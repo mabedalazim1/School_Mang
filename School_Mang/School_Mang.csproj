@@ -291,6 +291,12 @@
     <Compile Include="PL\STD\HOME\FRM_STD_DATA.Designer.cs">
       <DependentUpon>FRM_STD_DATA.cs</DependentUpon>
     </Compile>
+    <Compile Include="PL\STD\HOME\FRM_STD_REPORTS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\STD\HOME\FRM_STD_REPORTS.Designer.cs">
+      <DependentUpon>FRM_STD_REPORTS.cs</DependentUpon>
+    </Compile>
     <Compile Include="PL\USERS\FRM_ADD_USER.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -371,6 +377,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PL\STD\HOME\FRM_STD_DATA.resx">
       <DependentUpon>FRM_STD_DATA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PL\STD\HOME\FRM_STD_REPORTS.resx">
+      <DependentUpon>FRM_STD_REPORTS.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PL\USERS\FRM_ADD_USER.resx">
       <DependentUpon>FRM_ADD_USER.cs</DependentUpon>
@@ -592,6 +601,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="logo-b.ico" />
+    <None Include="Resources\improvement-100.png" />
     <None Include="Resources\users-data-100.png" />
     <None Include="Resources\students-100.png" />
   </ItemGroup>

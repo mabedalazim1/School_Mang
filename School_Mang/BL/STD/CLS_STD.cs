@@ -804,13 +804,13 @@ namespace School_Mang.BL.STD
             {
                 param[0] = new SqlParameter("@Year_Id", SqlDbType.Int);
                 param[0].Value = Properties.Settings.Default.year_cod;
+                
             }
             else
             {
                 param[0] = new SqlParameter("@Year_Id", SqlDbType.Int);
                 param[0].Value = Properties.Settings.Default.year_cod +1;
             }
-            
 
             param[1] = new SqlParameter("@Grade_Id", SqlDbType.Int);
             param[1].Value = Grade_Id;
@@ -904,11 +904,12 @@ namespace School_Mang.BL.STD
                                          int Grade_Id,
                                          int Class_Id,
                                          int new_year,
-                                         int std_found)
+                                         int std_found,
+                                         int To_School)
         {
             DAL.DataAcceseLayer DAL = new DAL.DataAcceseLayer();
 
-            SqlParameter[] param = new SqlParameter[8];
+            SqlParameter[] param = new SqlParameter[9];
 
             param[0] = new SqlParameter("@Transfer_code", SqlDbType.Int);
             param[0].Value = Transfer_code;
@@ -933,6 +934,9 @@ namespace School_Mang.BL.STD
 
             param[7] = new SqlParameter("@std_found", SqlDbType.Int);
             param[7].Value = std_found;
+
+            param[8] = new SqlParameter("@To_School", SqlDbType.Int);
+            param[8].Value = To_School;
 
             DAL.Open();
             DAL.ExeucuteCommand("SP_Delete_Transfers_Data", param);
@@ -968,6 +972,58 @@ namespace School_Mang.BL.STD
 
         }
 
+        public DataTable Verify_Std_School_Code(string std_code,int Year_Id)
+        {
+            DAL.DataAcceseLayer DAL = new DAL.DataAcceseLayer();
+            DataTable Dt;
 
+            SqlParameter[] param = new SqlParameter[2];
+           
+
+            param[0] = new SqlParameter("@std_code", SqlDbType.NVarChar, 20);
+            param[0].Value = std_code;
+
+            param[1] = new SqlParameter("@Year_Id", SqlDbType.Int);
+            param[1].Value = Year_Id;
+
+
+            Dt = DAL.Selectdata("SP_Verify_Std_School_Code", param);
+            DAL.Close();
+            return Dt;
+        }
+
+        public void Update_New_School_Std(string std_code,
+                                         int Grade_Id,
+                                         int Std_Status_Id,
+                                         int Class_Id,
+                                         int Year_Id)
+        {
+            DAL.DataAcceseLayer DAL = new DAL.DataAcceseLayer();
+
+            SqlParameter[] param = new SqlParameter[6];
+
+            param[0] = new SqlParameter("@std_code", SqlDbType.NVarChar,20);
+            param[0].Value = std_code;
+
+            param[1] = new SqlParameter("@Grade_Id", SqlDbType.Int);
+            param[1].Value = Grade_Id;
+
+            param[2] = new SqlParameter("@Std_Status_Id", SqlDbType.Int);
+            param[2].Value = Std_Status_Id;
+
+            param[3] = new SqlParameter("@Class_Id", SqlDbType.Int);
+            param[3].Value = Class_Id;
+
+            param[4] = new SqlParameter("@Year_Id", SqlDbType.Int);
+            param[4].Value = Year_Id;
+
+            param[5] = new SqlParameter("@Updated_by", SqlDbType.NVarChar, 15);
+            param[5].Value = Properties.Settings.Default.user_name;
+
+           
+            DAL.Open();
+            DAL.ExeucuteCommand("SP_Update_New_School_Std", param);
+            DAL.Close();
+        }
     }
 }

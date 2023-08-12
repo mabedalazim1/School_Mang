@@ -48,8 +48,12 @@ namespace School_Mang.PL.STD
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.txt_osra_id = new System.Windows.Forms.TextBox();
             this.txt_nat = new System.Windows.Forms.TextBox();
+            this.txt_sen = new System.Windows.Forms.TextBox();
+            this.txt_tarikh = new System.Windows.Forms.TextBox();
             this.txt_first_name = new System.Windows.Forms.TextBox();
             this.cmb_sana = new System.Windows.Forms.ComboBox();
             this.cmb_gender = new System.Windows.Forms.ComboBox();
@@ -59,10 +63,6 @@ namespace School_Mang.PL.STD
             this.label1 = new System.Windows.Forms.Label();
             this.btn_close = new DevExpress.XtraEditors.SimpleButton();
             this.pn_top = new System.Windows.Forms.Panel();
-            this.txt_tarikh = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.txt_sen = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.pn_top.SuspendLayout();
@@ -351,6 +351,28 @@ namespace School_Mang.PL.STD
             this.label6.TabIndex = 93;
             this.label6.Text = "الاسم الاول";
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.label9.Location = new System.Drawing.Point(191, 128);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(42, 29);
+            this.label9.TabIndex = 93;
+            this.label9.Text = "السن";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.label8.Location = new System.Drawing.Point(427, 128);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(88, 29);
+            this.label8.TabIndex = 93;
+            this.label8.Text = "تاريخ الميلاد";
+            // 
             // txt_osra_id
             // 
             this.txt_osra_id.Enabled = false;
@@ -373,6 +395,28 @@ namespace School_Mang.PL.STD
             this.txt_nat.TabIndex = 92;
             this.txt_nat.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_nat_KeyPress);
             this.txt_nat.Leave += new System.EventHandler(this.txt_nat_Leave);
+            // 
+            // txt_sen
+            // 
+            this.txt_sen.Enabled = false;
+            this.txt_sen.Font = new System.Drawing.Font("Noto Naskh Arabic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_sen.Location = new System.Drawing.Point(13, 123);
+            this.txt_sen.MaxLength = 11;
+            this.txt_sen.Name = "txt_sen";
+            this.txt_sen.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txt_sen.Size = new System.Drawing.Size(163, 35);
+            this.txt_sen.TabIndex = 92;
+            // 
+            // txt_tarikh
+            // 
+            this.txt_tarikh.Enabled = false;
+            this.txt_tarikh.Font = new System.Drawing.Font("Noto Naskh Arabic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_tarikh.Location = new System.Drawing.Point(258, 123);
+            this.txt_tarikh.MaxLength = 11;
+            this.txt_tarikh.Name = "txt_tarikh";
+            this.txt_tarikh.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txt_tarikh.Size = new System.Drawing.Size(163, 35);
+            this.txt_tarikh.TabIndex = 92;
             // 
             // txt_first_name
             // 
@@ -490,50 +534,6 @@ namespace School_Mang.PL.STD
             this.pn_top.Size = new System.Drawing.Size(549, 50);
             this.pn_top.TabIndex = 81;
             // 
-            // txt_tarikh
-            // 
-            this.txt_tarikh.Enabled = false;
-            this.txt_tarikh.Font = new System.Drawing.Font("Noto Naskh Arabic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_tarikh.Location = new System.Drawing.Point(258, 123);
-            this.txt_tarikh.MaxLength = 11;
-            this.txt_tarikh.Name = "txt_tarikh";
-            this.txt_tarikh.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.txt_tarikh.Size = new System.Drawing.Size(163, 35);
-            this.txt_tarikh.TabIndex = 92;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-            this.label8.Location = new System.Drawing.Point(427, 128);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(88, 29);
-            this.label8.TabIndex = 93;
-            this.label8.Text = "تاريخ الميلاد";
-            // 
-            // txt_sen
-            // 
-            this.txt_sen.Enabled = false;
-            this.txt_sen.Font = new System.Drawing.Font("Noto Naskh Arabic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_sen.Location = new System.Drawing.Point(13, 123);
-            this.txt_sen.MaxLength = 11;
-            this.txt_sen.Name = "txt_sen";
-            this.txt_sen.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.txt_sen.Size = new System.Drawing.Size(163, 35);
-            this.txt_sen.TabIndex = 92;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-            this.label9.Location = new System.Drawing.Point(191, 128);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(42, 29);
-            this.label9.TabIndex = 93;
-            this.label9.Text = "السن";
-            // 
             // FRM_UPDATE_SCHOOL_STD
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -548,6 +548,7 @@ namespace School_Mang.PL.STD
             this.Name = "FRM_UPDATE_SCHOOL_STD";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "تعديل بيانات الطالب";
+            this.Activated += new System.EventHandler(this.FRM_UPDATE_SCHOOL_STD_Activated);
             this.Load += new System.EventHandler(this.FRM_UPDATE_SCHOOL_STD_Load);
             this.groupBox3.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);

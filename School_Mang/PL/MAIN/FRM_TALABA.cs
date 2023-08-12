@@ -14,6 +14,8 @@ namespace School_Mang.PL.MAIN
     {
         // Get Std
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
+        BL.USERS users = new BL.USERS();
+        BL.MSG msg = new BL.MSG();
 
         // Form Closed
         private static FRM_TALABA frm_Talaba;
@@ -89,28 +91,7 @@ namespace School_Mang.PL.MAIN
         {
             pic_add_std_Click(sender, e);
         }
-
-        private void pic_get_osra_data_Click(object sender, EventArgs e)
-        {
-            BL.Globals.Open_Form_Get_osra = true;
-            STD.FRM_GET_OSRAA.Get_Osra_data.ShowDialog();
-        }
-
-        private void lbl_get_osra_data_Click(object sender, EventArgs e)
-        {
-            pic_get_osra_data_Click(sender, e);
-        }
-
-        private void pic_show_stds_Click(object sender, EventArgs e)
-        {
-            STD.FRM_GET_STD frm = new STD.FRM_GET_STD();
-            frm.ShowDialog();
-        }
-
-        private void lbl_show_stds_Click(object sender, EventArgs e)
-        {
-            pic_show_stds_Click(sender, e);
-        }
+ 
 
         private void lbl_elthak_Click(object sender, EventArgs e)
         {
@@ -125,23 +106,63 @@ namespace School_Mang.PL.MAIN
 
         private void lbl_current_stds_Click(object sender, EventArgs e)
         {
-            // Get Year
-
-            STD.HOME.FRM_STD_DATA.Get_Frm_Std_Data.lbl_year.Text = Properties.Settings.Default.Year_Desc;
-            int new_year = Properties.Settings.Default.MyYear + 1;
-            STD.HOME.FRM_STD_DATA.Get_Frm_Std_Data.lbl_new_year.Text = std.Get_years(new_year).Rows[0][1].ToString();
-
-            // Hide New Year Card If There Is no Student On New Year
-            int year_code = Properties.Settings.Default.year_cod+1;
-            DataTable dt_count;
-            dt_count = std.Get_School_year_Data(year_code, 0, 0);
-            if (dt_count.Rows.Count == 0)
+            try
             {
-                STD.HOME.FRM_STD_DATA.Get_Frm_Std_Data.card_new_year.Visible = false;
-            }
 
+                // Get Year
+
+                STD.HOME.FRM_STD_DATA.Get_Frm_Std_Data.lbl_year.Text = Properties.Settings.Default.Year_Desc;
+                int new_year = Properties.Settings.Default.MyYear + 1;
+                STD.HOME.FRM_STD_DATA.Get_Frm_Std_Data.lbl_new_year.Text = std.Get_years(new_year).Rows[0][1].ToString();
+
+                // Hide New Year Card If There Is no Student On New Year
+                int year_code = Properties.Settings.Default.year_cod+1;
+                DataTable dt_count;
+                dt_count = std.Get_School_year_Data(year_code, 0, 0);
+                if (dt_count.Rows.Count == 0)
+                {
+                    STD.HOME.FRM_STD_DATA.Get_Frm_Std_Data.card_new_year.Visible = false;
+                }
+                else
+                {
+                    STD.HOME.FRM_STD_DATA.Get_Frm_Std_Data.card_new_year.Visible = true;
+                }
+
+                // Test Permissions
+                int user = Properties.Settings.Default.user_code;
+                DataTable dt_user = users.Get_User_Permission(user);
+                if(dt_user.Rows[0]["role_id"].ToString() == "1" &&
+                    dt_user.Rows[0]["permission_id"].ToString() == "1")
+                {
+                    STD.HOME.FRM_STD_DATA.Get_Frm_Std_Data.card_update_data.Visible = true;
+                }
+                else
+                {
+                    STD.HOME.FRM_STD_DATA.Get_Frm_Std_Data.card_update_data.Visible = false;
+                }
+                // Get Std Data Form
+                changePages(STD.HOME.FRM_STD_DATA.Get_Frm_Std_Data.pn_std_home, "بيانات الطلاب");
+            }
+            catch (Exception ex)
+            {
+                msg.ErrorMesg(ex.Message);
+            }
+        }
+
+        private void lbl_tahwelat_Click(object sender, EventArgs e)
+        {
+            PL.STD.HOME.FRM_STD_DATA.Get_Frm_Std_Data.lbl_tahwelat_Click(sender, e);
+        }
+
+        private void pic_tahwelat_Click(object sender, EventArgs e)
+        {
+            lbl_tahwelat_Click(sender, e);
+        }
+
+        private void lbl_ehsaa_Click(object sender, EventArgs e)
+        {
             // Get Std Data Form
-            changePages(STD.HOME.FRM_STD_DATA.Get_Frm_Std_Data.pn_std_home, "بيانات الطلاب");
+            changePages(STD.HOME.FRM_STD_REPORTS.Get_Frm_Std_Reports.pn_std_home, "تقارير - احصائيات");
         }
     }
 }

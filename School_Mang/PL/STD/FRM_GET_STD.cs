@@ -37,10 +37,12 @@ namespace School_Mang.PL.STD
                 dt_std_data.Columns["Std_Status_Id"].Visible = false;
                 dt_std_data.Columns["Nationality_Id"].Visible = false;
                 dt_std_data.Columns["Year_Id"].Visible = false;
+                dt_std_data.Columns["Updated_At"].Visible = false;
                 dt_std_data.Columns["Religion_Id"].Visible = false;
                 dt_std_data.Columns["اسم الأب"].Visible = false;
                 dt_std_data.Columns["الوظيفة"].Visible = false;
                 dt_std_data.Columns["اسم الأم"].Visible = false;
+                dt_std_data.Columns["الرقم القومى"].Visible = false;
                 lbl_count.Text = dt_std_data.Rows.Count.ToString();
 
             }
@@ -274,9 +276,32 @@ namespace School_Mang.PL.STD
             try
             {
                 dt_std_data.Columns["اسم الطالب"].Width = 230;
-                dt_std_data.Columns["الرقم القومى"].Width = 200;
+                //dt_std_data.Columns["الرقم القومى"].Width = 200;
                 dt_std_data.Columns["العنوان"].Width = 270;
-                
+                dt_std_data_Click(sender, e);
+
+                if (BL.Globals.Elthak_Std)
+                {
+                    btn_new_std.Visible = false;
+                    btn_del_std.Visible = false;
+
+                    btn_edit_std.Location = new Point(839, 15);
+                    btn_talab_elthak.Location = new Point(432, 15);
+                    
+
+                }
+                else
+                {
+                    btn_new_std.Visible = true;
+                    btn_del_std.Visible = true;
+
+                    btn_new_std.Location= new Point(839, 15);
+                    btn_edit_std.Location = new Point(631, 15);
+                    btn_talab_elthak.Location = new Point(423, 15);
+
+                }
+
+
             }
             catch(Exception ex)
             {
@@ -309,7 +334,7 @@ namespace School_Mang.PL.STD
                 DataTable Dt;
                 Dt = std.Verify_Osra_Data(osrs_id);
 
-                if (msg.DialogeMsg("هل تريد حذف البيانات الخاصة بالطالب /  " + name) == DialogResult.Yes)
+                if (msg.DialogeErrMsg("هل تريد حذف البيانات الخاصة بالطالب /  " + name) == DialogResult.Yes)
                 {
                     std.Delele_Std_Data(dt_std_data.CurrentRow.Cells["std_code"].Value.ToString());
                     this.dt_std_data.DataSource = std.Get_All_Std_Data(Convert.ToInt32(cmb_sana.SelectedValue));

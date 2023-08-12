@@ -157,8 +157,7 @@ namespace School_Mang.PL.STD
                     break;
             }
 
-            DataTable Dt = new DataTable();
-            Dt = std.GET_Code_Std_Grade(Convert.ToInt32(cmb_grade.SelectedValue), Convert.ToInt32(cmb_sana.SelectedValue), "yes");
+            DataTable Dt = std.GET_Code_Std_Grade(Convert.ToInt32(cmb_grade.SelectedValue), Convert.ToInt32(cmb_sana.SelectedValue), "yes");
             count_std = Convert.ToInt32(Dt.Rows[0]["count_std"]);
             sdt_code = Convert.ToInt32(year + grade) + count_std + 1;
 

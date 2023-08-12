@@ -383,6 +383,16 @@ namespace School_Mang.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap improvement_100 {
+            get {
+                object obj = ResourceManager.GetObject("improvement-100", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap log_out_w40 {
             get {
                 object obj = ResourceManager.GetObject("log-out-w40", resourceCulture);

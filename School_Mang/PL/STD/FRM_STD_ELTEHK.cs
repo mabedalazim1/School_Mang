@@ -118,6 +118,13 @@ namespace School_Mang.PL.STD
            
             try
             {
+                //IF Tahweel To School Get New Year
+                if (BL.Globals.Taheewl_To_School)
+                {
+                   cmb_sana.SelectedValue = (Properties.Settings.Default.year_cod) + 1;
+
+                }
+                // Add Std
                 std.Add_School_Std_Data(
                     txt_std_code.Text,
                     Convert.ToInt32(cmb_sana.SelectedValue),

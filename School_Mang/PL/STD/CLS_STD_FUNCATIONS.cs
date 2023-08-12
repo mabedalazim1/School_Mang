@@ -116,6 +116,20 @@ namespace School_Mang.PL.STD
 
         }
 
+        // Change Pages
+        public void changePages(Panel pn)
+        {
+            MAIN.FRM_MAIN.Get_Frm_Main.pn_home.Visible = false;
+            MAIN.FRM_MAIN.Get_Frm_Main.pn_main.Controls.Clear();
+            MAIN.FRM_MAIN.Get_Frm_Main.pn_main.Visible = false;
+            MAIN.FRM_MAIN.Get_Frm_Main.pn_main.BringToFront();
+            MAIN.FRM_MAIN.Get_Frm_Main.lbl_main.Text = "شئون الطلاب";
+            MAIN.FRM_MAIN.Get_Frm_Main.lbl_main.Visible = false;
+            MAIN.FRM_MAIN.Get_Frm_Main.pn_main.Controls.Add(pn);
+            MAIN.FRM_MAIN.Get_Frm_Main.trans_a.ShowSync(MAIN.FRM_MAIN.Get_Frm_Main.pn_main);
+            MAIN.FRM_MAIN.Get_Frm_Main.lbl_main.Visible = true;
+        }
+
 
     }
 }

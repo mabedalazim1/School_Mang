@@ -286,20 +286,35 @@ namespace School_Mang.PL.STD
 
             int new_year = Convert.ToInt32(std.Get_Count_New_Year(year + 1).Rows[0][0]);
             int std_found=Convert.ToInt32(std.Get_Count_Trans_Std(new_year, std_code).Rows[0][0]);
+            int to_School;
             try
             {
                 if(msg.DialogeErrMsg("هل تريد حذف طلب التحويل للطالب  / " + std_name +" .. !") == DialogResult.Yes)
                 {
+                    msg.MyMesg(dt_std_data.CurrentRow.Cells["Std_Status_Id"].Value.ToString());
                     // Delete Trans Data
 
+                    
+                    if (dt_std_data.CurrentRow.Cells["Std_Status_Id"].Value.ToString() == "4")
+                    {
+                        // If Std Trans To School
+                        to_School = 1;
+                        new_year = 0;
+                    }
+                    else
+                    {
+                        to_School = 0;
+                    }
+                    msg.MyMesg(to_School.ToString());
                     std.Delete_Transfers_Data(
                         Convert.ToInt32(dt_std_data.CurrentRow.Cells["Transfer_code"].Value),
                         dt_std_data.CurrentRow.Cells["std_code"].Value.ToString(),
                         Convert.ToInt32(dt_std_data.CurrentRow.Cells["Year_Id"].Value),
                         grade,
                         class_id,
-                        new_year,
-                        std_found
+                        new_year,// = 0 If Std Trans To School 
+                        std_found, // = 0 If Std Not Found On Table
+                        to_School // = 1 If Std Trans To School
                         );
                     // Update DataGrid
 

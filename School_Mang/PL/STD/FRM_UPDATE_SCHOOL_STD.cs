@@ -23,6 +23,7 @@ namespace School_Mang.PL.STD
 
         public int grade = 1;
         public int row_index = 0;
+        int status;
 
         // Form Closed
         private static FRM_UPDATE_SCHOOL_STD frm_Update_School_Std;
@@ -88,6 +89,7 @@ namespace School_Mang.PL.STD
 
         private void btn_save_data_Click(object sender, EventArgs e)
         {
+
             try
             {
                 if (Convert.ToInt32(cmb_hala.SelectedValue) == 3 ||
@@ -95,9 +97,84 @@ namespace School_Mang.PL.STD
                 {
                     msg.ErrorMesg("لتحويل طالب .. يرجى تسجيل طلب تحويل أولا ..!");
                     cmb_hala.Focus();
+                    cmb_hala.SelectedValue = status;
                     return;
                 }
 
+                // Sahab Malaf
+
+                if(status == 6)
+                {
+                    if (msg.DialogeMsg("  الطالب كان مسجل سحب ملف  ..  " + txt_first_name.Text+ "  هل تريد المتابعة ؟   ") == DialogResult.Yes)
+                    {
+                        int year = Properties.Settings.Default.year_cod + 1;
+                        int grade = Convert.ToInt32(cmb_grade.SelectedValue);
+                        int new_grade = 0; 
+                        int class_id = Convert.ToInt32(cmb_class.SelectedValue);
+                        int new_class_id = 0;
+                        switch (grade)
+                        {
+                            case 10:
+                                new_grade = 11;
+                                new_class_id = class_id + 2;
+                                break;
+                            case 11:
+                                new_grade = 1;
+                                new_class_id = class_id + 2;
+                                break;
+
+                            case 1:
+                            case 2:
+                            case 3:
+                            case 4:
+                            case 5:
+                                new_grade += 1;
+                                new_class_id = class_id + 3;
+                                break;
+
+                            case 6:
+                            case 7:
+                            case 8:
+                                new_grade += 1;
+                                new_class_id = class_id + 2;
+                                break;
+                        }
+                        if(grade != 9)
+                        {
+                            DataTable dt_school_data = std.Get_School_year_Data(year, 0, 0);
+                            if(dt_school_data.Rows.Count != 0)
+                            {
+                                std.Add_School_Std_Data(txt_std_code.Text,
+                                                      year,
+                                                      new_grade,
+                                                      2,
+                                                      new_class_id);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        msg.ErrorMesg("تم إلغاء عملية الحفظ");
+                        cmb_hala.SelectedValue = status;
+                        cmb_hala.Focus();
+                        return;
+                    }
+                }
+                if (Convert.ToInt32(cmb_hala.SelectedValue) == 6)
+                {
+                    if(msg.DialogeMsg("   سوف يتم سحب ملف الطالب ..   " +txt_first_name.Text)== DialogResult.Yes)
+                    {
+                        int year = Properties.Settings.Default.year_cod + 1;
+                        std.Delete_School_Std_Data(txt_std_code.Text, year);
+                    }
+                    else
+                    {
+                        msg.ErrorMesg("تم إلغاء عملية الحفظ");
+                        cmb_hala.SelectedValue = status;
+                        cmb_hala.Focus();
+                        return;
+                    }
+                }
                 // Sen
                 sen = Hesab_sen.Nat_HesabSen(txt_nat.Text, Convert.ToInt32(cmb_sana.GetItemText(cmb_sana.SelectedItem).Substring(0, 4)) - 1);
 
@@ -108,7 +185,7 @@ namespace School_Mang.PL.STD
                     txt_std_code.Text,
                     txt_first_name.Text,
                     txt_nat.Text,
-                     Convert.ToDateTime(tarikh),
+                    Convert.ToDateTime(tarikh),
                     Convert.ToInt32(cmb_grade.SelectedValue),
                     Convert.ToInt32(cmb_hala.SelectedValue),
                     Convert.ToInt32(cmb_class.SelectedValue),
@@ -124,7 +201,7 @@ namespace School_Mang.PL.STD
                
                 FRM_CURRENT_STD.Get_Current_Std.dt_std_data.FirstDisplayedScrollingRowIndex = row_index;
                 FRM_CURRENT_STD.Get_Current_Std.dt_std_data.Rows[row_index].Selected = true;
-                 msg.MyMesg("تم حفظ البيانات");
+                msg.MyMesg("تم حفظ البيانات");
             }
             catch(Exception ex)
             {
@@ -252,6 +329,11 @@ namespace School_Mang.PL.STD
         private void FRM_UPDATE_SCHOOL_STD_Load(object sender, EventArgs e)
         {
             txt_nat_Leave(sender, e);
+        }
+
+        private void FRM_UPDATE_SCHOOL_STD_Activated(object sender, EventArgs e)
+        {
+            status = Convert.ToInt32(cmb_hala.SelectedValue);
         }
     }
 }

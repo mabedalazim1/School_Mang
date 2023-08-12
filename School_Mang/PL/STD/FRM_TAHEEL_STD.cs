@@ -208,12 +208,15 @@ namespace School_Mang.PL.STD
             Waiting.Wait();
             if (!BL.Globals.Update_Taheewl)
             {
+                int year = Properties.Settings.Default.year_cod;
                 try
                 {
+                   
                     // If Transfer To School
                     if (BL.Globals.Taheewl_To_School)
                     {
                         FRM_STD_ELTEHK.Get_Std_Eltehk.btn_new_std_Click(sender, e);
+                        year += 1;
                         BL.Globals.Taheewl_To_School = false;
                     }
                     // Add Transfers Data
@@ -223,7 +226,7 @@ namespace School_Mang.PL.STD
                         txt_std_code.Text,
                         txt_to_school.Text,
                         transfer_status,
-                        Properties.Settings.Default.year_cod,
+                        year,
                         txt_guardian_name.Text,
                         txt_transfer_reason.Text,
                         rosom, kotob,

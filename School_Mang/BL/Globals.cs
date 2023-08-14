@@ -167,5 +167,18 @@ namespace School_Mang.BL
             }
         }
 
+        private static bool _Restore_DataBase;
+        public static bool Restore_DataBase
+        {
+            get
+            {
+                return _Restore_DataBase;
+            }
+            set
+            {
+                _Restore_DataBase = value;
+            }
+        }
+
     }
 }

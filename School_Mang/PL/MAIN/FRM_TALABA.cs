@@ -164,5 +164,21 @@ namespace School_Mang.PL.MAIN
             // Get Std Data Form
             changePages(STD.HOME.FRM_STD_REPORTS.Get_Frm_Std_Reports.pn_std_home, "تقارير - احصائيات");
         }
+
+        private void pic_ehsaa_Click(object sender, EventArgs e)
+        {
+            lbl_ehsaa_Click(sender, e);
+        }
+
+        private void lbl_eltehak_old_Click(object sender, EventArgs e)
+        {
+            BL.Globals.Elthak_Std = true;
+            STD.FRM_CURRENT_STD.Get_Current_Std.ShowDialog();
+        }
+
+        private void pic_eltehak_old_Click(object sender, EventArgs e)
+        {
+            lbl_eltehak_old_Click(sender, e);
+        }
     }
 }

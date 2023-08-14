@@ -66,18 +66,39 @@ namespace School_Mang.PL.STD
             // Get School Year Data
             Get_School_Year_Data();
 
+
+            if (BL.Globals.Elthak_Std)
+            {
+                btn_talab_elthak.Location = new Point(409, 15);
+                btn_del_std.Visible = false;
+                btn_tahwel.Visible = false;
+            }
+            else
+            {
+                btn_del_std.Visible = true;
+                btn_tahwel.Visible = true;
+            }
+
             if (BL.Globals.Current_Year_Data)
             {
                 btn_tahwel.Visible = true;
                 btn_del_std.Location = new Point(208, 15);
-                btn_talab_elthak.Location = new Point(610, 15);
+                if (!BL.Globals.Elthak_Std)
+                {
+                    btn_talab_elthak.Location = new Point(610, 15);
+                }
+               
             }
             else
             {
                 btn_tahwel.Visible = false;
                 btn_del_std.Location = new Point(278, 15);
-                btn_talab_elthak.Location = new Point(540, 15);
+                if (!BL.Globals.Elthak_Std)
+                {
+                    btn_talab_elthak.Location = new Point(540, 15);
+                }
             }
+            
             Waiting.End_WAit();
         }
 
@@ -273,6 +294,7 @@ namespace School_Mang.PL.STD
             this.Close();
             BL.Globals.Current_Year_Data = false;
             BL.Globals.Details_Std = false;
+            BL.Globals.Elthak_Std = false;
             this.Dispose();
         }
 
@@ -391,7 +413,15 @@ namespace School_Mang.PL.STD
 
         private void dt_std_data_DoubleClick(object sender, EventArgs e)
         {
-            btn_new_std_Click(sender, e);
+            if (BL.Globals.Elthak_Std)
+            {
+                btn_talab_elthak_Click(sender, e);
+            }
+            else
+            {
+                btn_new_std_Click(sender, e);
+            }
+
         }
 
         private void btn_del_std_Click(object sender, EventArgs e)

@@ -118,20 +118,20 @@ namespace School_Mang.PL.STD
             // 
             this.btn_talab_elthak.ActiveBorderThickness = 1;
             this.btn_talab_elthak.ActiveCornerRadius = 20;
-            this.btn_talab_elthak.ActiveFillColor = System.Drawing.Color.Teal;
+            this.btn_talab_elthak.ActiveFillColor = System.Drawing.Color.DodgerBlue;
             this.btn_talab_elthak.ActiveForecolor = System.Drawing.Color.White;
-            this.btn_talab_elthak.ActiveLineColor = System.Drawing.Color.Teal;
+            this.btn_talab_elthak.ActiveLineColor = System.Drawing.Color.DeepSkyBlue;
             this.btn_talab_elthak.BackColor = System.Drawing.Color.WhiteSmoke;
             this.btn_talab_elthak.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_talab_elthak.BackgroundImage")));
             this.btn_talab_elthak.ButtonText = "طباعة طلب التحاق";
             this.btn_talab_elthak.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_talab_elthak.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_talab_elthak.ForeColor = System.Drawing.Color.DarkCyan;
+            this.btn_talab_elthak.ForeColor = System.Drawing.Color.MidnightBlue;
             this.btn_talab_elthak.IdleBorderThickness = 1;
             this.btn_talab_elthak.IdleCornerRadius = 20;
             this.btn_talab_elthak.IdleFillColor = System.Drawing.Color.WhiteSmoke;
-            this.btn_talab_elthak.IdleForecolor = System.Drawing.Color.DarkCyan;
-            this.btn_talab_elthak.IdleLineColor = System.Drawing.Color.CadetBlue;
+            this.btn_talab_elthak.IdleForecolor = System.Drawing.Color.MidnightBlue;
+            this.btn_talab_elthak.IdleLineColor = System.Drawing.Color.Navy;
             this.btn_talab_elthak.Location = new System.Drawing.Point(610, 15);
             this.btn_talab_elthak.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btn_talab_elthak.Name = "btn_talab_elthak";

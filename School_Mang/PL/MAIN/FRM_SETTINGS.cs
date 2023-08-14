@@ -415,11 +415,18 @@ namespace School_Mang.PL.MAIN
                             if(Convert.ToInt32(row["permission_id"]) == 1 
                                 && Convert.ToInt32(row["role_id"])==1)
                             {
-                                 pn_users.Visible = true;
+                                pn_users.Visible = true;
+                                pn_back_up.Visible = true;
+                                pn_restore_data.Visible = true;
+
                             }
                             else
                             {
                                 pn_users.Visible = false;
+                                pn_back_up.Visible = false;
+                                pn_restore_data.Visible = false;
+
+
                             }
 
                             switch (Convert.ToInt32(row["role_id"]))
@@ -930,6 +937,20 @@ namespace School_Mang.PL.MAIN
             Edit_User();
 
 
+        }
+
+        private void link_bake_up_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            BL.Globals.Restore_DataBase = false;
+            FRM_BACK_UP frm = new FRM_BACK_UP();
+            frm.ShowDialog();
+        }
+
+        private void lbl_restore_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            BL.Globals.Restore_DataBase = true;
+            FRM_BACK_UP frm = new FRM_BACK_UP();
+            frm.ShowDialog();
         }
     }
 }

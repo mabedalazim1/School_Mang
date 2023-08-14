@@ -43,15 +43,18 @@ namespace School_Mang.PL.MAIN
             this.bunifuCards3 = new Bunifu.Framework.UI.BunifuCards();
             this.lbl_elthak = new System.Windows.Forms.Label();
             this.pic_elthak = new System.Windows.Forms.PictureBox();
-            this.bunifuCards8 = new Bunifu.Framework.UI.BunifuCards();
-            this.lbl_ehsaa = new System.Windows.Forms.Label();
-            this.pic_ehsaa = new System.Windows.Forms.PictureBox();
             this.bunifuCards4 = new Bunifu.Framework.UI.BunifuCards();
             this.lbl_tahwelat = new System.Windows.Forms.Label();
             this.pic_tahwelat = new System.Windows.Forms.PictureBox();
             this.bunifuCards6 = new Bunifu.Framework.UI.BunifuCards();
             this.lbl_bian_dragat = new System.Windows.Forms.Label();
             this.pic_bian_dragat = new System.Windows.Forms.PictureBox();
+            this.bunifuCards8 = new Bunifu.Framework.UI.BunifuCards();
+            this.lbl_ehsaa = new System.Windows.Forms.Label();
+            this.pic_ehsaa = new System.Windows.Forms.PictureBox();
+            this.bunifuCards2 = new Bunifu.Framework.UI.BunifuCards();
+            this.lbl_eltehak_old = new System.Windows.Forms.Label();
+            this.pic_eltehak_old = new System.Windows.Forms.PictureBox();
             this.pn_home.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.bunifuCards5.SuspendLayout();
@@ -62,12 +65,14 @@ namespace School_Mang.PL.MAIN
             ((System.ComponentModel.ISupportInitialize)(this.pic_add_std)).BeginInit();
             this.bunifuCards3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_elthak)).BeginInit();
-            this.bunifuCards8.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pic_ehsaa)).BeginInit();
             this.bunifuCards4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_tahwelat)).BeginInit();
             this.bunifuCards6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_bian_dragat)).BeginInit();
+            this.bunifuCards8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_ehsaa)).BeginInit();
+            this.bunifuCards2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_eltehak_old)).BeginInit();
             this.SuspendLayout();
             // 
             // pn_home
@@ -86,6 +91,7 @@ namespace School_Mang.PL.MAIN
             this.flowLayoutPanel1.Controls.Add(this.bunifuCards12);
             this.flowLayoutPanel1.Controls.Add(this.bunifuCards1);
             this.flowLayoutPanel1.Controls.Add(this.bunifuCards3);
+            this.flowLayoutPanel1.Controls.Add(this.bunifuCards2);
             this.flowLayoutPanel1.Controls.Add(this.bunifuCards4);
             this.flowLayoutPanel1.Controls.Add(this.bunifuCards6);
             this.flowLayoutPanel1.Controls.Add(this.bunifuCards8);
@@ -250,11 +256,11 @@ namespace School_Mang.PL.MAIN
             this.lbl_elthak.AutoSize = true;
             this.lbl_elthak.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lbl_elthak.Font = new System.Drawing.Font("LBC", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_elthak.Location = new System.Drawing.Point(57, 120);
+            this.lbl_elthak.Location = new System.Drawing.Point(23, 117);
             this.lbl_elthak.Name = "lbl_elthak";
-            this.lbl_elthak.Size = new System.Drawing.Size(146, 37);
+            this.lbl_elthak.Size = new System.Drawing.Size(218, 37);
             this.lbl_elthak.TabIndex = 7;
-            this.lbl_elthak.Text = "طلب التحاق";
+            this.lbl_elthak.Text = "طلب التحاق للجدد";
             this.lbl_elthak.Click += new System.EventHandler(this.lbl_elthak_Click);
             // 
             // pic_elthak
@@ -269,48 +275,6 @@ namespace School_Mang.PL.MAIN
             this.pic_elthak.TabStop = false;
             this.pic_elthak.Click += new System.EventHandler(this.pic_elthak_Click);
             // 
-            // bunifuCards8
-            // 
-            this.bunifuCards8.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.bunifuCards8.BackColor = System.Drawing.Color.White;
-            this.bunifuCards8.BorderRadius = 5;
-            this.bunifuCards8.BottomSahddow = true;
-            this.bunifuCards8.color = System.Drawing.Color.Tomato;
-            this.bunifuCards8.Controls.Add(this.lbl_ehsaa);
-            this.bunifuCards8.Controls.Add(this.pic_ehsaa);
-            this.bunifuCards8.LeftSahddow = false;
-            this.bunifuCards8.Location = new System.Drawing.Point(505, 215);
-            this.bunifuCards8.Name = "bunifuCards8";
-            this.bunifuCards8.Padding = new System.Windows.Forms.Padding(20);
-            this.bunifuCards8.RightSahddow = true;
-            this.bunifuCards8.ShadowDepth = 20;
-            this.bunifuCards8.Size = new System.Drawing.Size(270, 186);
-            this.bunifuCards8.TabIndex = 19;
-            // 
-            // lbl_ehsaa
-            // 
-            this.lbl_ehsaa.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.lbl_ehsaa.AutoSize = true;
-            this.lbl_ehsaa.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lbl_ehsaa.Font = new System.Drawing.Font("LBC", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_ehsaa.Location = new System.Drawing.Point(34, 120);
-            this.lbl_ehsaa.Name = "lbl_ehsaa";
-            this.lbl_ehsaa.Size = new System.Drawing.Size(202, 37);
-            this.lbl_ehsaa.TabIndex = 7;
-            this.lbl_ehsaa.Text = "احصائيات وتقارير";
-            this.lbl_ehsaa.Click += new System.EventHandler(this.lbl_ehsaa_Click);
-            // 
-            // pic_ehsaa
-            // 
-            this.pic_ehsaa.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pic_ehsaa.Image = global::School_Mang.Properties.Resources.icons8_test_passed_100;
-            this.pic_ehsaa.Location = new System.Drawing.Point(74, 23);
-            this.pic_ehsaa.Name = "pic_ehsaa";
-            this.pic_ehsaa.Size = new System.Drawing.Size(118, 97);
-            this.pic_ehsaa.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pic_ehsaa.TabIndex = 1;
-            this.pic_ehsaa.TabStop = false;
-            // 
             // bunifuCards4
             // 
             this.bunifuCards4.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -321,7 +285,7 @@ namespace School_Mang.PL.MAIN
             this.bunifuCards4.Controls.Add(this.lbl_tahwelat);
             this.bunifuCards4.Controls.Add(this.pic_tahwelat);
             this.bunifuCards4.LeftSahddow = false;
-            this.bunifuCards4.Location = new System.Drawing.Point(1057, 215);
+            this.bunifuCards4.Location = new System.Drawing.Point(781, 215);
             this.bunifuCards4.Name = "bunifuCards4";
             this.bunifuCards4.Padding = new System.Windows.Forms.Padding(20);
             this.bunifuCards4.RightSahddow = true;
@@ -364,7 +328,7 @@ namespace School_Mang.PL.MAIN
             this.bunifuCards6.Controls.Add(this.lbl_bian_dragat);
             this.bunifuCards6.Controls.Add(this.pic_bian_dragat);
             this.bunifuCards6.LeftSahddow = false;
-            this.bunifuCards6.Location = new System.Drawing.Point(781, 215);
+            this.bunifuCards6.Location = new System.Drawing.Point(505, 215);
             this.bunifuCards6.Name = "bunifuCards6";
             this.bunifuCards6.Padding = new System.Windows.Forms.Padding(20);
             this.bunifuCards6.RightSahddow = true;
@@ -394,6 +358,92 @@ namespace School_Mang.PL.MAIN
             this.pic_bian_dragat.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pic_bian_dragat.TabIndex = 1;
             this.pic_bian_dragat.TabStop = false;
+            // 
+            // bunifuCards8
+            // 
+            this.bunifuCards8.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.bunifuCards8.BackColor = System.Drawing.Color.White;
+            this.bunifuCards8.BorderRadius = 5;
+            this.bunifuCards8.BottomSahddow = true;
+            this.bunifuCards8.color = System.Drawing.Color.Tomato;
+            this.bunifuCards8.Controls.Add(this.lbl_ehsaa);
+            this.bunifuCards8.Controls.Add(this.pic_ehsaa);
+            this.bunifuCards8.LeftSahddow = false;
+            this.bunifuCards8.Location = new System.Drawing.Point(229, 215);
+            this.bunifuCards8.Name = "bunifuCards8";
+            this.bunifuCards8.Padding = new System.Windows.Forms.Padding(20);
+            this.bunifuCards8.RightSahddow = true;
+            this.bunifuCards8.ShadowDepth = 20;
+            this.bunifuCards8.Size = new System.Drawing.Size(270, 186);
+            this.bunifuCards8.TabIndex = 19;
+            // 
+            // lbl_ehsaa
+            // 
+            this.lbl_ehsaa.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lbl_ehsaa.AutoSize = true;
+            this.lbl_ehsaa.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lbl_ehsaa.Font = new System.Drawing.Font("LBC", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_ehsaa.Location = new System.Drawing.Point(34, 120);
+            this.lbl_ehsaa.Name = "lbl_ehsaa";
+            this.lbl_ehsaa.Size = new System.Drawing.Size(202, 37);
+            this.lbl_ehsaa.TabIndex = 7;
+            this.lbl_ehsaa.Text = "احصائيات وتقارير";
+            this.lbl_ehsaa.Click += new System.EventHandler(this.lbl_ehsaa_Click);
+            // 
+            // pic_ehsaa
+            // 
+            this.pic_ehsaa.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pic_ehsaa.Image = global::School_Mang.Properties.Resources.icons8_test_passed_100;
+            this.pic_ehsaa.Location = new System.Drawing.Point(74, 23);
+            this.pic_ehsaa.Name = "pic_ehsaa";
+            this.pic_ehsaa.Size = new System.Drawing.Size(118, 97);
+            this.pic_ehsaa.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pic_ehsaa.TabIndex = 1;
+            this.pic_ehsaa.TabStop = false;
+            this.pic_ehsaa.Click += new System.EventHandler(this.pic_ehsaa_Click);
+            // 
+            // bunifuCards2
+            // 
+            this.bunifuCards2.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.bunifuCards2.BackColor = System.Drawing.Color.White;
+            this.bunifuCards2.BorderRadius = 5;
+            this.bunifuCards2.BottomSahddow = true;
+            this.bunifuCards2.color = System.Drawing.Color.Tomato;
+            this.bunifuCards2.Controls.Add(this.lbl_eltehak_old);
+            this.bunifuCards2.Controls.Add(this.pic_eltehak_old);
+            this.bunifuCards2.LeftSahddow = false;
+            this.bunifuCards2.Location = new System.Drawing.Point(1057, 215);
+            this.bunifuCards2.Name = "bunifuCards2";
+            this.bunifuCards2.Padding = new System.Windows.Forms.Padding(20);
+            this.bunifuCards2.RightSahddow = true;
+            this.bunifuCards2.ShadowDepth = 20;
+            this.bunifuCards2.Size = new System.Drawing.Size(270, 186);
+            this.bunifuCards2.TabIndex = 28;
+            // 
+            // lbl_eltehak_old
+            // 
+            this.lbl_eltehak_old.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lbl_eltehak_old.AutoSize = true;
+            this.lbl_eltehak_old.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lbl_eltehak_old.Font = new System.Drawing.Font("LBC", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_eltehak_old.Location = new System.Drawing.Point(23, 117);
+            this.lbl_eltehak_old.Name = "lbl_eltehak_old";
+            this.lbl_eltehak_old.Size = new System.Drawing.Size(231, 37);
+            this.lbl_eltehak_old.TabIndex = 7;
+            this.lbl_eltehak_old.Text = "طلب التحاق للمقيد";
+            this.lbl_eltehak_old.Click += new System.EventHandler(this.lbl_eltehak_old_Click);
+            // 
+            // pic_eltehak_old
+            // 
+            this.pic_eltehak_old.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pic_eltehak_old.Image = global::School_Mang.Properties.Resources.icons8_search_contacts_100;
+            this.pic_eltehak_old.Location = new System.Drawing.Point(74, 23);
+            this.pic_eltehak_old.Name = "pic_eltehak_old";
+            this.pic_eltehak_old.Size = new System.Drawing.Size(118, 97);
+            this.pic_eltehak_old.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pic_eltehak_old.TabIndex = 1;
+            this.pic_eltehak_old.TabStop = false;
+            this.pic_eltehak_old.Click += new System.EventHandler(this.pic_eltehak_old_Click);
             // 
             // FRM_TALABA
             // 
@@ -425,15 +475,18 @@ namespace School_Mang.PL.MAIN
             this.bunifuCards3.ResumeLayout(false);
             this.bunifuCards3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_elthak)).EndInit();
-            this.bunifuCards8.ResumeLayout(false);
-            this.bunifuCards8.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pic_ehsaa)).EndInit();
             this.bunifuCards4.ResumeLayout(false);
             this.bunifuCards4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_tahwelat)).EndInit();
             this.bunifuCards6.ResumeLayout(false);
             this.bunifuCards6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_bian_dragat)).EndInit();
+            this.bunifuCards8.ResumeLayout(false);
+            this.bunifuCards8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_ehsaa)).EndInit();
+            this.bunifuCards2.ResumeLayout(false);
+            this.bunifuCards2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_eltehak_old)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -462,5 +515,8 @@ namespace School_Mang.PL.MAIN
         private Bunifu.Framework.UI.BunifuCards bunifuCards6;
         private System.Windows.Forms.Label lbl_bian_dragat;
         private System.Windows.Forms.PictureBox pic_bian_dragat;
+        private Bunifu.Framework.UI.BunifuCards bunifuCards2;
+        private System.Windows.Forms.Label lbl_eltehak_old;
+        private System.Windows.Forms.PictureBox pic_eltehak_old;
     }
 }

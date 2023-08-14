@@ -176,6 +176,12 @@
     <Compile Include="PL\MAIN\FRM_AMELIN.Designer.cs">
       <DependentUpon>FRM_AMELIN.cs</DependentUpon>
     </Compile>
+    <Compile Include="PL\MAIN\FRM_BACK_UP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\MAIN\FRM_BACK_UP.Designer.cs">
+      <DependentUpon>FRM_BACK_UP.cs</DependentUpon>
+    </Compile>
     <Compile Include="PL\MAIN\FRM_YEAR.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -320,6 +326,9 @@
     </Compile>
     <EmbeddedResource Include="PL\MAIN\FRM_AMELIN.resx">
       <DependentUpon>FRM_AMELIN.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PL\MAIN\FRM_BACK_UP.resx">
+      <DependentUpon>FRM_BACK_UP.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PL\MAIN\FRM_YEAR.resx">
       <DependentUpon>FRM_YEAR.cs</DependentUpon>

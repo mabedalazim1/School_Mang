@@ -216,7 +216,6 @@ namespace School_Mang.PL.STD
                 return false;
             }
         }
-
         #endregion
 
 
@@ -244,7 +243,6 @@ namespace School_Mang.PL.STD
         {
             Get_Class_Data(Convert.ToInt32(cmb_grade.SelectedValue));
             txt_std_data.Text = "";
-           
         }
 
         private void pic_help_MouseLeave(object sender, EventArgs e)
@@ -501,6 +499,8 @@ namespace School_Mang.PL.STD
             {
                 msg.ErrorMesg("يرجى اختيار طالب .. !");
             }
+            
+
             Waiting.End_WAit();
         }
 
@@ -512,15 +512,13 @@ namespace School_Mang.PL.STD
                 if (Verify_Std_Status()) return;
                 try
                 {
-                    RPT.REPORT_CONNECTION Rpt_Connection = new RPT.REPORT_CONNECTION();
-                    RPT.rpt_Eltehak myReport = new RPT.rpt_Eltehak();
-                   
                     string std_code = dt_std_data.CurrentRow.Cells[0].Value.ToString();
                     string std_name = dt_std_data.CurrentRow.Cells["اسم الطالب"].Value.ToString();
-                    myReport.SetParameterValue("@std_code", std_code);
+                    string std_nat = dt_std_data.CurrentRow.Cells["std_nat"].Value.ToString();
+                    int sana = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Year_Id"].Value) + 2020;
 
-                    Rpt_Connection.OpenReport(myReport, "طلب إلتحاق  " + std_name, "طلب إلتحاق");                         
-                  
+                    RPT.REPORT_CONNECTION RPT = new RPT.REPORT_CONNECTION();
+                    RPT.OpenElthakReport(std_code, std_name, std_nat, 2023);
                 }
                 catch (Exception ex)
                 {

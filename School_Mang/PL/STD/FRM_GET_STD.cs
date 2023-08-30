@@ -19,9 +19,34 @@ namespace School_Mang.PL.STD
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
         DAL.TestConcation testConcation = new DAL.TestConcation();
 
+        // Form Closed
+        private static FRM_GET_STD frm_Get_Student;
+
+        static void frm_Form_Closed(object sender, FormClosedEventArgs e)
+        {
+            frm_Get_Student = null;
+        }
+        public static FRM_GET_STD Get_Student
+        {
+            get
+            {
+                if (frm_Get_Student == null)
+                {
+                    frm_Get_Student = new FRM_GET_STD();
+                    frm_Get_Student.FormClosed += new FormClosedEventHandler(frm_Form_Closed);
+                }
+                return frm_Get_Student;
+            }
+        }
+
         public FRM_GET_STD()
         {
             InitializeComponent();
+
+            if (frm_Get_Student == null)
+            {
+                frm_Get_Student = this;
+            }
 
             cmb_sana.SelectedIndex = 0;
 
@@ -96,7 +121,7 @@ namespace School_Mang.PL.STD
             this.Close();
         }
 
-        private void txt_std_data_OnValueChanged(object sender, EventArgs e)
+        public void txt_std_data_OnValueChanged(object sender, EventArgs e)
         {
             waiting.Wait();
             if (!testConcation.IsServerConnected())
@@ -172,9 +197,9 @@ namespace School_Mang.PL.STD
         {
 
             BL.Globals.Add_From_Get_Std = true;
-
-            this.Dispose();
+            this.Close();
             FRM_ADD_STD frm = new FRM_ADD_STD();
+            this.Dispose();
             frm.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
         }
 
@@ -183,7 +208,7 @@ namespace School_Mang.PL.STD
             btn_close_b_Click(sender, e);
         }
 
-        private void cmb_sana_SelectedIndexChanged(object sender, EventArgs e)
+        public void cmb_sana_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
             {
@@ -258,13 +283,14 @@ namespace School_Mang.PL.STD
 
                 FRM_ADD_STD.getAdd_Std_Frm.txt_mother_tel.Text =
                     dt_std_data.CurrentRow.Cells["هاتف الأم"].Value.ToString();
-
+                  
                 this.Close();
                 this.Dispose();
-
                 FRM_ADD_STD.getAdd_Std_Frm.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
-
-            }catch(Exception ex)
+                 
+               
+            }
+            catch(Exception ex)
             {
                 msg.ErrorMesg(ex.Message);
             }
@@ -360,7 +386,6 @@ namespace School_Mang.PL.STD
         {
             if (Verify_Std_Status()) return;
 
-
             int grade = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Grade_Id"].Value);
             FRM_STD_ELTEHK.Get_Std_Eltehk.txt_std_code.Text = dt_std_data.CurrentRow.Cells["std_code"].Value.ToString();
             FRM_STD_ELTEHK.Get_Std_Eltehk.txt_std_name.Text = dt_std_data.CurrentRow.Cells["اسم الطالب"].Value.ToString();
@@ -383,18 +408,15 @@ namespace School_Mang.PL.STD
                 FRM_TAHEEL_STD.Get_Tahweel_Std.transfer_status = 4;
                 FRM_TAHEEL_STD.Get_Tahweel_Std.lbl_mohwel.Text = "محول من";
                 FRM_TAHEEL_STD.Get_Tahweel_Std.grade = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Grade_Id"].Value);
-
+               
                 FRM_TAHEEL_STD.Get_Tahweel_Std.ShowDialog();
             }
             else
             {
+
                 FRM_STD_ELTEHK.Get_Std_Eltehk.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
             }
 
-            
-            this.Close();
-            this.Dispose();
-           
         }
 
         private void dt_std_data_Click(object sender, EventArgs e)

@@ -493,7 +493,6 @@ namespace School_Mang.PL.STD
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lbl_count;
         private System.Windows.Forms.Label label1;
-        private Bunifu.Framework.UI.BunifuMaterialTextbox txt_std_data;
         private System.Windows.Forms.PictureBox pic_help;
         private System.Windows.Forms.ComboBox cmb_class;
         private System.Windows.Forms.Label label4;
@@ -503,5 +502,6 @@ namespace School_Mang.PL.STD
         public Bunifu.Framework.UI.BunifuThinButton2 btn_del_std;
         public Bunifu.Framework.UI.BunifuThinButton2 btn_new_std;
         private Bunifu.Framework.UI.BunifuThinButton2 btn_talab_elthak;
+        public Bunifu.Framework.UI.BunifuMaterialTextbox txt_std_data;
     }
 }

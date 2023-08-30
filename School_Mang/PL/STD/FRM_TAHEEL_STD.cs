@@ -211,7 +211,6 @@ namespace School_Mang.PL.STD
                 int year = Properties.Settings.Default.year_cod;
                 try
                 {
-                   
                     // If Transfer To School
                     if (BL.Globals.Taheewl_To_School)
                     {
@@ -220,7 +219,6 @@ namespace School_Mang.PL.STD
                         BL.Globals.Taheewl_To_School = false;
                     }
                     // Add Transfers Data
-
                     std.Add_Transfers_Data(
                         Trans_cod().ToString(),
                         txt_std_code.Text,
@@ -231,12 +229,13 @@ namespace School_Mang.PL.STD
                         txt_transfer_reason.Text,
                         rosom, kotob,
                         txt_adrs.Text);
-                    // Update Current Std Data
 
-
-                    FRM_CURRENT_STD.Get_Current_Std.cmb_grade_SelectedIndexChanged(sender, e);
+                   
                     msg.MyMesg("تم حفظ طلب التحويل بنجاح .. !");
 
+                    // Update Current Std Data
+                    FRM_GET_STD.Get_Student.txt_std_data.Text = "";
+                    FRM_GET_STD.Get_Student.txt_std_data_OnValueChanged(sender, e);
                 }
                 catch (Exception ex)
                 {

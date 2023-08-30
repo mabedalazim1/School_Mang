@@ -35,18 +35,18 @@ namespace School_Mang.PL.MAIN
             this.lbl_title = new System.Windows.Forms.Label();
             this.btn_close = new DevExpress.XtraEditors.SimpleButton();
             this.group_box_login = new System.Windows.Forms.GroupBox();
+            this.pic_help = new System.Windows.Forms.PictureBox();
+            this.lbl_select = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btn_login = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btn_cancel = new Bunifu.Framework.UI.BunifuThinButton2();
             this.txt_bath = new System.Windows.Forms.TextBox();
-            this.lbl_select = new System.Windows.Forms.Label();
-            this.pic_help = new System.Windows.Forms.PictureBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.pn_top.SuspendLayout();
             this.group_box_login.SuspendLayout();
-            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_help)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel4
@@ -109,6 +109,31 @@ namespace School_Mang.PL.MAIN
             this.group_box_login.Size = new System.Drawing.Size(476, 171);
             this.group_box_login.TabIndex = 61;
             this.group_box_login.TabStop = false;
+            // 
+            // pic_help
+            // 
+            this.pic_help.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pic_help.Image = global::School_Mang.Properties.Resources.icons8_edit_100;
+            this.pic_help.Location = new System.Drawing.Point(1, 38);
+            this.pic_help.Name = "pic_help";
+            this.pic_help.Size = new System.Drawing.Size(38, 32);
+            this.pic_help.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pic_help.TabIndex = 80;
+            this.pic_help.TabStop = false;
+            this.pic_help.Click += new System.EventHandler(this.pic_help_Click);
+            // 
+            // lbl_select
+            // 
+            this.lbl_select.AutoSize = true;
+            this.lbl_select.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_select.ForeColor = System.Drawing.Color.DimGray;
+            this.lbl_select.Location = new System.Drawing.Point(370, 42);
+            this.lbl_select.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
+            this.lbl_select.Name = "lbl_select";
+            this.lbl_select.Size = new System.Drawing.Size(101, 25);
+            this.lbl_select.TabIndex = 45;
+            this.lbl_select.Text = "مسار الحفظ";
+            this.lbl_select.Click += new System.EventHandler(this.lbl_select_Click);
             // 
             // panel1
             // 
@@ -180,30 +205,7 @@ namespace School_Mang.PL.MAIN
             this.txt_bath.Name = "txt_bath";
             this.txt_bath.Size = new System.Drawing.Size(326, 32);
             this.txt_bath.TabIndex = 1;
-            // 
-            // lbl_select
-            // 
-            this.lbl_select.AutoSize = true;
-            this.lbl_select.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_select.ForeColor = System.Drawing.Color.DimGray;
-            this.lbl_select.Location = new System.Drawing.Point(370, 42);
-            this.lbl_select.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
-            this.lbl_select.Name = "lbl_select";
-            this.lbl_select.Size = new System.Drawing.Size(101, 25);
-            this.lbl_select.TabIndex = 45;
-            this.lbl_select.Text = "مسار الحفظ";
-            // 
-            // pic_help
-            // 
-            this.pic_help.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pic_help.Image = global::School_Mang.Properties.Resources.icons8_edit_100;
-            this.pic_help.Location = new System.Drawing.Point(1, 38);
-            this.pic_help.Name = "pic_help";
-            this.pic_help.Size = new System.Drawing.Size(38, 32);
-            this.pic_help.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pic_help.TabIndex = 80;
-            this.pic_help.TabStop = false;
-            this.pic_help.Click += new System.EventHandler(this.pic_help_Click);
+            this.txt_bath.DoubleClick += new System.EventHandler(this.txt_bath_DoubleClick);
             // 
             // openFileDialog1
             // 
@@ -227,8 +229,8 @@ namespace School_Mang.PL.MAIN
             this.pn_top.PerformLayout();
             this.group_box_login.ResumeLayout(false);
             this.group_box_login.PerformLayout();
-            this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pic_help)).EndInit();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

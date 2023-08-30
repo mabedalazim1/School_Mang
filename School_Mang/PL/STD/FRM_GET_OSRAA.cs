@@ -174,12 +174,14 @@ namespace School_Mang.PL.STD
                 }
                 else if(status == "std_add_new_osra")
                 {
-                    this.Close(); 
+                    this.Close();
+                    FRM_ADD_STD.getAdd_Std_Frm.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
+                     
                 }
                 else
                 {
                     this.Dispose();
-                    FRM_ADD_STD.getAdd_Std_Frm.Visible = false;
+                    //FRM_ADD_STD.getAdd_Std_Frm.Visible = false;
                     FRM_ADD_STD.getAdd_Std_Frm.Show(MAIN.FRM_MAIN.Get_Frm_Main);
                 }
             }

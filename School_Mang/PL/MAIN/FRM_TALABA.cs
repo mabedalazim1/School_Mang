@@ -83,8 +83,7 @@ namespace School_Mang.PL.MAIN
         {
             BL.Globals.Elthak_Std = true;
 
-            STD.FRM_GET_STD frm = new STD.FRM_GET_STD();
-            frm.ShowDialog();
+            STD.FRM_GET_STD.Get_Student.ShowDialog(); 
         }
 
         private void lbl_add_std_Click(object sender, EventArgs e)

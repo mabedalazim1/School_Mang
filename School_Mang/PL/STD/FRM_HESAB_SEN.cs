@@ -18,7 +18,6 @@ namespace School_Mang.PL.STD
         int move_x;
         int move_y;
 
-        PL.MAIN.FRM_MAIN frm_main = new PL.MAIN.FRM_MAIN();
         public FRM_HESAB_SEN()
         {
             InitializeComponent();

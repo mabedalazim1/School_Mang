@@ -196,41 +196,26 @@ namespace School_Mang.DAL
             Close();
             return dt;
         }
-        // Mothed To BackUp DataBase 
-        public void BackUP_DataBase(string file_name)
+
+        // Mothed To Exeucute Query
+        public void ExeucuteQuery(string query)
         {
-            string fileNme = file_name + "\\KPS_DATA_2023-" +
-                              DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss");
+            if (Test_Con.IsConnectedToInternet() == false) return;
+            try
+            {
+                SqlCommand sqlcmd = new SqlCommand();
+                sqlcmd.CommandType = CommandType.Text;
+                sqlcmd.CommandText = query;
+                sqlcmd.Connection = sqlConnection;
 
-            string Query = "Backup Database KPS_DATA_2023 to Disk ='" +
-                           fileNme + ".bak'";
-           
-            SqlCommand sqlcmd = new SqlCommand();
-            sqlcmd.CommandType = CommandType.Text;
-            sqlcmd.CommandText = Query;
-            sqlcmd.Connection = sqlConnection;
-            Open();
-            sqlcmd.ExecuteNonQuery();
-            Close();
-
-        }
-
-        // Mothed To BackUp DataBase 
-        public void Restore_DataBase(string file_name)
-        {
-
-
-            string Query = "ALTER DATABASE KPS_DATA_2023 SET OFFLINE WITH ROLLBACK IMMEDIATE; " +
-                            "Restore Database KPS_DATA_2023 From Disk ='" + file_name + "';"; 
-                           
-
-            SqlCommand sqlcmd = new SqlCommand();
-            sqlcmd.CommandType = CommandType.Text;
-            sqlcmd.CommandText = Query;
-            sqlcmd.Connection = sqlConnection;
-            Open();
-            sqlcmd.ExecuteNonQuery();
-            Close();
+                Open();
+                sqlcmd.ExecuteNonQuery();
+                Close();
+            }
+            catch (Exception e)
+            {
+                msg.ErrorMesg(e.Message);
+            }
 
         }
 

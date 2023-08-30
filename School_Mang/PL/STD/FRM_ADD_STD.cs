@@ -120,7 +120,33 @@ namespace School_Mang.PL.STD
             move_y = e.Y;
         }
 
-        
+        private int Verify_Std_Code(string sdt_code)
+        {
+            Boolean code_status = false;
+            int code = Convert.ToInt32(sdt_code);
+            // Verify Student Code 
+
+            
+            while (!code_status)
+            {
+                DataTable std_Dt = std.Verify_Std_Code(code.ToString());
+                if(std_Dt.Rows.Count != 0)
+                {
+                    DataTable Dt = std.GET_Code_Std_Grade(Convert.ToInt32(cmb_grade.SelectedValue), Convert.ToInt32(cmb_sana.SelectedValue), "no");
+                    code = Convert.ToInt32(Dt.Rows[0]["count_std"]) + 1;
+                    msg.MyMesg("A  "+code.ToString());
+                }
+                else
+                {
+                    code_status = true;
+                  
+                }
+                code += 1;
+                msg.MyMesg("B   " + code.ToString());
+            }
+            return code;
+            
+        }
         private void Save_Std_Data()
         {
             int count_std;
@@ -166,8 +192,7 @@ namespace School_Mang.PL.STD
             DataTable std_Dt = std.Verify_Std_Code(Convert.ToString(sdt_code));
             if (std_Dt.Rows.Count != 0)
             {
-                Dt = std.GET_Code_Std_Grade(Convert.ToInt32(cmb_grade.SelectedValue), Convert.ToInt32(cmb_sana.SelectedValue), "no");
-                sdt_code = Convert.ToInt32(Dt.Rows[0]["count_std"]) + 1;
+                sdt_code = Verify_Std_Code(sdt_code.ToString());
             }
 
             try
@@ -308,7 +333,7 @@ namespace School_Mang.PL.STD
                 this.Dispose();
 
                 FRM_GET_STD frm = new FRM_GET_STD();
-                frm.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
+                frm.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main); 
             }
 
             if (Globals.Open_Form_Get_osra)
@@ -323,13 +348,15 @@ namespace School_Mang.PL.STD
                 Globals.Add_From_Get_Std = false;
                 this.Close();
                 FRM_ADD_STD.frm = null;
-                this.Dispose();
+                                
                 FRM_GET_STD frm = new FRM_GET_STD();
+                this.Dispose();
                 frm.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
-
-            }else
+            }
+            else
             {
                 this.Close();
+                
                 FRM_ADD_STD.frm = null;
                 this.Dispose();
             }
@@ -473,7 +500,7 @@ namespace School_Mang.PL.STD
                         cmb_sana.SelectedIndex = 0;
                     }
 
-                     this.ActiveControl = txt_nat;
+                    this.ActiveControl = txt_nat;
                     this.txt_nat.Focus();
                 }
                 else

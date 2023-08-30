@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using School_Mang.BL;
 using CrystalDecisions.CrystalReports.Engine;
 
 namespace School_Mang.RPT
 {
     class REPORT_CONNECTION
     {
-        BL.Waiting Waiting = new BL.Waiting();
-        BL.MSG msg = new BL.MSG();
+        Waiting Waiting = new Waiting();
+        MSG msg = new MSG();
+        string[] sen = { };
 
         public void OpenReport(ReportDocument rpt, string frm_caption,string frm_text )
                                
@@ -40,5 +41,20 @@ namespace School_Mang.RPT
             Waiting.End_WAit();
 
         }
+        public void OpenElthakReport(string std_code, string std_name, string nat , int sana)
+        {
+            rpt_Eltehak myReport = new rpt_Eltehak();
+            HESAB_SEN hesab_sen = new HESAB_SEN();
+
+            sen = hesab_sen.Nat_HesabSen(nat, sana);
+            string octber_date = sen[0] + " يوم - " + sen[1] + " شهر - " + sen[2] + " سنة";
+           
+
+            myReport.SetParameterValue("@std_code", std_code);
+            myReport.SetParameterValue(1, octber_date);
+
+            OpenReport(myReport, "طلب إلتحاق  " + std_name, "طلب إلتحاق");
+        }
+
     }
 }

@@ -69,9 +69,10 @@ namespace School_Mang.PL.STD.HOME
                 msg.ErrorMesg("لم يتم تسجيل طلاب جدد لهذا العام .. !");
                 return;
             }
-            
-            FRM_GET_STD frm = new FRM_GET_STD();
-            frm.ShowDialog();
+
+            FRM_GET_STD.Get_Student.ShowDialog(); // frm = new FRM_GET_STD();
+                                                                          
+           //frm.ShowDialog();
         }
 
         private void lbl_get_osra_data_Click(object sender, EventArgs e)
@@ -83,8 +84,9 @@ namespace School_Mang.PL.STD.HOME
         private void lbl_add_std_Click(object sender, EventArgs e)
         {
             BL.Globals.Open_Form_Get_osra = false;
-            FRM_ADD_STD frm_add_std = new FRM_ADD_STD();
-            frm_add_std.ShowDialog();
+            FRM_ADD_STD frm = new FRM_ADD_STD();
+            frm.ShowDialog();
+           
         }
 
         private void pic_current_stds_Click(object sender, EventArgs e)

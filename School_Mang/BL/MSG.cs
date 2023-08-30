@@ -30,5 +30,9 @@ namespace School_Mang.BL
             DialogResult dialogResult = MessageBox.Show(str + "  ..!", " برنامج إدارة المدرسة", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             return dialogResult;
         }
+        public void MyExclamationMsg(string str)
+        {
+            MessageBox.Show(str, "برنامج إدارة المدرسة ", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        }
     }
 }

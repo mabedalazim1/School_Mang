@@ -43,12 +43,13 @@ namespace School_Mang.PL.MAIN
         public Boolean show_home = false;
 
         // init Forms
-        PL.MAIN.FRM_HOME frm_home = new FRM_HOME();
-        PL.MAIN.FRM_TALABA frm_talba = new FRM_TALABA();
-        PL.MAIN.FRM_NATEG frm_nateg = new FRM_NATEG();
-        PL.MAIN.FRM_AMELIN frm_amlin = new PL.MAIN.FRM_AMELIN();
-        PL.MAIN.FRM_MALIAT frm_maliat = new FRM_MALIAT();
-        PL.MAIN.FRM_SETTINGS frm_settings = new FRM_SETTINGS();
+        FRM_HOME frm_home = new FRM_HOME();
+        FRM_TALABA frm_talba = FRM_TALABA.Get_Frm_Talaba;
+        FRM_NATEG frm_nateg = new FRM_NATEG();
+        FRM_AMELIN frm_amlin = new FRM_AMELIN();
+        FRM_MALIAT frm_maliat = new FRM_MALIAT();
+        FRM_SETTINGS frm_settings = new FRM_SETTINGS();
+
         // Move Form
         int move;
         int move_x;
@@ -61,8 +62,9 @@ namespace School_Mang.PL.MAIN
             {
                 frm_main = this;
             }
-            // Empty User Data
 
+            // Empty User Data
+           
             Properties.Settings.Default.user_code = 0;
             Properties.Settings.Default.user_name = "";
 
@@ -216,7 +218,6 @@ namespace School_Mang.PL.MAIN
         {
             whiteColor(btn_home);
             changePages("الرئيسية", frm_home.pn_home);
-            lbl_year_main.Text = "العام الدراسى :   " +Properties.Settings.Default.MyYear;
         }
 
 

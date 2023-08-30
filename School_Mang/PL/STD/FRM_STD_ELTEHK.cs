@@ -97,9 +97,11 @@ namespace School_Mang.PL.STD
             BL.Globals.Taheewl_To_School = false;
             this.Close();
             this.Dispose();
-            FRM_GET_STD frm = new FRM_GET_STD();
-            frm.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
-            
+
+            FRM_GET_STD.Get_Student.txt_std_data.Text = "";
+            FRM_GET_STD.Get_Student.cmb_sana_SelectedIndexChanged(sender, e);
+            FRM_GET_STD.Get_Student.txt_std_data.Focus();
+
         }
 
         private void FRM_STD_ELTEHK_Load(object sender, EventArgs e)

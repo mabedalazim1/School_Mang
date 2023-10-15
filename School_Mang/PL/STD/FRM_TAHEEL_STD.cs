@@ -22,6 +22,8 @@ namespace School_Mang.PL.STD
         public byte rosom = 0;
         public byte kotob = 0;
 
+        int permission_id = Properties.Settings.Default.permission_id;
+
         // Form Closed
         private static FRM_TAHEEL_STD frm_Tahweel_Std;
 
@@ -53,13 +55,27 @@ namespace School_Mang.PL.STD
             chk_kotob_no.Checked = true;
             chk_resom_no.Checked = true;
 
+
+            // Set User permission
+            switch (permission_id)
+            {
+                case 3:
+                    btn_new_std.Enabled = false;
+                    break;
+                case 1:
+                case 2:
+                    btn_new_std.Enabled = true;
+                    break;
+            }
+
+
             txt_std_name.Focus();
         }
         #region My Voids
 
         private Boolean Cheack_Data(TextBox txt)
         {
-            if(txt.Text == "")
+            if (txt.Text == "")
             {
                 msg.ErrorMesg("تأكد من استكمال البيانات ! ..");
                 txt.BackColor = Color.MistyRose;
@@ -88,7 +104,7 @@ namespace School_Mang.PL.STD
             {
                 current_year = (Convert.ToInt32(year) + 1).ToString();
             }
-            
+
             DataTable Dt = std.Get_Trans_Code(current_year);
             if (Dt.Rows[0]["Max_Trans_Code"].ToString() == "")
             {
@@ -230,7 +246,7 @@ namespace School_Mang.PL.STD
                         rosom, kotob,
                         txt_adrs.Text);
 
-                   
+
                     msg.MyMesg("تم حفظ طلب التحويل بنجاح .. !");
 
                     // Update Current Std Data
@@ -265,7 +281,7 @@ namespace School_Mang.PL.STD
                         kotob = 1;
                     }
 
-                   
+
                     std.Update_Trans_Data(
                         Convert.ToInt32(txt_trans_code.Text),
                         txt_to_school.Text,
@@ -279,7 +295,7 @@ namespace School_Mang.PL.STD
                     FRM_TAHWELAT.Get_Frm_Tahwelat.cmb_grade_SelectedIndexChanged(sender, e);
                     msg.MyMesg("تم تعديل طلب التحويل بنجاح .. !");
 
-                    
+
                 }
                 catch (Exception ex)
                 {
@@ -327,6 +343,14 @@ namespace School_Mang.PL.STD
             {
                 lbl_title.Text = "طلب تحويل طالب";
                 btn_new_std.ButtonText = "حفظ";
+            }
+        }
+
+        private void FRM_TAHEEL_STD_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                btn_close_b_Click(sender, e);
             }
         }
     }

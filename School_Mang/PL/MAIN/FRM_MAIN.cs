@@ -49,6 +49,8 @@ namespace School_Mang.PL.MAIN
         FRM_AMELIN frm_amlin = new FRM_AMELIN();
         FRM_MALIAT frm_maliat = new FRM_MALIAT();
         FRM_SETTINGS frm_settings = new FRM_SETTINGS();
+        BL.USERS users = new BL.USERS();
+        BL.MSG msg = new BL.MSG();
 
         // Move Form
         int move;
@@ -131,6 +133,20 @@ namespace School_Mang.PL.MAIN
             sel_btn = btn;
             btn.ForeColor = Color.Chocolate;
             btn.BackColor = color;
+        }
+            // Get User Permission
+        private void Get_Permissions(int role)
+        {
+            int user_id = Properties.Settings.Default.user_code;
+            DataTable user_Dt = users.Get_User_Permission(user_id);
+            foreach (DataRow row in user_Dt.Rows)
+            {
+                if (Convert.ToInt32(row["role_id"]) == role)
+                {
+                    Properties.Settings.Default.permission_id = Convert.ToInt32(row["permission_id"]);
+                    Properties.Settings.Default.Save();
+                }
+            }
         }
         private void pn_topbar_MouseDown(object sender, MouseEventArgs e)
         {
@@ -238,18 +254,21 @@ namespace School_Mang.PL.MAIN
         {
             whiteColor(btn_talaba);
             changePages("شئون الطلاب", frm_talba.pn_home);
+            Get_Permissions(2);
         }
 
         private void btn_nataeg_Click(object sender, EventArgs e)
         {
             whiteColor(btn_nataeg);
             changePages("النتائج", frm_nateg.pn_home);
+            Get_Permissions(3);
         }
 
         private void btn_amelin_Click(object sender, EventArgs e)
         {
             whiteColor(btn_amelin);
             changePages("شئون العاملين", frm_amlin.pn_home);
+            Get_Permissions(4);
 
         }
 
@@ -257,7 +276,7 @@ namespace School_Mang.PL.MAIN
         {
             whiteColor(btn_maliat);
             changePages("الشئون المالية", frm_maliat.pn_home);
-
+            Get_Permissions(5);
         }
 
         private void btn_sittings_Click(object sender, EventArgs e)

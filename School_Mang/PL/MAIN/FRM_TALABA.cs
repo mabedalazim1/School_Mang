@@ -44,7 +44,18 @@ namespace School_Mang.PL.MAIN
             {
                 frm_Talaba = this;
             }
-            
+
+            // Set User permission
+            switch (Properties.Settings.Default.permission_id)
+            {
+                case 3:
+                    card_new.Visible = false;
+                    break;
+                case 1:
+                case 2:
+                    card_new.Visible = true;
+                    break;
+            }
         }
 
         // Change Pages
@@ -63,34 +74,33 @@ namespace School_Mang.PL.MAIN
 
         private void pic_age_Click(object sender, EventArgs e)
         {
-            STD.FRM_HESAB_SEN frm_sen = new  STD.FRM_HESAB_SEN();
+            STD.FRM_HESAB_SEN frm_sen = new STD.FRM_HESAB_SEN();
             frm_sen.ShowDialog();
         }
 
         private void lbl_age_Click(object sender, EventArgs e)
         {
-            pic_age_Click(sender,e);
+            pic_age_Click(sender, e);
         }
 
         private void pic_add_std_Click(object sender, EventArgs e)
         {
             BL.Globals.Open_Form_Get_osra = false;
-            STD.FRM_ADD_STD frm_add_std = new STD.FRM_ADD_STD();
-            frm_add_std.ShowDialog();
+            STD.FRM_ADD_STD.getAdd_Std_Frm.ShowDialog();
         }
 
         private void pic_elthak_Click(object sender, EventArgs e)
         {
             BL.Globals.Elthak_Std = true;
 
-            STD.FRM_GET_STD.Get_Student.ShowDialog(); 
+            STD.FRM_GET_STD.Get_Student.ShowDialog();
         }
 
         private void lbl_add_std_Click(object sender, EventArgs e)
         {
             pic_add_std_Click(sender, e);
         }
- 
+
 
         private void lbl_elthak_Click(object sender, EventArgs e)
         {
@@ -115,7 +125,7 @@ namespace School_Mang.PL.MAIN
                 STD.HOME.FRM_STD_DATA.Get_Frm_Std_Data.lbl_new_year.Text = std.Get_years(new_year).Rows[0][1].ToString();
 
                 // Hide New Year Card If There Is no Student On New Year
-                int year_code = Properties.Settings.Default.year_cod+1;
+                int year_code = Properties.Settings.Default.year_cod + 1;
                 DataTable dt_count;
                 dt_count = std.Get_School_year_Data(year_code, 0, 0);
                 if (dt_count.Rows.Count == 0)
@@ -130,7 +140,7 @@ namespace School_Mang.PL.MAIN
                 // Test Permissions
                 int user = Properties.Settings.Default.user_code;
                 DataTable dt_user = users.Get_User_Permission(user);
-                if(dt_user.Rows[0]["role_id"].ToString() == "1" &&
+                if (dt_user.Rows[0]["role_id"].ToString() == "1" &&
                     dt_user.Rows[0]["permission_id"].ToString() == "1")
                 {
                     STD.HOME.FRM_STD_DATA.Get_Frm_Std_Data.card_update_data.Visible = true;

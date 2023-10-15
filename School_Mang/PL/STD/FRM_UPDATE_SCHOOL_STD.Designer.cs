@@ -46,6 +46,10 @@ namespace School_Mang.PL.STD
             this.btn_show_data = new Bunifu.Framework.UI.BunifuThinButton2();
             this.panel4 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lbl_edit_by = new System.Windows.Forms.Label();
+            this.lbl_by = new System.Windows.Forms.Label();
+            this.lbl_edit_date = new System.Windows.Forms.Label();
+            this.lbl_date = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -252,7 +256,7 @@ namespace School_Mang.PL.STD
             this.groupBox3.Controls.Add(this.btn_show_data);
             this.groupBox3.Controls.Add(this.btn_save_data);
             this.groupBox3.Controls.Add(this.btn_close_b);
-            this.groupBox3.Location = new System.Drawing.Point(16, 362);
+            this.groupBox3.Location = new System.Drawing.Point(16, 386);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(517, 73);
             this.groupBox3.TabIndex = 83;
@@ -288,13 +292,17 @@ namespace School_Mang.PL.STD
             // 
             this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
             this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel4.Location = new System.Drawing.Point(0, 440);
+            this.panel4.Location = new System.Drawing.Point(0, 463);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(549, 10);
             this.panel4.TabIndex = 82;
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.lbl_edit_by);
+            this.groupBox1.Controls.Add(this.lbl_by);
+            this.groupBox1.Controls.Add(this.lbl_edit_date);
+            this.groupBox1.Controls.Add(this.lbl_date);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label9);
@@ -321,13 +329,57 @@ namespace School_Mang.PL.STD
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Font = new System.Drawing.Font("LBC", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.ForeColor = System.Drawing.Color.DarkGray;
-            this.groupBox1.Location = new System.Drawing.Point(16, 51);
+            this.groupBox1.Location = new System.Drawing.Point(16, 54);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.groupBox1.Size = new System.Drawing.Size(517, 308);
+            this.groupBox1.Size = new System.Drawing.Size(517, 329);
             this.groupBox1.TabIndex = 94;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "بيانات الطالب";
+            // 
+            // lbl_edit_by
+            // 
+            this.lbl_edit_by.AutoSize = true;
+            this.lbl_edit_by.Font = new System.Drawing.Font("Noto Naskh Arabic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_edit_by.ForeColor = System.Drawing.Color.Blue;
+            this.lbl_edit_by.Location = new System.Drawing.Point(102, 305);
+            this.lbl_edit_by.Name = "lbl_edit_by";
+            this.lbl_edit_by.Size = new System.Drawing.Size(72, 22);
+            this.lbl_edit_by.TabIndex = 97;
+            this.lbl_edit_by.Text = "تاريخ التعديل";
+            // 
+            // lbl_by
+            // 
+            this.lbl_by.AutoSize = true;
+            this.lbl_by.Font = new System.Drawing.Font("Noto Naskh Arabic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_by.ForeColor = System.Drawing.Color.Blue;
+            this.lbl_by.Location = new System.Drawing.Point(177, 305);
+            this.lbl_by.Name = "lbl_by";
+            this.lbl_by.Size = new System.Drawing.Size(70, 22);
+            this.lbl_by.TabIndex = 96;
+            this.lbl_by.Text = "عدل بواسطة";
+            // 
+            // lbl_edit_date
+            // 
+            this.lbl_edit_date.AutoSize = true;
+            this.lbl_edit_date.Font = new System.Drawing.Font("Noto Naskh Arabic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_edit_date.ForeColor = System.Drawing.Color.Blue;
+            this.lbl_edit_date.Location = new System.Drawing.Point(346, 305);
+            this.lbl_edit_date.Name = "lbl_edit_date";
+            this.lbl_edit_date.Size = new System.Drawing.Size(72, 22);
+            this.lbl_edit_date.TabIndex = 95;
+            this.lbl_edit_date.Text = "تاريخ التعديل";
+            // 
+            // lbl_date
+            // 
+            this.lbl_date.AutoSize = true;
+            this.lbl_date.Font = new System.Drawing.Font("Noto Naskh Arabic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_date.ForeColor = System.Drawing.Color.Blue;
+            this.lbl_date.Location = new System.Drawing.Point(422, 305);
+            this.lbl_date.Name = "lbl_date";
+            this.lbl_date.Size = new System.Drawing.Size(72, 22);
+            this.lbl_date.TabIndex = 94;
+            this.lbl_date.Text = "تاريخ التعديل";
             // 
             // label7
             // 
@@ -539,17 +591,21 @@ namespace School_Mang.PL.STD
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(549, 450);
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.ClientSize = new System.Drawing.Size(549, 473);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.pn_top);
+            this.ForeColor = System.Drawing.Color.Blue;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.KeyPreview = true;
             this.Name = "FRM_UPDATE_SCHOOL_STD";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "تعديل بيانات الطالب";
             this.Activated += new System.EventHandler(this.FRM_UPDATE_SCHOOL_STD_Activated);
             this.Load += new System.EventHandler(this.FRM_UPDATE_SCHOOL_STD_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FRM_UPDATE_SCHOOL_STD_KeyDown);
             this.groupBox3.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -594,5 +650,9 @@ namespace School_Mang.PL.STD
         private System.Windows.Forms.Label label8;
         public System.Windows.Forms.TextBox txt_sen;
         public System.Windows.Forms.TextBox txt_tarikh;
+        public System.Windows.Forms.Label lbl_edit_date;
+        public System.Windows.Forms.Label lbl_edit_by;
+        public System.Windows.Forms.Label lbl_date;
+        public System.Windows.Forms.Label lbl_by;
     }
 }

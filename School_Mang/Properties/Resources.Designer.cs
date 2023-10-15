@@ -493,6 +493,16 @@ namespace School_Mang.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap new_view_100 {
+            get {
+                object obj = ResourceManager.GetObject("new-view-100", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap payment {
             get {
                 object obj = ResourceManager.GetObject("payment", resourceCulture);
@@ -616,6 +626,26 @@ namespace School_Mang.Properties {
         internal static System.Drawing.Bitmap test_w40 {
             get {
                 object obj = ResourceManager.GetObject("test-w40", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap transfer_from_100 {
+            get {
+                object obj = ResourceManager.GetObject("transfer-from-100", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap transfer_to_100 {
+            get {
+                object obj = ResourceManager.GetObject("transfer-to-100", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -14,11 +14,12 @@ namespace School_Mang.PL.STD
     {
         BL.Waiting waiting = new BL.Waiting();
         BL.MSG msg = new BL.MSG();
-        
+
 
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
         DAL.TestConcation testConcation = new DAL.TestConcation();
 
+        int permission_id = Properties.Settings.Default.permission_id;
         // Form Closed
         private static FRM_GET_STD frm_Get_Student;
 
@@ -71,6 +72,28 @@ namespace School_Mang.PL.STD
                 lbl_count.Text = dt_std_data.Rows.Count.ToString();
 
             }
+
+            // Set User permission
+            switch (permission_id)
+            {
+                case 3:
+                    btn_new_std.Enabled = false;
+                    btn_del_std.Enabled = false;
+                    btn_edit_std.ButtonText = "عرض البيانات ";
+                    break;
+                case 2:
+                    btn_new_std.Enabled = true;
+                    btn_del_std.Enabled = false;
+                    btn_edit_std.ButtonText = "تعديل البيانات ";
+                    break;
+
+                case 1:
+                    btn_new_std.Enabled = true;
+                    btn_del_std.Enabled = true;
+                    btn_edit_std.ButtonText = "تعديل البيانات ";
+                    break;
+            }
+
             waiting.End_WAit();
         }
 
@@ -129,16 +152,13 @@ namespace School_Mang.PL.STD
                 msg.ErrorMesg("تأكد من الاتصال بالسيرفر.. !");
                 return;
             }
+            DataTable Dt;
+            Dt = std.Search_Std_Data(txt_std_data.Text, cmb_sana.SelectedIndex);
+
+            dt_std_data.DataSource = Dt;
+            lbl_count.Text = Dt.Rows.Count.ToString();
             try
             {
-                DataTable Dt = new DataTable();
-                Dt = std.Search_Std_Data(txt_std_data.Text, cmb_sana.SelectedIndex);
-                if (Dt != null)
-                {
-                    dt_std_data.DataSource = Dt;
-                    lbl_count.Text = Dt.Rows.Count.ToString();
-                }
-
 
             }
             catch (Exception ex)
@@ -195,12 +215,9 @@ namespace School_Mang.PL.STD
 
         private void btn_new_std_Click(object sender, EventArgs e)
         {
-
             BL.Globals.Add_From_Get_Std = true;
-            this.Close();
-            FRM_ADD_STD frm = new FRM_ADD_STD();
-            this.Dispose();
-            frm.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
+            this.Visible = false;
+            FRM_ADD_STD.getAdd_Std_Frm.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
         }
 
         private void btn_close_Click(object sender, EventArgs e)
@@ -221,7 +238,7 @@ namespace School_Mang.PL.STD
                 }
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 msg.ErrorMesg(ex.Message);
             }
@@ -232,11 +249,11 @@ namespace School_Mang.PL.STD
             if (Verify_Std_Status()) return;
 
             BL.Globals.Update_Std_Data = true;
-            
-           
+
+
             try
             {
-                FRM_ADD_STD.getAdd_Std_Frm.txt_std_code.Text=
+                FRM_ADD_STD.getAdd_Std_Frm.txt_std_code.Text =
                   dt_std_data.CurrentRow.Cells["std_code"].Value.ToString();
 
                 FRM_ADD_STD.getAdd_Std_Frm.txt_nat.Text =
@@ -283,14 +300,15 @@ namespace School_Mang.PL.STD
 
                 FRM_ADD_STD.getAdd_Std_Frm.txt_mother_tel.Text =
                     dt_std_data.CurrentRow.Cells["هاتف الأم"].Value.ToString();
-                  
-                this.Close();
-                this.Dispose();
+
+                // this.Close();
+                // this.Dispose();
+                this.Visible = false;
                 FRM_ADD_STD.getAdd_Std_Frm.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
-                 
-               
+
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 msg.ErrorMesg(ex.Message);
             }
@@ -313,7 +331,7 @@ namespace School_Mang.PL.STD
 
                     btn_edit_std.Location = new Point(839, 15);
                     btn_talab_elthak.Location = new Point(432, 15);
-                    
+
 
                 }
                 else
@@ -321,7 +339,7 @@ namespace School_Mang.PL.STD
                     btn_new_std.Visible = true;
                     btn_del_std.Visible = true;
 
-                    btn_new_std.Location= new Point(839, 15);
+                    btn_new_std.Location = new Point(839, 15);
                     btn_edit_std.Location = new Point(631, 15);
                     btn_talab_elthak.Location = new Point(423, 15);
 
@@ -329,11 +347,11 @@ namespace School_Mang.PL.STD
 
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 msg.ErrorMesg(ex.Message);
             }
-            
+
         }
 
         private void dt_std_data_DoubleClick(object sender, EventArgs e)
@@ -364,12 +382,12 @@ namespace School_Mang.PL.STD
                 {
                     std.Delele_Std_Data(dt_std_data.CurrentRow.Cells["std_code"].Value.ToString());
                     this.dt_std_data.DataSource = std.Get_All_Std_Data(Convert.ToInt32(cmb_sana.SelectedValue));
-                   
+
                     if (Convert.ToInt32(Dt.Rows[0]["Id"].ToString()) == 1)
                     {
-                        std.Delele_Osra_Data(osrs_id); 
+                        std.Delele_Osra_Data(osrs_id);
                     }
-                   
+
                     msg.ErrorMesg("تم حذف البيانات الخاصة بالطالب /   " + name);
 
                 }
@@ -392,8 +410,11 @@ namespace School_Mang.PL.STD
             FRM_STD_ELTEHK.Get_Std_Eltehk.cmb_grade.SelectedValue = dt_std_data.CurrentRow.Cells["Grade_Id"].Value;
             FRM_STD_ELTEHK.Get_Std_Eltehk.cmb_hala.SelectedValue = dt_std_data.CurrentRow.Cells["Std_Status_Id"].Value;
             FRM_STD_ELTEHK.Get_Std_Eltehk.cmb_grade.SelectedValue = grade;
+            FRM_STD_ELTEHK.Get_Std_Eltehk.txt_std_nat.Text = dt_std_data.CurrentRow.Cells["الرقم القومى"].Value.ToString(); ;
+            FRM_STD_ELTEHK.Get_Std_Eltehk.txt_sana.Text = dt_std_data.CurrentRow.Cells["Year_Id"].Value.ToString(); ;
 
-            if ((10 > grade  && grade >1))
+
+            if ((10 > grade && grade > 1))
             {
 
                 BL.Globals.Taheewl_To_School = true;
@@ -408,7 +429,7 @@ namespace School_Mang.PL.STD
                 FRM_TAHEEL_STD.Get_Tahweel_Std.transfer_status = 4;
                 FRM_TAHEEL_STD.Get_Tahweel_Std.lbl_mohwel.Text = "محول من";
                 FRM_TAHEEL_STD.Get_Tahweel_Std.grade = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Grade_Id"].Value);
-               
+
                 FRM_TAHEEL_STD.Get_Tahweel_Std.ShowDialog();
             }
             else

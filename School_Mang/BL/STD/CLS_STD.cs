@@ -46,11 +46,15 @@ namespace School_Mang.BL.STD
             return Dt;
         }
         
-         public DataTable Get_grades()
+         public DataTable Get_grades(string frist_classes = "no")
          {
             DAL.DataAcceseLayer DAL = new DAL.DataAcceseLayer();
             DataTable Dt;
-            Dt = DAL.Selectdata("SP_GETGRADES", null);
+
+            SqlParameter[] param = new SqlParameter[1];
+            param[0] = new SqlParameter("@frist_classes", SqlDbType.VarChar,3);
+            param[0].Value = frist_classes;
+            Dt = DAL.Selectdata("SP_GETGRADES", param);
             DAL.Close();
             return Dt;
          }
@@ -797,19 +801,19 @@ namespace School_Mang.BL.STD
         {
             DAL.DataAcceseLayer DAL = new DAL.DataAcceseLayer();
             DataTable Dt;
-
+            
             SqlParameter[] param = new SqlParameter[3];
 
             if(Status_Id == 3)
             {
                 param[0] = new SqlParameter("@Year_Id", SqlDbType.Int);
-                param[0].Value = Properties.Settings.Default.year_cod;
+                param[0].Value = Convert.ToInt32(Globals.My_Year -1);
                 
             }
             else
             {
                 param[0] = new SqlParameter("@Year_Id", SqlDbType.Int);
-                param[0].Value = Properties.Settings.Default.year_cod +1;
+                param[0].Value = Convert.ToInt32(Globals.My_Year);
             }
 
             param[1] = new SqlParameter("@Grade_Id", SqlDbType.Int);
@@ -834,12 +838,12 @@ namespace School_Mang.BL.STD
             if (Status_Id == 3)
             {
                 param[0] = new SqlParameter("@Year_Id", SqlDbType.Int);
-                param[0].Value = Properties.Settings.Default.year_cod;
+                param[0].Value = Convert.ToInt32(Globals.My_Year)-1;
             }
             else
             {
                 param[0] = new SqlParameter("@Year_Id", SqlDbType.Int);
-                param[0].Value = Properties.Settings.Default.year_cod + 1;
+                param[0].Value = Convert.ToInt32(Globals.My_Year) ;
             }
 
             param[1] = new SqlParameter("@Grade_Id", SqlDbType.Int);
@@ -1024,6 +1028,53 @@ namespace School_Mang.BL.STD
             DAL.Open();
             DAL.ExeucuteCommand("SP_Update_New_School_Std", param);
             DAL.Close();
+        }
+        public DataTable Get_Year_Desc(int year)
+        {
+
+            DAL.DataAcceseLayer DAL = new DAL.DataAcceseLayer();
+            DataTable Dt;
+            SqlParameter[] param = new SqlParameter[1];
+
+            param[0] = new SqlParameter("@year", SqlDbType.Int);
+            param[0].Value = year;
+
+            Dt = DAL.Selectdata("SP_Get_Year_Desc", param);
+            DAL.Close();
+            return Dt;
+        }
+
+        public DataTable Get_Grade_Desc(int grade_id)
+        {
+
+            DAL.DataAcceseLayer DAL = new DAL.DataAcceseLayer();
+            DataTable Dt;
+            SqlParameter[] param = new SqlParameter[1];
+
+            param[0] = new SqlParameter("@grade_id", SqlDbType.Int);
+            param[0].Value = grade_id;
+
+            Dt = DAL.Selectdata("SP_Get_Grade_Desc", param);
+            DAL.Close();
+            return Dt;
+        }
+
+        public DataTable Get_Kaema_Data(int year_id, int grade_id)
+        {
+
+            DAL.DataAcceseLayer DAL = new DAL.DataAcceseLayer();
+            DataTable Dt;
+            SqlParameter[] param = new SqlParameter[2];
+
+            param[0] = new SqlParameter("@year_id", SqlDbType.Int);
+            param[0].Value = year_id;
+
+            param[1] = new SqlParameter("@grade_id", SqlDbType.Int);
+            param[1].Value = grade_id;
+
+            Dt = DAL.Selectdata("SP_Get_Kaema_Data", param);
+            DAL.Close();
+            return Dt;
         }
     }
 }

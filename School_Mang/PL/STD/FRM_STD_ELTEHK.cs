@@ -14,6 +14,9 @@ namespace School_Mang.PL.STD
     {
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
         BL.MSG msg = new BL.MSG();
+        RPT.REPORT_CONNECTION RPT = new RPT.REPORT_CONNECTION();
+
+        int permission_id = Properties.Settings.Default.permission_id;
 
         // Form Closed
         private static FRM_STD_ELTEHK frm_Std_Eltehk;
@@ -61,6 +64,18 @@ namespace School_Mang.PL.STD
             cmb_class.DisplayMember = "Class_Desc";
             cmb_class.ValueMember = "Class_Id";
 
+            // Set User permission
+            switch (permission_id)
+            {
+                case 3:
+                    btn_new_std.Enabled = false;
+                    break;
+                case 1:
+                case 2:
+                    btn_new_std.Enabled = true;
+                    break;
+            }
+
         }
 
         int move;
@@ -106,7 +121,7 @@ namespace School_Mang.PL.STD
 
         private void FRM_STD_ELTEHK_Load(object sender, EventArgs e)
         {
-            cmb_sana.SelectedValue = (Properties.Settings.Default.year_cod)+1;
+            cmb_sana.SelectedValue = (Properties.Settings.Default.year_cod) + 1;
         }
 
         private void cmb_grade_SelectedIndexChanged(object sender, EventArgs e)
@@ -117,13 +132,13 @@ namespace School_Mang.PL.STD
 
         public void btn_new_std_Click(object sender, EventArgs e)
         {
-           
+
             try
             {
                 //IF Tahweel To School Get New Year
                 if (BL.Globals.Taheewl_To_School)
                 {
-                   cmb_sana.SelectedValue = (Properties.Settings.Default.year_cod) + 1;
+                    cmb_sana.SelectedValue = (Properties.Settings.Default.year_cod) + 1;
 
                 }
                 // Add Std
@@ -135,15 +150,45 @@ namespace School_Mang.PL.STD
                     Convert.ToInt32(cmb_class.SelectedValue)
                     );
 
+                if (!BL.Globals.Taheewl_To_School)
+                {
                     msg.MyMesg("تم حفظ البيانات");
-                   
+                }
+
                 btn_new_std.Enabled = false;
                 BL.Globals.Taheewl_To_School = false;
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 msg.ErrorMesg(ex.Message);
+            }
+        }
+
+        private void btn_print_elthak_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string std_code = txt_std_code.Text;
+                string std_name = txt_std_name.Text;
+                string std_nat = txt_std_nat.Text;
+                int sana = Convert.ToInt32(txt_sana.Text) + 2020;
+
+                this.Close();
+                RPT.OpenElthakReport(std_code, std_name, std_nat, sana);
+
+            }
+            catch (Exception ex)
+            {
+                msg.ErrorMesg(ex.Message);
+            }
+        }
+
+        private void FRM_STD_ELTEHK_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                btn_close_b_Click(sender, e);
             }
         }
     }

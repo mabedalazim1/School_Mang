@@ -17,6 +17,7 @@ namespace School_Mang.PL.STD
         BL.MSG msg = new BL.MSG();
         BL.Waiting Waiting = new BL.Waiting();
         CLS_STD_FUNCATIONS Std_Func = new CLS_STD_FUNCATIONS();
+        CLS_STD_FUNCATIONS function = new CLS_STD_FUNCATIONS();
 
         BL.HESAB_SEN Hesab_sen = new BL.HESAB_SEN();
         string[] sen = { };
@@ -24,6 +25,8 @@ namespace School_Mang.PL.STD
         public int grade = 1;
         public int row_index = 0;
         int status;
+
+        int permission_id = Properties.Settings.Default.permission_id;
 
         // Form Closed
         private static FRM_UPDATE_SCHOOL_STD frm_Update_School_Std;
@@ -80,6 +83,16 @@ namespace School_Mang.PL.STD
             cmb_class.DisplayMember = "Class_Desc";
             cmb_class.ValueMember = "Class_Id";
 
+            // Set User permission
+            if (permission_id == 3)
+            {
+                btn_save_data.Enabled = false;
+            }
+            else
+            {
+                btn_save_data.Enabled = true;
+            }
+
         }
 
         private void cmb_grade_SelectedIndexChanged(object sender, EventArgs e)
@@ -92,15 +105,19 @@ namespace School_Mang.PL.STD
 
             try
             {
-                if (Convert.ToInt32(cmb_hala.SelectedValue) == 3 ||
-                    Convert.ToInt32(cmb_hala.SelectedValue) == 4)
+                // If Hala = 3 Or 4
+                if(cmb_hala.Enabled == true)
                 {
-                    msg.ErrorMesg("لتحويل طالب .. يرجى تسجيل طلب تحويل أولا ..!");
-                    cmb_hala.Focus();
-                    cmb_hala.SelectedValue = status;
-                    return;
+                    if (Convert.ToInt32(cmb_hala.SelectedValue) == 3 ||
+                   Convert.ToInt32(cmb_hala.SelectedValue) == 4)
+                    {
+                        msg.ErrorMesg("لتحويل طالب .. يرجى تسجيل طلب تحويل أولا ..!");
+                        cmb_hala.Focus();
+                        cmb_hala.SelectedValue = status;
+                        return;
+                    }
                 }
-
+               
                 // Sahab Malaf
 
                 if(status == 6)
@@ -258,6 +275,8 @@ namespace School_Mang.PL.STD
                 FRM_OSRAA_DATA.Get_Osra_data.txt_memo.Text = Dt.Rows[0]["comments"].ToString();
                 FRM_OSRAA_DATA.Get_Osra_data.txt_osra_code.Text = Dt.Rows[0]["Osraa_Id"].ToString();
 
+                function.Get_Update_Name_For_OSRAA_DATA(Dt);
+
                 //this.Dispose();
 
                 FRM_OSRAA_DATA.Get_Osra_data.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
@@ -328,12 +347,29 @@ namespace School_Mang.PL.STD
 
         private void FRM_UPDATE_SCHOOL_STD_Load(object sender, EventArgs e)
         {
+          
             txt_nat_Leave(sender, e);
+            if (Convert.ToInt32(cmb_hala.SelectedValue) == 3 || Convert.ToInt32(cmb_hala.SelectedValue) == 4)
+            {
+                cmb_hala.Enabled = false;
+            }
+            else
+            {
+                cmb_hala.Enabled = true;
+            }
         }
 
         private void FRM_UPDATE_SCHOOL_STD_Activated(object sender, EventArgs e)
         {
             status = Convert.ToInt32(cmb_hala.SelectedValue);
+        }
+
+        private void FRM_UPDATE_SCHOOL_STD_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                btn_close_b_Click(sender, e);
+            }
         }
     }
 }

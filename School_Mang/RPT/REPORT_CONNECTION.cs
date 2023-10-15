@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using School_Mang.BL;
 using CrystalDecisions.CrystalReports.Engine;
+using System.Windows.Forms;
 
 namespace School_Mang.RPT
 {
@@ -14,7 +15,7 @@ namespace School_Mang.RPT
         MSG msg = new MSG();
         string[] sen = { };
 
-        public void OpenReport(ReportDocument rpt, string frm_caption,string frm_text )
+        private void OpenReport(ReportDocument rpt, string frm_caption,string frm_text )
                                
         {
             Waiting.Wait();
@@ -41,19 +42,210 @@ namespace School_Mang.RPT
             Waiting.End_WAit();
 
         }
-        public void OpenElthakReport(string std_code, string std_name, string nat , int sana)
+        public void OpenElthakReport(string std_code, 
+                                     string std_name, 
+                                     string nat , 
+                                     int sana, 
+                                     string new_year = "", 
+                                     string new_grade= "")
         {
-            rpt_Eltehak myReport = new rpt_Eltehak();
-            HESAB_SEN hesab_sen = new HESAB_SEN();
+            try
+            {
+                ReportDocument myReport = new ReportDocument();
+                myReport.Load(Application.StartupPath + @"/MyReports/rpt_Eltehak.rpt");
+                //rpt_Eltehak myReport = new rpt_Eltehak();
+                HESAB_SEN hesab_sen = new HESAB_SEN();
 
-            sen = hesab_sen.Nat_HesabSen(nat, sana);
-            string octber_date = sen[0] + " يوم - " + sen[1] + " شهر - " + sen[2] + " سنة";
-           
+                sen = hesab_sen.Nat_HesabSen(nat, sana);
+                string octber_date = sen[0] + " يوم - " + sen[1] + " شهر - " + sen[2] + " سنة";
 
-            myReport.SetParameterValue("@std_code", std_code);
-            myReport.SetParameterValue(1, octber_date);
 
-            OpenReport(myReport, "طلب إلتحاق  " + std_name, "طلب إلتحاق");
+                myReport.SetParameterValue("@std_code", std_code);
+                myReport.SetParameterValue("octber_date", octber_date);
+                myReport.SetParameterValue("new_year", new_year);
+                myReport.SetParameterValue("new_grade", new_grade);
+
+                OpenReport(myReport, "طلب إلتحاق  " + std_name, "طلب إلتحاق");
+            }
+            catch(Exception e)
+            {
+                msg.ErrorMesg(e.Message);
+            }
+            
+        }
+
+        public void OpenTahwel_From_Report(string trans_code,
+                                           string std_name,
+                                           string year_desc, 
+                                           string grade_desc)
+        {
+            try
+            {
+                ReportDocument myReport = new ReportDocument();
+                myReport.Load(Application.StartupPath + @"/MyReports/rpt_Tahewl_From.rpt");
+                //rpt_Tahewl_From myReport = new rpt_Tahewl_From();
+             
+                myReport.SetParameterValue("@Transfer_code", trans_code);
+                myReport.SetParameterValue("new_year_desc", year_desc);
+                myReport.SetParameterValue("new_grade", grade_desc);
+               
+                OpenReport(myReport, "طلب تحويل  " + std_name, "طلب تحويل من المدرسة");
+            }
+            catch (Exception e)
+            {
+                msg.ErrorMesg(e.Message);
+            }
+
+        }
+
+        public void OpenTahwel_To_Report(string trans_code, 
+                                         string std_name, 
+                                         string year_desc)
+        {
+            try
+            {
+                ReportDocument myReport = new ReportDocument();
+                myReport.Load(Application.StartupPath + @"/MyReports/rpt_Tahewl_To.rpt");
+                //rpt_Tahewl_To myReport = new rpt_Tahewl_To();
+
+                myReport.SetParameterValue("@Transfer_code", trans_code);
+                myReport.SetParameterValue("new_year_desc", year_desc);
+
+                OpenReport(myReport, "طلب تحويل  " + std_name, "طلب تحويل إلى المدرسة");
+            }
+            catch (Exception e)
+            {
+                msg.ErrorMesg(e.Message);
+            }
+
+        }
+
+        public void Open_Kaema_Report(int year,int grade, string grade_desc)                         
+        {
+
+            try
+            {
+                ReportDocument myReport = new ReportDocument();
+                myReport.Load(Application.StartupPath + @"/MyReports/rpt_Kaema.rpt");
+                //rpt_Kaema myReport = new rpt_Kaema();
+               
+                myReport.SetParameterValue("@year_id", year);
+                myReport.SetParameterValue("@grade_id", grade);
+
+                OpenReport(myReport, "قوائم فصول  " + grade_desc, "قوائم الفصول");
+            }
+            catch (Exception e)
+            {
+                msg.ErrorMesg(e.Message);
+            }
+
+        }
+
+        public void OpenTadargSen(int year_id,
+                                  int grade_id =0)
+        {
+            try
+            {
+                ReportDocument myReport = new ReportDocument();
+                myReport.Load(Application.StartupPath + @"/MyReports/rpt_Tadarg_Sen.rpt");
+                //rpt_Tadarg_Sen myReport = new rpt_Tadarg_Sen();
+                HESAB_SEN hesab_sen = new HESAB_SEN();
+
+                string octber =  Convert.ToString(year_id + 2020) + "-10-01";
+                DateTime October_Sana = Convert.ToDateTime(octber);
+
+                myReport.SetParameterValue("@year_id", year_id);
+                myReport.SetParameterValue("@grade_id", grade_id);
+                myReport.SetParameterValue("@October_Sana", October_Sana);
+                
+
+                OpenReport(myReport, "تدرج السن" , "تدرج السن");
+            }
+            catch (Exception e)
+            {
+                msg.ErrorMesg(e.Message);
+            }
+
+        }
+
+        public void OpenSegel(int year_id,
+                                  int grade_id = 0)
+        {
+            try
+            {
+                ReportDocument myReport = new ReportDocument();
+                myReport.Load(Application.StartupPath + @"/MyReports/rpt_Segel_Data.rpt");
+                HESAB_SEN hesab_sen = new HESAB_SEN();
+
+                string octber = Convert.ToString(year_id + 2020) + "-10-01";
+                DateTime October_Sana = Convert.ToDateTime(octber);
+
+                myReport.SetParameterValue("@year_id", year_id);
+                myReport.SetParameterValue("@grade_id", grade_id);
+                myReport.SetParameterValue("@October_Sana", October_Sana);
+
+                myReport.SetParameterValue("@year_id", year_id, "rpt_Segel_Transform_From.rpt");
+                myReport.SetParameterValue("@grade_id", grade_id, "rpt_Segel_Transform_From.rpt");
+                myReport.SetParameterValue("@October_Sana", October_Sana, "rpt_Segel_Transform_From.rpt");
+
+
+                OpenReport(myReport, "سجل الطلاب", "سجل الطلاب");
+            }
+            catch (Exception e)
+            {
+                msg.ErrorMesg(e.Message);
+            }
+
+        }
+
+        public void OpenMostgdin_41(int year_id,
+                                 int grade_id = 0)
+        {
+            try
+            {
+                ReportDocument myReport = new ReportDocument();
+                myReport.Load(Application.StartupPath + @"/MyReports/rpt_Mostgdin_41.rpt");
+                //rpt_Tadarg_Sen myReport = new rpt_Tadarg_Sen();
+                HESAB_SEN hesab_sen = new HESAB_SEN();
+
+                string octber = Convert.ToString(year_id + 2020) + "-10-01";
+                DateTime October_Sana = Convert.ToDateTime(octber);
+
+                myReport.SetParameterValue("@year_id", year_id);
+                myReport.SetParameterValue("@grade_id", grade_id);
+                myReport.SetParameterValue("@October_Sana", October_Sana);
+
+
+                OpenReport(myReport, "كشف 41 مستجدين", "كشف 41 مستجدين");
+            }
+            catch (Exception e)
+            {
+                msg.ErrorMesg(e.Message);
+            }
+
+
+        } public void OpenTahewl_Data(int year_id,
+                                 int Status_Id,
+                                 int grade_id = 0)
+        {
+            try
+            {
+                ReportDocument myReport = new ReportDocument();
+                myReport.Load(Application.StartupPath + @"/MyReports/rpt_Tahewl_Data.rpt");
+                
+
+                myReport.SetParameterValue("@year_id", year_id);
+                myReport.SetParameterValue("@grade_id", grade_id);
+                myReport.SetParameterValue("@Status_Id", Status_Id);
+
+
+                OpenReport(myReport, "بيان الطلاب المحولين", "بيان الطلاب المحولين");
+            }
+            catch (Exception e)
+            {
+                msg.ErrorMesg(e.Message);
+            }
+
         }
 
     }

@@ -742,11 +742,13 @@ namespace School_Mang.PL.STD
             this.Font = new System.Drawing.Font("LBC", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "FRM_ADD_STD";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "بيانات الطالب";
             this.Load += new System.EventHandler(this.FRM_ADD_STD_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FRM_ADD_STD_KeyDown);
             this.pn_top.ResumeLayout(false);
             this.pn_top.PerformLayout();
             this.panel3.ResumeLayout(false);

@@ -63,6 +63,19 @@ namespace School_Mang.BL
             }
         }
 
+        private static bool _Open_From_Get_Std;
+        public static bool Open_From_Get_Std
+        {
+            get
+            {
+                return _Open_From_Get_Std;
+            }
+            set
+            {
+                _Open_From_Get_Std = value;
+            }
+        }
+
         private static bool _Update_Std_Data;
         public static bool Update_Std_Data
         {
@@ -177,6 +190,97 @@ namespace School_Mang.BL
             set
             {
                 _Restore_DataBase = value;
+            }
+        }
+
+        private static bool _Open_Kaema;
+        public static bool Open_Kaema
+        {
+            get
+            {
+                return _Open_Kaema;
+            }
+            set
+            {
+                _Open_Kaema = value;
+            }
+        }
+
+        private static bool _Open_Tadarg_Sen;
+        public static bool Open_Tadarg_Sen
+        {
+            get
+            {
+                return _Open_Tadarg_Sen;
+            }
+            set
+            {
+                _Open_Tadarg_Sen = value;
+            }
+        }
+
+        private static bool _Open_Segel;
+        public static bool Open_Segel
+        {
+            get
+            {
+                return _Open_Segel;
+            }
+            set
+            {
+                _Open_Segel = value;
+            }
+        }
+
+        private static bool _Open_41_New;
+        public static bool Open_41_New
+        {
+            get
+            {
+                return _Open_41_New;
+            }
+            set
+            {
+                _Open_41_New = value;
+            }
+        }
+
+        private static bool _Open_Transfer_From;
+        public static bool Open_Transfer_From
+        {
+            get
+            {
+                return _Open_Transfer_From;
+            }
+            set
+            {
+                _Open_Transfer_From = value;
+            }
+        }
+
+        private static bool _Open_Transfer_To;
+        public static bool Open_Transfer_To
+        {
+            get
+            {
+                return _Open_Transfer_To;
+            }
+            set
+            {
+                _Open_Transfer_To = value;
+            }
+        }
+
+        private static Byte _My_Year;
+        public static Byte My_Year
+        {
+            get
+            {
+                return _My_Year;
+            }
+            set
+            {
+                _My_Year = value;
             }
         }
 

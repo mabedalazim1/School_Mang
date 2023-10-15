@@ -142,5 +142,17 @@ namespace School_Mang.Properties {
                 this["Year_Desc"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int permission_id {
+            get {
+                return ((int)(this["permission_id"]));
+            }
+            set {
+                this["permission_id"] = value;
+            }
+        }
     }
 }

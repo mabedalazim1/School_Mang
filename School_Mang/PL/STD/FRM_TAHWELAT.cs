@@ -17,6 +17,10 @@ namespace School_Mang.PL.STD
         BL.Waiting Waiting = new BL.Waiting();
         MAIN.CLS_FUNCATIONS Func = new MAIN.CLS_FUNCATIONS();
 
+        private byte test_year = 0;
+
+        int permission_id = Properties.Settings.Default.permission_id;
+
         // Form Closed
         private static FRM_TAHWELAT frm_Tahwelat;
         static void frm_Form_Closed(object sender, FormClosedEventArgs e)
@@ -44,6 +48,9 @@ namespace School_Mang.PL.STD
                 frm_Tahwelat = this;
             }
 
+            // Set year val
+            BL.Globals.My_Year = Convert.ToByte(Properties.Settings.Default.year_cod);
+            lbl_year_b.Text = Properties.Settings.Default.MyYear.ToString();
             Waiting.Wait();
             // Add Grade Data
             DataTable grade_dt = std.Get_grades();
@@ -57,8 +64,7 @@ namespace School_Mang.PL.STD
             grade_dt.Rows.InsertAt(dr, 0);
 
             // Get Trans  Data
-           
-            dt_std_data.DataSource =  std.GET_Trans_Data(0,3);
+            dt_std_data.DataSource = std.GET_Trans_Data(0, 3);
             dt_std_data.Columns["std_code"].Visible = false;
             dt_std_data.Columns["Year_Id"].Visible = false;
             dt_std_data.Columns["Grade_Id"].Visible = false;
@@ -71,6 +77,21 @@ namespace School_Mang.PL.STD
             dt_std_data.Columns["Guardian_name"].Visible = false;
             dt_std_data.Columns["Transfer_code"].Visible = false;
             dt_std_data.Columns["Class_Id"].Visible = false;
+
+            // Set User permission
+            switch (permission_id)
+            {
+                case 3:
+                    btn_del_std.Enabled = false;
+                    break;
+                case 2:
+                    btn_del_std.Enabled = false;
+                    break;
+                case 1:
+                    btn_del_std.Enabled = true;
+                    break;
+            }
+
             Waiting.End_WAit();
         }
 
@@ -89,7 +110,17 @@ namespace School_Mang.PL.STD
                 return false;
             }
         }
+        private void Test_Data()
+        {
+            DataTable Dt_Trans_Current_Year = std.GET_Trans_Data(0, 3);
+            DataTable Dt_Trans_Next_Year = std.GET_Trans_Data(0, 4);
 
+            if (Dt_Trans_Current_Year.Rows.Count == 0 && Dt_Trans_Next_Year.Rows.Count == 00)
+            {
+                msg.ErrorMesg("لا يوجد طلبات تحويل مسجلة هذا العام .. !");
+                return;
+            }
+        }
         #endregion
 
 
@@ -125,6 +156,8 @@ namespace School_Mang.PL.STD
 
             lbl_count.Text = dt_std_data.Rows.Count.ToString();
 
+            Test_Data();
+
         }
 
         private void btn_close_Click(object sender, EventArgs e)
@@ -140,8 +173,12 @@ namespace School_Mang.PL.STD
         public void cmb_grade_SelectedIndexChanged(object sender, EventArgs e)
         {
             dt_std_data.DataSource = std.GET_Trans_Data(
-                Convert.ToInt32(cmb_grade.SelectedValue),
-                Convert.ToInt32(cmb_status.SelectedIndex)+3);
+            Convert.ToInt32(cmb_grade.SelectedValue),
+            Convert.ToInt32(cmb_status.SelectedIndex) + 3);
+
+            lbl_count.Text = dt_std_data.Rows.Count.ToString();
+            txt_std_data.Text = "";
+
         }
 
         private void cmb_status_SelectedIndexChanged(object sender, EventArgs e)
@@ -196,9 +233,9 @@ namespace School_Mang.PL.STD
             {
                 DataTable dt;
                 dt = std.Search_Trans_Data(
-                    
+
                     Convert.ToInt32(cmb_grade.SelectedValue),
-                    Convert.ToInt32(cmb_status.SelectedIndex +3),
+                    Convert.ToInt32(cmb_status.SelectedIndex + 3),
                     txt_std_data.Text);
 
                 dt_std_data.DataSource = dt;
@@ -220,15 +257,15 @@ namespace School_Mang.PL.STD
             byte resom = Convert.ToByte(dt_std_data.CurrentRow.Cells["Resom"].Value);
             byte kotob = Convert.ToByte(dt_std_data.CurrentRow.Cells["Kotob"].Value);
 
-           
+
             FRM_TAHEEL_STD.Get_Tahweel_Std.txt_trans_code.Text = dt_std_data.CurrentRow.Cells["Transfer_code"].Value.ToString();
             FRM_TAHEEL_STD.Get_Tahweel_Std.txt_std_name.Text = dt_std_data.CurrentRow.Cells["اسم الطالب"].Value.ToString();
             FRM_TAHEEL_STD.Get_Tahweel_Std.txt_guardian_name.Text = dt_std_data.CurrentRow.Cells["Guardian_name"].Value.ToString();
             FRM_TAHEEL_STD.Get_Tahweel_Std.txt_adrs.Text = dt_std_data.CurrentRow.Cells["adrs"].Value.ToString();
             FRM_TAHEEL_STD.Get_Tahweel_Std.txt_transfer_reason.Text = dt_std_data.CurrentRow.Cells["Transfer_reason"].Value.ToString();
             FRM_TAHEEL_STD.Get_Tahweel_Std.txt_to_school.Text = dt_std_data.CurrentRow.Cells["Transfer_School"].Value.ToString();
-            
-            if(resom == 0)
+
+            if (resom == 0)
             {
                 FRM_TAHEEL_STD.Get_Tahweel_Std.chk_resom_no.Checked = true;
                 FRM_TAHEEL_STD.Get_Tahweel_Std.chk_resom_yes.Checked = false;
@@ -251,7 +288,7 @@ namespace School_Mang.PL.STD
             }
 
             FRM_TAHEEL_STD.Get_Tahweel_Std.transfer_status = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Std_Status_Id"].Value);
-            if(Convert.ToInt32(dt_std_data.CurrentRow.Cells["Std_Status_Id"].Value) == 3)
+            if (Convert.ToInt32(dt_std_data.CurrentRow.Cells["Std_Status_Id"].Value) == 3)
             {
                 FRM_TAHEEL_STD.Get_Tahweel_Std.lbl_mohwel.Text = "محول إلى";
             }
@@ -275,7 +312,7 @@ namespace School_Mang.PL.STD
             int grade = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Grade_Id"].Value);
             int year = Properties.Settings.Default.year_cod;
 
-            if(grade > 6)
+            if (grade > 6)
             {
                 class_id += 2;
             }
@@ -285,16 +322,16 @@ namespace School_Mang.PL.STD
             }
 
             int new_year = Convert.ToInt32(std.Get_Count_New_Year(year + 1).Rows[0][0]);
-            int std_found=Convert.ToInt32(std.Get_Count_Trans_Std(new_year, std_code).Rows[0][0]);
+            int std_found = Convert.ToInt32(std.Get_Count_Trans_Std(new_year, std_code).Rows[0][0]);
             int to_School;
             try
             {
-                if(msg.DialogeErrMsg("هل تريد حذف طلب التحويل للطالب  / " + std_name +" .. !") == DialogResult.Yes)
+                if (msg.DialogeErrMsg("هل تريد حذف طلب التحويل للطالب  / " + std_name + " .. !") == DialogResult.Yes)
                 {
-                    msg.MyMesg(dt_std_data.CurrentRow.Cells["Std_Status_Id"].Value.ToString());
+                    //msg.MyMesg(dt_std_data.CurrentRow.Cells["Std_Status_Id"].Value.ToString());
+
                     // Delete Trans Data
 
-                    
                     if (dt_std_data.CurrentRow.Cells["Std_Status_Id"].Value.ToString() == "4")
                     {
                         // If Std Trans To School
@@ -305,7 +342,7 @@ namespace School_Mang.PL.STD
                     {
                         to_School = 0;
                     }
-                    msg.MyMesg(to_School.ToString());
+                    // msg.MyMesg(to_School.ToString());
                     std.Delete_Transfers_Data(
                         Convert.ToInt32(dt_std_data.CurrentRow.Cells["Transfer_code"].Value),
                         dt_std_data.CurrentRow.Cells["std_code"].Value.ToString(),
@@ -327,15 +364,84 @@ namespace School_Mang.PL.STD
                     msg.ErrorMesg("تم الغاء عملية الحذف ..!");
                     return;
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 msg.ErrorMesg(ex.Message);
             }
         }
 
-        private void btn_talab_elthak_Click(object sender, EventArgs e)
+
+        private void btn_talab_tahewl_Click(object sender, EventArgs e)
         {
             if (Verify_Std()) return;
+
+            // Get Trans Data
+            int grade = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Grade_Id"].Value);
+            int Std_Status_Id = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Std_Status_Id"].Value);
+            string trans_code = dt_std_data.CurrentRow.Cells["Transfer_code"].Value.ToString();
+            string std_name = dt_std_data.CurrentRow.Cells["اسم الطالب"].Value.ToString();
+            int sana = (Convert.ToInt32(dt_std_data.CurrentRow.Cells["Year_Id"].Value)) + 2021;
+            string year_data;
+            // Get New Year & Grade For Tahewl To School
+            if (Std_Status_Id == 3)
+            {
+                year_data = std.Get_Year_Desc(sana + 1).Rows[0]["YearDesc"].ToString();
+
+            }
+            else
+            {
+                year_data = std.Get_Year_Desc(sana).Rows[0]["YearDesc"].ToString();
+
+            }
+
+            string[] year = year_data.Split('-');
+            string year_desc = year[1] + "-" + year[0];
+
+            // Open Report
+            RPT.REPORT_CONNECTION RPT = new RPT.REPORT_CONNECTION();
+            try
+            {
+                if (Std_Status_Id == 3)
+                {
+                    string grade_desc = std.Get_Grade_Desc(grade + 1).Rows[0]["GradeDesc"].ToString();
+
+                    RPT.OpenTahwel_From_Report(trans_code, std_name, year_desc, grade_desc);
+                }
+                else
+                {
+                    RPT.OpenTahwel_To_Report(trans_code, std_name, year_desc);
+                }
+            }
+            catch (Exception ex)
+            {
+                msg.ErrorMesg(ex.Message);
+            }
         }
+
+        private void btn_current_year_Click(object sender, EventArgs e)
+        {
+            if (test_year == 0)
+            {
+                //Set year val
+                BL.Globals.My_Year = Convert.ToByte(Properties.Settings.Default.year_cod + 1);
+                test_year = 1;
+                btn_current_year.ButtonText = "العام الحالى";
+                lbl_year_b.Text = (Properties.Settings.Default.MyYear + 1).ToString();
+            }
+            else
+            {
+                //Set year val
+                BL.Globals.My_Year = Convert.ToByte(Properties.Settings.Default.year_cod);
+                test_year = 0;
+                btn_current_year.ButtonText = "العام القادم";
+                lbl_year_b.Text = Properties.Settings.Default.MyYear.ToString();
+            }
+
+            cmb_grade_SelectedIndexChanged(sender, e);
+            Test_Data();
+
+        }
+
     }
 }

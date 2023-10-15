@@ -35,7 +35,7 @@ namespace School_Mang.PL.STD
             this.label11 = new System.Windows.Forms.Label();
             this.btn_close = new DevExpress.XtraEditors.SimpleButton();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.btn_edit_std = new Bunifu.Framework.UI.BunifuThinButton2();
+            this.btn_print_elthak = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btn_new_std = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btn_close_b = new Bunifu.Framework.UI.BunifuThinButton2();
             this.cmb_sana = new System.Windows.Forms.ComboBox();
@@ -50,6 +50,8 @@ namespace School_Mang.PL.STD
             this.txt_std_name = new System.Windows.Forms.TextBox();
             this.txt_std_code = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txt_sana = new System.Windows.Forms.TextBox();
+            this.txt_std_nat = new System.Windows.Forms.TextBox();
             this.pn_top.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -106,7 +108,7 @@ namespace School_Mang.PL.STD
             // groupBox3
             // 
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox3.Controls.Add(this.btn_edit_std);
+            this.groupBox3.Controls.Add(this.btn_print_elthak);
             this.groupBox3.Controls.Add(this.btn_new_std);
             this.groupBox3.Controls.Add(this.btn_close_b);
             this.groupBox3.Location = new System.Drawing.Point(14, 299);
@@ -115,30 +117,31 @@ namespace School_Mang.PL.STD
             this.groupBox3.TabIndex = 71;
             this.groupBox3.TabStop = false;
             // 
-            // btn_edit_std
+            // btn_print_elthak
             // 
-            this.btn_edit_std.ActiveBorderThickness = 1;
-            this.btn_edit_std.ActiveCornerRadius = 20;
-            this.btn_edit_std.ActiveFillColor = System.Drawing.Color.CadetBlue;
-            this.btn_edit_std.ActiveForecolor = System.Drawing.Color.White;
-            this.btn_edit_std.ActiveLineColor = System.Drawing.Color.CadetBlue;
-            this.btn_edit_std.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.btn_edit_std.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_edit_std.BackgroundImage")));
-            this.btn_edit_std.ButtonText = "طباعة الطلب";
-            this.btn_edit_std.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_edit_std.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_edit_std.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.btn_edit_std.IdleBorderThickness = 1;
-            this.btn_edit_std.IdleCornerRadius = 20;
-            this.btn_edit_std.IdleFillColor = System.Drawing.Color.WhiteSmoke;
-            this.btn_edit_std.IdleForecolor = System.Drawing.Color.DodgerBlue;
-            this.btn_edit_std.IdleLineColor = System.Drawing.Color.SteelBlue;
-            this.btn_edit_std.Location = new System.Drawing.Point(189, 15);
-            this.btn_edit_std.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btn_edit_std.Name = "btn_edit_std";
-            this.btn_edit_std.Size = new System.Drawing.Size(138, 50);
-            this.btn_edit_std.TabIndex = 74;
-            this.btn_edit_std.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btn_print_elthak.ActiveBorderThickness = 1;
+            this.btn_print_elthak.ActiveCornerRadius = 20;
+            this.btn_print_elthak.ActiveFillColor = System.Drawing.Color.CadetBlue;
+            this.btn_print_elthak.ActiveForecolor = System.Drawing.Color.White;
+            this.btn_print_elthak.ActiveLineColor = System.Drawing.Color.CadetBlue;
+            this.btn_print_elthak.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btn_print_elthak.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_print_elthak.BackgroundImage")));
+            this.btn_print_elthak.ButtonText = "طباعة الطلب";
+            this.btn_print_elthak.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_print_elthak.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_print_elthak.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.btn_print_elthak.IdleBorderThickness = 1;
+            this.btn_print_elthak.IdleCornerRadius = 20;
+            this.btn_print_elthak.IdleFillColor = System.Drawing.Color.WhiteSmoke;
+            this.btn_print_elthak.IdleForecolor = System.Drawing.Color.DodgerBlue;
+            this.btn_print_elthak.IdleLineColor = System.Drawing.Color.SteelBlue;
+            this.btn_print_elthak.Location = new System.Drawing.Point(189, 15);
+            this.btn_print_elthak.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_print_elthak.Name = "btn_print_elthak";
+            this.btn_print_elthak.Size = new System.Drawing.Size(138, 50);
+            this.btn_print_elthak.TabIndex = 74;
+            this.btn_print_elthak.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btn_print_elthak.Click += new System.EventHandler(this.btn_print_elthak_Click);
             // 
             // btn_new_std
             // 
@@ -337,6 +340,8 @@ namespace School_Mang.PL.STD
             // groupBox1
             // 
             this.groupBox1.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.groupBox1.Controls.Add(this.txt_sana);
+            this.groupBox1.Controls.Add(this.txt_std_nat);
             this.groupBox1.Controls.Add(this.label17);
             this.groupBox1.Controls.Add(this.txt_std_code);
             this.groupBox1.Controls.Add(this.txt_std_name);
@@ -358,6 +363,30 @@ namespace School_Mang.PL.STD
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "بيانات الطالب";
             // 
+            // txt_sana
+            // 
+            this.txt_sana.Enabled = false;
+            this.txt_sana.Font = new System.Drawing.Font("Noto Naskh Arabic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_sana.Location = new System.Drawing.Point(489, 57);
+            this.txt_sana.MaxLength = 11;
+            this.txt_sana.Name = "txt_sana";
+            this.txt_sana.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txt_sana.Size = new System.Drawing.Size(11, 40);
+            this.txt_sana.TabIndex = 82;
+            this.txt_sana.Visible = false;
+            // 
+            // txt_std_nat
+            // 
+            this.txt_std_nat.Enabled = false;
+            this.txt_std_nat.Font = new System.Drawing.Font("Noto Naskh Arabic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_std_nat.Location = new System.Drawing.Point(507, 57);
+            this.txt_std_nat.MaxLength = 11;
+            this.txt_std_nat.Name = "txt_std_nat";
+            this.txt_std_nat.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txt_std_nat.Size = new System.Drawing.Size(11, 40);
+            this.txt_std_nat.TabIndex = 81;
+            this.txt_std_nat.Visible = false;
+            // 
             // FRM_STD_ELTEHK
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -369,10 +398,12 @@ namespace School_Mang.PL.STD
             this.Controls.Add(this.pn_top);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.KeyPreview = true;
             this.Name = "FRM_STD_ELTEHK";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "طلب التحاق";
             this.Load += new System.EventHandler(this.FRM_STD_ELTEHK_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FRM_STD_ELTEHK_KeyDown);
             this.pn_top.ResumeLayout(false);
             this.pn_top.PerformLayout();
             this.groupBox3.ResumeLayout(false);
@@ -389,7 +420,7 @@ namespace School_Mang.PL.STD
         private System.Windows.Forms.Label label11;
         private DevExpress.XtraEditors.SimpleButton btn_close;
         private System.Windows.Forms.GroupBox groupBox3;
-        private Bunifu.Framework.UI.BunifuThinButton2 btn_edit_std;
+        private Bunifu.Framework.UI.BunifuThinButton2 btn_print_elthak;
         private Bunifu.Framework.UI.BunifuThinButton2 btn_close_b;
         public System.Windows.Forms.ComboBox cmb_sana;
         private System.Windows.Forms.Label label12;
@@ -404,5 +435,7 @@ namespace School_Mang.PL.STD
         public System.Windows.Forms.TextBox txt_std_code;
         private System.Windows.Forms.GroupBox groupBox1;
         public Bunifu.Framework.UI.BunifuThinButton2 btn_new_std;
+        public System.Windows.Forms.TextBox txt_std_nat;
+        public System.Windows.Forms.TextBox txt_sana;
     }
 }

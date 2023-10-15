@@ -22,8 +22,10 @@ namespace School_Mang.PL.STD
 
         BL.HESAB_SEN hesab_sen = new BL.HESAB_SEN();
 
+        int permission_id = Properties.Settings.Default.permission_id;
+
         // Form Closed
-        private static FRM_OSRAA_DATA  frm_Osrs_Data;
+        private static FRM_OSRAA_DATA frm_Osrs_Data;
 
         static void frm_Form_Closed(object sender, FormClosedEventArgs e)
         {
@@ -59,6 +61,19 @@ namespace School_Mang.PL.STD
             cmb_mother_hala.DisplayMember = "StatusDesc";
             cmb_mother_hala.ValueMember = "Id";
 
+            // Set User permission
+            switch (permission_id)
+            {
+                case 3:
+                    btn_ok.Enabled = false;
+                    break;
+
+                case 1:
+                case 2:
+                    btn_ok.Enabled = true;
+                    break;
+            }
+
         }
 
         int move;
@@ -66,10 +81,10 @@ namespace School_Mang.PL.STD
         int move_y;
 
         // checked Data
-        private Boolean Checked_Data (TextBox txt, string str)
+        private Boolean Checked_Data(TextBox txt, string str)
         {
             Waiting.Wait();
-            if(txt.Text == "")
+            if (txt.Text == "")
             {
                 msg.ErrorMesg(str);
                 txt.BackColor = Color.MistyRose;
@@ -81,11 +96,11 @@ namespace School_Mang.PL.STD
             {
                 Waiting.End_WAit();
                 return true;
-            }         
-            
+            }
+
         }
 
-        private Boolean Checked_Phon(TextBox txt,int num)
+        private Boolean Checked_Phon(TextBox txt, int num)
         {
             Waiting.Wait();
             if (txt.Text.Length != num && txt.Text != "")
@@ -118,7 +133,7 @@ namespace School_Mang.PL.STD
             {
                 Waiting.End_WAit();
                 return true;
-            }    
+            }
         }
 
         private Boolean Checked_Phon_End_NO(TextBox txt)
@@ -136,9 +151,9 @@ namespace School_Mang.PL.STD
                 Waiting.End_WAit();
                 return false;
             }
-             else if (txt.Text.Substring(0,2) != "01" && txt.Text.Length==11)
+            else if (txt.Text.Substring(0, 2) != "01" && txt.Text.Length == 11)
             {
-                msg.ErrorMesg("تأكد من رقم الهاتف المدخل  .. ! الرقم يجب أن يبدأ ب  01 " );
+                msg.ErrorMesg("تأكد من رقم الهاتف المدخل  .. ! الرقم يجب أن يبدأ ب  01 ");
                 txt.BackColor = Color.MistyRose;
                 txt.Focus();
                 Waiting.End_WAit();
@@ -159,11 +174,11 @@ namespace School_Mang.PL.STD
             // Student Code
             string year = Properties.Settings.Default.MyYear.ToString().Substring(2, 2);
             string next_year = (Convert.ToInt32(year) + 1).ToString();
-            DataTable Dt =  std.Verify_Osra_Code(next_year);
-            if(Dt.Rows[0]["Max_Osra_Id"].ToString() == "")
+            DataTable Dt = std.Verify_Osra_Code(next_year);
+            if (Dt.Rows[0]["Max_Osra_Id"].ToString() == "")
             {
-               
-                int Osra_cod = Convert.ToInt32(next_year +  "001");
+
+                int Osra_cod = Convert.ToInt32(next_year + "001");
                 Waiting.End_WAit();
                 return Osra_cod;
             }
@@ -172,7 +187,7 @@ namespace School_Mang.PL.STD
                 Waiting.End_WAit();
                 return Convert.ToInt32(Dt.Rows[0]["Max_Osra_Id"]) + 1;
             }
-            
+
         }
         // Save Osra Data
         private void Save_Osra_Data()
@@ -201,7 +216,7 @@ namespace School_Mang.PL.STD
                      Osra_cod());
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 msg.ErrorMesg(ex.Message);
             }
@@ -286,8 +301,8 @@ namespace School_Mang.PL.STD
 
             Waiting.Wait();
             int sana = Properties.Settings.Default.MyYear;
-            if (hesab_sen.Nat_HesabSen(txt.Text, sana) == null) 
-            { 
+            if (hesab_sen.Nat_HesabSen(txt.Text, sana) == null)
+            {
                 osra_nat = true;
                 txt.BackColor = Color.MistyRose;
                 txt.Focus();
@@ -296,7 +311,7 @@ namespace School_Mang.PL.STD
             {
                 try
                 {
-                    DataTable Dt = std.Verify_Osra_Nat(txt.Text,  osra_code);
+                    DataTable Dt = std.Verify_Osra_Nat(txt.Text, osra_code);
                     if (Dt != null)
                     {
                         if (Dt.Rows.Count > 0)
@@ -323,8 +338,8 @@ namespace School_Mang.PL.STD
                     Waiting.End_WAit();
                 }
 
-            }           
-           
+            }
+
             Waiting.End_WAit();
             return osra_nat;
 
@@ -332,29 +347,36 @@ namespace School_Mang.PL.STD
 
         private void btn_close_b_Click(object sender, EventArgs e)
         {
+            this.Close();
+            if (BL.Globals.Open_Form_Get_osra)
+            {
+                FRM_GET_OSRAA.Get_Osra_data.txt_osra_data_OnValueChanged(sender, e);
+                FRM_GET_OSRAA.Get_Osra_data.Visible = true;
+                BL.Globals.Open_Form_Get_osra = false;
 
-             this.Close();
+            }
+
             //this.Dispose();
-           
-            
+
+
         }
 
         private void txt_father_nat_Leave(object sender, EventArgs e)
         {
-            if(txt_father_nat.Text !="" || txt_father_nat.Text.Length == 14)
+            if (txt_father_nat.Text != "" || txt_father_nat.Text.Length == 14)
             {
-                if(state == "add")
+                if (state == "add")
                 {
-                    Verify_Osra_Nat(txt_father_nat,0);
+                    Verify_Osra_Nat(txt_father_nat, 0);
                 }
                 else
                 {
-                    Verify_Osra_Nat(txt_father_nat,Convert.ToInt32( txt_osra_code.Text));
+                    Verify_Osra_Nat(txt_father_nat, Convert.ToInt32(txt_osra_code.Text));
                 }
-                
+
                 Verify_Std_Nat(txt_father_nat);
             }
-           
+
         }
 
         private void txt_father_nat_KeyPress(object sender, KeyPressEventArgs e)
@@ -439,9 +461,9 @@ namespace School_Mang.PL.STD
                 {
                     Verify_Osra_Nat(txt_mother_nat, Convert.ToInt32(txt_osra_code.Text));
                 }
-                 Verify_Std_Nat(txt_mother_nat);
+                Verify_Std_Nat(txt_mother_nat);
             }
-               
+
         }
 
         private void btn_ok_Click(object sender, EventArgs e)
@@ -462,7 +484,7 @@ namespace School_Mang.PL.STD
             {
                 Verify_Osra_Nat(txt_father_nat, Convert.ToInt32(txt_osra_code.Text));
             }
-           
+
             if (Verify_Std_Nat(txt_father_nat)) return;
 
             if (!Checked_Data(txt_adrs, "يرجى إدخال العنوان ... !")) return;
@@ -485,14 +507,14 @@ namespace School_Mang.PL.STD
             if (!Checked_Data(txt_mother_nat, "يرجى إدخال الرقم القومى للأم  ... !")) return;
 
             if (!Checked_Is_Numeric(txt_mother_nat)) return;
-            
+
 
             if (Verify_Std_Nat(txt_mother_nat)) return;
 
 
             if (!Checked_Data(txt_mother_wazifa, "يرجى إدخال وظيفة الأم  ... !")) return;
             if (!Checked_Data(txt_mother_moahel, "يرجى إدخال مؤهل الأم  ... !")) return;
-           
+
             if (!Checked_Data(txt_mother_mobil_1, "يرجى إدخال هاتف الأم  ... !")) return;
             if (!Checked_Phon_End_NO(txt_mother_mobil_1)) return;
             if (!Checked_Is_Numeric(txt_mother_mobil_1)) return;
@@ -513,7 +535,7 @@ namespace School_Mang.PL.STD
 
             if (!Checked_Phon_End_NO(txt_mother_mobil2)) return;
 
-            if(txt_father_nat.Text == txt_mother_nat.Text)
+            if (txt_father_nat.Text == txt_mother_nat.Text)
             {
                 msg.ErrorMesg("الأرقام القومية للوالدين متشابهة... !");
                 txt_father_nat.BackColor = Color.MistyRose;
@@ -522,7 +544,7 @@ namespace School_Mang.PL.STD
                 return;
             }
 
-            if (txt_father_nat.Text == FRM_ADD_STD.getAdd_Std_Frm.txt_nat.Text)   
+            if (txt_father_nat.Text == FRM_ADD_STD.getAdd_Std_Frm.txt_nat.Text)
             {
                 msg.ErrorMesg(" تم إدخال هذا الرقم للطالب .. يرجى مراجعة الأرقام القومية... !");
                 txt_father_nat.BackColor = Color.MistyRose;
@@ -540,32 +562,49 @@ namespace School_Mang.PL.STD
 
             try
             {
-                if(state == "add")
+                if (state == "add")
                 {
                     // Save Osra Data
-                   
+
                     Save_Osra_Data();
-                    
+
                     msg.MyMesg("تم حفظ بيانات الأسرة بنجاح ... !");
+                    if (student_state == "std_add_new_osra")
+                    {
+                        student_state = "";
+                        FRM_GET_OSRAA.Get_Osra_data.Show();
+                        FRM_GET_OSRAA.Get_Osra_data.btn_ok_Click(sender, e);
+                        //FRM_GET_OSRAA.Get_Osra_data.Close();
+                    }
+                    if (BL.Globals.Open_From_Get_Std)
+                    {
+                        BL.Globals.Open_From_Get_Std = false;
+                        FRM_ADD_STD.getAdd_Std_Frm.Show();
+                    }
                 }
                 else
                 {
                     // Update Osra Data
 
-                    Update_Osra_Data(); 
+                    Update_Osra_Data();
                     msg.MyMesg("تم تعديل بيانات الأسرة بنجاح ... !");
                 }
 
                 FRM_GET_OSRAA.Get_Osra_data.status = student_state;
-                FRM_GET_OSRAA.Get_Osra_data.dt_osra_data.DataSource = std.Get_All_Osra_Data(); ;
+                FRM_GET_OSRAA.Get_Osra_data.dt_osra_data.DataSource = std.Get_All_Osra_Data();
+                if (BL.Globals.Open_Form_Get_osra)
+                {
+                    BL.Globals.Open_Form_Get_osra = false;
+                    FRM_GET_OSRAA.Get_Osra_data.Show();
+                }
+
                 this.Close();
-                //this.Dispose();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 msg.ErrorMesg(ex.Message);
             }
-           
+
         }
 
         private void txt_father_name_KeyUp(object sender, KeyEventArgs e)
@@ -610,7 +649,7 @@ namespace School_Mang.PL.STD
 
         private void FRM_OSRAA_DATA_Load(object sender, EventArgs e)
         {
-            if(state == "add")
+            if (state == "add")
             {
                 label11.Text = "إضافة بيانات الأسرة";
                 btn_ok.ButtonText = "إضافة";
@@ -654,6 +693,14 @@ namespace School_Mang.PL.STD
         private void btn_close_Click(object sender, EventArgs e)
         {
             btn_close_b_Click(sender, e);
+        }
+
+        private void FRM_OSRAA_DATA_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                btn_close_b_Click(sender, e);
+            }
         }
     }
 }

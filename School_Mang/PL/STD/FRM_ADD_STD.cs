@@ -16,26 +16,28 @@ using School_Mang.BL.STD;
 
 namespace School_Mang.PL.STD
 {
-    
+
     public partial class FRM_ADD_STD : Form
     {
         public string from_status = "";
 
         // Data
         DAL.DataAcceseLayer DAL = new DAL.DataAcceseLayer();
-     
+
         //Import Classes
         CLS_STD std = new BL.STD.CLS_STD();
         Waiting Waiting = new BL.Waiting();
         Globals globals = new BL.Globals();
         // Hesab Sen
         HESAB_SEN Hesab_sen = new BL.HESAB_SEN();
-        string[] sen = {};
+        string[] sen = { };
 
         // MSG
-        MSG msg =new BL.MSG();
+        MSG msg = new BL.MSG();
 
         CLS_STD_FUNCATIONS Std_Func = new CLS_STD_FUNCATIONS();
+
+        int permission_id = Properties.Settings.Default.permission_id;
 
         // Form Closed
         private static FRM_ADD_STD frm;
@@ -66,39 +68,52 @@ namespace School_Mang.PL.STD
             {
                 Waiting.Wait();
                 // Fill Combos
-                
-                    cmb_sana.DataSource = std.Get_years();
-                    cmb_sana.DisplayMember = "YearDesc";
-                    cmb_sana.ValueMember = "Year_Id";
 
-                    cmb_type.DataSource = std.Get_genders();
-                    cmb_type.DisplayMember = "GenderDesc";
-                    cmb_type.ValueMember = "Gender_Id";
+                cmb_sana.DataSource = std.Get_years();
+                cmb_sana.DisplayMember = "YearDesc";
+                cmb_sana.ValueMember = "Year_Id";
 
-                    cmb_grade.DataSource = std.Get_grades();
-                    cmb_grade.DisplayMember = "GradeDesc";
-                    cmb_grade.ValueMember = "Grade_Id";
+                cmb_type.DataSource = std.Get_genders();
+                cmb_type.DisplayMember = "GenderDesc";
+                cmb_type.ValueMember = "Gender_Id";
 
-                    cmb_national.DataSource = std.Get_nationalities();
-                    cmb_national.DisplayMember = "NationalityDesc";
-                    cmb_national.ValueMember = "Nationality_Id";
+                cmb_grade.DataSource = std.Get_grades();
+                cmb_grade.DisplayMember = "GradeDesc";
+                cmb_grade.ValueMember = "Grade_Id";
 
-                    cmb_hala.DataSource = std.Get_stdStat();
-                    cmb_hala.DisplayMember = "StatusDesc";
-                    cmb_hala.ValueMember = "Std_Status_Id";
+                cmb_national.DataSource = std.Get_nationalities();
+                cmb_national.DisplayMember = "NationalityDesc";
+                cmb_national.ValueMember = "Nationality_Id";
 
-                    cmb_religion.DataSource = std.Get_religion();
-                    cmb_religion.DisplayMember = "ReligionDesc";
-                    cmb_religion.ValueMember = "Religion_Id";
-                    Waiting.End_WAit();
-                
+                cmb_hala.DataSource = std.Get_stdStat();
+                cmb_hala.DisplayMember = "StatusDesc";
+                cmb_hala.ValueMember = "Std_Status_Id";
+
+                cmb_religion.DataSource = std.Get_religion();
+                cmb_religion.DisplayMember = "ReligionDesc";
+                cmb_religion.ValueMember = "Religion_Id";
+                Waiting.End_WAit();
+
+                // Set User permission
+                switch (permission_id)
+                {
+                    case 3:
+                        btn_ok.Enabled = false;
+                        break;
+                    case 1:
+                    case 2:
+                        btn_ok.Enabled = true;
+                        break;
+                }
+
+
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 msg.ErrorMesg(e.Message);
                 Waiting.End_WAit();
             }
-            
+
 
         }
         int move;
@@ -107,7 +122,7 @@ namespace School_Mang.PL.STD
 
         // checked Data
 
-       
+
         private void btn_close_Click(object sender, EventArgs e)
         {
             btn_close_b_Click(sender, e);
@@ -126,26 +141,24 @@ namespace School_Mang.PL.STD
             int code = Convert.ToInt32(sdt_code);
             // Verify Student Code 
 
-            
+
             while (!code_status)
             {
                 DataTable std_Dt = std.Verify_Std_Code(code.ToString());
-                if(std_Dt.Rows.Count != 0)
+                if (std_Dt.Rows.Count != 0)
                 {
                     DataTable Dt = std.GET_Code_Std_Grade(Convert.ToInt32(cmb_grade.SelectedValue), Convert.ToInt32(cmb_sana.SelectedValue), "no");
                     code = Convert.ToInt32(Dt.Rows[0]["count_std"]) + 1;
-                    msg.MyMesg("A  "+code.ToString());
                 }
                 else
                 {
                     code_status = true;
-                  
+
                 }
                 code += 1;
-                msg.MyMesg("B   " + code.ToString());
             }
             return code;
-            
+
         }
         private void Save_Std_Data()
         {
@@ -273,7 +286,7 @@ namespace School_Mang.PL.STD
                         Convert.ToInt32(cmb_sana.SelectedValue),
                         Convert.ToInt32(txt_osra_id.Text));
 
-                msg.MyMesg("تم تعديل بيانات الطالب: " + txt_std_name.Text );
+                msg.MyMesg("تم تعديل بيانات الطالب: " + txt_std_name.Text);
                 Globals.Add_From_Get_Std = false;
 
                 this.Close();
@@ -311,15 +324,14 @@ namespace School_Mang.PL.STD
             }
         }
 
-       
+
         private void btn_close_b_Click(object sender, EventArgs e)
         {
-            
-            if(txt_std_name.Text!="" || txt_nat.Text != "")
+            if (txt_std_name.Text != "" || txt_nat.Text != "")
             {
                 if (!Globals.Update_Std_Data)
                 {
-                    if(msg.DialogeErrMsg("لم يتم حفظ البيانات المدخلة .. هل تريد الخروج؟") != DialogResult.Yes) return;
+                    if (msg.DialogeErrMsg("لم يتم حفظ البيانات المدخلة .. هل تريد الخروج؟") != DialogResult.Yes) return;
 
                 }
             }
@@ -331,32 +343,29 @@ namespace School_Mang.PL.STD
                 this.Close();
                 FRM_ADD_STD.frm = null;
                 this.Dispose();
-
-                FRM_GET_STD frm = new FRM_GET_STD();
-                frm.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main); 
+                FRM_GET_STD.Get_Student.cmb_sana_SelectedIndexChanged(sender, e);
+                FRM_GET_STD.Get_Student.Visible = true;
             }
 
             if (Globals.Open_Form_Get_osra)
             {
                 Globals.Open_Form_Get_osra = false;
                 this.Close();
-                FRM_GET_OSRAA.Get_Osra_data.ShowDialog();
-               
+                FRM_GET_OSRAA.Get_Osra_data.txt_osra_data_OnValueChanged(sender,e);
+                FRM_GET_OSRAA.Get_Osra_data.Visible= true;
             }
             else if (Globals.Add_From_Get_Std)
             {
                 Globals.Add_From_Get_Std = false;
                 this.Close();
                 FRM_ADD_STD.frm = null;
-                                
-                FRM_GET_STD frm = new FRM_GET_STD();
                 this.Dispose();
-                frm.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
+                FRM_GET_STD.Get_Student.cmb_sana_SelectedIndexChanged(sender, e);
+                FRM_GET_STD.Get_Student.Visible= true;
             }
             else
             {
                 this.Close();
-                
                 FRM_ADD_STD.frm = null;
                 this.Dispose();
             }
@@ -365,8 +374,7 @@ namespace School_Mang.PL.STD
 
         private void link_lbl_osraa_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            //PL.STD.FRM_OSRAA frm_osraa = new FRM_OSRAA();
-            //frm_osraa.ShowDialog();
+            
 
             FRM_OSRAA_DATA.Get_Osra_data.ShowDialog();
         }
@@ -375,8 +383,8 @@ namespace School_Mang.PL.STD
         {
 
             Waiting.Wait();
-            if(txt_nat.Text == "")
-                {
+            if (txt_nat.Text == "")
+            {
                 txt_nat.BackColor = Color.MistyRose;
                 ActiveControl = txt_nat;
                 msg.ErrorMesg();
@@ -386,7 +394,7 @@ namespace School_Mang.PL.STD
             else
             {
                 if (!Std_Func.Checked_Is_Numeric(txt_nat)) return;
-                if(Std_Func.Verify_Std_Nat(txt_std_code,txt_nat) == 1) return ;
+                if (Std_Func.Verify_Std_Nat(txt_std_code, txt_nat) == 1) return;
                 if (Std_Func.Verify_Osra_Nat(txt_nat) == 1) return;
             }
             if (txt_std_name.Text == "")
@@ -399,7 +407,7 @@ namespace School_Mang.PL.STD
             }
 
             // Chack Type
-            if (Hesab_sen.Chack_Type(txt_nat)== -1)
+            if (Hesab_sen.Chack_Type(txt_nat) == -1)
             {
                 txt_nat.BackColor = Color.MistyRose;
                 txt_nat.Focus();
@@ -414,7 +422,7 @@ namespace School_Mang.PL.STD
                 Waiting.End_WAit();
                 return;
             }
-                
+
             if (txt_father_name.Text == "")
             {
                 msg.ErrorMesg("يجب إدخال بيانات الأسرة");
@@ -428,7 +436,7 @@ namespace School_Mang.PL.STD
             {
                 Save_Std_Data();
             }
-            else if(Globals.Update_Std_Data)
+            else if (Globals.Update_Std_Data)
             {
                 Update_Std_Data();
             }
@@ -446,11 +454,11 @@ namespace School_Mang.PL.STD
                 {
                     if (txt_nat.Text != "")
                     {
-                        if(!Std_Func.Checked_Is_Numeric(txt_nat)) return;
-                        if (Std_Func.Verify_Std_Nat(txt_std_code,txt_nat) == 1) return;
+                        if (!Std_Func.Checked_Is_Numeric(txt_nat)) return;
+                        if (Std_Func.Verify_Std_Nat(txt_std_code, txt_nat) == 1) return;
                         if (Std_Func.Verify_Osra_Nat(txt_nat) == 1) return;
 
-                        sen = Hesab_sen.Nat_HesabSen(txt_nat.Text, Convert.ToInt32(cmb_sana.GetItemText(cmb_sana.SelectedItem).Substring(0, 4))-1);
+                        sen = Hesab_sen.Nat_HesabSen(txt_nat.Text, Convert.ToInt32(cmb_sana.GetItemText(cmb_sana.SelectedItem).Substring(0, 4)) - 1);
                         if (sen != null)
                         {
                             txt_tarikh.Text = sen[3] + " / " + sen[4] + " / " + sen[5];
@@ -476,7 +484,7 @@ namespace School_Mang.PL.STD
                 Waiting.End_WAit();
             }
             Waiting.End_WAit();
-           
+
         }
         private void FRM_ADD_STD_Load(object sender, EventArgs e)
         {
@@ -531,12 +539,12 @@ namespace School_Mang.PL.STD
 
         private void link_new_osra_data_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            FRM_OSRAA_DATA frm_osraa_data = new FRM_OSRAA_DATA
-            {
-                state = "add",
-                student_state = "std_add_new_osra"
-            };
-            frm_osraa_data.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
+            Globals.Open_From_Get_Std = true;
+
+            FRM_OSRAA_DATA.Get_Osra_data.state = "add";
+            FRM_OSRAA_DATA.Get_Osra_data.student_state = "std_add_new_osra";
+
+            FRM_OSRAA_DATA.Get_Osra_data.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
         }
 
         private void link_get_osra_data_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -550,7 +558,7 @@ namespace School_Mang.PL.STD
                 };
                 frm.ShowDialog();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 msg.ErrorMesg(ex.Message);
             }
@@ -581,7 +589,7 @@ namespace School_Mang.PL.STD
                     cmb_hala.SelectedIndex = 0;
                     break;
                 default:
-                    if(Properties.Settings.Default.MyYear == 2022)
+                    if (Properties.Settings.Default.MyYear == 2022)
                     {
                         cmb_hala.SelectedIndex = 1;
                     }
@@ -589,10 +597,19 @@ namespace School_Mang.PL.STD
                     {
                         cmb_hala.SelectedIndex = 2;
                     }
-                    
+
                     break;
             }
-            
+
+        }
+
+        private void FRM_ADD_STD_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                btn_close_b_Click(sender, e);
+            }
+
         }
     }
 }

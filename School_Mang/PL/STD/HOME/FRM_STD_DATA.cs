@@ -17,6 +17,7 @@ namespace School_Mang.PL.STD.HOME
         BL.Waiting waiting = new BL.Waiting();
         CLS_STD_FUNCATIONS Func = new CLS_STD_FUNCATIONS();
 
+        int permission_id = Properties.Settings.Default.permission_id;
         // Form Closed
         private static FRM_STD_DATA frm_Std_Data;
         static void frm_Form_Closed(object sender, FormClosedEventArgs e)
@@ -45,9 +46,22 @@ namespace School_Mang.PL.STD.HOME
                 frm_Std_Data = this;
             }
 
+            // Set User permission
+            switch (permission_id)
+            {
+                case 3:
+                    card_new.Visible = false;
+                    break;
+                case 1:
+                case 2:
+                    card_new.Visible = true;
+                    break;
+            }
+
+
         }
 
-        
+
 
         private void lbl_current_stds_Click(object sender, EventArgs e)
         {
@@ -63,16 +77,16 @@ namespace School_Mang.PL.STD.HOME
 
         private void lbl_show_stds_Click(object sender, EventArgs e)
         {
-            DataTable Dt =  std.Get_All_Std_Data(0);
-            if (Dt.Rows.Count == 0 )
+            DataTable Dt = std.Get_All_Std_Data(0);
+            if (Dt.Rows.Count == 0)
             {
                 msg.ErrorMesg("لم يتم تسجيل طلاب جدد لهذا العام .. !");
                 return;
             }
 
             FRM_GET_STD.Get_Student.ShowDialog(); // frm = new FRM_GET_STD();
-                                                                          
-           //frm.ShowDialog();
+
+            //frm.ShowDialog();
         }
 
         private void lbl_get_osra_data_Click(object sender, EventArgs e)
@@ -84,9 +98,9 @@ namespace School_Mang.PL.STD.HOME
         private void lbl_add_std_Click(object sender, EventArgs e)
         {
             BL.Globals.Open_Form_Get_osra = false;
-            FRM_ADD_STD frm = new FRM_ADD_STD();
-            frm.ShowDialog();
-           
+            FRM_ADD_STD.getAdd_Std_Frm.ShowDialog(); //frm = new FRM_ADD_STD();
+                                                     //frm.ShowDialog();
+
         }
 
         private void pic_current_stds_Click(object sender, EventArgs e)
@@ -128,14 +142,7 @@ namespace School_Mang.PL.STD.HOME
 
         public void lbl_tahwelat_Click(object sender, EventArgs e)
         {
-            DataTable Dt_Trans_Current_Year = std.GET_Trans_Data(0, 3);
-            DataTable Dt_Trans_Next_Year = std.GET_Trans_Data(0, 4);
 
-            if(Dt_Trans_Current_Year.Rows.Count == 0 && Dt_Trans_Next_Year.Rows.Count == 00)
-            {
-                msg.ErrorMesg("لا يوجد طلبات تحويل مسجلة هذا العام .. !");
-                return;
-            }
             FRM_TAHWELAT.Get_Frm_Tahwelat.ShowDialog();
         }
 
@@ -160,12 +167,12 @@ namespace School_Mang.PL.STD.HOME
             DataTable dt_verify_std;
             int year = Properties.Settings.Default.year_cod;
             int new_year = year + 1;
-            
-           
+
+
             if (msg.DialogeMsg("هل تريد ترحيل بيانات العام الحالى ..!") == DialogResult.Yes)
             {
                 // Update Student New Year Data
-               
+
                 waiting.Wait();
                 DataTable Dt = std.Get_School_year_Data(year, 0, 0);
                 if (Dt.Rows.Count == 0)
@@ -178,10 +185,10 @@ namespace School_Mang.PL.STD.HOME
                 {
                     try
                     {
-                        
+
                         foreach (DataRow row in Dt.Rows)
                         {
-                            int new_grade =0;
+                            int new_grade = 0;
                             int new_class_id = 0;
                             string std_code = row["std_code"].ToString();
                             int grade = Convert.ToInt32(row["Grade_Id"]);
@@ -196,7 +203,7 @@ namespace School_Mang.PL.STD.HOME
                                     break;
                                 case 11:
                                     new_grade = 1;
-                                    new_class_id = claas_id +2;
+                                    new_class_id = claas_id + 2;
 
                                     break;
                                 case 1:
@@ -211,7 +218,7 @@ namespace School_Mang.PL.STD.HOME
                                 case 7:
                                 case 8:
                                     new_grade = grade + 1;
-                                    new_class_id = claas_id + 2; 
+                                    new_class_id = claas_id + 2;
                                     break;
                                 case 9:
                                     new_grade = 0;
@@ -221,14 +228,14 @@ namespace School_Mang.PL.STD.HOME
                                     new_grade = 0;
                                     break;
                             }
-                           
+
                             dt_verify_std = std.Verify_Std_School_Code(std_code, new_year);
                             if (dt_verify_std.Rows.Count != 0)
                             {
                                 // Delete Std
                                 if (std_status == 4 || std_status == 6 || new_grade == 0)
                                 {
-                                    std.Delete_School_Std_Data(std_code, new_year); 
+                                    std.Delete_School_Std_Data(std_code, new_year);
                                 }
                                 else
                                 {
@@ -236,16 +243,16 @@ namespace School_Mang.PL.STD.HOME
                                     std.Update_New_School_Std(
                                     std_code,
                                     new_grade,
-                                    2, 
+                                    2,
                                     new_class_id,
                                     new_year);
                                 }
-                                
+
                             }
                             else
                             {
                                 // Add New School Std
-                                if(new_grade != 0 && std_status != 6 && std_status != 4)
+                                if (new_grade != 0 && std_status != 6 && std_status != 4)
                                 {
 
                                     std.Add_School_Std_Data(
@@ -265,18 +272,18 @@ namespace School_Mang.PL.STD.HOME
                         dt_count = std.Get_School_year_Data(new_year, 0, 0);
                         if (dt_count.Rows.Count != 0)
                         {
-                           FRM_STD_DATA.Get_Frm_Std_Data.card_new_year.Visible = true;
+                            FRM_STD_DATA.Get_Frm_Std_Data.card_new_year.Visible = true;
                         }
-                        
+
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         msg.ErrorMesg(ex.Message);
                         waiting.End_WAit();
                         return;
                     }
                 }
-               
+
             }
             else
             {

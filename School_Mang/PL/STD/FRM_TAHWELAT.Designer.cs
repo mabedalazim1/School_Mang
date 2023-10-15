@@ -29,10 +29,10 @@ namespace School_Mang.PL.STD
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FRM_TAHWELAT));
             this.cmb_status = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -45,7 +45,7 @@ namespace School_Mang.PL.STD
             this.label1 = new System.Windows.Forms.Label();
             this.txt_std_data = new Bunifu.Framework.UI.BunifuMaterialTextbox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.btn_talab_elthak = new Bunifu.Framework.UI.BunifuThinButton2();
+            this.btn_talab_tahewl = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btn_del_std = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btn_new_std = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btn_close_b = new Bunifu.Framework.UI.BunifuThinButton2();
@@ -54,6 +54,8 @@ namespace School_Mang.PL.STD
             this.btn_close = new DevExpress.XtraEditors.SimpleButton();
             this.panel4 = new System.Windows.Forms.Panel();
             this.pic_help = new System.Windows.Forms.PictureBox();
+            this.btn_current_year = new Bunifu.Framework.UI.BunifuThinButton2();
+            this.lbl_year_b = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dt_std_data)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.pn_top.SuspendLayout();
@@ -70,10 +72,10 @@ namespace School_Mang.PL.STD
             this.cmb_status.Items.AddRange(new object[] {
             "من المدرسة",
             "إلى المدرسة"});
-            this.cmb_status.Location = new System.Drawing.Point(15, 69);
+            this.cmb_status.Location = new System.Drawing.Point(16, 69);
             this.cmb_status.Name = "cmb_status";
             this.cmb_status.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.cmb_status.Size = new System.Drawing.Size(125, 40);
+            this.cmb_status.Size = new System.Drawing.Size(103, 40);
             this.cmb_status.TabIndex = 98;
             this.cmb_status.SelectedIndexChanged += new System.EventHandler(this.cmb_status_SelectedIndexChanged);
             // 
@@ -83,7 +85,7 @@ namespace School_Mang.PL.STD
             this.label4.Cursor = System.Windows.Forms.Cursors.Hand;
             this.label4.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.Black;
-            this.label4.Location = new System.Drawing.Point(146, 79);
+            this.label4.Location = new System.Drawing.Point(124, 79);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(98, 25);
             this.label4.TabIndex = 97;
@@ -93,35 +95,35 @@ namespace School_Mang.PL.STD
             // 
             this.dt_std_data.AllowUserToAddRows = false;
             this.dt_std_data.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dt_std_data.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dt_std_data.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle13;
             this.dt_std_data.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dt_std_data.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("LBC", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dt_std_data.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("LBC", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dt_std_data.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle14;
             this.dt_std_data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dt_std_data.Location = new System.Drawing.Point(12, 131);
+            this.dt_std_data.Location = new System.Drawing.Point(12, 126);
             this.dt_std_data.MultiSelect = false;
             this.dt_std_data.Name = "dt_std_data";
             this.dt_std_data.ReadOnly = true;
             this.dt_std_data.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dt_std_data.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dt_std_data.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dt_std_data.RowHeadersDefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dt_std_data.RowsDefaultCellStyle = dataGridViewCellStyle16;
             this.dt_std_data.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dt_std_data.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dt_std_data.Size = new System.Drawing.Size(1003, 395);
@@ -147,10 +149,10 @@ namespace School_Mang.PL.STD
             "الثالث  الإعدادى",
             "KG1",
             "KG2"});
-            this.cmb_grade.Location = new System.Drawing.Point(250, 69);
+            this.cmb_grade.Location = new System.Drawing.Point(218, 69);
             this.cmb_grade.Name = "cmb_grade";
             this.cmb_grade.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.cmb_grade.Size = new System.Drawing.Size(126, 40);
+            this.cmb_grade.Size = new System.Drawing.Size(110, 40);
             this.cmb_grade.TabIndex = 95;
             this.cmb_grade.SelectedIndexChanged += new System.EventHandler(this.cmb_grade_SelectedIndexChanged);
             // 
@@ -158,7 +160,7 @@ namespace School_Mang.PL.STD
             // 
             this.lbl_help.AutoSize = true;
             this.lbl_help.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_help.Location = new System.Drawing.Point(493, 53);
+            this.lbl_help.Location = new System.Drawing.Point(436, 53);
             this.lbl_help.Name = "lbl_help";
             this.lbl_help.Size = new System.Drawing.Size(29, 29);
             this.lbl_help.TabIndex = 94;
@@ -171,7 +173,7 @@ namespace School_Mang.PL.STD
             this.label2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.label2.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(376, 79);
+            this.label2.Location = new System.Drawing.Point(330, 79);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 25);
             this.label2.TabIndex = 89;
@@ -183,7 +185,7 @@ namespace School_Mang.PL.STD
             this.label3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.label3.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.Black;
-            this.label3.Location = new System.Drawing.Point(897, 79);
+            this.label3.Location = new System.Drawing.Point(793, 77);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(100, 25);
             this.label3.TabIndex = 90;
@@ -195,7 +197,7 @@ namespace School_Mang.PL.STD
             this.lbl_count.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lbl_count.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_count.ForeColor = System.Drawing.Color.Black;
-            this.lbl_count.Location = new System.Drawing.Point(867, 79);
+            this.lbl_count.Location = new System.Drawing.Point(763, 79);
             this.lbl_count.Name = "lbl_count";
             this.lbl_count.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lbl_count.Size = new System.Drawing.Size(0, 25);
@@ -207,7 +209,7 @@ namespace School_Mang.PL.STD
             this.label1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.label1.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(804, 79);
+            this.label1.Location = new System.Drawing.Point(707, 79);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(45, 25);
             this.label1.TabIndex = 92;
@@ -229,11 +231,11 @@ namespace School_Mang.PL.STD
             this.txt_std_data.LineIdleColor = System.Drawing.Color.Gray;
             this.txt_std_data.LineMouseHoverColor = System.Drawing.Color.Blue;
             this.txt_std_data.LineThickness = 5;
-            this.txt_std_data.Location = new System.Drawing.Point(466, 65);
+            this.txt_std_data.Location = new System.Drawing.Point(419, 65);
             this.txt_std_data.Margin = new System.Windows.Forms.Padding(4);
             this.txt_std_data.Name = "txt_std_data";
             this.txt_std_data.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.txt_std_data.Size = new System.Drawing.Size(340, 44);
+            this.txt_std_data.Size = new System.Drawing.Size(292, 44);
             this.txt_std_data.TabIndex = 88;
             this.txt_std_data.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txt_std_data.Enter += new System.EventHandler(this.txt_std_data_Enter);
@@ -244,7 +246,7 @@ namespace School_Mang.PL.STD
             // groupBox3
             // 
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox3.Controls.Add(this.btn_talab_elthak);
+            this.groupBox3.Controls.Add(this.btn_talab_tahewl);
             this.groupBox3.Controls.Add(this.btn_del_std);
             this.groupBox3.Controls.Add(this.btn_new_std);
             this.groupBox3.Controls.Add(this.btn_close_b);
@@ -254,31 +256,31 @@ namespace School_Mang.PL.STD
             this.groupBox3.TabIndex = 87;
             this.groupBox3.TabStop = false;
             // 
-            // btn_talab_elthak
+            // btn_talab_tahewl
             // 
-            this.btn_talab_elthak.ActiveBorderThickness = 1;
-            this.btn_talab_elthak.ActiveCornerRadius = 20;
-            this.btn_talab_elthak.ActiveFillColor = System.Drawing.Color.Teal;
-            this.btn_talab_elthak.ActiveForecolor = System.Drawing.Color.White;
-            this.btn_talab_elthak.ActiveLineColor = System.Drawing.Color.Teal;
-            this.btn_talab_elthak.BackColor = System.Drawing.SystemColors.Control;
-            this.btn_talab_elthak.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_talab_elthak.BackgroundImage")));
-            this.btn_talab_elthak.ButtonText = "طباعة طلب التحويل";
-            this.btn_talab_elthak.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_talab_elthak.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_talab_elthak.ForeColor = System.Drawing.Color.DarkCyan;
-            this.btn_talab_elthak.IdleBorderThickness = 1;
-            this.btn_talab_elthak.IdleCornerRadius = 20;
-            this.btn_talab_elthak.IdleFillColor = System.Drawing.Color.WhiteSmoke;
-            this.btn_talab_elthak.IdleForecolor = System.Drawing.Color.DarkCyan;
-            this.btn_talab_elthak.IdleLineColor = System.Drawing.Color.CadetBlue;
-            this.btn_talab_elthak.Location = new System.Drawing.Point(543, 15);
-            this.btn_talab_elthak.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btn_talab_elthak.Name = "btn_talab_elthak";
-            this.btn_talab_elthak.Size = new System.Drawing.Size(169, 50);
-            this.btn_talab_elthak.TabIndex = 76;
-            this.btn_talab_elthak.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btn_talab_elthak.Click += new System.EventHandler(this.btn_talab_elthak_Click);
+            this.btn_talab_tahewl.ActiveBorderThickness = 1;
+            this.btn_talab_tahewl.ActiveCornerRadius = 20;
+            this.btn_talab_tahewl.ActiveFillColor = System.Drawing.Color.Teal;
+            this.btn_talab_tahewl.ActiveForecolor = System.Drawing.Color.White;
+            this.btn_talab_tahewl.ActiveLineColor = System.Drawing.Color.Teal;
+            this.btn_talab_tahewl.BackColor = System.Drawing.SystemColors.Control;
+            this.btn_talab_tahewl.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_talab_tahewl.BackgroundImage")));
+            this.btn_talab_tahewl.ButtonText = "طباعة طلب التحويل";
+            this.btn_talab_tahewl.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_talab_tahewl.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_talab_tahewl.ForeColor = System.Drawing.Color.DarkCyan;
+            this.btn_talab_tahewl.IdleBorderThickness = 1;
+            this.btn_talab_tahewl.IdleCornerRadius = 20;
+            this.btn_talab_tahewl.IdleFillColor = System.Drawing.Color.WhiteSmoke;
+            this.btn_talab_tahewl.IdleForecolor = System.Drawing.Color.DarkCyan;
+            this.btn_talab_tahewl.IdleLineColor = System.Drawing.Color.CadetBlue;
+            this.btn_talab_tahewl.Location = new System.Drawing.Point(543, 15);
+            this.btn_talab_tahewl.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_talab_tahewl.Name = "btn_talab_tahewl";
+            this.btn_talab_tahewl.Size = new System.Drawing.Size(169, 50);
+            this.btn_talab_tahewl.TabIndex = 76;
+            this.btn_talab_tahewl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btn_talab_tahewl.Click += new System.EventHandler(this.btn_talab_tahewl_Click);
             // 
             // btn_del_std
             // 
@@ -373,6 +375,7 @@ namespace School_Mang.PL.STD
             // pn_top
             // 
             this.pn_top.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.pn_top.Controls.Add(this.lbl_year_b);
             this.pn_top.Controls.Add(this.lbl_current_year);
             this.pn_top.Controls.Add(this.btn_close);
             this.pn_top.Dock = System.Windows.Forms.DockStyle.Top;
@@ -410,7 +413,7 @@ namespace School_Mang.PL.STD
             // 
             this.pic_help.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pic_help.Image = global::School_Mang.Properties.Resources.help_80;
-            this.pic_help.Location = new System.Drawing.Point(429, 72);
+            this.pic_help.Location = new System.Drawing.Point(382, 72);
             this.pic_help.Name = "pic_help";
             this.pic_help.Size = new System.Drawing.Size(38, 32);
             this.pic_help.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -419,11 +422,51 @@ namespace School_Mang.PL.STD
             this.pic_help.MouseLeave += new System.EventHandler(this.pic_help_MouseLeave);
             this.pic_help.MouseHover += new System.EventHandler(this.pic_help_MouseHover);
             // 
+            // btn_current_year
+            // 
+            this.btn_current_year.ActiveBorderThickness = 1;
+            this.btn_current_year.ActiveCornerRadius = 20;
+            this.btn_current_year.ActiveFillColor = System.Drawing.Color.Crimson;
+            this.btn_current_year.ActiveForecolor = System.Drawing.Color.White;
+            this.btn_current_year.ActiveLineColor = System.Drawing.Color.Pink;
+            this.btn_current_year.BackColor = System.Drawing.SystemColors.Control;
+            this.btn_current_year.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_current_year.BackgroundImage")));
+            this.btn_current_year.ButtonText = "العام القادم";
+            this.btn_current_year.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_current_year.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_current_year.ForeColor = System.Drawing.Color.Crimson;
+            this.btn_current_year.IdleBorderThickness = 1;
+            this.btn_current_year.IdleCornerRadius = 20;
+            this.btn_current_year.IdleFillColor = System.Drawing.Color.WhiteSmoke;
+            this.btn_current_year.IdleForecolor = System.Drawing.Color.Crimson;
+            this.btn_current_year.IdleLineColor = System.Drawing.Color.MediumVioletRed;
+            this.btn_current_year.Location = new System.Drawing.Point(900, 70);
+            this.btn_current_year.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_current_year.Name = "btn_current_year";
+            this.btn_current_year.Size = new System.Drawing.Size(114, 53);
+            this.btn_current_year.TabIndex = 99;
+            this.btn_current_year.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btn_current_year.Click += new System.EventHandler(this.btn_current_year_Click);
+            // 
+            // lbl_year_b
+            // 
+            this.lbl_year_b.AutoSize = true;
+            this.lbl_year_b.BackColor = System.Drawing.SystemColors.Highlight;
+            this.lbl_year_b.Font = new System.Drawing.Font("LBC", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_year_b.ForeColor = System.Drawing.Color.White;
+            this.lbl_year_b.Location = new System.Drawing.Point(408, 16);
+            this.lbl_year_b.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
+            this.lbl_year_b.Name = "lbl_year_b";
+            this.lbl_year_b.Size = new System.Drawing.Size(50, 22);
+            this.lbl_year_b.TabIndex = 48;
+            this.lbl_year_b.Text = "2023";
+            // 
             // FRM_TAHWELAT
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1027, 618);
+            this.Controls.Add(this.btn_current_year);
             this.Controls.Add(this.cmb_status);
             this.Controls.Add(this.dt_std_data);
             this.Controls.Add(this.cmb_grade);
@@ -474,6 +517,8 @@ namespace School_Mang.PL.STD
         private DevExpress.XtraEditors.SimpleButton btn_close;
         private System.Windows.Forms.Panel pn_top;
         private System.Windows.Forms.Panel panel4;
-        private Bunifu.Framework.UI.BunifuThinButton2 btn_talab_elthak;
+        private Bunifu.Framework.UI.BunifuThinButton2 btn_talab_tahewl;
+        private Bunifu.Framework.UI.BunifuThinButton2 btn_current_year;
+        private System.Windows.Forms.Label lbl_year_b;
     }
 }

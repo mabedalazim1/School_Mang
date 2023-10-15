@@ -126,6 +126,7 @@ namespace School_Mang.RPT
             this.crystalReportViewer1.Size = new System.Drawing.Size(1027, 586);
             this.crystalReportViewer1.TabIndex = 75;
             this.crystalReportViewer1.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None;
+            this.crystalReportViewer1.Load += new System.EventHandler(this.crystalReportViewer1_Load);
             // 
             // FRM_REPORTS
             // 

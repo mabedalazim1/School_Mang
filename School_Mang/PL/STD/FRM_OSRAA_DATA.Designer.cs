@@ -77,6 +77,10 @@ namespace School_Mang.PL.STD
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btn_ok = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btn_close_b = new Bunifu.Framework.UI.BunifuThinButton2();
+            this.lbl_edit_by = new System.Windows.Forms.Label();
+            this.lbl_by = new System.Windows.Forms.Label();
+            this.lbl_edit_date = new System.Windows.Forms.Label();
+            this.lbl_date = new System.Windows.Forms.Label();
             this.pn_osraa_data.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -87,11 +91,15 @@ namespace School_Mang.PL.STD
             // pn_osraa_data
             // 
             this.pn_osraa_data.AutoScroll = true;
+            this.pn_osraa_data.Controls.Add(this.lbl_edit_by);
+            this.pn_osraa_data.Controls.Add(this.lbl_by);
+            this.pn_osraa_data.Controls.Add(this.lbl_edit_date);
+            this.pn_osraa_data.Controls.Add(this.lbl_date);
             this.pn_osraa_data.Controls.Add(this.groupBox2);
             this.pn_osraa_data.Controls.Add(this.groupBox1);
             this.pn_osraa_data.Location = new System.Drawing.Point(0, 57);
             this.pn_osraa_data.Name = "pn_osraa_data";
-            this.pn_osraa_data.Size = new System.Drawing.Size(684, 521);
+            this.pn_osraa_data.Size = new System.Drawing.Size(684, 551);
             this.pn_osraa_data.TabIndex = 0;
             // 
             // groupBox2
@@ -114,7 +122,7 @@ namespace School_Mang.PL.STD
             this.groupBox2.Controls.Add(this.label20);
             this.groupBox2.Font = new System.Drawing.Font("LBC", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.ForeColor = System.Drawing.Color.DarkGray;
-            this.groupBox2.Location = new System.Drawing.Point(28, 316);
+            this.groupBox2.Location = new System.Drawing.Point(28, 355);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(630, 296);
             this.groupBox2.TabIndex = 1;
@@ -320,7 +328,7 @@ namespace School_Mang.PL.STD
             this.groupBox1.Controls.Add(this.label19);
             this.groupBox1.Font = new System.Drawing.Font("LBC", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.ForeColor = System.Drawing.Color.DarkGray;
-            this.groupBox1.Location = new System.Drawing.Point(28, 3);
+            this.groupBox1.Location = new System.Drawing.Point(28, 28);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(630, 307);
             this.groupBox1.TabIndex = 0;
@@ -598,7 +606,7 @@ namespace School_Mang.PL.STD
             // 
             this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
             this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel4.Location = new System.Drawing.Point(0, 679);
+            this.panel4.Location = new System.Drawing.Point(0, 695);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(696, 10);
             this.panel4.TabIndex = 58;
@@ -607,7 +615,7 @@ namespace School_Mang.PL.STD
             // 
             this.groupBox3.Controls.Add(this.btn_ok);
             this.groupBox3.Controls.Add(this.btn_close_b);
-            this.groupBox3.Location = new System.Drawing.Point(45, 597);
+            this.groupBox3.Location = new System.Drawing.Point(45, 614);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(630, 65);
             this.groupBox3.TabIndex = 59;
@@ -665,23 +673,74 @@ namespace School_Mang.PL.STD
             this.btn_close_b.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.btn_close_b.Click += new System.EventHandler(this.btn_close_b_Click);
             // 
+            // lbl_edit_by
+            // 
+            this.lbl_edit_by.AutoSize = true;
+            this.lbl_edit_by.Font = new System.Drawing.Font("Noto Naskh Arabic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_edit_by.ForeColor = System.Drawing.Color.Blue;
+            this.lbl_edit_by.Location = new System.Drawing.Point(35, 10);
+            this.lbl_edit_by.Name = "lbl_edit_by";
+            this.lbl_edit_by.Size = new System.Drawing.Size(72, 22);
+            this.lbl_edit_by.TabIndex = 101;
+            this.lbl_edit_by.Text = "تاريخ التعديل";
+            this.lbl_edit_by.Visible = false;
+            // 
+            // lbl_by
+            // 
+            this.lbl_by.AutoSize = true;
+            this.lbl_by.Font = new System.Drawing.Font("Noto Naskh Arabic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_by.ForeColor = System.Drawing.Color.Blue;
+            this.lbl_by.Location = new System.Drawing.Point(110, 10);
+            this.lbl_by.Name = "lbl_by";
+            this.lbl_by.Size = new System.Drawing.Size(70, 22);
+            this.lbl_by.TabIndex = 100;
+            this.lbl_by.Text = "عدل بواسطة";
+            this.lbl_by.Visible = false;
+            // 
+            // lbl_edit_date
+            // 
+            this.lbl_edit_date.AutoSize = true;
+            this.lbl_edit_date.Font = new System.Drawing.Font("Noto Naskh Arabic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_edit_date.ForeColor = System.Drawing.Color.Blue;
+            this.lbl_edit_date.Location = new System.Drawing.Point(256, 10);
+            this.lbl_edit_date.Name = "lbl_edit_date";
+            this.lbl_edit_date.Size = new System.Drawing.Size(72, 22);
+            this.lbl_edit_date.TabIndex = 99;
+            this.lbl_edit_date.Text = "تاريخ التعديل";
+            this.lbl_edit_date.Visible = false;
+            // 
+            // lbl_date
+            // 
+            this.lbl_date.AutoSize = true;
+            this.lbl_date.Font = new System.Drawing.Font("Noto Naskh Arabic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_date.ForeColor = System.Drawing.Color.Blue;
+            this.lbl_date.Location = new System.Drawing.Point(332, 10);
+            this.lbl_date.Name = "lbl_date";
+            this.lbl_date.Size = new System.Drawing.Size(72, 22);
+            this.lbl_date.TabIndex = 98;
+            this.lbl_date.Text = "تاريخ التعديل";
+            this.lbl_date.Visible = false;
+            // 
             // FRM_OSRAA_DATA
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(696, 689);
+            this.ClientSize = new System.Drawing.Size(696, 705);
             this.Controls.Add(this.pn_osraa_data);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.pn_top);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.KeyPreview = true;
             this.Name = "FRM_OSRAA_DATA";
             this.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "إضافة بيانات الأسرة";
             this.Load += new System.EventHandler(this.FRM_OSRAA_DATA_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FRM_OSRAA_DATA_KeyDown);
             this.pn_osraa_data.ResumeLayout(false);
+            this.pn_osraa_data.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -741,5 +800,9 @@ namespace School_Mang.PL.STD
         public System.Windows.Forms.ComboBox cmb_father_halaa;
         public System.Windows.Forms.ComboBox cmb_mother_hala;
         public System.Windows.Forms.TextBox txt_osra_code;
+        public System.Windows.Forms.Label lbl_edit_by;
+        public System.Windows.Forms.Label lbl_by;
+        public System.Windows.Forms.Label lbl_edit_date;
+        public System.Windows.Forms.Label lbl_date;
     }
 }

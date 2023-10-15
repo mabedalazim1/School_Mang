@@ -173,6 +173,76 @@
     <Compile Include="BL\Waiting.cs" />
     <Compile Include="DAL\DataAcceseLayer.cs" />
     <Compile Include="DAL\TestConcation.cs" />
+    <Compile Include="MyReports\rpt_Count_Std.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rpt_Count_Std.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="MyReports\rpt_Eltehak.cs">
+      <DependentUpon>rpt_Eltehak.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="MyReports\rpt_Kaema.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rpt_Kaema.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="MyReports\rpt_Mostgdin_41.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rpt_Mostgdin_41.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="MyReports\rpt_Segel_Data.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rpt_Segel_Data.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="MyReports\rpt_Segel_Transform_From.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rpt_Segel_Transform_From.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="MyReports\rpt_Tadarg_Sen.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rpt_Tadarg_Sen.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="MyReports\rpt_Tahewl_Data.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rpt_Tahewl_Data.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="MyReports\rpt_Tahewl_From.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rpt_Tahewl_From.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="MyReports\rpt_Tahewl_To.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rpt_Tahewl_To.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="PL\MAIN\CLS_FUNCATIONS.cs" />
     <Compile Include="PL\MAIN\FRM_AMELIN.cs">
       <SubType>Form</SubType>
@@ -265,6 +335,12 @@
     <Compile Include="PL\STD\FRM_GET_OSRAA.Designer.cs">
       <DependentUpon>FRM_GET_OSRAA.cs</DependentUpon>
     </Compile>
+    <Compile Include="PL\STD\FRM_KAEMA_GRADE.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\STD\FRM_KAEMA_GRADE.Designer.cs">
+      <DependentUpon>FRM_KAEMA_GRADE.cs</DependentUpon>
+    </Compile>
     <Compile Include="PL\STD\FRM_OSRAA_DATA.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -322,12 +398,56 @@
       <DependentUpon>FRM_REPORTS.cs</DependentUpon>
     </Compile>
     <Compile Include="RPT\REPORT_CONNECTION.cs" />
-    <Compile Include="RPT\rpt_Eltehak.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>rpt_Eltehak.rpt</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
+    <Content Include="MyReports\rpt_Eltehak.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rpt_Eltehak.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MyReports\rpt_Kaema.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rpt_Kaema.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MyReports\rpt_Tadarg_Sen.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rpt_Tadarg_Sen.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MyReports\rpt_Tahewl_From.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rpt_Tahewl_From.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MyReports\rpt_Tahewl_To.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rpt_Tahewl_To.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MyReports\rpt_Segel_Data.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rpt_Segel_Data.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MyReports\rpt_Segel_Transform_From.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rpt_Segel_Transform_From.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MyReports\rpt_Mostgdin_41.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rpt_Mostgdin_41.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MyReports\rpt_Count_Std.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rpt_Count_Std.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MyReports\rpt_Tahewl_Data.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rpt_Tahewl_Data.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="PL\MAIN\FRM_AMELIN.resx">
       <DependentUpon>FRM_AMELIN.cs</DependentUpon>
     </EmbeddedResource>
@@ -373,6 +493,9 @@
     <EmbeddedResource Include="PL\STD\FRM_GET_OSRAA.resx">
       <DependentUpon>FRM_GET_OSRAA.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PL\STD\FRM_KAEMA_GRADE.resx">
+      <DependentUpon>FRM_KAEMA_GRADE.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PL\STD\FRM_OSRAA_DATA.resx">
       <DependentUpon>FRM_OSRAA_DATA.cs</DependentUpon>
     </EmbeddedResource>
@@ -410,10 +533,6 @@
     </Compile>
     <EmbeddedResource Include="RPT\FRM_REPORTS.resx">
       <DependentUpon>FRM_REPORTS.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RPT\rpt_Eltehak.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>rpt_Eltehak.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -615,6 +734,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="logo-b.ico" />
+    <None Include="Resources\transfer-to-100.png" />
+    <None Include="Resources\transfer-from-100.png" />
+    <None Include="Resources\new-view-100.png" />
     <None Include="Resources\improvement-100.png" />
     <None Include="Resources\users-data-100.png" />
     <None Include="Resources\students-100.png" />
@@ -622,5 +744,6 @@
   <ItemGroup>
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -594,12 +594,14 @@ namespace School_Mang.PL.STD
             this.ClientSize = new System.Drawing.Size(737, 534);
             this.Controls.Add(this.pn_home);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.KeyPreview = true;
             this.Name = "FRM_HESAB_SEN";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "حساب السن";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.FRM_HESAB_SEN_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FRM_HESAB_SEN_KeyDown);
             this.pn_home.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();

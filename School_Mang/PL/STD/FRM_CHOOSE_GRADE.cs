@@ -309,5 +309,13 @@ namespace School_Mang.PL.STD
         {
             btn_show_data_Click(sender, e);
         }
+
+        private void FRM_CHOOSE_GRADE_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                btn_close_b_Click(sender, e);
+            }
+        }
     }
 }

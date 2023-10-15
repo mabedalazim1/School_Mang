@@ -216,5 +216,13 @@ namespace School_Mang.PL.STD
                 e.Handled = true;
             }
         }
+
+        private void FRM_HESAB_SEN_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                btn_close_b_Click(sender, e);
+            }
+        }
     }
 }

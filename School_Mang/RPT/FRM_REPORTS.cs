@@ -13,6 +13,7 @@ namespace School_Mang.RPT
     public partial class FRM_REPORTS : Form
     {
 
+      
         // Form Closed
         private static FRM_REPORTS frm_Report;
 
@@ -42,6 +43,7 @@ namespace School_Mang.RPT
             {
                 frm_Report = this;
             }
+           
         }
 
 
@@ -96,6 +98,11 @@ namespace School_Mang.RPT
             {
                 WindowState = FormWindowState.Maximized;
             }
+        }
+
+        private void crystalReportViewer1_Load(object sender, EventArgs e)
+        {
+            crystalReportViewer1.Zoom(1);
         }
     }
 }

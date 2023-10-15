@@ -33,6 +33,7 @@ namespace School_Mang.PL.STD
             this.panel4 = new System.Windows.Forms.Panel();
             this.pn_top = new System.Windows.Forms.Panel();
             this.lbl_title = new System.Windows.Forms.Label();
+            this.txt_trans_code = new System.Windows.Forms.TextBox();
             this.txt_std_code = new System.Windows.Forms.TextBox();
             this.btn_close = new DevExpress.XtraEditors.SimpleButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -56,7 +57,6 @@ namespace School_Mang.PL.STD
             this.btn_edit_std = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btn_new_std = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btn_close_b = new Bunifu.Framework.UI.BunifuThinButton2();
-            this.txt_trans_code = new System.Windows.Forms.TextBox();
             this.pn_top.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -98,6 +98,17 @@ namespace School_Mang.PL.STD
             this.lbl_title.Size = new System.Drawing.Size(144, 25);
             this.lbl_title.TabIndex = 46;
             this.lbl_title.Text = "طلب تحويل طالب";
+            // 
+            // txt_trans_code
+            // 
+            this.txt_trans_code.Enabled = false;
+            this.txt_trans_code.Font = new System.Drawing.Font("Noto Naskh Arabic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_trans_code.Location = new System.Drawing.Point(97, 25);
+            this.txt_trans_code.MaxLength = 11;
+            this.txt_trans_code.Name = "txt_trans_code";
+            this.txt_trans_code.Size = new System.Drawing.Size(15, 40);
+            this.txt_trans_code.TabIndex = 78;
+            this.txt_trans_code.Visible = false;
             // 
             // txt_std_code
             // 
@@ -425,17 +436,6 @@ namespace School_Mang.PL.STD
             this.btn_close_b.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.btn_close_b.Click += new System.EventHandler(this.btn_close_b_Click);
             // 
-            // txt_trans_code
-            // 
-            this.txt_trans_code.Enabled = false;
-            this.txt_trans_code.Font = new System.Drawing.Font("Noto Naskh Arabic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_trans_code.Location = new System.Drawing.Point(97, 25);
-            this.txt_trans_code.MaxLength = 11;
-            this.txt_trans_code.Name = "txt_trans_code";
-            this.txt_trans_code.Size = new System.Drawing.Size(15, 40);
-            this.txt_trans_code.TabIndex = 78;
-            this.txt_trans_code.Visible = false;
-            // 
             // FRM_TAHEEL_STD
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -447,10 +447,12 @@ namespace School_Mang.PL.STD
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.pn_top);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.KeyPreview = true;
             this.Name = "FRM_TAHEEL_STD";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FRM_TAHEEL_STD";
             this.Load += new System.EventHandler(this.FRM_TAHEEL_STD_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FRM_TAHEEL_STD_KeyDown);
             this.pn_top.ResumeLayout(false);
             this.pn_top.PerformLayout();
             this.groupBox1.ResumeLayout(false);

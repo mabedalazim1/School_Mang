@@ -252,7 +252,7 @@ namespace School_Mang.PL.STD.HOME
                             else
                             {
                                 // Add New School Std
-                                if (new_grade != 0 && std_status != 6 && std_status != 4)
+                                if (new_grade != 0 && std_status != 6 && std_status != 4 )
                                 {
 
                                     std.Add_School_Std_Data(

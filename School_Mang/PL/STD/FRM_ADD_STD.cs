@@ -567,8 +567,7 @@ namespace School_Mang.PL.STD
         private void txt_nat_KeyPress(object sender, KeyPressEventArgs e)
         {
             txt_nat.BackColor = Color.White;
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
-               (e.KeyChar != '.'))
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) )
             {
                 e.Handled = true;
             }

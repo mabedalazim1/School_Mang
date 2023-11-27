@@ -41,6 +41,8 @@ namespace School_Mang.PL.STD
         int move_x;
         int move_y;
 
+
+        short grade = 0;
         private void Add_Data()
         {
             dt_std_data.ColumnCount = 7;
@@ -269,7 +271,7 @@ namespace School_Mang.PL.STD
 
         private void pn_top_MouseUp(object sender, MouseEventArgs e)
         {
-            move = 0;
+                move = 0;
         }
 
         private void btn_close_Click(object sender, EventArgs e)
@@ -291,14 +293,15 @@ namespace School_Mang.PL.STD
         }
 
         private void btn_show_data_Click(object sender, EventArgs e)
-        { 
-            short grade = 0;
+        {
             if (dt_std_data.SelectedRows.Count != 0)
             {
                 grade =Convert.ToInt16(dt_std_data.CurrentRow.Cells[6].Value);
+                
             }
-            this.Dispose();
 
+            this.Close();
+            this.Dispose();
             FRM_CURRENT_STD.Get_Current_Std.grade = grade;
             FRM_CURRENT_STD.Get_Current_Std.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
            

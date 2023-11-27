@@ -20,6 +20,7 @@ namespace School_Mang.PL.STD
 
         int year_cod = Properties.Settings.Default.year_cod;
         int permission_id = Properties.Settings.Default.permission_id;
+
         public short grade = 0;
 
         // Form Closed
@@ -152,7 +153,7 @@ namespace School_Mang.PL.STD
         public void Get_School_Year_Data()
         {
             Waiting.Wait();
-            DataTable dt = std.Get_School_year_Data(Current_Year(), 1, 0);
+            DataTable dt = std.Get_School_year_Data(Current_Year(),Convert.ToInt32(grade), 0);
 
             dt_std_data.DataSource = dt;
             dt_std_data.Columns["std_code"].Visible = false;
@@ -329,10 +330,11 @@ namespace School_Mang.PL.STD
         private void btn_close_b_Click(object sender, EventArgs e)
         {
             this.Close();
+            
             BL.Globals.Current_Year_Data = false;
             BL.Globals.Details_Std = false;
             BL.Globals.Elthak_Std = false;
-            this.Dispose();
+            this.Dispose();  
         }
 
         private void btn_close_Click(object sender, EventArgs e)
@@ -367,7 +369,7 @@ namespace School_Mang.PL.STD
             try
             {
                 dt_std_data.Columns["اسم الطالب"].Width = 200;
-                cmb_grade.SelectedIndex = grade;
+                cmb_grade.SelectedValue = grade;
                 lbl_current_year.Text = "بيانات " + Func.Year_Desc();
                 lbl_count.Text = dt_std_data.Rows.Count.ToString();
             }

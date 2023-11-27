@@ -35,7 +35,6 @@ namespace School_Mang.PL.STD
             this.panel2 = new System.Windows.Forms.Panel();
             this.chk_nat = new Bunifu.Framework.UI.BunifuCheckbox();
             this.chk_traehk = new Bunifu.Framework.UI.BunifuCheckbox();
-            this.drop_chose_year = new Bunifu.Framework.UI.BunifuDropdown();
             this.txt_nat = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -49,9 +48,6 @@ namespace School_Mang.PL.STD
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.pn_tarihk = new System.Windows.Forms.Panel();
-            this.drop_year = new Bunifu.Framework.UI.BunifuDropdown();
-            this.drop_month = new Bunifu.Framework.UI.BunifuDropdown();
-            this.drop_day = new Bunifu.Framework.UI.BunifuDropdown();
             this.label10 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -61,6 +57,10 @@ namespace School_Mang.PL.STD
             this.panel3 = new System.Windows.Forms.Panel();
             this.btn_ok = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btn_close_b = new Bunifu.Framework.UI.BunifuThinButton2();
+            this.cmb_day = new System.Windows.Forms.ComboBox();
+            this.cmb_month = new System.Windows.Forms.ComboBox();
+            this.cmb_year = new System.Windows.Forms.ComboBox();
+            this.cmb_chose_year = new System.Windows.Forms.ComboBox();
             this.pn_home.SuspendLayout();
             this.panel2.SuspendLayout();
             this.pn_tarihk.SuspendLayout();
@@ -94,9 +94,9 @@ namespace School_Mang.PL.STD
             // 
             this.panel2.BackColor = System.Drawing.Color.Azure;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.cmb_chose_year);
             this.panel2.Controls.Add(this.chk_nat);
             this.panel2.Controls.Add(this.chk_traehk);
-            this.panel2.Controls.Add(this.drop_chose_year);
             this.panel2.Controls.Add(this.txt_nat);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.label9);
@@ -117,11 +117,11 @@ namespace School_Mang.PL.STD
             // 
             // chk_nat
             // 
-            this.chk_nat.BackColor = System.Drawing.Color.SeaGreen;
+            this.chk_nat.BackColor = System.Drawing.Color.Silver;
             this.chk_nat.ChechedOffColor = System.Drawing.Color.Gray;
             this.chk_nat.Checked = true;
-            this.chk_nat.CheckedOnColor = System.Drawing.Color.SeaGreen;
-            this.chk_nat.ForeColor = System.Drawing.Color.White;
+            this.chk_nat.CheckedOnColor = System.Drawing.Color.Silver;
+            this.chk_nat.ForeColor = System.Drawing.Color.Black;
             this.chk_nat.Location = new System.Drawing.Point(137, 84);
             this.chk_nat.Name = "chk_nat";
             this.chk_nat.Size = new System.Drawing.Size(20, 20);
@@ -130,51 +130,22 @@ namespace School_Mang.PL.STD
             // 
             // chk_traehk
             // 
-            this.chk_traehk.BackColor = System.Drawing.Color.SeaGreen;
+            this.chk_traehk.BackColor = System.Drawing.Color.Silver;
             this.chk_traehk.ChechedOffColor = System.Drawing.Color.Gray;
             this.chk_traehk.Checked = true;
-            this.chk_traehk.CheckedOnColor = System.Drawing.Color.SeaGreen;
-            this.chk_traehk.ForeColor = System.Drawing.Color.White;
+            this.chk_traehk.CheckedOnColor = System.Drawing.Color.Silver;
+            this.chk_traehk.ForeColor = System.Drawing.Color.Black;
             this.chk_traehk.Location = new System.Drawing.Point(356, 84);
             this.chk_traehk.Name = "chk_traehk";
             this.chk_traehk.Size = new System.Drawing.Size(20, 20);
             this.chk_traehk.TabIndex = 1;
             this.chk_traehk.OnChange += new System.EventHandler(this.chk_traehk_OnChange);
             // 
-            // drop_chose_year
-            // 
-            this.drop_chose_year.BackColor = System.Drawing.Color.Transparent;
-            this.drop_chose_year.BorderRadius = 3;
-            this.drop_chose_year.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.drop_chose_year.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.drop_chose_year.ForeColor = System.Drawing.Color.White;
-            this.drop_chose_year.Items = new string[] {
-        "2023",
-        "2024",
-        "2025",
-        "2026",
-        "2027",
-        "2028",
-        "2029",
-        "2030",
-        "2031",
-        "2032",
-        "2033"};
-            this.drop_chose_year.Location = new System.Drawing.Point(107, 207);
-            this.drop_chose_year.Margin = new System.Windows.Forms.Padding(12, 15, 12, 15);
-            this.drop_chose_year.Name = "drop_chose_year";
-            this.drop_chose_year.NomalColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(139)))), ((int)(((byte)(87)))));
-            this.drop_chose_year.onHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(129)))), ((int)(((byte)(77)))));
-            this.drop_chose_year.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.drop_chose_year.selectedIndex = -1;
-            this.drop_chose_year.Size = new System.Drawing.Size(277, 36);
-            this.drop_chose_year.TabIndex = 6;
-            // 
             // txt_nat
             // 
-            this.txt_nat.BackColor = System.Drawing.Color.SeaGreen;
+            this.txt_nat.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.txt_nat.Font = new System.Drawing.Font("LBC", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_nat.ForeColor = System.Drawing.Color.White;
+            this.txt_nat.ForeColor = System.Drawing.Color.Black;
             this.txt_nat.Location = new System.Drawing.Point(103, 254);
             this.txt_nat.MaxLength = 14;
             this.txt_nat.Name = "txt_nat";
@@ -321,132 +292,16 @@ namespace School_Mang.PL.STD
             // 
             // pn_tarihk
             // 
-            this.pn_tarihk.Controls.Add(this.drop_year);
-            this.pn_tarihk.Controls.Add(this.drop_month);
-            this.pn_tarihk.Controls.Add(this.drop_day);
             this.pn_tarihk.Controls.Add(this.label10);
+            this.pn_tarihk.Controls.Add(this.cmb_year);
+            this.pn_tarihk.Controls.Add(this.cmb_month);
+            this.pn_tarihk.Controls.Add(this.cmb_day);
             this.pn_tarihk.Controls.Add(this.label8);
             this.pn_tarihk.Controls.Add(this.label6);
             this.pn_tarihk.Location = new System.Drawing.Point(83, 110);
             this.pn_tarihk.Name = "pn_tarihk";
             this.pn_tarihk.Size = new System.Drawing.Size(424, 88);
             this.pn_tarihk.TabIndex = 54;
-            // 
-            // drop_year
-            // 
-            this.drop_year.BackColor = System.Drawing.Color.Transparent;
-            this.drop_year.BorderRadius = 3;
-            this.drop_year.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.drop_year.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.drop_year.ForeColor = System.Drawing.Color.White;
-            this.drop_year.Items = new string[] {
-        "2005",
-        "2006",
-        "2007",
-        "2008",
-        "2009",
-        "2010",
-        "2011",
-        "2012",
-        "2013",
-        "2014",
-        "2015",
-        "2016",
-        "2017",
-        "2018",
-        "2019",
-        "2020",
-        "2021",
-        "2022",
-        "2023"};
-            this.drop_year.Location = new System.Drawing.Point(20, 34);
-            this.drop_year.Margin = new System.Windows.Forms.Padding(13);
-            this.drop_year.Name = "drop_year";
-            this.drop_year.NomalColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(139)))), ((int)(((byte)(87)))));
-            this.drop_year.onHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(129)))), ((int)(((byte)(77)))));
-            this.drop_year.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.drop_year.selectedIndex = -1;
-            this.drop_year.Size = new System.Drawing.Size(104, 42);
-            this.drop_year.TabIndex = 5;
-            // 
-            // drop_month
-            // 
-            this.drop_month.BackColor = System.Drawing.Color.Transparent;
-            this.drop_month.BorderRadius = 3;
-            this.drop_month.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.drop_month.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.drop_month.ForeColor = System.Drawing.Color.White;
-            this.drop_month.Items = new string[] {
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-        "9",
-        "10",
-        "11",
-        "12"};
-            this.drop_month.Location = new System.Drawing.Point(176, 34);
-            this.drop_month.Margin = new System.Windows.Forms.Padding(13);
-            this.drop_month.Name = "drop_month";
-            this.drop_month.NomalColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(139)))), ((int)(((byte)(87)))));
-            this.drop_month.onHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(129)))), ((int)(((byte)(77)))));
-            this.drop_month.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.drop_month.selectedIndex = -1;
-            this.drop_month.Size = new System.Drawing.Size(90, 42);
-            this.drop_month.TabIndex = 4;
-            // 
-            // drop_day
-            // 
-            this.drop_day.BackColor = System.Drawing.Color.Transparent;
-            this.drop_day.BorderRadius = 3;
-            this.drop_day.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.drop_day.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.drop_day.ForeColor = System.Drawing.Color.White;
-            this.drop_day.Items = new string[] {
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-        "9",
-        "10",
-        "11",
-        "12",
-        "13",
-        "14",
-        "15",
-        "16",
-        "17",
-        "18",
-        "19",
-        "20",
-        "21",
-        "22",
-        "23",
-        "24",
-        "25",
-        "26",
-        "27",
-        "28",
-        "29",
-        "30",
-        "31"};
-            this.drop_day.Location = new System.Drawing.Point(308, 34);
-            this.drop_day.Margin = new System.Windows.Forms.Padding(50, 56, 50, 56);
-            this.drop_day.Name = "drop_day";
-            this.drop_day.NomalColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(139)))), ((int)(((byte)(87)))));
-            this.drop_day.onHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(129)))), ((int)(((byte)(77)))));
-            this.drop_day.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.drop_day.selectedIndex = -1;
-            this.drop_day.Size = new System.Drawing.Size(84, 38);
-            this.drop_day.TabIndex = 3;
             // 
             // label10
             // 
@@ -585,6 +440,139 @@ namespace School_Mang.PL.STD
             this.btn_close_b.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.btn_close_b.Click += new System.EventHandler(this.btn_close_b_Click);
             // 
+            // cmb_day
+            // 
+            this.cmb_day.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.cmb_day.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_day.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cmb_day.Font = new System.Drawing.Font("Noto Naskh Arabic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmb_day.ForeColor = System.Drawing.Color.DimGray;
+            this.cmb_day.FormattingEnabled = true;
+            this.cmb_day.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23",
+            "24",
+            "25",
+            "26",
+            "27",
+            "28",
+            "29",
+            "30",
+            "31"});
+            this.cmb_day.Location = new System.Drawing.Point(305, 36);
+            this.cmb_day.Name = "cmb_day";
+            this.cmb_day.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.cmb_day.Size = new System.Drawing.Size(84, 35);
+            this.cmb_day.TabIndex = 55;
+            // 
+            // cmb_month
+            // 
+            this.cmb_month.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.cmb_month.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_month.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cmb_month.Font = new System.Drawing.Font("Noto Naskh Arabic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmb_month.ForeColor = System.Drawing.Color.DimGray;
+            this.cmb_month.FormattingEnabled = true;
+            this.cmb_month.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12"});
+            this.cmb_month.Location = new System.Drawing.Point(172, 36);
+            this.cmb_month.Name = "cmb_month";
+            this.cmb_month.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.cmb_month.Size = new System.Drawing.Size(85, 35);
+            this.cmb_month.TabIndex = 56;
+            // 
+            // cmb_year
+            // 
+            this.cmb_year.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.cmb_year.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_year.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cmb_year.Font = new System.Drawing.Font("Noto Naskh Arabic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmb_year.ForeColor = System.Drawing.Color.DimGray;
+            this.cmb_year.FormattingEnabled = true;
+            this.cmb_year.Items.AddRange(new object[] {
+            "2005",
+            "2006",
+            "2007",
+            "2008",
+            "2009",
+            "2010",
+            "2011",
+            "2012",
+            "2013",
+            "2014",
+            "2015",
+            "2016",
+            "2017",
+            "2018",
+            "2019",
+            "2020",
+            "2021",
+            "2022",
+            "2023"});
+            this.cmb_year.Location = new System.Drawing.Point(26, 36);
+            this.cmb_year.Name = "cmb_year";
+            this.cmb_year.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.cmb_year.Size = new System.Drawing.Size(95, 35);
+            this.cmb_year.TabIndex = 57;
+            // 
+            // cmb_chose_year
+            // 
+            this.cmb_chose_year.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.cmb_chose_year.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_chose_year.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cmb_chose_year.Font = new System.Drawing.Font("Noto Naskh Arabic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmb_chose_year.ForeColor = System.Drawing.Color.DimGray;
+            this.cmb_chose_year.FormattingEnabled = true;
+            this.cmb_chose_year.Items.AddRange(new object[] {
+            "2023",
+            "2024",
+            "2025",
+            "2026",
+            "2027",
+            "2028",
+            "2029",
+            "2030",
+            "2031",
+            "2032",
+            "2033"});
+            this.cmb_chose_year.Location = new System.Drawing.Point(103, 204);
+            this.cmb_chose_year.Name = "cmb_chose_year";
+            this.cmb_chose_year.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.cmb_chose_year.Size = new System.Drawing.Size(272, 35);
+            this.cmb_chose_year.TabIndex = 58;
+            // 
             // FRM_HESAB_SEN
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -617,7 +605,6 @@ namespace School_Mang.PL.STD
         #endregion
 
         public System.Windows.Forms.Panel pn_home;
-        private Bunifu.Framework.UI.BunifuDropdown drop_chose_year;
         private System.Windows.Forms.TextBox txt_nat;
         private System.Windows.Forms.Panel pn_top;
         private DevExpress.XtraEditors.SimpleButton btn_close;
@@ -640,12 +627,13 @@ namespace School_Mang.PL.STD
         private Bunifu.Framework.UI.BunifuCheckbox chk_nat;
         private Bunifu.Framework.UI.BunifuCheckbox chk_traehk;
         private System.Windows.Forms.Panel pn_tarihk;
-        private Bunifu.Framework.UI.BunifuDropdown drop_year;
-        private Bunifu.Framework.UI.BunifuDropdown drop_month;
-        private Bunifu.Framework.UI.BunifuDropdown drop_day;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label lbl_nat;
+        public System.Windows.Forms.ComboBox cmb_day;
+        public System.Windows.Forms.ComboBox cmb_month;
+        public System.Windows.Forms.ComboBox cmb_year;
+        public System.Windows.Forms.ComboBox cmb_chose_year;
     }
 }

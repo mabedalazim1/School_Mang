@@ -35,5 +35,11 @@
     <Setting Name="permission_id" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
+    <Setting Name="save_path" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\Rasd</Value>
+    </Setting>
+    <Setting Name="site_uri" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://www.alkwtherps.com/api/</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

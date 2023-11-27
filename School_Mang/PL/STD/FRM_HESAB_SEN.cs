@@ -58,49 +58,50 @@ namespace School_Mang.PL.STD
 
         private void btn_ok_Click(object sender, EventArgs e)
         {
-            if (drop_chose_year.selectedIndex == -1)
+            if (cmb_chose_year.SelectedIndex == -1)
             {
                 msg.ErrorMesg("اختر العام الدراسى");
-                drop_chose_year.Focus();
+                cmb_chose_year.Focus();
                 return;
             }
             // By Tarehk
             if (chk_traehk.Checked)
             {
-            
-            if(drop_day.selectedIndex == -1)
-            {
+
+                if (cmb_day.SelectedIndex == -1)
+                {
                     msg.ErrorMesg("اختر اليوم");
-                drop_day.Focus();
-                return;
-            }
-            if (drop_month.selectedIndex == -1)
-            {
+                    cmb_day.Focus();
+                    return;
+                }
+                if (cmb_month.SelectedIndex == -1)
+                {
                     msg.ErrorMesg("اختر الشهر");
-                    drop_month.Focus();
+                    cmb_month.Focus();
                     return;
-            }
-            if (drop_year.selectedIndex == -1)
-            {
+                }
+                if (cmb_year.SelectedIndex == -1)
+                {
                     msg.ErrorMesg("اختر السنة");
-                    drop_year.Focus();
+                    cmb_year.Focus();
                     return;
-            }
-         
-            int dd = Convert.ToInt32(drop_day.selectedValue);
-            int mm = Convert.ToInt32(drop_month.selectedValue);
-            int yy = Convert.ToInt32(drop_year.selectedValue);
-            int sana =Convert.ToInt32(drop_chose_year.selectedValue);
+                }
 
-            if (BL.HesabSen(dd, mm, yy, sana) != null) { 
+                int dd = Convert.ToInt32(cmb_day.SelectedItem);
+                int mm = Convert.ToInt32(cmb_month.SelectedItem);
+                int yy = Convert.ToInt32(cmb_year.SelectedItem);
+                int sana = Convert.ToInt32(cmb_chose_year.SelectedItem);
 
-                lbl_day.Text =BL.HesabSen(dd,mm,yy, sana)[0];
-                lbl_month.Text = BL.HesabSen(dd, mm, yy, sana)[1];
-                lbl_year.Text = BL.HesabSen(dd, mm, yy, sana)[2];
+                if (BL.HesabSen(dd, mm, yy, sana) != null)
+                {
+
+                    lbl_day.Text = BL.HesabSen(dd, mm, yy, sana)[0];
+                    lbl_month.Text = BL.HesabSen(dd, mm, yy, sana)[1];
+                    lbl_year.Text = BL.HesabSen(dd, mm, yy, sana)[2];
                 }
                 else
                 {
-                    lbl_day.Text ="";
+                    lbl_day.Text = "";
                     lbl_month.Text = "";
                     lbl_year.Text = "";
                 }
@@ -108,17 +109,17 @@ namespace School_Mang.PL.STD
             // By Nat
             else
             {
-                if(txt_nat != null)
+                if (txt_nat != null)
                 {
 
-                    int sana = Convert.ToInt32(drop_chose_year.selectedValue);
+                    int sana = Convert.ToInt32(cmb_chose_year.SelectedItem);
                     if (txt_nat.TextLength == 14)
                     {
-                        if(BL.Nat_HesabSen(txt_nat.Text, sana)!= null)
-                        { 
-                          lbl_day.Text = BL.Nat_HesabSen(txt_nat.Text, sana)[0];
-                          lbl_month.Text = BL.Nat_HesabSen(txt_nat.Text, sana)[1];
-                          lbl_year.Text = BL.Nat_HesabSen(txt_nat.Text, sana)[2];
+                        if (BL.Nat_HesabSen(txt_nat.Text, sana) != null)
+                        {
+                            lbl_day.Text = BL.Nat_HesabSen(txt_nat.Text, sana)[0];
+                            lbl_month.Text = BL.Nat_HesabSen(txt_nat.Text, sana)[1];
+                            lbl_year.Text = BL.Nat_HesabSen(txt_nat.Text, sana)[2];
                         }
                     }
                     else
@@ -140,7 +141,7 @@ namespace School_Mang.PL.STD
 
         private void chk_traehk_OnChange(object sender, EventArgs e)
         {
-            if(chk_traehk.Checked)
+            if (chk_traehk.Checked)
             {
                 chk_nat.Checked = false;
                 pn_tarihk.Visible = true;
@@ -181,7 +182,7 @@ namespace School_Mang.PL.STD
 
         private void FRM_HESAB_SEN_Load(object sender, EventArgs e)
         {
-            drop_chose_year.selectedIndex = 0;
+            cmb_chose_year.SelectedIndex = 0;
             chk_nat.Checked = false;
             txt_nat.Location = new Point(105, 150);
             lbl_nat.Location = new Point(385, 150);
@@ -191,7 +192,7 @@ namespace School_Mang.PL.STD
         {
             if (!chk_traehk.Checked)
             {
-                chk_traehk.Checked =true;
+                chk_traehk.Checked = true;
                 chk_nat.Checked = false;
             }
             else

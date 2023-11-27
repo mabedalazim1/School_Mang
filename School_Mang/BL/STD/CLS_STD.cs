@@ -730,12 +730,12 @@ namespace School_Mang.BL.STD
                                           string Guardian_name,
                                           string Transfer_reason,
                                           byte Resom , byte Kotob,
-                                          string adrs)
+                                          string adrs , int New_Grade)
 
         {
             DAL.DataAcceseLayer DAL = new DAL.DataAcceseLayer();
 
-            SqlParameter[] param = new SqlParameter[12];
+            SqlParameter[] param = new SqlParameter[13];
 
             param[0] = new SqlParameter("@Transfer_code", SqlDbType.NVarChar, 20);
             param[0].Value = Transfer_code;
@@ -772,6 +772,9 @@ namespace School_Mang.BL.STD
 
             param[11] = new SqlParameter("@Updated_by", SqlDbType.NVarChar, 15);
             param[11].Value = Properties.Settings.Default.user_name;
+
+            param[12] = new SqlParameter("@New_Grade", SqlDbType.Int);
+            param[12].Value = New_Grade;
 
 
             DAL.Open();
@@ -1076,5 +1079,70 @@ namespace School_Mang.BL.STD
             DAL.Close();
             return Dt;
         }
+
+        public DataTable Get_Segel_Data(int year_id,int grade_id = 0)
+        {
+            DAL.DataAcceseLayer DAL = new DAL.DataAcceseLayer();
+            DataTable Dt;
+
+            int October_Sana = year_id + 20;
+
+            SqlParameter[] param = new SqlParameter[3];
+            param[0] = new SqlParameter("@year_id", SqlDbType.Int);
+            param[0].Value = year_id;
+
+            param[1] = new SqlParameter("@Grade_Id", SqlDbType.Int);
+            param[1].Value = grade_id;
+
+            param[2] = new SqlParameter("@October_Sana", SqlDbType.Int);
+            param[2].Value = October_Sana;
+
+            Dt = DAL.Selectdata("SP_Get_Segel_Data", param);
+            DAL.Close();
+            return Dt;
+        }
+
+        public DataTable Get_Tadrg_Sen(int year_id, int grade_id =0)
+        {
+            DAL.DataAcceseLayer DAL = new DAL.DataAcceseLayer();
+            DataTable Dt;
+
+            int October_Sana = year_id + 20;
+
+            SqlParameter[] param = new SqlParameter[3];
+            param[0] = new SqlParameter("@year_id", SqlDbType.Int);
+            param[0].Value = year_id;
+
+            param[1] = new SqlParameter("@Grade_Id", SqlDbType.Int);
+            param[1].Value = grade_id;
+
+            param[2] = new SqlParameter("@October_Sana", SqlDbType.Int);
+            param[2].Value = October_Sana;
+
+            Dt = DAL.Selectdata("SP_Get_Tadrg_Sen", param);
+            DAL.Close();
+            return Dt;
+        }
+
+        public DataTable Get_Trans_Reports(int Year_Id, int Status_Id ,int Grade_Id = 0)
+        {
+            DAL.DataAcceseLayer DAL = new DAL.DataAcceseLayer();
+            DataTable Dt;
+
+            SqlParameter[] param = new SqlParameter[3];
+            param[0] = new SqlParameter("@Year_Id", SqlDbType.Int);
+            param[0].Value = Year_Id;
+
+            param[1] = new SqlParameter("@Grade_Id", SqlDbType.Int);
+            param[1].Value = Grade_Id;
+
+            param[2] = new SqlParameter("@Status_Id", SqlDbType.Int);
+            param[2].Value = Status_Id;
+
+            Dt = DAL.Selectdata("SP_GET_Trans_Data", param);
+            DAL.Close();
+            return Dt;
+        }
+
     }
 }

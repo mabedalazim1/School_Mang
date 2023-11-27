@@ -94,6 +94,9 @@
   <PropertyGroup />
   <ItemGroup>
     <Reference Include="AxShockwaveFlashObjects, Version=1.0.0.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.9.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
+      <HintPath>..\packages\Portable.BouncyCastle.1.8.9\lib\net40\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
     <Reference Include="Bunifu_UI_v1.52">
       <HintPath>D:\Prog\Bunifu_UI_WinForms_5.0.3 [PeskTop.com]\Bunifu_UI_WinForms_5.0.3 [PeskTop.com]\Bunifu_UI_v1.52.dll</HintPath>
     </Reference>
@@ -141,15 +144,65 @@
     <Reference Include="DevExpress.XtraTreeMap.v22.2, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraTreeMap.v22.2.UI, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraWizard.v22.2, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json.Bson, Version=1.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.Bson.1.0.2\lib\net45\Newtonsoft.Json.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="ReachFramework" />
     <Reference Include="Renci.SshNet, Version=2020.0.2.0, Culture=neutral, PublicKeyToken=1cee9f8bde3db106, processorArchitecture=MSIL">
       <HintPath>..\packages\SSH.NET.2020.0.2\lib\net40\Renci.SshNet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.6.0.0\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.Json.8.0.0\lib\net462\System.Net.Http.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Printing" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.8.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.8.0.0\lib\net462\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
@@ -161,6 +214,7 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BL\CLS_BACKUP_DATABASE.cs" />
@@ -168,11 +222,16 @@
     <Compile Include="BL\HESAB_SEN.cs" />
     <Compile Include="BL\LOGIN\CLS_LOGIN.cs" />
     <Compile Include="BL\MSG.cs" />
+    <Compile Include="BL\NATEG\CLS_NATEG.cs" />
+    <Compile Include="BL\NATEG\ExcelUtlity.cs" />
     <Compile Include="BL\STD\CLS_STD.cs" />
     <Compile Include="BL\USERS.cs" />
     <Compile Include="BL\Waiting.cs" />
     <Compile Include="DAL\DataAcceseLayer.cs" />
+    <Compile Include="DAL\SiteAccessLayer.cs" />
     <Compile Include="DAL\TestConcation.cs" />
+    <Compile Include="HTTP\HTTPCLINT.cs" />
+    <Compile Include="Models\LOGIN_DATA.cs" />
     <Compile Include="MyReports\rpt_Count_Std.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -198,6 +257,55 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Mostgdin_41.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="MyReports\rpt_Rasd_Degree_A.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rpt_Rasd_Degree_A.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="MyReports\rpt_Rasd_Degree_B.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rpt_Rasd_Degree_B.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="MyReports\rpt_Rasd_Degree_C.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rpt_Rasd_Degree_C.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="MyReports\rpt_Rasd_Mark_A.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rpt_Rasd_Mark_A.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="MyReports\rpt_Rasd_Mark_B.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rpt_Rasd_Mark_B.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="MyReports\rpt_Rasd_Mark_C.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rpt_Rasd_Mark_C.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="MyReports\rpt_Rasd_Mark_D.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rpt_Rasd_Mark_D.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
@@ -261,6 +369,30 @@
     </Compile>
     <Compile Include="PL\MAIN\FRM_YEAR.Designer.cs">
       <DependentUpon>FRM_YEAR.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PL\NATIGA\FRM_ADD_GOLOS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\NATIGA\FRM_ADD_GOLOS.Designer.cs">
+      <DependentUpon>FRM_ADD_GOLOS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PL\NATIGA\FRM_DELETE_SITE_DATA.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\NATIGA\FRM_DELETE_SITE_DATA.Designer.cs">
+      <DependentUpon>FRM_DELETE_SITE_DATA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PL\NATIGA\FRM_KSHOF_RASD.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\NATIGA\FRM_KSHOF_RASD.Designer.cs">
+      <DependentUpon>FRM_KSHOF_RASD.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PL\NATIGA\HOME\FRM_MANG_SITE.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\NATIGA\HOME\FRM_MANG_SITE.Designer.cs">
+      <DependentUpon>FRM_MANG_SITE.cs</DependentUpon>
     </Compile>
     <Compile Include="PL\STD\CLS_STD_FUNCATIONS.cs" />
     <Compile Include="PL\STD\FRM_ADD_STD.cs">
@@ -448,6 +580,73 @@
       <LastGenOutput>rpt_Tahewl_Data.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="EXCEL\degree-1p.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EXCEL\degree-2p.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EXCEL\degree-3p.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EXCEL\mark-1p.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EXCEL\mark-2p.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EXCEL\mark-3p.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EXCEL\mark-4p.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\delete-database-100.png" />
+    <None Include="Resources\site-100.png" />
+    <None Include="Resources\note-48.png" />
+    <None Include="Resources\note-100.png" />
+    <None Include="Resources\reports-100.png" />
+    <None Include="Resources\excel-to-2100.png" />
+    <None Include="Resources\excel-100.png" />
+    <None Include="Resources\excel-48.png" />
+    <None Include="Resources\test-cheating-1001.png" />
+    <None Include="Resources\test-cheating-100.png" />
+    <None Include="Resources\add-golos-100.png" />
+    <Content Include="MyReports\rpt_Rasd_Degree_A.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rpt_Rasd_Degree_A.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MyReports\rpt_Rasd_Degree_B.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rpt_Rasd_Degree_B.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MyReports\rpt_Rasd_Degree_C.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rpt_Rasd_Degree_C.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MyReports\rpt_Rasd_Mark_A.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rpt_Rasd_Mark_A.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MyReports\rpt_Rasd_Mark_B.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rpt_Rasd_Mark_B.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MyReports\rpt_Rasd_Mark_C.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rpt_Rasd_Mark_C.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MyReports\rpt_Rasd_Mark_D.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rpt_Rasd_Mark_D.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="PL\MAIN\FRM_AMELIN.resx">
       <DependentUpon>FRM_AMELIN.cs</DependentUpon>
     </EmbeddedResource>
@@ -456,6 +655,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PL\MAIN\FRM_YEAR.resx">
       <DependentUpon>FRM_YEAR.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PL\NATIGA\FRM_ADD_GOLOS.resx">
+      <DependentUpon>FRM_ADD_GOLOS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PL\NATIGA\FRM_DELETE_SITE_DATA.resx">
+      <DependentUpon>FRM_DELETE_SITE_DATA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PL\NATIGA\FRM_KSHOF_RASD.resx">
+      <DependentUpon>FRM_KSHOF_RASD.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PL\NATIGA\HOME\FRM_MANG_SITE.resx">
+      <DependentUpon>FRM_MANG_SITE.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PL\STD\FRM_ADD_STD.resx">
       <DependentUpon>FRM_ADD_STD.cs</DependentUpon>

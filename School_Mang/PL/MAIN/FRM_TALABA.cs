@@ -72,6 +72,33 @@ namespace School_Mang.PL.MAIN
             FRM_MAIN.Get_Frm_Main.lbl_main.Visible = true;
         }
 
+        // Hide New Year
+        private void cheack_New_Year()
+        {
+            // Get Year
+
+            STD.HOME.FRM_STD_DATA.Get_Frm_Std_Data.lbl_year.Text = Properties.Settings.Default.Year_Desc;
+            STD.HOME.FRM_STD_REPORTS.Get_Frm_Std_Reports.lbl_cruunt_year.Text = Properties.Settings.Default.Year_Desc;
+            int new_year = Properties.Settings.Default.MyYear + 1;
+            STD.HOME.FRM_STD_DATA.Get_Frm_Std_Data.lbl_new_year.Text = std.Get_years(new_year).Rows[0][1].ToString();
+            STD.HOME.FRM_STD_REPORTS.Get_Frm_Std_Reports.lbl_new_year.Text = std.Get_years(new_year).Rows[0][1].ToString();
+
+            // Hide New Year Card If There Is no Student On New Year
+            int year_code = Properties.Settings.Default.year_cod + 1;
+            DataTable dt_count;
+            dt_count = std.Get_School_year_Data(year_code, 0, 0);
+            if (dt_count.Rows.Count == 0)
+            {
+                STD.HOME.FRM_STD_DATA.Get_Frm_Std_Data.card_new_year.Visible = false;
+                STD.HOME.FRM_STD_REPORTS.Get_Frm_Std_Reports.card_new_year.Visible = false;
+            }
+            else
+            {
+                STD.HOME.FRM_STD_DATA.Get_Frm_Std_Data.card_new_year.Visible = true;
+                STD.HOME.FRM_STD_REPORTS.Get_Frm_Std_Reports.card_new_year.Visible = true;
+
+            }
+        }
         private void pic_age_Click(object sender, EventArgs e)
         {
             STD.FRM_HESAB_SEN frm_sen = new STD.FRM_HESAB_SEN();
@@ -117,27 +144,8 @@ namespace School_Mang.PL.MAIN
         {
             try
             {
-
-                // Get Year
-
-                STD.HOME.FRM_STD_DATA.Get_Frm_Std_Data.lbl_year.Text = Properties.Settings.Default.Year_Desc;
-                int new_year = Properties.Settings.Default.MyYear + 1;
-                STD.HOME.FRM_STD_DATA.Get_Frm_Std_Data.lbl_new_year.Text = std.Get_years(new_year).Rows[0][1].ToString();
-
-                // Hide New Year Card If There Is no Student On New Year
-                int year_code = Properties.Settings.Default.year_cod + 1;
-                DataTable dt_count;
-                dt_count = std.Get_School_year_Data(year_code, 0, 0);
-                if (dt_count.Rows.Count == 0)
-                {
-                    STD.HOME.FRM_STD_DATA.Get_Frm_Std_Data.card_new_year.Visible = false;
-                }
-                else
-                {
-                    STD.HOME.FRM_STD_DATA.Get_Frm_Std_Data.card_new_year.Visible = true;
-                }
-
-                // Test Permissions
+                cheack_New_Year();
+              // Test Permissions
                 int user = Properties.Settings.Default.user_code;
                 DataTable dt_user = users.Get_User_Permission(user);
                 if (dt_user.Rows[0]["role_id"].ToString() == "1" &&
@@ -170,6 +178,8 @@ namespace School_Mang.PL.MAIN
 
         private void lbl_ehsaa_Click(object sender, EventArgs e)
         {
+            // Hide New Year Data
+            cheack_New_Year();
             // Get Std Data Form
             changePages(STD.HOME.FRM_STD_REPORTS.Get_Frm_Std_Reports.pn_std_home, "تقارير - احصائيات");
         }

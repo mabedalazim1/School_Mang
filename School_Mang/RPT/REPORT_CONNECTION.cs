@@ -151,9 +151,8 @@ namespace School_Mang.RPT
                 //rpt_Tadarg_Sen myReport = new rpt_Tadarg_Sen();
                 HESAB_SEN hesab_sen = new HESAB_SEN();
 
-                string octber =  Convert.ToString(year_id + 2020) + "-10-01";
-                DateTime October_Sana = Convert.ToDateTime(octber);
-
+                int October_Sana =  year_id + 20;
+              
                 myReport.SetParameterValue("@year_id", year_id);
                 myReport.SetParameterValue("@grade_id", grade_id);
                 myReport.SetParameterValue("@October_Sana", October_Sana);
@@ -177,9 +176,8 @@ namespace School_Mang.RPT
                 myReport.Load(Application.StartupPath + @"/MyReports/rpt_Segel_Data.rpt");
                 HESAB_SEN hesab_sen = new HESAB_SEN();
 
-                string octber = Convert.ToString(year_id + 2020) + "-10-01";
-                DateTime October_Sana = Convert.ToDateTime(octber);
-
+                int October_Sana = year_id + 20;
+               
                 myReport.SetParameterValue("@year_id", year_id);
                 myReport.SetParameterValue("@grade_id", grade_id);
                 myReport.SetParameterValue("@October_Sana", October_Sana);
@@ -208,8 +206,7 @@ namespace School_Mang.RPT
                 //rpt_Tadarg_Sen myReport = new rpt_Tadarg_Sen();
                 HESAB_SEN hesab_sen = new HESAB_SEN();
 
-                string octber = Convert.ToString(year_id + 2020) + "-10-01";
-                DateTime October_Sana = Convert.ToDateTime(octber);
+                int October_Sana = year_id + 20;
 
                 myReport.SetParameterValue("@year_id", year_id);
                 myReport.SetParameterValue("@grade_id", grade_id);
@@ -224,7 +221,9 @@ namespace School_Mang.RPT
             }
 
 
-        } public void OpenTahewl_Data(int year_id,
+        } 
+        
+        public void OpenTahewl_Data(int year_id,
                                  int Status_Id,
                                  int grade_id = 0)
         {
@@ -238,8 +237,117 @@ namespace School_Mang.RPT
                 myReport.SetParameterValue("@grade_id", grade_id);
                 myReport.SetParameterValue("@Status_Id", Status_Id);
 
-
                 OpenReport(myReport, "بيان الطلاب المحولين", "بيان الطلاب المحولين");
+            }
+            catch (Exception e)
+            {
+                msg.ErrorMesg(e.Message);
+            }
+
+        }
+
+        public void OpenCount_Std(int year_id)
+        {
+            try
+            {
+                ReportDocument myReport = new ReportDocument();
+                myReport.Load(Application.StartupPath + @"/MyReports/rpt_Count_Std.rpt");
+
+
+                myReport.SetParameterValue("@year_id", year_id);
+                myReport.SetParameterValue("@grade_id", 0);
+
+                OpenReport(myReport, "بيان احصاء الطلاب", "بيان احصاء الطلاب");
+            }
+            catch (Exception e)
+            {
+                msg.ErrorMesg(e.Message);
+            }
+
+        }
+
+        public void OpenKoshof_Rasd(int grade_id, string month, byte rasd_kind = 1 )
+        {
+            try
+            {
+                string report_name = "rpt_Rasd_Degree_A.rpt";
+
+                int year = Properties.Settings.Default.year_cod;
+                ReportDocument myReport = new ReportDocument();
+                if (rasd_kind == 1)
+                {
+                    switch (grade_id)
+                    {
+                        case 10:
+                        case 11:
+                        case 1:
+                        case 2:
+                        case 3:
+
+                            report_name = "rpt_Rasd_Degree_A.rpt";
+                            break;
+                        case 4:
+                        case 5:
+                        case 6:
+
+                            report_name = "rpt_Rasd_Degree_B.rpt";
+                            break;
+
+                        case 7:
+                        case 8:
+                        case 9:
+
+                            report_name = "rpt_Rasd_Degree_C.rpt";
+                            break;
+
+                    }
+                }
+                else
+                {
+                    switch (grade_id)
+                    {
+                        case 10:
+                        case 11:
+                            report_name = "rpt_Rasd_Mark_A.rpt";
+                            break;
+                        case 1:
+                        case 2:
+                        case 3:
+                            report_name = "rpt_Rasd_Mark_B.rpt";
+                            break;
+
+                        case 4:
+                        case 5:
+                        case 6:
+                            report_name = "rpt_Rasd_Mark_C.rpt";
+                            break;
+
+                        case 7:
+                        case 8:
+                        case 9:
+                            report_name = "rpt_Rasd_Mark_D.rpt";
+                            break;
+
+                    }
+                }
+                myReport.Load(Application.StartupPath + @"/MyReports/" + report_name);
+
+
+                myReport.SetParameterValue("@year_id", year);
+                myReport.SetParameterValue("@grade_id", grade_id);
+                myReport.SetParameterValue("@month", month);
+                if(rasd_kind == 1)
+                {
+                    myReport.SetParameterValue("@test_kind", "تقييمات");
+                }
+                else
+                {
+                    myReport.SetParameterValue("@test_kind", "اختبار");
+                }
+               
+                
+
+                OpenReport(myReport, "كشوف الرصد", "كشوف الرصد");
             }
             catch (Exception e)
             {

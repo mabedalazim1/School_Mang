@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -281,6 +282,46 @@ namespace School_Mang.BL
             set
             {
                 _My_Year = value;
+            }
+        }
+
+        private static bool _Kashof_Rasd;
+        public static bool Kashof_Rasd
+        {
+            get
+            {
+                return _Kashof_Rasd;
+            }
+            set
+            {
+                _Kashof_Rasd = value;
+            }
+        }
+        
+        private static string _accessToken;
+        public static string accessToken
+        {
+            get
+            {
+                return _accessToken;
+            }
+            set
+            {
+                _accessToken = value;
+            }
+        } 
+        
+       
+        private static HttpContent _Http_Content;
+        public static HttpContent Http_Content
+        {
+            get
+            {
+                return _Http_Content;
+            }
+            set
+            {
+                _Http_Content = value;
             }
         }
 

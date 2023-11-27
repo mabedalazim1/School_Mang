@@ -107,6 +107,7 @@ namespace School_Mang.PL.MAIN
             txt_databasee_name.Text = Properties.Settings.Default.DataBasee_name;
             txt_databasee_user.Text = Properties.Settings.Default.DataBasee_User;
             txt_databasee_pass.Text = Properties.Settings.Default.DataBasee_Pass;
+            txt_url.Text = Properties.Settings.Default.site_uri;
             group_box_server.Visible = false;
             group_box_pic.Visible = false;
             group_box_users.Visible = false;
@@ -145,6 +146,14 @@ namespace School_Mang.PL.MAIN
                 Waiting.End_WAit();
                 return;
             }
+
+            if (txt_url.Text == "")
+            {
+                msg.ErrorMesg("تأكد من عنوان الموقع");
+                txt_url.Focus();
+                Waiting.End_WAit();
+                return;
+            }
             DialogResult dialogResult = MessageBox.Show("هل تريد تغيير البيانات الخاصة بالسيرفر!!", " مدرسة الكوثر الخاصة", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (dialogResult == DialogResult.No)
@@ -160,6 +169,7 @@ namespace School_Mang.PL.MAIN
                 Properties.Settings.Default.DataBasee_name = txt_databasee_name.Text;
                 Properties.Settings.Default.DataBasee_User = txt_databasee_user.Text;
                 Properties.Settings.Default.DataBasee_Pass = txt_databasee_pass.Text;
+                Properties.Settings.Default.site_uri = txt_url.Text;
                 Properties.Settings.Default.Save();
                 Waiting.End_WAit();
             }
@@ -172,6 +182,7 @@ namespace School_Mang.PL.MAIN
             txt_databasee_name.Text = Properties.Settings.Default.DataBasee_name;
             txt_databasee_user.Text = Properties.Settings.Default.DataBasee_User;
             txt_databasee_pass.Text = Properties.Settings.Default.DataBasee_Pass;
+            txt_url.Text = Properties.Settings.Default.site_uri;
         }
 
        

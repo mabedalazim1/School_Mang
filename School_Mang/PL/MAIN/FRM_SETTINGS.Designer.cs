@@ -30,10 +30,10 @@ namespace School_Mang.PL.MAIN
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FRM_SETTINGS));
             this.pn_home = new System.Windows.Forms.Panel();
             this.group_box_users = new System.Windows.Forms.GroupBox();
@@ -41,8 +41,15 @@ namespace School_Mang.PL.MAIN
             this.txt_user_data = new Bunifu.Framework.UI.BunifuMaterialTextbox();
             this.dt_users_data = new System.Windows.Forms.DataGridView();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btn_add_perm = new Bunifu.Framework.UI.BunifuThinButton2();
+            this.btn_edit_user = new Bunifu.Framework.UI.BunifuThinButton2();
+            this.btn_add_user = new Bunifu.Framework.UI.BunifuThinButton2();
+            this.btn_del_user = new Bunifu.Framework.UI.BunifuThinButton2();
+            this.btn_close_users = new Bunifu.Framework.UI.BunifuThinButton2();
             this.group_box_login = new System.Windows.Forms.GroupBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btn_login = new Bunifu.Framework.UI.BunifuThinButton2();
+            this.btn_cancel = new Bunifu.Framework.UI.BunifuThinButton2();
             this.txt_pass = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.txt_user = new System.Windows.Forms.TextBox();
@@ -51,6 +58,8 @@ namespace School_Mang.PL.MAIN
             this.txt_new_pass2 = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.btn_change_pass = new Bunifu.Framework.UI.BunifuThinButton2();
+            this.btn_close_pass = new Bunifu.Framework.UI.BunifuThinButton2();
             this.txt_new_pass1 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.txt_old_pass = new System.Windows.Forms.TextBox();
@@ -68,10 +77,17 @@ namespace School_Mang.PL.MAIN
             this.link_users = new System.Windows.Forms.LinkLabel();
             this.pn_change_year = new System.Windows.Forms.Panel();
             this.link_chenge_year = new System.Windows.Forms.LinkLabel();
+            this.pn_back_up = new System.Windows.Forms.Panel();
+            this.link_bake_up = new System.Windows.Forms.LinkLabel();
+            this.pn_restore_data = new System.Windows.Forms.Panel();
+            this.lbl_restore = new System.Windows.Forms.LinkLabel();
             this.panel7 = new System.Windows.Forms.Panel();
             this.lbl_user = new System.Windows.Forms.Label();
             this.group_box_server = new System.Windows.Forms.GroupBox();
+            this.btn_test_con = new Bunifu.Framework.UI.BunifuThinButton2();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.btn_ok = new Bunifu.Framework.UI.BunifuThinButton2();
+            this.btn_close_b = new Bunifu.Framework.UI.BunifuThinButton2();
             this.txt_databasee_pass = new System.Windows.Forms.TextBox();
             this.txt_databasee_user = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -82,28 +98,14 @@ namespace School_Mang.PL.MAIN
             this.label2 = new System.Windows.Forms.Label();
             this.lbl_settings = new System.Windows.Forms.Label();
             this.group_box_pic = new System.Windows.Forms.GroupBox();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.label5 = new System.Windows.Forms.Label();
-            this.bunifuElipse1 = new Bunifu.Framework.UI.BunifuElipse(this.components);
-            this.pn_back_up = new System.Windows.Forms.Panel();
-            this.link_bake_up = new System.Windows.Forms.LinkLabel();
-            this.btn_add_perm = new Bunifu.Framework.UI.BunifuThinButton2();
-            this.btn_edit_user = new Bunifu.Framework.UI.BunifuThinButton2();
-            this.btn_add_user = new Bunifu.Framework.UI.BunifuThinButton2();
-            this.btn_del_user = new Bunifu.Framework.UI.BunifuThinButton2();
-            this.btn_close_users = new Bunifu.Framework.UI.BunifuThinButton2();
-            this.btn_login = new Bunifu.Framework.UI.BunifuThinButton2();
-            this.btn_cancel = new Bunifu.Framework.UI.BunifuThinButton2();
-            this.btn_change_pass = new Bunifu.Framework.UI.BunifuThinButton2();
-            this.btn_close_pass = new Bunifu.Framework.UI.BunifuThinButton2();
-            this.btn_test_con = new Bunifu.Framework.UI.BunifuThinButton2();
-            this.btn_ok = new Bunifu.Framework.UI.BunifuThinButton2();
-            this.btn_close_b = new Bunifu.Framework.UI.BunifuThinButton2();
             this.pic_user = new System.Windows.Forms.PictureBox();
+            this.panel4 = new System.Windows.Forms.Panel();
             this.btn_img_ok = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btn_close_img = new Bunifu.Framework.UI.BunifuThinButton2();
-            this.pn_restore_data = new System.Windows.Forms.Panel();
-            this.lbl_restore = new System.Windows.Forms.LinkLabel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.bunifuElipse1 = new Bunifu.Framework.UI.BunifuElipse(this.components);
+            this.txt_url = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.pn_home.SuspendLayout();
             this.group_box_users.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dt_users_data)).BeginInit();
@@ -119,13 +121,13 @@ namespace School_Mang.PL.MAIN
             this.pn_server.SuspendLayout();
             this.pn_users.SuspendLayout();
             this.pn_change_year.SuspendLayout();
+            this.pn_back_up.SuspendLayout();
+            this.pn_restore_data.SuspendLayout();
             this.group_box_server.SuspendLayout();
             this.panel3.SuspendLayout();
             this.group_box_pic.SuspendLayout();
-            this.panel4.SuspendLayout();
-            this.pn_back_up.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_user)).BeginInit();
-            this.pn_restore_data.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // pn_home
@@ -201,32 +203,32 @@ namespace School_Mang.PL.MAIN
             // 
             this.dt_users_data.AllowUserToAddRows = false;
             this.dt_users_data.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dt_users_data.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dt_users_data.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle13;
             this.dt_users_data.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dt_users_data.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("LBC", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dt_users_data.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("LBC", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dt_users_data.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle14;
             this.dt_users_data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dt_users_data.Cursor = System.Windows.Forms.Cursors.Hand;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("LBC", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.DarkGray;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dt_users_data.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("LBC", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle15.ForeColor = System.Drawing.Color.DarkGray;
+            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dt_users_data.DefaultCellStyle = dataGridViewCellStyle15;
             this.dt_users_data.Location = new System.Drawing.Point(15, 90);
             this.dt_users_data.Name = "dt_users_data";
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dt_users_data.RowsDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dt_users_data.RowsDefaultCellStyle = dataGridViewCellStyle16;
             this.dt_users_data.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.dt_users_data.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dt_users_data.RowTemplate.ReadOnly = true;
@@ -248,6 +250,140 @@ namespace School_Mang.PL.MAIN
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(698, 58);
             this.panel2.TabIndex = 59;
+            // 
+            // btn_add_perm
+            // 
+            this.btn_add_perm.ActiveBorderThickness = 1;
+            this.btn_add_perm.ActiveCornerRadius = 20;
+            this.btn_add_perm.ActiveFillColor = System.Drawing.Color.Turquoise;
+            this.btn_add_perm.ActiveForecolor = System.Drawing.Color.White;
+            this.btn_add_perm.ActiveLineColor = System.Drawing.Color.LightSeaGreen;
+            this.btn_add_perm.BackColor = System.Drawing.Color.White;
+            this.btn_add_perm.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_add_perm.BackgroundImage")));
+            this.btn_add_perm.ButtonText = "إضافة صلاحيات";
+            this.btn_add_perm.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_add_perm.Enabled = false;
+            this.btn_add_perm.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_add_perm.ForeColor = System.Drawing.Color.DodgerBlue;
+            this.btn_add_perm.IdleBorderThickness = 1;
+            this.btn_add_perm.IdleCornerRadius = 20;
+            this.btn_add_perm.IdleFillColor = System.Drawing.Color.WhiteSmoke;
+            this.btn_add_perm.IdleForecolor = System.Drawing.Color.DodgerBlue;
+            this.btn_add_perm.IdleLineColor = System.Drawing.Color.DodgerBlue;
+            this.btn_add_perm.Location = new System.Drawing.Point(424, 1);
+            this.btn_add_perm.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_add_perm.Name = "btn_add_perm";
+            this.btn_add_perm.Size = new System.Drawing.Size(127, 50);
+            this.btn_add_perm.TabIndex = 4;
+            this.btn_add_perm.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btn_add_perm.Click += new System.EventHandler(this.btn_add_perm_Click);
+            // 
+            // btn_edit_user
+            // 
+            this.btn_edit_user.ActiveBorderThickness = 1;
+            this.btn_edit_user.ActiveCornerRadius = 20;
+            this.btn_edit_user.ActiveFillColor = System.Drawing.Color.SteelBlue;
+            this.btn_edit_user.ActiveForecolor = System.Drawing.Color.White;
+            this.btn_edit_user.ActiveLineColor = System.Drawing.Color.DodgerBlue;
+            this.btn_edit_user.BackColor = System.Drawing.Color.White;
+            this.btn_edit_user.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_edit_user.BackgroundImage")));
+            this.btn_edit_user.ButtonText = "تعديل الصلاحيات";
+            this.btn_edit_user.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_edit_user.Enabled = false;
+            this.btn_edit_user.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_edit_user.ForeColor = System.Drawing.Color.Indigo;
+            this.btn_edit_user.IdleBorderThickness = 1;
+            this.btn_edit_user.IdleCornerRadius = 20;
+            this.btn_edit_user.IdleFillColor = System.Drawing.Color.WhiteSmoke;
+            this.btn_edit_user.IdleForecolor = System.Drawing.Color.MidnightBlue;
+            this.btn_edit_user.IdleLineColor = System.Drawing.Color.DarkBlue;
+            this.btn_edit_user.Location = new System.Drawing.Point(284, 1);
+            this.btn_edit_user.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_edit_user.Name = "btn_edit_user";
+            this.btn_edit_user.Size = new System.Drawing.Size(127, 50);
+            this.btn_edit_user.TabIndex = 4;
+            this.btn_edit_user.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btn_edit_user.Click += new System.EventHandler(this.btn_edit_user_Click);
+            // 
+            // btn_add_user
+            // 
+            this.btn_add_user.ActiveBorderThickness = 1;
+            this.btn_add_user.ActiveCornerRadius = 20;
+            this.btn_add_user.ActiveFillColor = System.Drawing.Color.SeaGreen;
+            this.btn_add_user.ActiveForecolor = System.Drawing.Color.White;
+            this.btn_add_user.ActiveLineColor = System.Drawing.Color.SeaGreen;
+            this.btn_add_user.BackColor = System.Drawing.Color.White;
+            this.btn_add_user.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_add_user.BackgroundImage")));
+            this.btn_add_user.ButtonText = "إضافة مستخدم";
+            this.btn_add_user.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_add_user.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_add_user.ForeColor = System.Drawing.Color.SeaGreen;
+            this.btn_add_user.IdleBorderThickness = 1;
+            this.btn_add_user.IdleCornerRadius = 20;
+            this.btn_add_user.IdleFillColor = System.Drawing.Color.WhiteSmoke;
+            this.btn_add_user.IdleForecolor = System.Drawing.Color.SeaGreen;
+            this.btn_add_user.IdleLineColor = System.Drawing.Color.SeaGreen;
+            this.btn_add_user.Location = new System.Drawing.Point(564, 1);
+            this.btn_add_user.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_add_user.Name = "btn_add_user";
+            this.btn_add_user.Size = new System.Drawing.Size(127, 50);
+            this.btn_add_user.TabIndex = 4;
+            this.btn_add_user.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btn_add_user.Click += new System.EventHandler(this.btn_add_user_Click);
+            // 
+            // btn_del_user
+            // 
+            this.btn_del_user.ActiveBorderThickness = 1;
+            this.btn_del_user.ActiveCornerRadius = 20;
+            this.btn_del_user.ActiveFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.btn_del_user.ActiveForecolor = System.Drawing.Color.White;
+            this.btn_del_user.ActiveLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btn_del_user.BackColor = System.Drawing.Color.White;
+            this.btn_del_user.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_del_user.BackgroundImage")));
+            this.btn_del_user.ButtonText = "حذف الصلاحيات";
+            this.btn_del_user.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_del_user.Enabled = false;
+            this.btn_del_user.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_del_user.ForeColor = System.Drawing.Color.Firebrick;
+            this.btn_del_user.IdleBorderThickness = 1;
+            this.btn_del_user.IdleCornerRadius = 20;
+            this.btn_del_user.IdleFillColor = System.Drawing.Color.WhiteSmoke;
+            this.btn_del_user.IdleForecolor = System.Drawing.Color.Maroon;
+            this.btn_del_user.IdleLineColor = System.Drawing.Color.DarkRed;
+            this.btn_del_user.ImeMode = System.Windows.Forms.ImeMode.Disable;
+            this.btn_del_user.Location = new System.Drawing.Point(144, 1);
+            this.btn_del_user.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_del_user.Name = "btn_del_user";
+            this.btn_del_user.Size = new System.Drawing.Size(127, 50);
+            this.btn_del_user.TabIndex = 3;
+            this.btn_del_user.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btn_del_user.Click += new System.EventHandler(this.btn_del_user_Click);
+            // 
+            // btn_close_users
+            // 
+            this.btn_close_users.ActiveBorderThickness = 1;
+            this.btn_close_users.ActiveCornerRadius = 20;
+            this.btn_close_users.ActiveFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.btn_close_users.ActiveForecolor = System.Drawing.Color.White;
+            this.btn_close_users.ActiveLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btn_close_users.BackColor = System.Drawing.Color.White;
+            this.btn_close_users.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_close_users.BackgroundImage")));
+            this.btn_close_users.ButtonText = "إلغاء";
+            this.btn_close_users.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_close_users.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_close_users.ForeColor = System.Drawing.Color.Red;
+            this.btn_close_users.IdleBorderThickness = 1;
+            this.btn_close_users.IdleCornerRadius = 20;
+            this.btn_close_users.IdleFillColor = System.Drawing.Color.WhiteSmoke;
+            this.btn_close_users.IdleForecolor = System.Drawing.Color.Red;
+            this.btn_close_users.IdleLineColor = System.Drawing.Color.Red;
+            this.btn_close_users.Location = new System.Drawing.Point(4, 1);
+            this.btn_close_users.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_close_users.Name = "btn_close_users";
+            this.btn_close_users.Size = new System.Drawing.Size(127, 50);
+            this.btn_close_users.TabIndex = 3;
+            this.btn_close_users.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btn_close_users.Click += new System.EventHandler(this.btn_close_users_Click);
             // 
             // group_box_login
             // 
@@ -276,6 +412,58 @@ namespace School_Mang.PL.MAIN
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(414, 58);
             this.panel1.TabIndex = 59;
+            // 
+            // btn_login
+            // 
+            this.btn_login.ActiveBorderThickness = 1;
+            this.btn_login.ActiveCornerRadius = 20;
+            this.btn_login.ActiveFillColor = System.Drawing.Color.SeaGreen;
+            this.btn_login.ActiveForecolor = System.Drawing.Color.White;
+            this.btn_login.ActiveLineColor = System.Drawing.Color.SeaGreen;
+            this.btn_login.BackColor = System.Drawing.Color.White;
+            this.btn_login.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_login.BackgroundImage")));
+            this.btn_login.ButtonText = "دخول";
+            this.btn_login.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_login.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_login.ForeColor = System.Drawing.Color.SeaGreen;
+            this.btn_login.IdleBorderThickness = 1;
+            this.btn_login.IdleCornerRadius = 20;
+            this.btn_login.IdleFillColor = System.Drawing.Color.WhiteSmoke;
+            this.btn_login.IdleForecolor = System.Drawing.Color.SeaGreen;
+            this.btn_login.IdleLineColor = System.Drawing.Color.SeaGreen;
+            this.btn_login.Location = new System.Drawing.Point(269, 7);
+            this.btn_login.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_login.Name = "btn_login";
+            this.btn_login.Size = new System.Drawing.Size(139, 50);
+            this.btn_login.TabIndex = 2;
+            this.btn_login.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btn_login.Click += new System.EventHandler(this.btn_login_Click);
+            // 
+            // btn_cancel
+            // 
+            this.btn_cancel.ActiveBorderThickness = 1;
+            this.btn_cancel.ActiveCornerRadius = 20;
+            this.btn_cancel.ActiveFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.btn_cancel.ActiveForecolor = System.Drawing.Color.White;
+            this.btn_cancel.ActiveLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btn_cancel.BackColor = System.Drawing.Color.White;
+            this.btn_cancel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_cancel.BackgroundImage")));
+            this.btn_cancel.ButtonText = "إلغاء";
+            this.btn_cancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_cancel.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_cancel.ForeColor = System.Drawing.Color.Red;
+            this.btn_cancel.IdleBorderThickness = 1;
+            this.btn_cancel.IdleCornerRadius = 20;
+            this.btn_cancel.IdleFillColor = System.Drawing.Color.WhiteSmoke;
+            this.btn_cancel.IdleForecolor = System.Drawing.Color.Red;
+            this.btn_cancel.IdleLineColor = System.Drawing.Color.Red;
+            this.btn_cancel.Location = new System.Drawing.Point(4, 1);
+            this.btn_cancel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_cancel.Name = "btn_cancel";
+            this.btn_cancel.Size = new System.Drawing.Size(139, 50);
+            this.btn_cancel.TabIndex = 3;
+            this.btn_cancel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btn_cancel.Click += new System.EventHandler(this.btn_cancel_Click);
             // 
             // txt_pass
             // 
@@ -370,6 +558,58 @@ namespace School_Mang.PL.MAIN
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(414, 58);
             this.panel5.TabIndex = 59;
+            // 
+            // btn_change_pass
+            // 
+            this.btn_change_pass.ActiveBorderThickness = 1;
+            this.btn_change_pass.ActiveCornerRadius = 20;
+            this.btn_change_pass.ActiveFillColor = System.Drawing.Color.SeaGreen;
+            this.btn_change_pass.ActiveForecolor = System.Drawing.Color.White;
+            this.btn_change_pass.ActiveLineColor = System.Drawing.Color.SeaGreen;
+            this.btn_change_pass.BackColor = System.Drawing.Color.White;
+            this.btn_change_pass.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_change_pass.BackgroundImage")));
+            this.btn_change_pass.ButtonText = "تغيير";
+            this.btn_change_pass.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_change_pass.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_change_pass.ForeColor = System.Drawing.Color.SeaGreen;
+            this.btn_change_pass.IdleBorderThickness = 1;
+            this.btn_change_pass.IdleCornerRadius = 20;
+            this.btn_change_pass.IdleFillColor = System.Drawing.Color.WhiteSmoke;
+            this.btn_change_pass.IdleForecolor = System.Drawing.Color.SeaGreen;
+            this.btn_change_pass.IdleLineColor = System.Drawing.Color.SeaGreen;
+            this.btn_change_pass.Location = new System.Drawing.Point(269, 7);
+            this.btn_change_pass.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_change_pass.Name = "btn_change_pass";
+            this.btn_change_pass.Size = new System.Drawing.Size(139, 50);
+            this.btn_change_pass.TabIndex = 3;
+            this.btn_change_pass.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btn_change_pass.Click += new System.EventHandler(this.btn_change_pass_Click);
+            // 
+            // btn_close_pass
+            // 
+            this.btn_close_pass.ActiveBorderThickness = 1;
+            this.btn_close_pass.ActiveCornerRadius = 20;
+            this.btn_close_pass.ActiveFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.btn_close_pass.ActiveForecolor = System.Drawing.Color.White;
+            this.btn_close_pass.ActiveLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btn_close_pass.BackColor = System.Drawing.Color.White;
+            this.btn_close_pass.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_close_pass.BackgroundImage")));
+            this.btn_close_pass.ButtonText = "إلغاء";
+            this.btn_close_pass.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_close_pass.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_close_pass.ForeColor = System.Drawing.Color.Red;
+            this.btn_close_pass.IdleBorderThickness = 1;
+            this.btn_close_pass.IdleCornerRadius = 20;
+            this.btn_close_pass.IdleFillColor = System.Drawing.Color.WhiteSmoke;
+            this.btn_close_pass.IdleForecolor = System.Drawing.Color.Red;
+            this.btn_close_pass.IdleLineColor = System.Drawing.Color.Red;
+            this.btn_close_pass.Location = new System.Drawing.Point(4, 1);
+            this.btn_close_pass.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_close_pass.Name = "btn_close_pass";
+            this.btn_close_pass.Size = new System.Drawing.Size(139, 50);
+            this.btn_close_pass.TabIndex = 4;
+            this.btn_close_pass.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btn_close_pass.Click += new System.EventHandler(this.btn_close_pass_Click);
             // 
             // txt_new_pass1
             // 
@@ -574,194 +814,6 @@ namespace School_Mang.PL.MAIN
             this.link_chenge_year.Text = "تعديل العام الدراسى";
             this.link_chenge_year.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.link_chenge_year_LinkClicked);
             // 
-            // panel7
-            // 
-            this.panel7.Location = new System.Drawing.Point(1145, 12);
-            this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(181, 60);
-            this.panel7.TabIndex = 1;
-            // 
-            // lbl_user
-            // 
-            this.lbl_user.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.lbl_user.AutoSize = true;
-            this.lbl_user.Font = new System.Drawing.Font("LBC", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_user.Location = new System.Drawing.Point(981, 133);
-            this.lbl_user.Name = "lbl_user";
-            this.lbl_user.Size = new System.Drawing.Size(0, 27);
-            this.lbl_user.TabIndex = 12;
-            this.lbl_user.Visible = false;
-            // 
-            // group_box_server
-            // 
-            this.group_box_server.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.group_box_server.Controls.Add(this.btn_test_con);
-            this.group_box_server.Controls.Add(this.panel3);
-            this.group_box_server.Controls.Add(this.txt_databasee_pass);
-            this.group_box_server.Controls.Add(this.txt_databasee_user);
-            this.group_box_server.Controls.Add(this.label4);
-            this.group_box_server.Controls.Add(this.label3);
-            this.group_box_server.Controls.Add(this.txt_databasee_name);
-            this.group_box_server.Controls.Add(this.label1);
-            this.group_box_server.Controls.Add(this.txt_server);
-            this.group_box_server.Controls.Add(this.label2);
-            this.group_box_server.Font = new System.Drawing.Font("LBC", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.group_box_server.ForeColor = System.Drawing.Color.DarkGray;
-            this.group_box_server.Location = new System.Drawing.Point(656, 3);
-            this.group_box_server.Name = "group_box_server";
-            this.group_box_server.Size = new System.Drawing.Size(422, 365);
-            this.group_box_server.TabIndex = 8;
-            this.group_box_server.TabStop = false;
-            this.group_box_server.Text = "إعدادات السيرفر";
-            this.group_box_server.Visible = false;
-            // 
-            // panel3
-            // 
-            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel3.Controls.Add(this.btn_ok);
-            this.panel3.Controls.Add(this.btn_close_b);
-            this.panel3.Location = new System.Drawing.Point(14, 298);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(414, 58);
-            this.panel3.TabIndex = 59;
-            // 
-            // txt_databasee_pass
-            // 
-            this.txt_databasee_pass.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_databasee_pass.Location = new System.Drawing.Point(50, 220);
-            this.txt_databasee_pass.MaxLength = 50;
-            this.txt_databasee_pass.Name = "txt_databasee_pass";
-            this.txt_databasee_pass.PasswordChar = '*';
-            this.txt_databasee_pass.Size = new System.Drawing.Size(269, 32);
-            this.txt_databasee_pass.TabIndex = 4;
-            // 
-            // txt_databasee_user
-            // 
-            this.txt_databasee_user.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_databasee_user.Location = new System.Drawing.Point(50, 163);
-            this.txt_databasee_user.MaxLength = 50;
-            this.txt_databasee_user.Name = "txt_databasee_user";
-            this.txt_databasee_user.Size = new System.Drawing.Size(269, 32);
-            this.txt_databasee_user.TabIndex = 4;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("LBC", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-            this.label4.Location = new System.Drawing.Point(324, 223);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(86, 22);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "كلمة المرور";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("LBC", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-            this.label3.Location = new System.Drawing.Point(324, 166);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(113, 22);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "اسم المستخدم";
-            // 
-            // txt_databasee_name
-            // 
-            this.txt_databasee_name.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_databasee_name.Location = new System.Drawing.Point(50, 108);
-            this.txt_databasee_name.MaxLength = 50;
-            this.txt_databasee_name.Name = "txt_databasee_name";
-            this.txt_databasee_name.Size = new System.Drawing.Size(269, 32);
-            this.txt_databasee_name.TabIndex = 4;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("LBC", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-            this.label1.Location = new System.Drawing.Point(324, 111);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(108, 22);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "قاعدة البيانات";
-            // 
-            // txt_server
-            // 
-            this.txt_server.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_server.Location = new System.Drawing.Point(50, 53);
-            this.txt_server.MaxLength = 50;
-            this.txt_server.Name = "txt_server";
-            this.txt_server.Size = new System.Drawing.Size(269, 32);
-            this.txt_server.TabIndex = 4;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("LBC", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-            this.label2.Location = new System.Drawing.Point(324, 56);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(94, 22);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "اسم السيرفر";
-            // 
-            // lbl_settings
-            // 
-            this.lbl_settings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbl_settings.AutoSize = true;
-            this.lbl_settings.Font = new System.Drawing.Font("LBC", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_settings.ForeColor = System.Drawing.Color.Black;
-            this.lbl_settings.Location = new System.Drawing.Point(1149, 116);
-            this.lbl_settings.Name = "lbl_settings";
-            this.lbl_settings.Size = new System.Drawing.Size(209, 62);
-            this.lbl_settings.TabIndex = 7;
-            this.lbl_settings.Text = "الإعدادات";
-            // 
-            // group_box_pic
-            // 
-            this.group_box_pic.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.group_box_pic.Controls.Add(this.pic_user);
-            this.group_box_pic.Controls.Add(this.panel4);
-            this.group_box_pic.Controls.Add(this.label5);
-            this.group_box_pic.Font = new System.Drawing.Font("LBC", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.group_box_pic.ForeColor = System.Drawing.Color.DarkGray;
-            this.group_box_pic.Location = new System.Drawing.Point(712, 374);
-            this.group_box_pic.Name = "group_box_pic";
-            this.group_box_pic.Size = new System.Drawing.Size(450, 365);
-            this.group_box_pic.TabIndex = 11;
-            this.group_box_pic.TabStop = false;
-            this.group_box_pic.Text = "تغيير الصورة";
-            this.group_box_pic.Visible = false;
-            // 
-            // panel4
-            // 
-            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel4.Controls.Add(this.btn_img_ok);
-            this.panel4.Controls.Add(this.btn_close_img);
-            this.panel4.Location = new System.Drawing.Point(6, 301);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(438, 58);
-            this.panel4.TabIndex = 59;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label5.Font = new System.Drawing.Font("LBC", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-            this.label5.Location = new System.Drawing.Point(176, 271);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(75, 22);
-            this.label5.TabIndex = 5;
-            this.label5.Text = "اختر صورة";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
-            // 
-            // bunifuElipse1
-            // 
-            this.bunifuElipse1.ElipseRadius = 500;
-            this.bunifuElipse1.TargetControl = this.pic_user;
-            // 
             // pn_back_up
             // 
             this.pn_back_up.Anchor = System.Windows.Forms.AnchorStyles.Top;
@@ -786,243 +838,72 @@ namespace School_Mang.PL.MAIN
             this.link_bake_up.Text = "إنشاء نسخة إحتياطية";
             this.link_bake_up.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.link_bake_up_LinkClicked);
             // 
-            // btn_add_perm
+            // pn_restore_data
             // 
-            this.btn_add_perm.ActiveBorderThickness = 1;
-            this.btn_add_perm.ActiveCornerRadius = 20;
-            this.btn_add_perm.ActiveFillColor = System.Drawing.Color.Turquoise;
-            this.btn_add_perm.ActiveForecolor = System.Drawing.Color.White;
-            this.btn_add_perm.ActiveLineColor = System.Drawing.Color.LightSeaGreen;
-            this.btn_add_perm.BackColor = System.Drawing.Color.White;
-            this.btn_add_perm.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_add_perm.BackgroundImage")));
-            this.btn_add_perm.ButtonText = "إضافة صلاحيات";
-            this.btn_add_perm.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_add_perm.Enabled = false;
-            this.btn_add_perm.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_add_perm.ForeColor = System.Drawing.Color.DodgerBlue;
-            this.btn_add_perm.IdleBorderThickness = 1;
-            this.btn_add_perm.IdleCornerRadius = 20;
-            this.btn_add_perm.IdleFillColor = System.Drawing.Color.WhiteSmoke;
-            this.btn_add_perm.IdleForecolor = System.Drawing.Color.DodgerBlue;
-            this.btn_add_perm.IdleLineColor = System.Drawing.Color.DodgerBlue;
-            this.btn_add_perm.Location = new System.Drawing.Point(424, 1);
-            this.btn_add_perm.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btn_add_perm.Name = "btn_add_perm";
-            this.btn_add_perm.Size = new System.Drawing.Size(127, 50);
-            this.btn_add_perm.TabIndex = 4;
-            this.btn_add_perm.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btn_add_perm.Click += new System.EventHandler(this.btn_add_perm_Click);
+            this.pn_restore_data.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.pn_restore_data.BackColor = System.Drawing.Color.White;
+            this.pn_restore_data.Controls.Add(this.lbl_restore);
+            this.pn_restore_data.Location = new System.Drawing.Point(0, 435);
+            this.pn_restore_data.Name = "pn_restore_data";
+            this.pn_restore_data.Size = new System.Drawing.Size(181, 60);
+            this.pn_restore_data.TabIndex = 13;
+            this.pn_restore_data.Visible = false;
             // 
-            // btn_edit_user
+            // lbl_restore
             // 
-            this.btn_edit_user.ActiveBorderThickness = 1;
-            this.btn_edit_user.ActiveCornerRadius = 20;
-            this.btn_edit_user.ActiveFillColor = System.Drawing.Color.SteelBlue;
-            this.btn_edit_user.ActiveForecolor = System.Drawing.Color.White;
-            this.btn_edit_user.ActiveLineColor = System.Drawing.Color.DodgerBlue;
-            this.btn_edit_user.BackColor = System.Drawing.Color.White;
-            this.btn_edit_user.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_edit_user.BackgroundImage")));
-            this.btn_edit_user.ButtonText = "تعديل الصلاحيات";
-            this.btn_edit_user.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_edit_user.Enabled = false;
-            this.btn_edit_user.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_edit_user.ForeColor = System.Drawing.Color.Indigo;
-            this.btn_edit_user.IdleBorderThickness = 1;
-            this.btn_edit_user.IdleCornerRadius = 20;
-            this.btn_edit_user.IdleFillColor = System.Drawing.Color.WhiteSmoke;
-            this.btn_edit_user.IdleForecolor = System.Drawing.Color.MidnightBlue;
-            this.btn_edit_user.IdleLineColor = System.Drawing.Color.DarkBlue;
-            this.btn_edit_user.Location = new System.Drawing.Point(284, 1);
-            this.btn_edit_user.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btn_edit_user.Name = "btn_edit_user";
-            this.btn_edit_user.Size = new System.Drawing.Size(127, 50);
-            this.btn_edit_user.TabIndex = 4;
-            this.btn_edit_user.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btn_edit_user.Click += new System.EventHandler(this.btn_edit_user_Click);
+            this.lbl_restore.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lbl_restore.AutoSize = true;
+            this.lbl_restore.Font = new System.Drawing.Font("LBC", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_restore.Location = new System.Drawing.Point(1, 8);
+            this.lbl_restore.Name = "lbl_restore";
+            this.lbl_restore.Size = new System.Drawing.Size(169, 27);
+            this.lbl_restore.TabIndex = 9;
+            this.lbl_restore.TabStop = true;
+            this.lbl_restore.Text = "استعادة من نسخة ";
+            this.lbl_restore.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lbl_restore_LinkClicked);
             // 
-            // btn_add_user
+            // panel7
             // 
-            this.btn_add_user.ActiveBorderThickness = 1;
-            this.btn_add_user.ActiveCornerRadius = 20;
-            this.btn_add_user.ActiveFillColor = System.Drawing.Color.SeaGreen;
-            this.btn_add_user.ActiveForecolor = System.Drawing.Color.White;
-            this.btn_add_user.ActiveLineColor = System.Drawing.Color.SeaGreen;
-            this.btn_add_user.BackColor = System.Drawing.Color.White;
-            this.btn_add_user.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_add_user.BackgroundImage")));
-            this.btn_add_user.ButtonText = "إضافة مستخدم";
-            this.btn_add_user.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_add_user.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_add_user.ForeColor = System.Drawing.Color.SeaGreen;
-            this.btn_add_user.IdleBorderThickness = 1;
-            this.btn_add_user.IdleCornerRadius = 20;
-            this.btn_add_user.IdleFillColor = System.Drawing.Color.WhiteSmoke;
-            this.btn_add_user.IdleForecolor = System.Drawing.Color.SeaGreen;
-            this.btn_add_user.IdleLineColor = System.Drawing.Color.SeaGreen;
-            this.btn_add_user.Location = new System.Drawing.Point(564, 1);
-            this.btn_add_user.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btn_add_user.Name = "btn_add_user";
-            this.btn_add_user.Size = new System.Drawing.Size(127, 50);
-            this.btn_add_user.TabIndex = 4;
-            this.btn_add_user.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btn_add_user.Click += new System.EventHandler(this.btn_add_user_Click);
+            this.panel7.Location = new System.Drawing.Point(1145, 12);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(181, 60);
+            this.panel7.TabIndex = 1;
             // 
-            // btn_del_user
+            // lbl_user
             // 
-            this.btn_del_user.ActiveBorderThickness = 1;
-            this.btn_del_user.ActiveCornerRadius = 20;
-            this.btn_del_user.ActiveFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.btn_del_user.ActiveForecolor = System.Drawing.Color.White;
-            this.btn_del_user.ActiveLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btn_del_user.BackColor = System.Drawing.Color.White;
-            this.btn_del_user.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_del_user.BackgroundImage")));
-            this.btn_del_user.ButtonText = "حذف الصلاحيات";
-            this.btn_del_user.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_del_user.Enabled = false;
-            this.btn_del_user.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_del_user.ForeColor = System.Drawing.Color.Firebrick;
-            this.btn_del_user.IdleBorderThickness = 1;
-            this.btn_del_user.IdleCornerRadius = 20;
-            this.btn_del_user.IdleFillColor = System.Drawing.Color.WhiteSmoke;
-            this.btn_del_user.IdleForecolor = System.Drawing.Color.Maroon;
-            this.btn_del_user.IdleLineColor = System.Drawing.Color.DarkRed;
-            this.btn_del_user.ImeMode = System.Windows.Forms.ImeMode.Disable;
-            this.btn_del_user.Location = new System.Drawing.Point(144, 1);
-            this.btn_del_user.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btn_del_user.Name = "btn_del_user";
-            this.btn_del_user.Size = new System.Drawing.Size(127, 50);
-            this.btn_del_user.TabIndex = 3;
-            this.btn_del_user.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btn_del_user.Click += new System.EventHandler(this.btn_del_user_Click);
+            this.lbl_user.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lbl_user.AutoSize = true;
+            this.lbl_user.Font = new System.Drawing.Font("LBC", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_user.Location = new System.Drawing.Point(981, 133);
+            this.lbl_user.Name = "lbl_user";
+            this.lbl_user.Size = new System.Drawing.Size(0, 27);
+            this.lbl_user.TabIndex = 12;
+            this.lbl_user.Visible = false;
             // 
-            // btn_close_users
+            // group_box_server
             // 
-            this.btn_close_users.ActiveBorderThickness = 1;
-            this.btn_close_users.ActiveCornerRadius = 20;
-            this.btn_close_users.ActiveFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.btn_close_users.ActiveForecolor = System.Drawing.Color.White;
-            this.btn_close_users.ActiveLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btn_close_users.BackColor = System.Drawing.Color.White;
-            this.btn_close_users.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_close_users.BackgroundImage")));
-            this.btn_close_users.ButtonText = "إلغاء";
-            this.btn_close_users.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_close_users.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_close_users.ForeColor = System.Drawing.Color.Red;
-            this.btn_close_users.IdleBorderThickness = 1;
-            this.btn_close_users.IdleCornerRadius = 20;
-            this.btn_close_users.IdleFillColor = System.Drawing.Color.WhiteSmoke;
-            this.btn_close_users.IdleForecolor = System.Drawing.Color.Red;
-            this.btn_close_users.IdleLineColor = System.Drawing.Color.Red;
-            this.btn_close_users.Location = new System.Drawing.Point(4, 1);
-            this.btn_close_users.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btn_close_users.Name = "btn_close_users";
-            this.btn_close_users.Size = new System.Drawing.Size(127, 50);
-            this.btn_close_users.TabIndex = 3;
-            this.btn_close_users.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btn_close_users.Click += new System.EventHandler(this.btn_close_users_Click);
-            // 
-            // btn_login
-            // 
-            this.btn_login.ActiveBorderThickness = 1;
-            this.btn_login.ActiveCornerRadius = 20;
-            this.btn_login.ActiveFillColor = System.Drawing.Color.SeaGreen;
-            this.btn_login.ActiveForecolor = System.Drawing.Color.White;
-            this.btn_login.ActiveLineColor = System.Drawing.Color.SeaGreen;
-            this.btn_login.BackColor = System.Drawing.Color.White;
-            this.btn_login.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_login.BackgroundImage")));
-            this.btn_login.ButtonText = "دخول";
-            this.btn_login.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_login.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_login.ForeColor = System.Drawing.Color.SeaGreen;
-            this.btn_login.IdleBorderThickness = 1;
-            this.btn_login.IdleCornerRadius = 20;
-            this.btn_login.IdleFillColor = System.Drawing.Color.WhiteSmoke;
-            this.btn_login.IdleForecolor = System.Drawing.Color.SeaGreen;
-            this.btn_login.IdleLineColor = System.Drawing.Color.SeaGreen;
-            this.btn_login.Location = new System.Drawing.Point(269, 7);
-            this.btn_login.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btn_login.Name = "btn_login";
-            this.btn_login.Size = new System.Drawing.Size(139, 50);
-            this.btn_login.TabIndex = 2;
-            this.btn_login.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btn_login.Click += new System.EventHandler(this.btn_login_Click);
-            // 
-            // btn_cancel
-            // 
-            this.btn_cancel.ActiveBorderThickness = 1;
-            this.btn_cancel.ActiveCornerRadius = 20;
-            this.btn_cancel.ActiveFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.btn_cancel.ActiveForecolor = System.Drawing.Color.White;
-            this.btn_cancel.ActiveLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btn_cancel.BackColor = System.Drawing.Color.White;
-            this.btn_cancel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_cancel.BackgroundImage")));
-            this.btn_cancel.ButtonText = "إلغاء";
-            this.btn_cancel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_cancel.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_cancel.ForeColor = System.Drawing.Color.Red;
-            this.btn_cancel.IdleBorderThickness = 1;
-            this.btn_cancel.IdleCornerRadius = 20;
-            this.btn_cancel.IdleFillColor = System.Drawing.Color.WhiteSmoke;
-            this.btn_cancel.IdleForecolor = System.Drawing.Color.Red;
-            this.btn_cancel.IdleLineColor = System.Drawing.Color.Red;
-            this.btn_cancel.Location = new System.Drawing.Point(4, 1);
-            this.btn_cancel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btn_cancel.Name = "btn_cancel";
-            this.btn_cancel.Size = new System.Drawing.Size(139, 50);
-            this.btn_cancel.TabIndex = 3;
-            this.btn_cancel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btn_cancel.Click += new System.EventHandler(this.btn_cancel_Click);
-            // 
-            // btn_change_pass
-            // 
-            this.btn_change_pass.ActiveBorderThickness = 1;
-            this.btn_change_pass.ActiveCornerRadius = 20;
-            this.btn_change_pass.ActiveFillColor = System.Drawing.Color.SeaGreen;
-            this.btn_change_pass.ActiveForecolor = System.Drawing.Color.White;
-            this.btn_change_pass.ActiveLineColor = System.Drawing.Color.SeaGreen;
-            this.btn_change_pass.BackColor = System.Drawing.Color.White;
-            this.btn_change_pass.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_change_pass.BackgroundImage")));
-            this.btn_change_pass.ButtonText = "تغيير";
-            this.btn_change_pass.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_change_pass.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_change_pass.ForeColor = System.Drawing.Color.SeaGreen;
-            this.btn_change_pass.IdleBorderThickness = 1;
-            this.btn_change_pass.IdleCornerRadius = 20;
-            this.btn_change_pass.IdleFillColor = System.Drawing.Color.WhiteSmoke;
-            this.btn_change_pass.IdleForecolor = System.Drawing.Color.SeaGreen;
-            this.btn_change_pass.IdleLineColor = System.Drawing.Color.SeaGreen;
-            this.btn_change_pass.Location = new System.Drawing.Point(269, 7);
-            this.btn_change_pass.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btn_change_pass.Name = "btn_change_pass";
-            this.btn_change_pass.Size = new System.Drawing.Size(139, 50);
-            this.btn_change_pass.TabIndex = 3;
-            this.btn_change_pass.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btn_change_pass.Click += new System.EventHandler(this.btn_change_pass_Click);
-            // 
-            // btn_close_pass
-            // 
-            this.btn_close_pass.ActiveBorderThickness = 1;
-            this.btn_close_pass.ActiveCornerRadius = 20;
-            this.btn_close_pass.ActiveFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.btn_close_pass.ActiveForecolor = System.Drawing.Color.White;
-            this.btn_close_pass.ActiveLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btn_close_pass.BackColor = System.Drawing.Color.White;
-            this.btn_close_pass.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_close_pass.BackgroundImage")));
-            this.btn_close_pass.ButtonText = "إلغاء";
-            this.btn_close_pass.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_close_pass.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_close_pass.ForeColor = System.Drawing.Color.Red;
-            this.btn_close_pass.IdleBorderThickness = 1;
-            this.btn_close_pass.IdleCornerRadius = 20;
-            this.btn_close_pass.IdleFillColor = System.Drawing.Color.WhiteSmoke;
-            this.btn_close_pass.IdleForecolor = System.Drawing.Color.Red;
-            this.btn_close_pass.IdleLineColor = System.Drawing.Color.Red;
-            this.btn_close_pass.Location = new System.Drawing.Point(4, 1);
-            this.btn_close_pass.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btn_close_pass.Name = "btn_close_pass";
-            this.btn_close_pass.Size = new System.Drawing.Size(139, 50);
-            this.btn_close_pass.TabIndex = 4;
-            this.btn_close_pass.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btn_close_pass.Click += new System.EventHandler(this.btn_close_pass_Click);
+            this.group_box_server.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.group_box_server.Controls.Add(this.txt_url);
+            this.group_box_server.Controls.Add(this.label12);
+            this.group_box_server.Controls.Add(this.btn_test_con);
+            this.group_box_server.Controls.Add(this.panel3);
+            this.group_box_server.Controls.Add(this.txt_databasee_pass);
+            this.group_box_server.Controls.Add(this.txt_databasee_user);
+            this.group_box_server.Controls.Add(this.label4);
+            this.group_box_server.Controls.Add(this.label3);
+            this.group_box_server.Controls.Add(this.txt_databasee_name);
+            this.group_box_server.Controls.Add(this.label1);
+            this.group_box_server.Controls.Add(this.txt_server);
+            this.group_box_server.Controls.Add(this.label2);
+            this.group_box_server.Font = new System.Drawing.Font("LBC", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.group_box_server.ForeColor = System.Drawing.Color.DarkGray;
+            this.group_box_server.Location = new System.Drawing.Point(656, 3);
+            this.group_box_server.Name = "group_box_server";
+            this.group_box_server.Size = new System.Drawing.Size(431, 370);
+            this.group_box_server.TabIndex = 8;
+            this.group_box_server.TabStop = false;
+            this.group_box_server.Text = "إعدادات السيرفر";
+            this.group_box_server.Visible = false;
             // 
             // btn_test_con
             // 
@@ -1042,13 +923,23 @@ namespace School_Mang.PL.MAIN
             this.btn_test_con.IdleFillColor = System.Drawing.Color.WhiteSmoke;
             this.btn_test_con.IdleForecolor = System.Drawing.Color.DodgerBlue;
             this.btn_test_con.IdleLineColor = System.Drawing.Color.DodgerBlue;
-            this.btn_test_con.Location = new System.Drawing.Point(50, 253);
+            this.btn_test_con.Location = new System.Drawing.Point(39, 213);
             this.btn_test_con.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btn_test_con.Name = "btn_test_con";
             this.btn_test_con.Size = new System.Drawing.Size(102, 41);
             this.btn_test_con.TabIndex = 13;
             this.btn_test_con.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.btn_test_con.Click += new System.EventHandler(this.btn_test_con_Click);
+            // 
+            // panel3
+            // 
+            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel3.Controls.Add(this.btn_ok);
+            this.panel3.Controls.Add(this.btn_close_b);
+            this.panel3.Location = new System.Drawing.Point(14, 291);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(414, 58);
+            this.panel3.TabIndex = 59;
             // 
             // btn_ok
             // 
@@ -1102,6 +993,115 @@ namespace School_Mang.PL.MAIN
             this.btn_close_b.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.btn_close_b.Click += new System.EventHandler(this.btn_close_b_Click);
             // 
+            // txt_databasee_pass
+            // 
+            this.txt_databasee_pass.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_databasee_pass.Location = new System.Drawing.Point(39, 176);
+            this.txt_databasee_pass.MaxLength = 50;
+            this.txt_databasee_pass.Name = "txt_databasee_pass";
+            this.txt_databasee_pass.PasswordChar = '*';
+            this.txt_databasee_pass.Size = new System.Drawing.Size(269, 32);
+            this.txt_databasee_pass.TabIndex = 4;
+            // 
+            // txt_databasee_user
+            // 
+            this.txt_databasee_user.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_databasee_user.Location = new System.Drawing.Point(39, 130);
+            this.txt_databasee_user.MaxLength = 50;
+            this.txt_databasee_user.Name = "txt_databasee_user";
+            this.txt_databasee_user.Size = new System.Drawing.Size(269, 32);
+            this.txt_databasee_user.TabIndex = 4;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("LBC", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.label4.Location = new System.Drawing.Point(313, 179);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(86, 22);
+            this.label4.TabIndex = 5;
+            this.label4.Text = "كلمة المرور";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("LBC", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.label3.Location = new System.Drawing.Point(313, 133);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(113, 22);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "اسم المستخدم";
+            // 
+            // txt_databasee_name
+            // 
+            this.txt_databasee_name.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_databasee_name.Location = new System.Drawing.Point(39, 84);
+            this.txt_databasee_name.MaxLength = 50;
+            this.txt_databasee_name.Name = "txt_databasee_name";
+            this.txt_databasee_name.Size = new System.Drawing.Size(269, 32);
+            this.txt_databasee_name.TabIndex = 4;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("LBC", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.label1.Location = new System.Drawing.Point(313, 87);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(108, 22);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "قاعدة البيانات";
+            // 
+            // txt_server
+            // 
+            this.txt_server.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_server.Location = new System.Drawing.Point(39, 38);
+            this.txt_server.MaxLength = 50;
+            this.txt_server.Name = "txt_server";
+            this.txt_server.Size = new System.Drawing.Size(269, 32);
+            this.txt_server.TabIndex = 4;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("LBC", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.label2.Location = new System.Drawing.Point(313, 41);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(94, 22);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "اسم السيرفر";
+            // 
+            // lbl_settings
+            // 
+            this.lbl_settings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbl_settings.AutoSize = true;
+            this.lbl_settings.Font = new System.Drawing.Font("LBC", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_settings.ForeColor = System.Drawing.Color.Black;
+            this.lbl_settings.Location = new System.Drawing.Point(1149, 116);
+            this.lbl_settings.Name = "lbl_settings";
+            this.lbl_settings.Size = new System.Drawing.Size(209, 62);
+            this.lbl_settings.TabIndex = 7;
+            this.lbl_settings.Text = "الإعدادات";
+            // 
+            // group_box_pic
+            // 
+            this.group_box_pic.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.group_box_pic.Controls.Add(this.pic_user);
+            this.group_box_pic.Controls.Add(this.panel4);
+            this.group_box_pic.Controls.Add(this.label5);
+            this.group_box_pic.Font = new System.Drawing.Font("LBC", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.group_box_pic.ForeColor = System.Drawing.Color.DarkGray;
+            this.group_box_pic.Location = new System.Drawing.Point(712, 374);
+            this.group_box_pic.Name = "group_box_pic";
+            this.group_box_pic.Size = new System.Drawing.Size(450, 365);
+            this.group_box_pic.TabIndex = 11;
+            this.group_box_pic.TabStop = false;
+            this.group_box_pic.Text = "تغيير الصورة";
+            this.group_box_pic.Visible = false;
+            // 
             // pic_user
             // 
             this.pic_user.BackColor = System.Drawing.Color.WhiteSmoke;
@@ -1114,6 +1114,16 @@ namespace School_Mang.PL.MAIN
             this.pic_user.TabIndex = 60;
             this.pic_user.TabStop = false;
             this.pic_user.Click += new System.EventHandler(this.pic_user_Click);
+            // 
+            // panel4
+            // 
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel4.Controls.Add(this.btn_img_ok);
+            this.panel4.Controls.Add(this.btn_close_img);
+            this.panel4.Location = new System.Drawing.Point(6, 301);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(438, 58);
+            this.panel4.TabIndex = 59;
             // 
             // btn_img_ok
             // 
@@ -1167,29 +1177,43 @@ namespace School_Mang.PL.MAIN
             this.btn_close_img.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.btn_close_img.Click += new System.EventHandler(this.btn_close_img_Click);
             // 
-            // pn_restore_data
+            // label5
             // 
-            this.pn_restore_data.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.pn_restore_data.BackColor = System.Drawing.Color.White;
-            this.pn_restore_data.Controls.Add(this.lbl_restore);
-            this.pn_restore_data.Location = new System.Drawing.Point(0, 435);
-            this.pn_restore_data.Name = "pn_restore_data";
-            this.pn_restore_data.Size = new System.Drawing.Size(181, 60);
-            this.pn_restore_data.TabIndex = 13;
-            this.pn_restore_data.Visible = false;
+            this.label5.AutoSize = true;
+            this.label5.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.label5.Font = new System.Drawing.Font("LBC", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.label5.Location = new System.Drawing.Point(176, 271);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(75, 22);
+            this.label5.TabIndex = 5;
+            this.label5.Text = "اختر صورة";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
-            // lbl_restore
+            // bunifuElipse1
             // 
-            this.lbl_restore.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lbl_restore.AutoSize = true;
-            this.lbl_restore.Font = new System.Drawing.Font("LBC", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_restore.Location = new System.Drawing.Point(1, 8);
-            this.lbl_restore.Name = "lbl_restore";
-            this.lbl_restore.Size = new System.Drawing.Size(169, 27);
-            this.lbl_restore.TabIndex = 9;
-            this.lbl_restore.TabStop = true;
-            this.lbl_restore.Text = "استعادة من نسخة ";
-            this.lbl_restore.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lbl_restore_LinkClicked);
+            this.bunifuElipse1.ElipseRadius = 500;
+            this.bunifuElipse1.TargetControl = this.pic_user;
+            // 
+            // txt_url
+            // 
+            this.txt_url.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_url.Location = new System.Drawing.Point(40, 257);
+            this.txt_url.MaxLength = 50;
+            this.txt_url.Name = "txt_url";
+            this.txt_url.Size = new System.Drawing.Size(269, 28);
+            this.txt_url.TabIndex = 60;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("LBC", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.label12.Location = new System.Drawing.Point(314, 260);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(67, 22);
+            this.label12.TabIndex = 61;
+            this.label12.Text = "Site Url";
             // 
             // FRM_SETTINGS
             // 
@@ -1230,17 +1254,17 @@ namespace School_Mang.PL.MAIN
             this.pn_users.PerformLayout();
             this.pn_change_year.ResumeLayout(false);
             this.pn_change_year.PerformLayout();
+            this.pn_back_up.ResumeLayout(false);
+            this.pn_back_up.PerformLayout();
+            this.pn_restore_data.ResumeLayout(false);
+            this.pn_restore_data.PerformLayout();
             this.group_box_server.ResumeLayout(false);
             this.group_box_server.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.group_box_pic.ResumeLayout(false);
             this.group_box_pic.PerformLayout();
-            this.panel4.ResumeLayout(false);
-            this.pn_back_up.ResumeLayout(false);
-            this.pn_back_up.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_user)).EndInit();
-            this.pn_restore_data.ResumeLayout(false);
-            this.pn_restore_data.PerformLayout();
+            this.panel4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1315,5 +1339,7 @@ namespace School_Mang.PL.MAIN
         private System.Windows.Forms.LinkLabel link_bake_up;
         public System.Windows.Forms.Panel pn_restore_data;
         private System.Windows.Forms.LinkLabel lbl_restore;
+        private System.Windows.Forms.TextBox txt_url;
+        private System.Windows.Forms.Label label12;
     }
 }

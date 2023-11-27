@@ -73,6 +73,8 @@ namespace School_Mang.PL.MAIN
                             Properties.Settings.Default.MyYear,
                             Properties.Settings.Default.Year_Desc
                             );
+                            Properties.Settings.Default.Save();
+
                             msg.MyMesg("تم تغيير العام الدراسى فى قاعدة البيانات !! ");
                         }
                         else

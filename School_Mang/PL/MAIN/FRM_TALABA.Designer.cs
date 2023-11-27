@@ -81,7 +81,7 @@ namespace School_Mang.PL.MAIN
             this.pn_home.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pn_home.Location = new System.Drawing.Point(0, 0);
             this.pn_home.Name = "pn_home";
-            this.pn_home.Size = new System.Drawing.Size(1370, 749);
+            this.pn_home.Size = new System.Drawing.Size(1370, 788);
             this.pn_home.TabIndex = 0;
             // 
             // flowLayoutPanel1
@@ -100,7 +100,7 @@ namespace School_Mang.PL.MAIN
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(20);
             this.flowLayoutPanel1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1370, 494);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1370, 785);
             this.flowLayoutPanel1.TabIndex = 12;
             // 
             // bunifuCards5
@@ -453,7 +453,7 @@ namespace School_Mang.PL.MAIN
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1370, 749);
+            this.ClientSize = new System.Drawing.Size(1370, 788);
             this.Controls.Add(this.pn_home);
             this.Font = new System.Drawing.Font("LBC", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.Black;

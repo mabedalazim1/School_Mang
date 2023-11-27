@@ -22,6 +22,9 @@ namespace School_Mang.PL.STD
         public byte rosom = 0;
         public byte kotob = 0;
 
+        private short trans_year = 0;
+        private short trans_grade = 0;
+
         int permission_id = Properties.Settings.Default.permission_id;
 
         // Form Closed
@@ -70,6 +73,7 @@ namespace School_Mang.PL.STD
 
 
             txt_std_name.Focus();
+            chk_after.Checked = true;
         }
         #region My Voids
 
@@ -119,7 +123,19 @@ namespace School_Mang.PL.STD
             }
 
         }
-
+        private Boolean Verify_Std_School_Code(string std_code, int year)
+        {
+            DataTable Dt;
+            Dt = std.Verify_Std_School_Code(std_code, year);
+            if (Dt.Rows.Count == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
         #endregion
 
         int move;
@@ -225,6 +241,25 @@ namespace School_Mang.PL.STD
             if (!BL.Globals.Update_Taheewl)
             {
                 int year = Properties.Settings.Default.year_cod;
+                if (!Verify_Std_School_Code(txt_std_code.Text, year+1))
+                {
+                    if (chk_after.Checked)
+                    {
+                        msg.ErrorMesg("لا يمكن تحويل الطالب .. غير مقيد بالعام الجديد .. يمكنك تغيير العام ثم تحويل الطالب ... !");
+                        Waiting.End_WAit();
+                        return;
+                    }
+                    else
+                    {
+                        if (msg.DialogeErrMsg("سوف يتم تحويل من المدرسة عن العام السابق .. هل تريد المتابعة ؟ ") != DialogResult.Yes) return;
+
+                        // Get Trans Year And Grade For Old Std
+                      
+                            year -= 1;
+                            grade -= 1;
+                    }
+                   
+                }
                 try
                 {
                     // If Transfer To School
@@ -234,6 +269,8 @@ namespace School_Mang.PL.STD
                         year += 1;
                         BL.Globals.Taheewl_To_School = false;
                     }
+
+
                     // Add Transfers Data
                     std.Add_Transfers_Data(
                         Trans_cod().ToString(),
@@ -244,7 +281,8 @@ namespace School_Mang.PL.STD
                         txt_guardian_name.Text,
                         txt_transfer_reason.Text,
                         rosom, kotob,
-                        txt_adrs.Text);
+                        txt_adrs.Text,
+                        grade);
 
 
                     msg.MyMesg("تم حفظ طلب التحويل بنجاح .. !");
@@ -338,11 +376,21 @@ namespace School_Mang.PL.STD
             {
                 lbl_title.Text = "تعديل طلب التحويل";
                 btn_new_std.ButtonText = "تعديل";
+                chk_after.Checked = true;
+                chk_before.Visible = false;
+                chk_after.Visible = false;
             }
             else
             {
                 lbl_title.Text = "طلب تحويل طالب";
                 btn_new_std.ButtonText = "حفظ";
+            }
+
+            if (BL.Globals.Taheewl_To_School)
+            {
+                chk_after.Checked = true;
+                chk_before.Visible = false;
+                chk_after.Visible = false;
             }
         }
 
@@ -351,6 +399,41 @@ namespace School_Mang.PL.STD
             if (e.KeyCode == Keys.Escape)
             {
                 btn_close_b_Click(sender, e);
+            }
+        }
+
+        private void chk_after_CheckedChanged(object sender, EventArgs e)
+        {
+
+            if(chk_after.Checked )
+            {
+
+                chk_before.Checked = false;
+            }
+            else
+            {
+                chk_before.Checked = true;
+            }
+        }
+
+        private void chk_before_CheckedChanged(object sender, EventArgs e)
+        {
+           
+            if (chk_before.Checked)
+            {
+                if (msg.DialogeErrMsg("سوف يتم تحويل الطالب أثناء الدراسة .. هل تريد المتابعة ؟ ") != DialogResult.Yes) 
+                {
+                    chk_after.Checked = true;
+                    chk_before.Checked = false;
+                    return;
+                }
+                
+                chk_after.Checked = false;
+                
+            }
+            else
+            {
+                chk_after.Checked = true;
             }
         }
     }

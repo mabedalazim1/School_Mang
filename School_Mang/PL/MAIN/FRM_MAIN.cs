@@ -260,7 +260,7 @@ namespace School_Mang.PL.MAIN
         private void btn_nataeg_Click(object sender, EventArgs e)
         {
             whiteColor(btn_nataeg);
-            changePages("النتائج", frm_nateg.pn_home);
+            changePages("التقييمات", frm_nateg.pn_home);
             Get_Permissions(3);
         }
 

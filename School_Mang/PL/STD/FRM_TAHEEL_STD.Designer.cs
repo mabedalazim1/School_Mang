@@ -57,6 +57,8 @@ namespace School_Mang.PL.STD
             this.btn_edit_std = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btn_new_std = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btn_close_b = new Bunifu.Framework.UI.BunifuThinButton2();
+            this.chk_before = new System.Windows.Forms.CheckBox();
+            this.chk_after = new System.Windows.Forms.CheckBox();
             this.pn_top.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -66,7 +68,7 @@ namespace School_Mang.PL.STD
             // 
             this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
             this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel4.Location = new System.Drawing.Point(0, 465);
+            this.panel4.Location = new System.Drawing.Point(0, 491);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(536, 10);
             this.panel4.TabIndex = 70;
@@ -155,7 +157,7 @@ namespace School_Mang.PL.STD
             this.groupBox1.Controls.Add(this.lbl_mohwel);
             this.groupBox1.Font = new System.Drawing.Font("LBC", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.ForeColor = System.Drawing.Color.DarkGray;
-            this.groupBox1.Location = new System.Drawing.Point(4, 54);
+            this.groupBox1.Location = new System.Drawing.Point(4, 78);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.groupBox1.Size = new System.Drawing.Size(522, 335);
@@ -353,7 +355,7 @@ namespace School_Mang.PL.STD
             this.groupBox3.Controls.Add(this.btn_edit_std);
             this.groupBox3.Controls.Add(this.btn_new_std);
             this.groupBox3.Controls.Add(this.btn_close_b);
-            this.groupBox3.Location = new System.Drawing.Point(4, 390);
+            this.groupBox3.Location = new System.Drawing.Point(4, 417);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(522, 69);
             this.groupBox3.TabIndex = 82;
@@ -436,12 +438,40 @@ namespace School_Mang.PL.STD
             this.btn_close_b.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.btn_close_b.Click += new System.EventHandler(this.btn_close_b_Click);
             // 
+            // chk_before
+            // 
+            this.chk_before.AutoSize = true;
+            this.chk_before.Font = new System.Drawing.Font("Noto Naskh Arabic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chk_before.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.chk_before.Location = new System.Drawing.Point(13, 56);
+            this.chk_before.Name = "chk_before";
+            this.chk_before.Size = new System.Drawing.Size(176, 31);
+            this.chk_before.TabIndex = 80;
+            this.chk_before.Text = "تحويل أثناء العام الدراسى";
+            this.chk_before.UseVisualStyleBackColor = true;
+            this.chk_before.CheckedChanged += new System.EventHandler(this.chk_before_CheckedChanged);
+            // 
+            // chk_after
+            // 
+            this.chk_after.AutoSize = true;
+            this.chk_after.Font = new System.Drawing.Font("Noto Naskh Arabic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chk_after.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.chk_after.Location = new System.Drawing.Point(242, 56);
+            this.chk_after.Name = "chk_after";
+            this.chk_after.Size = new System.Drawing.Size(171, 31);
+            this.chk_after.TabIndex = 83;
+            this.chk_after.Text = "تحويل بعد العام الدراسى";
+            this.chk_after.UseVisualStyleBackColor = true;
+            this.chk_after.CheckedChanged += new System.EventHandler(this.chk_after_CheckedChanged);
+            // 
             // FRM_TAHEEL_STD
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(536, 475);
+            this.ClientSize = new System.Drawing.Size(536, 501);
+            this.Controls.Add(this.chk_after);
+            this.Controls.Add(this.chk_before);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.panel4);
@@ -459,6 +489,7 @@ namespace School_Mang.PL.STD
             this.groupBox1.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -491,5 +522,7 @@ namespace School_Mang.PL.STD
         public System.Windows.Forms.CheckBox chk_kotob_yes;
         public System.Windows.Forms.CheckBox chk_resom_yes;
         public System.Windows.Forms.TextBox txt_trans_code;
+        public System.Windows.Forms.CheckBox chk_before;
+        public System.Windows.Forms.CheckBox chk_after;
     }
 }

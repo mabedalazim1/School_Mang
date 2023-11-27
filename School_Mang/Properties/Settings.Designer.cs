@@ -154,5 +154,29 @@ namespace School_Mang.Properties {
                 this["permission_id"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Rasd")]
+        public string save_path {
+            get {
+                return ((string)(this["save_path"]));
+            }
+            set {
+                this["save_path"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://www.alkwtherps.com/api/")]
+        public string site_uri {
+            get {
+                return ((string)(this["site_uri"]));
+            }
+            set {
+                this["site_uri"] = value;
+            }
+        }
     }
 }

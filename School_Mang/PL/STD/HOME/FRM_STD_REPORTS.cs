@@ -15,6 +15,9 @@ namespace School_Mang.PL.STD.HOME
         CLS_STD_FUNCATIONS Func = new CLS_STD_FUNCATIONS();
         BL.MSG msg = new BL.MSG();
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
+        BL.Waiting waiting = new BL.Waiting();
+
+        int year = Properties.Settings.Default.year_cod;
 
         // Form Closed
         private static FRM_STD_REPORTS frm_Std_Reports;
@@ -49,6 +52,24 @@ namespace School_Mang.PL.STD.HOME
             FRM_KAEMA_GRADE.Get_Frm_Kaema_Grade.label11.Text = title;
             FRM_KAEMA_GRADE.Get_Frm_Kaema_Grade.Text = title;
             FRM_KAEMA_GRADE.Get_Frm_Kaema_Grade.ShowDialog();
+        }
+
+        private void Open_Count_Std(int year)
+        {
+            waiting.Wait();
+            try
+            {
+
+                RPT.REPORT_CONNECTION RPT = new RPT.REPORT_CONNECTION();
+                RPT.OpenCount_Std(year);
+                waiting.End_WAit();
+            }
+            catch (Exception ex)
+            {
+                msg.MyMesg(ex.Message);
+                waiting.End_WAit();
+            }
+            waiting.End_WAit();
         }
         private void lbl_back_Click(object sender, EventArgs e)
         {
@@ -161,6 +182,27 @@ namespace School_Mang.PL.STD.HOME
         private void pic_transfer_to_Click(object sender, EventArgs e)
         {
             lbl_transfer_to_Click(sender, e);
+        }
+
+        private void lbl_count_Click(object sender, EventArgs e)
+        {
+            
+            Open_Count_Std(year);
+        }
+
+        private void pic_count_Click(object sender, EventArgs e)
+        {
+            lbl_count_Click(sender, e);
+        }
+
+        private void lbl_count_new_Click(object sender, EventArgs e)
+        {
+            Open_Count_Std(year + 1);
+        }
+
+        private void pic_count_new_Click(object sender, EventArgs e)
+        {
+            lbl_count_new_Click(sender, e);
         }
     }
 }

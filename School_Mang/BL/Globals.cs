@@ -325,5 +325,44 @@ namespace School_Mang.BL
             }
         }
 
+        private static int _test_kind;
+        public static int test_kind
+        {
+            get
+            {
+                return _test_kind;
+            }
+            set
+            {
+                _test_kind = value;
+            }
+        }
+
+
+        private static int _test_month;
+        public static int test_month
+        {
+            get
+            {
+                return _test_month;
+            }
+            set
+            {
+                _test_month = value;
+            }
+        }
+
+        private static int _test_grade_id;
+        public static int test_grade_id
+        {
+            get
+            {
+                return _test_grade_id;
+            }
+            set
+            {
+                _test_grade_id = value;
+            }
+        }
     }
 }

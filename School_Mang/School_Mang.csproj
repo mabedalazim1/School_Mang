@@ -376,6 +376,12 @@
     <Compile Include="PL\NATIGA\FRM_ADD_GOLOS.Designer.cs">
       <DependentUpon>FRM_ADD_GOLOS.cs</DependentUpon>
     </Compile>
+    <Compile Include="PL\NATIGA\FRM_CHOSE_NATAG.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\NATIGA\FRM_CHOSE_NATAG.Designer.cs">
+      <DependentUpon>FRM_CHOSE_NATAG.cs</DependentUpon>
+    </Compile>
     <Compile Include="PL\NATIGA\FRM_DELETE_SITE_DATA.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -387,6 +393,18 @@
     </Compile>
     <Compile Include="PL\NATIGA\FRM_KSHOF_RASD.Designer.cs">
       <DependentUpon>FRM_KSHOF_RASD.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PL\NATIGA\FRM_NATAG_DATA.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\NATIGA\FRM_NATAG_DATA.Designer.cs">
+      <DependentUpon>FRM_NATAG_DATA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PL\NATIGA\FRM_SITE_STD_DATA.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\NATIGA\FRM_SITE_STD_DATA.Designer.cs">
+      <DependentUpon>FRM_SITE_STD_DATA.cs</DependentUpon>
     </Compile>
     <Compile Include="PL\NATIGA\HOME\FRM_MANG_SITE.cs">
       <SubType>Form</SubType>
@@ -601,6 +619,7 @@
     <Content Include="EXCEL\mark-4p.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\test-100.png" />
     <None Include="Resources\delete-database-100.png" />
     <None Include="Resources\site-100.png" />
     <None Include="Resources\note-48.png" />
@@ -659,11 +678,20 @@
     <EmbeddedResource Include="PL\NATIGA\FRM_ADD_GOLOS.resx">
       <DependentUpon>FRM_ADD_GOLOS.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PL\NATIGA\FRM_CHOSE_NATAG.resx">
+      <DependentUpon>FRM_CHOSE_NATAG.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PL\NATIGA\FRM_DELETE_SITE_DATA.resx">
       <DependentUpon>FRM_DELETE_SITE_DATA.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PL\NATIGA\FRM_KSHOF_RASD.resx">
       <DependentUpon>FRM_KSHOF_RASD.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PL\NATIGA\FRM_NATAG_DATA.resx">
+      <DependentUpon>FRM_NATAG_DATA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PL\NATIGA\FRM_SITE_STD_DATA.resx">
+      <DependentUpon>FRM_SITE_STD_DATA.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PL\NATIGA\HOME\FRM_MANG_SITE.resx">
       <DependentUpon>FRM_MANG_SITE.cs</DependentUpon>

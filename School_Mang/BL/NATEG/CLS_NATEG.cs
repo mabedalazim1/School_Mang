@@ -151,5 +151,79 @@ namespace School_Mang.BL.NATEG
             DAL.Close();
             return Dt;
         }
+
+        public DataTable Get_Count_Degree(int test_kind_Id)
+        {
+
+            SiteAccessLayer DAL = new SiteAccessLayer();
+
+            SqlParameter[] param = new SqlParameter[1];
+            param[0] = new SqlParameter("@test_kind_Id", SqlDbType.Int);
+            param[0].Value = test_kind_Id;
+
+            
+            DataTable Dt;
+
+            Dt = DAL.Selectdata("SP_Get_Count_Degree", param);
+            DAL.Close();
+            return Dt;
+        }
+
+        public DataTable Get_Count_Mark(int test_kind_Id)
+        {
+
+            SiteAccessLayer DAL = new SiteAccessLayer();
+
+            SqlParameter[] param = new SqlParameter[1];
+            param[0] = new SqlParameter("@test_kind_Id", SqlDbType.Int);
+            param[0].Value = test_kind_Id;
+
+
+            DataTable Dt;
+
+            Dt = DAL.Selectdata("SP_Get_Count_Mark", param);
+            DAL.Close();
+            return Dt;
+        }
+
+        public DataTable Get_Mark_Data(int test_kind_Id, int grade_Id)
+        {
+
+            SiteAccessLayer DAL = new SiteAccessLayer();
+
+            SqlParameter[] param = new SqlParameter[2];
+            param[0] = new SqlParameter("@test_kind_Id", SqlDbType.Int);
+            param[0].Value = test_kind_Id;
+
+
+            param[1] = new SqlParameter("@grade_Id", SqlDbType.Int);
+            param[1].Value = grade_Id;
+
+            DataTable Dt;
+
+            Dt = DAL.Selectdata("SP_Get_Mark_Data", param);
+            DAL.Close();
+            return Dt;
+        }
+
+        public DataTable Get_Degree_Data(int test_kind_Id, int grade_Id)
+        {
+
+            SiteAccessLayer DAL = new SiteAccessLayer();
+
+            SqlParameter[] param = new SqlParameter[2];
+            param[0] = new SqlParameter("@test_kind_Id", SqlDbType.Int);
+            param[0].Value = test_kind_Id;
+
+
+            param[1] = new SqlParameter("@grade_Id", SqlDbType.Int);
+            param[1].Value = grade_Id;
+
+            DataTable Dt;
+
+            Dt = DAL.Selectdata("SP_Get_Degree_Data", param);
+            DAL.Close();
+            return Dt;
+        }
     }
 }

@@ -703,6 +703,16 @@ namespace School_Mang.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap test_100 {
+            get {
+                object obj = ResourceManager.GetObject("test-100", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap test_cheating_100 {
             get {
                 object obj = ResourceManager.GetObject("test-cheating-100", resourceCulture);

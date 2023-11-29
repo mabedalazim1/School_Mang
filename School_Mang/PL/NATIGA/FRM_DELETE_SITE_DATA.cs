@@ -57,6 +57,29 @@ namespace School_Mang.PL.NATIGA
 
         }
 
+        int move;
+        int move_x;
+        int move_y;
+        private void pn_top_MouseDown(object sender, MouseEventArgs e)
+        {
+            move = 1;
+            move_x = e.X;
+            move_y = e.Y;
+        }
+
+
+        private void pn_top_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (move == 1)
+            {
+                this.SetDesktopLocation(MousePosition.X - move_x, MousePosition.Y - move_y);
+            }
+        }
+
+        private void pn_top_MouseUp(object sender, MouseEventArgs e)
+        {
+            move = 0;
+        }
         private void Add_To_Comb_Test()
         {
             Dictionary<int, string> comboSource = new Dictionary<int, string>();

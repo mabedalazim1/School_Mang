@@ -125,5 +125,15 @@ namespace School_Mang.PL.NATIGA.HOME
             FRM_DELETE_SITE_DATA.Get_Frm_Delete_Data.ShowDialog();
             
         }
+
+        private void lbl_degree_Click(object sender, EventArgs e)
+        {
+            FRM_CHOSE_NATAG.Get_Frm_Chose_Natag.ShowDialog();
+        }
+
+        private void pic_degree_Click(object sender, EventArgs e)
+        {
+            lbl_degree_Click(sender, e);
+        }
     }
 }

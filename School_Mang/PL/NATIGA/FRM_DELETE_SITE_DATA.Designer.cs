@@ -40,15 +40,15 @@ namespace School_Mang.PL.NATIGA
             this.cmb_test = new System.Windows.Forms.ComboBox();
             this.label18 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cmb_grade = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txt_pass = new System.Windows.Forms.TextBox();
+            this.txt_user = new System.Windows.Forms.TextBox();
             this.cmb_month = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.txt_user = new System.Windows.Forms.TextBox();
-            this.txt_pass = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.cmb_grade = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.pn_top.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -73,6 +73,9 @@ namespace School_Mang.PL.NATIGA
             this.pn_top.Name = "pn_top";
             this.pn_top.Size = new System.Drawing.Size(532, 50);
             this.pn_top.TabIndex = 100;
+            this.pn_top.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pn_top_MouseDown);
+            this.pn_top.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pn_top_MouseMove);
+            this.pn_top.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pn_top_MouseUp);
             // 
             // label11
             // 
@@ -211,6 +214,73 @@ namespace School_Mang.PL.NATIGA
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "البيانات المراد حذفها";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.Red;
+            this.label5.Location = new System.Drawing.Point(13, 102);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(245, 29);
+            this.label5.TabIndex = 102;
+            this.label5.Text = "سوف يتم حذف جميع البيانات المحددة";
+            // 
+            // cmb_grade
+            // 
+            this.cmb_grade.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_grade.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cmb_grade.Font = new System.Drawing.Font("Noto Naskh Arabic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmb_grade.ForeColor = System.Drawing.Color.DimGray;
+            this.cmb_grade.FormattingEnabled = true;
+            this.cmb_grade.Items.AddRange(new object[] {
+            "ذكر",
+            "أنثى"});
+            this.cmb_grade.Location = new System.Drawing.Point(275, 97);
+            this.cmb_grade.Name = "cmb_grade";
+            this.cmb_grade.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.cmb_grade.Size = new System.Drawing.Size(140, 40);
+            this.cmb_grade.TabIndex = 101;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.label4.Location = new System.Drawing.Point(422, 102);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(48, 29);
+            this.label4.TabIndex = 100;
+            this.label4.Text = "الصف";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.label3.Location = new System.Drawing.Point(184, 164);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(80, 29);
+            this.label3.TabIndex = 99;
+            this.label3.Text = "كلمة المرور";
+            // 
+            // txt_pass
+            // 
+            this.txt_pass.Font = new System.Drawing.Font("Noto Naskh Arabic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_pass.Location = new System.Drawing.Point(38, 153);
+            this.txt_pass.MaxLength = 20;
+            this.txt_pass.Name = "txt_pass";
+            this.txt_pass.Size = new System.Drawing.Size(140, 40);
+            this.txt_pass.TabIndex = 98;
+            // 
+            // txt_user
+            // 
+            this.txt_user.Font = new System.Drawing.Font("Noto Naskh Arabic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_user.Location = new System.Drawing.Point(275, 158);
+            this.txt_user.MaxLength = 20;
+            this.txt_user.Name = "txt_user";
+            this.txt_user.Size = new System.Drawing.Size(140, 40);
+            this.txt_user.TabIndex = 97;
+            // 
             // cmb_month
             // 
             this.cmb_month.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -249,73 +319,6 @@ namespace School_Mang.PL.NATIGA
             this.label2.TabIndex = 96;
             this.label2.Text = "اسم المستخدم";
             // 
-            // txt_user
-            // 
-            this.txt_user.Font = new System.Drawing.Font("Noto Naskh Arabic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_user.Location = new System.Drawing.Point(275, 158);
-            this.txt_user.MaxLength = 20;
-            this.txt_user.Name = "txt_user";
-            this.txt_user.Size = new System.Drawing.Size(140, 40);
-            this.txt_user.TabIndex = 97;
-            // 
-            // txt_pass
-            // 
-            this.txt_pass.Font = new System.Drawing.Font("Noto Naskh Arabic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_pass.Location = new System.Drawing.Point(38, 153);
-            this.txt_pass.MaxLength = 20;
-            this.txt_pass.Name = "txt_pass";
-            this.txt_pass.Size = new System.Drawing.Size(140, 40);
-            this.txt_pass.TabIndex = 98;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-            this.label3.Location = new System.Drawing.Point(184, 164);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(80, 29);
-            this.label3.TabIndex = 99;
-            this.label3.Text = "كلمة المرور";
-            // 
-            // cmb_grade
-            // 
-            this.cmb_grade.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmb_grade.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cmb_grade.Font = new System.Drawing.Font("Noto Naskh Arabic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmb_grade.ForeColor = System.Drawing.Color.DimGray;
-            this.cmb_grade.FormattingEnabled = true;
-            this.cmb_grade.Items.AddRange(new object[] {
-            "ذكر",
-            "أنثى"});
-            this.cmb_grade.Location = new System.Drawing.Point(275, 97);
-            this.cmb_grade.Name = "cmb_grade";
-            this.cmb_grade.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.cmb_grade.Size = new System.Drawing.Size(140, 40);
-            this.cmb_grade.TabIndex = 101;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-            this.label4.Location = new System.Drawing.Point(422, 102);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(48, 29);
-            this.label4.TabIndex = 100;
-            this.label4.Text = "الصف";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.Red;
-            this.label5.Location = new System.Drawing.Point(13, 102);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(245, 29);
-            this.label5.TabIndex = 102;
-            this.label5.Text = "سوف يتم حذف جميع البيانات المحددة";
-            // 
             // FRM_DELETE_SITE_DATA
             // 
             this.AcceptButton = this.btn_close;
@@ -329,7 +332,7 @@ namespace School_Mang.PL.NATIGA
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FRM_DELETE_SITE_DATA";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FRM_DELETE_SITE_DATA";
+            this.Text = "حذف البيانات";
             this.pn_top.ResumeLayout(false);
             this.pn_top.PerformLayout();
             this.groupBox3.ResumeLayout(false);

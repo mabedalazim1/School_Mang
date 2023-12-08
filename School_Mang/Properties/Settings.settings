@@ -36,10 +36,19 @@
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="save_path" Type="System.String" Scope="User">
-      <Value Profile="(Default)">D:\Rasd</Value>
+      <Value Profile="(Default)">D:\Rasd\Months</Value>
     </Setting>
     <Setting Name="site_uri" Type="System.String" Scope="User">
       <Value Profile="(Default)">https://www.alkwtherps.com/api/</Value>
+    </Setting>
+    <Setting Name="save_Trm_A_path" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\Rasd\Term1</Value>
+    </Setting>
+    <Setting Name="save_Trm_B_path" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\Rasd\Term2</Value>
+    </Setting>
+    <Setting Name="save_Sery_path" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\Rasd\Sery</Value>
     </Setting>
   </Settings>
 </SettingsFile>

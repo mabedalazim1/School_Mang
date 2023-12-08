@@ -16,6 +16,8 @@ namespace School_Mang.PL.MAIN
 
         HTTP.HTTPCLINT HTTP = new HTTP.HTTPCLINT();
 
+        BL.NATEG.cls_NATAG_FUNCTIONS natag_func = new BL.NATEG.cls_NATAG_FUNCTIONS();
+
         // Form Closed
         private static FRM_NATEG frm_Nateg;
         static void frm_Form_Closed(object sender, FormClosedEventArgs e)
@@ -49,20 +51,7 @@ namespace School_Mang.PL.MAIN
         BL.NATEG.ExcelUtlity Excel = new BL.NATEG.ExcelUtlity();
 
 
-        // Change Pages
-        private void changePages(Panel pn, string lbl)
-        {
-            FRM_MAIN.Get_Frm_Main.pn_home.Visible = false;
-            FRM_MAIN.Get_Frm_Main.pn_main.Controls.Clear();
-            FRM_MAIN.Get_Frm_Main.pn_main.Visible = false;
-            FRM_MAIN.Get_Frm_Main.lbl_main.Text = lbl;
-            FRM_MAIN.Get_Frm_Main.lbl_main.Visible = false;
-            FRM_MAIN.Get_Frm_Main.pn_main.BringToFront();
-            FRM_MAIN.Get_Frm_Main.pn_main.Controls.Add(pn);
-            FRM_MAIN.Get_Frm_Main.trans_a.ShowSync(FRM_MAIN.Get_Frm_Main.pn_main);
-            FRM_MAIN.Get_Frm_Main.lbl_main.Visible = true;
-        }
-
+        
         private void lbl_current_stds_Click(object sender, EventArgs e)
         {
             lbl_golos_id_Click(sender, e);
@@ -91,20 +80,9 @@ namespace School_Mang.PL.MAIN
             lbl_rasd_Click(sender, e);
         }
 
-        private void lbl_import_Click(object sender, EventArgs e)
-        {
-            openFileDialog1.Filter = "Excel 2010(*.xlsx)|*.xlsx|Excel 2003(*.xls)|*.xls";
-            openFileDialog1.InitialDirectory = @"D:\Rasd";
-            openFileDialog1.Title = "اختر ملف الاكسيل المراد رفعه ..!";
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                Excel.ReadRasdDataFromExcel(openFileDialog1.FileName);
-            }
-        }
-
         private void pic_import_Click(object sender, EventArgs e)
         {
-            lbl_import_Click(sender, e);
+            lbl_final_exams_Click(sender, e);
         }
 
         private void lbl_rasd_report_Click(object sender, EventArgs e)
@@ -122,7 +100,7 @@ namespace School_Mang.PL.MAIN
         private void lbl_site_Click(object sender, EventArgs e)
         {
             // Get Std Data Form
-            changePages(NATIGA.HOME.FRM_MANG_SITE.Get_Frm_Mang_Site.pn_home, "إدارة الموقع");
+            natag_func.changePages(NATIGA.HOME.FRM_MANG_SITE.Get_Frm_Mang_Site.pn_home, "إدارة الموقع");
         }
 
         private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
@@ -133,6 +111,23 @@ namespace School_Mang.PL.MAIN
         private void pic_site_Click(object sender, EventArgs e)
         {
             lbl_site_Click(sender, e);
+        }
+
+        private void lbl_final_exams_Click(object sender, EventArgs e)
+        {
+            // Get Std Data Form
+            natag_func.changePages(NATIGA.HOME.FRM_FINAL_DATA.Get_Frm_Final_Data.pn_home, "الإختبارات النهائية");
+        }
+
+        private void lbl_setting_Click(object sender, EventArgs e)
+        {
+            // Get Std Data Form
+            natag_func.changePages(NATIGA.HOME.FRM_FINAL_EXAMS.Get_Frm_Final_Exams.pn_home, "التجهيزات");
+        }
+
+        private void pic_setting_Click(object sender, EventArgs e)
+        {
+            lbl_setting_Click(sender, e);
         }
     }
 

@@ -23,6 +23,11 @@ namespace School_Mang.DAL
             string database_user = "db_a786ad_kpsdata_admin";
             string database_pass = "kps@2020";
 
+            //string server = "DESKTOP-G5OR1RP";
+            //string database_name = "db_a786ad_kpsdata";
+            //string database_user = "sa";
+            //string database_pass = "kps@2023";
+
             try
             {
                 sqlConnection = new SqlConnection(@"Server=" + server + ";Database= " +

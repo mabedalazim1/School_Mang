@@ -17,6 +17,7 @@ namespace School_Mang.PL.NATIGA.HOME
         BL.MSG msg = new BL.MSG();
         BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
         BL.Waiting Waiting = new BL.Waiting();
+        BL.NATEG.cls_NATAG_FUNCTIONS natag_func = new BL.NATEG.cls_NATAG_FUNCTIONS();
 
         // Form Closed
         private static FRM_MANG_SITE frm_Mang_Site;
@@ -47,20 +48,7 @@ namespace School_Mang.PL.NATIGA.HOME
             }
         }
 
-        // Change Pages
-        private void changePages(Panel pn, string lbl)
-        {
-            FRM_MAIN.Get_Frm_Main.pn_home.Visible = false;
-            FRM_MAIN.Get_Frm_Main.pn_main.Controls.Clear();
-            FRM_MAIN.Get_Frm_Main.pn_main.Visible = false;
-            FRM_MAIN.Get_Frm_Main.lbl_main.Text = lbl;
-            FRM_MAIN.Get_Frm_Main.lbl_main.Visible = false;
-            FRM_MAIN.Get_Frm_Main.pn_main.BringToFront();
-            FRM_MAIN.Get_Frm_Main.pn_main.Controls.Add(pn);
-            FRM_MAIN.Get_Frm_Main.trans_a.ShowSync(FRM_MAIN.Get_Frm_Main.pn_main);
-            FRM_MAIN.Get_Frm_Main.lbl_main.Visible = true;
-        }
-
+        
         // Upload File
         private async Task UploadFile(string path )
         {
@@ -82,15 +70,10 @@ namespace School_Mang.PL.NATIGA.HOME
             }
            
         }
-        private void label1_Click(object sender, EventArgs e)
-        {
-            changePages(FRM_NATEG.Get_Frm_Nateg.pn_home, "التقييمات");
-        }
-
+        
         private void lbl_back_Click(object sender, EventArgs e)
         {
-            changePages(FRM_NATEG.Get_Frm_Nateg.pn_home, "التقييمات");
-
+            natag_func.changePages(FRM_NATEG.Get_Frm_Nateg.pn_home, "التقييمات");
         }
 
         private void pic_back_Click(object sender, EventArgs e)

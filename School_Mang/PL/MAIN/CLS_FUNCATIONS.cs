@@ -14,7 +14,7 @@ namespace School_Mang.PL.MAIN
 {
     class CLS_FUNCATIONS
     {
-        String Host = "192.168.1.136";
+        String Host = Properties.Settings.Default.Server_Name;
         int Port = 22;
         String Username = "kpsftp";
         String Password = "kps2020";

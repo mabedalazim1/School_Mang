@@ -13,8 +13,8 @@ namespace School_Mang.BL.NATEG
         Waiting waiting = new Waiting();
 
         public bool WriteRasdDataToExcel(System.Data.DataTable dataTable,
-                                          string worksheetName, 
-                                          string saveAsLocation, 
+                                          string worksheetName,
+                                          string saveAsLocation,
                                           string RasdDataName,
                                           string staticExcelFile,
                                           short test_kind)
@@ -23,7 +23,7 @@ namespace School_Mang.BL.NATEG
             Application excel;
             Workbook excelworkBook;
             Worksheet excelSheet;
-       
+
             waiting.Wait();
             try
             {
@@ -40,7 +40,7 @@ namespace School_Mang.BL.NATEG
                 // Workk sheet
                 excelSheet = (Worksheet)excelworkBook.ActiveSheet;
                 excelSheet.Name = worksheetName;
-                
+
                 excelSheet.Cells[2, 2] = RasdDataName;
 
                 // loop through each row and add values to our sheet
@@ -74,8 +74,8 @@ namespace School_Mang.BL.NATEG
 
                 // Delete Unused Rows
                 Range range;
-                range = excelSheet.Range[excelSheet.Cells[ count_data +5 , 1], excelSheet.Cells[152,19]];
-                range.Delete();
+                range = excelSheet.Range[excelSheet.Cells[count_data + 5, 1], excelSheet.Cells[152, 19]];
+                range.Delete(XlDeleteShiftDirection.xlShiftUp);
 
                 // Protected Excel
                 excelSheet.Protect("kps2023");
@@ -83,9 +83,13 @@ namespace School_Mang.BL.NATEG
                 //now save the workbook and exit Excel
 
                 excelworkBook.SaveAs(saveAsLocation); ;
-                excelworkBook.Close(true); 
-                
+                excelworkBook.Close(true);
+                excelSheet = null;
+                excelworkBook = null;
+
+                excel.DisplayAlerts = true;
                 excel.Quit();
+                excel = null;
 
                 waiting.End_WAit();
                 return true;
@@ -106,11 +110,13 @@ namespace School_Mang.BL.NATEG
             }
         }
 
-        public System.Data.DataTable ReadRasdDataFromExcel(string staticExcelFile  )
-                                      
+        public bool WriteAmalDataToExcel(System.Data.DataTable dataTable,
+                                         string worksheetName,
+                                         string saveAsLocation,
+                                         string RasdDataName,
+                                         string staticExcelFile,
+                                         byte prep = 0)
         {
-            System.Data.DataTable dt = new System.Data.DataTable();
-            DataRow row;
 
             Application excel;
             Workbook excelworkBook;
@@ -130,11 +136,294 @@ namespace School_Mang.BL.NATEG
                 excelworkBook = excel.Workbooks.Open(staticExcelFile);
 
                 // Workk sheet
+                excelSheet = (Worksheet)excelworkBook.ActiveSheet;
+                excelSheet.Name = worksheetName;
+
+                excelSheet.Cells[2, 2] = RasdDataName;
+
+                // loop through each row and add values to our sheet
+                short rowcount = 4;
+                short id = 0;
+                short c_id = 0;
+                short class_id = 0;
+                short count_data = Convert.ToInt16(dataTable.Rows.Count);
+
+
+                foreach (DataRow datarow in dataTable.Rows)
+                {
+                    // Reset Counter
+                    if (class_id != Convert.ToInt16(datarow[2])) c_id = 0;
+                    class_id = Convert.ToInt16(datarow[2]);
+
+                    rowcount += 1;
+                    id += 1;
+                    c_id += 1;
+
+                    // Add values
+                    excelSheet.Cells[rowcount, 1] = id.ToString();
+                    excelSheet.Cells[rowcount, 2] = c_id.ToString();
+                    excelSheet.Cells[rowcount, 3] = datarow[1].ToString();
+                    excelSheet.Cells[rowcount, 4] = datarow[0].ToString();
+                    if(prep == 0)
+                    {
+                        excelSheet.Cells[rowcount, 13] = datarow[2].ToString();
+                    }
+                    else
+                    {
+                        excelSheet.Cells[rowcount, 17] = datarow[2].ToString();
+                    }
+
+                }
+
+                // Delete Unused Rows
+                Range range;
+                range = excelSheet.Range[excelSheet.Cells[count_data + 5, 1], excelSheet.Cells[152, 19]];
+                range.Delete(XlDeleteShiftDirection.xlShiftUp);
+
+                // Protected Excel
+                excelSheet.Protect("kps2023");
+
+                //now save the workbook and exit Excel
+
+                
+                excelworkBook.SaveAs(saveAsLocation);
+                excel.DisplayAlerts = true;
+                excelworkBook.Close(true);
+                excelSheet = null;
+                excelworkBook = null;
+
+               
+                excel.Quit(); 
+                excel = null;
+
+                waiting.End_WAit();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                waiting.End_WAit();
+                msg.ErrorMesg(ex.Message);
+                return false;
+            }
+            finally
+            {
+                excelSheet = null;
+                excelworkBook = null;
+                excel = null;
+
+                waiting.End_WAit();
+            }
+        }
+
+
+        public bool WriteTestDataToExcel(System.Data.DataTable dataTable,
+                                       string worksheetName,
+                                       string saveAsLocation,
+                                       string RasdDataName,
+                                       string staticExcelFile)
+        {
+
+            Application excel;
+            Workbook excelworkBook;
+            Worksheet excelSheet;
+
+            waiting.Wait();
+            try
+            {
+                // Start Excel and get Application object.
+                excel = new Application();
+
+                // for making Excel visible
+                excel.Visible = false;
+                excel.DisplayAlerts = false;
+
+                // Creation a new Workbook
+                excelworkBook = excel.Workbooks.Open(staticExcelFile);
+
+                // Workk sheet
+                excelSheet = (Worksheet)excelworkBook.ActiveSheet;
+                excelSheet.Name = worksheetName;
+
+                excelSheet.Cells[2, 2] = RasdDataName;
+
+                // loop through each row and add values to our sheet
+                short rowcount = 4;
+                
+                short count_data = Convert.ToInt16(dataTable.Rows.Count);
+
+
+                foreach (DataRow datarow in dataTable.Rows)
+                {
+                    // Reset Counter
+                  
+
+                    rowcount += 1;
+
+                    // Add values
+                   
+                    excelSheet.Cells[rowcount, 1] = datarow[0].ToString();
+                    excelSheet.Cells[rowcount, 2] = datarow[5].ToString();
+
+                }
+
+                // Delete Unused Rows
+                Range range;
+                range = excelSheet.Range[excelSheet.Cells[count_data + 5, 1], excelSheet.Cells[152, 19]];
+                range.Delete(XlDeleteShiftDirection.xlShiftUp);
+
+                // Protected Excel
+                excelSheet.Protect("kps2023");
+
+                //now save the workbook and exit Excel
+
+
+                excelworkBook.SaveAs(saveAsLocation);
+                excel.DisplayAlerts = true;
+                excelworkBook.Close(true);
+                excelSheet = null;
+                excelworkBook = null;
+
+
+                excel.Quit();
+                excel = null;
+
+                waiting.End_WAit();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                waiting.End_WAit();
+                msg.ErrorMesg(ex.Message);
+                return false;
+            }
+            finally
+            {
+                excelSheet = null;
+                excelworkBook = null;
+                excel = null;
+
+                waiting.End_WAit();
+            }
+        }
+        public bool WriteSeryDataToExcel(System.Data.DataTable dataTable,
+                                         string worksheetName,
+                                         string saveAsLocation,
+                                         string RasdDataName,
+                                         string staticExcelFile)
+        {
+
+            Application excel;
+            Workbook excelworkBook;
+            Worksheet excelSheet;
+
+            waiting.Wait();
+            try
+            {
+                // Start Excel and get Application object.
+                excel = new Application();
+
+                // for making Excel visible
+                excel.Visible = false;
+                excel.DisplayAlerts = false;
+
+                // Creation a new Workbook
+                excelworkBook = excel.Workbooks.Open(staticExcelFile);
+
+                // Workk sheet
+                excelSheet = (Worksheet)excelworkBook.ActiveSheet;
+                excelSheet.Name = worksheetName;
+
+                excelSheet.Cells[2, 2] = RasdDataName;
+
+                // loop through each row and add values to our sheet
+                short rowcount = 4;
+                short id = 0;
+               
+                short count_data = Convert.ToInt16(dataTable.Rows.Count);
+
+
+                foreach (DataRow datarow in dataTable.Rows)
+                {
+                  
+                    rowcount += 1;
+                    id += 1;
+                  
+
+                    // Add values
+                    excelSheet.Cells[rowcount, 1] = id.ToString();
+                    excelSheet.Cells[rowcount, 2] = datarow[1].ToString();
+                    excelSheet.Cells[rowcount, 3] = datarow[0].ToString();
+                }
+
+                // Delete Unused Rows
+                Range range;
+                range = excelSheet.Range[excelSheet.Cells[count_data + 5, 1], excelSheet.Cells[152, 19]];
+                range.Delete(XlDeleteShiftDirection.xlShiftUp);
+
+                // Protected Excel
+                excelSheet.Protect("kps2023");
+
+                //now save the workbook and exit Excel
+
+                excelworkBook.SaveAs(saveAsLocation); ;
+                excelworkBook.Close(true);
+                excelSheet = null;
+                excelworkBook = null;
+
+                excel.DisplayAlerts = true;
+                excel.Quit();
+                excel = null;
+
+                waiting.End_WAit();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                waiting.End_WAit();
+                msg.ErrorMesg(ex.Message);
+                return false;
+            }
+            finally
+            {
+
+                excelSheet = null;
+                excelworkBook = null;
+                excel = null;
+
+                waiting.End_WAit();
+            }
+        }
+
+        public System.Data.DataTable ReadRasdDataFromExcel(string staticExcelFile)
+
+        {
+            System.Data.DataTable dt = new System.Data.DataTable();
+            DataRow row;
+
+            Application excel;
+            Workbook excelworkBook;
+            Worksheet excelSheet;
+
+            // Start Excel and get Application object.
+            excel = new Application();
+
+            waiting.Wait();
+            try
+            {
+
+                // for making Excel visible
+                excel.Visible = false;
+                excel.DisplayAlerts = false;
+
+                // Creation a new Workbook
+                excelworkBook = excel.Workbooks.Open(staticExcelFile);
+
+                // Workk sheet
                 excelSheet = (Worksheet)excelworkBook.Sheets[1];
                 Range xlRange = excelSheet.UsedRange;
 
                 int rowCount = xlRange.Rows.Count;
-                rowCount = 25;
+                //rowCount = 25;
                 int colCount = xlRange.Columns.Count;
 
                 //Set DataTable Name and Columns Name
@@ -167,7 +456,7 @@ namespace School_Mang.BL.NATEG
                 for (int i = 4; i <= rowCount; i++) //Loop for available row of excel data
                 {
                     row = dt.NewRow(); //assign new row to DataTable
-                    
+
                     row["student_Id"] = Convert.ToInt32(xlRange.Cells[i, 4].Value2);
                     row["arabic_degre"] = Convert.ToInt32(xlRange.Cells[i, 5].Value2);
                     row["dain_degre"] = Convert.ToInt32(xlRange.Cells[i, 6].Value2);
@@ -185,14 +474,103 @@ namespace School_Mang.BL.NATEG
                     row["french_degre"] = Convert.ToInt32(xlRange.Cells[i, 18].Value2);
                     row["createdAt"] = DateTimeOffset.Now;
                     row["updatedAt"] = DateTimeOffset.Now;
-                    
-                        rowCounter++;
-                 
-                   dt.Rows.Add(row); //add row to DataTable
-                }
-                    excelworkBook.Close(true);
 
+                    rowCounter++;
+
+                    dt.Rows.Add(row); //add row to DataTable
+                }
+
+                excelworkBook.Close(0); 
+                excelSheet = null;
+                excelworkBook = null;
+
+                excel.DisplayAlerts = true;
+                excel.Quit(); 
+                excel = null;
+              
+                
+
+                waiting.End_WAit();
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                waiting.End_WAit();
+                msg.ErrorMesg(ex.Message);
+                return null;
+            }
+            finally
+            {
+                excel.DisplayAlerts = true;
+                excelSheet = null;
+                excelworkBook = null;
+                excel = null;
+                waiting.End_WAit();
+            }
+
+        }
+
+        public System.Data.DataTable ReadSeryData(string staticExcelFile)
+
+        {
+            System.Data.DataTable dt = new System.Data.DataTable();
+            DataRow row;
+
+            Application excel;
+            Workbook excelworkBook;
+            Worksheet excelSheet;
+
+            // Start Excel and get Application object.
+            excel = new Application();
+
+            waiting.Wait();
+            try
+            {
+
+                // for making Excel visible
+                excel.Visible = false;
+                excel.DisplayAlerts = false;
+
+                // Creation a new Workbook
+                excelworkBook = excel.Workbooks.Open(staticExcelFile);
+
+                // Workk sheet
+                excelSheet = (Worksheet)excelworkBook.Sheets[1];
+                Range xlRange = excelSheet.UsedRange;
+
+                int rowCount = xlRange.Rows.Count;
+                int colCount = xlRange.Columns.Count;
+
+                //Set DataTable Name and Columns Name
+
+                dt.Columns.Add("Golos", typeof(int));
+                dt.Columns.Add("Sery", typeof(int));
+                dt.Columns.Add("Year_Id", typeof(int));
+
+                // loop through each row and add values to our sheet
+                //Get Row Data of Excel
+
+                int rowCounter; //This variable is used for row index number
+
+                rowCounter = 4;
+
+                for (int i = 4; i <= rowCount; i++) //Loop for available row of excel data
+                {
+                    row = dt.NewRow(); //assign new row to DataTable
+
+                    row["Golos"] = Convert.ToInt32(xlRange.Cells[i, 3].Value2);
+                    row["Sery"] = Convert.ToInt32(xlRange.Cells[i, 4].Value2);
+                    row["Year_Id"] = Properties.Settings.Default.year_cod;
+                    rowCounter++;
+
+                    dt.Rows.Add(row); //add row to DataTable
+                }
+
+                excelworkBook.Close(0);
+
+                excel.DisplayAlerts = true;
                 excel.Quit();
+
                 excelSheet = null;
                 excelworkBook = null;
                 excel = null;
@@ -213,6 +591,7 @@ namespace School_Mang.BL.NATEG
                 excel = null;
                 waiting.End_WAit();
             }
+
         }
     }
 }

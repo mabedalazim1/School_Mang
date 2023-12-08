@@ -74,19 +74,19 @@ namespace School_Mang.PL.NATIGA
                     case 1:
                     case 2:
                     case 3:
-                        staticExcelFile = staticExcelFile + @"Excel\degree-1p.xlsx";
+                        staticExcelFile = staticExcelFile + @"Excel\Months\degree-1p.xlsx";
                         break;
 
                     case 4:
                     case 5:
                     case 6:
-                        staticExcelFile = staticExcelFile + @"Excel\degree-2p.xlsx";
+                        staticExcelFile = staticExcelFile + @"Excel\Months\degree-2p.xlsx";
                         break;
 
                     case 7:
                     case 8:
                     case 9:
-                        staticExcelFile = staticExcelFile + @"Excel\degree-3p.xlsx";
+                        staticExcelFile = staticExcelFile + @"Excel\Months\degree-3p.xlsx";
                         break;
                 }
             }
@@ -100,25 +100,25 @@ namespace School_Mang.PL.NATIGA
                 {
                     case 10:
                     case 11:
-                        staticExcelFile = staticExcelFile + @"Excel\mark-1p.xlsx";
+                        staticExcelFile = staticExcelFile + @"Excel\Months\mark-1p.xlsx";
                         break;
 
                     case 1:
                     case 2:
                     case 3:
-                        staticExcelFile = staticExcelFile + @"Excel\mark-2p.xlsx";
+                        staticExcelFile = staticExcelFile + @"Excel\Months\mark-2p.xlsx";
                         break;
 
                     case 4:
                     case 5:
                     case 6:
-                        staticExcelFile = staticExcelFile + @"Excel\mark-3p.xlsx";
+                        staticExcelFile = staticExcelFile + @"Excel\Months\mark-3p.xlsx";
                         break;
 
                     case 7:
                     case 8:
                     case 9:
-                        staticExcelFile = staticExcelFile + @"Excel\mark-4p.xlsx";
+                        staticExcelFile = staticExcelFile + @"Excel\Months\mark-4p.xlsx";
                         break;
                 }
             }
@@ -253,5 +253,6 @@ namespace School_Mang.PL.NATIGA
                 ExportToExcel(btn_mark, 2);
             }
         }
+
     }
 }

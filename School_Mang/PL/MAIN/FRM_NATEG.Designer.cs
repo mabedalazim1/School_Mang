@@ -41,8 +41,11 @@ namespace School_Mang.PL.MAIN
             this.lbl_rasd = new System.Windows.Forms.Label();
             this.pic_rasd = new System.Windows.Forms.PictureBox();
             this.bunifuCards3 = new Bunifu.Framework.UI.BunifuCards();
-            this.lbl_import = new System.Windows.Forms.Label();
-            this.pic_import = new System.Windows.Forms.PictureBox();
+            this.lbl_final_exams = new System.Windows.Forms.Label();
+            this.pic_final_exams = new System.Windows.Forms.PictureBox();
+            this.bunifuCards6 = new Bunifu.Framework.UI.BunifuCards();
+            this.lbl_setting = new System.Windows.Forms.Label();
+            this.pic_setting = new System.Windows.Forms.PictureBox();
             this.bunifuCards5 = new Bunifu.Framework.UI.BunifuCards();
             this.lbl_site = new System.Windows.Forms.Label();
             this.pic_site = new System.Windows.Forms.PictureBox();
@@ -56,7 +59,9 @@ namespace School_Mang.PL.MAIN
             this.bunifuCards1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_rasd)).BeginInit();
             this.bunifuCards3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pic_import)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_final_exams)).BeginInit();
+            this.bunifuCards6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_setting)).BeginInit();
             this.bunifuCards5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_site)).BeginInit();
             this.SuspendLayout();
@@ -77,8 +82,9 @@ namespace School_Mang.PL.MAIN
             this.flowLayoutPanel1.Controls.Add(this.bunifuCards2);
             this.flowLayoutPanel1.Controls.Add(this.bunifuCards4);
             this.flowLayoutPanel1.Controls.Add(this.bunifuCards1);
-            this.flowLayoutPanel1.Controls.Add(this.bunifuCards3);
+            this.flowLayoutPanel1.Controls.Add(this.bunifuCards6);
             this.flowLayoutPanel1.Controls.Add(this.bunifuCards5);
+            this.flowLayoutPanel1.Controls.Add(this.bunifuCards3);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -224,10 +230,10 @@ namespace School_Mang.PL.MAIN
             this.bunifuCards3.BorderRadius = 5;
             this.bunifuCards3.BottomSahddow = true;
             this.bunifuCards3.color = System.Drawing.Color.Tomato;
-            this.bunifuCards3.Controls.Add(this.lbl_import);
-            this.bunifuCards3.Controls.Add(this.pic_import);
+            this.bunifuCards3.Controls.Add(this.lbl_final_exams);
+            this.bunifuCards3.Controls.Add(this.pic_final_exams);
             this.bunifuCards3.LeftSahddow = false;
-            this.bunifuCards3.Location = new System.Drawing.Point(229, 23);
+            this.bunifuCards3.Location = new System.Drawing.Point(781, 215);
             this.bunifuCards3.Name = "bunifuCards3";
             this.bunifuCards3.Padding = new System.Windows.Forms.Padding(20);
             this.bunifuCards3.RightSahddow = true;
@@ -235,30 +241,73 @@ namespace School_Mang.PL.MAIN
             this.bunifuCards3.Size = new System.Drawing.Size(270, 186);
             this.bunifuCards3.TabIndex = 30;
             // 
-            // lbl_import
+            // lbl_final_exams
             // 
-            this.lbl_import.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.lbl_import.AutoSize = true;
-            this.lbl_import.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lbl_import.Font = new System.Drawing.Font("LBC", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_import.Location = new System.Drawing.Point(39, 117);
-            this.lbl_import.Name = "lbl_import";
-            this.lbl_import.Size = new System.Drawing.Size(188, 37);
-            this.lbl_import.TabIndex = 7;
-            this.lbl_import.Text = "استيراد الدرجات";
-            this.lbl_import.Click += new System.EventHandler(this.lbl_import_Click);
+            this.lbl_final_exams.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lbl_final_exams.AutoSize = true;
+            this.lbl_final_exams.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lbl_final_exams.Font = new System.Drawing.Font("LBC", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_final_exams.Location = new System.Drawing.Point(23, 117);
+            this.lbl_final_exams.Name = "lbl_final_exams";
+            this.lbl_final_exams.Size = new System.Drawing.Size(209, 37);
+            this.lbl_final_exams.TabIndex = 7;
+            this.lbl_final_exams.Text = "الاختبارات النهائية";
+            this.lbl_final_exams.Click += new System.EventHandler(this.lbl_final_exams_Click);
             // 
-            // pic_import
+            // pic_final_exams
             // 
-            this.pic_import.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pic_import.Image = global::School_Mang.Properties.Resources.excel_to_2100;
-            this.pic_import.Location = new System.Drawing.Point(74, 23);
-            this.pic_import.Name = "pic_import";
-            this.pic_import.Size = new System.Drawing.Size(118, 97);
-            this.pic_import.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pic_import.TabIndex = 1;
-            this.pic_import.TabStop = false;
-            this.pic_import.Click += new System.EventHandler(this.pic_import_Click);
+            this.pic_final_exams.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pic_final_exams.Image = global::School_Mang.Properties.Resources.icons8_certification_100;
+            this.pic_final_exams.Location = new System.Drawing.Point(74, 23);
+            this.pic_final_exams.Name = "pic_final_exams";
+            this.pic_final_exams.Size = new System.Drawing.Size(118, 97);
+            this.pic_final_exams.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pic_final_exams.TabIndex = 1;
+            this.pic_final_exams.TabStop = false;
+            this.pic_final_exams.Click += new System.EventHandler(this.pic_import_Click);
+            // 
+            // bunifuCards6
+            // 
+            this.bunifuCards6.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.bunifuCards6.BackColor = System.Drawing.Color.White;
+            this.bunifuCards6.BorderRadius = 5;
+            this.bunifuCards6.BottomSahddow = true;
+            this.bunifuCards6.color = System.Drawing.Color.Tomato;
+            this.bunifuCards6.Controls.Add(this.lbl_setting);
+            this.bunifuCards6.Controls.Add(this.pic_setting);
+            this.bunifuCards6.LeftSahddow = false;
+            this.bunifuCards6.Location = new System.Drawing.Point(229, 23);
+            this.bunifuCards6.Name = "bunifuCards6";
+            this.bunifuCards6.Padding = new System.Windows.Forms.Padding(20);
+            this.bunifuCards6.RightSahddow = true;
+            this.bunifuCards6.ShadowDepth = 20;
+            this.bunifuCards6.Size = new System.Drawing.Size(270, 186);
+            this.bunifuCards6.TabIndex = 32;
+            // 
+            // lbl_setting
+            // 
+            this.lbl_setting.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lbl_setting.AutoSize = true;
+            this.lbl_setting.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lbl_setting.Font = new System.Drawing.Font("LBC", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_setting.Location = new System.Drawing.Point(55, 117);
+            this.lbl_setting.Name = "lbl_setting";
+            this.lbl_setting.Size = new System.Drawing.Size(148, 37);
+            this.lbl_setting.TabIndex = 7;
+            this.lbl_setting.Text = "تجهيز للرصد";
+            this.lbl_setting.Click += new System.EventHandler(this.lbl_setting_Click);
+            // 
+            // pic_setting
+            // 
+            this.pic_setting.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pic_setting.Image = global::School_Mang.Properties.Resources.password_100;
+            this.pic_setting.Location = new System.Drawing.Point(74, 23);
+            this.pic_setting.Name = "pic_setting";
+            this.pic_setting.Size = new System.Drawing.Size(118, 97);
+            this.pic_setting.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pic_setting.TabIndex = 1;
+            this.pic_setting.TabStop = false;
+            this.pic_setting.Click += new System.EventHandler(this.pic_setting_Click);
             // 
             // bunifuCards5
             // 
@@ -333,7 +382,10 @@ namespace School_Mang.PL.MAIN
             ((System.ComponentModel.ISupportInitialize)(this.pic_rasd)).EndInit();
             this.bunifuCards3.ResumeLayout(false);
             this.bunifuCards3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pic_import)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_final_exams)).EndInit();
+            this.bunifuCards6.ResumeLayout(false);
+            this.bunifuCards6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_setting)).EndInit();
             this.bunifuCards5.ResumeLayout(false);
             this.bunifuCards5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_site)).EndInit();
@@ -352,8 +404,8 @@ namespace School_Mang.PL.MAIN
         private System.Windows.Forms.Label lbl_rasd;
         private System.Windows.Forms.PictureBox pic_rasd;
         private Bunifu.Framework.UI.BunifuCards bunifuCards3;
-        private System.Windows.Forms.Label lbl_import;
-        private System.Windows.Forms.PictureBox pic_import;
+        private System.Windows.Forms.Label lbl_final_exams;
+        private System.Windows.Forms.PictureBox pic_final_exams;
         private Bunifu.Framework.UI.BunifuCards bunifuCards4;
         private System.Windows.Forms.Label lbl_rasd_report;
         private System.Windows.Forms.PictureBox pic_rasd_report;
@@ -361,5 +413,8 @@ namespace School_Mang.PL.MAIN
         private Bunifu.Framework.UI.BunifuCards bunifuCards5;
         private System.Windows.Forms.Label lbl_site;
         private System.Windows.Forms.PictureBox pic_site;
+        private Bunifu.Framework.UI.BunifuCards bunifuCards6;
+        private System.Windows.Forms.Label lbl_setting;
+        private System.Windows.Forms.PictureBox pic_setting;
     }
 }

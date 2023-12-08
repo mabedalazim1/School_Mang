@@ -364,5 +364,29 @@ namespace School_Mang.BL
                 _test_grade_id = value;
             }
         }
+        private static bool _Amal_Sana;
+        public static bool Amal_Sana
+        {
+            get
+            {
+                return _Amal_Sana;
+            }
+            set
+            {
+                _Amal_Sana = value;
+            }
+        }
+        private static bool _Final_Test;
+        public static bool Final_Test
+        {
+            get
+            {
+                return _Final_Test;
+            }
+            set
+            {
+                _Final_Test = value;
+            }
+        }
     }
 }

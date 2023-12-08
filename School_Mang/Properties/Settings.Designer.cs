@@ -157,7 +157,7 @@ namespace School_Mang.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Rasd")]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Rasd\\Months")]
         public string save_path {
             get {
                 return ((string)(this["save_path"]));
@@ -176,6 +176,42 @@ namespace School_Mang.Properties {
             }
             set {
                 this["site_uri"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Rasd\\Term1")]
+        public string save_Trm_A_path {
+            get {
+                return ((string)(this["save_Trm_A_path"]));
+            }
+            set {
+                this["save_Trm_A_path"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Rasd\\Term2")]
+        public string save_Trm_B_path {
+            get {
+                return ((string)(this["save_Trm_B_path"]));
+            }
+            set {
+                this["save_Trm_B_path"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Rasd\\Sery")]
+        public string save_Sery_path {
+            get {
+                return ((string)(this["save_Sery_path"]));
+            }
+            set {
+                this["save_Sery_path"] = value;
             }
         }
     }

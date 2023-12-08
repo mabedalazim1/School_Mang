@@ -222,6 +222,7 @@
     <Compile Include="BL\HESAB_SEN.cs" />
     <Compile Include="BL\LOGIN\CLS_LOGIN.cs" />
     <Compile Include="BL\MSG.cs" />
+    <Compile Include="BL\NATEG\cls_NATAG_FUNCTIONS.cs" />
     <Compile Include="BL\NATEG\CLS_NATEG.cs" />
     <Compile Include="BL\NATEG\ExcelUtlity.cs" />
     <Compile Include="BL\STD\CLS_STD.cs" />
@@ -376,6 +377,18 @@
     <Compile Include="PL\NATIGA\FRM_ADD_GOLOS.Designer.cs">
       <DependentUpon>FRM_ADD_GOLOS.cs</DependentUpon>
     </Compile>
+    <Compile Include="PL\NATIGA\FRM_ADD_SERY.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\NATIGA\FRM_ADD_SERY.Designer.cs">
+      <DependentUpon>FRM_ADD_SERY.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PL\NATIGA\FRM_CHOSE_FINAL_DATA.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\NATIGA\FRM_CHOSE_FINAL_DATA.Designer.cs">
+      <DependentUpon>FRM_CHOSE_FINAL_DATA.cs</DependentUpon>
+    </Compile>
     <Compile Include="PL\NATIGA\FRM_CHOSE_NATAG.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -387,6 +400,18 @@
     </Compile>
     <Compile Include="PL\NATIGA\FRM_DELETE_SITE_DATA.Designer.cs">
       <DependentUpon>FRM_DELETE_SITE_DATA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PL\NATIGA\FRM_EDIT_SITE_DEGREES.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\NATIGA\FRM_EDIT_SITE_DEGREES.Designer.cs">
+      <DependentUpon>FRM_EDIT_SITE_DEGREES.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PL\NATIGA\FRM_EDIT_SITE_MARKS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\NATIGA\FRM_EDIT_SITE_MARKS.Designer.cs">
+      <DependentUpon>FRM_EDIT_SITE_MARKS.cs</DependentUpon>
     </Compile>
     <Compile Include="PL\NATIGA\FRM_KSHOF_RASD.cs">
       <SubType>Form</SubType>
@@ -405,6 +430,18 @@
     </Compile>
     <Compile Include="PL\NATIGA\FRM_SITE_STD_DATA.Designer.cs">
       <DependentUpon>FRM_SITE_STD_DATA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PL\NATIGA\HOME\FRM_FINAL_DATA.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\NATIGA\HOME\FRM_FINAL_DATA.Designer.cs">
+      <DependentUpon>FRM_FINAL_DATA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PL\NATIGA\HOME\FRM_FINAL_EXAMS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\NATIGA\HOME\FRM_FINAL_EXAMS.Designer.cs">
+      <DependentUpon>FRM_FINAL_EXAMS.cs</DependentUpon>
     </Compile>
     <Compile Include="PL\NATIGA\HOME\FRM_MANG_SITE.cs">
       <SubType>Form</SubType>
@@ -598,27 +635,57 @@
       <LastGenOutput>rpt_Tahewl_Data.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="EXCEL\degree-1p.xlsx">
+    <Content Include="EXCEL\Months\degree-1p.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="EXCEL\degree-2p.xlsx">
+    <Content Include="EXCEL\Months\degree-2p.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="EXCEL\degree-3p.xlsx">
+    <Content Include="EXCEL\Months\degree-3p.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="EXCEL\mark-1p.xlsx">
+    <Content Include="EXCEL\Months\mark-1p.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="EXCEL\mark-2p.xlsx">
+    <Content Include="EXCEL\Months\mark-2p.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="EXCEL\mark-3p.xlsx">
+    <Content Include="EXCEL\Months\mark-3p.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="EXCEL\mark-4p.xlsx">
+    <Content Include="EXCEL\Months\mark-4p.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="EXCEL\Final\sery-a.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EXCEL\Final\Term_A\Term_A_2.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EXCEL\Final\Term_A\Term_A_3.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EXCEL\Final\Term_B\Term_B_2.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EXCEL\Final\Term_B\Term_B_3.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EXCEL\Final\Term_A\Term_A_2_Test.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EXCEL\Final\Term_A\Term_A_3_Test.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EXCEL\Final\Term_B\Term_B_2_Test.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EXCEL\Final\Term_B\Term_B_3_Test.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\password-100.png" />
+    <None Include="Resources\exam-b-100.png" />
+    <None Include="Resources\exam-a-100.png" />
     <None Include="Resources\test-100.png" />
     <None Include="Resources\delete-database-100.png" />
     <None Include="Resources\site-100.png" />
@@ -678,11 +745,23 @@
     <EmbeddedResource Include="PL\NATIGA\FRM_ADD_GOLOS.resx">
       <DependentUpon>FRM_ADD_GOLOS.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PL\NATIGA\FRM_ADD_SERY.resx">
+      <DependentUpon>FRM_ADD_SERY.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PL\NATIGA\FRM_CHOSE_FINAL_DATA.resx">
+      <DependentUpon>FRM_CHOSE_FINAL_DATA.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PL\NATIGA\FRM_CHOSE_NATAG.resx">
       <DependentUpon>FRM_CHOSE_NATAG.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PL\NATIGA\FRM_DELETE_SITE_DATA.resx">
       <DependentUpon>FRM_DELETE_SITE_DATA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PL\NATIGA\FRM_EDIT_SITE_DEGREES.resx">
+      <DependentUpon>FRM_EDIT_SITE_DEGREES.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PL\NATIGA\FRM_EDIT_SITE_MARKS.resx">
+      <DependentUpon>FRM_EDIT_SITE_MARKS.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PL\NATIGA\FRM_KSHOF_RASD.resx">
       <DependentUpon>FRM_KSHOF_RASD.cs</DependentUpon>
@@ -692,6 +771,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PL\NATIGA\FRM_SITE_STD_DATA.resx">
       <DependentUpon>FRM_SITE_STD_DATA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PL\NATIGA\HOME\FRM_FINAL_DATA.resx">
+      <DependentUpon>FRM_FINAL_DATA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PL\NATIGA\HOME\FRM_FINAL_EXAMS.resx">
+      <DependentUpon>FRM_FINAL_EXAMS.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PL\NATIGA\HOME\FRM_MANG_SITE.resx">
       <DependentUpon>FRM_MANG_SITE.cs</DependentUpon>

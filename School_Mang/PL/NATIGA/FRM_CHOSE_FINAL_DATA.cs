@@ -59,6 +59,12 @@ namespace School_Mang.PL.NATIGA
 
         private void ExportAmalToExcel(BunifuThinButton2 btn, byte term)
         {
+            string term_kind;
+            string test_kind = "أعمال السنة";
+            string grade_data = cmb_grade.Text;
+            string year_data = Properties.Settings.Default.Year_Desc;
+            byte term_id;
+
             string title;
             string file_name;
             string saveAsLocation;
@@ -66,36 +72,40 @@ namespace School_Mang.PL.NATIGA
             short grade = Convert.ToInt16(cmb_grade.SelectedValue);
 
             string staticExcelFile = AppDomain.CurrentDomain.BaseDirectory;
-            string grade_desc = cmb_grade.Text +" - (" + 
-                Properties.Settings.Default.Year_Desc +")";
-           
-            if(term == 1)
+            string grade_desc = cmb_grade.Text + " - (" +
+                Properties.Settings.Default.Year_Desc + ")";
+
+            if (term == 1)
             {
+                term_id = 1;
+                term_kind = "الترم الأول";
                 title = " أعمال السنة - الفصل الدراسى الأول - الصف " + grade_desc;
                 file_name = @"\" + "أعمال السنة - ترم أول  -" + grade_desc + ".xlsx";
             }
             else
             {
+                term_id = 2;
+                term_kind = "الترم الثانى";
                 title = " أعمال السنة - الفصل الدراسى الثاني - الصف " + grade_desc;
                 file_name = @"\" + "أعمال السنة - ترم ثاني  -" + grade_desc + ".xlsx";
             }
-                
+
             byte prep = 0;
             // Get staticExcelFile Name
             switch (grade)
-                {
-                    case 10:
-                    case 11:                     
-                    case 1:
-                    case 2:
-                    case 3:
+            {
+                case 10:
+                case 11:
+                case 1:
+                case 2:
+                case 3:
                     msg.MyMesg("لا توجد ملفات للصف المحدد .. !");
                     return;
 
-                    case 4:
-                    case 5:
-                    case 6:
-                    if(term ==1)
+                case 4:
+                case 5:
+                case 6:
+                    if (term == 1)
                     {
                         staticExcelFile = staticExcelFile + @"Excel\Final\Term_A\Term_A_2.xlsx";
                     }
@@ -103,12 +113,12 @@ namespace School_Mang.PL.NATIGA
                     {
                         staticExcelFile = staticExcelFile + @"Excel\Final\Term_B\Term_B_2.xlsx";
                     }
-                       
-                        break;
 
-                    case 7:
-                    case 8:
-                    case 9:
+                    break;
+
+                case 7:
+                case 8:
+                case 9:
                     prep = 1;
                     if (term == 1)
                     {
@@ -119,16 +129,16 @@ namespace School_Mang.PL.NATIGA
                         staticExcelFile = staticExcelFile + @"Excel\Final\Term_B\Term_B_3.xlsx";
                     }
                     break;
-                }
+            }
 
 
 
             // Folder Path
             string folder = "";
-           
+
             if (term == 1)
             {
-                folder= Properties.Settings.Default.save_Trm_A_path;
+                folder = Properties.Settings.Default.save_Trm_A_path;
             }
             else
             {
@@ -164,7 +174,10 @@ namespace School_Mang.PL.NATIGA
             try
             {
                 DataTable Dt_Rasd = nateg.Get_Rasd_Data(grade);
-                if (Excel.WriteAmalDataToExcel(Dt_Rasd, grade_desc, saveAsLocation, title, staticExcelFile,prep))
+                if (Excel.WriteAmalDataToExcel(
+                    Dt_Rasd, grade_desc, saveAsLocation, title,
+                    staticExcelFile, test_kind, grade_data,
+                    year_data, term_kind,grade,term_id, prep))
                 {
                     msg.MyMesg("تم إعداد الملف بنجاح !");
                     msg.MyMesg(saveAsLocation + "  مسار الملف هو  ");
@@ -180,6 +193,12 @@ namespace School_Mang.PL.NATIGA
 
         private void ExportTestToExcel(BunifuThinButton2 btn, byte term)
         {
+            string term_kind;
+            string test_kind = "درجات الإختبار";
+            string grade_data = cmb_grade.Text;
+            string year_data = Properties.Settings.Default.Year_Desc;
+            byte term_id;
+
             string title;
             string file_name;
             string saveAsLocation;
@@ -192,11 +211,15 @@ namespace School_Mang.PL.NATIGA
 
             if (term == 1)
             {
+                term_id = 1;
+                term_kind = "الترم الأول";
                 title = " إختبار الفصل الدراسى الأول - الصف " + grade_desc;
                 file_name = @"\" + "إختبار الترم الأول  -" + grade_desc + ".xlsx";
             }
             else
             {
+                term_id = 2;
+                term_kind = "الترم الثاني";
                 title = " إختبار الفصل الدراسى الثاني - الصف " + grade_desc;
                 file_name = @"\" + "إختبار الترم الثاني  -" + grade_desc + ".xlsx";
             }
@@ -221,6 +244,7 @@ namespace School_Mang.PL.NATIGA
                     }
                     else
                     {
+                        term_kind = "الترم الثاني";
                         staticExcelFile = staticExcelFile + @"Excel\Final\Term_B\Term_B_2_Test.xlsx";
                     }
 
@@ -282,8 +306,10 @@ namespace School_Mang.PL.NATIGA
             waiting.Wait();
             try
             {
-                DataTable Dt_Rasd = nateg.Get_Rasd_Data(grade);
-                if (Excel.WriteTestDataToExcel(Dt_Rasd, grade_desc, saveAsLocation, title, staticExcelFile))
+                DataTable Dt_Rasd = nateg.Get_Rasd_Data(grade, 1);
+                if (Excel.WriteTestDataToExcel(Dt_Rasd, grade_desc, saveAsLocation,
+                                                title, staticExcelFile, test_kind, grade_data,
+                                                year_data, term_kind,grade,term_id))
                 {
                     msg.MyMesg("تم إعداد الملف بنجاح !");
                     msg.MyMesg(saveAsLocation + "  مسار الملف هو  ");
@@ -334,7 +360,7 @@ namespace School_Mang.PL.NATIGA
 
         private void btn_ok_Click(object sender, EventArgs e)
         {
-            
+
             try
             {
                 if (BL.Globals.Amal_Sana)
@@ -359,9 +385,9 @@ namespace School_Mang.PL.NATIGA
                         ExportTestToExcel(btn_ok, 2);
                     }
                 }
-                
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 msg.ErrorMesg(ex.Message);
             }

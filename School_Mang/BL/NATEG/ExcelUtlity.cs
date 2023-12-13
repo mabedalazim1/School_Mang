@@ -115,6 +115,12 @@ namespace School_Mang.BL.NATEG
                                          string saveAsLocation,
                                          string RasdDataName,
                                          string staticExcelFile,
+                                         string test_kind,
+                                         string grade_data,
+                                         string year_data,
+                                         string term_kind,
+                                         short grade,
+                                         byte term_id,
                                          byte prep = 0)
         {
 
@@ -141,13 +147,21 @@ namespace School_Mang.BL.NATEG
 
                 excelSheet.Cells[2, 2] = RasdDataName;
 
+                // Add File Information
+                excelSheet.Cells[1, 30] = test_kind;
+                excelSheet.Cells[2, 30] = term_kind;
+                excelSheet.Cells[3, 30] = grade_data;
+                excelSheet.Cells[4, 30] = year_data;
+                excelSheet.Cells[5, 30] = 1;
+                excelSheet.Cells[6, 30] = grade;
+                excelSheet.Cells[7, 30] = term_id;
+
                 // loop through each row and add values to our sheet
                 short rowcount = 4;
                 short id = 0;
                 short c_id = 0;
                 short class_id = 0;
                 short count_data = Convert.ToInt16(dataTable.Rows.Count);
-
 
                 foreach (DataRow datarow in dataTable.Rows)
                 {
@@ -185,15 +199,13 @@ namespace School_Mang.BL.NATEG
 
                 //now save the workbook and exit Excel
 
-                
                 excelworkBook.SaveAs(saveAsLocation);
                 excel.DisplayAlerts = true;
                 excelworkBook.Close(true);
                 excelSheet = null;
                 excelworkBook = null;
 
-               
-                excel.Quit(); 
+                excel.Quit();
                 excel = null;
 
                 waiting.End_WAit();
@@ -220,7 +232,13 @@ namespace School_Mang.BL.NATEG
                                        string worksheetName,
                                        string saveAsLocation,
                                        string RasdDataName,
-                                       string staticExcelFile)
+                                       string staticExcelFile,
+                                       string test_kind,
+                                       string grade_data,
+                                       string year_data,
+                                       string term_kind,
+                                       short grade,
+                                       byte term_id)
         {
 
             Application excel;
@@ -246,11 +264,18 @@ namespace School_Mang.BL.NATEG
 
                 excelSheet.Cells[2, 2] = RasdDataName;
 
+                // Add File Information
+                excelSheet.Cells[1, 30] = test_kind;
+                excelSheet.Cells[2, 30] = term_kind;
+                excelSheet.Cells[3, 30] = grade_data;
+                excelSheet.Cells[4, 30] = year_data;
+                excelSheet.Cells[5, 30] = 2;
+                excelSheet.Cells[6, 30] = grade;
+                excelSheet.Cells[7, 30] = term_id;
                 // loop through each row and add values to our sheet
                 short rowcount = 4;
                 
                 short count_data = Convert.ToInt16(dataTable.Rows.Count);
-
 
                 foreach (DataRow datarow in dataTable.Rows)
                 {
@@ -262,7 +287,7 @@ namespace School_Mang.BL.NATEG
                     // Add values
                    
                     excelSheet.Cells[rowcount, 1] = datarow[0].ToString();
-                    excelSheet.Cells[rowcount, 2] = datarow[5].ToString();
+                    excelSheet.Cells[rowcount, 2] = datarow[1].ToString();
 
                 }
 
@@ -350,9 +375,9 @@ namespace School_Mang.BL.NATEG
                   
 
                     // Add values
-                    excelSheet.Cells[rowcount, 1] = id.ToString();
-                    excelSheet.Cells[rowcount, 2] = datarow[1].ToString();
-                    excelSheet.Cells[rowcount, 3] = datarow[0].ToString();
+                    excelSheet.Cells[rowcount, 1] = id.ToString(); // Id
+                    excelSheet.Cells[rowcount, 2] = datarow[2].ToString(); // Name
+                    excelSheet.Cells[rowcount, 3] = datarow[0].ToString(); // Golos
                 }
 
                 // Delete Unused Rows
@@ -561,6 +586,549 @@ namespace School_Mang.BL.NATEG
                     row["Golos"] = Convert.ToInt32(xlRange.Cells[i, 3].Value2);
                     row["Sery"] = Convert.ToInt32(xlRange.Cells[i, 4].Value2);
                     row["Year_Id"] = Properties.Settings.Default.year_cod;
+                    rowCounter++;
+
+                    dt.Rows.Add(row); //add row to DataTable
+                }
+
+                excelworkBook.Close(0);
+
+                excel.DisplayAlerts = true;
+                excel.Quit();
+
+                excelSheet = null;
+                excelworkBook = null;
+                excel = null;
+
+                waiting.End_WAit();
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                waiting.End_WAit();
+                msg.ErrorMesg(ex.Message);
+                return null;
+            }
+            finally
+            {
+                excelSheet = null;
+                excelworkBook = null;
+                excel = null;
+                waiting.End_WAit();
+            }
+
+        }
+
+        public System.Data.DataTable GetInformationData(string staticExcelFile)
+
+        {
+            System.Data.DataTable dt = new System.Data.DataTable();
+            
+            Application excel;
+            Workbook excelworkBook;
+            Worksheet excelSheet;
+
+            // Start Excel and get Application object.
+            excel = new Application();
+
+            waiting.Wait();
+            try
+            {
+
+                // for making Excel visible
+                excel.Visible = false;
+                excel.DisplayAlerts = false;
+
+                // Creation a new Workbook
+                excelworkBook = excel.Workbooks.Open(staticExcelFile);
+
+                // Workk sheet
+                excelSheet = (Worksheet)excelworkBook.Sheets[1];
+
+                dt.Columns.Add("test_kind", typeof(string));
+                dt.Columns.Add("term_kind", typeof(string));
+                dt.Columns.Add("grade_data", typeof(string));
+                dt.Columns.Add("year_data", typeof(string));
+                dt.Columns.Add("test_kind_id", typeof(string));
+                dt.Columns.Add("test_grade_id", typeof(string));
+                dt.Columns.Add("term_id", typeof(string));
+                dt.Columns.Add("degree_data", typeof(string));
+
+                //assign new row to DataTable
+                DataRow NewRow = dt.NewRow();
+
+                NewRow["test_kind"] = excelSheet.Cells[1, 30].Value2;
+                NewRow["term_kind"] = excelSheet.Cells[2, 30].Value2;
+                NewRow["grade_data"] = excelSheet.Cells[3, 30].Value2;
+                NewRow["year_data"] = excelSheet.Cells[4, 30].Value2;
+                NewRow["test_kind_id"] = excelSheet.Cells[5, 30].Value2;
+                NewRow["test_grade_id"] = excelSheet.Cells[6, 30].Value2;
+                NewRow["term_id"] = excelSheet.Cells[7, 30].Value2;
+                NewRow["degree_data"] = excelSheet.Cells[8, 30].Value2;
+
+                dt.Rows.Add(NewRow); //add row to DataTable
+
+                excelworkBook.Close(0);
+
+                excel.DisplayAlerts = true;
+                excel.Quit();
+
+                excelSheet = null;
+                excelworkBook = null;
+                excel = null;
+
+                waiting.End_WAit();
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                waiting.End_WAit();
+                msg.ErrorMesg(ex.Message);
+                return null;
+            }
+            finally
+            {
+                excelSheet = null;
+                excelworkBook = null;
+                excel = null;
+                waiting.End_WAit();
+            }
+
+        }
+
+        public System.Data.DataTable Read_Amal_Term_A_4_5_6(string staticExcelFile)
+
+        {
+            System.Data.DataTable dt = new System.Data.DataTable();
+
+            Application excel;
+            Workbook excelworkBook;
+            Worksheet excelSheet;
+
+            // Start Excel and get Application object.
+            excel = new Application();
+
+            waiting.Wait();
+            try
+            {
+
+                // for making Excel visible
+                excel.Visible = false;
+                excel.DisplayAlerts = false;
+
+                // Creation a new Workbook
+                excelworkBook = excel.Workbooks.Open(staticExcelFile);
+
+                // Workk sheet
+                excelSheet = (Worksheet)excelworkBook.Sheets[1];
+                Range xlRange = excelSheet.UsedRange;
+
+                int rowCount = xlRange.Rows.Count;
+                int colCount = xlRange.Columns.Count;
+
+                dt.Columns.Add("Golos", typeof(int));
+                dt.Columns.Add("arabic_A_1", typeof(decimal));
+                dt.Columns.Add("dain_A_1", typeof(decimal));
+                dt.Columns.Add("math_A_1", typeof(decimal));
+                dt.Columns.Add("scince_A_1", typeof(decimal));
+                dt.Columns.Add("social_A_1", typeof(decimal));
+                dt.Columns.Add("english_A_1", typeof(decimal));
+                dt.Columns.Add("maharat_A_1", typeof(decimal));
+                dt.Columns.Add("tocnolegy_A_1", typeof(decimal));
+
+                int rowCounter; //This variable is used for row index number
+                DataRow row ;
+                rowCounter = 5;
+
+                for (int i = 5; i <= rowCount; i++) //Loop for available row of excel data
+                {
+                    row = dt.NewRow(); //assign new row to DataTable
+
+                    row["Golos"] = Convert.ToInt32(xlRange.Cells[i, 4].Value2);
+                    row["arabic_A_1"] = Convert.ToDecimal(xlRange.Cells[i, 5].Value2);
+                    row["dain_A_1"] = Convert.ToDecimal(xlRange.Cells[i, 6].Value2);
+                    row["math_A_1"] = Convert.ToDecimal(xlRange.Cells[i, 7].Value2);
+                    row["scince_A_1"] = Convert.ToDecimal(xlRange.Cells[i, 8].Value2);
+                    row["social_A_1"] = Convert.ToDecimal(xlRange.Cells[i, 9].Value2);
+                    row["english_A_1"] = Convert.ToDecimal(xlRange.Cells[i, 10].Value2);
+                    row["maharat_A_1"] = Convert.ToDecimal(xlRange.Cells[i, 11].Value2);
+                    row["tocnolegy_A_1"] = Convert.ToDecimal(xlRange.Cells[i, 12].Value2);
+                    rowCounter++;
+
+                    dt.Rows.Add(row); //add row to DataTable
+                }
+                
+                excelworkBook.Close(0);
+
+                excel.DisplayAlerts = true;
+                excel.Quit();
+
+                excelSheet = null;
+                excelworkBook = null;
+                excel = null;
+
+                waiting.End_WAit();
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                waiting.End_WAit();
+                msg.ErrorMesg(ex.Message);
+                return null;
+            }
+            finally
+            {
+                excelSheet = null;
+                excelworkBook = null;
+                excel = null;
+                waiting.End_WAit();
+            }
+
+        } 
+        
+        public System.Data.DataTable Read_Test(string staticExcelFile)
+
+        {
+            System.Data.DataTable dt = new System.Data.DataTable();
+
+            Application excel;
+            Workbook excelworkBook;
+            Worksheet excelSheet;
+
+            // Start Excel and get Application object.
+            excel = new Application();
+
+            waiting.Wait();
+            try
+            {
+
+                // for making Excel visible
+                excel.Visible = false;
+                excel.DisplayAlerts = false;
+
+                // Creation a new Workbook
+                excelworkBook = excel.Workbooks.Open(staticExcelFile);
+
+                // Workk sheet
+                excelSheet = (Worksheet)excelworkBook.Sheets[1];
+                Range xlRange = excelSheet.UsedRange;
+
+                int rowCount = xlRange.Rows.Count;
+                int colCount = xlRange.Columns.Count;
+
+                dt.Columns.Add("Golos", typeof(int));
+                dt.Columns.Add("arabic", typeof(decimal));
+                dt.Columns.Add("dain", typeof(decimal));
+                dt.Columns.Add("math", typeof(decimal));
+                dt.Columns.Add("scince", typeof(decimal));
+                dt.Columns.Add("social", typeof(decimal));
+                dt.Columns.Add("english", typeof(decimal));
+                dt.Columns.Add("maharat", typeof(decimal));
+                dt.Columns.Add("tocnolegy", typeof(decimal));
+
+                int rowCounter; //This variable is used for row index number
+                DataRow row ;
+                rowCounter = 5;
+
+                for (int i = 5; i <= rowCount; i++) //Loop for available row of excel data
+                {
+                    row = dt.NewRow(); //assign new row to DataTable
+
+                    row["Golos"] = Convert.ToInt32(xlRange.Cells[i, 1].Value2);
+                    row["arabic"] = Convert.ToDecimal(xlRange.Cells[i, 3].Value2);
+                    row["dain"] = Convert.ToDecimal(xlRange.Cells[i, 4].Value2);
+                    row["math"] = Convert.ToDecimal(xlRange.Cells[i, 5].Value2);
+                    row["scince"] = Convert.ToDecimal(xlRange.Cells[i, 6].Value2);
+                    row["social"] = Convert.ToDecimal(xlRange.Cells[i, 7].Value2);
+                    row["english"] = Convert.ToDecimal(xlRange.Cells[i, 8].Value2);
+                    row["maharat"] = Convert.ToDecimal(xlRange.Cells[i, 9].Value2);
+                    row["tocnolegy"] = Convert.ToDecimal(xlRange.Cells[i, 10].Value2);
+                    rowCounter++;
+
+                    dt.Rows.Add(row); //add row to DataTable
+                }
+                
+                excelworkBook.Close(0);
+
+                excel.DisplayAlerts = true;
+                excel.Quit();
+
+                excelSheet = null;
+                excelworkBook = null;
+                excel = null;
+
+                waiting.End_WAit();
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                waiting.End_WAit();
+                msg.ErrorMesg(ex.Message);
+                return null;
+            }
+            finally
+            {
+                excelSheet = null;
+                excelworkBook = null;
+                excel = null;
+                waiting.End_WAit();
+            }
+
+        }
+
+        public System.Data.DataTable Read_Amal_Term_B_4_5_6(string staticExcelFile)
+
+        {
+            System.Data.DataTable dt = new System.Data.DataTable();
+
+            Application excel;
+            Workbook excelworkBook;
+            Worksheet excelSheet;
+
+            // Start Excel and get Application object.
+            excel = new Application();
+
+            waiting.Wait();
+            try
+            {
+
+                // for making Excel visible
+                excel.Visible = false;
+                excel.DisplayAlerts = false;
+
+                // Creation a new Workbook
+                excelworkBook = excel.Workbooks.Open(staticExcelFile);
+
+                // Workk sheet
+                excelSheet = (Worksheet)excelworkBook.Sheets[1];
+                Range xlRange = excelSheet.UsedRange;
+
+                int rowCount = xlRange.Rows.Count;
+                int colCount = xlRange.Columns.Count;
+
+                dt.Columns.Add("Golos", typeof(int));
+                dt.Columns.Add("arabic_B_1", typeof(decimal));
+                dt.Columns.Add("dain_B_1", typeof(decimal));
+                dt.Columns.Add("math_B_1", typeof(decimal));
+                dt.Columns.Add("scince_B_1", typeof(decimal));
+                dt.Columns.Add("social_B_1", typeof(decimal));
+                dt.Columns.Add("english_B_1", typeof(decimal));
+                dt.Columns.Add("maharat_B_1", typeof(decimal));
+                dt.Columns.Add("tocnolegy_B_1", typeof(decimal));
+
+                int rowCounter; //This variable is used for row index number
+                DataRow row;
+                rowCounter = 5;
+
+                for (int i = 5; i <= rowCount; i++) //Loop for available row of excel data
+                {
+                    row = dt.NewRow(); //assign new row to DataTable
+
+                    row["Golos"] = Convert.ToInt32(xlRange.Cells[i, 4].Value2);
+                    row["arabic_B_1"] = Convert.ToDecimal(xlRange.Cells[i, 5].Value2);
+                    row["dain_B_1"] = Convert.ToDecimal(xlRange.Cells[i, 6].Value2);
+                    row["math_B_1"] = Convert.ToDecimal(xlRange.Cells[i, 7].Value2);
+                    row["scince_B_1"] = Convert.ToDecimal(xlRange.Cells[i, 8].Value2);
+                    row["social_B_1"] = Convert.ToDecimal(xlRange.Cells[i, 9].Value2);
+                    row["english_B_1"] = Convert.ToDecimal(xlRange.Cells[i, 10].Value2);
+                    row["maharat_B_1"] = Convert.ToDecimal(xlRange.Cells[i, 11].Value2);
+                    row["tocnolegy_B_1"] = Convert.ToDecimal(xlRange.Cells[i, 12].Value2);
+                    rowCounter++;
+
+                    dt.Rows.Add(row); //add row to DataTable
+                }
+
+                excelworkBook.Close(0);
+
+                excel.DisplayAlerts = true;
+                excel.Quit();
+
+                excelSheet = null;
+                excelworkBook = null;
+                excel = null;
+
+                waiting.End_WAit();
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                waiting.End_WAit();
+                msg.ErrorMesg(ex.Message);
+                return null;
+            }
+            finally
+            {
+                excelSheet = null;
+                excelworkBook = null;
+                excel = null;
+                waiting.End_WAit();
+            }
+
+        }
+
+        public System.Data.DataTable Read_Amal_Term_A_7_8_9(string staticExcelFile)
+
+        {
+            System.Data.DataTable dt = new System.Data.DataTable();
+
+            Application excel;
+            Workbook excelworkBook;
+            Worksheet excelSheet;
+
+            // Start Excel and get Application object.
+            excel = new Application();
+
+            waiting.Wait();
+            try
+            {
+
+                // for making Excel visible
+                excel.Visible = false;
+                excel.DisplayAlerts = false;
+
+                // Creation a new Workbook
+                excelworkBook = excel.Workbooks.Open(staticExcelFile);
+
+                // Workk sheet
+                excelSheet = (Worksheet)excelworkBook.Sheets[1];
+                Range xlRange = excelSheet.UsedRange;
+
+                int rowCount = xlRange.Rows.Count;
+                int colCount = xlRange.Columns.Count;
+
+                dt.Columns.Add("Golos", typeof(int));
+                dt.Columns.Add("arabic_A_1", typeof(decimal));
+                dt.Columns.Add("dain_A_1", typeof(decimal));
+                dt.Columns.Add("math_A_1", typeof(decimal));
+                dt.Columns.Add("scince_A_1", typeof(decimal));
+                dt.Columns.Add("scince_A_practical", typeof(decimal));
+                dt.Columns.Add("social_A_1", typeof(decimal));
+                dt.Columns.Add("english_A_1", typeof(decimal));
+                dt.Columns.Add("maharat_A_1", typeof(decimal));
+                dt.Columns.Add("tocnolegy_A_1", typeof(decimal));
+                dt.Columns.Add("tocnolegy_A_practical", typeof(decimal));
+                dt.Columns.Add("nashat_1_A", typeof(decimal));
+                dt.Columns.Add("nashat_2_A", typeof(decimal));
+
+                int rowCounter; //This variable is used for row index number
+                DataRow row;
+                rowCounter = 5;
+
+                for (int i = 5; i <= rowCount; i++) //Loop for available row of excel data
+                {
+                    row = dt.NewRow(); //assign new row to DataTable
+
+                    row["Golos"] = Convert.ToInt32(xlRange.Cells[i, 4].Value2);
+                    row["arabic_A_1"] = Convert.ToDecimal(xlRange.Cells[i, 5].Value2);
+                    row["dain_A_1"] = Convert.ToDecimal(xlRange.Cells[i, 6].Value2);
+                    row["math_A_1"] = Convert.ToDecimal(xlRange.Cells[i, 7].Value2);
+                    row["scince_A_1"] = Convert.ToDecimal(xlRange.Cells[i, 8].Value2);
+                    row["scince_A_practical"] = Convert.ToDecimal(xlRange.Cells[i, 9].Value2);
+                    row["social_A_1"] = Convert.ToDecimal(xlRange.Cells[i, 10].Value2);
+                    row["english_A_1"] = Convert.ToDecimal(xlRange.Cells[i, 11].Value2);
+                    row["maharat_A_1"] = Convert.ToDecimal(xlRange.Cells[i, 12].Value2);
+                    row["tocnolegy_A_1"] = Convert.ToDecimal(xlRange.Cells[i, 13].Value2);
+                    row["tocnolegy_A_practical"] = Convert.ToDecimal(xlRange.Cells[i, 14].Value2);
+                    row["nashat_1_A"] = Convert.ToDecimal(xlRange.Cells[i, 15].Value2);
+                    row["nashat_2_A"] = Convert.ToDecimal(xlRange.Cells[i, 16].Value2);
+                    rowCounter++;
+
+                    dt.Rows.Add(row); //add row to DataTable
+                }
+
+                excelworkBook.Close(0);
+
+                excel.DisplayAlerts = true;
+                excel.Quit();
+
+                excelSheet = null;
+                excelworkBook = null;
+                excel = null;
+
+                waiting.End_WAit();
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                waiting.End_WAit();
+                msg.ErrorMesg(ex.Message);
+                return null;
+            }
+            finally
+            {
+                excelSheet = null;
+                excelworkBook = null;
+                excel = null;
+                waiting.End_WAit();
+            }
+
+        }
+
+        public System.Data.DataTable Read_Amal_Term_B_7_8_9(string staticExcelFile)
+
+        {
+            System.Data.DataTable dt = new System.Data.DataTable();
+
+            Application excel;
+            Workbook excelworkBook;
+            Worksheet excelSheet;
+
+            // Start Excel and get Application object.
+            excel = new Application();
+
+            waiting.Wait();
+            try
+            {
+
+                // for making Excel visible
+                excel.Visible = false;
+                excel.DisplayAlerts = false;
+
+                // Creation a new Workbook
+                excelworkBook = excel.Workbooks.Open(staticExcelFile);
+
+                // Workk sheet
+                excelSheet = (Worksheet)excelworkBook.Sheets[1];
+                Range xlRange = excelSheet.UsedRange;
+
+                int rowCount = xlRange.Rows.Count;
+                int colCount = xlRange.Columns.Count;
+
+                dt.Columns.Add("Golos", typeof(int));
+                dt.Columns.Add("arabic_B_1", typeof(decimal));
+                dt.Columns.Add("dain_B_1", typeof(decimal));
+                dt.Columns.Add("math_B_1", typeof(decimal));
+                dt.Columns.Add("scince_B_1", typeof(decimal));
+                dt.Columns.Add("scince_B_practical", typeof(decimal));
+                dt.Columns.Add("social_B_1", typeof(decimal));
+                dt.Columns.Add("english_B_1", typeof(decimal));
+                dt.Columns.Add("maharat_B_1", typeof(decimal));
+                dt.Columns.Add("tocnolegy_B_1", typeof(decimal));
+                dt.Columns.Add("tocnolegy_B_practical", typeof(decimal));
+                dt.Columns.Add("nashat_1_B", typeof(decimal));
+                dt.Columns.Add("nashat_2_B", typeof(decimal));
+
+                int rowCounter; //This variable is used for row index number
+                DataRow row;
+                rowCounter = 5;
+
+                for (int i = 5; i <= rowCount; i++) //Loop for available row of excel data
+                {
+                    row = dt.NewRow(); //assign new row to DataTable
+
+                    row["Golos"] = Convert.ToInt32(xlRange.Cells[i, 4].Value2);
+                    row["arabic_B_1"] = Convert.ToDecimal(xlRange.Cells[i, 5].Value2);
+                    row["dain_B_1"] = Convert.ToDecimal(xlRange.Cells[i, 6].Value2);
+                    row["math_B_1"] = Convert.ToDecimal(xlRange.Cells[i, 7].Value2);
+                    row["scince_B_1"] = Convert.ToDecimal(xlRange.Cells[i, 8].Value2);
+                    row["scince_B_practical"] = Convert.ToDecimal(xlRange.Cells[i, 9].Value2);
+                    row["social_B_1"] = Convert.ToDecimal(xlRange.Cells[i, 10].Value2);
+                    row["english_B_1"] = Convert.ToDecimal(xlRange.Cells[i, 11].Value2);
+                    row["maharat_B_1"] = Convert.ToDecimal(xlRange.Cells[i, 12].Value2);
+                    row["tocnolegy_B_1"] = Convert.ToDecimal(xlRange.Cells[i, 13].Value2);
+                    row["tocnolegy_B_practical"] = Convert.ToDecimal(xlRange.Cells[i, 14].Value2);
+                    row["nashat_1_B"] = Convert.ToDecimal(xlRange.Cells[i, 15].Value2);
+                    row["nashat_2_B"] = Convert.ToDecimal(xlRange.Cells[i, 16].Value2);
                     rowCounter++;
 
                     dt.Rows.Add(row); //add row to DataTable

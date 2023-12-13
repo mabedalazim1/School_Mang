@@ -683,6 +683,8 @@
     <Content Include="EXCEL\Final\Term_B\Term_B_3_Test.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\test-100 %282%29.png" />
+    <None Include="Resources\test-100 %281%29.png" />
     <None Include="Resources\password-100.png" />
     <None Include="Resources\exam-b-100.png" />
     <None Include="Resources\exam-a-100.png" />

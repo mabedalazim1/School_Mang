@@ -40,15 +40,15 @@ namespace School_Mang.PL.MAIN
             this.bunifuCards1 = new Bunifu.Framework.UI.BunifuCards();
             this.lbl_rasd = new System.Windows.Forms.Label();
             this.pic_rasd = new System.Windows.Forms.PictureBox();
-            this.bunifuCards3 = new Bunifu.Framework.UI.BunifuCards();
-            this.lbl_final_exams = new System.Windows.Forms.Label();
-            this.pic_final_exams = new System.Windows.Forms.PictureBox();
             this.bunifuCards6 = new Bunifu.Framework.UI.BunifuCards();
             this.lbl_setting = new System.Windows.Forms.Label();
             this.pic_setting = new System.Windows.Forms.PictureBox();
             this.bunifuCards5 = new Bunifu.Framework.UI.BunifuCards();
             this.lbl_site = new System.Windows.Forms.Label();
             this.pic_site = new System.Windows.Forms.PictureBox();
+            this.bunifuCards3 = new Bunifu.Framework.UI.BunifuCards();
+            this.lbl_final_exams = new System.Windows.Forms.Label();
+            this.pic_final_exams = new System.Windows.Forms.PictureBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.pn_home.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -58,12 +58,12 @@ namespace School_Mang.PL.MAIN
             ((System.ComponentModel.ISupportInitialize)(this.pic_rasd_report)).BeginInit();
             this.bunifuCards1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_rasd)).BeginInit();
-            this.bunifuCards3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pic_final_exams)).BeginInit();
             this.bunifuCards6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_setting)).BeginInit();
             this.bunifuCards5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_site)).BeginInit();
+            this.bunifuCards3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_final_exams)).BeginInit();
             this.SuspendLayout();
             // 
             // pn_home
@@ -83,8 +83,8 @@ namespace School_Mang.PL.MAIN
             this.flowLayoutPanel1.Controls.Add(this.bunifuCards4);
             this.flowLayoutPanel1.Controls.Add(this.bunifuCards1);
             this.flowLayoutPanel1.Controls.Add(this.bunifuCards6);
-            this.flowLayoutPanel1.Controls.Add(this.bunifuCards5);
             this.flowLayoutPanel1.Controls.Add(this.bunifuCards3);
+            this.flowLayoutPanel1.Controls.Add(this.bunifuCards5);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -223,49 +223,6 @@ namespace School_Mang.PL.MAIN
             this.pic_rasd.TabStop = false;
             this.pic_rasd.Click += new System.EventHandler(this.pic_rasd_Click);
             // 
-            // bunifuCards3
-            // 
-            this.bunifuCards3.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.bunifuCards3.BackColor = System.Drawing.Color.White;
-            this.bunifuCards3.BorderRadius = 5;
-            this.bunifuCards3.BottomSahddow = true;
-            this.bunifuCards3.color = System.Drawing.Color.Tomato;
-            this.bunifuCards3.Controls.Add(this.lbl_final_exams);
-            this.bunifuCards3.Controls.Add(this.pic_final_exams);
-            this.bunifuCards3.LeftSahddow = false;
-            this.bunifuCards3.Location = new System.Drawing.Point(781, 215);
-            this.bunifuCards3.Name = "bunifuCards3";
-            this.bunifuCards3.Padding = new System.Windows.Forms.Padding(20);
-            this.bunifuCards3.RightSahddow = true;
-            this.bunifuCards3.ShadowDepth = 20;
-            this.bunifuCards3.Size = new System.Drawing.Size(270, 186);
-            this.bunifuCards3.TabIndex = 30;
-            // 
-            // lbl_final_exams
-            // 
-            this.lbl_final_exams.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.lbl_final_exams.AutoSize = true;
-            this.lbl_final_exams.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lbl_final_exams.Font = new System.Drawing.Font("LBC", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_final_exams.Location = new System.Drawing.Point(23, 117);
-            this.lbl_final_exams.Name = "lbl_final_exams";
-            this.lbl_final_exams.Size = new System.Drawing.Size(209, 37);
-            this.lbl_final_exams.TabIndex = 7;
-            this.lbl_final_exams.Text = "الاختبارات النهائية";
-            this.lbl_final_exams.Click += new System.EventHandler(this.lbl_final_exams_Click);
-            // 
-            // pic_final_exams
-            // 
-            this.pic_final_exams.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pic_final_exams.Image = global::School_Mang.Properties.Resources.icons8_certification_100;
-            this.pic_final_exams.Location = new System.Drawing.Point(74, 23);
-            this.pic_final_exams.Name = "pic_final_exams";
-            this.pic_final_exams.Size = new System.Drawing.Size(118, 97);
-            this.pic_final_exams.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pic_final_exams.TabIndex = 1;
-            this.pic_final_exams.TabStop = false;
-            this.pic_final_exams.Click += new System.EventHandler(this.pic_import_Click);
-            // 
             // bunifuCards6
             // 
             this.bunifuCards6.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -319,7 +276,7 @@ namespace School_Mang.PL.MAIN
             this.bunifuCards5.Controls.Add(this.lbl_site);
             this.bunifuCards5.Controls.Add(this.pic_site);
             this.bunifuCards5.LeftSahddow = false;
-            this.bunifuCards5.Location = new System.Drawing.Point(1057, 215);
+            this.bunifuCards5.Location = new System.Drawing.Point(781, 215);
             this.bunifuCards5.Name = "bunifuCards5";
             this.bunifuCards5.Padding = new System.Windows.Forms.Padding(20);
             this.bunifuCards5.RightSahddow = true;
@@ -352,6 +309,49 @@ namespace School_Mang.PL.MAIN
             this.pic_site.TabStop = false;
             this.pic_site.Click += new System.EventHandler(this.pic_site_Click);
             // 
+            // bunifuCards3
+            // 
+            this.bunifuCards3.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.bunifuCards3.BackColor = System.Drawing.Color.White;
+            this.bunifuCards3.BorderRadius = 5;
+            this.bunifuCards3.BottomSahddow = true;
+            this.bunifuCards3.color = System.Drawing.Color.Tomato;
+            this.bunifuCards3.Controls.Add(this.lbl_final_exams);
+            this.bunifuCards3.Controls.Add(this.pic_final_exams);
+            this.bunifuCards3.LeftSahddow = false;
+            this.bunifuCards3.Location = new System.Drawing.Point(1057, 215);
+            this.bunifuCards3.Name = "bunifuCards3";
+            this.bunifuCards3.Padding = new System.Windows.Forms.Padding(20);
+            this.bunifuCards3.RightSahddow = true;
+            this.bunifuCards3.ShadowDepth = 20;
+            this.bunifuCards3.Size = new System.Drawing.Size(270, 186);
+            this.bunifuCards3.TabIndex = 30;
+            // 
+            // lbl_final_exams
+            // 
+            this.lbl_final_exams.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lbl_final_exams.AutoSize = true;
+            this.lbl_final_exams.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lbl_final_exams.Font = new System.Drawing.Font("LBC", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_final_exams.Location = new System.Drawing.Point(23, 117);
+            this.lbl_final_exams.Name = "lbl_final_exams";
+            this.lbl_final_exams.Size = new System.Drawing.Size(209, 37);
+            this.lbl_final_exams.TabIndex = 7;
+            this.lbl_final_exams.Text = "الاختبارات النهائية";
+            this.lbl_final_exams.Click += new System.EventHandler(this.lbl_final_exams_Click);
+            // 
+            // pic_final_exams
+            // 
+            this.pic_final_exams.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pic_final_exams.Image = global::School_Mang.Properties.Resources.icons8_certification_100;
+            this.pic_final_exams.Location = new System.Drawing.Point(74, 23);
+            this.pic_final_exams.Name = "pic_final_exams";
+            this.pic_final_exams.Size = new System.Drawing.Size(118, 97);
+            this.pic_final_exams.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pic_final_exams.TabIndex = 1;
+            this.pic_final_exams.TabStop = false;
+            this.pic_final_exams.Click += new System.EventHandler(this.pic_import_Click);
+            // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
@@ -380,15 +380,15 @@ namespace School_Mang.PL.MAIN
             this.bunifuCards1.ResumeLayout(false);
             this.bunifuCards1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_rasd)).EndInit();
-            this.bunifuCards3.ResumeLayout(false);
-            this.bunifuCards3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pic_final_exams)).EndInit();
             this.bunifuCards6.ResumeLayout(false);
             this.bunifuCards6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_setting)).EndInit();
             this.bunifuCards5.ResumeLayout(false);
             this.bunifuCards5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_site)).EndInit();
+            this.bunifuCards3.ResumeLayout(false);
+            this.bunifuCards3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_final_exams)).EndInit();
             this.ResumeLayout(false);
 
         }

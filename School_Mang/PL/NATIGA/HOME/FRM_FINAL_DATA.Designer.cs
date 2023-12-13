@@ -31,39 +31,39 @@ namespace School_Mang.PL.NATIGA.HOME
         {
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.bunifuCards4 = new Bunifu.Framework.UI.BunifuCards();
-            this.pic_final = new System.Windows.Forms.PictureBox();
             this.lbl_final = new System.Windows.Forms.Label();
             this.bunifuCards6 = new Bunifu.Framework.UI.BunifuCards();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.bunifuCards5 = new Bunifu.Framework.UI.BunifuCards();
             this.lbl_get_dgree_a = new System.Windows.Forms.Label();
-            this.pic_get_dgree_a = new System.Windows.Forms.PictureBox();
             this.bunifuCards3 = new Bunifu.Framework.UI.BunifuCards();
             this.lbl_get_dgree_b = new System.Windows.Forms.Label();
-            this.pic_get_dgree_b = new System.Windows.Forms.PictureBox();
             this.bunifuCards2 = new Bunifu.Framework.UI.BunifuCards();
-            this.lbl_upload_sery = new System.Windows.Forms.Label();
-            this.pic_upload_sery = new System.Windows.Forms.PictureBox();
+            this.lbl_upload_file = new System.Windows.Forms.Label();
             this.bunifuCards1 = new Bunifu.Framework.UI.BunifuCards();
             this.lbl_back = new System.Windows.Forms.Label();
-            this.pic_back = new System.Windows.Forms.PictureBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.pn_home = new System.Windows.Forms.Panel();
+            this.pic_final = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pic_get_dgree_a = new System.Windows.Forms.PictureBox();
+            this.pic_get_dgree_b = new System.Windows.Forms.PictureBox();
+            this.pic_upload_file = new System.Windows.Forms.PictureBox();
+            this.pic_back = new System.Windows.Forms.PictureBox();
             this.flowLayoutPanel1.SuspendLayout();
             this.bunifuCards4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pic_final)).BeginInit();
             this.bunifuCards6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.bunifuCards5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pic_get_dgree_a)).BeginInit();
             this.bunifuCards3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pic_get_dgree_b)).BeginInit();
             this.bunifuCards2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pic_upload_sery)).BeginInit();
             this.bunifuCards1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pic_back)).BeginInit();
             this.pn_home.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_final)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_get_dgree_a)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_get_dgree_b)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_upload_file)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_back)).BeginInit();
             this.SuspendLayout();
             // 
             // flowLayoutPanel1
@@ -101,28 +101,17 @@ namespace School_Mang.PL.NATIGA.HOME
             this.bunifuCards4.Size = new System.Drawing.Size(270, 186);
             this.bunifuCards4.TabIndex = 16;
             // 
-            // pic_final
-            // 
-            this.pic_final.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pic_final.Image = global::School_Mang.Properties.Resources.test_cheating_100;
-            this.pic_final.Location = new System.Drawing.Point(74, 23);
-            this.pic_final.Name = "pic_final";
-            this.pic_final.Size = new System.Drawing.Size(118, 97);
-            this.pic_final.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pic_final.TabIndex = 1;
-            this.pic_final.TabStop = false;
-            // 
             // lbl_final
             // 
             this.lbl_final.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lbl_final.AutoSize = true;
             this.lbl_final.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lbl_final.Font = new System.Drawing.Font("LBC", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_final.Location = new System.Drawing.Point(50, 117);
+            this.lbl_final.Location = new System.Drawing.Point(9, 117);
             this.lbl_final.Name = "lbl_final";
-            this.lbl_final.Size = new System.Drawing.Size(186, 37);
+            this.lbl_final.Size = new System.Drawing.Size(238, 37);
             this.lbl_final.TabIndex = 7;
-            this.lbl_final.Text = "كشوف الأعمال";
+            this.lbl_final.Text = "كشوف رصد الأعمال";
             // 
             // bunifuCards6
             // 
@@ -142,28 +131,17 @@ namespace School_Mang.PL.NATIGA.HOME
             this.bunifuCards6.Size = new System.Drawing.Size(270, 186);
             this.bunifuCards6.TabIndex = 17;
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox1.Image = global::School_Mang.Properties.Resources.icons8_properties_script_100;
-            this.pictureBox1.Location = new System.Drawing.Point(74, 23);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(118, 97);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
-            // 
             // label1
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label1.AutoSize = true;
             this.label1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.label1.Font = new System.Drawing.Font("LBC", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(50, 117);
+            this.label1.Location = new System.Drawing.Point(4, 117);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(191, 37);
+            this.label1.Size = new System.Drawing.Size(243, 37);
             this.label1.TabIndex = 7;
-            this.label1.Text = "كشوف الدرجات";
+            this.label1.Text = "كشوف رصد الدرجات";
             // 
             // bunifuCards5
             // 
@@ -189,24 +167,12 @@ namespace School_Mang.PL.NATIGA.HOME
             this.lbl_get_dgree_a.AutoSize = true;
             this.lbl_get_dgree_a.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lbl_get_dgree_a.Font = new System.Drawing.Font("LBC", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_get_dgree_a.Location = new System.Drawing.Point(57, 118);
+            this.lbl_get_dgree_a.Location = new System.Drawing.Point(23, 117);
             this.lbl_get_dgree_a.Name = "lbl_get_dgree_a";
-            this.lbl_get_dgree_a.Size = new System.Drawing.Size(153, 37);
+            this.lbl_get_dgree_a.Size = new System.Drawing.Size(219, 37);
             this.lbl_get_dgree_a.TabIndex = 7;
-            this.lbl_get_dgree_a.Text = "أعمال السنة";
+            this.lbl_get_dgree_a.Text = "تجهيز أعمال السنة";
             this.lbl_get_dgree_a.Click += new System.EventHandler(this.lbl_get_dgree_a_Click);
-            // 
-            // pic_get_dgree_a
-            // 
-            this.pic_get_dgree_a.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pic_get_dgree_a.Image = global::School_Mang.Properties.Resources.excel_100;
-            this.pic_get_dgree_a.Location = new System.Drawing.Point(74, 23);
-            this.pic_get_dgree_a.Name = "pic_get_dgree_a";
-            this.pic_get_dgree_a.Size = new System.Drawing.Size(118, 97);
-            this.pic_get_dgree_a.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pic_get_dgree_a.TabIndex = 1;
-            this.pic_get_dgree_a.TabStop = false;
-            this.pic_get_dgree_a.Click += new System.EventHandler(this.pic_get_dgree_a_Click);
             // 
             // bunifuCards3
             // 
@@ -232,24 +198,12 @@ namespace School_Mang.PL.NATIGA.HOME
             this.lbl_get_dgree_b.AutoSize = true;
             this.lbl_get_dgree_b.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lbl_get_dgree_b.Font = new System.Drawing.Font("LBC", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_get_dgree_b.Location = new System.Drawing.Point(51, 118);
+            this.lbl_get_dgree_b.Location = new System.Drawing.Point(12, 117);
             this.lbl_get_dgree_b.Name = "lbl_get_dgree_b";
-            this.lbl_get_dgree_b.Size = new System.Drawing.Size(169, 37);
+            this.lbl_get_dgree_b.Size = new System.Drawing.Size(235, 37);
             this.lbl_get_dgree_b.TabIndex = 7;
-            this.lbl_get_dgree_b.Text = "درجات الإختبار";
+            this.lbl_get_dgree_b.Text = "تجهيز درجات الإختبار";
             this.lbl_get_dgree_b.Click += new System.EventHandler(this.lbl_get_dgree_b_Click);
-            // 
-            // pic_get_dgree_b
-            // 
-            this.pic_get_dgree_b.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pic_get_dgree_b.Image = global::School_Mang.Properties.Resources.excel_100;
-            this.pic_get_dgree_b.Location = new System.Drawing.Point(74, 23);
-            this.pic_get_dgree_b.Name = "pic_get_dgree_b";
-            this.pic_get_dgree_b.Size = new System.Drawing.Size(118, 97);
-            this.pic_get_dgree_b.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pic_get_dgree_b.TabIndex = 1;
-            this.pic_get_dgree_b.TabStop = false;
-            this.pic_get_dgree_b.Click += new System.EventHandler(this.pic_get_dgree_b_Click);
             // 
             // bunifuCards2
             // 
@@ -258,8 +212,8 @@ namespace School_Mang.PL.NATIGA.HOME
             this.bunifuCards2.BorderRadius = 5;
             this.bunifuCards2.BottomSahddow = true;
             this.bunifuCards2.color = System.Drawing.Color.Tomato;
-            this.bunifuCards2.Controls.Add(this.lbl_upload_sery);
-            this.bunifuCards2.Controls.Add(this.pic_upload_sery);
+            this.bunifuCards2.Controls.Add(this.lbl_upload_file);
+            this.bunifuCards2.Controls.Add(this.pic_upload_file);
             this.bunifuCards2.LeftSahddow = false;
             this.bunifuCards2.Location = new System.Drawing.Point(1041, 215);
             this.bunifuCards2.Name = "bunifuCards2";
@@ -269,28 +223,18 @@ namespace School_Mang.PL.NATIGA.HOME
             this.bunifuCards2.Size = new System.Drawing.Size(270, 186);
             this.bunifuCards2.TabIndex = 14;
             // 
-            // lbl_upload_sery
+            // lbl_upload_file
             // 
-            this.lbl_upload_sery.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.lbl_upload_sery.AutoSize = true;
-            this.lbl_upload_sery.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lbl_upload_sery.Font = new System.Drawing.Font("LBC", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_upload_sery.Location = new System.Drawing.Point(52, 117);
-            this.lbl_upload_sery.Name = "lbl_upload_sery";
-            this.lbl_upload_sery.Size = new System.Drawing.Size(154, 37);
-            this.lbl_upload_sery.TabIndex = 7;
-            this.lbl_upload_sery.Text = "رفع الملفات";
-            // 
-            // pic_upload_sery
-            // 
-            this.pic_upload_sery.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pic_upload_sery.Image = global::School_Mang.Properties.Resources.excel_to_2100;
-            this.pic_upload_sery.Location = new System.Drawing.Point(74, 23);
-            this.pic_upload_sery.Name = "pic_upload_sery";
-            this.pic_upload_sery.Size = new System.Drawing.Size(118, 97);
-            this.pic_upload_sery.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pic_upload_sery.TabIndex = 1;
-            this.pic_upload_sery.TabStop = false;
+            this.lbl_upload_file.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lbl_upload_file.AutoSize = true;
+            this.lbl_upload_file.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lbl_upload_file.Font = new System.Drawing.Font("LBC", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_upload_file.Location = new System.Drawing.Point(52, 117);
+            this.lbl_upload_file.Name = "lbl_upload_file";
+            this.lbl_upload_file.Size = new System.Drawing.Size(154, 37);
+            this.lbl_upload_file.TabIndex = 7;
+            this.lbl_upload_file.Text = "رفع الملفات";
+            this.lbl_upload_file.Click += new System.EventHandler(this.lbl_upload_file_Click);
             // 
             // bunifuCards1
             // 
@@ -323,17 +267,6 @@ namespace School_Mang.PL.NATIGA.HOME
             this.lbl_back.Text = "شاشة التقييمات";
             this.lbl_back.Click += new System.EventHandler(this.lbl_back_Click);
             // 
-            // pic_back
-            // 
-            this.pic_back.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pic_back.Image = global::School_Mang.Properties.Resources.home;
-            this.pic_back.Location = new System.Drawing.Point(74, 23);
-            this.pic_back.Name = "pic_back";
-            this.pic_back.Size = new System.Drawing.Size(118, 97);
-            this.pic_back.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pic_back.TabIndex = 1;
-            this.pic_back.TabStop = false;
-            // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
@@ -346,6 +279,75 @@ namespace School_Mang.PL.NATIGA.HOME
             this.pn_home.Name = "pn_home";
             this.pn_home.Size = new System.Drawing.Size(1354, 746);
             this.pn_home.TabIndex = 3;
+            // 
+            // pic_final
+            // 
+            this.pic_final.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pic_final.Image = global::School_Mang.Properties.Resources.test_100__2_;
+            this.pic_final.Location = new System.Drawing.Point(74, 23);
+            this.pic_final.Name = "pic_final";
+            this.pic_final.Size = new System.Drawing.Size(118, 97);
+            this.pic_final.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pic_final.TabIndex = 1;
+            this.pic_final.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBox1.Image = global::School_Mang.Properties.Resources.test_100__1_;
+            this.pictureBox1.Location = new System.Drawing.Point(74, 23);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(118, 97);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 1;
+            this.pictureBox1.TabStop = false;
+            // 
+            // pic_get_dgree_a
+            // 
+            this.pic_get_dgree_a.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pic_get_dgree_a.Image = global::School_Mang.Properties.Resources.excel_100;
+            this.pic_get_dgree_a.Location = new System.Drawing.Point(74, 23);
+            this.pic_get_dgree_a.Name = "pic_get_dgree_a";
+            this.pic_get_dgree_a.Size = new System.Drawing.Size(118, 97);
+            this.pic_get_dgree_a.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pic_get_dgree_a.TabIndex = 1;
+            this.pic_get_dgree_a.TabStop = false;
+            this.pic_get_dgree_a.Click += new System.EventHandler(this.pic_get_dgree_a_Click);
+            // 
+            // pic_get_dgree_b
+            // 
+            this.pic_get_dgree_b.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pic_get_dgree_b.Image = global::School_Mang.Properties.Resources.excel_100;
+            this.pic_get_dgree_b.Location = new System.Drawing.Point(74, 23);
+            this.pic_get_dgree_b.Name = "pic_get_dgree_b";
+            this.pic_get_dgree_b.Size = new System.Drawing.Size(118, 97);
+            this.pic_get_dgree_b.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pic_get_dgree_b.TabIndex = 1;
+            this.pic_get_dgree_b.TabStop = false;
+            this.pic_get_dgree_b.Click += new System.EventHandler(this.pic_get_dgree_b_Click);
+            // 
+            // pic_upload_file
+            // 
+            this.pic_upload_file.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pic_upload_file.Image = global::School_Mang.Properties.Resources.excel_to_2100;
+            this.pic_upload_file.Location = new System.Drawing.Point(74, 23);
+            this.pic_upload_file.Name = "pic_upload_file";
+            this.pic_upload_file.Size = new System.Drawing.Size(118, 97);
+            this.pic_upload_file.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pic_upload_file.TabIndex = 1;
+            this.pic_upload_file.TabStop = false;
+            this.pic_upload_file.Click += new System.EventHandler(this.pic_upload_file_Click);
+            // 
+            // pic_back
+            // 
+            this.pic_back.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pic_back.Image = global::School_Mang.Properties.Resources.home;
+            this.pic_back.Location = new System.Drawing.Point(74, 23);
+            this.pic_back.Name = "pic_back";
+            this.pic_back.Size = new System.Drawing.Size(118, 97);
+            this.pic_back.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pic_back.TabIndex = 1;
+            this.pic_back.TabStop = false;
             // 
             // FRM_FINAL_DATA
             // 
@@ -361,23 +363,23 @@ namespace School_Mang.PL.NATIGA.HOME
             this.flowLayoutPanel1.ResumeLayout(false);
             this.bunifuCards4.ResumeLayout(false);
             this.bunifuCards4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pic_final)).EndInit();
             this.bunifuCards6.ResumeLayout(false);
             this.bunifuCards6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.bunifuCards5.ResumeLayout(false);
             this.bunifuCards5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pic_get_dgree_a)).EndInit();
             this.bunifuCards3.ResumeLayout(false);
             this.bunifuCards3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pic_get_dgree_b)).EndInit();
             this.bunifuCards2.ResumeLayout(false);
             this.bunifuCards2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pic_upload_sery)).EndInit();
             this.bunifuCards1.ResumeLayout(false);
             this.bunifuCards1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pic_back)).EndInit();
             this.pn_home.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pic_final)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_get_dgree_a)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_get_dgree_b)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_upload_file)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_back)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -389,8 +391,8 @@ namespace School_Mang.PL.NATIGA.HOME
         private System.Windows.Forms.Label lbl_get_dgree_a;
         public System.Windows.Forms.PictureBox pic_get_dgree_a;
         private Bunifu.Framework.UI.BunifuCards bunifuCards2;
-        private System.Windows.Forms.Label lbl_upload_sery;
-        public System.Windows.Forms.PictureBox pic_upload_sery;
+        private System.Windows.Forms.Label lbl_upload_file;
+        public System.Windows.Forms.PictureBox pic_upload_file;
         private Bunifu.Framework.UI.BunifuCards bunifuCards4;
         public System.Windows.Forms.PictureBox pic_final;
         private System.Windows.Forms.Label lbl_final;

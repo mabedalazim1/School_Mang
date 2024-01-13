@@ -12,7 +12,6 @@ namespace School_Mang.PL.NATIGA
 {
     public partial class FRM_NATAG_DATA : Form
     {
-        BL.MSG msg = new BL.MSG();
         BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
         BL.Waiting Waiting = new BL.Waiting();
 

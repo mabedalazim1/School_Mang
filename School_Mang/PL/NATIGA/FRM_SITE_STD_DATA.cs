@@ -348,5 +348,75 @@ namespace School_Mang.PL.NATIGA
         {
             btn_edit_std_Click(sender, e);
         }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lbl_count_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox3_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dt_std_data_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void panel4_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txt_std_data_OnValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmb_grade_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_del_std_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_new_std_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pn_top_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void pic_help_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

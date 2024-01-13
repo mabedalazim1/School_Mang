@@ -285,19 +285,21 @@ namespace School_Mang.BL
             }
         }
 
-        private static bool _Kashof_Rasd;
-        public static bool Kashof_Rasd
+        private static bool _Koshof_Rasd;
+        public static bool Koshof_Rasd
         {
             get
             {
-                return _Kashof_Rasd;
+                return _Koshof_Rasd;
             }
             set
             {
-                _Kashof_Rasd = value;
+                _Koshof_Rasd = value;
             }
         }
+
         
+
         private static string _accessToken;
         public static string accessToken
         {
@@ -388,5 +390,59 @@ namespace School_Mang.BL
                 _Final_Test = value;
             }
         }
+
+        private static int _Std_Golos;
+        public static int Std_Golos
+        {
+            get
+            {
+                return _Std_Golos;
+            }
+            set
+            {
+                _Std_Golos = value;
+            }
+        }
+
+        private static string _Final_Test_Name;
+        public static string Final_Test_Name
+        {
+            get
+            {
+                return _Final_Test_Name;
+            }
+            set
+            {
+                _Final_Test_Name = value;
+            }
+        }
+
+        private static byte _Final_Test_Kind;
+        public static byte Final_Test_Kind
+        {
+            get
+            {
+                return _Final_Test_Kind;
+            }
+            set
+            {
+                _Final_Test_Kind = value;
+            }
+        }
+
+        private static bool _Final_Nataga;
+        public static bool Final_Nataga
+        {
+            get
+            {
+                return _Final_Nataga;
+            }
+            set
+            {
+                _Final_Nataga = value;
+            }
+        }
+
+
     }
 }

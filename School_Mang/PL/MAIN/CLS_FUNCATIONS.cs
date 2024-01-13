@@ -69,7 +69,6 @@ namespace School_Mang.PL.MAIN
                 {
                     sftp.Connect();
 
-
                     using (Stream file = File.Create(LocalDestinationFilename))
                     {
                         sftp.DownloadFile(RemoteFileName, file);

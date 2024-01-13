@@ -485,9 +485,10 @@ namespace School_Mang.PL.NATIGA
                 decimal french = Convert.ToDecimal(txt_french.Text);
                 decimal general = Convert.ToDecimal(txt_total.Text);
                 int test_kind_Id = Convert.ToInt32(txt_test_kind_id.Text);
+                int sort_code = Convert.ToInt32(txt_sort.Text);
                 NATEG.Update_Mark(
                     student_Id, ar, din, math, scince, social, english,
-                    maharat, tocnolegy, french, general, test_kind_Id);
+                    maharat, tocnolegy, french, general, sort_code, test_kind_Id);
 
                 FRM_SITE_STD_DATA.Get_Frm_Site_Std_Data.cmb_grade_DropDownClosed(sender, e);
                 msg.MyMesg("تم التعديل بنجاح ..!");

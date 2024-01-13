@@ -763,6 +763,26 @@ namespace School_Mang.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap test_48 {
+            get {
+                object obj = ResourceManager.GetObject("test_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap test_48_1 {
+            get {
+                object obj = ResourceManager.GetObject("test_48_1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap test_cheating_100 {
             get {
                 object obj = ResourceManager.GetObject("test-cheating-100", resourceCulture);
@@ -776,6 +796,16 @@ namespace School_Mang.Properties {
         internal static System.Drawing.Bitmap test_cheating_1001 {
             get {
                 object obj = ResourceManager.GetObject("test-cheating-1001", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap test_data_100 {
+            get {
+                object obj = ResourceManager.GetObject("test-data-100", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

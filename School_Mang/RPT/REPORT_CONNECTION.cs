@@ -356,5 +356,284 @@ namespace School_Mang.RPT
 
         }
 
+
+        public void Open_Koshof_Amal(int grade_id, string month)
+        {
+            try
+            {
+                string report_name = "rpt_Rasd_Degree_A.rpt";
+
+                int year = Properties.Settings.Default.year_cod;
+                ReportDocument myReport = new ReportDocument();
+
+                switch (grade_id)
+                {
+                    case 10:
+                    case 11:
+                    case 1:
+                    case 2:
+                    case 3:
+
+                        msg.ErrorMesg("لا توجد كشوف للصف المحدد");
+                        Waiting.End_WAit();
+                        return;
+                    case 4:
+                    case 5:
+                    case 6:
+
+                        report_name = "rpt_Amal_Degree_B.rpt";
+                        break;
+
+                    case 7:
+                    case 8:
+                    case 9:
+
+                        report_name = "rpt_Amal_Degree_C.rpt";
+                        break;
+
+                }
+
+                myReport.Load(Application.StartupPath + @"/MyReports/" + report_name);
+
+
+                myReport.SetParameterValue("@year_id", year);
+                myReport.SetParameterValue("@grade_id", grade_id);
+                myReport.SetParameterValue("@month", month);
+
+                myReport.SetParameterValue("@test_kind", "أعمال السنة");
+
+
+
+                OpenReport(myReport, "كشوف الرصد", "أعمال السنة");
+            }
+            catch (Exception e)
+            {
+                msg.ErrorMesg(e.Message);
+            }
+
+        }
+
+        public void OpenResdTest_A(int year_id,
+                                 int grade_id = 0)
+        {
+            try
+            {
+                ReportDocument myReport = new ReportDocument();
+
+                switch (grade_id)
+                {
+                    case 10:
+                    case 11:
+                    case 1:
+                    case 2:
+                    case 3:
+                        msg.ErrorMesg("لا توجد كشوف للصف المحدد");
+                        Waiting.End_WAit();
+                        return;
+                    case 4:
+                    case 5:
+                    case 6:
+
+                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Rasd_Test_B.rpt");
+
+                        myReport.SetParameterValue("@Year_Id", year_id, "rpt_Rasd_Test_B_Part_1.rpt");
+                        myReport.SetParameterValue("@Grade_Id", grade_id, "rpt_Rasd_Test_B_Part_1.rpt");
+
+                        myReport.SetParameterValue("@Year_Id", year_id, "rpt_Rasd_Test_B_Part_2.rpt");
+                        myReport.SetParameterValue("@Grade_Id", grade_id, "rpt_Rasd_Test_B_Part_2.rpt");
+                        break;
+
+                    case 7:
+                    case 8:
+                    case 9:
+
+                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Rasd_Test_C.rpt");
+
+
+                        myReport.SetParameterValue("@Year_Id", year_id, "rpt_Rasd_Test_C_Part_1.rpt");
+                        myReport.SetParameterValue("@Grade_Id", grade_id, "rpt_Rasd_Test_C_Part_1.rpt");
+
+                        myReport.SetParameterValue("@Year_Id", year_id, "rpt_Rasd_Test_C_Part_2.rpt");
+                        myReport.SetParameterValue("@Grade_Id", grade_id, "rpt_Rasd_Test_C_Part_2.rpt");
+
+                        break;
+                }
+             
+                OpenReport(myReport, "كشف الرصد", "كشف الرصد ");
+            }
+            catch (Exception e)
+            {
+                msg.ErrorMesg(e.Message);
+            }
+
+        }
+
+        public void OpenResdTest_B(int year_id,
+                                 int grade_id = 0)
+        {
+            try
+            {
+                ReportDocument myReport = new ReportDocument();
+
+                switch (grade_id)
+                {
+                    case 10:
+                    case 11:
+                    case 1:
+                    case 2:
+                    case 3:
+                        msg.ErrorMesg("لا توجد كشوف للصف المحدد");
+                        Waiting.End_WAit();
+                        return;
+                    case 4:
+                    case 5:
+                    case 6:
+                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Rasd_Test_B_Term_2.rpt");
+
+                        myReport.SetParameterValue("@Year_Id", 0);
+                        myReport.SetParameterValue("@Grade_Id", 0);
+                        myReport.SetParameterValue("@Year_Id", year_id, "rpt_Rasd_Test_B_Term_2_Part_1.rpt");
+                        myReport.SetParameterValue("@Grade_Id", grade_id, "rpt_Rasd_Test_B_Term_2_Part_1.rpt");
+
+                        myReport.SetParameterValue("@Year_Id", year_id, "rpt_Rasd_Test_B_Term_2_Part_2.rpt");
+                        myReport.SetParameterValue("@Grade_Id", grade_id, "rpt_Rasd_Test_B_Term_2_Part_2.rpt");
+                        break;
+
+                    case 7:
+                    case 8:
+                    case 9:
+                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Rasd_Test_C_Term_2.rpt");
+
+                        myReport.SetParameterValue("@Year_Id", 0);
+                        myReport.SetParameterValue("@Grade_Id", 0);
+                        myReport.SetParameterValue("@Year_Id", year_id, "rpt_Rasd_Test_C_Term_2_Part_1.rpt");
+                        myReport.SetParameterValue("@Grade_Id", grade_id, "rpt_Rasd_Test_C_Term_2_Part_1.rpt");
+
+                        myReport.SetParameterValue("@Year_Id", year_id, "rpt_Rasd_Test_C_Term_2_Part_2.rpt");
+                        myReport.SetParameterValue("@Grade_Id", grade_id, "rpt_Rasd_Test_C_Term_2_Part_2.rpt");
+
+                        break;
+                }
+
+                OpenReport(myReport, "كشف الرصد", "كشف الرصد ");
+            }
+            catch (Exception e)
+            {
+                msg.ErrorMesg(e.Message);
+            }
+
+        }
+
+        public void OpenNatega_A(int year_id,
+                              int grade_id = 0)
+        {
+            try
+            {
+                ReportDocument myReport = new ReportDocument();
+
+                switch (grade_id)
+                {
+                    case 10:
+                    case 11:
+                    case 1:
+                    case 2:
+                    case 3:
+                        msg.ErrorMesg("لا توجد كشوف للصف المحدد");
+                        Waiting.End_WAit();
+                        return;
+                    case 4:
+                    case 5:
+                    case 6:
+
+                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Review_Rasd_Test_B.rpt");
+
+                        myReport.SetParameterValue("@Year_Id", year_id, "rpt_Review_Rasd_Test_B_Part_1.rpt");
+                        myReport.SetParameterValue("@Grade_Id", grade_id, "rpt_Review_Rasd_Test_B_Part_1.rpt");
+
+                        myReport.SetParameterValue("@Year_Id", year_id, "rpt_Review_Rasd_Test_B_Part_2.rpt");
+                        myReport.SetParameterValue("@Grade_Id", grade_id, "rpt_Review_Rasd_Test_B_Part_2.rpt");
+                        break;
+
+                    case 7:
+                    case 8:
+                    case 9:
+
+                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Review_Rasd_Test_C.rpt");
+
+
+                        myReport.SetParameterValue("@Year_Id", year_id, "rpt_Review_Rasd_Test_C_Part_1.rpt");
+                        myReport.SetParameterValue("@Grade_Id", grade_id, "rpt_Review_Rasd_Test_C_Part_1.rpt");
+
+                        myReport.SetParameterValue("@Year_Id", year_id, "rpt_Review_Rasd_Test_C_Part_2.rpt");
+                        myReport.SetParameterValue("@Grade_Id", grade_id, "rpt_Review_Rasd_Test_C_Part_2.rpt");
+
+                        break;
+                }
+
+                OpenReport(myReport, "نتيجة الفصل الدراسي الأول", "نتيجة الفصل الدراسي الأول ");
+            }
+            catch (Exception e)
+            {
+                msg.ErrorMesg(e.Message);
+            }
+
+        }
+
+        public void OpenNatega_B(int year_id,
+                                 int grade_id = 0)
+        {
+            try
+            {
+                ReportDocument myReport = new ReportDocument();
+
+                switch (grade_id)
+                {
+                    case 10:
+                    case 11:
+                    case 1:
+                    case 2:
+                    case 3:
+                        msg.ErrorMesg("لا توجد كشوف للصف المحدد");
+                        Waiting.End_WAit();
+                        return;
+                    case 4:
+                    case 5:
+                    case 6:
+                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Natega_B.rpt");
+
+                        myReport.SetParameterValue("@Year_Id", 0);
+                        myReport.SetParameterValue("@Grade_Id", 0);
+                        myReport.SetParameterValue("@Year_Id", year_id, "rpt_Natega_B_Part_1.rpt");
+                        myReport.SetParameterValue("@Grade_Id", grade_id, "rpt_Natega_B_Part_1.rpt");
+
+                        myReport.SetParameterValue("@Year_Id", year_id, "rpt_Natega_B_part_2.rpt");
+                        myReport.SetParameterValue("@Grade_Id", grade_id, "rpt_Natega_B_part_2.rpt");
+                        break;
+
+                    case 7:
+                    case 8:
+                    case 9:
+                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Natega_C.rpt");
+
+                        myReport.SetParameterValue("@Year_Id", 0);
+                        myReport.SetParameterValue("@Grade_Id", 0);
+                        myReport.SetParameterValue("@Year_Id", year_id, "rpt_Natega_C_Part_1.rpt");
+                        myReport.SetParameterValue("@Grade_Id", grade_id, "rpt_Natega_C_Part_1.rpt");
+
+                        myReport.SetParameterValue("@Year_Id", year_id, "rpt_Natega_C_Part_2.rpt");
+                        myReport.SetParameterValue("@Grade_Id", grade_id, "rpt_Natega_C_Part_2.rpt");
+
+                        break;
+                }
+
+                OpenReport(myReport, "نتيجة الفصل الدراسي الثاني", "نتيجة الفصل الدراسي الثاني ");
+            }
+            catch (Exception e)
+            {
+                msg.ErrorMesg(e.Message);
+            }
+
+        }
+
     }
 }

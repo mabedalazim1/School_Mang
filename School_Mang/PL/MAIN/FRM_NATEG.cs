@@ -70,7 +70,7 @@ namespace School_Mang.PL.MAIN
 
         private void lbl_rasd_Click(object sender, EventArgs e)
         {
-            BL.Globals.Kashof_Rasd = false;
+            BL.Globals.Koshof_Rasd = false;
             NATIGA.FRM_KSHOF_RASD frm = new NATIGA.FRM_KSHOF_RASD();
             frm.ShowDialog();
         }
@@ -87,7 +87,7 @@ namespace School_Mang.PL.MAIN
 
         private void lbl_rasd_report_Click(object sender, EventArgs e)
         {
-            BL.Globals.Kashof_Rasd = true;
+            BL.Globals.Koshof_Rasd = true;
             NATIGA.FRM_KSHOF_RASD frm = new NATIGA.FRM_KSHOF_RASD();
             frm.ShowDialog();
         }
@@ -116,7 +116,7 @@ namespace School_Mang.PL.MAIN
         private void lbl_final_exams_Click(object sender, EventArgs e)
         {
             // Get Std Data Form
-            natag_func.changePages(NATIGA.HOME.FRM_FINAL_DATA.Get_Frm_Final_Data.pn_home, "الإختبارات النهائية");
+            natag_func.changePages(NATIGA.HOME.FRM_FINAL_DATA_HOME.Get_Frm_Final_Data_Home.pn_home, "الإختبارات النهائية");
         }
 
         private void lbl_setting_Click(object sender, EventArgs e)

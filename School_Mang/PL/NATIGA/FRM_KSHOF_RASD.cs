@@ -36,7 +36,7 @@ namespace School_Mang.PL.NATIGA
             cmb_month.DisplayMember = "testkind_desc";
             cmb_month.ValueMember = "id";
 
-            if (!BL.Globals.Kashof_Rasd)
+            if (!BL.Globals.Koshof_Rasd)
             {
                 lbl_title.Text = "ملفات كشوف الرصد";
                 pic_rasd.Image = Properties.Resources.excel_48;
@@ -220,7 +220,7 @@ namespace School_Mang.PL.NATIGA
 
         private void btn_close_b_Click(object sender, EventArgs e)
         {
-            BL.Globals.Kashof_Rasd = false;
+            BL.Globals.Koshof_Rasd = false;
             this.Close();
         }
 
@@ -232,7 +232,7 @@ namespace School_Mang.PL.NATIGA
         private void btn_degree_Click(object sender, EventArgs e)
         {
 
-            if (BL.Globals.Kashof_Rasd)
+            if (BL.Globals.Koshof_Rasd)
             {
                 OpenRasdReport(1);
             }
@@ -244,7 +244,7 @@ namespace School_Mang.PL.NATIGA
 
         private void btn_mark_Click(object sender, EventArgs e)
         {
-            if (BL.Globals.Kashof_Rasd)
+            if (BL.Globals.Koshof_Rasd)
             {
                 OpenRasdReport(2);
             }

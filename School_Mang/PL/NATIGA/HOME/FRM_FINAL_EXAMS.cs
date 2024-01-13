@@ -112,7 +112,7 @@ namespace School_Mang.PL.NATIGA.HOME
 
         private void lbl_final_Click(object sender, EventArgs e)
         {
-            natag_func.changePages(FRM_FINAL_DATA.Get_Frm_Final_Data. pn_home, "الإختبارات النهائية");
+            natag_func.changePages(FRM_FINAL_DATA_HOME.Get_Frm_Final_Data_Home. pn_home, "الإختبارات النهائية");
         }
 
         private void pic_final_Click(object sender, EventArgs e)

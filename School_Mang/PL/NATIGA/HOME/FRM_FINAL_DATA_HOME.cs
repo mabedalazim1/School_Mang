@@ -11,7 +11,7 @@ using School_Mang.PL.MAIN;
 
 namespace School_Mang.PL.NATIGA.HOME
 {
-    public partial class FRM_FINAL_DATA : Form
+    public partial class FRM_FINAL_DATA_HOME : Form
     {
         BL.NATEG.cls_NATAG_FUNCTIONS natag_func = new BL.NATEG.cls_NATAG_FUNCTIONS();
         BL.MSG msg = new BL.MSG();
@@ -20,32 +20,32 @@ namespace School_Mang.PL.NATIGA.HOME
         BL.NATEG.ExcelUtlity Excel = new BL.NATEG.ExcelUtlity();
 
         // Form Closed
-        private static FRM_FINAL_DATA frm_Final_Data;
+        private static FRM_FINAL_DATA_HOME frm_Final_Data_home;
         static void frm_Form_Closed(object sender, FormClosedEventArgs e)
         {
-            frm_Final_Data = null;
+            frm_Final_Data_home = null;
         }
-        public static FRM_FINAL_DATA Get_Frm_Final_Data
+        public static FRM_FINAL_DATA_HOME Get_Frm_Final_Data_Home
         {
             get
             {
-                if (frm_Final_Data == null)
+                if (frm_Final_Data_home == null)
                 {
-                    frm_Final_Data = new FRM_FINAL_DATA();
-                    frm_Final_Data.FormClosed += new FormClosedEventHandler(frm_Form_Closed);
+                    frm_Final_Data_home = new FRM_FINAL_DATA_HOME();
+                    frm_Final_Data_home.FormClosed += new FormClosedEventHandler(frm_Form_Closed);
                 }
-                return frm_Final_Data;
+                return frm_Final_Data_home;
             }
         }
 
 
-        public FRM_FINAL_DATA()
+        public FRM_FINAL_DATA_HOME()
         {
             InitializeComponent();
 
-            if (frm_Final_Data == null)
+            if (frm_Final_Data_home == null)
             {
-                frm_Final_Data = this;
+                frm_Final_Data_home = this;
             }
 
         }
@@ -122,7 +122,7 @@ namespace School_Mang.PL.NATIGA.HOME
                                             case 5:
                                             case 6:
 
-                                                dt_degree = Excel.Read_Amal_Term_A_4_5_6(file_name);
+                                                dt_degree = Excel.Read_Amal_4_5_6(file_name);
                                                 foreach (DataRow amal in dt_degree.Rows)
                                                 {
                                                     Golos = Convert.ToInt32(amal[0]);
@@ -153,7 +153,7 @@ namespace School_Mang.PL.NATIGA.HOME
                                             case 8:
                                             case 9:
 
-                                                dt_degree = Excel.Read_Amal_Term_A_7_8_9(file_name);
+                                                dt_degree = Excel.Read_Amal_7_8_9(file_name);
                                                 foreach (DataRow amal in dt_degree.Rows)
                                                 {
                                                     Golos = Convert.ToInt32(amal[0]);
@@ -191,19 +191,32 @@ namespace School_Mang.PL.NATIGA.HOME
                                         break;
                                     case 2: // Test Term A
 
-
-                                        dt_degree = Excel.Read_Test(file_name);
-                                        foreach (DataRow amal in dt_degree.Rows)
+                                        switch (test_grade)
                                         {
-                                            Golos = Convert.ToInt32(amal[0]);
-                                            arabic = Convert.ToDecimal(amal[1]);
-                                            din = Convert.ToDecimal(amal[2]);
-                                            math = Convert.ToDecimal(amal[3]);
-                                            scince = Convert.ToDecimal(amal[4]);
-                                            social = Convert.ToDecimal(amal[5]);
-                                            english = Convert.ToDecimal(amal[6]);
-                                            maharat = Convert.ToDecimal(amal[7]);
-                                            tocnolegy = Convert.ToDecimal(amal[8]);
+                                            case 4:
+                                            case 5:
+                                            case 6:
+                                                dt_degree = Excel.Read_Test(file_name);
+                                                break;
+
+                                            case 7:
+                                            case 8:
+                                            case 9:
+                                                dt_degree = Excel.Read_Test(file_name,2);
+                                                break;
+                                        }
+                                       
+                                        foreach (DataRow test in dt_degree.Rows)
+                                        {
+                                            Golos = Convert.ToInt32(test[0]);
+                                            arabic = Convert.ToDecimal(test[1]);
+                                            din = Convert.ToDecimal(test[2]);
+                                            math = Convert.ToDecimal(test[3]);
+                                            scince = Convert.ToDecimal(test[4]);
+                                            social = Convert.ToDecimal(test[5]);
+                                            english = Convert.ToDecimal(test[6]);
+                                            maharat = Convert.ToDecimal(test[7]);
+                                            tocnolegy = Convert.ToDecimal(test[8]);
 
                                             NATEG.Add_Test_A(Golos,
                                                                     arabic,
@@ -226,7 +239,6 @@ namespace School_Mang.PL.NATIGA.HOME
                                 switch (test_kind)
                                 {
                                     case 1: // Amal Term B
-                                        msg.MyMesg("Amal term B");
 
                                         switch (test_grade)
                                         {
@@ -235,7 +247,7 @@ namespace School_Mang.PL.NATIGA.HOME
                                             case 5:
                                             case 6:
 
-                                                dt_degree = Excel.Read_Amal_Term_B_4_5_6(file_name);
+                                                dt_degree = Excel.Read_Amal_4_5_6(file_name);
                                                 foreach (DataRow amal in dt_degree.Rows)
                                                 {
                                                     Golos = Convert.ToInt32(amal[0]);
@@ -261,12 +273,12 @@ namespace School_Mang.PL.NATIGA.HOME
                                                 Waiting.End_WAit();
                                                 msg.MyMesg("تم تحديث الدرجات بنجاح .. !");
                                                 break;
-                                            // 7-8-9 Amal term A
+                                            // 7-8-9 Amal term B
                                             case 7:
                                             case 8:
                                             case 9:
 
-                                                dt_degree = Excel.Read_Amal_Term_B_7_8_9(file_name);
+                                                dt_degree = Excel.Read_Amal_7_8_9(file_name);
                                                 foreach (DataRow amal in dt_degree.Rows)
                                                 {
                                                     Golos = Convert.ToInt32(amal[0]);
@@ -303,18 +315,31 @@ namespace School_Mang.PL.NATIGA.HOME
                                         }
                                         break;
                                     case 2: // Test term b
-                                        dt_degree = Excel.Read_Test(file_name);
-                                        foreach (DataRow amal in dt_degree.Rows)
+                                        switch (test_grade)
                                         {
-                                            Golos = Convert.ToInt32(amal[0]);
-                                            arabic = Convert.ToDecimal(amal[1]);
-                                            din = Convert.ToDecimal(amal[2]);
-                                            math = Convert.ToDecimal(amal[3]);
-                                            scince = Convert.ToDecimal(amal[4]);
-                                            social = Convert.ToDecimal(amal[5]);
-                                            english = Convert.ToDecimal(amal[6]);
-                                            maharat = Convert.ToDecimal(amal[7]);
-                                            tocnolegy = Convert.ToDecimal(amal[8]);
+                                            case 4:
+                                            case 5:
+                                            case 6:
+                                                dt_degree = Excel.Read_Test(file_name);
+                                                break;
+
+                                            case 7:
+                                            case 8:
+                                            case 9:
+                                                dt_degree = Excel.Read_Test(file_name, 2);
+                                                break;
+                                        }
+                                        foreach (DataRow test in dt_degree.Rows)
+                                        {
+                                            Golos = Convert.ToInt32(test[0]);
+                                            arabic = Convert.ToDecimal(test[1]);
+                                            din = Convert.ToDecimal(test[2]);
+                                            math = Convert.ToDecimal(test[3]);
+                                            scince = Convert.ToDecimal(test[4]);
+                                            social = Convert.ToDecimal(test[5]);
+                                            english = Convert.ToDecimal(test[6]);
+                                            maharat = Convert.ToDecimal(test[7]);
+                                            tocnolegy = Convert.ToDecimal(test[8]);
 
                                             NATEG.Add_Test_B(Golos,
                                                                     arabic,
@@ -417,6 +442,58 @@ namespace School_Mang.PL.NATIGA.HOME
         private void pic_upload_file_Click(object sender, EventArgs e)
         {
             lbl_upload_file_Click(sender, e);
+        }
+
+        private void lbl_final_Click(object sender, EventArgs e)
+        {
+            BL.Globals.Amal_Sana = true;
+            FRM_CHOSE_FINAL_RASD.Get_Frm_Chose_Final_Rasd.ShowDialog();
+           
+        }
+
+        private void pic_final_Click(object sender, EventArgs e)
+        {
+            lbl_final_Click(sender, e);
+        }
+
+
+        private void lbl_final_test_Click(object sender, EventArgs e)
+        {
+            BL.Globals.Final_Test = true;
+            FRM_CHOSE_FINAL_RASD.Get_Frm_Chose_Final_Rasd.ShowDialog();
+        }
+
+        private void pic_final_test_Click(object sender, EventArgs e)
+        {
+            lbl_final_test_Click(sender, e);
+        }
+
+        private void lbl_data_Click(object sender, EventArgs e)
+        {
+            FRM_FINAL_COUNT_DATA.Get_Frm_Final_Count_Data.ShowDialog();
+        }
+
+        private void pic_data_Click(object sender, EventArgs e)
+        {
+            lbl_data_Click(sender, e);
+        }
+
+        private void pic_back_Click(object sender, EventArgs e)
+        {
+            lbl_back_Click(sender, e);
+        }
+
+        private void pic_natega_a_Click(object sender, EventArgs e)
+        {
+            lbl_natega_a_Click(sender,e);
+        }
+
+        private void lbl_natega_a_Click(object sender, EventArgs e)
+        {
+            BL.Globals.Amal_Sana = false;
+            BL.Globals.Final_Test = false;
+            BL.Globals.Final_Nataga = true;
+            FRM_CHOSE_FINAL_RASD.Get_Frm_Chose_Final_Rasd.ShowDialog();
         }
     }
 }

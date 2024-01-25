@@ -33,37 +33,37 @@ namespace School_Mang.PL.MAIN
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.bunifuCards2 = new Bunifu.Framework.UI.BunifuCards();
             this.lbl_golos_id = new System.Windows.Forms.Label();
-            this.pic__golos_id = new System.Windows.Forms.PictureBox();
             this.bunifuCards4 = new Bunifu.Framework.UI.BunifuCards();
             this.lbl_rasd_report = new System.Windows.Forms.Label();
-            this.pic_rasd_report = new System.Windows.Forms.PictureBox();
             this.bunifuCards1 = new Bunifu.Framework.UI.BunifuCards();
             this.lbl_rasd = new System.Windows.Forms.Label();
-            this.pic_rasd = new System.Windows.Forms.PictureBox();
             this.bunifuCards6 = new Bunifu.Framework.UI.BunifuCards();
             this.lbl_setting = new System.Windows.Forms.Label();
-            this.pic_setting = new System.Windows.Forms.PictureBox();
-            this.bunifuCards5 = new Bunifu.Framework.UI.BunifuCards();
-            this.lbl_site = new System.Windows.Forms.Label();
-            this.pic_site = new System.Windows.Forms.PictureBox();
             this.bunifuCards3 = new Bunifu.Framework.UI.BunifuCards();
             this.lbl_final_exams = new System.Windows.Forms.Label();
-            this.pic_final_exams = new System.Windows.Forms.PictureBox();
+            this.bunifuCards5 = new Bunifu.Framework.UI.BunifuCards();
+            this.lbl_site = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.pic__golos_id = new System.Windows.Forms.PictureBox();
+            this.pic_rasd_report = new System.Windows.Forms.PictureBox();
+            this.pic_rasd = new System.Windows.Forms.PictureBox();
+            this.pic_setting = new System.Windows.Forms.PictureBox();
+            this.pic_final_exams = new System.Windows.Forms.PictureBox();
+            this.pic_site = new System.Windows.Forms.PictureBox();
             this.pn_home.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.bunifuCards2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pic__golos_id)).BeginInit();
             this.bunifuCards4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pic_rasd_report)).BeginInit();
             this.bunifuCards1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pic_rasd)).BeginInit();
             this.bunifuCards6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pic_setting)).BeginInit();
-            this.bunifuCards5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pic_site)).BeginInit();
             this.bunifuCards3.SuspendLayout();
+            this.bunifuCards5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pic__golos_id)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_rasd_report)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_rasd)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_setting)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic_final_exams)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_site)).BeginInit();
             this.SuspendLayout();
             // 
             // pn_home
@@ -125,18 +125,6 @@ namespace School_Mang.PL.MAIN
             this.lbl_golos_id.Text = "أرقام الجلوس";
             this.lbl_golos_id.Click += new System.EventHandler(this.lbl_golos_id_Click);
             // 
-            // pic__golos_id
-            // 
-            this.pic__golos_id.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pic__golos_id.Image = global::School_Mang.Properties.Resources.add_golos_100;
-            this.pic__golos_id.Location = new System.Drawing.Point(74, 23);
-            this.pic__golos_id.Name = "pic__golos_id";
-            this.pic__golos_id.Size = new System.Drawing.Size(118, 97);
-            this.pic__golos_id.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pic__golos_id.TabIndex = 1;
-            this.pic__golos_id.TabStop = false;
-            this.pic__golos_id.Click += new System.EventHandler(this.pic__golos_id_Click);
-            // 
             // bunifuCards4
             // 
             this.bunifuCards4.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -167,18 +155,6 @@ namespace School_Mang.PL.MAIN
             this.lbl_rasd_report.TabIndex = 7;
             this.lbl_rasd_report.Text = "كشوف فارغة";
             this.lbl_rasd_report.Click += new System.EventHandler(this.lbl_rasd_report_Click);
-            // 
-            // pic_rasd_report
-            // 
-            this.pic_rasd_report.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pic_rasd_report.Image = global::School_Mang.Properties.Resources.note_100;
-            this.pic_rasd_report.Location = new System.Drawing.Point(74, 23);
-            this.pic_rasd_report.Name = "pic_rasd_report";
-            this.pic_rasd_report.Size = new System.Drawing.Size(118, 97);
-            this.pic_rasd_report.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pic_rasd_report.TabIndex = 1;
-            this.pic_rasd_report.TabStop = false;
-            this.pic_rasd_report.Click += new System.EventHandler(this.pic_rasd_report_Click);
             // 
             // bunifuCards1
             // 
@@ -211,18 +187,6 @@ namespace School_Mang.PL.MAIN
             this.lbl_rasd.Text = "ملفات الرصد";
             this.lbl_rasd.Click += new System.EventHandler(this.lbl_rasd_Click);
             // 
-            // pic_rasd
-            // 
-            this.pic_rasd.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pic_rasd.Image = global::School_Mang.Properties.Resources.excel_100;
-            this.pic_rasd.Location = new System.Drawing.Point(74, 23);
-            this.pic_rasd.Name = "pic_rasd";
-            this.pic_rasd.Size = new System.Drawing.Size(118, 97);
-            this.pic_rasd.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pic_rasd.TabIndex = 1;
-            this.pic_rasd.TabStop = false;
-            this.pic_rasd.Click += new System.EventHandler(this.pic_rasd_Click);
-            // 
             // bunifuCards6
             // 
             this.bunifuCards6.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -254,61 +218,6 @@ namespace School_Mang.PL.MAIN
             this.lbl_setting.Text = "تجهيز للرصد";
             this.lbl_setting.Click += new System.EventHandler(this.lbl_setting_Click);
             // 
-            // pic_setting
-            // 
-            this.pic_setting.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pic_setting.Image = global::School_Mang.Properties.Resources.password_100;
-            this.pic_setting.Location = new System.Drawing.Point(74, 23);
-            this.pic_setting.Name = "pic_setting";
-            this.pic_setting.Size = new System.Drawing.Size(118, 97);
-            this.pic_setting.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pic_setting.TabIndex = 1;
-            this.pic_setting.TabStop = false;
-            this.pic_setting.Click += new System.EventHandler(this.pic_setting_Click);
-            // 
-            // bunifuCards5
-            // 
-            this.bunifuCards5.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.bunifuCards5.BackColor = System.Drawing.Color.White;
-            this.bunifuCards5.BorderRadius = 5;
-            this.bunifuCards5.BottomSahddow = true;
-            this.bunifuCards5.color = System.Drawing.Color.Tomato;
-            this.bunifuCards5.Controls.Add(this.lbl_site);
-            this.bunifuCards5.Controls.Add(this.pic_site);
-            this.bunifuCards5.LeftSahddow = false;
-            this.bunifuCards5.Location = new System.Drawing.Point(781, 215);
-            this.bunifuCards5.Name = "bunifuCards5";
-            this.bunifuCards5.Padding = new System.Windows.Forms.Padding(20);
-            this.bunifuCards5.RightSahddow = true;
-            this.bunifuCards5.ShadowDepth = 20;
-            this.bunifuCards5.Size = new System.Drawing.Size(270, 186);
-            this.bunifuCards5.TabIndex = 31;
-            // 
-            // lbl_site
-            // 
-            this.lbl_site.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.lbl_site.AutoSize = true;
-            this.lbl_site.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lbl_site.Font = new System.Drawing.Font("LBC", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_site.Location = new System.Drawing.Point(55, 117);
-            this.lbl_site.Name = "lbl_site";
-            this.lbl_site.Size = new System.Drawing.Size(154, 37);
-            this.lbl_site.TabIndex = 7;
-            this.lbl_site.Text = "إدارة الموقع";
-            this.lbl_site.Click += new System.EventHandler(this.lbl_site_Click);
-            // 
-            // pic_site
-            // 
-            this.pic_site.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pic_site.Image = global::School_Mang.Properties.Resources.site_100;
-            this.pic_site.Location = new System.Drawing.Point(74, 23);
-            this.pic_site.Name = "pic_site";
-            this.pic_site.Size = new System.Drawing.Size(118, 97);
-            this.pic_site.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pic_site.TabIndex = 1;
-            this.pic_site.TabStop = false;
-            this.pic_site.Click += new System.EventHandler(this.pic_site_Click);
-            // 
             // bunifuCards3
             // 
             this.bunifuCards3.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -333,12 +242,95 @@ namespace School_Mang.PL.MAIN
             this.lbl_final_exams.AutoSize = true;
             this.lbl_final_exams.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lbl_final_exams.Font = new System.Drawing.Font("LBC", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_final_exams.Location = new System.Drawing.Point(23, 117);
+            this.lbl_final_exams.Location = new System.Drawing.Point(23, 123);
             this.lbl_final_exams.Name = "lbl_final_exams";
             this.lbl_final_exams.Size = new System.Drawing.Size(209, 37);
             this.lbl_final_exams.TabIndex = 7;
             this.lbl_final_exams.Text = "الاختبارات النهائية";
             this.lbl_final_exams.Click += new System.EventHandler(this.lbl_final_exams_Click);
+            // 
+            // bunifuCards5
+            // 
+            this.bunifuCards5.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.bunifuCards5.BackColor = System.Drawing.Color.White;
+            this.bunifuCards5.BorderRadius = 5;
+            this.bunifuCards5.BottomSahddow = true;
+            this.bunifuCards5.color = System.Drawing.Color.Tomato;
+            this.bunifuCards5.Controls.Add(this.pic_site);
+            this.bunifuCards5.Controls.Add(this.lbl_site);
+            this.bunifuCards5.LeftSahddow = false;
+            this.bunifuCards5.Location = new System.Drawing.Point(781, 215);
+            this.bunifuCards5.Name = "bunifuCards5";
+            this.bunifuCards5.Padding = new System.Windows.Forms.Padding(20);
+            this.bunifuCards5.RightSahddow = true;
+            this.bunifuCards5.ShadowDepth = 20;
+            this.bunifuCards5.Size = new System.Drawing.Size(270, 186);
+            this.bunifuCards5.TabIndex = 31;
+            // 
+            // lbl_site
+            // 
+            this.lbl_site.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lbl_site.AutoSize = true;
+            this.lbl_site.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lbl_site.Font = new System.Drawing.Font("LBC", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_site.Location = new System.Drawing.Point(53, 118);
+            this.lbl_site.Name = "lbl_site";
+            this.lbl_site.Size = new System.Drawing.Size(170, 37);
+            this.lbl_site.TabIndex = 7;
+            this.lbl_site.Text = "بيانات الموقع";
+            this.lbl_site.Click += new System.EventHandler(this.lbl_site_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // pic__golos_id
+            // 
+            this.pic__golos_id.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pic__golos_id.Image = global::School_Mang.Properties.Resources.add_golos_100;
+            this.pic__golos_id.Location = new System.Drawing.Point(74, 23);
+            this.pic__golos_id.Name = "pic__golos_id";
+            this.pic__golos_id.Size = new System.Drawing.Size(118, 97);
+            this.pic__golos_id.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pic__golos_id.TabIndex = 1;
+            this.pic__golos_id.TabStop = false;
+            this.pic__golos_id.Click += new System.EventHandler(this.pic__golos_id_Click);
+            // 
+            // pic_rasd_report
+            // 
+            this.pic_rasd_report.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pic_rasd_report.Image = global::School_Mang.Properties.Resources.note_100;
+            this.pic_rasd_report.Location = new System.Drawing.Point(74, 23);
+            this.pic_rasd_report.Name = "pic_rasd_report";
+            this.pic_rasd_report.Size = new System.Drawing.Size(118, 97);
+            this.pic_rasd_report.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pic_rasd_report.TabIndex = 1;
+            this.pic_rasd_report.TabStop = false;
+            this.pic_rasd_report.Click += new System.EventHandler(this.pic_rasd_report_Click);
+            // 
+            // pic_rasd
+            // 
+            this.pic_rasd.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pic_rasd.Image = global::School_Mang.Properties.Resources.excel_100;
+            this.pic_rasd.Location = new System.Drawing.Point(74, 23);
+            this.pic_rasd.Name = "pic_rasd";
+            this.pic_rasd.Size = new System.Drawing.Size(118, 97);
+            this.pic_rasd.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pic_rasd.TabIndex = 1;
+            this.pic_rasd.TabStop = false;
+            this.pic_rasd.Click += new System.EventHandler(this.pic_rasd_Click);
+            // 
+            // pic_setting
+            // 
+            this.pic_setting.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pic_setting.Image = global::School_Mang.Properties.Resources.password_100;
+            this.pic_setting.Location = new System.Drawing.Point(74, 23);
+            this.pic_setting.Name = "pic_setting";
+            this.pic_setting.Size = new System.Drawing.Size(118, 97);
+            this.pic_setting.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pic_setting.TabIndex = 1;
+            this.pic_setting.TabStop = false;
+            this.pic_setting.Click += new System.EventHandler(this.pic_setting_Click);
             // 
             // pic_final_exams
             // 
@@ -352,9 +344,17 @@ namespace School_Mang.PL.MAIN
             this.pic_final_exams.TabStop = false;
             this.pic_final_exams.Click += new System.EventHandler(this.pic_import_Click);
             // 
-            // openFileDialog1
+            // pic_site
             // 
-            this.openFileDialog1.FileName = "openFileDialog1";
+            this.pic_site.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pic_site.Image = global::School_Mang.Properties.Resources.site_data_100;
+            this.pic_site.Location = new System.Drawing.Point(74, 23);
+            this.pic_site.Name = "pic_site";
+            this.pic_site.Size = new System.Drawing.Size(118, 97);
+            this.pic_site.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pic_site.TabIndex = 1;
+            this.pic_site.TabStop = false;
+            this.pic_site.Click += new System.EventHandler(this.pic_site_Click);
             // 
             // FRM_NATEG
             // 
@@ -373,22 +373,22 @@ namespace School_Mang.PL.MAIN
             this.flowLayoutPanel1.ResumeLayout(false);
             this.bunifuCards2.ResumeLayout(false);
             this.bunifuCards2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pic__golos_id)).EndInit();
             this.bunifuCards4.ResumeLayout(false);
             this.bunifuCards4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pic_rasd_report)).EndInit();
             this.bunifuCards1.ResumeLayout(false);
             this.bunifuCards1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pic_rasd)).EndInit();
             this.bunifuCards6.ResumeLayout(false);
             this.bunifuCards6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pic_setting)).EndInit();
-            this.bunifuCards5.ResumeLayout(false);
-            this.bunifuCards5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pic_site)).EndInit();
             this.bunifuCards3.ResumeLayout(false);
             this.bunifuCards3.PerformLayout();
+            this.bunifuCards5.ResumeLayout(false);
+            this.bunifuCards5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pic__golos_id)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_rasd_report)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_rasd)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_setting)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic_final_exams)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_site)).EndInit();
             this.ResumeLayout(false);
 
         }

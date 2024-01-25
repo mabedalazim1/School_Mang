@@ -94,6 +94,9 @@
   <PropertyGroup />
   <ItemGroup>
     <Reference Include="AxShockwaveFlashObjects, Version=1.0.0.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="BCrypt.Net-Next, Version=4.0.3.0, Culture=neutral, PublicKeyToken=1e11be04b6288443, processorArchitecture=MSIL">
+      <HintPath>..\packages\BCrypt.Net-Next.4.0.3\lib\net472\BCrypt.Net-Next.dll</HintPath>
+    </Reference>
     <Reference Include="BouncyCastle.Crypto, Version=1.8.9.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
       <HintPath>..\packages\Portable.BouncyCastle.1.8.9\lib\net40\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
@@ -144,6 +147,9 @@
     <Reference Include="DevExpress.XtraTreeMap.v22.2, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraTreeMap.v22.2.UI, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraWizard.v22.2, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevOne.Security.Cryptography.BCrypt, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BCrypt.1.0.0.0\lib\DevOne.Security.Cryptography.BCrypt.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
@@ -218,6 +224,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BL\CLS_BACKUP_DATABASE.cs" />
+    <Compile Include="BL\CLS_TEST_INTRNET_CON.cs" />
     <Compile Include="BL\Globals.cs" />
     <Compile Include="BL\HESAB_SEN.cs" />
     <Compile Include="BL\LOGIN\CLS_LOGIN.cs" />
@@ -225,6 +232,7 @@
     <Compile Include="BL\NATEG\cls_NATAG_FUNCTIONS.cs" />
     <Compile Include="BL\NATEG\CLS_NATEG.cs" />
     <Compile Include="BL\NATEG\ExcelUtlity.cs" />
+    <Compile Include="BL\SITE\CLS_MANGE_SITE.cs" />
     <Compile Include="BL\STD\CLS_STD.cs" />
     <Compile Include="BL\USERS.cs" />
     <Compile Include="BL\Waiting.cs" />
@@ -547,6 +555,12 @@
     <Compile Include="PL\MAIN\FRM_BACK_UP.Designer.cs">
       <DependentUpon>FRM_BACK_UP.cs</DependentUpon>
     </Compile>
+    <Compile Include="PL\MAIN\FRM_MANGE_SITE.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\MAIN\FRM_MANGE_SITE.Designer.cs">
+      <DependentUpon>FRM_MANGE_SITE.cs</DependentUpon>
+    </Compile>
     <Compile Include="PL\MAIN\FRM_YEAR.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -660,6 +674,18 @@
     </Compile>
     <Compile Include="PL\NATIGA\HOME\FRM_MANG_SITE.Designer.cs">
       <DependentUpon>FRM_MANG_SITE.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PL\SITE\FRM_COUNT_USERS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\SITE\FRM_COUNT_USERS.Designer.cs">
+      <DependentUpon>FRM_COUNT_USERS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PL\SITE\FRM_SITE_USER_DATA.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\SITE\FRM_SITE_USER_DATA.Designer.cs">
+      <DependentUpon>FRM_SITE_USER_DATA.cs</DependentUpon>
     </Compile>
     <Compile Include="PL\STD\CLS_STD_FUNCATIONS.cs" />
     <Compile Include="PL\STD\FRM_ADD_STD.cs">
@@ -895,6 +921,8 @@
     <Content Include="EXCEL\Final\Term_B\Term_B_3_Test.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\site-data-100.png" />
+    <None Include="Resources\site-40.png" />
     <None Include="Resources\test-data-100.png" />
     <None Include="Resources\test_48.png" />
     <None Include="Resources\test_48_1.png" />
@@ -1086,6 +1114,9 @@
     <EmbeddedResource Include="PL\MAIN\FRM_BACK_UP.resx">
       <DependentUpon>FRM_BACK_UP.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PL\MAIN\FRM_MANGE_SITE.resx">
+      <DependentUpon>FRM_MANGE_SITE.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PL\MAIN\FRM_YEAR.resx">
       <DependentUpon>FRM_YEAR.cs</DependentUpon>
     </EmbeddedResource>
@@ -1142,6 +1173,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PL\NATIGA\HOME\FRM_MANG_SITE.resx">
       <DependentUpon>FRM_MANG_SITE.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PL\SITE\FRM_COUNT_USERS.resx">
+      <DependentUpon>FRM_COUNT_USERS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PL\SITE\FRM_SITE_USER_DATA.resx">
+      <DependentUpon>FRM_SITE_USER_DATA.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PL\STD\FRM_ADD_STD.resx">
       <DependentUpon>FRM_ADD_STD.cs</DependentUpon>

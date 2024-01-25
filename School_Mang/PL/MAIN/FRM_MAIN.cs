@@ -49,6 +49,7 @@ namespace School_Mang.PL.MAIN
         FRM_AMELIN frm_amlin = new FRM_AMELIN();
         FRM_MALIAT frm_maliat = new FRM_MALIAT();
         FRM_SETTINGS frm_settings = new FRM_SETTINGS();
+        FRM_MANGE_SITE frm_mange_site = new FRM_MANGE_SITE();
         BL.USERS users = new BL.USERS();
         BL.MSG msg = new BL.MSG();
 
@@ -120,6 +121,7 @@ namespace School_Mang.PL.MAIN
             btn_talaba.ForeColor = color;
             btn_maliat.ForeColor = color;
             btn_sittings.ForeColor = color;
+            btn_site.ForeColor = color;
         }
         // Selected Btn
         SimpleButton sel_btn;
@@ -331,6 +333,15 @@ namespace School_Mang.PL.MAIN
         {
             link_login.Focus();
             ActiveControl = link_login;
+        }
+
+       
+
+        private void btn_site_Click(object sender, EventArgs e)
+        {
+            whiteColor(btn_site);
+            changePages("إدارة الموقع", frm_mange_site.pn_home);
+            
         }
     }
 }

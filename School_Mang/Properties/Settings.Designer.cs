@@ -214,5 +214,65 @@ namespace School_Mang.Properties {
                 this["save_Sery_path"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("sql5080.site4now.net")]
+        public string Site_Server_Name {
+            get {
+                return ((string)(this["Site_Server_Name"]));
+            }
+            set {
+                this["Site_Server_Name"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("db_a786ad_kpsdata")]
+        public string Site_DataBasee_name {
+            get {
+                return ((string)(this["Site_DataBasee_name"]));
+            }
+            set {
+                this["Site_DataBasee_name"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("db_a786ad_kpsdata_admin")]
+        public string Site_DataBasee_User {
+            get {
+                return ((string)(this["Site_DataBasee_User"]));
+            }
+            set {
+                this["Site_DataBasee_User"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("kps@2020")]
+        public string Site_DataBasee_Pass {
+            get {
+                return ((string)(this["Site_DataBasee_Pass"]));
+            }
+            set {
+                this["Site_DataBasee_Pass"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("google.com")]
+        public string Site_Host_Test {
+            get {
+                return ((string)(this["Site_Host_Test"]));
+            }
+            set {
+                this["Site_Host_Test"] = value;
+            }
+        }
     }
 }

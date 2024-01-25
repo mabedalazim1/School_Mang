@@ -14,9 +14,9 @@ namespace School_Mang.PL.MAIN
     public partial class FRM_NATEG : Form
     {
 
-        HTTP.HTTPCLINT HTTP = new HTTP.HTTPCLINT();
-
         BL.NATEG.cls_NATAG_FUNCTIONS natag_func = new BL.NATEG.cls_NATAG_FUNCTIONS();
+        BL.Waiting Waiting = new BL.Waiting();
+        BL.MSG msg = new BL.MSG();
 
         // Form Closed
         private static FRM_NATEG frm_Nateg;
@@ -47,11 +47,16 @@ namespace School_Mang.PL.MAIN
             }
         }
 
-        BL.MSG msg = new BL.MSG();
-        BL.NATEG.ExcelUtlity Excel = new BL.NATEG.ExcelUtlity();
 
+        private async Task Test_Intrent()
+        {
+            Waiting.Wait();
+            //Test Intrent Connection
+            BL.CLS_TEST_INTRNET_CON test_intrent = new BL.CLS_TEST_INTRNET_CON();
+            await test_intrent.ChecK_Internt_Con();
+            Waiting.End_WAit();
+        }
 
-        
         private void lbl_current_stds_Click(object sender, EventArgs e)
         {
             lbl_golos_id_Click(sender, e);
@@ -97,10 +102,20 @@ namespace School_Mang.PL.MAIN
             lbl_rasd_report_Click(sender, e);
         }
 
-        private void lbl_site_Click(object sender, EventArgs e)
+        private async void lbl_site_Click(object sender, EventArgs e)
         {
-            // Get Std Data Form
-            natag_func.changePages(NATIGA.HOME.FRM_MANG_SITE.Get_Frm_Mang_Site.pn_home, "إدارة الموقع");
+            await Test_Intrent();
+            if (!BL.Globals.Test_Internet_Con)
+            {
+                msg.ErrorMesg("تأكد من الإتصال بالإنترنت ..!");
+                return;
+            }
+            else
+            {
+                // Get Std Data Form
+                natag_func.changePages(NATIGA.HOME.FRM_MANG_SITE.Get_Frm_Mang_Site.pn_home, "إدارة الموقع");
+            }
+          
         }
 
         private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)

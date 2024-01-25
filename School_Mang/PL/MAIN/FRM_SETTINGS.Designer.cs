@@ -30,10 +30,10 @@ namespace School_Mang.PL.MAIN
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FRM_SETTINGS));
             this.pn_home = new System.Windows.Forms.Panel();
             this.group_box_users = new System.Windows.Forms.GroupBox();
@@ -81,9 +81,15 @@ namespace School_Mang.PL.MAIN
             this.link_bake_up = new System.Windows.Forms.LinkLabel();
             this.pn_restore_data = new System.Windows.Forms.Panel();
             this.lbl_restore = new System.Windows.Forms.LinkLabel();
+            this.pn_mange_site = new System.Windows.Forms.Panel();
+            this.link_mange_site = new System.Windows.Forms.LinkLabel();
+            this.pn_site_server = new System.Windows.Forms.Panel();
+            this.link_site_server = new System.Windows.Forms.LinkLabel();
             this.panel7 = new System.Windows.Forms.Panel();
             this.lbl_user = new System.Windows.Forms.Label();
             this.group_box_server = new System.Windows.Forms.GroupBox();
+            this.txt_url = new System.Windows.Forms.TextBox();
+            this.lbl_url = new System.Windows.Forms.Label();
             this.btn_test_con = new Bunifu.Framework.UI.BunifuThinButton2();
             this.panel3 = new System.Windows.Forms.Panel();
             this.btn_ok = new Bunifu.Framework.UI.BunifuThinButton2();
@@ -104,8 +110,6 @@ namespace School_Mang.PL.MAIN
             this.btn_close_img = new Bunifu.Framework.UI.BunifuThinButton2();
             this.label5 = new System.Windows.Forms.Label();
             this.bunifuElipse1 = new Bunifu.Framework.UI.BunifuElipse(this.components);
-            this.txt_url = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
             this.pn_home.SuspendLayout();
             this.group_box_users.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dt_users_data)).BeginInit();
@@ -123,6 +127,8 @@ namespace School_Mang.PL.MAIN
             this.pn_change_year.SuspendLayout();
             this.pn_back_up.SuspendLayout();
             this.pn_restore_data.SuspendLayout();
+            this.pn_mange_site.SuspendLayout();
+            this.pn_site_server.SuspendLayout();
             this.group_box_server.SuspendLayout();
             this.panel3.SuspendLayout();
             this.group_box_pic.SuspendLayout();
@@ -146,7 +152,6 @@ namespace School_Mang.PL.MAIN
             this.pn_home.Name = "pn_home";
             this.pn_home.Size = new System.Drawing.Size(1370, 749);
             this.pn_home.TabIndex = 0;
-            this.pn_home.Paint += new System.Windows.Forms.PaintEventHandler(this.pn_home_Paint);
             // 
             // group_box_users
             // 
@@ -203,32 +208,32 @@ namespace School_Mang.PL.MAIN
             // 
             this.dt_users_data.AllowUserToAddRows = false;
             this.dt_users_data.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dt_users_data.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dt_users_data.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dt_users_data.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dt_users_data.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("LBC", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dt_users_data.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("LBC", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dt_users_data.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dt_users_data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dt_users_data.Cursor = System.Windows.Forms.Cursors.Hand;
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("LBC", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle15.ForeColor = System.Drawing.Color.DarkGray;
-            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dt_users_data.DefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("LBC", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.DarkGray;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dt_users_data.DefaultCellStyle = dataGridViewCellStyle3;
             this.dt_users_data.Location = new System.Drawing.Point(15, 90);
             this.dt_users_data.Name = "dt_users_data";
-            dataGridViewCellStyle16.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dt_users_data.RowsDefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dt_users_data.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dt_users_data.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.dt_users_data.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dt_users_data.RowTemplate.ReadOnly = true;
@@ -664,9 +669,11 @@ namespace School_Mang.PL.MAIN
             this.pn_settings_con.Controls.Add(this.pn_change_year);
             this.pn_settings_con.Controls.Add(this.pn_back_up);
             this.pn_settings_con.Controls.Add(this.pn_restore_data);
-            this.pn_settings_con.Location = new System.Drawing.Point(1163, 189);
+            this.pn_settings_con.Controls.Add(this.pn_mange_site);
+            this.pn_settings_con.Controls.Add(this.pn_site_server);
+            this.pn_settings_con.Location = new System.Drawing.Point(1163, 222);
             this.pn_settings_con.Name = "pn_settings_con";
-            this.pn_settings_con.Size = new System.Drawing.Size(184, 540);
+            this.pn_settings_con.Size = new System.Drawing.Size(184, 432);
             this.pn_settings_con.TabIndex = 13;
             this.pn_settings_con.Paint += new System.Windows.Forms.PaintEventHandler(this.pn_settings_con_Paint);
             // 
@@ -677,17 +684,17 @@ namespace School_Mang.PL.MAIN
             this.pn_login.Controls.Add(this.link_login);
             this.pn_login.Location = new System.Drawing.Point(0, 3);
             this.pn_login.Name = "pn_login";
-            this.pn_login.Size = new System.Drawing.Size(181, 50);
+            this.pn_login.Size = new System.Drawing.Size(181, 35);
             this.pn_login.TabIndex = 0;
             // 
             // link_login
             // 
             this.link_login.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.link_login.AutoSize = true;
-            this.link_login.Font = new System.Drawing.Font("LBC", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.link_login.Font = new System.Drawing.Font("LBC", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.link_login.Location = new System.Drawing.Point(37, 4);
             this.link_login.Name = "link_login";
-            this.link_login.Size = new System.Drawing.Size(131, 27);
+            this.link_login.Size = new System.Drawing.Size(124, 26);
             this.link_login.TabIndex = 9;
             this.link_login.TabStop = true;
             this.link_login.Text = "تسجيل الدخول";
@@ -698,9 +705,9 @@ namespace School_Mang.PL.MAIN
             this.pn_change_Pass.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pn_change_Pass.BackColor = System.Drawing.Color.White;
             this.pn_change_Pass.Controls.Add(this.link_chang_pass);
-            this.pn_change_Pass.Location = new System.Drawing.Point(0, 59);
+            this.pn_change_Pass.Location = new System.Drawing.Point(0, 44);
             this.pn_change_Pass.Name = "pn_change_Pass";
-            this.pn_change_Pass.Size = new System.Drawing.Size(181, 49);
+            this.pn_change_Pass.Size = new System.Drawing.Size(181, 35);
             this.pn_change_Pass.TabIndex = 1;
             this.pn_change_Pass.Visible = false;
             // 
@@ -708,10 +715,10 @@ namespace School_Mang.PL.MAIN
             // 
             this.link_chang_pass.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.link_chang_pass.AutoSize = true;
-            this.link_chang_pass.Font = new System.Drawing.Font("LBC", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.link_chang_pass.Font = new System.Drawing.Font("LBC", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.link_chang_pass.Location = new System.Drawing.Point(18, 1);
             this.link_chang_pass.Name = "link_chang_pass";
-            this.link_chang_pass.Size = new System.Drawing.Size(150, 27);
+            this.link_chang_pass.Size = new System.Drawing.Size(142, 26);
             this.link_chang_pass.TabIndex = 10;
             this.link_chang_pass.TabStop = true;
             this.link_chang_pass.Text = "تغيير كلمة المرور";
@@ -723,9 +730,9 @@ namespace School_Mang.PL.MAIN
             this.pn_change_img.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pn_change_img.BackColor = System.Drawing.Color.White;
             this.pn_change_img.Controls.Add(this.link_change_img);
-            this.pn_change_img.Location = new System.Drawing.Point(0, 114);
+            this.pn_change_img.Location = new System.Drawing.Point(0, 85);
             this.pn_change_img.Name = "pn_change_img";
-            this.pn_change_img.Size = new System.Drawing.Size(181, 51);
+            this.pn_change_img.Size = new System.Drawing.Size(181, 35);
             this.pn_change_img.TabIndex = 1;
             this.pn_change_img.Visible = false;
             // 
@@ -733,10 +740,10 @@ namespace School_Mang.PL.MAIN
             // 
             this.link_change_img.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.link_change_img.AutoSize = true;
-            this.link_change_img.Font = new System.Drawing.Font("LBC", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.link_change_img.Font = new System.Drawing.Font("LBC", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.link_change_img.Location = new System.Drawing.Point(37, 4);
             this.link_change_img.Name = "link_change_img";
-            this.link_change_img.Size = new System.Drawing.Size(118, 27);
+            this.link_change_img.Size = new System.Drawing.Size(111, 26);
             this.link_change_img.TabIndex = 10;
             this.link_change_img.TabStop = true;
             this.link_change_img.Text = "تغيير الصورة ";
@@ -748,19 +755,19 @@ namespace School_Mang.PL.MAIN
             this.pn_server.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pn_server.BackColor = System.Drawing.Color.White;
             this.pn_server.Controls.Add(this.link_server);
-            this.pn_server.Location = new System.Drawing.Point(0, 171);
+            this.pn_server.Location = new System.Drawing.Point(0, 126);
             this.pn_server.Name = "pn_server";
-            this.pn_server.Size = new System.Drawing.Size(181, 60);
+            this.pn_server.Size = new System.Drawing.Size(181, 35);
             this.pn_server.TabIndex = 1;
             // 
             // link_server
             // 
             this.link_server.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.link_server.AutoSize = true;
-            this.link_server.Font = new System.Drawing.Font("LBC", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.link_server.Font = new System.Drawing.Font("LBC", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.link_server.Location = new System.Drawing.Point(21, 8);
             this.link_server.Name = "link_server";
-            this.link_server.Size = new System.Drawing.Size(147, 27);
+            this.link_server.Size = new System.Drawing.Size(138, 26);
             this.link_server.TabIndex = 9;
             this.link_server.TabStop = true;
             this.link_server.Text = "إعدادات السيرفر";
@@ -771,9 +778,9 @@ namespace School_Mang.PL.MAIN
             this.pn_users.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pn_users.BackColor = System.Drawing.Color.White;
             this.pn_users.Controls.Add(this.link_users);
-            this.pn_users.Location = new System.Drawing.Point(0, 237);
+            this.pn_users.Location = new System.Drawing.Point(0, 167);
             this.pn_users.Name = "pn_users";
-            this.pn_users.Size = new System.Drawing.Size(181, 60);
+            this.pn_users.Size = new System.Drawing.Size(181, 35);
             this.pn_users.TabIndex = 10;
             this.pn_users.Visible = false;
             // 
@@ -781,10 +788,10 @@ namespace School_Mang.PL.MAIN
             // 
             this.link_users.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.link_users.AutoSize = true;
-            this.link_users.Font = new System.Drawing.Font("LBC", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.link_users.Font = new System.Drawing.Font("LBC", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.link_users.Location = new System.Drawing.Point(15, 8);
             this.link_users.Name = "link_users";
-            this.link_users.Size = new System.Drawing.Size(158, 27);
+            this.link_users.Size = new System.Drawing.Size(151, 26);
             this.link_users.TabIndex = 9;
             this.link_users.TabStop = true;
             this.link_users.Text = "إدارة المستخدمين";
@@ -795,9 +802,9 @@ namespace School_Mang.PL.MAIN
             this.pn_change_year.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pn_change_year.BackColor = System.Drawing.Color.White;
             this.pn_change_year.Controls.Add(this.link_chenge_year);
-            this.pn_change_year.Location = new System.Drawing.Point(0, 303);
+            this.pn_change_year.Location = new System.Drawing.Point(0, 208);
             this.pn_change_year.Name = "pn_change_year";
-            this.pn_change_year.Size = new System.Drawing.Size(181, 60);
+            this.pn_change_year.Size = new System.Drawing.Size(181, 35);
             this.pn_change_year.TabIndex = 11;
             this.pn_change_year.Visible = false;
             // 
@@ -805,10 +812,10 @@ namespace School_Mang.PL.MAIN
             // 
             this.link_chenge_year.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.link_chenge_year.AutoSize = true;
-            this.link_chenge_year.Font = new System.Drawing.Font("LBC", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.link_chenge_year.Font = new System.Drawing.Font("LBC", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.link_chenge_year.Location = new System.Drawing.Point(5, 8);
             this.link_chenge_year.Name = "link_chenge_year";
-            this.link_chenge_year.Size = new System.Drawing.Size(181, 27);
+            this.link_chenge_year.Size = new System.Drawing.Size(170, 26);
             this.link_chenge_year.TabIndex = 9;
             this.link_chenge_year.TabStop = true;
             this.link_chenge_year.Text = "تعديل العام الدراسى";
@@ -819,9 +826,9 @@ namespace School_Mang.PL.MAIN
             this.pn_back_up.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pn_back_up.BackColor = System.Drawing.Color.White;
             this.pn_back_up.Controls.Add(this.link_bake_up);
-            this.pn_back_up.Location = new System.Drawing.Point(0, 369);
+            this.pn_back_up.Location = new System.Drawing.Point(0, 249);
             this.pn_back_up.Name = "pn_back_up";
-            this.pn_back_up.Size = new System.Drawing.Size(181, 60);
+            this.pn_back_up.Size = new System.Drawing.Size(181, 35);
             this.pn_back_up.TabIndex = 12;
             this.pn_back_up.Visible = false;
             // 
@@ -829,10 +836,10 @@ namespace School_Mang.PL.MAIN
             // 
             this.link_bake_up.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.link_bake_up.AutoSize = true;
-            this.link_bake_up.Font = new System.Drawing.Font("LBC", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.link_bake_up.Font = new System.Drawing.Font("LBC", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.link_bake_up.Location = new System.Drawing.Point(1, 8);
             this.link_bake_up.Name = "link_bake_up";
-            this.link_bake_up.Size = new System.Drawing.Size(184, 27);
+            this.link_bake_up.Size = new System.Drawing.Size(177, 26);
             this.link_bake_up.TabIndex = 9;
             this.link_bake_up.TabStop = true;
             this.link_bake_up.Text = "إنشاء نسخة إحتياطية";
@@ -843,9 +850,9 @@ namespace School_Mang.PL.MAIN
             this.pn_restore_data.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pn_restore_data.BackColor = System.Drawing.Color.White;
             this.pn_restore_data.Controls.Add(this.lbl_restore);
-            this.pn_restore_data.Location = new System.Drawing.Point(0, 435);
+            this.pn_restore_data.Location = new System.Drawing.Point(0, 290);
             this.pn_restore_data.Name = "pn_restore_data";
-            this.pn_restore_data.Size = new System.Drawing.Size(181, 60);
+            this.pn_restore_data.Size = new System.Drawing.Size(181, 35);
             this.pn_restore_data.TabIndex = 13;
             this.pn_restore_data.Visible = false;
             // 
@@ -853,14 +860,62 @@ namespace School_Mang.PL.MAIN
             // 
             this.lbl_restore.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lbl_restore.AutoSize = true;
-            this.lbl_restore.Font = new System.Drawing.Font("LBC", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_restore.Font = new System.Drawing.Font("LBC", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_restore.Location = new System.Drawing.Point(1, 8);
             this.lbl_restore.Name = "lbl_restore";
-            this.lbl_restore.Size = new System.Drawing.Size(169, 27);
+            this.lbl_restore.Size = new System.Drawing.Size(158, 26);
             this.lbl_restore.TabIndex = 9;
             this.lbl_restore.TabStop = true;
             this.lbl_restore.Text = "استعادة من نسخة ";
             this.lbl_restore.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lbl_restore_LinkClicked);
+            // 
+            // pn_mange_site
+            // 
+            this.pn_mange_site.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.pn_mange_site.BackColor = System.Drawing.Color.White;
+            this.pn_mange_site.Controls.Add(this.link_mange_site);
+            this.pn_mange_site.Location = new System.Drawing.Point(0, 331);
+            this.pn_mange_site.Name = "pn_mange_site";
+            this.pn_mange_site.Size = new System.Drawing.Size(181, 35);
+            this.pn_mange_site.TabIndex = 14;
+            this.pn_mange_site.Visible = false;
+            // 
+            // link_mange_site
+            // 
+            this.link_mange_site.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.link_mange_site.AutoSize = true;
+            this.link_mange_site.Font = new System.Drawing.Font("LBC", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.link_mange_site.Location = new System.Drawing.Point(38, 8);
+            this.link_mange_site.Name = "link_mange_site";
+            this.link_mange_site.Size = new System.Drawing.Size(109, 26);
+            this.link_mange_site.TabIndex = 9;
+            this.link_mange_site.TabStop = true;
+            this.link_mange_site.Text = "إدارة الموقع";
+            this.link_mange_site.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.link_mange_site_LinkClicked);
+            // 
+            // pn_site_server
+            // 
+            this.pn_site_server.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.pn_site_server.BackColor = System.Drawing.Color.White;
+            this.pn_site_server.Controls.Add(this.link_site_server);
+            this.pn_site_server.Location = new System.Drawing.Point(0, 372);
+            this.pn_site_server.Name = "pn_site_server";
+            this.pn_site_server.Size = new System.Drawing.Size(181, 35);
+            this.pn_site_server.TabIndex = 15;
+            this.pn_site_server.Visible = false;
+            // 
+            // link_site_server
+            // 
+            this.link_site_server.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.link_site_server.AutoSize = true;
+            this.link_site_server.Font = new System.Drawing.Font("LBC", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.link_site_server.Location = new System.Drawing.Point(38, 8);
+            this.link_site_server.Name = "link_site_server";
+            this.link_site_server.Size = new System.Drawing.Size(120, 26);
+            this.link_site_server.TabIndex = 9;
+            this.link_site_server.TabStop = true;
+            this.link_site_server.Text = "سيرفر الموقع";
+            this.link_site_server.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.link_site_server_LinkClicked);
             // 
             // panel7
             // 
@@ -884,7 +939,7 @@ namespace School_Mang.PL.MAIN
             // 
             this.group_box_server.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.group_box_server.Controls.Add(this.txt_url);
-            this.group_box_server.Controls.Add(this.label12);
+            this.group_box_server.Controls.Add(this.lbl_url);
             this.group_box_server.Controls.Add(this.btn_test_con);
             this.group_box_server.Controls.Add(this.panel3);
             this.group_box_server.Controls.Add(this.txt_databasee_pass);
@@ -904,6 +959,26 @@ namespace School_Mang.PL.MAIN
             this.group_box_server.TabStop = false;
             this.group_box_server.Text = "إعدادات السيرفر";
             this.group_box_server.Visible = false;
+            // 
+            // txt_url
+            // 
+            this.txt_url.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_url.Location = new System.Drawing.Point(40, 257);
+            this.txt_url.MaxLength = 50;
+            this.txt_url.Name = "txt_url";
+            this.txt_url.Size = new System.Drawing.Size(269, 28);
+            this.txt_url.TabIndex = 60;
+            // 
+            // lbl_url
+            // 
+            this.lbl_url.AutoSize = true;
+            this.lbl_url.Font = new System.Drawing.Font("LBC", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_url.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.lbl_url.Location = new System.Drawing.Point(314, 260);
+            this.lbl_url.Name = "lbl_url";
+            this.lbl_url.Size = new System.Drawing.Size(67, 22);
+            this.lbl_url.TabIndex = 61;
+            this.lbl_url.Text = "Site Url";
             // 
             // btn_test_con
             // 
@@ -1078,11 +1153,11 @@ namespace School_Mang.PL.MAIN
             // 
             this.lbl_settings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lbl_settings.AutoSize = true;
-            this.lbl_settings.Font = new System.Drawing.Font("LBC", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_settings.Font = new System.Drawing.Font("LBC", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_settings.ForeColor = System.Drawing.Color.Black;
-            this.lbl_settings.Location = new System.Drawing.Point(1149, 116);
+            this.lbl_settings.Location = new System.Drawing.Point(1171, 166);
             this.lbl_settings.Name = "lbl_settings";
-            this.lbl_settings.Size = new System.Drawing.Size(209, 62);
+            this.lbl_settings.Size = new System.Drawing.Size(158, 47);
             this.lbl_settings.TabIndex = 7;
             this.lbl_settings.Text = "الإعدادات";
             // 
@@ -1195,26 +1270,6 @@ namespace School_Mang.PL.MAIN
             this.bunifuElipse1.ElipseRadius = 500;
             this.bunifuElipse1.TargetControl = this.pic_user;
             // 
-            // txt_url
-            // 
-            this.txt_url.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_url.Location = new System.Drawing.Point(40, 257);
-            this.txt_url.MaxLength = 50;
-            this.txt_url.Name = "txt_url";
-            this.txt_url.Size = new System.Drawing.Size(269, 28);
-            this.txt_url.TabIndex = 60;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("LBC", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-            this.label12.Location = new System.Drawing.Point(314, 260);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(67, 22);
-            this.label12.TabIndex = 61;
-            this.label12.Text = "Site Url";
-            // 
             // FRM_SETTINGS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(37F, 82F);
@@ -1258,6 +1313,10 @@ namespace School_Mang.PL.MAIN
             this.pn_back_up.PerformLayout();
             this.pn_restore_data.ResumeLayout(false);
             this.pn_restore_data.PerformLayout();
+            this.pn_mange_site.ResumeLayout(false);
+            this.pn_mange_site.PerformLayout();
+            this.pn_site_server.ResumeLayout(false);
+            this.pn_site_server.PerformLayout();
             this.group_box_server.ResumeLayout(false);
             this.group_box_server.PerformLayout();
             this.panel3.ResumeLayout(false);
@@ -1340,6 +1399,10 @@ namespace School_Mang.PL.MAIN
         public System.Windows.Forms.Panel pn_restore_data;
         private System.Windows.Forms.LinkLabel lbl_restore;
         private System.Windows.Forms.TextBox txt_url;
-        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label lbl_url;
+        public System.Windows.Forms.Panel pn_mange_site;
+        private System.Windows.Forms.LinkLabel link_mange_site;
+        public System.Windows.Forms.Panel pn_site_server;
+        private System.Windows.Forms.LinkLabel link_site_server;
     }
 }

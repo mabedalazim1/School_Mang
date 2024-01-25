@@ -333,6 +333,7 @@ namespace School_Mang.PL.NATIGA
             this.Name = "FRM_DELETE_SITE_DATA";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "حذف البيانات";
+            this.Load += new System.EventHandler(this.FRM_DELETE_SITE_DATA_Load);
             this.pn_top.ResumeLayout(false);
             this.pn_top.PerformLayout();
             this.groupBox3.ResumeLayout(false);

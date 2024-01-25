@@ -30,6 +30,11 @@ namespace School_Mang.PL.MAIN
         BL.USERS users = new BL.USERS();
         // Wating
         BL.Waiting waiting = new BL.Waiting();
+
+        // Test servers
+        byte server_kind = 0;
+        string site_name = "";
+
         // Form Closed
         private static FRM_SETTINGS frm_settings;
         static void frm_Form_Closed(object sender, FormClosedEventArgs e)
@@ -101,6 +106,41 @@ namespace School_Mang.PL.MAIN
 
         }
 
+        private void Check_Server(byte kind)
+        {
+            server_kind = kind;
+            group_box_login.Visible = false;
+            group_box_server.Visible = true;
+            group_box_users.Visible = false;
+            group_box_pic.Visible = false;
+            group_box_pass.Visible = false;
+
+            switch (server_kind)
+            {
+                case 0:
+                    txt_server.Text = Properties.Settings.Default.Server_Name;
+                    txt_databasee_name.Text = Properties.Settings.Default.DataBasee_name;
+                    txt_databasee_user.Text = Properties.Settings.Default.DataBasee_User;
+                    txt_databasee_pass.Text = Properties.Settings.Default.DataBasee_Pass;
+                    txt_url.Text = Properties.Settings.Default.site_uri;
+                    lbl_url.Text = "School Site Url";
+                    break;
+
+                case 1:
+                    txt_server.Text = Properties.Settings.Default.Site_Server_Name;
+                    txt_databasee_name.Text = Properties.Settings.Default.Site_DataBasee_name;
+                    txt_databasee_user.Text = Properties.Settings.Default.Site_DataBasee_User;
+                    txt_databasee_pass.Text = Properties.Settings.Default.Site_DataBasee_Pass;
+                    txt_url.Text = Properties.Settings.Default.Site_Host_Test;
+                    lbl_url.Text = "Test Server Url";
+                    break;
+            }
+
+            // Change Lang
+
+            InputLanguage.CurrentInputLanguage =
+            InputLanguage.FromCulture(new System.Globalization.CultureInfo("en-US"));
+        }
         private void btn_close_b_Click(object sender, EventArgs e)
         {
             txt_server.Text = Properties.Settings.Default.Server_Name;
@@ -146,14 +186,17 @@ namespace School_Mang.PL.MAIN
                 Waiting.End_WAit();
                 return;
             }
-
-            if (txt_url.Text == "")
+            if(server_kind == 0)
             {
-                msg.ErrorMesg("تأكد من عنوان الموقع");
-                txt_url.Focus();
-                Waiting.End_WAit();
-                return;
+                if (txt_url.Text == "")
+                {
+                    msg.ErrorMesg("تأكد من عنوان الموقع");
+                    txt_url.Focus();
+                    Waiting.End_WAit();
+                    return;
+                }
             }
+            
             DialogResult dialogResult = MessageBox.Show("هل تريد تغيير البيانات الخاصة بالسيرفر!!", " مدرسة الكوثر الخاصة", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (dialogResult == DialogResult.No)
@@ -165,24 +208,30 @@ namespace School_Mang.PL.MAIN
             else
             {
                 // Get Server data From  Properties.Settings
-                Properties.Settings.Default.Server_Name = txt_server.Text;
-                Properties.Settings.Default.DataBasee_name = txt_databasee_name.Text;
-                Properties.Settings.Default.DataBasee_User = txt_databasee_user.Text;
-                Properties.Settings.Default.DataBasee_Pass = txt_databasee_pass.Text;
-                Properties.Settings.Default.site_uri = txt_url.Text;
+                switch (server_kind)
+                {
+                    case 0:
+                        Properties.Settings.Default.Server_Name = txt_server.Text;
+                        Properties.Settings.Default.DataBasee_name = txt_databasee_name.Text;
+                        Properties.Settings.Default.DataBasee_User = txt_databasee_user.Text;
+                        Properties.Settings.Default.DataBasee_Pass = txt_databasee_pass.Text;
+                        Properties.Settings.Default.site_uri = txt_url.Text;
+                       
+                        break;
+
+                    case 1:
+                        Properties.Settings.Default.Site_Server_Name = txt_server.Text;
+                        Properties.Settings.Default.Site_DataBasee_name = txt_databasee_name.Text;
+                        Properties.Settings.Default.Site_DataBasee_User = txt_databasee_user.Text;
+                        Properties.Settings.Default.Site_DataBasee_Pass = txt_databasee_pass.Text;
+                        Properties.Settings.Default.Site_Server_Name = txt_url.Text;
+
+                        break;
+                }
                 Properties.Settings.Default.Save();
                 Waiting.End_WAit();
             }
             Waiting.End_WAit();
-        }
-
-        private void pn_home_Paint(object sender, PaintEventArgs e)
-        {
-            txt_server.Text = Properties.Settings.Default.Server_Name;
-            txt_databasee_name.Text = Properties.Settings.Default.DataBasee_name;
-            txt_databasee_user.Text = Properties.Settings.Default.DataBasee_User;
-            txt_databasee_pass.Text = Properties.Settings.Default.DataBasee_Pass;
-            txt_url.Text = Properties.Settings.Default.site_uri;
         }
 
        
@@ -291,16 +340,8 @@ namespace School_Mang.PL.MAIN
 
         private void link_server_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            group_box_login.Visible = false;
-            group_box_server.Visible = true;
-            group_box_users.Visible = false;
-            group_box_pic.Visible = false;
-            group_box_pass.Visible = false;
 
-            // Change Lang
-
-            InputLanguage.CurrentInputLanguage =
-            InputLanguage.FromCulture(new System.Globalization.CultureInfo("en-US"));
+            Check_Server(0);
 
         }
 
@@ -323,6 +364,10 @@ namespace School_Mang.PL.MAIN
         }
         private void btn_login_Click(object sender, EventArgs e)
         {
+            // Store Dir OpenFile Path
+
+            BL.Globals.Dir_Path = "D:\\Rasd";
+
             Waiting.Wait();
             // Enable Test Con
             BL.Globals.Test_Internet_Con = true;
@@ -429,6 +474,8 @@ namespace School_Mang.PL.MAIN
                                 pn_users.Visible = true;
                                 pn_back_up.Visible = true;
                                 pn_restore_data.Visible = true;
+                                pn_mange_site.Visible = true;
+                                pn_site_server.Visible = true;
 
                             }
                             else
@@ -436,7 +483,8 @@ namespace School_Mang.PL.MAIN
                                 pn_users.Visible = false;
                                 pn_back_up.Visible = false;
                                 pn_restore_data.Visible = false;
-
+                                pn_mange_site.Visible = false;
+                                pn_site_server.Visible = false;
 
                             }
 
@@ -447,6 +495,7 @@ namespace School_Mang.PL.MAIN
                                     FRM_MAIN.Get_Frm_Main.btn_nataeg.Visible = true;
                                     FRM_MAIN.Get_Frm_Main.btn_maliat.Visible = true;
                                     FRM_MAIN.Get_Frm_Main.btn_amelin.Visible = true;
+                                    FRM_MAIN.Get_Frm_Main.btn_site.Visible = true;
 
                                     break;
                                 case 2:
@@ -962,6 +1011,18 @@ namespace School_Mang.PL.MAIN
             BL.Globals.Restore_DataBase = true;
             FRM_BACK_UP frm = new FRM_BACK_UP();
             frm.ShowDialog();
+        }
+
+        private void link_mange_site_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            BL.NATEG.cls_NATAG_FUNCTIONS natag_func = new BL.NATEG.cls_NATAG_FUNCTIONS();
+            // Get Mange Site Form
+            natag_func.changePages(FRM_MANGE_SITE.Get_Frm_Mange_Site.pn_home, "إدارة الموقع");
+        }
+
+        private void link_site_server_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Check_Server(1);
         }
     }
 }

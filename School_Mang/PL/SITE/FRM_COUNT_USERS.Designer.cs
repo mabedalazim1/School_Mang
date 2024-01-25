@@ -1,7 +1,7 @@
 ﻿
-namespace School_Mang.PL.NATIGA
+namespace School_Mang.PL.SITE
 {
-    partial class FRM_NATAG_DATA
+    partial class FRM_COUNT_USERS
     {
         /// <summary>
         /// Required designer variable.
@@ -33,7 +33,7 @@ namespace School_Mang.PL.NATIGA
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FRM_NATAG_DATA));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FRM_COUNT_USERS));
             this.dt_std_data = new System.Windows.Forms.DataGridView();
             this.panel4 = new System.Windows.Forms.Panel();
             this.pn_top = new System.Windows.Forms.Panel();
@@ -82,7 +82,7 @@ namespace School_Mang.PL.NATIGA
             this.dt_std_data.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dt_std_data.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dt_std_data.Size = new System.Drawing.Size(663, 276);
-            this.dt_std_data.TabIndex = 87;
+            this.dt_std_data.TabIndex = 95;
             this.dt_std_data.DoubleClick += new System.EventHandler(this.dt_std_data_DoubleClick);
             // 
             // panel4
@@ -92,7 +92,7 @@ namespace School_Mang.PL.NATIGA
             this.panel4.Location = new System.Drawing.Point(0, 415);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(683, 10);
-            this.panel4.TabIndex = 86;
+            this.panel4.TabIndex = 94;
             // 
             // pn_top
             // 
@@ -103,7 +103,7 @@ namespace School_Mang.PL.NATIGA
             this.pn_top.Location = new System.Drawing.Point(0, 0);
             this.pn_top.Name = "pn_top";
             this.pn_top.Size = new System.Drawing.Size(683, 50);
-            this.pn_top.TabIndex = 85;
+            this.pn_top.TabIndex = 93;
             this.pn_top.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pn_top_MouseDown);
             this.pn_top.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pn_top_MouseMove);
             this.pn_top.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pn_top_MouseUp);
@@ -113,12 +113,12 @@ namespace School_Mang.PL.NATIGA
             this.lbl_title.AutoSize = true;
             this.lbl_title.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_title.ForeColor = System.Drawing.Color.White;
-            this.lbl_title.Location = new System.Drawing.Point(261, 13);
+            this.lbl_title.Location = new System.Drawing.Point(217, 13);
             this.lbl_title.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
             this.lbl_title.Name = "lbl_title";
-            this.lbl_title.Size = new System.Drawing.Size(197, 25);
+            this.lbl_title.Size = new System.Drawing.Size(248, 25);
             this.lbl_title.TabIndex = 46;
-            this.lbl_title.Text = "بيانات الموقع - التقييمات";
+            this.lbl_title.Text = "إدارة الموقع - عدد المستخدمين";
             // 
             // btn_close
             // 
@@ -141,7 +141,7 @@ namespace School_Mang.PL.NATIGA
             this.groupBox3.Location = new System.Drawing.Point(12, 341);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(659, 65);
-            this.groupBox3.TabIndex = 88;
+            this.groupBox3.TabIndex = 96;
             this.groupBox3.TabStop = false;
             // 
             // btn_show_data
@@ -196,7 +196,7 @@ namespace School_Mang.PL.NATIGA
             this.btn_close_b.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.btn_close_b.Click += new System.EventHandler(this.btn_close_b_Click);
             // 
-            // FRM_NATAG_DATA
+            // FRM_COUNT_USERS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -208,9 +208,10 @@ namespace School_Mang.PL.NATIGA
             this.Controls.Add(this.pn_top);
             this.Controls.Add(this.groupBox3);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "FRM_NATAG_DATA";
+            this.Name = "FRM_COUNT_USERS";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "بيانات الموقع";
+            this.Text = "عدد المستخدمين";
+            this.Load += new System.EventHandler(this.FRM_COUNT_USERS_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dt_std_data)).EndInit();
             this.pn_top.ResumeLayout(false);
             this.pn_top.PerformLayout();

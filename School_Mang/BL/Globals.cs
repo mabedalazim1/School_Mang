@@ -443,6 +443,19 @@ namespace School_Mang.BL
             }
         }
 
+        private static string  _Dir_Path ="";
+        public static string Dir_Path
+        {
+            get
+            {
+                return _Dir_Path;
+            }
+            set
+            {
+                _Dir_Path = value;
+            }
+        }
+
 
     }
 }

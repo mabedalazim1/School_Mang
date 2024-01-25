@@ -41,8 +41,8 @@ namespace School_Mang.PL.NATIGA.HOME
             this.lbl_degree = new System.Windows.Forms.Label();
             this.pic_degree = new System.Windows.Forms.PictureBox();
             this.bunifuCards3 = new Bunifu.Framework.UI.BunifuCards();
-            this.label1 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.lbl_del_data_from_site = new System.Windows.Forms.Label();
+            this.pic_del_data_from_site = new System.Windows.Forms.PictureBox();
             this.bunifuCards1 = new Bunifu.Framework.UI.BunifuCards();
             this.lbl_back = new System.Windows.Forms.Label();
             this.pic_back = new System.Windows.Forms.PictureBox();
@@ -56,7 +56,7 @@ namespace School_Mang.PL.NATIGA.HOME
             this.bunifuCards4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_degree)).BeginInit();
             this.bunifuCards3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_del_data_from_site)).BeginInit();
             this.bunifuCards1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_back)).BeginInit();
             this.SuspendLayout();
@@ -153,7 +153,7 @@ namespace School_Mang.PL.NATIGA.HOME
             this.lbl_upload_test.AutoSize = true;
             this.lbl_upload_test.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lbl_upload_test.Font = new System.Drawing.Font("LBC", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_upload_test.Location = new System.Drawing.Point(23, 117);
+            this.lbl_upload_test.Location = new System.Drawing.Point(25, 117);
             this.lbl_upload_test.Name = "lbl_upload_test";
             this.lbl_upload_test.Size = new System.Drawing.Size(221, 37);
             this.lbl_upload_test.TabIndex = 7;
@@ -196,11 +196,11 @@ namespace School_Mang.PL.NATIGA.HOME
             this.lbl_degree.AutoSize = true;
             this.lbl_degree.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lbl_degree.Font = new System.Drawing.Font("LBC", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_degree.Location = new System.Drawing.Point(57, 117);
+            this.lbl_degree.Location = new System.Drawing.Point(18, 117);
             this.lbl_degree.Name = "lbl_degree";
-            this.lbl_degree.Size = new System.Drawing.Size(160, 37);
+            this.lbl_degree.Size = new System.Drawing.Size(234, 37);
             this.lbl_degree.TabIndex = 7;
-            this.lbl_degree.Text = "عرض البيانات";
+            this.lbl_degree.Text = "عرض درجات الطلاب";
             this.lbl_degree.Click += new System.EventHandler(this.lbl_degree_Click);
             // 
             // pic_degree
@@ -222,8 +222,8 @@ namespace School_Mang.PL.NATIGA.HOME
             this.bunifuCards3.BorderRadius = 5;
             this.bunifuCards3.BottomSahddow = true;
             this.bunifuCards3.color = System.Drawing.Color.Tomato;
-            this.bunifuCards3.Controls.Add(this.label1);
-            this.bunifuCards3.Controls.Add(this.pictureBox1);
+            this.bunifuCards3.Controls.Add(this.lbl_del_data_from_site);
+            this.bunifuCards3.Controls.Add(this.pic_del_data_from_site);
             this.bunifuCards3.LeftSahddow = false;
             this.bunifuCards3.Location = new System.Drawing.Point(213, 23);
             this.bunifuCards3.Name = "bunifuCards3";
@@ -233,29 +233,30 @@ namespace School_Mang.PL.NATIGA.HOME
             this.bunifuCards3.Size = new System.Drawing.Size(270, 186);
             this.bunifuCards3.TabIndex = 15;
             // 
-            // label1
+            // lbl_del_data_from_site
             // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label1.AutoSize = true;
-            this.label1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label1.Font = new System.Drawing.Font("LBC", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(62, 117);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(147, 37);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "حذف بيانات";
-            this.label1.Click += new System.EventHandler(this.label1_Click_1);
+            this.lbl_del_data_from_site.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lbl_del_data_from_site.AutoSize = true;
+            this.lbl_del_data_from_site.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lbl_del_data_from_site.Font = new System.Drawing.Font("LBC", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_del_data_from_site.Location = new System.Drawing.Point(19, 117);
+            this.lbl_del_data_from_site.Name = "lbl_del_data_from_site";
+            this.lbl_del_data_from_site.Size = new System.Drawing.Size(233, 37);
+            this.lbl_del_data_from_site.TabIndex = 7;
+            this.lbl_del_data_from_site.Text = "حذف بيانات الطلاب";
+            this.lbl_del_data_from_site.Click += new System.EventHandler(this.lbl_del_data_from_site_Click);
             // 
-            // pictureBox1
+            // pic_del_data_from_site
             // 
-            this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox1.Image = global::School_Mang.Properties.Resources.delete_database_100;
-            this.pictureBox1.Location = new System.Drawing.Point(74, 23);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(118, 97);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
+            this.pic_del_data_from_site.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pic_del_data_from_site.Image = global::School_Mang.Properties.Resources.delete_database_100;
+            this.pic_del_data_from_site.Location = new System.Drawing.Point(74, 23);
+            this.pic_del_data_from_site.Name = "pic_del_data_from_site";
+            this.pic_del_data_from_site.Size = new System.Drawing.Size(118, 97);
+            this.pic_del_data_from_site.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pic_del_data_from_site.TabIndex = 1;
+            this.pic_del_data_from_site.TabStop = false;
+            this.pic_del_data_from_site.Click += new System.EventHandler(this.pic_del_data_from_site_Click);
             // 
             // bunifuCards1
             // 
@@ -281,7 +282,7 @@ namespace School_Mang.PL.NATIGA.HOME
             this.lbl_back.AutoSize = true;
             this.lbl_back.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lbl_back.Font = new System.Drawing.Font("LBC", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_back.Location = new System.Drawing.Point(31, 117);
+            this.lbl_back.Location = new System.Drawing.Point(33, 117);
             this.lbl_back.Name = "lbl_back";
             this.lbl_back.Size = new System.Drawing.Size(205, 37);
             this.lbl_back.TabIndex = 7;
@@ -328,7 +329,7 @@ namespace School_Mang.PL.NATIGA.HOME
             ((System.ComponentModel.ISupportInitialize)(this.pic_degree)).EndInit();
             this.bunifuCards3.ResumeLayout(false);
             this.bunifuCards3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_del_data_from_site)).EndInit();
             this.bunifuCards1.ResumeLayout(false);
             this.bunifuCards1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_back)).EndInit();
@@ -350,8 +351,8 @@ namespace School_Mang.PL.NATIGA.HOME
         public System.Windows.Forms.PictureBox pic_upload_test;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private Bunifu.Framework.UI.BunifuCards bunifuCards3;
-        private System.Windows.Forms.Label label1;
-        public System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label lbl_del_data_from_site;
+        public System.Windows.Forms.PictureBox pic_del_data_from_site;
         private Bunifu.Framework.UI.BunifuCards bunifuCards4;
         private System.Windows.Forms.Label lbl_degree;
         public System.Windows.Forms.PictureBox pic_degree;

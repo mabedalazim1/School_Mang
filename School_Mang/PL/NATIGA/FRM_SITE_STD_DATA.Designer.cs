@@ -29,28 +29,28 @@ namespace School_Mang.PL.NATIGA
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FRM_SITE_STD_DATA));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FRM_SITE_STD_DATA));
             this.cmb_grade = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.lbl_count = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btn_edit_std = new Bunifu.Framework.UI.BunifuThinButton2();
+            this.btn_del_std = new Bunifu.Framework.UI.BunifuThinButton2();
+            this.btn_new_std = new Bunifu.Framework.UI.BunifuThinButton2();
+            this.btn_close_b = new Bunifu.Framework.UI.BunifuThinButton2();
             this.dt_std_data = new System.Windows.Forms.DataGridView();
             this.panel4 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.txt_std_data = new Bunifu.Framework.UI.BunifuMaterialTextbox();
             this.label11 = new System.Windows.Forms.Label();
             this.pn_top = new System.Windows.Forms.Panel();
-            this.btn_edit_std = new Bunifu.Framework.UI.BunifuThinButton2();
-            this.btn_del_std = new Bunifu.Framework.UI.BunifuThinButton2();
-            this.btn_new_std = new Bunifu.Framework.UI.BunifuThinButton2();
-            this.btn_close_b = new Bunifu.Framework.UI.BunifuThinButton2();
-            this.pic_help = new System.Windows.Forms.PictureBox();
             this.btn_close = new DevExpress.XtraEditors.SimpleButton();
+            this.pic_help = new System.Windows.Forms.PictureBox();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dt_std_data)).BeginInit();
             this.pn_top.SuspendLayout();
@@ -69,7 +69,6 @@ namespace School_Mang.PL.NATIGA
             this.cmb_grade.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.cmb_grade.Size = new System.Drawing.Size(181, 40);
             this.cmb_grade.TabIndex = 85;
-            this.cmb_grade.SelectedIndexChanged += new System.EventHandler(this.cmb_grade_SelectedIndexChanged);
             this.cmb_grade.DropDownClosed += new System.EventHandler(this.cmb_grade_DropDownClosed);
             // 
             // label2
@@ -104,7 +103,7 @@ namespace School_Mang.PL.NATIGA
             this.lbl_count.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lbl_count.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_count.ForeColor = System.Drawing.Color.Black;
-            this.lbl_count.Location = new System.Drawing.Point(1049, 76);
+            this.lbl_count.Location = new System.Drawing.Point(1027, 76);
             this.lbl_count.Name = "lbl_count";
             this.lbl_count.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lbl_count.Size = new System.Drawing.Size(0, 25);
@@ -123,6 +122,110 @@ namespace School_Mang.PL.NATIGA
             this.groupBox3.TabIndex = 82;
             this.groupBox3.TabStop = false;
             this.groupBox3.Enter += new System.EventHandler(this.groupBox3_Enter);
+            // 
+            // btn_edit_std
+            // 
+            this.btn_edit_std.ActiveBorderThickness = 1;
+            this.btn_edit_std.ActiveCornerRadius = 20;
+            this.btn_edit_std.ActiveFillColor = System.Drawing.Color.CadetBlue;
+            this.btn_edit_std.ActiveForecolor = System.Drawing.Color.White;
+            this.btn_edit_std.ActiveLineColor = System.Drawing.Color.CadetBlue;
+            this.btn_edit_std.BackColor = System.Drawing.SystemColors.Control;
+            this.btn_edit_std.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_edit_std.BackgroundImage")));
+            this.btn_edit_std.ButtonText = "تعديل الدرجات";
+            this.btn_edit_std.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_edit_std.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_edit_std.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.btn_edit_std.IdleBorderThickness = 1;
+            this.btn_edit_std.IdleCornerRadius = 20;
+            this.btn_edit_std.IdleFillColor = System.Drawing.Color.WhiteSmoke;
+            this.btn_edit_std.IdleForecolor = System.Drawing.Color.DodgerBlue;
+            this.btn_edit_std.IdleLineColor = System.Drawing.Color.SteelBlue;
+            this.btn_edit_std.Location = new System.Drawing.Point(776, 15);
+            this.btn_edit_std.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_edit_std.Name = "btn_edit_std";
+            this.btn_edit_std.Size = new System.Drawing.Size(138, 50);
+            this.btn_edit_std.TabIndex = 74;
+            this.btn_edit_std.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btn_edit_std.Click += new System.EventHandler(this.btn_edit_std_Click);
+            // 
+            // btn_del_std
+            // 
+            this.btn_del_std.ActiveBorderThickness = 1;
+            this.btn_del_std.ActiveCornerRadius = 20;
+            this.btn_del_std.ActiveFillColor = System.Drawing.Color.Crimson;
+            this.btn_del_std.ActiveForecolor = System.Drawing.Color.White;
+            this.btn_del_std.ActiveLineColor = System.Drawing.Color.Crimson;
+            this.btn_del_std.BackColor = System.Drawing.SystemColors.Control;
+            this.btn_del_std.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_del_std.BackgroundImage")));
+            this.btn_del_std.ButtonText = "حذف الطالب";
+            this.btn_del_std.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_del_std.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_del_std.ForeColor = System.Drawing.Color.Crimson;
+            this.btn_del_std.IdleBorderThickness = 1;
+            this.btn_del_std.IdleCornerRadius = 20;
+            this.btn_del_std.IdleFillColor = System.Drawing.Color.WhiteSmoke;
+            this.btn_del_std.IdleForecolor = System.Drawing.Color.Crimson;
+            this.btn_del_std.IdleLineColor = System.Drawing.Color.PaleVioletRed;
+            this.btn_del_std.Location = new System.Drawing.Point(215, 15);
+            this.btn_del_std.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_del_std.Name = "btn_del_std";
+            this.btn_del_std.Size = new System.Drawing.Size(138, 50);
+            this.btn_del_std.TabIndex = 18;
+            this.btn_del_std.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btn_del_std.Click += new System.EventHandler(this.btn_del_std_Click);
+            // 
+            // btn_new_std
+            // 
+            this.btn_new_std.ActiveBorderThickness = 1;
+            this.btn_new_std.ActiveCornerRadius = 20;
+            this.btn_new_std.ActiveFillColor = System.Drawing.Color.SeaGreen;
+            this.btn_new_std.ActiveForecolor = System.Drawing.Color.White;
+            this.btn_new_std.ActiveLineColor = System.Drawing.Color.SeaGreen;
+            this.btn_new_std.BackColor = System.Drawing.SystemColors.Control;
+            this.btn_new_std.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_new_std.BackgroundImage")));
+            this.btn_new_std.ButtonText = "إضافة  جديد";
+            this.btn_new_std.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_new_std.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_new_std.ForeColor = System.Drawing.Color.SeaGreen;
+            this.btn_new_std.IdleBorderThickness = 1;
+            this.btn_new_std.IdleCornerRadius = 20;
+            this.btn_new_std.IdleFillColor = System.Drawing.Color.WhiteSmoke;
+            this.btn_new_std.IdleForecolor = System.Drawing.Color.SeaGreen;
+            this.btn_new_std.IdleLineColor = System.Drawing.Color.SeaGreen;
+            this.btn_new_std.Location = new System.Drawing.Point(984, 15);
+            this.btn_new_std.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_new_std.Name = "btn_new_std";
+            this.btn_new_std.Size = new System.Drawing.Size(138, 50);
+            this.btn_new_std.TabIndex = 18;
+            this.btn_new_std.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btn_new_std.Click += new System.EventHandler(this.btn_new_std_Click);
+            // 
+            // btn_close_b
+            // 
+            this.btn_close_b.ActiveBorderThickness = 1;
+            this.btn_close_b.ActiveCornerRadius = 20;
+            this.btn_close_b.ActiveFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.btn_close_b.ActiveForecolor = System.Drawing.Color.White;
+            this.btn_close_b.ActiveLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btn_close_b.BackColor = System.Drawing.SystemColors.Control;
+            this.btn_close_b.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_close_b.BackgroundImage")));
+            this.btn_close_b.ButtonText = "إغلاق";
+            this.btn_close_b.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_close_b.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_close_b.ForeColor = System.Drawing.Color.Red;
+            this.btn_close_b.IdleBorderThickness = 1;
+            this.btn_close_b.IdleCornerRadius = 20;
+            this.btn_close_b.IdleFillColor = System.Drawing.Color.WhiteSmoke;
+            this.btn_close_b.IdleForecolor = System.Drawing.Color.Red;
+            this.btn_close_b.IdleLineColor = System.Drawing.Color.Red;
+            this.btn_close_b.Location = new System.Drawing.Point(7, 15);
+            this.btn_close_b.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_close_b.Name = "btn_close_b";
+            this.btn_close_b.Size = new System.Drawing.Size(138, 50);
+            this.btn_close_b.TabIndex = 19;
+            this.btn_close_b.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btn_close_b.Click += new System.EventHandler(this.btn_close_b_Click);
             // 
             // dt_std_data
             // 
@@ -237,122 +340,6 @@ namespace School_Mang.PL.NATIGA
             this.pn_top.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pn_top_MouseMove);
             this.pn_top.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pn_top_MouseUp);
             // 
-            // btn_edit_std
-            // 
-            this.btn_edit_std.ActiveBorderThickness = 1;
-            this.btn_edit_std.ActiveCornerRadius = 20;
-            this.btn_edit_std.ActiveFillColor = System.Drawing.Color.CadetBlue;
-            this.btn_edit_std.ActiveForecolor = System.Drawing.Color.White;
-            this.btn_edit_std.ActiveLineColor = System.Drawing.Color.CadetBlue;
-            this.btn_edit_std.BackColor = System.Drawing.SystemColors.Control;
-            this.btn_edit_std.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_edit_std.BackgroundImage")));
-            this.btn_edit_std.ButtonText = "تعديل الدرجات";
-            this.btn_edit_std.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_edit_std.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_edit_std.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.btn_edit_std.IdleBorderThickness = 1;
-            this.btn_edit_std.IdleCornerRadius = 20;
-            this.btn_edit_std.IdleFillColor = System.Drawing.Color.WhiteSmoke;
-            this.btn_edit_std.IdleForecolor = System.Drawing.Color.DodgerBlue;
-            this.btn_edit_std.IdleLineColor = System.Drawing.Color.SteelBlue;
-            this.btn_edit_std.Location = new System.Drawing.Point(776, 15);
-            this.btn_edit_std.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btn_edit_std.Name = "btn_edit_std";
-            this.btn_edit_std.Size = new System.Drawing.Size(138, 50);
-            this.btn_edit_std.TabIndex = 74;
-            this.btn_edit_std.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btn_edit_std.Click += new System.EventHandler(this.btn_edit_std_Click);
-            // 
-            // btn_del_std
-            // 
-            this.btn_del_std.ActiveBorderThickness = 1;
-            this.btn_del_std.ActiveCornerRadius = 20;
-            this.btn_del_std.ActiveFillColor = System.Drawing.Color.Crimson;
-            this.btn_del_std.ActiveForecolor = System.Drawing.Color.White;
-            this.btn_del_std.ActiveLineColor = System.Drawing.Color.Crimson;
-            this.btn_del_std.BackColor = System.Drawing.SystemColors.Control;
-            this.btn_del_std.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_del_std.BackgroundImage")));
-            this.btn_del_std.ButtonText = "حذف الطالب";
-            this.btn_del_std.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_del_std.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_del_std.ForeColor = System.Drawing.Color.Crimson;
-            this.btn_del_std.IdleBorderThickness = 1;
-            this.btn_del_std.IdleCornerRadius = 20;
-            this.btn_del_std.IdleFillColor = System.Drawing.Color.WhiteSmoke;
-            this.btn_del_std.IdleForecolor = System.Drawing.Color.Crimson;
-            this.btn_del_std.IdleLineColor = System.Drawing.Color.PaleVioletRed;
-            this.btn_del_std.Location = new System.Drawing.Point(215, 15);
-            this.btn_del_std.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btn_del_std.Name = "btn_del_std";
-            this.btn_del_std.Size = new System.Drawing.Size(138, 50);
-            this.btn_del_std.TabIndex = 18;
-            this.btn_del_std.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btn_del_std.Click += new System.EventHandler(this.btn_del_std_Click);
-            // 
-            // btn_new_std
-            // 
-            this.btn_new_std.ActiveBorderThickness = 1;
-            this.btn_new_std.ActiveCornerRadius = 20;
-            this.btn_new_std.ActiveFillColor = System.Drawing.Color.SeaGreen;
-            this.btn_new_std.ActiveForecolor = System.Drawing.Color.White;
-            this.btn_new_std.ActiveLineColor = System.Drawing.Color.SeaGreen;
-            this.btn_new_std.BackColor = System.Drawing.SystemColors.Control;
-            this.btn_new_std.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_new_std.BackgroundImage")));
-            this.btn_new_std.ButtonText = "إضافة  جديد";
-            this.btn_new_std.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_new_std.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_new_std.ForeColor = System.Drawing.Color.SeaGreen;
-            this.btn_new_std.IdleBorderThickness = 1;
-            this.btn_new_std.IdleCornerRadius = 20;
-            this.btn_new_std.IdleFillColor = System.Drawing.Color.WhiteSmoke;
-            this.btn_new_std.IdleForecolor = System.Drawing.Color.SeaGreen;
-            this.btn_new_std.IdleLineColor = System.Drawing.Color.SeaGreen;
-            this.btn_new_std.Location = new System.Drawing.Point(984, 15);
-            this.btn_new_std.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btn_new_std.Name = "btn_new_std";
-            this.btn_new_std.Size = new System.Drawing.Size(138, 50);
-            this.btn_new_std.TabIndex = 18;
-            this.btn_new_std.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btn_new_std.Click += new System.EventHandler(this.btn_new_std_Click);
-            // 
-            // btn_close_b
-            // 
-            this.btn_close_b.ActiveBorderThickness = 1;
-            this.btn_close_b.ActiveCornerRadius = 20;
-            this.btn_close_b.ActiveFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.btn_close_b.ActiveForecolor = System.Drawing.Color.White;
-            this.btn_close_b.ActiveLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btn_close_b.BackColor = System.Drawing.SystemColors.Control;
-            this.btn_close_b.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_close_b.BackgroundImage")));
-            this.btn_close_b.ButtonText = "إغلاق";
-            this.btn_close_b.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_close_b.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_close_b.ForeColor = System.Drawing.Color.Red;
-            this.btn_close_b.IdleBorderThickness = 1;
-            this.btn_close_b.IdleCornerRadius = 20;
-            this.btn_close_b.IdleFillColor = System.Drawing.Color.WhiteSmoke;
-            this.btn_close_b.IdleForecolor = System.Drawing.Color.Red;
-            this.btn_close_b.IdleLineColor = System.Drawing.Color.Red;
-            this.btn_close_b.Location = new System.Drawing.Point(7, 15);
-            this.btn_close_b.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btn_close_b.Name = "btn_close_b";
-            this.btn_close_b.Size = new System.Drawing.Size(138, 50);
-            this.btn_close_b.TabIndex = 19;
-            this.btn_close_b.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btn_close_b.Click += new System.EventHandler(this.btn_close_b_Click);
-            // 
-            // pic_help
-            // 
-            this.pic_help.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pic_help.Image = global::School_Mang.Properties.Resources.help_80;
-            this.pic_help.Location = new System.Drawing.Point(397, 69);
-            this.pic_help.Name = "pic_help";
-            this.pic_help.Size = new System.Drawing.Size(38, 32);
-            this.pic_help.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pic_help.TabIndex = 83;
-            this.pic_help.TabStop = false;
-            this.pic_help.Click += new System.EventHandler(this.pic_help_Click);
-            // 
             // btn_close
             // 
             this.btn_close.DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -365,6 +352,18 @@ namespace School_Mang.PL.NATIGA
             this.btn_close.TabIndex = 11;
             this.btn_close.TabStop = false;
             this.btn_close.Click += new System.EventHandler(this.btn_close_Click);
+            // 
+            // pic_help
+            // 
+            this.pic_help.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pic_help.Image = global::School_Mang.Properties.Resources.help_80;
+            this.pic_help.Location = new System.Drawing.Point(397, 69);
+            this.pic_help.Name = "pic_help";
+            this.pic_help.Size = new System.Drawing.Size(38, 32);
+            this.pic_help.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pic_help.TabIndex = 83;
+            this.pic_help.TabStop = false;
+            this.pic_help.Click += new System.EventHandler(this.pic_help_Click);
             // 
             // FRM_SITE_STD_DATA
             // 

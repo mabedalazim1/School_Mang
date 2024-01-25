@@ -46,6 +46,15 @@ namespace School_Mang.PL.NATIGA
 
         }
 
+        private async Task Test_Intrent()
+        {
+            Waiting.Wait();
+            //Test Intrent Connection
+            BL.CLS_TEST_INTRNET_CON test_intrent = new BL.CLS_TEST_INTRNET_CON();
+            await test_intrent.ChecK_Internt_Con();
+            Waiting.End_WAit();
+        }
+
         int move;
         int move_x;
         int move_y;
@@ -87,8 +96,18 @@ namespace School_Mang.PL.NATIGA
             Close();
         }
 
-        private void FRM_EDIT_SITE_DEGREES_Load(object sender, EventArgs e)
+        private async void FRM_EDIT_SITE_DEGREES_Load(object sender, EventArgs e)
         {
+            //Test Intrent Connection
+            await Test_Intrent();
+
+            if (!BL.Globals.Test_Internet_Con)
+            {
+                msg.ErrorMesg("تأكد من الإتصال بالإنترنت ..!");
+                this.Close();
+                return;
+            }
+
             txt_ar.TextAlign = HorizontalAlignment.Center;
             txt_badnia.TextAlign = HorizontalAlignment.Center;
             txt_din.TextAlign = HorizontalAlignment.Center;
@@ -159,17 +178,17 @@ namespace School_Mang.PL.NATIGA
                     break;
 
             }
-            
+
             //CheckDegree
-            CheckDegree(txt_ar, ar_old,0);
-            CheckDegree(txt_din, din_old,0);
-            CheckDegree(txt_math, math_old,0);
-            CheckDegree(txt_sinces, sinces_old,0);
-            CheckDegree(txt_english, english_old,0);
-            CheckDegree(txt_total, general_old,0);
+            CheckDegree(txt_ar, ar_old, 0);
+            CheckDegree(txt_din, din_old, 0);
+            CheckDegree(txt_math, math_old, 0);
+            CheckDegree(txt_sinces, sinces_old, 0);
+            CheckDegree(txt_english, english_old, 0);
+            CheckDegree(txt_total, general_old, 0);
         }
 
-        private void CheckDegree(TextBox textBox, string txt, byte test=1)
+        private void CheckDegree(TextBox textBox, string txt, byte test = 1)
         {
             if (test == 1)
             {
@@ -195,7 +214,7 @@ namespace School_Mang.PL.NATIGA
                            Convert.ToDouble(txt_sinces.Text) +
                            Convert.ToDouble(txt_math.Text) +
                            Convert.ToDouble(txt_english.Text) +
-                           Convert.ToDouble(txt_badnia.Text) ;
+                           Convert.ToDouble(txt_badnia.Text);
                         total = Math.Round(total / 6, 0);
                         txt_total.Text = total.ToString();
                         break;
@@ -213,7 +232,7 @@ namespace School_Mang.PL.NATIGA
                            Convert.ToDouble(txt_social.Text) +
                            Convert.ToDouble(txt_math.Text) +
                            Convert.ToDouble(txt_english.Text) +
-                           Convert.ToDouble(txt_maharat.Text)+
+                           Convert.ToDouble(txt_maharat.Text) +
                            Convert.ToDouble(txt_tecnolgey.Text);
                         total = Math.Round(total / 8, 0);
                         txt_total.Text = total.ToString();
@@ -221,23 +240,23 @@ namespace School_Mang.PL.NATIGA
                 }
 
             }
-            
-                switch (Convert.ToInt32(textBox.Text))
-                {
-                    case 1:
-                        textBox.BackColor = Color.Red;
-                        break;
-                    case 2:
-                        textBox.BackColor = Color.Orange;
-                        break;
-                    case 3:
-                        textBox.BackColor = Color.Green;
-                        break;
-                    case 4:
-                        textBox.BackColor = Color.Blue;
-                        break;
-                }
-                
+
+            switch (Convert.ToInt32(textBox.Text))
+            {
+                case 1:
+                    textBox.BackColor = Color.Red;
+                    break;
+                case 2:
+                    textBox.BackColor = Color.Orange;
+                    break;
+                case 3:
+                    textBox.BackColor = Color.Green;
+                    break;
+                case 4:
+                    textBox.BackColor = Color.Blue;
+                    break;
+            }
+
         }
         private void btn_close_Click(object sender, EventArgs e)
         {
@@ -251,7 +270,7 @@ namespace School_Mang.PL.NATIGA
 
         private void txt_ar_KeyPress(object sender, KeyPressEventArgs e)
         {
-            
+
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
             {
                 e.Handled = true;
@@ -332,37 +351,45 @@ namespace School_Mang.PL.NATIGA
             }
         }
 
-        private void btn_save_Click(object sender, EventArgs e)
+        private async void btn_save_Click(object sender, EventArgs e)
         {
+            await Test_Intrent();
+
+            if (!BL.Globals.Test_Internet_Con)
+            {
+                msg.ErrorMesg("تأكد من الإتصال بالإنترنت ..!");
+                return;
+            }
+
             try
             {
-               int student_Id = Convert.ToInt32(txt_cod.Text);
-               int ar = Convert.ToInt32(txt_ar.Text);
-               int din = Convert.ToInt32(txt_din.Text);
-               int math = Convert.ToInt32(txt_math.Text);
-               int scince = Convert.ToInt32(txt_sinces.Text);
-               int social = Convert.ToInt32(txt_social.Text);
-               int english = Convert.ToInt32(txt_english.Text);
-               int maharat = Convert.ToInt32(txt_maharat.Text);
-               int tocnolegy = Convert.ToInt32(txt_tecnolgey.Text);
-               int badania = Convert.ToInt32(txt_badnia.Text);
-               int general = Convert.ToInt32(txt_total.Text);
-               int test_kind_Id = Convert.ToInt32(txt_test_kind_id.Text);
+                int student_Id = Convert.ToInt32(txt_cod.Text);
+                int ar = Convert.ToInt32(txt_ar.Text);
+                int din = Convert.ToInt32(txt_din.Text);
+                int math = Convert.ToInt32(txt_math.Text);
+                int scince = Convert.ToInt32(txt_sinces.Text);
+                int social = Convert.ToInt32(txt_social.Text);
+                int english = Convert.ToInt32(txt_english.Text);
+                int maharat = Convert.ToInt32(txt_maharat.Text);
+                int tocnolegy = Convert.ToInt32(txt_tecnolgey.Text);
+                int badania = Convert.ToInt32(txt_badnia.Text);
+                int general = Convert.ToInt32(txt_total.Text);
+                int test_kind_Id = Convert.ToInt32(txt_test_kind_id.Text);
                 NATEG.Update_Degree(
                     student_Id, ar, din, math, scince, social, english,
                     maharat, tocnolegy, badania, general, test_kind_Id);
-               
-            FRM_SITE_STD_DATA.Get_Frm_Site_Std_Data.cmb_grade_DropDownClosed(sender, e);
+
+                FRM_SITE_STD_DATA.Get_Frm_Site_Std_Data.cmb_grade_DropDownClosed(sender, e);
                 msg.MyMesg("تم التعديل بنجاح ..!");
                 this.Close();
 
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 msg.ErrorMesg(ex.Message);
             }
-            
+
         }
 
         private void txt_ar_Leave(object sender, EventArgs e)

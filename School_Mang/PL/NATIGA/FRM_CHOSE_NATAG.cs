@@ -42,15 +42,59 @@ namespace School_Mang.PL.NATIGA
             {
                 frm_Chose_Natag = this;
             }
-            Waiting.Wait();
-            cmb_month.DataSource = NATEG.GET_TEST_KIND();
-            cmb_month.DisplayMember = "testkind_desc";
-            cmb_month.ValueMember = "id";
 
             Add_To_Comb_Test();
+            Load_Data();
+        }
+
+        private async Task Test_Intrent()
+        {
+            Waiting.Wait();
+            //Test Intrent Connection
+            BL.CLS_TEST_INTRNET_CON test_intrent = new BL.CLS_TEST_INTRNET_CON();
+            await test_intrent.ChecK_Internt_Con();
             Waiting.End_WAit();
         }
 
+        private async  void Load_Data()
+        {
+            await Test_Intrent();
+            if (!BL.Globals.Test_Internet_Con)
+            {
+                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+                this.Close();
+                return;
+            }
+            else
+            {
+                try
+                {
+                    Waiting.Wait();
+                    if (BL.Globals.Test_Internet_Con)
+                    {
+                        cmb_month.DataSource = NATEG.GET_TEST_KIND();
+                        cmb_month.DisplayMember = "testkind_desc";
+                        cmb_month.ValueMember = "id";
+                    }
+                    else
+                    {
+                        msg.ErrorMesg("تأكد من الإتصال بالإنترنت ..!");
+                    }
+                }
+                catch (Exception e)
+                {
+                    BL.Globals.Test_Internet_Con = false;
+                    Waiting.End_WAit();
+                    msg.ErrorMesg(e.Message);
+                }
+                finally
+                {
+                    Waiting.End_WAit();
+                }
+            }
+        }
+        
+        
         int move;
         int move_x;
         int move_y;
@@ -97,12 +141,16 @@ namespace School_Mang.PL.NATIGA
             Close();
         }
 
-        private void btn_show_data_Click(object sender, EventArgs e)
+        private async void btn_show_data_Click(object sender, EventArgs e)
         {
+            await Test_Intrent();
+            if (!BL.Globals.Test_Internet_Con)
+            {
+                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+                return;
+            }
             BL.Globals.test_kind = Convert.ToInt32(cmb_test.SelectedValue);
             BL.Globals.test_month = Convert.ToInt32(cmb_month.SelectedValue);
-
-
             DataTable Dt ;
 
             switch (BL.Globals.test_kind)

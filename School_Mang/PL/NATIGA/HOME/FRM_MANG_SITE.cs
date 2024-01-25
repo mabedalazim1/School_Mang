@@ -48,7 +48,16 @@ namespace School_Mang.PL.NATIGA.HOME
             }
         }
 
-        
+
+        private async Task Test_Intrent()
+        {
+            Waiting.Wait();
+            //Test Intrent Connection
+            BL.CLS_TEST_INTRNET_CON test_intrent = new BL.CLS_TEST_INTRNET_CON();
+            await test_intrent.ChecK_Internt_Con();
+            Waiting.End_WAit();
+        }
+
         // Upload File
         private async Task UploadFile(string path )
         {
@@ -56,11 +65,18 @@ namespace School_Mang.PL.NATIGA.HOME
             {
                 if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 {
+                    await Test_Intrent();
+                    if (!BL.Globals.Test_Internet_Con)
+                    {
+                        msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+                        return;
+                    }
                     await HTTP.UplodFile(openFileDialog1.FileName, path);
                 }
                 else
                 {
                     msg.ErrorMesg("تم إلغاء الإجراء ..!");
+                    BL.Globals.Dir_Path = "D://Rasd";
                 }
 
             }
@@ -83,6 +99,12 @@ namespace School_Mang.PL.NATIGA.HOME
 
         private async void lbl_upload_a_Click(object sender, EventArgs e)
         {
+            await Test_Intrent();
+            if (!BL.Globals.Test_Internet_Con)
+            {
+                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+                return;
+            }
             await UploadFile("upload/degree");
 
         }
@@ -94,7 +116,13 @@ namespace School_Mang.PL.NATIGA.HOME
 
         private async void lbl_upload_test_Click(object sender, EventArgs e)
         {
-                await UploadFile("upload/mark");
+            await Test_Intrent();
+            if (!BL.Globals.Test_Internet_Con)
+            {
+                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+                return;
+            }
+            await UploadFile("upload/mark");
         }
 
         private void pic_upload_test_Click(object sender, EventArgs e)
@@ -102,21 +130,36 @@ namespace School_Mang.PL.NATIGA.HOME
             lbl_upload_test_Click(sender, e);
         }
 
-        private void label1_Click_1(object sender, EventArgs e)
+        private async void lbl_degree_Click(object sender, EventArgs e)
         {
-            
-            FRM_DELETE_SITE_DATA.Get_Frm_Delete_Data.ShowDialog();
-            
-        }
-
-        private void lbl_degree_Click(object sender, EventArgs e)
-        {
+            await Test_Intrent();
+            if (!BL.Globals.Test_Internet_Con)
+            {
+                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+                return;
+            }
             FRM_CHOSE_NATAG.Get_Frm_Chose_Natag.ShowDialog();
         }
 
         private void pic_degree_Click(object sender, EventArgs e)
         {
             lbl_degree_Click(sender, e);
+        }
+
+        private async void lbl_del_data_from_site_Click(object sender, EventArgs e)
+        {
+            await Test_Intrent();
+            if (!BL.Globals.Test_Internet_Con)
+            {
+                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+                return;
+            }
+            FRM_DELETE_SITE_DATA.Get_Frm_Delete_Data.ShowDialog();
+        }
+
+        private void pic_del_data_from_site_Click(object sender, EventArgs e)
+        {
+            lbl_del_data_from_site_Click(sender, e);
         }
     }
 }

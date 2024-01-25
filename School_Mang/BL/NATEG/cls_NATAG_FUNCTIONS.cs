@@ -10,13 +10,23 @@ namespace School_Mang.BL.NATEG
 {
     public class cls_NATAG_FUNCTIONS
     {
+        MSG msg = new MSG();
         public string OpenDialoge(OpenFileDialog FileDialog)
         {
-            FileDialog.Filter = "Excel 2010(*.xlsx)|*.xlsx|Excel 2003(*.xls)|*.xls";
-            FileDialog.InitialDirectory = @"D:\Rasd";
-            FileDialog.Title = "اختر ملف الاكسيل المراد رفعه ..!";
+            try
+            {
+                FileDialog.Filter = "Excel 2010(*.xlsx)|*.xlsx|Excel 2003(*.xls)|*.xls";
+                FileDialog.InitialDirectory = Globals.Dir_Path;
+                FileDialog.Title = "اختر ملف الاكسيل المراد رفعه ..!";
+            }
+            catch(Exception e)
+            {
+                msg.ErrorMesg(e.Message);
+            }
+           
             if (FileDialog.ShowDialog() == DialogResult.OK)
             {
+                Globals.Dir_Path = FileDialog.FileName;
                 return FileDialog.FileName;
             }
             else

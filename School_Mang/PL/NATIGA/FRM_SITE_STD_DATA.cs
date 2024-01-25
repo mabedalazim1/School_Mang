@@ -46,6 +46,7 @@ namespace School_Mang.PL.NATIGA
                 frm_Site_Std_Data = this;
             }
 
+
             DataTable grade_dt = std.Get_grades();
             cmb_grade.DataSource = grade_dt;
             cmb_grade.DisplayMember = "GradeDesc";
@@ -59,105 +60,126 @@ namespace School_Mang.PL.NATIGA
         int move_x;
         int move_y;
 
-        private void LoadStdData()
+        private async Task Test_Intrent()
         {
+            Waiting.Wait();
+            //Test Intrent Connection
+            BL.CLS_TEST_INTRNET_CON test_intrent = new BL.CLS_TEST_INTRNET_CON();
+            await test_intrent.ChecK_Internt_Con();
+            Waiting.End_WAit();
+        }
+
+        private async void LoadStdData()
+        {
+            await Test_Intrent();
             try
             {
                 int test_kind = BL.Globals.test_kind;
                 int grade_id = BL.Globals.test_grade_id;
                 int test_month = BL.Globals.test_month;
 
-                DataTable Dt;
 
-                dt_std_data.DataSource = null;
-
-                Waiting.Wait();
-
-                if (test_kind == 1)
+                if (BL.Globals.Test_Internet_Con)
                 {
-                    Dt = NATEG.Get_Degree_Data(test_month, grade_id);
-                    dt_std_data.DataSource = Dt;
 
-                    switch (grade_id)
+                    DataTable Dt;
+
+                    dt_std_data.DataSource = null;
+
+                    Waiting.Wait();
+
+                    if (test_kind == 1)
                     {
-                        case 10:
-                        case 11:
-                        case 1:
-                        case 2:
-                        case 3:
-                            dt_std_data.Columns["دراسات"].Visible = false;
-                            dt_std_data.Columns["مهارات"].Visible = false;
-                            dt_std_data.Columns["تكنولوجيا"].Visible = false;
-                            dt_std_data.Columns["علوم"].HeaderText = "متعدد";
-                            break;
+                        Dt = NATEG.Get_Degree_Data(test_month, grade_id);
+                        dt_std_data.DataSource = Dt;
 
-                        case 4:
-                        case 5:
-                        case 6:
-                            dt_std_data.Columns["بدنية"].Visible = false;
+                        switch (grade_id)
+                        {
+                            case 10:
+                            case 11:
+                            case 1:
+                            case 2:
+                            case 3:
+                                dt_std_data.Columns["دراسات"].Visible = false;
+                                dt_std_data.Columns["مهارات"].Visible = false;
+                                dt_std_data.Columns["تكنولوجيا"].Visible = false;
+                                dt_std_data.Columns["علوم"].HeaderText = "متعدد";
+                                break;
 
-                            break;
+                            case 4:
+                            case 5:
+                            case 6:
+                                dt_std_data.Columns["بدنية"].Visible = false;
 
-                        case 7:
-                        case 8:
-                        case 9:
-                            dt_std_data.Columns["بدنية"].Visible = false;
-                            dt_std_data.Columns["مهارات"].HeaderText = "فنية";
-                            dt_std_data.Columns["تكنولوجيا"].HeaderText = "حاسب";
-                            break;
+                                break;
+
+                            case 7:
+                            case 8:
+                            case 9:
+                                dt_std_data.Columns["بدنية"].Visible = false;
+                                dt_std_data.Columns["مهارات"].HeaderText = "فنية";
+                                dt_std_data.Columns["تكنولوجيا"].HeaderText = "حاسب";
+                                break;
+
+                        }
+                    }
+                    else
+                    {
+                        Dt = NATEG.Get_Mark_Data(test_month, grade_id);
+                        dt_std_data.DataSource = Dt;
+                        switch (grade_id)
+                        {
+                            case 10:
+                            case 11:
+                                dt_std_data.Columns["دراسات"].Visible = false;
+                                dt_std_data.Columns["فرنسى"].Visible = false;
+                                dt_std_data.Columns["مهارات"].Visible = false;
+                                dt_std_data.Columns["تكنولوجيا"].Visible = false;
+                                dt_std_data.Columns["علوم"].HeaderText = "متعدد";
+                                break;
+                            case 1:
+                            case 2:
+                            case 3:
+                                dt_std_data.Columns["دراسات"].Visible = false;
+                                dt_std_data.Columns["مهارات"].Visible = false;
+                                dt_std_data.Columns["تكنولوجيا"].Visible = false;
+                                dt_std_data.Columns["علوم"].HeaderText = "متعدد";
+                                break;
+
+                            case 4:
+                            case 5:
+                            case 6:
+                                dt_std_data.Columns["مهارات"].Visible = false;
+                                dt_std_data.Columns["تكنولوجيا"].Visible = false;
+
+                                break;
+
+                            case 7:
+                            case 8:
+                            case 9:
+
+                                dt_std_data.Columns["مهارات"].HeaderText = "فنية";
+                                dt_std_data.Columns["تكنولوجيا"].HeaderText = "حاسب";
+                                break;
+
+                        }
 
                     }
+
+                    dt_std_data.Columns["test_kind_Id"].Visible = false;
+                    dt_std_data.Columns["grade_Id"].Visible = false;
+                    dt_std_data.Columns["الصف"].Visible = false;
+                    dt_std_data.Columns["نوع الإختبار"].Visible = false;
+                    dt_std_data.Columns["userSchoolId"].Visible = false;
+
+                    lbl_count.Text = dt_std_data.Rows.Count.ToString();
                 }
                 else
                 {
-                    Dt = NATEG.Get_Mark_Data(test_month, grade_id);
-                    dt_std_data.DataSource = Dt;
-                    switch (grade_id)
-                    {
-                        case 10:
-                        case 11:
-                            dt_std_data.Columns["دراسات"].Visible = false;
-                            dt_std_data.Columns["فرنسى"].Visible = false;
-                            dt_std_data.Columns["مهارات"].Visible = false;
-                            dt_std_data.Columns["تكنولوجيا"].Visible = false;
-                            dt_std_data.Columns["علوم"].HeaderText = "متعدد";
-                            break;
-                        case 1:
-                        case 2:
-                        case 3:
-                            dt_std_data.Columns["دراسات"].Visible = false;
-                            dt_std_data.Columns["مهارات"].Visible = false;
-                            dt_std_data.Columns["تكنولوجيا"].Visible = false;
-                            dt_std_data.Columns["علوم"].HeaderText = "متعدد";
-                            break;
-
-                        case 4:
-                        case 5:
-                        case 6:
-                            dt_std_data.Columns["مهارات"].Visible = false;
-                            dt_std_data.Columns["تكنولوجيا"].Visible = false;
-
-                            break;
-
-                        case 7:
-                        case 8:
-                        case 9:
-
-                            dt_std_data.Columns["مهارات"].HeaderText = "فنية";
-                            dt_std_data.Columns["تكنولوجيا"].HeaderText = "حاسب";
-                            break;
-
-                    }
-
+                    msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+                    this.Close();
                 }
 
-                dt_std_data.Columns["test_kind_Id"].Visible = false;
-                dt_std_data.Columns["grade_Id"].Visible = false;
-                dt_std_data.Columns["الصف"].Visible = false;
-                dt_std_data.Columns["نوع الإختبار"].Visible = false;
-                dt_std_data.Columns["userSchoolId"].Visible = false;
-
-                lbl_count.Text = dt_std_data.Rows.Count.ToString();
             }
             catch (Exception e)
             {
@@ -200,14 +222,30 @@ namespace School_Mang.PL.NATIGA
             btn_close_b_Click(sender, e);
         }
 
-        private void FRM_SITE_STD_DATA_Load(object sender, EventArgs e)
+        private async void FRM_SITE_STD_DATA_Load(object sender, EventArgs e)
         {
+            await Test_Intrent();
+            if (!BL.Globals.Test_Internet_Con) 
+            {
+                msg.ErrorMesg("تأكد من الإتصال بالإنترنت ..!");
+                this.Close();
+                return;
+            }
             dt_std_data.Columns["اسم الطالب"].Width = 200;
             cmb_grade.SelectedValue = BL.Globals.test_grade_id;
         }
 
-        public void cmb_grade_DropDownClosed(object sender, EventArgs e)
+        public async void cmb_grade_DropDownClosed(object sender, EventArgs e)
         {
+
+            await Test_Intrent();
+            if (!BL.Globals.Test_Internet_Con)
+            {
+                msg.ErrorMesg("تأكد من الإتصال بالإنترنت ..!");
+                cmb_grade.SelectedValue = BL.Globals.test_grade_id;
+                return;
+            }
+
             try
             {
                 BL.Globals.test_grade_id = Convert.ToInt32(cmb_grade.SelectedValue);
@@ -228,8 +266,14 @@ namespace School_Mang.PL.NATIGA
             }
         }
 
-        private void txt_std_data_KeyUp(object sender, KeyEventArgs e)
+        private async void txt_std_data_KeyUp(object sender, KeyEventArgs e)
         {
+            await Test_Intrent();
+            if (!BL.Globals.Test_Internet_Con)
+            {
+                msg.ErrorMesg("تأكد من الإتصال بالإنترنت ..!");
+                return;
+            }
             try
             {
                 int test_kind = BL.Globals.test_kind;
@@ -260,8 +304,14 @@ namespace School_Mang.PL.NATIGA
             }
         }
 
-        private void btn_edit_std_Click(object sender, EventArgs e)
+        private async void btn_edit_std_Click(object sender, EventArgs e)
         {
+            await Test_Intrent();
+            if (!BL.Globals.Test_Internet_Con)
+            {
+                msg.ErrorMesg("تأكد من الإتصال بالإنترنت ..!");
+                return;
+            }
             try
             {
                 int test_kind_id = BL.Globals.test_kind;
@@ -401,12 +451,12 @@ namespace School_Mang.PL.NATIGA
 
         private void btn_del_std_Click(object sender, EventArgs e)
         {
-
+            msg.ErrorMesg("هذا الإجراء غير متاح ..!");
         }
 
         private void btn_new_std_Click(object sender, EventArgs e)
         {
-
+            msg.ErrorMesg("هذا الإجراء غير متاح ..!");
         }
 
         private void pn_top_Paint(object sender, PaintEventArgs e)

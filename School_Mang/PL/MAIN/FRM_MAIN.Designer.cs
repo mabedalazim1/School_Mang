@@ -30,7 +30,7 @@ namespace School_Mang.PL.MAIN
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            BunifuAnimatorNS.Animation animation1 = new BunifuAnimatorNS.Animation();
+            BunifuAnimatorNS.Animation animation2 = new BunifuAnimatorNS.Animation();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FRM_MAIN));
             this.pn_topbar = new System.Windows.Forms.Panel();
             this.btn_min = new DevExpress.XtraEditors.SimpleButton();
@@ -69,12 +69,16 @@ namespace School_Mang.PL.MAIN
             this.lbl_year_main = new System.Windows.Forms.Label();
             this.pic_logo = new System.Windows.Forms.PictureBox();
             this.pn_home = new System.Windows.Forms.Panel();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.link_login = new System.Windows.Forms.LinkLabel();
+            this.label5 = new System.Windows.Forms.Label();
             this.lbl_Year = new System.Windows.Forms.Label();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.bunifuElipse1 = new Bunifu.Framework.UI.BunifuElipse(this.components);
+            this.btn_site = new DevExpress.XtraEditors.SimpleButton();
             this.pn_topbar.SuspendLayout();
             this.pn_navbar.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
@@ -185,10 +189,11 @@ namespace School_Mang.PL.MAIN
             this.flowLayoutPanel2.Controls.Add(this.btn_maliat);
             this.flowLayoutPanel2.Controls.Add(this.btn_sittings);
             this.flowLayoutPanel2.Controls.Add(this.panel1);
+            this.flowLayoutPanel2.Controls.Add(this.btn_site);
             this.trans_a.SetDecoration(this.flowLayoutPanel2, BunifuAnimatorNS.DecorationType.None);
             this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 231);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(191, 457);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(191, 460);
             this.flowLayoutPanel2.TabIndex = 1;
             // 
             // btn_home
@@ -217,7 +222,6 @@ namespace School_Mang.PL.MAIN
             this.btn_home.Size = new System.Drawing.Size(185, 50);
             this.btn_home.TabIndex = 1;
             this.btn_home.Text = "الرئيسية";
-            this.btn_home.ToolTip = "الرئيسية";
             this.btn_home.Click += new System.EventHandler(this.btn_home_Click);
             // 
             // btn_talaba
@@ -248,7 +252,6 @@ namespace School_Mang.PL.MAIN
             this.btn_talaba.Size = new System.Drawing.Size(185, 50);
             this.btn_talaba.TabIndex = 2;
             this.btn_talaba.Text = "شئون الطلاب";
-            this.btn_talaba.ToolTip = "شئون الطلاب";
             this.btn_talaba.Visible = false;
             this.btn_talaba.Click += new System.EventHandler(this.btn_talaba_Click);
             // 
@@ -280,7 +283,6 @@ namespace School_Mang.PL.MAIN
             this.btn_nataeg.Size = new System.Drawing.Size(185, 50);
             this.btn_nataeg.TabIndex = 3;
             this.btn_nataeg.Text = "التقييمات والنتائج";
-            this.btn_nataeg.ToolTip = "التقييمات والنتائج";
             this.btn_nataeg.Visible = false;
             this.btn_nataeg.Click += new System.EventHandler(this.btn_nataeg_Click);
             // 
@@ -312,7 +314,6 @@ namespace School_Mang.PL.MAIN
             this.btn_amelin.Size = new System.Drawing.Size(185, 50);
             this.btn_amelin.TabIndex = 4;
             this.btn_amelin.Text = "شئون العاملين";
-            this.btn_amelin.ToolTip = "شئون العاملين";
             this.btn_amelin.Visible = false;
             this.btn_amelin.Click += new System.EventHandler(this.btn_amelin_Click);
             // 
@@ -344,7 +345,6 @@ namespace School_Mang.PL.MAIN
             this.btn_maliat.Size = new System.Drawing.Size(185, 50);
             this.btn_maliat.TabIndex = 5;
             this.btn_maliat.Text = "الشئون المالية";
-            this.btn_maliat.ToolTip = "الشئون المالية";
             this.btn_maliat.Visible = false;
             this.btn_maliat.Click += new System.EventHandler(this.btn_maliat_Click);
             // 
@@ -376,7 +376,6 @@ namespace School_Mang.PL.MAIN
             this.btn_sittings.Size = new System.Drawing.Size(185, 50);
             this.btn_sittings.TabIndex = 6;
             this.btn_sittings.Text = "الإعدادات";
-            this.btn_sittings.ToolTip = "الإعدادات";
             this.btn_sittings.Click += new System.EventHandler(this.btn_sittings_Click);
             // 
             // panel1
@@ -588,9 +587,9 @@ namespace School_Mang.PL.MAIN
             this.label6.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.label6.Location = new System.Drawing.Point(253, 4);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(75, 20);
+            this.label6.Size = new System.Drawing.Size(84, 20);
             this.label6.TabIndex = 8;
-            this.label6.Text = "7-1-2024";
+            this.label6.Text = "2024-1-14";
             // 
             // lbl_caption
             // 
@@ -650,22 +649,22 @@ namespace School_Mang.PL.MAIN
             // 
             this.trans_a.AnimationType = BunifuAnimatorNS.AnimationType.HorizSlide;
             this.trans_a.Cursor = null;
-            animation1.AnimateOnlyDifferences = true;
-            animation1.BlindCoeff = ((System.Drawing.PointF)(resources.GetObject("animation1.BlindCoeff")));
-            animation1.LeafCoeff = 0F;
-            animation1.MaxTime = 1F;
-            animation1.MinTime = 0F;
-            animation1.MosaicCoeff = ((System.Drawing.PointF)(resources.GetObject("animation1.MosaicCoeff")));
-            animation1.MosaicShift = ((System.Drawing.PointF)(resources.GetObject("animation1.MosaicShift")));
-            animation1.MosaicSize = 0;
-            animation1.Padding = new System.Windows.Forms.Padding(0);
-            animation1.RotateCoeff = 0F;
-            animation1.RotateLimit = 0F;
-            animation1.ScaleCoeff = ((System.Drawing.PointF)(resources.GetObject("animation1.ScaleCoeff")));
-            animation1.SlideCoeff = ((System.Drawing.PointF)(resources.GetObject("animation1.SlideCoeff")));
-            animation1.TimeCoeff = 0F;
-            animation1.TransparencyCoeff = 0F;
-            this.trans_a.DefaultAnimation = animation1;
+            animation2.AnimateOnlyDifferences = true;
+            animation2.BlindCoeff = ((System.Drawing.PointF)(resources.GetObject("animation2.BlindCoeff")));
+            animation2.LeafCoeff = 0F;
+            animation2.MaxTime = 1F;
+            animation2.MinTime = 0F;
+            animation2.MosaicCoeff = ((System.Drawing.PointF)(resources.GetObject("animation2.MosaicCoeff")));
+            animation2.MosaicShift = ((System.Drawing.PointF)(resources.GetObject("animation2.MosaicShift")));
+            animation2.MosaicSize = 0;
+            animation2.Padding = new System.Windows.Forms.Padding(0);
+            animation2.RotateCoeff = 0F;
+            animation2.RotateLimit = 0F;
+            animation2.ScaleCoeff = ((System.Drawing.PointF)(resources.GetObject("animation2.ScaleCoeff")));
+            animation2.SlideCoeff = ((System.Drawing.PointF)(resources.GetObject("animation2.SlideCoeff")));
+            animation2.TimeCoeff = 0F;
+            animation2.TransparencyCoeff = 0F;
+            this.trans_a.DefaultAnimation = animation2;
             this.trans_a.MaxAnimationTime = 500;
             // 
             // lbl_main
@@ -727,7 +726,10 @@ namespace School_Mang.PL.MAIN
             // 
             this.pn_home.BackColor = System.Drawing.Color.White;
             this.pn_home.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pn_home.Controls.Add(this.label8);
+            this.pn_home.Controls.Add(this.label4);
             this.pn_home.Controls.Add(this.link_login);
+            this.pn_home.Controls.Add(this.label5);
             this.pn_home.Controls.Add(this.lbl_Year);
             this.pn_home.Controls.Add(this.pictureBox3);
             this.trans_a.SetDecoration(this.pn_home, BunifuAnimatorNS.DecorationType.None);
@@ -736,6 +738,36 @@ namespace School_Mang.PL.MAIN
             this.pn_home.Name = "pn_home";
             this.pn_home.Size = new System.Drawing.Size(1080, 567);
             this.pn_home.TabIndex = 3;
+            // 
+            // label8
+            // 
+            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.label8.AutoSize = true;
+            this.label8.BackColor = System.Drawing.Color.Transparent;
+            this.trans_a.SetDecoration(this.label8, BunifuAnimatorNS.DecorationType.None);
+            this.label8.Font = new System.Drawing.Font("LBC", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.ForeColor = System.Drawing.Color.DarkOrange;
+            this.label8.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label8.Location = new System.Drawing.Point(528, 42);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(84, 20);
+            this.label8.TabIndex = 12;
+            this.label8.Text = "نسخة تجريبية";
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.Transparent;
+            this.trans_a.SetDecoration(this.label4, BunifuAnimatorNS.DecorationType.None);
+            this.label4.Font = new System.Drawing.Font("LBC", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.DarkOrange;
+            this.label4.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label4.Location = new System.Drawing.Point(569, 72);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(90, 20);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "تاريخ التحديث :";
             // 
             // link_login
             // 
@@ -749,6 +781,21 @@ namespace School_Mang.PL.MAIN
             this.link_login.TabStop = true;
             this.link_login.Text = "تسجيل الدخول";
             this.link_login.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.link_login_LinkClicked);
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.Transparent;
+            this.trans_a.SetDecoration(this.label5, BunifuAnimatorNS.DecorationType.None);
+            this.label5.Font = new System.Drawing.Font("LBC", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.DarkOrange;
+            this.label5.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label5.Location = new System.Drawing.Point(489, 72);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(84, 20);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "2024-1-14";
             // 
             // lbl_Year
             // 
@@ -785,6 +832,37 @@ namespace School_Mang.PL.MAIN
             // 
             this.bunifuElipse1.ElipseRadius = 300;
             this.bunifuElipse1.TargetControl = this.pic_user_main;
+            // 
+            // btn_site
+            // 
+            this.btn_site.Appearance.Font = new System.Drawing.Font("LBC", 12.75F);
+            this.btn_site.Appearance.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btn_site.Appearance.Options.UseFont = true;
+            this.btn_site.Appearance.Options.UseForeColor = true;
+            this.btn_site.AppearanceHovered.BackColor = System.Drawing.Color.Black;
+            this.btn_site.AppearanceHovered.Font = new System.Drawing.Font("LBC", 12.75F);
+            this.btn_site.AppearanceHovered.ForeColor = System.Drawing.Color.White;
+            this.btn_site.AppearanceHovered.Options.UseBackColor = true;
+            this.btn_site.AppearanceHovered.Options.UseFont = true;
+            this.btn_site.AppearanceHovered.Options.UseForeColor = true;
+            this.btn_site.AppearancePressed.BackColor = System.Drawing.Color.Gray;
+            this.btn_site.AppearancePressed.Font = new System.Drawing.Font("LBC", 12.75F);
+            this.btn_site.AppearancePressed.ForeColor = System.Drawing.Color.White;
+            this.btn_site.AppearancePressed.Options.UseBackColor = true;
+            this.btn_site.AppearancePressed.Options.UseFont = true;
+            this.btn_site.AppearancePressed.Options.UseForeColor = true;
+            this.btn_site.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.trans_a.SetDecoration(this.btn_site, BunifuAnimatorNS.DecorationType.None);
+            this.btn_site.ImageOptions.Image = global::School_Mang.Properties.Resources.site_40;
+            this.btn_site.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
+            this.btn_site.Location = new System.Drawing.Point(3, 396);
+            this.btn_site.Name = "btn_site";
+            this.btn_site.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
+            this.btn_site.Size = new System.Drawing.Size(185, 50);
+            this.btn_site.TabIndex = 7;
+            this.btn_site.Text = "إدارة الموقع";
+            this.btn_site.Visible = false;
+            this.btn_site.Click += new System.EventHandler(this.btn_site_Click);
             // 
             // FRM_MAIN
             // 
@@ -879,5 +957,9 @@ namespace School_Mang.PL.MAIN
         public System.Windows.Forms.Label lbl_main;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        public DevExpress.XtraEditors.SimpleButton btn_site;
     }
 }

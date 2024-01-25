@@ -12,9 +12,32 @@ namespace School_Mang.PL.MAIN
 {
     public partial class FRM_HOME : Form
     {
+        // Form Closed
+        private static FRM_HOME frm_home;
+        static void frm_Form_Closed(object sender, FormClosedEventArgs e)
+        {
+            frm_home = null;
+        }
+        public static FRM_HOME Get_Frm_home
+        {
+            get
+            {
+                if (frm_home == null)
+                {
+                    frm_home = new FRM_HOME();
+                    frm_home.FormClosed += new FormClosedEventHandler(frm_Form_Closed);
+                }
+                return frm_home;
+            }
+        }
         public FRM_HOME()
         {
             InitializeComponent();
+
+            if (frm_home == null)
+            {
+                frm_home = this;
+            }
         }
 
         private void pic_age_Click(object sender, EventArgs e)

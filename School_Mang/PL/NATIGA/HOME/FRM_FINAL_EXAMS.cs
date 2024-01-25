@@ -69,10 +69,19 @@ namespace School_Mang.PL.NATIGA.HOME
                 if (file_name == null) 
                 {
                     msg.ErrorMesg("تم إلغاء الإجراء..!");
+                    BL.Globals.Dir_Path = "D://Rasd";
                     return;
                 }
                 Waiting.Wait();
+              
                 DataTable dt_sery = Excel.ReadSeryData(file_name);
+
+                if (dt_sery == null)
+                {
+                    msg.ErrorMesg("لا توجد بيانات..!");
+                    BL.Globals.Dir_Path = "D://Rasd";
+                    return;
+                }
                 foreach (DataRow row in dt_sery.Rows)
                 {
                     int Golos = Convert.ToInt32(row["Golos"]);

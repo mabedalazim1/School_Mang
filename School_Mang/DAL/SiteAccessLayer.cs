@@ -3,31 +3,34 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace School_Mang.DAL
 {
     public class SiteAccessLayer
     {
+
         readonly SqlConnection sqlConnection;
         BL.MSG msg = new BL.MSG();
-        readonly DAL.TestConcation Test_Con = new TestConcation();
+        BL.Waiting waiting = new BL.Waiting();
+        readonly TestConcation Test_Con = new TestConcation();
 
+        // Connection Object
+        string server = Properties.Settings.Default.Site_Server_Name;
+        string database_name = Properties.Settings.Default.Site_DataBasee_name;
+        string database_user = Properties.Settings.Default.Site_DataBasee_User;
+        string database_pass = Properties.Settings.Default.Site_DataBasee_Pass;
+
+        //string server = "DESKTOP-G5OR1RP";
+        //string database_name = "db_a786ad_kpsdata";
+        //string database_user = "sa";
+        //string database_pass = "kps@2023";
 
         public SiteAccessLayer()
         {
-            // Connection Object
-            string server = "sql5080.site4now.net";
-            string database_name = "db_a786ad_kpsdata";
-            string database_user = "db_a786ad_kpsdata_admin";
-            string database_pass = "kps@2020";
-
-            //string server = "DESKTOP-G5OR1RP";
-            //string database_name = "db_a786ad_kpsdata";
-            //string database_user = "sa";
-            //string database_pass = "kps@2023";
-
             try
             {
                 sqlConnection = new SqlConnection(@"Server=" + server + ";Database= " +
@@ -37,13 +40,14 @@ namespace School_Mang.DAL
             catch (SqlException e)
             {
                 msg.ErrorMesg(e.Message);
+                return;
             }
         }
 
         // Mothed To Open Connection
         public void Open()
         {
-            if (Test_Con.IsConnectedToInternet() == false) return;
+
             try
             {
                 if (sqlConnection.State != ConnectionState.Open)
@@ -59,7 +63,6 @@ namespace School_Mang.DAL
         }
         public void Close()
         {
-            if (Test_Con.IsConnectedToInternet() == false) return;
             try
             {
                 if (sqlConnection.State == ConnectionState.Open)
@@ -104,7 +107,7 @@ namespace School_Mang.DAL
         // Mothed To Insert Delete Update Data
         public void ExeucuteCommand(string stored_procedure, SqlParameter[] param)
         {
-            if (Test_Con.IsConnectedToInternet() == false) return;
+            if (!BL.Globals.Test_Internet_Con) return;
             try
             {
                 SqlCommand sqlcmd = new SqlCommand();
@@ -199,7 +202,6 @@ namespace School_Mang.DAL
         // Mothed To Exeucute Query
         public void ExeucuteQuery(string query)
         {
-            if (Test_Con.IsConnectedToInternet() == false) return;
             try
             {
                 SqlCommand sqlcmd = new SqlCommand();

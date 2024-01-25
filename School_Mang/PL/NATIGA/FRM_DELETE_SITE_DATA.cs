@@ -44,18 +44,61 @@ namespace School_Mang.PL.NATIGA
             }
 
             InitializeComponent();
-            cmb_grade.DataSource = NATEG.GET_GRADE();
-            cmb_grade.DisplayMember = "grade_desc";
-            cmb_grade.ValueMember = "id";
-
-            cmb_month.DataSource = NATEG.GET_TEST_KIND();
-            cmb_month.DisplayMember = "testkind_desc";
-            cmb_month.ValueMember = "id";
 
             Add_To_Comb_Test();
-
-
         }
+
+        private async Task Test_Intrent()
+        {
+            Waiting.Wait();
+            //Test Intrent Connection
+            BL.CLS_TEST_INTRNET_CON test_intrent = new BL.CLS_TEST_INTRNET_CON();
+            await test_intrent.ChecK_Internt_Con();
+            Waiting.End_WAit();
+        }
+
+
+        private void Load_Data()
+        {
+            if (!BL.Globals.Test_Internet_Con)
+            {
+                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+                this.Close();
+                return;
+            }
+            else
+            {
+                try
+                {
+                    Waiting.Wait();
+                    if (BL.Globals.Test_Internet_Con)
+                    {
+                        cmb_grade.DataSource = NATEG.GET_GRADE();
+                        cmb_grade.DisplayMember = "grade_desc";
+                        cmb_grade.ValueMember = "id";
+
+                        cmb_month.DataSource = NATEG.GET_TEST_KIND();
+                        cmb_month.DisplayMember = "testkind_desc";
+                        cmb_month.ValueMember = "id";
+                    }
+                    else
+                    {
+                        msg.ErrorMesg("تأكد من الإتصال بالإنترنت ..!");
+                    }
+                }
+                catch (Exception e)
+                {
+                    BL.Globals.Test_Internet_Con = false;
+                    Waiting.End_WAit();
+                    msg.ErrorMesg(e.Message);
+                }
+                finally
+                {
+                    Waiting.End_WAit();
+                }
+            }
+        }
+
 
         int move;
         int move_x;
@@ -100,10 +143,14 @@ namespace School_Mang.PL.NATIGA
             btn_close_b_Click(sender, e);
         }
 
-        private void btn_save_data_Click(object sender, EventArgs e)
+        private async void btn_save_data_Click(object sender, EventArgs e)
         {
-           
-            if(txt_user.Text =="" || txt_pass.Text == "")
+            if (!BL.Globals.Test_Internet_Con) 
+            {
+                msg.ErrorMesg("تأكد من الإتصال بالإنترنت ..!");
+                return;
+            }
+            if (txt_user.Text =="" || txt_pass.Text == "")
             {
                 msg.ErrorMesg("تأكد من اسم المستخدم وكلمة المرور ..!");
                 txt_user.Focus();
@@ -120,7 +167,13 @@ namespace School_Mang.PL.NATIGA
                 }
                 try
                 {
-                    int grade = Convert.ToInt32(cmb_grade.SelectedValue);
+                    await Test_Intrent();
+                    if (!BL.Globals.Test_Internet_Con)
+                    {
+                        msg.ErrorMesg("تأكد من الإتصال بالإنترنت ..!");
+                        return;
+                    }
+                        int grade = Convert.ToInt32(cmb_grade.SelectedValue);
                     int test_kind = Convert.ToInt32(cmb_month.SelectedValue);
 
                     Waiting.Wait();
@@ -143,6 +196,19 @@ namespace School_Mang.PL.NATIGA
                 {
                     Waiting.End_WAit();
                 }
+            }
+        }
+
+        private async void FRM_DELETE_SITE_DATA_Load(object sender, EventArgs e)
+        {
+            await Test_Intrent();
+            if (BL.Globals.Test_Internet_Con)
+            {
+                Load_Data();     
+            }
+            else
+            {
+                this.Close();
             }
         }
     }

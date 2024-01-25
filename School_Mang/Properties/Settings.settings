@@ -50,5 +50,20 @@
     <Setting Name="save_Sery_path" Type="System.String" Scope="User">
       <Value Profile="(Default)">D:\Rasd\Sery</Value>
     </Setting>
+    <Setting Name="Site_Server_Name" Type="System.String" Scope="User">
+      <Value Profile="(Default)">sql5080.site4now.net</Value>
+    </Setting>
+    <Setting Name="Site_DataBasee_name" Type="System.String" Scope="User">
+      <Value Profile="(Default)">db_a786ad_kpsdata</Value>
+    </Setting>
+    <Setting Name="Site_DataBasee_User" Type="System.String" Scope="User">
+      <Value Profile="(Default)">db_a786ad_kpsdata_admin</Value>
+    </Setting>
+    <Setting Name="Site_DataBasee_Pass" Type="System.String" Scope="User">
+      <Value Profile="(Default)">kps@2020</Value>
+    </Setting>
+    <Setting Name="Site_Host_Test" Type="System.String" Scope="User">
+      <Value Profile="(Default)">google.com</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

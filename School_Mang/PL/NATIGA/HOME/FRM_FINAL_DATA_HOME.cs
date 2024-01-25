@@ -56,8 +56,10 @@ namespace School_Mang.PL.NATIGA.HOME
             if (file_name == null)
             {
                 msg.ErrorMesg("تم إلغاء الإجراء..!");
+                BL.Globals.Dir_Path = "D://Rasd";
                 return;
             }
+            
             try
             {
                 int Golos;
@@ -83,6 +85,7 @@ namespace School_Mang.PL.NATIGA.HOME
                 if (file_kind == "" || file_kind == null)
                 {
                     msg.ErrorMesg("الملف غير صالح .. يرجى التأكد من الملف المطلوب ..!");
+                    BL.Globals.Dir_Path = "D://Rasd";
                     return;
                 }
                 else
@@ -106,6 +109,7 @@ namespace School_Mang.PL.NATIGA.HOME
                         {
                             msg.ErrorMesg("يرجى التأكد من الدرجات ..!");
                             msg.ErrorMesg("تم إلغاء الإجراء ..!");
+                            BL.Globals.Dir_Path = "D://Rasd";
                             return;
                         }
 
@@ -362,6 +366,7 @@ namespace School_Mang.PL.NATIGA.HOME
                     else
                     {
                         msg.ErrorMesg("تم إلغاء الإجراء ..!");
+                        BL.Globals.Dir_Path = "D://Rasd";
                         return;
                     }
                 }

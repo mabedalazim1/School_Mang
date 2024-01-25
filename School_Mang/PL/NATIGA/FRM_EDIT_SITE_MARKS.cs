@@ -47,6 +47,16 @@ namespace School_Mang.PL.NATIGA
             }
         }
 
+
+        private async Task Test_Intrent()
+        {
+            Waiting.Wait();
+            //Test Intrent Connection
+            BL.CLS_TEST_INTRNET_CON test_intrent = new BL.CLS_TEST_INTRNET_CON();
+            await test_intrent.ChecK_Internt_Con();
+            Waiting.End_WAit();
+        }
+
         int move;
         int move_x;
         int move_y;
@@ -185,8 +195,18 @@ namespace School_Mang.PL.NATIGA
             Close();
         }
 
-        private void FRM_EDIT_SITE_MARKS_Load(object sender, EventArgs e)
+        private async void FRM_EDIT_SITE_MARKS_Load(object sender, EventArgs e)
         {
+            //Test Intrent Connection
+            await Test_Intrent();
+
+            if (!BL.Globals.Test_Internet_Con)
+            {
+                msg.ErrorMesg("تأكد من الإتصال بالإنترنت ..!");
+                this.Close();
+                return;
+            }
+
             txt_ar.TextAlign = HorizontalAlignment.Center;
             txt_french.TextAlign = HorizontalAlignment.Center;
             txt_din.TextAlign = HorizontalAlignment.Center;
@@ -469,8 +489,16 @@ namespace School_Mang.PL.NATIGA
 
         }
 
-        private void btn_save_Click(object sender, EventArgs e)
+        private async void btn_save_Click(object sender, EventArgs e)
         {
+            //Test Intrent Connection
+            await Test_Intrent();
+
+            if (!BL.Globals.Test_Internet_Con)
+            {
+                msg.ErrorMesg("تأكد من الإتصال بالإنترنت ..!");
+                return;
+            }
             try
             {
                 int student_Id = Convert.ToInt32(txt_cod.Text);

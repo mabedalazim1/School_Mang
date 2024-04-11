@@ -90,8 +90,8 @@ namespace School_Mang.PL.STD
             // pn_top
             // 
             this.pn_top.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.pn_top.Controls.Add(this.label11);
             this.pn_top.Controls.Add(this.btn_close);
+            this.pn_top.Controls.Add(this.label11);
             this.pn_top.Dock = System.Windows.Forms.DockStyle.Top;
             this.pn_top.ForeColor = System.Drawing.Color.White;
             this.pn_top.Location = new System.Drawing.Point(0, 0);
@@ -107,7 +107,7 @@ namespace School_Mang.PL.STD
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.Color.White;
-            this.label11.Location = new System.Drawing.Point(223, 9);
+            this.label11.Location = new System.Drawing.Point(247, 9);
             this.label11.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(104, 25);

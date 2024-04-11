@@ -162,7 +162,7 @@ namespace School_Mang.PL.STD
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.Color.White;
-            this.label11.Location = new System.Drawing.Point(192, 13);
+            this.label11.Location = new System.Drawing.Point(200, 13);
             this.label11.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(148, 25);
@@ -578,13 +578,16 @@ namespace School_Mang.PL.STD
             // pn_top
             // 
             this.pn_top.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.pn_top.Controls.Add(this.label11);
             this.pn_top.Controls.Add(this.btn_close);
+            this.pn_top.Controls.Add(this.label11);
             this.pn_top.Dock = System.Windows.Forms.DockStyle.Top;
             this.pn_top.Location = new System.Drawing.Point(0, 0);
             this.pn_top.Name = "pn_top";
             this.pn_top.Size = new System.Drawing.Size(549, 50);
             this.pn_top.TabIndex = 81;
+            this.pn_top.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pn_top_MouseDown);
+            this.pn_top.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pn_top_MouseMove);
+            this.pn_top.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pn_top_MouseUp);
             // 
             // FRM_UPDATE_SCHOOL_STD
             // 

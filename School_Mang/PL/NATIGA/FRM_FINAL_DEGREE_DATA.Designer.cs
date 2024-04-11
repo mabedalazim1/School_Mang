@@ -31,12 +31,19 @@ namespace School_Mang.PL.NATIGA
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FRM_FINAL_DEGREE_DATA));
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btn_save = new Bunifu.Framework.UI.BunifuThinButton2();
+            this.btn_close_b = new Bunifu.Framework.UI.BunifuThinButton2();
             this.lbl_dain = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.pn_top = new System.Windows.Forms.Panel();
             this.label11 = new System.Windows.Forms.Label();
+            this.btn_close = new DevExpress.XtraEditors.SimpleButton();
             this.label18 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.txt_tocnolegy_practical = new System.Windows.Forms.TextBox();
+            this.lbl_tocnolegy_practical = new System.Windows.Forms.Label();
+            this.txt_scince = new System.Windows.Forms.TextBox();
+            this.lbl_sinces = new System.Windows.Forms.Label();
             this.txt_tocnolegy = new System.Windows.Forms.TextBox();
             this.lbl_tocnolegy = new System.Windows.Forms.Label();
             this.txt_maharat = new System.Windows.Forms.TextBox();
@@ -58,13 +65,6 @@ namespace School_Mang.PL.NATIGA
             this.label1 = new System.Windows.Forms.Label();
             this.txt_name = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btn_save = new Bunifu.Framework.UI.BunifuThinButton2();
-            this.btn_close_b = new Bunifu.Framework.UI.BunifuThinButton2();
-            this.btn_close = new DevExpress.XtraEditors.SimpleButton();
-            this.txt_scince = new System.Windows.Forms.TextBox();
-            this.lbl_sinces = new System.Windows.Forms.Label();
-            this.txt_tocnolegy_practical = new System.Windows.Forms.TextBox();
-            this.lbl_tocnolegy_practical = new System.Windows.Forms.Label();
             this.groupBox3.SuspendLayout();
             this.pn_top.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -80,6 +80,58 @@ namespace School_Mang.PL.NATIGA
             this.groupBox3.Size = new System.Drawing.Size(863, 67);
             this.groupBox3.TabIndex = 111;
             this.groupBox3.TabStop = false;
+            // 
+            // btn_save
+            // 
+            this.btn_save.ActiveBorderThickness = 1;
+            this.btn_save.ActiveCornerRadius = 20;
+            this.btn_save.ActiveFillColor = System.Drawing.Color.SeaGreen;
+            this.btn_save.ActiveForecolor = System.Drawing.Color.White;
+            this.btn_save.ActiveLineColor = System.Drawing.Color.SeaGreen;
+            this.btn_save.BackColor = System.Drawing.SystemColors.Control;
+            this.btn_save.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_save.BackgroundImage")));
+            this.btn_save.ButtonText = "تعديل";
+            this.btn_save.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_save.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_save.ForeColor = System.Drawing.Color.SeaGreen;
+            this.btn_save.IdleBorderThickness = 1;
+            this.btn_save.IdleCornerRadius = 20;
+            this.btn_save.IdleFillColor = System.Drawing.Color.WhiteSmoke;
+            this.btn_save.IdleForecolor = System.Drawing.Color.SeaGreen;
+            this.btn_save.IdleLineColor = System.Drawing.Color.SeaGreen;
+            this.btn_save.Location = new System.Drawing.Point(701, 9);
+            this.btn_save.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_save.Name = "btn_save";
+            this.btn_save.Size = new System.Drawing.Size(138, 50);
+            this.btn_save.TabIndex = 11;
+            this.btn_save.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btn_save.Click += new System.EventHandler(this.btn_save_Click);
+            // 
+            // btn_close_b
+            // 
+            this.btn_close_b.ActiveBorderThickness = 1;
+            this.btn_close_b.ActiveCornerRadius = 20;
+            this.btn_close_b.ActiveFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.btn_close_b.ActiveForecolor = System.Drawing.Color.White;
+            this.btn_close_b.ActiveLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btn_close_b.BackColor = System.Drawing.SystemColors.Control;
+            this.btn_close_b.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_close_b.BackgroundImage")));
+            this.btn_close_b.ButtonText = "إغلاق";
+            this.btn_close_b.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_close_b.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_close_b.ForeColor = System.Drawing.Color.Red;
+            this.btn_close_b.IdleBorderThickness = 1;
+            this.btn_close_b.IdleCornerRadius = 20;
+            this.btn_close_b.IdleFillColor = System.Drawing.Color.WhiteSmoke;
+            this.btn_close_b.IdleForecolor = System.Drawing.Color.Red;
+            this.btn_close_b.IdleLineColor = System.Drawing.Color.Red;
+            this.btn_close_b.Location = new System.Drawing.Point(16, 13);
+            this.btn_close_b.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_close_b.Name = "btn_close_b";
+            this.btn_close_b.Size = new System.Drawing.Size(138, 50);
+            this.btn_close_b.TabIndex = 12;
+            this.btn_close_b.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btn_close_b.Click += new System.EventHandler(this.btn_close_b_Click);
             // 
             // lbl_dain
             // 
@@ -104,8 +156,8 @@ namespace School_Mang.PL.NATIGA
             // pn_top
             // 
             this.pn_top.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.pn_top.Controls.Add(this.label11);
             this.pn_top.Controls.Add(this.btn_close);
+            this.pn_top.Controls.Add(this.label11);
             this.pn_top.Dock = System.Windows.Forms.DockStyle.Top;
             this.pn_top.Location = new System.Drawing.Point(0, 0);
             this.pn_top.Name = "pn_top";
@@ -120,12 +172,25 @@ namespace School_Mang.PL.NATIGA
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.Color.White;
-            this.label11.Location = new System.Drawing.Point(391, 12);
+            this.label11.Location = new System.Drawing.Point(388, 12);
             this.label11.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(113, 25);
             this.label11.TabIndex = 46;
             this.label11.Text = "درجات الطالب";
+            // 
+            // btn_close
+            // 
+            this.btn_close.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btn_close.ImageOptions.Image = global::School_Mang.Properties.Resources.close_w;
+            this.btn_close.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+            this.btn_close.Location = new System.Drawing.Point(12, 12);
+            this.btn_close.Name = "btn_close";
+            this.btn_close.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
+            this.btn_close.Size = new System.Drawing.Size(34, 33);
+            this.btn_close.TabIndex = 11;
+            this.btn_close.TabStop = false;
+            this.btn_close.Click += new System.EventHandler(this.btn_close_Click);
             // 
             // label18
             // 
@@ -169,6 +234,52 @@ namespace School_Mang.PL.NATIGA
             this.groupBox2.TabIndex = 110;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "الدرجات";
+            // 
+            // txt_tocnolegy_practical
+            // 
+            this.txt_tocnolegy_practical.Font = new System.Drawing.Font("Noto Naskh Arabic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_tocnolegy_practical.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.txt_tocnolegy_practical.Location = new System.Drawing.Point(14, 64);
+            this.txt_tocnolegy_practical.MaxLength = 20;
+            this.txt_tocnolegy_practical.Name = "txt_tocnolegy_practical";
+            this.txt_tocnolegy_practical.Size = new System.Drawing.Size(68, 40);
+            this.txt_tocnolegy_practical.TabIndex = 10;
+            this.txt_tocnolegy_practical.TextChanged += new System.EventHandler(this.txt_tocnolegy_practical_TextChanged);
+            this.txt_tocnolegy_practical.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_tocnolegy_practical_KeyPress);
+            // 
+            // lbl_tocnolegy_practical
+            // 
+            this.lbl_tocnolegy_practical.AutoSize = true;
+            this.lbl_tocnolegy_practical.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_tocnolegy_practical.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.lbl_tocnolegy_practical.Location = new System.Drawing.Point(18, 31);
+            this.lbl_tocnolegy_practical.Name = "lbl_tocnolegy_practical";
+            this.lbl_tocnolegy_practical.Size = new System.Drawing.Size(60, 29);
+            this.lbl_tocnolegy_practical.TabIndex = 125;
+            this.lbl_tocnolegy_practical.Text = "ح عملى";
+            // 
+            // txt_scince
+            // 
+            this.txt_scince.Font = new System.Drawing.Font("Noto Naskh Arabic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_scince.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.txt_scince.Location = new System.Drawing.Point(518, 64);
+            this.txt_scince.MaxLength = 20;
+            this.txt_scince.Name = "txt_scince";
+            this.txt_scince.Size = new System.Drawing.Size(68, 40);
+            this.txt_scince.TabIndex = 4;
+            this.txt_scince.TextChanged += new System.EventHandler(this.txt_scince_TextChanged);
+            this.txt_scince.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_scince_KeyPress);
+            // 
+            // lbl_sinces
+            // 
+            this.lbl_sinces.AutoSize = true;
+            this.lbl_sinces.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_sinces.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.lbl_sinces.Location = new System.Drawing.Point(532, 31);
+            this.lbl_sinces.Name = "lbl_sinces";
+            this.lbl_sinces.Size = new System.Drawing.Size(42, 29);
+            this.lbl_sinces.TabIndex = 123;
+            this.lbl_sinces.Text = "علوم";
             // 
             // txt_tocnolegy
             // 
@@ -412,117 +523,6 @@ namespace School_Mang.PL.NATIGA
             this.groupBox1.TabIndex = 109;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "بيانات الطالب";
-            // 
-            // btn_save
-            // 
-            this.btn_save.ActiveBorderThickness = 1;
-            this.btn_save.ActiveCornerRadius = 20;
-            this.btn_save.ActiveFillColor = System.Drawing.Color.SeaGreen;
-            this.btn_save.ActiveForecolor = System.Drawing.Color.White;
-            this.btn_save.ActiveLineColor = System.Drawing.Color.SeaGreen;
-            this.btn_save.BackColor = System.Drawing.SystemColors.Control;
-            this.btn_save.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_save.BackgroundImage")));
-            this.btn_save.ButtonText = "تعديل";
-            this.btn_save.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_save.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_save.ForeColor = System.Drawing.Color.SeaGreen;
-            this.btn_save.IdleBorderThickness = 1;
-            this.btn_save.IdleCornerRadius = 20;
-            this.btn_save.IdleFillColor = System.Drawing.Color.WhiteSmoke;
-            this.btn_save.IdleForecolor = System.Drawing.Color.SeaGreen;
-            this.btn_save.IdleLineColor = System.Drawing.Color.SeaGreen;
-            this.btn_save.Location = new System.Drawing.Point(701, 9);
-            this.btn_save.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btn_save.Name = "btn_save";
-            this.btn_save.Size = new System.Drawing.Size(138, 50);
-            this.btn_save.TabIndex = 11;
-            this.btn_save.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btn_save.Click += new System.EventHandler(this.btn_save_Click);
-            // 
-            // btn_close_b
-            // 
-            this.btn_close_b.ActiveBorderThickness = 1;
-            this.btn_close_b.ActiveCornerRadius = 20;
-            this.btn_close_b.ActiveFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.btn_close_b.ActiveForecolor = System.Drawing.Color.White;
-            this.btn_close_b.ActiveLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btn_close_b.BackColor = System.Drawing.SystemColors.Control;
-            this.btn_close_b.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_close_b.BackgroundImage")));
-            this.btn_close_b.ButtonText = "إغلاق";
-            this.btn_close_b.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_close_b.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_close_b.ForeColor = System.Drawing.Color.Red;
-            this.btn_close_b.IdleBorderThickness = 1;
-            this.btn_close_b.IdleCornerRadius = 20;
-            this.btn_close_b.IdleFillColor = System.Drawing.Color.WhiteSmoke;
-            this.btn_close_b.IdleForecolor = System.Drawing.Color.Red;
-            this.btn_close_b.IdleLineColor = System.Drawing.Color.Red;
-            this.btn_close_b.Location = new System.Drawing.Point(16, 13);
-            this.btn_close_b.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btn_close_b.Name = "btn_close_b";
-            this.btn_close_b.Size = new System.Drawing.Size(138, 50);
-            this.btn_close_b.TabIndex = 12;
-            this.btn_close_b.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btn_close_b.Click += new System.EventHandler(this.btn_close_b_Click);
-            // 
-            // btn_close
-            // 
-            this.btn_close.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btn_close.ImageOptions.Image = global::School_Mang.Properties.Resources.close_w;
-            this.btn_close.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
-            this.btn_close.Location = new System.Drawing.Point(12, 12);
-            this.btn_close.Name = "btn_close";
-            this.btn_close.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
-            this.btn_close.Size = new System.Drawing.Size(34, 33);
-            this.btn_close.TabIndex = 11;
-            this.btn_close.TabStop = false;
-            this.btn_close.Click += new System.EventHandler(this.btn_close_Click);
-            // 
-            // txt_scince
-            // 
-            this.txt_scince.Font = new System.Drawing.Font("Noto Naskh Arabic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_scince.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.txt_scince.Location = new System.Drawing.Point(518, 64);
-            this.txt_scince.MaxLength = 20;
-            this.txt_scince.Name = "txt_scince";
-            this.txt_scince.Size = new System.Drawing.Size(68, 40);
-            this.txt_scince.TabIndex = 4;
-            this.txt_scince.TextChanged += new System.EventHandler(this.txt_scince_TextChanged);
-            this.txt_scince.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_scince_KeyPress);
-            // 
-            // lbl_sinces
-            // 
-            this.lbl_sinces.AutoSize = true;
-            this.lbl_sinces.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_sinces.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-            this.lbl_sinces.Location = new System.Drawing.Point(532, 31);
-            this.lbl_sinces.Name = "lbl_sinces";
-            this.lbl_sinces.Size = new System.Drawing.Size(42, 29);
-            this.lbl_sinces.TabIndex = 123;
-            this.lbl_sinces.Text = "علوم";
-            // 
-            // txt_tocnolegy_practical
-            // 
-            this.txt_tocnolegy_practical.Font = new System.Drawing.Font("Noto Naskh Arabic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_tocnolegy_practical.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.txt_tocnolegy_practical.Location = new System.Drawing.Point(14, 64);
-            this.txt_tocnolegy_practical.MaxLength = 20;
-            this.txt_tocnolegy_practical.Name = "txt_tocnolegy_practical";
-            this.txt_tocnolegy_practical.Size = new System.Drawing.Size(68, 40);
-            this.txt_tocnolegy_practical.TabIndex = 10;
-            this.txt_tocnolegy_practical.TextChanged += new System.EventHandler(this.txt_tocnolegy_practical_TextChanged);
-            this.txt_tocnolegy_practical.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_tocnolegy_practical_KeyPress);
-            // 
-            // lbl_tocnolegy_practical
-            // 
-            this.lbl_tocnolegy_practical.AutoSize = true;
-            this.lbl_tocnolegy_practical.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_tocnolegy_practical.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-            this.lbl_tocnolegy_practical.Location = new System.Drawing.Point(18, 31);
-            this.lbl_tocnolegy_practical.Name = "lbl_tocnolegy_practical";
-            this.lbl_tocnolegy_practical.Size = new System.Drawing.Size(60, 29);
-            this.lbl_tocnolegy_practical.TabIndex = 125;
-            this.lbl_tocnolegy_practical.Text = "ح عملى";
             // 
             // FRM_FINAL_DEGREE_DATA
             // 

@@ -97,8 +97,8 @@ namespace School_Mang.PL.NATIGA
             // pn_top
             // 
             this.pn_top.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.pn_top.Controls.Add(this.lbl_title);
             this.pn_top.Controls.Add(this.btn_close);
+            this.pn_top.Controls.Add(this.lbl_title);
             this.pn_top.Dock = System.Windows.Forms.DockStyle.Top;
             this.pn_top.Location = new System.Drawing.Point(0, 0);
             this.pn_top.Name = "pn_top";
@@ -113,7 +113,7 @@ namespace School_Mang.PL.NATIGA
             this.lbl_title.AutoSize = true;
             this.lbl_title.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_title.ForeColor = System.Drawing.Color.White;
-            this.lbl_title.Location = new System.Drawing.Point(261, 13);
+            this.lbl_title.Location = new System.Drawing.Point(243, 13);
             this.lbl_title.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
             this.lbl_title.Name = "lbl_title";
             this.lbl_title.Size = new System.Drawing.Size(197, 25);

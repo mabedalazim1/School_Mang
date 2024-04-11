@@ -31,6 +31,8 @@ namespace School_Mang.PL.NATIGA
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FRM_ADD_GOLOS));
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btn_save_data = new Bunifu.Framework.UI.BunifuThinButton2();
+            this.btn_close_b = new Bunifu.Framework.UI.BunifuThinButton2();
             this.cmb_grade = new System.Windows.Forms.ComboBox();
             this.label18 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -44,8 +46,6 @@ namespace School_Mang.PL.NATIGA
             this.pn_top = new System.Windows.Forms.Panel();
             this.label11 = new System.Windows.Forms.Label();
             this.btn_close = new DevExpress.XtraEditors.SimpleButton();
-            this.btn_save_data = new Bunifu.Framework.UI.BunifuThinButton2();
-            this.btn_close_b = new Bunifu.Framework.UI.BunifuThinButton2();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.pn_top.SuspendLayout();
@@ -60,6 +60,58 @@ namespace School_Mang.PL.NATIGA
             this.groupBox3.Size = new System.Drawing.Size(515, 67);
             this.groupBox3.TabIndex = 84;
             this.groupBox3.TabStop = false;
+            // 
+            // btn_save_data
+            // 
+            this.btn_save_data.ActiveBorderThickness = 1;
+            this.btn_save_data.ActiveCornerRadius = 20;
+            this.btn_save_data.ActiveFillColor = System.Drawing.Color.SeaGreen;
+            this.btn_save_data.ActiveForecolor = System.Drawing.Color.White;
+            this.btn_save_data.ActiveLineColor = System.Drawing.Color.SeaGreen;
+            this.btn_save_data.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btn_save_data.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_save_data.BackgroundImage")));
+            this.btn_save_data.ButtonText = "بدء الترقيم";
+            this.btn_save_data.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_save_data.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_save_data.ForeColor = System.Drawing.Color.SeaGreen;
+            this.btn_save_data.IdleBorderThickness = 1;
+            this.btn_save_data.IdleCornerRadius = 20;
+            this.btn_save_data.IdleFillColor = System.Drawing.Color.WhiteSmoke;
+            this.btn_save_data.IdleForecolor = System.Drawing.Color.SeaGreen;
+            this.btn_save_data.IdleLineColor = System.Drawing.Color.SeaGreen;
+            this.btn_save_data.Location = new System.Drawing.Point(359, 13);
+            this.btn_save_data.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_save_data.Name = "btn_save_data";
+            this.btn_save_data.Size = new System.Drawing.Size(138, 50);
+            this.btn_save_data.TabIndex = 18;
+            this.btn_save_data.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btn_save_data.Click += new System.EventHandler(this.btn_save_data_Click);
+            // 
+            // btn_close_b
+            // 
+            this.btn_close_b.ActiveBorderThickness = 1;
+            this.btn_close_b.ActiveCornerRadius = 20;
+            this.btn_close_b.ActiveFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.btn_close_b.ActiveForecolor = System.Drawing.Color.White;
+            this.btn_close_b.ActiveLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btn_close_b.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btn_close_b.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_close_b.BackgroundImage")));
+            this.btn_close_b.ButtonText = "إلغاء";
+            this.btn_close_b.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_close_b.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_close_b.ForeColor = System.Drawing.Color.Red;
+            this.btn_close_b.IdleBorderThickness = 1;
+            this.btn_close_b.IdleCornerRadius = 20;
+            this.btn_close_b.IdleFillColor = System.Drawing.Color.WhiteSmoke;
+            this.btn_close_b.IdleForecolor = System.Drawing.Color.Red;
+            this.btn_close_b.IdleLineColor = System.Drawing.Color.Red;
+            this.btn_close_b.Location = new System.Drawing.Point(16, 13);
+            this.btn_close_b.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_close_b.Name = "btn_close_b";
+            this.btn_close_b.Size = new System.Drawing.Size(138, 50);
+            this.btn_close_b.TabIndex = 19;
+            this.btn_close_b.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btn_close_b.Click += new System.EventHandler(this.btn_close_b_Click);
             // 
             // cmb_grade
             // 
@@ -186,8 +238,8 @@ namespace School_Mang.PL.NATIGA
             // pn_top
             // 
             this.pn_top.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.pn_top.Controls.Add(this.label11);
             this.pn_top.Controls.Add(this.btn_close);
+            this.pn_top.Controls.Add(this.label11);
             this.pn_top.Dock = System.Windows.Forms.DockStyle.Top;
             this.pn_top.Location = new System.Drawing.Point(0, 0);
             this.pn_top.Name = "pn_top";
@@ -202,7 +254,7 @@ namespace School_Mang.PL.NATIGA
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.Color.White;
-            this.label11.Location = new System.Drawing.Point(192, 13);
+            this.label11.Location = new System.Drawing.Point(211, 13);
             this.label11.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(111, 25);
@@ -221,58 +273,6 @@ namespace School_Mang.PL.NATIGA
             this.btn_close.TabIndex = 11;
             this.btn_close.TabStop = false;
             this.btn_close.Click += new System.EventHandler(this.btn_close_Click);
-            // 
-            // btn_save_data
-            // 
-            this.btn_save_data.ActiveBorderThickness = 1;
-            this.btn_save_data.ActiveCornerRadius = 20;
-            this.btn_save_data.ActiveFillColor = System.Drawing.Color.SeaGreen;
-            this.btn_save_data.ActiveForecolor = System.Drawing.Color.White;
-            this.btn_save_data.ActiveLineColor = System.Drawing.Color.SeaGreen;
-            this.btn_save_data.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.btn_save_data.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_save_data.BackgroundImage")));
-            this.btn_save_data.ButtonText = "بدء الترقيم";
-            this.btn_save_data.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_save_data.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_save_data.ForeColor = System.Drawing.Color.SeaGreen;
-            this.btn_save_data.IdleBorderThickness = 1;
-            this.btn_save_data.IdleCornerRadius = 20;
-            this.btn_save_data.IdleFillColor = System.Drawing.Color.WhiteSmoke;
-            this.btn_save_data.IdleForecolor = System.Drawing.Color.SeaGreen;
-            this.btn_save_data.IdleLineColor = System.Drawing.Color.SeaGreen;
-            this.btn_save_data.Location = new System.Drawing.Point(359, 13);
-            this.btn_save_data.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btn_save_data.Name = "btn_save_data";
-            this.btn_save_data.Size = new System.Drawing.Size(138, 50);
-            this.btn_save_data.TabIndex = 18;
-            this.btn_save_data.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btn_save_data.Click += new System.EventHandler(this.btn_save_data_Click);
-            // 
-            // btn_close_b
-            // 
-            this.btn_close_b.ActiveBorderThickness = 1;
-            this.btn_close_b.ActiveCornerRadius = 20;
-            this.btn_close_b.ActiveFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.btn_close_b.ActiveForecolor = System.Drawing.Color.White;
-            this.btn_close_b.ActiveLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btn_close_b.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.btn_close_b.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_close_b.BackgroundImage")));
-            this.btn_close_b.ButtonText = "إلغاء";
-            this.btn_close_b.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_close_b.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_close_b.ForeColor = System.Drawing.Color.Red;
-            this.btn_close_b.IdleBorderThickness = 1;
-            this.btn_close_b.IdleCornerRadius = 20;
-            this.btn_close_b.IdleFillColor = System.Drawing.Color.WhiteSmoke;
-            this.btn_close_b.IdleForecolor = System.Drawing.Color.Red;
-            this.btn_close_b.IdleLineColor = System.Drawing.Color.Red;
-            this.btn_close_b.Location = new System.Drawing.Point(16, 13);
-            this.btn_close_b.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btn_close_b.Name = "btn_close_b";
-            this.btn_close_b.Size = new System.Drawing.Size(138, 50);
-            this.btn_close_b.TabIndex = 19;
-            this.btn_close_b.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btn_close_b.Click += new System.EventHandler(this.btn_close_b_Click);
             // 
             // FRM_ADD_GOLOS
             // 

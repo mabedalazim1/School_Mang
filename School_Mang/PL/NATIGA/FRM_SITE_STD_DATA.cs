@@ -314,7 +314,9 @@ namespace School_Mang.PL.NATIGA
             }
             try
             {
+                // Mark Or Degree --test_kind_id--
                 int test_kind_id = BL.Globals.test_kind;
+
                 string badnia = "0";
                 string franch = "0";
                 string sort_id = "0";
@@ -329,7 +331,10 @@ namespace School_Mang.PL.NATIGA
                 string maharat = dt_std_data.CurrentRow.Cells["مهارات"].Value.ToString();
                 string tecnolgy = dt_std_data.CurrentRow.Cells["تكنولوجيا"].Value.ToString();
                 string total = dt_std_data.CurrentRow.Cells["مجموع"].Value.ToString();
-                string test_kind_Id = dt_std_data.CurrentRow.Cells["test_kind_Id"].Value.ToString();
+
+                // Get Test_Month From site --test_kind_Id_site--
+                string test_kind_Id_site = dt_std_data.CurrentRow.Cells["test_kind_Id"].Value.ToString();
+                
                 string grade_Id = dt_std_data.CurrentRow.Cells["grade_Id"].Value.ToString();
                 string name = dt_std_data.CurrentRow.Cells["اسم الطالب"].Value.ToString();
                 string grade = dt_std_data.CurrentRow.Cells["الصف"].Value.ToString();
@@ -337,6 +342,7 @@ namespace School_Mang.PL.NATIGA
 
                 switch (test_kind_id)
                 {
+                   
                     case 1:
                         badnia = dt_std_data.CurrentRow.Cells["بدنية"].Value.ToString();
                         FRM_EDIT_SITE_DEGREES.Get_Edit_Site_Degree.txt_cod.Text = code;
@@ -350,7 +356,7 @@ namespace School_Mang.PL.NATIGA
                         FRM_EDIT_SITE_DEGREES.Get_Edit_Site_Degree.txt_maharat.Text = maharat;
                         FRM_EDIT_SITE_DEGREES.Get_Edit_Site_Degree.txt_tecnolgey.Text = tecnolgy;
                         FRM_EDIT_SITE_DEGREES.Get_Edit_Site_Degree.txt_total.Text = total;
-                        FRM_EDIT_SITE_DEGREES.Get_Edit_Site_Degree.txt_test_kind_id.Text = test_kind_Id;
+                        FRM_EDIT_SITE_DEGREES.Get_Edit_Site_Degree.txt_test_kind_id.Text = test_kind_Id_site;
                         FRM_EDIT_SITE_DEGREES.Get_Edit_Site_Degree.txt_grade_id.Text = grade_Id;
                         FRM_EDIT_SITE_DEGREES.Get_Edit_Site_Degree.txt_name.Text = name;
                         FRM_EDIT_SITE_DEGREES.Get_Edit_Site_Degree.txt_grade.Text = grade;
@@ -373,17 +379,17 @@ namespace School_Mang.PL.NATIGA
                         FRM_EDIT_SITE_MARKS.Get_Edit_Site_Mark.txt_tecnolgey.Text = tecnolgy;
                         FRM_EDIT_SITE_MARKS.Get_Edit_Site_Mark.txt_total.Text = total;
                         FRM_EDIT_SITE_MARKS.Get_Edit_Site_Mark.txt_sort.Text = sort_id;
-                        FRM_EDIT_SITE_MARKS.Get_Edit_Site_Mark.txt_test_kind_id.Text = test_kind_Id;
+                        FRM_EDIT_SITE_MARKS.Get_Edit_Site_Mark.txt_test_kind_id.Text = test_kind_Id_site;
                         FRM_EDIT_SITE_MARKS.Get_Edit_Site_Mark.txt_grade_id.Text = grade_Id;
                         FRM_EDIT_SITE_MARKS.Get_Edit_Site_Mark.txt_name.Text = name;
                         FRM_EDIT_SITE_MARKS.Get_Edit_Site_Mark.txt_grade.Text = grade;
                         FRM_EDIT_SITE_MARKS.Get_Edit_Site_Mark.txt_test_kind.Text = test_kind;
-
+                        
                         FRM_EDIT_SITE_MARKS.Get_Edit_Site_Mark.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
                         break;
                 }
 
-
+                
 
 
             }

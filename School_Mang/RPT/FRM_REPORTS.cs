@@ -102,6 +102,7 @@ namespace School_Mang.RPT
 
         private void crystalReportViewer1_Load(object sender, EventArgs e)
         {
+
             crystalReportViewer1.Zoom(1);
         }
     }

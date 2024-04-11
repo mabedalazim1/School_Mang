@@ -77,6 +77,7 @@ namespace School_Mang.PL.STD
             dt_std_data.Columns["Guardian_name"].Visible = false;
             dt_std_data.Columns["Transfer_code"].Visible = false;
             dt_std_data.Columns["Class_Id"].Visible = false;
+            dt_std_data.Columns["Trans_After_Year"].Visible = false;
 
             // Set User permission
             switch (permission_id)
@@ -264,6 +265,7 @@ namespace School_Mang.PL.STD
             FRM_TAHEEL_STD.Get_Tahweel_Std.txt_adrs.Text = dt_std_data.CurrentRow.Cells["adrs"].Value.ToString();
             FRM_TAHEEL_STD.Get_Tahweel_Std.txt_transfer_reason.Text = dt_std_data.CurrentRow.Cells["Transfer_reason"].Value.ToString();
             FRM_TAHEEL_STD.Get_Tahweel_Std.txt_to_school.Text = dt_std_data.CurrentRow.Cells["Transfer_School"].Value.ToString();
+            FRM_TAHEEL_STD.Get_Tahweel_Std.txt_std_code.Text = dt_std_data.CurrentRow.Cells["std_code"].Value.ToString();
 
             if (resom == 0)
             {
@@ -305,64 +307,74 @@ namespace School_Mang.PL.STD
         private void btn_del_std_Click(object sender, EventArgs e)
         {
             if (Verify_Std()) return;
-
-            string std_name = dt_std_data.CurrentRow.Cells["اسم الطالب"].Value.ToString();
-            string std_code = dt_std_data.CurrentRow.Cells["std_code"].Value.ToString();
-            int class_id = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Class_Id"].Value);
-            int grade = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Grade_Id"].Value);
-            int year = Properties.Settings.Default.year_cod;
-
-            if (grade > 6)
-            {
-                class_id += 2;
-            }
-            else
-            {
-                class_id += 3;
-            }
-
-            int new_year = Convert.ToInt32(std.Get_Count_New_Year(year + 1).Rows[0][0]);
-            int std_found = Convert.ToInt32(std.Get_Count_Trans_Std(new_year, std_code).Rows[0][0]);
-            int to_School;
             try
             {
-                if (msg.DialogeErrMsg("هل تريد حذف طلب التحويل للطالب  / " + std_name + " .. !") == DialogResult.Yes)
+                string std_name = dt_std_data.CurrentRow.Cells["اسم الطالب"].Value.ToString();
+                string std_code = dt_std_data.CurrentRow.Cells["std_code"].Value.ToString();
+                int class_id = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Class_Id"].Value);
+                int grade = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Grade_Id"].Value);
+                int year = Properties.Settings.Default.year_cod;
+
+                if (grade > 6)
                 {
-                    //msg.MyMesg(dt_std_data.CurrentRow.Cells["Std_Status_Id"].Value.ToString());
-
-                    // Delete Trans Data
-
-                    if (dt_std_data.CurrentRow.Cells["Std_Status_Id"].Value.ToString() == "4")
-                    {
-                        // If Std Trans To School
-                        to_School = 1;
-                        new_year = 0;
-                    }
-                    else
-                    {
-                        to_School = 0;
-                    }
-                    // msg.MyMesg(to_School.ToString());
-                    std.Delete_Transfers_Data(
-                        Convert.ToInt32(dt_std_data.CurrentRow.Cells["Transfer_code"].Value),
-                        dt_std_data.CurrentRow.Cells["std_code"].Value.ToString(),
-                        Convert.ToInt32(dt_std_data.CurrentRow.Cells["Year_Id"].Value),
-                        grade,
-                        class_id,
-                        new_year,// = 0 If Std Trans To School 
-                        std_found, // = 0 If Std Not Found On Table
-                        to_School // = 1 If Std Trans To School
-                        );
-                    // Update DataGrid
-
-                    cmb_grade_SelectedIndexChanged(sender, e);
-
-                    msg.MyMesg("تم حذف طلب التحويل للطالب  /  " + std_name + "...! ");
+                    class_id += 2;
                 }
                 else
                 {
-                    msg.ErrorMesg("تم الغاء عملية الحذف ..!");
-                    return;
+                    class_id += 3;
+                }
+
+                bool Trans_After_Year = Convert.ToBoolean(dt_std_data.CurrentRow.Cells["Trans_After_Year"].Value);
+                int Transfer_code = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Transfer_code"].Value);
+                int current_year = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Year_Id"].Value);
+                int new_year = Convert.ToInt32(std.Get_Count_New_Year(year + 1).Rows[0][0]);
+                int std_found = Convert.ToInt32(std.Get_Count_Trans_Std(new_year, std_code).Rows[0][0]);
+                int to_School;
+                try
+                {
+                    if (msg.DialogeErrMsg("هل تريد حذف طلب التحويل للطالب  / " + std_name + " .. !") == DialogResult.Yes)
+                    {
+
+                        // Delete Trans Data
+
+                        if (dt_std_data.CurrentRow.Cells["Std_Status_Id"].Value.ToString() == "4")
+                        {
+                            // If Std Trans To School
+                            to_School = 1;
+                            new_year = 0;
+                        }
+                        else
+                        {
+                            to_School = 0;
+                        }
+
+                        // Delete Trans Data
+                        std.Delete_Transfers_Data(
+                            Transfer_code,
+                            std_code,
+                            current_year,
+                            grade,
+                            class_id,
+                            new_year,// = 0 If Std Trans To School 
+                            std_found, // = 0 If Std Not Found On Table
+                            to_School, // = 1 If Std Trans To School,
+                            Trans_After_Year // 1 if Trans After Year Begin
+                            );
+                        // Update DataGrid
+
+                        cmb_grade_SelectedIndexChanged(sender, e);
+
+                        msg.MyMesg("تم حذف طلب التحويل للطالب  /  " + std_name + "...! ");
+                    }
+                    else
+                    {
+                        msg.ErrorMesg("تم الغاء عملية الحذف ..!");
+                        return;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    msg.ErrorMesg(ex.Message);
                 }
             }
             catch (Exception ex)
@@ -383,11 +395,22 @@ namespace School_Mang.PL.STD
             string std_name = dt_std_data.CurrentRow.Cells["اسم الطالب"].Value.ToString();
             int sana = (Convert.ToInt32(dt_std_data.CurrentRow.Cells["Year_Id"].Value)) + 2021;
             string year_data;
+            string grade_desc = "";
+            bool Trans_After_Year = Convert.ToBoolean(dt_std_data.CurrentRow.Cells["Trans_After_Year"].Value);
+
             // Get New Year & Grade For Tahewl To School
             if (Std_Status_Id == 3)
             {
+                // If Trans After School
+                if (Trans_After_Year)
+                {
+                    grade_desc = std.Get_Grade_Desc(grade).Rows[0]["GradeDesc"].ToString();
+                }
+                else
+                {
+                    grade_desc = std.Get_Grade_Desc(grade + 1).Rows[0]["GradeDesc"].ToString();
+                }
                 year_data = std.Get_Year_Desc(sana + 1).Rows[0]["YearDesc"].ToString();
-
             }
             else
             {
@@ -404,7 +427,6 @@ namespace School_Mang.PL.STD
             {
                 if (Std_Status_Id == 3)
                 {
-                    string grade_desc = std.Get_Grade_Desc(grade + 1).Rows[0]["GradeDesc"].ToString();
 
                     RPT.OpenTahwel_From_Report(trans_code, std_name, year_desc, grade_desc);
                 }

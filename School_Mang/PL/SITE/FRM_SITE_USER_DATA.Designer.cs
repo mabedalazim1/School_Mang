@@ -46,7 +46,7 @@ namespace School_Mang.PL.SITE
             this.btn_absent_std = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btn_show_data = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btn_close_b = new Bunifu.Framework.UI.BunifuThinButton2();
-            this.label11 = new System.Windows.Forms.Label();
+            this.lbl_title = new System.Windows.Forms.Label();
             this.pn_top = new System.Windows.Forms.Panel();
             this.btn_close = new DevExpress.XtraEditors.SimpleButton();
             this.panel4 = new System.Windows.Forms.Panel();
@@ -75,7 +75,7 @@ namespace School_Mang.PL.SITE
             this.label1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.label1.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(674, 72);
+            this.label1.Location = new System.Drawing.Point(670, 72);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(45, 25);
             this.label1.TabIndex = 105;
@@ -104,6 +104,7 @@ namespace School_Mang.PL.SITE
             this.txt_std_data.Size = new System.Drawing.Size(373, 44);
             this.txt_std_data.TabIndex = 101;
             this.txt_std_data.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txt_std_data.OnValueChanged += new System.EventHandler(this.txt_std_data_OnValueChanged);
             this.txt_std_data.Enter += new System.EventHandler(this.txt_std_data_Enter);
             this.txt_std_data.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_std_data_KeyPress);
             this.txt_std_data.MouseLeave += new System.EventHandler(this.txt_std_data_MouseLeave);
@@ -180,7 +181,7 @@ namespace School_Mang.PL.SITE
             this.label3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.label3.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.Black;
-            this.label3.Location = new System.Drawing.Point(764, 72);
+            this.label3.Location = new System.Drawing.Point(779, 72);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(100, 25);
             this.label3.TabIndex = 103;
@@ -192,7 +193,7 @@ namespace School_Mang.PL.SITE
             this.lbl_count.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lbl_count.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_count.ForeColor = System.Drawing.Color.Black;
-            this.lbl_count.Location = new System.Drawing.Point(742, 72);
+            this.lbl_count.Location = new System.Drawing.Point(729, 72);
             this.lbl_count.Name = "lbl_count";
             this.lbl_count.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lbl_count.Size = new System.Drawing.Size(0, 25);
@@ -287,23 +288,23 @@ namespace School_Mang.PL.SITE
             this.btn_close_b.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.btn_close_b.Click += new System.EventHandler(this.btn_close_b_Click);
             // 
-            // label11
+            // lbl_title
             // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.ForeColor = System.Drawing.Color.White;
-            this.label11.Location = new System.Drawing.Point(499, 13);
-            this.label11.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(152, 25);
-            this.label11.TabIndex = 46;
-            this.label11.Text = "بيانات المستخدمين";
+            this.lbl_title.AutoSize = true;
+            this.lbl_title.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_title.ForeColor = System.Drawing.Color.White;
+            this.lbl_title.Location = new System.Drawing.Point(369, 13);
+            this.lbl_title.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
+            this.lbl_title.Name = "lbl_title";
+            this.lbl_title.Size = new System.Drawing.Size(152, 25);
+            this.lbl_title.TabIndex = 46;
+            this.lbl_title.Text = "بيانات المستخدمين";
             // 
             // pn_top
             // 
             this.pn_top.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.pn_top.Controls.Add(this.label11);
             this.pn_top.Controls.Add(this.btn_close);
+            this.pn_top.Controls.Add(this.lbl_title);
             this.pn_top.Dock = System.Windows.Forms.DockStyle.Top;
             this.pn_top.Location = new System.Drawing.Point(0, 0);
             this.pn_top.Name = "pn_top";
@@ -397,7 +398,7 @@ namespace School_Mang.PL.SITE
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lbl_count;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label lbl_title;
         private System.Windows.Forms.Panel pn_top;
         private System.Windows.Forms.Panel panel4;
         private Bunifu.Framework.UI.BunifuThinButton2 btn_absent_std;

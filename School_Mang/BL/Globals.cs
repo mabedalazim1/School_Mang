@@ -456,6 +456,57 @@ namespace School_Mang.BL
             }
         }
 
+        private static bool _Edit_Golos;
+        public static bool Edit_Golos
+        {
+            get
+            {
+                return _Edit_Golos;
+            }
+            set
+            {
+                _Edit_Golos = value;
+            }
+        }
+
+        private static bool _Get_Site_Data;
+        public static bool Get_Site_Data
+        {
+            get
+            {
+                return _Get_Site_Data;
+            }
+            set
+            {
+                _Get_Site_Data = value;
+            }
+        }
+
+        private static bool _From_Un_Matched;
+        public static bool From_Un_Matched
+        {
+            get
+            {
+                return _From_Un_Matched;
+            }
+            set
+            {
+                _From_Un_Matched = value;
+            }
+        }
+
+        private static bool _Get_User_Data;
+        public static bool Get_User_Data
+        {
+            get
+            {
+                return _Get_User_Data;
+            }
+            set
+            {
+                _Get_User_Data = value;
+            }
+        }
 
     }
 }

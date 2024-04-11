@@ -13,6 +13,7 @@ namespace School_Mang.PL.STD
     public partial class FRM_CHOOSE_GRADE : Form
     {
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
+        BL.Waiting Waiting = new BL.Waiting();
         MAIN.CLS_FUNCATIONS Func = new MAIN.CLS_FUNCATIONS();
 
         DataTable dt_count = new DataTable();
@@ -34,7 +35,7 @@ namespace School_Mang.PL.STD
             }
 
             dt_count = std.Get_School_year_Data(year, 0, 0);
-
+            Waiting.End_WAit();
         }
 
         int move;
@@ -294,18 +295,19 @@ namespace School_Mang.PL.STD
 
         private void btn_show_data_Click(object sender, EventArgs e)
         {
+            Waiting.Wait();
             if (dt_std_data.SelectedRows.Count != 0)
             {
                 grade =Convert.ToInt16(dt_std_data.CurrentRow.Cells[6].Value);
                 
             }
-
-            this.Close();
-            this.Dispose();
+           
             FRM_CURRENT_STD.Get_Current_Std.grade = grade;
             FRM_CURRENT_STD.Get_Current_Std.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
-           
-                  
+             this.Hide();
+            this.Dispose();
+            Waiting.End_WAit();
+  
         }
 
         private void dt_std_data_DoubleClick(object sender, EventArgs e)

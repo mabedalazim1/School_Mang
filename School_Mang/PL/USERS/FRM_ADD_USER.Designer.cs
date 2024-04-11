@@ -37,6 +37,9 @@ namespace School_Mang.PL.USERS
             this.group_box_login = new System.Windows.Forms.GroupBox();
             this.txt_pass = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.txt_user_id = new System.Windows.Forms.TextBox();
+            this.txt_role_permissions_id = new System.Windows.Forms.TextBox();
+            this.txt_user_role_id = new System.Windows.Forms.TextBox();
             this.txt_user = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -52,9 +55,6 @@ namespace School_Mang.PL.USERS
             this.chk_all_prem = new System.Windows.Forms.CheckBox();
             this.chk_some_perm = new System.Windows.Forms.CheckBox();
             this.chk_read = new System.Windows.Forms.CheckBox();
-            this.txt_user_role_id = new System.Windows.Forms.TextBox();
-            this.txt_role_permissions_id = new System.Windows.Forms.TextBox();
-            this.txt_user_id = new System.Windows.Forms.TextBox();
             this.pn_top.SuspendLayout();
             this.group_box_login.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -76,7 +76,7 @@ namespace School_Mang.PL.USERS
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.Color.White;
-            this.label11.Location = new System.Drawing.Point(192, 12);
+            this.label11.Location = new System.Drawing.Point(224, 12);
             this.label11.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(130, 25);
@@ -86,8 +86,8 @@ namespace School_Mang.PL.USERS
             // pn_top
             // 
             this.pn_top.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.pn_top.Controls.Add(this.label11);
             this.pn_top.Controls.Add(this.btn_close);
+            this.pn_top.Controls.Add(this.label11);
             this.pn_top.Dock = System.Windows.Forms.DockStyle.Top;
             this.pn_top.Location = new System.Drawing.Point(0, 0);
             this.pn_top.Name = "pn_top";
@@ -149,6 +149,36 @@ namespace School_Mang.PL.USERS
             this.label6.Size = new System.Drawing.Size(86, 22);
             this.label6.TabIndex = 5;
             this.label6.Text = "كلمة المرور";
+            // 
+            // txt_user_id
+            // 
+            this.txt_user_id.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_user_id.Location = new System.Drawing.Point(457, 118);
+            this.txt_user_id.MaxLength = 50;
+            this.txt_user_id.Name = "txt_user_id";
+            this.txt_user_id.Size = new System.Drawing.Size(68, 32);
+            this.txt_user_id.TabIndex = 0;
+            this.txt_user_id.Visible = false;
+            // 
+            // txt_role_permissions_id
+            // 
+            this.txt_role_permissions_id.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_role_permissions_id.Location = new System.Drawing.Point(457, 82);
+            this.txt_role_permissions_id.MaxLength = 50;
+            this.txt_role_permissions_id.Name = "txt_role_permissions_id";
+            this.txt_role_permissions_id.Size = new System.Drawing.Size(68, 32);
+            this.txt_role_permissions_id.TabIndex = 0;
+            this.txt_role_permissions_id.Visible = false;
+            // 
+            // txt_user_role_id
+            // 
+            this.txt_user_role_id.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_user_role_id.Location = new System.Drawing.Point(457, 44);
+            this.txt_user_role_id.MaxLength = 50;
+            this.txt_user_role_id.Name = "txt_user_role_id";
+            this.txt_user_role_id.Size = new System.Drawing.Size(68, 32);
+            this.txt_user_role_id.TabIndex = 0;
+            this.txt_user_role_id.Visible = false;
             // 
             // txt_user
             // 
@@ -369,36 +399,6 @@ namespace School_Mang.PL.USERS
             this.chk_read.Text = "اطلاع فقط";
             this.chk_read.UseVisualStyleBackColor = true;
             this.chk_read.CheckedChanged += new System.EventHandler(this.chk_read_CheckedChanged);
-            // 
-            // txt_user_role_id
-            // 
-            this.txt_user_role_id.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_user_role_id.Location = new System.Drawing.Point(457, 44);
-            this.txt_user_role_id.MaxLength = 50;
-            this.txt_user_role_id.Name = "txt_user_role_id";
-            this.txt_user_role_id.Size = new System.Drawing.Size(68, 32);
-            this.txt_user_role_id.TabIndex = 0;
-            this.txt_user_role_id.Visible = false;
-            // 
-            // txt_role_permissions_id
-            // 
-            this.txt_role_permissions_id.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_role_permissions_id.Location = new System.Drawing.Point(457, 82);
-            this.txt_role_permissions_id.MaxLength = 50;
-            this.txt_role_permissions_id.Name = "txt_role_permissions_id";
-            this.txt_role_permissions_id.Size = new System.Drawing.Size(68, 32);
-            this.txt_role_permissions_id.TabIndex = 0;
-            this.txt_role_permissions_id.Visible = false;
-            // 
-            // txt_user_id
-            // 
-            this.txt_user_id.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_user_id.Location = new System.Drawing.Point(457, 118);
-            this.txt_user_id.MaxLength = 50;
-            this.txt_user_id.Name = "txt_user_id";
-            this.txt_user_id.Size = new System.Drawing.Size(68, 32);
-            this.txt_user_id.TabIndex = 0;
-            this.txt_user_id.Visible = false;
             // 
             // FRM_ADD_USER
             // 

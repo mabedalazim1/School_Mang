@@ -147,9 +147,6 @@
     <Reference Include="DevExpress.XtraTreeMap.v22.2, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraTreeMap.v22.2.UI, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraWizard.v22.2, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevOne.Security.Cryptography.BCrypt, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\BCrypt.1.0.0.0\lib\DevOne.Security.Cryptography.BCrypt.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
@@ -232,6 +229,7 @@
     <Compile Include="BL\NATEG\cls_NATAG_FUNCTIONS.cs" />
     <Compile Include="BL\NATEG\CLS_NATEG.cs" />
     <Compile Include="BL\NATEG\ExcelUtlity.cs" />
+    <Compile Include="BL\SITE\CLS_ADD_USER.cs" />
     <Compile Include="BL\SITE\CLS_MANGE_SITE.cs" />
     <Compile Include="BL\STD\CLS_STD.cs" />
     <Compile Include="BL\USERS.cs" />
@@ -609,6 +607,12 @@
     <Compile Include="PL\NATIGA\FRM_EDIT_ABSENT_STD.Designer.cs">
       <DependentUpon>FRM_EDIT_ABSENT_STD.cs</DependentUpon>
     </Compile>
+    <Compile Include="PL\NATIGA\FRM_EDIT_GOLOS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\NATIGA\FRM_EDIT_GOLOS.Designer.cs">
+      <DependentUpon>FRM_EDIT_GOLOS.cs</DependentUpon>
+    </Compile>
     <Compile Include="PL\NATIGA\FRM_EDIT_SITE_DEGREES.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -675,6 +679,12 @@
     <Compile Include="PL\NATIGA\HOME\FRM_MANG_SITE.Designer.cs">
       <DependentUpon>FRM_MANG_SITE.cs</DependentUpon>
     </Compile>
+    <Compile Include="PL\SITE\FRM_ADD_USER.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\SITE\FRM_ADD_USER.Designer.cs">
+      <DependentUpon>FRM_ADD_USER.cs</DependentUpon>
+    </Compile>
     <Compile Include="PL\SITE\FRM_COUNT_USERS.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -686,6 +696,18 @@
     </Compile>
     <Compile Include="PL\SITE\FRM_SITE_USER_DATA.Designer.cs">
       <DependentUpon>FRM_SITE_USER_DATA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PL\SITE\FRM_UNMATCH_DATA.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\SITE\FRM_UNMATCH_DATA.Designer.cs">
+      <DependentUpon>FRM_UNMATCH_DATA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PL\SITE\FRM_UPDATE_USER_DATA.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\SITE\FRM_UPDATE_USER_DATA.Designer.cs">
+      <DependentUpon>FRM_UPDATE_USER_DATA.cs</DependentUpon>
     </Compile>
     <Compile Include="PL\STD\CLS_STD_FUNCATIONS.cs" />
     <Compile Include="PL\STD\FRM_ADD_STD.cs">
@@ -921,6 +943,12 @@
     <Content Include="EXCEL\Final\Term_B\Term_B_3_Test.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\add-user-male-1001.png" />
+    <None Include="Resources\add-user-male-100.png" />
+    <None Include="Resources\database-site-100.png" />
+    <None Include="Resources\database-100.png" />
+    <None Include="Resources\compare-100.png" />
+    <None Include="Resources\user-100.png" />
     <None Include="Resources\site-data-100.png" />
     <None Include="Resources\site-40.png" />
     <None Include="Resources\test-data-100.png" />
@@ -1141,6 +1169,9 @@
     <EmbeddedResource Include="PL\NATIGA\FRM_EDIT_ABSENT_STD.resx">
       <DependentUpon>FRM_EDIT_ABSENT_STD.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PL\NATIGA\FRM_EDIT_GOLOS.resx">
+      <DependentUpon>FRM_EDIT_GOLOS.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PL\NATIGA\FRM_EDIT_SITE_DEGREES.resx">
       <DependentUpon>FRM_EDIT_SITE_DEGREES.cs</DependentUpon>
     </EmbeddedResource>
@@ -1174,11 +1205,20 @@
     <EmbeddedResource Include="PL\NATIGA\HOME\FRM_MANG_SITE.resx">
       <DependentUpon>FRM_MANG_SITE.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PL\SITE\FRM_ADD_USER.resx">
+      <DependentUpon>FRM_ADD_USER.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PL\SITE\FRM_COUNT_USERS.resx">
       <DependentUpon>FRM_COUNT_USERS.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PL\SITE\FRM_SITE_USER_DATA.resx">
       <DependentUpon>FRM_SITE_USER_DATA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PL\SITE\FRM_UNMATCH_DATA.resx">
+      <DependentUpon>FRM_UNMATCH_DATA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PL\SITE\FRM_UPDATE_USER_DATA.resx">
+      <DependentUpon>FRM_UPDATE_USER_DATA.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PL\STD\FRM_ADD_STD.resx">
       <DependentUpon>FRM_ADD_STD.cs</DependentUpon>

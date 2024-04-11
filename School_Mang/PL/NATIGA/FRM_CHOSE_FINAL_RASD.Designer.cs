@@ -33,21 +33,21 @@ namespace School_Mang.PL.NATIGA
             this.panel4 = new System.Windows.Forms.Panel();
             this.pn_top = new System.Windows.Forms.Panel();
             this.lbl_title = new System.Windows.Forms.Label();
+            this.btn_close = new DevExpress.XtraEditors.SimpleButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.pic_rasd = new System.Windows.Forms.PictureBox();
             this.cmb_test = new System.Windows.Forms.ComboBox();
             this.cmb_grade = new System.Windows.Forms.ComboBox();
             this.label18 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.btn_close = new DevExpress.XtraEditors.SimpleButton();
-            this.pic_rasd = new System.Windows.Forms.PictureBox();
             this.btn_ok = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btn_close_b = new Bunifu.Framework.UI.BunifuThinButton2();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.pn_top.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_rasd)).BeginInit();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel4
@@ -62,8 +62,8 @@ namespace School_Mang.PL.NATIGA
             // pn_top
             // 
             this.pn_top.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.pn_top.Controls.Add(this.lbl_title);
             this.pn_top.Controls.Add(this.btn_close);
+            this.pn_top.Controls.Add(this.lbl_title);
             this.pn_top.Dock = System.Windows.Forms.DockStyle.Top;
             this.pn_top.Location = new System.Drawing.Point(0, 0);
             this.pn_top.Name = "pn_top";
@@ -78,12 +78,25 @@ namespace School_Mang.PL.NATIGA
             this.lbl_title.AutoSize = true;
             this.lbl_title.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_title.ForeColor = System.Drawing.Color.White;
-            this.lbl_title.Location = new System.Drawing.Point(183, 13);
+            this.lbl_title.Location = new System.Drawing.Point(181, 13);
             this.lbl_title.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
             this.lbl_title.Name = "lbl_title";
             this.lbl_title.Size = new System.Drawing.Size(168, 25);
             this.lbl_title.TabIndex = 46;
             this.lbl_title.Text = "كشوف الرصد النهائية";
+            // 
+            // btn_close
+            // 
+            this.btn_close.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btn_close.ImageOptions.Image = global::School_Mang.Properties.Resources.close_w;
+            this.btn_close.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+            this.btn_close.Location = new System.Drawing.Point(4, 12);
+            this.btn_close.Name = "btn_close";
+            this.btn_close.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
+            this.btn_close.Size = new System.Drawing.Size(34, 33);
+            this.btn_close.TabIndex = 11;
+            this.btn_close.TabStop = false;
+            this.btn_close.Click += new System.EventHandler(this.btn_close_Click);
             // 
             // groupBox1
             // 
@@ -101,6 +114,16 @@ namespace School_Mang.PL.NATIGA
             this.groupBox1.TabIndex = 103;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "الصف ونوع الإختبار";
+            // 
+            // pic_rasd
+            // 
+            this.pic_rasd.Image = global::School_Mang.Properties.Resources.test_48;
+            this.pic_rasd.Location = new System.Drawing.Point(220, 0);
+            this.pic_rasd.Name = "pic_rasd";
+            this.pic_rasd.Size = new System.Drawing.Size(48, 48);
+            this.pic_rasd.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pic_rasd.TabIndex = 97;
+            this.pic_rasd.TabStop = false;
             // 
             // cmb_test
             // 
@@ -165,29 +188,6 @@ namespace School_Mang.PL.NATIGA
             this.groupBox3.Size = new System.Drawing.Size(515, 67);
             this.groupBox3.TabIndex = 102;
             this.groupBox3.TabStop = false;
-            // 
-            // btn_close
-            // 
-            this.btn_close.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btn_close.ImageOptions.Image = global::School_Mang.Properties.Resources.close_w;
-            this.btn_close.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
-            this.btn_close.Location = new System.Drawing.Point(4, 12);
-            this.btn_close.Name = "btn_close";
-            this.btn_close.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
-            this.btn_close.Size = new System.Drawing.Size(34, 33);
-            this.btn_close.TabIndex = 11;
-            this.btn_close.TabStop = false;
-            this.btn_close.Click += new System.EventHandler(this.btn_close_Click);
-            // 
-            // pic_rasd
-            // 
-            this.pic_rasd.Image = global::School_Mang.Properties.Resources.test_48;
-            this.pic_rasd.Location = new System.Drawing.Point(220, 0);
-            this.pic_rasd.Name = "pic_rasd";
-            this.pic_rasd.Size = new System.Drawing.Size(48, 48);
-            this.pic_rasd.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pic_rasd.TabIndex = 97;
-            this.pic_rasd.TabStop = false;
             // 
             // btn_ok
             // 
@@ -259,8 +259,8 @@ namespace School_Mang.PL.NATIGA
             this.pn_top.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pic_rasd)).EndInit();
+            this.groupBox3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

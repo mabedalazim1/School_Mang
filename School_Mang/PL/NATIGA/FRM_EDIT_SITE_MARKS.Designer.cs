@@ -33,6 +33,9 @@ namespace School_Mang.PL.NATIGA
             this.btn_close = new DevExpress.XtraEditors.SimpleButton();
             this.btn_save = new Bunifu.Framework.UI.BunifuThinButton2();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.txt_grade_id = new System.Windows.Forms.TextBox();
+            this.txt_test_kind_id = new System.Windows.Forms.TextBox();
+            this.txt_cod = new System.Windows.Forms.TextBox();
             this.btn_close_b = new Bunifu.Framework.UI.BunifuThinButton2();
             this.label13 = new System.Windows.Forms.Label();
             this.txt_sort = new System.Windows.Forms.TextBox();
@@ -67,9 +70,6 @@ namespace School_Mang.PL.NATIGA
             this.label2 = new System.Windows.Forms.Label();
             this.txt_name = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.txt_grade_id = new System.Windows.Forms.TextBox();
-            this.txt_test_kind_id = new System.Windows.Forms.TextBox();
-            this.txt_cod = new System.Windows.Forms.TextBox();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.pn_top.SuspendLayout();
@@ -127,6 +127,36 @@ namespace School_Mang.PL.NATIGA
             this.groupBox3.Size = new System.Drawing.Size(863, 67);
             this.groupBox3.TabIndex = 111;
             this.groupBox3.TabStop = false;
+            // 
+            // txt_grade_id
+            // 
+            this.txt_grade_id.Font = new System.Drawing.Font("Noto Naskh Arabic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_grade_id.Location = new System.Drawing.Point(285, 13);
+            this.txt_grade_id.MaxLength = 20;
+            this.txt_grade_id.Name = "txt_grade_id";
+            this.txt_grade_id.Size = new System.Drawing.Size(88, 40);
+            this.txt_grade_id.TabIndex = 129;
+            this.txt_grade_id.Visible = false;
+            // 
+            // txt_test_kind_id
+            // 
+            this.txt_test_kind_id.Font = new System.Drawing.Font("Noto Naskh Arabic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_test_kind_id.Location = new System.Drawing.Point(402, 13);
+            this.txt_test_kind_id.MaxLength = 20;
+            this.txt_test_kind_id.Name = "txt_test_kind_id";
+            this.txt_test_kind_id.Size = new System.Drawing.Size(88, 40);
+            this.txt_test_kind_id.TabIndex = 128;
+            this.txt_test_kind_id.Visible = false;
+            // 
+            // txt_cod
+            // 
+            this.txt_cod.Font = new System.Drawing.Font("Noto Naskh Arabic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_cod.Location = new System.Drawing.Point(509, 13);
+            this.txt_cod.MaxLength = 20;
+            this.txt_cod.Name = "txt_cod";
+            this.txt_cod.Size = new System.Drawing.Size(68, 40);
+            this.txt_cod.TabIndex = 127;
+            this.txt_cod.Visible = false;
             // 
             // btn_close_b
             // 
@@ -443,8 +473,8 @@ namespace School_Mang.PL.NATIGA
             // pn_top
             // 
             this.pn_top.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.pn_top.Controls.Add(this.label11);
             this.pn_top.Controls.Add(this.btn_close);
+            this.pn_top.Controls.Add(this.label11);
             this.pn_top.Dock = System.Windows.Forms.DockStyle.Top;
             this.pn_top.Location = new System.Drawing.Point(0, 0);
             this.pn_top.Name = "pn_top";
@@ -459,7 +489,7 @@ namespace School_Mang.PL.NATIGA
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.Color.White;
-            this.label11.Location = new System.Drawing.Point(391, 12);
+            this.label11.Location = new System.Drawing.Point(388, 12);
             this.label11.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(113, 25);
@@ -546,36 +576,6 @@ namespace School_Mang.PL.NATIGA
             this.label1.Size = new System.Drawing.Size(48, 29);
             this.label1.TabIndex = 99;
             this.label1.Text = "الصف";
-            // 
-            // txt_grade_id
-            // 
-            this.txt_grade_id.Font = new System.Drawing.Font("Noto Naskh Arabic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_grade_id.Location = new System.Drawing.Point(285, 13);
-            this.txt_grade_id.MaxLength = 20;
-            this.txt_grade_id.Name = "txt_grade_id";
-            this.txt_grade_id.Size = new System.Drawing.Size(88, 40);
-            this.txt_grade_id.TabIndex = 129;
-            this.txt_grade_id.Visible = false;
-            // 
-            // txt_test_kind_id
-            // 
-            this.txt_test_kind_id.Font = new System.Drawing.Font("Noto Naskh Arabic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_test_kind_id.Location = new System.Drawing.Point(402, 13);
-            this.txt_test_kind_id.MaxLength = 20;
-            this.txt_test_kind_id.Name = "txt_test_kind_id";
-            this.txt_test_kind_id.Size = new System.Drawing.Size(88, 40);
-            this.txt_test_kind_id.TabIndex = 128;
-            this.txt_test_kind_id.Visible = false;
-            // 
-            // txt_cod
-            // 
-            this.txt_cod.Font = new System.Drawing.Font("Noto Naskh Arabic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_cod.Location = new System.Drawing.Point(509, 13);
-            this.txt_cod.MaxLength = 20;
-            this.txt_cod.Name = "txt_cod";
-            this.txt_cod.Size = new System.Drawing.Size(68, 40);
-            this.txt_cod.TabIndex = 127;
-            this.txt_cod.Visible = false;
             // 
             // FRM_EDIT_SITE_MARKS
             // 

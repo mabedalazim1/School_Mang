@@ -24,7 +24,6 @@ namespace School_Mang.PL.MAIN
 
         // Get BL DATA
         BL.LOGIN.CLS_LOGIN login = new BL.LOGIN.CLS_LOGIN();
-        BL.STD.CLS_STD std = new BL.STD.CLS_STD();
 
         DAL.TestConcation testConcation = new DAL.TestConcation();
         BL.USERS users = new BL.USERS();
@@ -33,9 +32,9 @@ namespace School_Mang.PL.MAIN
 
         // Test servers
         byte server_kind = 0;
-        string site_name = "";
-
+    
         // Form Closed
+
         private static FRM_SETTINGS frm_settings;
         static void frm_Form_Closed(object sender, FormClosedEventArgs e)
         {
@@ -224,7 +223,7 @@ namespace School_Mang.PL.MAIN
                         Properties.Settings.Default.Site_DataBasee_name = txt_databasee_name.Text;
                         Properties.Settings.Default.Site_DataBasee_User = txt_databasee_user.Text;
                         Properties.Settings.Default.Site_DataBasee_Pass = txt_databasee_pass.Text;
-                        Properties.Settings.Default.Site_Server_Name = txt_url.Text;
+                        Properties.Settings.Default.Site_Host_Test = txt_url.Text;
 
                         break;
                 }

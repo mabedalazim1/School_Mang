@@ -57,17 +57,16 @@ namespace School_Mang.PL.STD.HOME
                     card_new.Visible = true;
                     break;
             }
-
-
         }
 
 
 
         private void lbl_current_stds_Click(object sender, EventArgs e)
         {
+            waiting.Wait();
             BL.Globals.Current_Year_Data = true;
-            STD.FRM_CHOOSE_GRADE frm = new FRM_CHOOSE_GRADE();
-            frm.ShowDialog();
+            FRM_CHOOSE_GRADE frm = new FRM_CHOOSE_GRADE();
+            frm.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
         }
 
         private void lbl_back_Click(object sender, EventArgs e)
@@ -127,7 +126,8 @@ namespace School_Mang.PL.STD.HOME
         {
             BL.Globals.Current_Year_Data = false;
             FRM_CHOOSE_GRADE frm = new FRM_CHOOSE_GRADE();
-            frm.ShowDialog();
+            frm.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
+
         }
 
         private void pic_next_year_Click(object sender, EventArgs e)

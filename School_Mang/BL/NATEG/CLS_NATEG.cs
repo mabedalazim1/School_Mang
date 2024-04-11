@@ -35,9 +35,8 @@ namespace School_Mang.BL.NATEG
 
         public void Update_Golos_Data(int std_code, int Golos)
         {
-
             DataAcceseLayer DAL = new DataAcceseLayer();
-
+           
             SqlParameter[] param = new SqlParameter[3];
             param[0] = new SqlParameter("@year_Id", SqlDbType.Int);
             param[0].Value = Properties.Settings.Default.year_cod;
@@ -48,6 +47,7 @@ namespace School_Mang.BL.NATEG
             param[2] = new SqlParameter("@Golos", SqlDbType.Int);
             param[2].Value = Golos;
 
+            DAL.Open();
             DAL.ExeucuteCommand("SP_Update_Golos_Data", param);  
         }
 
@@ -69,6 +69,51 @@ namespace School_Mang.BL.NATEG
             DAL.Close();
             return Dt;
         }
+
+        public DataTable Get_Golos_Edit_Data(int Grade_Id, string Get_All = "no")                   
+        {
+
+            DataAcceseLayer DAL = new DataAcceseLayer();
+
+            SqlParameter[] param = new SqlParameter[3];
+            param[0] = new SqlParameter("@year_Id", SqlDbType.Int);
+            param[0].Value = Properties.Settings.Default.year_cod;
+
+            param[1] = new SqlParameter("@Grade_Id", SqlDbType.Int);
+            param[1].Value = Grade_Id;
+
+            param[2] = new SqlParameter("@Get_All", SqlDbType.NVarChar, 3);
+            param[2].Value = Get_All;
+
+            DataTable Dt;
+
+            Dt = DAL.Selectdata("SP_Get_Golos_Edit_Data", param);
+            DAL.Close();
+            return Dt;
+        }
+
+        public DataTable Search_Golos_Data(int Grade_Id, string studeNtname)
+        {
+
+            DataAcceseLayer DAL = new DataAcceseLayer();
+
+            SqlParameter[] param = new SqlParameter[3];
+            param[0] = new SqlParameter("@year_Id", SqlDbType.Int);
+            param[0].Value = Properties.Settings.Default.year_cod;
+
+            param[1] = new SqlParameter("@Grade_Id", SqlDbType.Int);
+            param[1].Value = Grade_Id;
+
+            param[2] = new SqlParameter("@studeNtname", SqlDbType.NVarChar, 200);
+            param[2].Value = studeNtname;
+
+            DataTable Dt;
+             
+            Dt = DAL.Selectdata("SP_Search_Golos_Data", param);
+            DAL.Close();
+            return Dt;
+        }
+
 
         public DataTable Get_Test_Month()
         {

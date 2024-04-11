@@ -382,6 +382,7 @@ namespace School_Mang.PL.STD
 
         private void btn_new_std_Click(object sender, EventArgs e)
         {
+            Waiting.Wait();
             if (dt_std_data.SelectedRows.Count > 0)
             {
                 // if (Verify_Std_Status()) return;
@@ -446,7 +447,7 @@ namespace School_Mang.PL.STD
                 Waiting.End_WAit();
             }
 
-
+            Waiting.End_WAit();
         }
 
         private void txt_std_data_KeyUp(object sender, KeyEventArgs e)

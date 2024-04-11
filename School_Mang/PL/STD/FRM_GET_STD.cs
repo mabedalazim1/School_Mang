@@ -428,6 +428,7 @@ namespace School_Mang.PL.STD
                 FRM_TAHEEL_STD.Get_Tahweel_Std.chk_kotob_no.Checked = true;
                 FRM_TAHEEL_STD.Get_Tahweel_Std.transfer_status = 4;
                 FRM_TAHEEL_STD.Get_Tahweel_Std.lbl_mohwel.Text = "محول من";
+
                 FRM_TAHEEL_STD.Get_Tahweel_Std.grade = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Grade_Id"].Value);
 
                 FRM_TAHEEL_STD.Get_Tahweel_Std.ShowDialog();

@@ -44,8 +44,8 @@ namespace School_Mang.RPT
             this.pn_top.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
             this.pn_top.Controls.Add(this.btn_min);
             this.pn_top.Controls.Add(this.btn_max);
-            this.pn_top.Controls.Add(this.lbl_caption);
             this.pn_top.Controls.Add(this.btn_close);
+            this.pn_top.Controls.Add(this.lbl_caption);
             this.pn_top.Dock = System.Windows.Forms.DockStyle.Top;
             this.pn_top.Location = new System.Drawing.Point(0, 0);
             this.pn_top.Name = "pn_top";
@@ -86,7 +86,7 @@ namespace School_Mang.RPT
             this.lbl_caption.AutoSize = true;
             this.lbl_caption.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_caption.ForeColor = System.Drawing.Color.White;
-            this.lbl_caption.Location = new System.Drawing.Point(384, 10);
+            this.lbl_caption.Location = new System.Drawing.Point(384, 13);
             this.lbl_caption.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
             this.lbl_caption.Name = "lbl_caption";
             this.lbl_caption.Size = new System.Drawing.Size(259, 25);

@@ -139,9 +139,6 @@
   <data name="new-std" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\new-std.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="test-100 (2)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\test-100 (2).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="boys-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\boys-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -175,6 +172,9 @@
   <data name="site-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\site-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="compare-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\compare-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="minimize" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\minimize.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -201,6 +201,9 @@
   </data>
   <data name="test-cheating-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\test-cheating-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="add-user-male-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\add-user-male-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="exam-a-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\exam-a-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -235,6 +238,12 @@
   <data name="help-80" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\help-80.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="user-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\user-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="site-data-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\site-data-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="payment-w40" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\payment-w40.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -252,6 +261,9 @@
   </data>
   <data name="icons8-edit-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-edit-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="database-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\database-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="minimize-w" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\minimize-w.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -304,11 +316,14 @@
   <data name="close" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\close.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="age-64" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\age-64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="test-100 (2)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\test-100 (2).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="site-40" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\site-40.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="database-site-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\database-site-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="settings-w" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\settings-w.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -355,6 +370,9 @@
   <data name="icons8-go-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-go-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="age-64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\age-64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="transfer-from-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\transfer-from-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -370,7 +388,7 @@
   <data name="maximize" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\maximize.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="site-data-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\site-data-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="add-user-male-1001" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\add-user-male-1001.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

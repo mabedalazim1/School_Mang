@@ -730,12 +730,13 @@ namespace School_Mang.BL.STD
                                           string Guardian_name,
                                           string Transfer_reason,
                                           byte Resom , byte Kotob,
-                                          string adrs , int New_Grade)
+                                          string adrs , int New_Grade,
+                                          bool Trans_After_Year)
 
         {
             DAL.DataAcceseLayer DAL = new DAL.DataAcceseLayer();
 
-            SqlParameter[] param = new SqlParameter[13];
+            SqlParameter[] param = new SqlParameter[14];
 
             param[0] = new SqlParameter("@Transfer_code", SqlDbType.NVarChar, 20);
             param[0].Value = Transfer_code;
@@ -776,6 +777,8 @@ namespace School_Mang.BL.STD
             param[12] = new SqlParameter("@New_Grade", SqlDbType.Int);
             param[12].Value = New_Grade;
 
+            param[13] = new SqlParameter("@Trans_After_Year", SqlDbType.Bit);
+            param[13].Value = Trans_After_Year;
 
             DAL.Open();
             DAL.ExeucuteCommand("SP_Add_Transfers_Data", param);
@@ -912,11 +915,12 @@ namespace School_Mang.BL.STD
                                          int Class_Id,
                                          int new_year,
                                          int std_found,
-                                         int To_School)
+                                         int To_School,
+                                         bool Trans_After_Year)
         {
             DAL.DataAcceseLayer DAL = new DAL.DataAcceseLayer();
 
-            SqlParameter[] param = new SqlParameter[9];
+            SqlParameter[] param = new SqlParameter[10];
 
             param[0] = new SqlParameter("@Transfer_code", SqlDbType.Int);
             param[0].Value = Transfer_code;
@@ -944,6 +948,9 @@ namespace School_Mang.BL.STD
 
             param[8] = new SqlParameter("@To_School", SqlDbType.Int);
             param[8].Value = To_School;
+
+            param[9] = new SqlParameter("@Trans_After_Year", SqlDbType.Bit);
+            param[9].Value = Trans_After_Year;
 
             DAL.Open();
             DAL.ExeucuteCommand("SP_Delete_Transfers_Data", param);
@@ -1144,5 +1151,72 @@ namespace School_Mang.BL.STD
             return Dt;
         }
 
+        public DataTable GET_Trans_By_Code(string std_code)
+        {
+            DAL.DataAcceseLayer DAL = new DAL.DataAcceseLayer();
+            DataTable Dt;
+
+            SqlParameter[] param = new SqlParameter[1];
+            param[0] = new SqlParameter("@std_code", SqlDbType.NVarChar,20);
+            param[0].Value = std_code;
+
+            Dt = DAL.Selectdata("SP_GET_Trans_By_Code", param);
+            DAL.Close();
+            return Dt;
+        }
+
+
+
+        public DataTable Get_Data_For_Site(int Grade_Id = 0, int Golos = 0)
+        {
+            DAL.DataAcceseLayer DAL = new DAL.DataAcceseLayer();
+
+            SqlParameter[] param = new SqlParameter[5];
+            param[0] = new SqlParameter("@Year_Id", SqlDbType.Int);
+            param[0].Value = Properties.Settings.Default.year_cod;
+
+            param[1] = new SqlParameter("@Golos", SqlDbType.Int);
+            param[1].Value = Golos;
+            
+            param[2] = new SqlParameter("@Grade_Id", SqlDbType.Int);
+            param[2].Value = Grade_Id;
+
+            param[3] = new SqlParameter("@stdunet_full_name", SqlDbType.NVarChar,255);
+            param[3].Value = "";
+
+            param[4] = new SqlParameter("@search", SqlDbType.Bit);
+            param[4].Value = false;
+
+            DataTable Dt;
+            Dt = DAL.Selectdata("SP_Get_Data_For_Site", param);
+            DAL.Close();
+            return Dt;
+        }
+
+        public DataTable Get_Data_For_Site(int Grade_Id, string stdunet_full_name)
+        {
+            DAL.DataAcceseLayer DAL = new DAL.DataAcceseLayer();
+
+            SqlParameter[] param = new SqlParameter[5];
+            param[0] = new SqlParameter("@Year_Id", SqlDbType.Int);
+            param[0].Value = Properties.Settings.Default.year_cod;
+
+            param[1] = new SqlParameter("@Golos", SqlDbType.Int);
+            param[1].Value = 0;
+
+            param[2] = new SqlParameter("@Grade_Id", SqlDbType.Int);
+            param[2].Value = Grade_Id;
+
+            param[3] = new SqlParameter("@stdunet_full_name", SqlDbType.NVarChar, 255);
+            param[3].Value = stdunet_full_name;
+
+            param[4] = new SqlParameter("@search", SqlDbType.Bit);
+            param[4].Value = true;
+
+            DataTable Dt;
+            Dt = DAL.Selectdata("SP_Get_Data_For_Site", param);
+            DAL.Close();
+            return Dt;
+        }
     }
 }

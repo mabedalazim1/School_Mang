@@ -32,10 +32,11 @@ namespace School_Mang.PL.STD
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FRM_TAHEEL_STD));
             this.panel4 = new System.Windows.Forms.Panel();
             this.pn_top = new System.Windows.Forms.Panel();
-            this.lbl_title = new System.Windows.Forms.Label();
+            this.txt_year = new System.Windows.Forms.TextBox();
             this.txt_trans_code = new System.Windows.Forms.TextBox();
             this.txt_std_code = new System.Windows.Forms.TextBox();
             this.btn_close = new DevExpress.XtraEditors.SimpleButton();
+            this.lbl_title = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.chk_kotob_no = new System.Windows.Forms.CheckBox();
             this.chk_kotob_yes = new System.Windows.Forms.CheckBox();
@@ -59,6 +60,8 @@ namespace School_Mang.PL.STD
             this.btn_close_b = new Bunifu.Framework.UI.BunifuThinButton2();
             this.chk_before = new System.Windows.Forms.CheckBox();
             this.chk_after = new System.Windows.Forms.CheckBox();
+            this.txt_grade = new System.Windows.Forms.TextBox();
+            this.txt_trans_after = new System.Windows.Forms.TextBox();
             this.pn_top.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -76,10 +79,12 @@ namespace School_Mang.PL.STD
             // pn_top
             // 
             this.pn_top.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.pn_top.Controls.Add(this.lbl_title);
+            this.pn_top.Controls.Add(this.txt_trans_after);
+            this.pn_top.Controls.Add(this.txt_year);
             this.pn_top.Controls.Add(this.txt_trans_code);
             this.pn_top.Controls.Add(this.txt_std_code);
             this.pn_top.Controls.Add(this.btn_close);
+            this.pn_top.Controls.Add(this.lbl_title);
             this.pn_top.Dock = System.Windows.Forms.DockStyle.Top;
             this.pn_top.Location = new System.Drawing.Point(0, 0);
             this.pn_top.Name = "pn_top";
@@ -89,17 +94,16 @@ namespace School_Mang.PL.STD
             this.pn_top.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pn_top_MouseMove);
             this.pn_top.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pn_top_MouseUp);
             // 
-            // lbl_title
+            // txt_year
             // 
-            this.lbl_title.AutoSize = true;
-            this.lbl_title.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_title.ForeColor = System.Drawing.Color.White;
-            this.lbl_title.Location = new System.Drawing.Point(200, 13);
-            this.lbl_title.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
-            this.lbl_title.Name = "lbl_title";
-            this.lbl_title.Size = new System.Drawing.Size(144, 25);
-            this.lbl_title.TabIndex = 46;
-            this.lbl_title.Text = "طلب تحويل طالب";
+            this.txt_year.Enabled = false;
+            this.txt_year.Font = new System.Drawing.Font("Noto Naskh Arabic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_year.Location = new System.Drawing.Point(55, 25);
+            this.txt_year.MaxLength = 11;
+            this.txt_year.Name = "txt_year";
+            this.txt_year.Size = new System.Drawing.Size(15, 40);
+            this.txt_year.TabIndex = 84;
+            this.txt_year.Visible = false;
             // 
             // txt_trans_code
             // 
@@ -135,6 +139,18 @@ namespace School_Mang.PL.STD
             this.btn_close.TabIndex = 12;
             this.btn_close.TabStop = false;
             this.btn_close.Click += new System.EventHandler(this.btn_close_Click);
+            // 
+            // lbl_title
+            // 
+            this.lbl_title.AutoSize = true;
+            this.lbl_title.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_title.ForeColor = System.Drawing.Color.White;
+            this.lbl_title.Location = new System.Drawing.Point(196, 13);
+            this.lbl_title.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
+            this.lbl_title.Name = "lbl_title";
+            this.lbl_title.Size = new System.Drawing.Size(144, 25);
+            this.lbl_title.TabIndex = 46;
+            this.lbl_title.Text = "طلب تحويل طالب";
             // 
             // groupBox1
             // 
@@ -385,6 +401,7 @@ namespace School_Mang.PL.STD
             this.btn_edit_std.Size = new System.Drawing.Size(138, 50);
             this.btn_edit_std.TabIndex = 10;
             this.btn_edit_std.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btn_edit_std.Click += new System.EventHandler(this.btn_edit_std_Click);
             // 
             // btn_new_std
             // 
@@ -464,12 +481,35 @@ namespace School_Mang.PL.STD
             this.chk_after.UseVisualStyleBackColor = true;
             this.chk_after.CheckedChanged += new System.EventHandler(this.chk_after_CheckedChanged);
             // 
+            // txt_grade
+            // 
+            this.txt_grade.Enabled = false;
+            this.txt_grade.Font = new System.Drawing.Font("Noto Naskh Arabic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_grade.Location = new System.Drawing.Point(76, 25);
+            this.txt_grade.MaxLength = 11;
+            this.txt_grade.Name = "txt_grade";
+            this.txt_grade.Size = new System.Drawing.Size(15, 40);
+            this.txt_grade.TabIndex = 79;
+            this.txt_grade.Visible = false;
+            // 
+            // txt_trans_after
+            // 
+            this.txt_trans_after.Enabled = false;
+            this.txt_trans_after.Font = new System.Drawing.Font("Noto Naskh Arabic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_trans_after.Location = new System.Drawing.Point(157, 25);
+            this.txt_trans_after.MaxLength = 11;
+            this.txt_trans_after.Name = "txt_trans_after";
+            this.txt_trans_after.Size = new System.Drawing.Size(19, 40);
+            this.txt_trans_after.TabIndex = 85;
+            this.txt_trans_after.Visible = false;
+            // 
             // FRM_TAHEEL_STD
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(536, 501);
+            this.Controls.Add(this.txt_grade);
             this.Controls.Add(this.chk_after);
             this.Controls.Add(this.chk_before);
             this.Controls.Add(this.groupBox3);
@@ -524,5 +564,8 @@ namespace School_Mang.PL.STD
         public System.Windows.Forms.TextBox txt_trans_code;
         public System.Windows.Forms.CheckBox chk_before;
         public System.Windows.Forms.CheckBox chk_after;
+        public System.Windows.Forms.TextBox txt_year;
+        public System.Windows.Forms.TextBox txt_grade;
+        public System.Windows.Forms.TextBox txt_trans_after;
     }
 }

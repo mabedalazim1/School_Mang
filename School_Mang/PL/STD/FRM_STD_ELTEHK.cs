@@ -153,10 +153,13 @@ namespace School_Mang.PL.STD
                 if (!BL.Globals.Taheewl_To_School)
                 {
                     msg.MyMesg("تم حفظ البيانات");
+
                 }
 
                 btn_new_std.Enabled = false;
                 BL.Globals.Taheewl_To_School = false;
+                FRM_GET_STD.Get_Student.txt_std_data.Text = "";
+                FRM_GET_STD.Get_Student.cmb_sana_SelectedIndexChanged(sender, e);
 
             }
             catch (Exception ex)

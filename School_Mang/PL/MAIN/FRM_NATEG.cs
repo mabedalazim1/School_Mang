@@ -113,7 +113,7 @@ namespace School_Mang.PL.MAIN
             else
             {
                 // Get Std Data Form
-                natag_func.changePages(NATIGA.HOME.FRM_MANG_SITE.Get_Frm_Mang_Site.pn_home, "إدارة الموقع");
+                natag_func.changePages(NATIGA.HOME.FRM_MANG_SITE.Get_Frm_Mang_Site.pn_home, "بيانات الموقع");
             }
           
         }
@@ -143,6 +143,24 @@ namespace School_Mang.PL.MAIN
         private void pic_setting_Click(object sender, EventArgs e)
         {
             lbl_setting_Click(sender, e);
+        }
+
+        private void lbl_edit_golos_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                BL.Globals.Edit_Golos = true;
+                NATIGA.FRM_FINAL_DATA.Get_Frm_Final_Data.ShowDialog();
+            }
+            catch(Exception ex)
+            {
+                msg.ErrorMesg(ex.Message);
+            }
+        }
+
+        private void pic_edit_golos_Click(object sender, EventArgs e)
+        {
+            lbl_edit_golos_Click(sender, e);
         }
     }
 

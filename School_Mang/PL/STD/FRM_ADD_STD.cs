@@ -135,31 +135,51 @@ namespace School_Mang.PL.STD
             move_y = e.Y;
         }
 
+        private bool test_std_cod(int code)
+        {
+            DataTable std_Dt = std.Verify_Std_Code(Convert.ToString(code));
+            if (std_Dt.Rows.Count == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
         private int Verify_Std_Code(string sdt_code)
         {
+
             Boolean code_status = false;
             int code = Convert.ToInt32(sdt_code);
             // Verify Student Code 
 
-
-            while (!code_status)
+            try
             {
-                DataTable std_Dt = std.Verify_Std_Code(code.ToString());
-                if (std_Dt.Rows.Count != 0)
+                while (!code_status)
                 {
-                    DataTable Dt = std.GET_Code_Std_Grade(Convert.ToInt32(cmb_grade.SelectedValue), Convert.ToInt32(cmb_sana.SelectedValue), "no");
-                    code = Convert.ToInt32(Dt.Rows[0]["count_std"]) + 1;
-                }
-                else
-                {
-                    code_status = true;
+                    if (test_std_cod(code))
+                    {
+                        int myCode = code + 1;
+                        if (test_std_cod(myCode))
+                        {
+                            code_status = true;
+                        }
 
+                    }
+                    code += 1;
                 }
-                code += 1;
+            }
+            catch (Exception e)
+            {
+                msg.ErrorMesg(e.Message);
             }
             return code;
 
         }
+
         private void Save_Std_Data()
         {
             int count_std;
@@ -202,8 +222,7 @@ namespace School_Mang.PL.STD
 
             // Verify Student Code 
 
-            DataTable std_Dt = std.Verify_Std_Code(Convert.ToString(sdt_code));
-            if (std_Dt.Rows.Count != 0)
+            if (!test_std_cod(sdt_code))
             {
                 sdt_code = Verify_Std_Code(sdt_code.ToString());
             }
@@ -351,8 +370,8 @@ namespace School_Mang.PL.STD
             {
                 Globals.Open_Form_Get_osra = false;
                 this.Close();
-                FRM_GET_OSRAA.Get_Osra_data.txt_osra_data_OnValueChanged(sender,e);
-                FRM_GET_OSRAA.Get_Osra_data.Visible= true;
+                FRM_GET_OSRAA.Get_Osra_data.txt_osra_data_OnValueChanged(sender, e);
+                FRM_GET_OSRAA.Get_Osra_data.Visible = true;
             }
             else if (Globals.Add_From_Get_Std)
             {
@@ -361,7 +380,7 @@ namespace School_Mang.PL.STD
                 FRM_ADD_STD.frm = null;
                 this.Dispose();
                 FRM_GET_STD.Get_Student.cmb_sana_SelectedIndexChanged(sender, e);
-                FRM_GET_STD.Get_Student.Visible= true;
+                FRM_GET_STD.Get_Student.Visible = true;
             }
             else
             {
@@ -374,7 +393,7 @@ namespace School_Mang.PL.STD
 
         private void link_lbl_osraa_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            
+
 
             FRM_OSRAA_DATA.Get_Osra_data.ShowDialog();
         }
@@ -567,7 +586,7 @@ namespace School_Mang.PL.STD
         private void txt_nat_KeyPress(object sender, KeyPressEventArgs e)
         {
             txt_nat.BackColor = Color.White;
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) )
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
             {
                 e.Handled = true;
             }

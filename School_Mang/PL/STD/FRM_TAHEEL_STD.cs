@@ -15,15 +15,14 @@ namespace School_Mang.PL.STD
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
         BL.MSG msg = new BL.MSG();
         BL.Waiting Waiting = new BL.Waiting();
-
+        RPT.REPORT_CONNECTION RPT = new RPT.REPORT_CONNECTION();
         public int transfer_status;
         public int grade = 0;
 
         public byte rosom = 0;
         public byte kotob = 0;
 
-        private short trans_year = 0;
-        private short trans_grade = 0;
+        private byte save_data = 0;
 
         int permission_id = Properties.Settings.Default.permission_id;
 
@@ -77,6 +76,23 @@ namespace School_Mang.PL.STD
         }
         #region My Voids
 
+        private Boolean Cheack_Tarns_Data()
+        {
+            DataTable Dt;
+            Dt = std.GET_Trans_By_Code(txt_std_code.Text);
+            if (Dt.Rows.Count != 0)
+            {
+                txt_trans_code.Text = Dt.Rows[0]["Transfer_code"].ToString();
+                txt_grade.Text = Dt.Rows[0]["Grade_Id"].ToString();
+                txt_year.Text = Dt.Rows[0]["Year_Id"].ToString();
+                txt_trans_after.Text = Convert.ToBoolean(Dt.Rows[0]["Year_Id"]).ToString();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         private Boolean Cheack_Data(TextBox txt)
         {
             if (txt.Text == "")
@@ -84,6 +100,7 @@ namespace School_Mang.PL.STD
                 msg.ErrorMesg("تأكد من استكمال البيانات ! ..");
                 txt.BackColor = Color.MistyRose;
                 txt.Focus();
+                Waiting.End_WAit();
                 return false;
             }
             else
@@ -129,6 +146,7 @@ namespace School_Mang.PL.STD
             Dt = std.Verify_Std_School_Code(std_code, year);
             if (Dt.Rows.Count == 0)
             {
+                Waiting.End_WAit();
                 return false;
             }
             else
@@ -179,12 +197,12 @@ namespace School_Mang.PL.STD
             if (chk_resom_yes.Checked)
             {
                 chk_resom_no.Checked = false;
-                rosom = 0;
+                rosom = 1;
             }
             else
             {
                 chk_resom_no.Checked = true;
-                rosom = 1;
+                rosom = 0;
             }
         }
 
@@ -232,16 +250,23 @@ namespace School_Mang.PL.STD
 
         private void btn_new_std_Click(object sender, EventArgs e)
         {
+            bool Trans_After_Year;
+            Waiting.Wait();
+
+            // Check Entry Data
             if (!Cheack_Data(txt_to_school)) return;
             if (!Cheack_Data(txt_adrs)) return;
             if (!Cheack_Data(txt_guardian_name)) return;
             if (!Cheack_Data(txt_transfer_reason)) return;
 
-            Waiting.Wait();
+            //  New Trans Data  New Student
             if (!BL.Globals.Update_Taheewl)
             {
+
                 int year = Properties.Settings.Default.year_cod;
-                if (!Verify_Std_School_Code(txt_std_code.Text, year+1))
+
+                // Cheak If Student Has Data On Next Year Or Not 
+                if (!Verify_Std_School_Code(txt_std_code.Text, year + 1))
                 {
                     if (chk_after.Checked)
                     {
@@ -252,16 +277,11 @@ namespace School_Mang.PL.STD
                     else
                     {
                         if (msg.DialogeErrMsg("سوف يتم تحويل من المدرسة عن العام السابق .. هل تريد المتابعة ؟ ") != DialogResult.Yes) return;
-
-                        // Get Trans Year And Grade For Old Std
-                      
-                            year -= 1;
-                            grade -= 1;
                     }
-                   
                 }
                 try
                 {
+
                     // If Transfer To School
                     if (BL.Globals.Taheewl_To_School)
                     {
@@ -270,8 +290,20 @@ namespace School_Mang.PL.STD
                         BL.Globals.Taheewl_To_School = false;
                     }
 
+                    // If Trans on Current Year After School Begin
+                    if (chk_before.Checked)
+                    {
+                        Trans_After_Year = true;
+                        year -= 1;
+                    }
+                    else
+                    {
+                        Trans_After_Year = false;
+                    }
+
 
                     // Add Transfers Data
+                    Waiting.Wait();
                     std.Add_Transfers_Data(
                         Trans_cod().ToString(),
                         txt_std_code.Text,
@@ -282,14 +314,26 @@ namespace School_Mang.PL.STD
                         txt_transfer_reason.Text,
                         rosom, kotob,
                         txt_adrs.Text,
-                        grade);
+                        grade,
+                        Trans_After_Year);
 
+                    // Get Trans Code After Save data
+                    Waiting.Wait();
+                    if (Cheack_Tarns_Data())
+                    {
+                        msg.MyMesg("تم حفظ طلب التحويل بنجاح .. !");
+                    }
 
-                    msg.MyMesg("تم حفظ طلب التحويل بنجاح .. !");
+                    else
+                    {
+                        msg.ErrorMesg("لم يتم الحفظ ..!");
+                        Waiting.End_WAit();
+                        return;
+                    }
 
                     // Update Current Std Data
-                    FRM_GET_STD.Get_Student.txt_std_data.Text = "";
-                    FRM_GET_STD.Get_Student.txt_std_data_OnValueChanged(sender, e);
+                    FRM_CURRENT_STD.Get_Current_Std.txt_std_data.Text = "";
+                    FRM_CURRENT_STD.Get_Current_Std.cmb_grade_SelectedIndexChanged(sender, e);
                 }
                 catch (Exception ex)
                 {
@@ -297,6 +341,7 @@ namespace School_Mang.PL.STD
                     Waiting.End_WAit();
                 }
             }
+            // If Update Current Trans Data
             else
             {
                 try
@@ -344,7 +389,11 @@ namespace School_Mang.PL.STD
             // Update Current Std Data
 
             FRM_TAHWELAT.Get_Frm_Tahwelat.cmb_grade_SelectedIndexChanged(sender, e);
+
+            // Data is Saved
+            save_data = 1;
             btn_new_std.Enabled = false;
+
 
             Waiting.End_WAit();
 
@@ -372,6 +421,8 @@ namespace School_Mang.PL.STD
 
         private void FRM_TAHEEL_STD_Load(object sender, EventArgs e)
         {
+
+
             if (BL.Globals.Update_Taheewl)
             {
                 lbl_title.Text = "تعديل طلب التحويل";
@@ -379,11 +430,17 @@ namespace School_Mang.PL.STD
                 chk_after.Checked = true;
                 chk_before.Visible = false;
                 chk_after.Visible = false;
+
+                // Data is Saved
+                save_data = 1;
             }
             else
             {
                 lbl_title.Text = "طلب تحويل طالب";
                 btn_new_std.ButtonText = "حفظ";
+
+                // Data Not Save Yet
+                save_data = 0;
             }
 
             if (BL.Globals.Taheewl_To_School)
@@ -405,7 +462,7 @@ namespace School_Mang.PL.STD
         private void chk_after_CheckedChanged(object sender, EventArgs e)
         {
 
-            if(chk_after.Checked )
+            if (chk_after.Checked)
             {
 
                 chk_before.Checked = false;
@@ -418,23 +475,91 @@ namespace School_Mang.PL.STD
 
         private void chk_before_CheckedChanged(object sender, EventArgs e)
         {
-           
+
             if (chk_before.Checked)
             {
-                if (msg.DialogeErrMsg("سوف يتم تحويل الطالب أثناء الدراسة .. هل تريد المتابعة ؟ ") != DialogResult.Yes) 
+                if (msg.DialogeErrMsg("سوف يتم تحويل الطالب أثناء الدراسة .. هل تريد المتابعة ؟ ") != DialogResult.Yes)
                 {
                     chk_after.Checked = true;
                     chk_before.Checked = false;
+
                     return;
                 }
-                
+
                 chk_after.Checked = false;
-                
+                chk_kotob_yes.Checked = true;
+                chk_kotob_no.Checked = false;
+                chk_resom_yes.Checked = true;
+                chk_resom_no.Checked = false;
             }
             else
             {
                 chk_after.Checked = true;
+                chk_kotob_yes.Checked = false;
+                chk_resom_yes.Checked = false;
+                chk_kotob_no.Checked = true;
+                chk_resom_no.Checked = true;
             }
+        }
+
+        private void btn_edit_std_Click(object sender, EventArgs e)
+        {
+            if (BL.Globals.Update_Taheewl)
+            {
+                if (Cheack_Tarns_Data())
+                {
+                    save_data = 1;
+                }
+                else
+                {
+                    save_data = 0;
+                    msg.ErrorMesg("يرجى حفظ طلب التحويل أولا .. !");
+                }
+            }
+
+            try
+            {
+                // Check Saved Data
+                if (save_data != 0)
+                {
+                    Waiting.Wait();
+                    // Get Year Desc
+                    int sana = (Convert.ToInt32(txt_year.Text)) + 2021;
+                    string year_data = std.Get_Year_Desc(sana + 1).Rows[0]["YearDesc"].ToString();
+                    string[] year = year_data.Split('-');
+                    string year_desc = year[1] + "-" + year[0];
+                    string grade_desc = "";
+                    // Get new Grade
+                    int saved_grade = Convert.ToInt32(txt_grade.Text);
+                    // If Trans After School
+                    if (Convert.ToBoolean(txt_trans_after.Text))
+                    {
+                        grade_desc = std.Get_Grade_Desc(saved_grade).Rows[0]["GradeDesc"].ToString();
+                    }
+                    else
+                    {
+                        grade_desc = std.Get_Grade_Desc(saved_grade + 1).Rows[0]["GradeDesc"].ToString();
+                    }
+
+                    string std_name = txt_std_name.Text;
+                    string trans_code = txt_trans_code.Text;
+
+                    Waiting.End_WAit();
+                    // Open Report
+                    RPT.OpenTahwel_From_Report(trans_code, std_name, year_desc, grade_desc);
+                }
+                else
+                {
+                    msg.ErrorMesg("يرجى حفظ طلب التحويل أولا .. !");
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                msg.ErrorMesg(ex.Message);
+                Waiting.End_WAit();
+            }
+            Waiting.End_WAit();
         }
     }
 }

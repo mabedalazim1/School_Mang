@@ -38,33 +38,33 @@ namespace School_Mang.PL.NATIGA
             this.btn_save_data = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btn_close_b = new Bunifu.Framework.UI.BunifuThinButton2();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.chk_term_1 = new System.Windows.Forms.CheckBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.chk_term_2 = new System.Windows.Forms.CheckBox();
-            this.chk_ar_1 = new System.Windows.Forms.CheckBox();
-            this.chk_math_1 = new System.Windows.Forms.CheckBox();
-            this.chk_scince_1 = new System.Windows.Forms.CheckBox();
-            this.chk_social_1 = new System.Windows.Forms.CheckBox();
-            this.chk_english_1 = new System.Windows.Forms.CheckBox();
-            this.chk_dain_1 = new System.Windows.Forms.CheckBox();
-            this.chk_tocnolegy_1 = new System.Windows.Forms.CheckBox();
             this.chk_maharat_1 = new System.Windows.Forms.CheckBox();
-            this.chk_maharat_2 = new System.Windows.Forms.CheckBox();
-            this.chk_tocnolegy_2 = new System.Windows.Forms.CheckBox();
-            this.chk_dain_2 = new System.Windows.Forms.CheckBox();
-            this.chk_english_2 = new System.Windows.Forms.CheckBox();
-            this.chk_social_2 = new System.Windows.Forms.CheckBox();
-            this.chk_scince_2 = new System.Windows.Forms.CheckBox();
-            this.chk_math_2 = new System.Windows.Forms.CheckBox();
-            this.chk_ar_2 = new System.Windows.Forms.CheckBox();
+            this.chk_tocnolegy_1 = new System.Windows.Forms.CheckBox();
+            this.chk_dain_1 = new System.Windows.Forms.CheckBox();
+            this.chk_english_1 = new System.Windows.Forms.CheckBox();
+            this.chk_social_1 = new System.Windows.Forms.CheckBox();
+            this.chk_scince_1 = new System.Windows.Forms.CheckBox();
+            this.chk_math_1 = new System.Windows.Forms.CheckBox();
+            this.chk_ar_1 = new System.Windows.Forms.CheckBox();
+            this.chk_term_1 = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.chk_maharat_2 = new System.Windows.Forms.CheckBox();
+            this.chk_term_2 = new System.Windows.Forms.CheckBox();
+            this.chk_tocnolegy_2 = new System.Windows.Forms.CheckBox();
+            this.chk_ar_2 = new System.Windows.Forms.CheckBox();
+            this.chk_dain_2 = new System.Windows.Forms.CheckBox();
+            this.chk_math_2 = new System.Windows.Forms.CheckBox();
+            this.chk_english_2 = new System.Windows.Forms.CheckBox();
+            this.chk_scince_2 = new System.Windows.Forms.CheckBox();
+            this.chk_social_2 = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.txt_grade = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.txt_name = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.pn_top.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -84,8 +84,8 @@ namespace School_Mang.PL.NATIGA
             // pn_top
             // 
             this.pn_top.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.pn_top.Controls.Add(this.label11);
             this.pn_top.Controls.Add(this.btn_close);
+            this.pn_top.Controls.Add(this.label11);
             this.pn_top.Dock = System.Windows.Forms.DockStyle.Top;
             this.pn_top.Location = new System.Drawing.Point(0, 0);
             this.pn_top.Name = "pn_top";
@@ -204,6 +204,102 @@ namespace School_Mang.PL.NATIGA
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "الفصل الدراسي الأول";
             // 
+            // chk_maharat_1
+            // 
+            this.chk_maharat_1.AutoSize = true;
+            this.chk_maharat_1.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.chk_maharat_1.Location = new System.Drawing.Point(15, 259);
+            this.chk_maharat_1.Name = "chk_maharat_1";
+            this.chk_maharat_1.Size = new System.Drawing.Size(84, 30);
+            this.chk_maharat_1.TabIndex = 8;
+            this.chk_maharat_1.Text = "مهارات";
+            this.chk_maharat_1.UseVisualStyleBackColor = true;
+            this.chk_maharat_1.CheckedChanged += new System.EventHandler(this.chk_maharat_1_CheckedChanged);
+            // 
+            // chk_tocnolegy_1
+            // 
+            this.chk_tocnolegy_1.AutoSize = true;
+            this.chk_tocnolegy_1.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.chk_tocnolegy_1.Location = new System.Drawing.Point(131, 259);
+            this.chk_tocnolegy_1.Name = "chk_tocnolegy_1";
+            this.chk_tocnolegy_1.Size = new System.Drawing.Size(112, 30);
+            this.chk_tocnolegy_1.TabIndex = 7;
+            this.chk_tocnolegy_1.Text = "تكنولوجي";
+            this.chk_tocnolegy_1.UseVisualStyleBackColor = true;
+            this.chk_tocnolegy_1.CheckedChanged += new System.EventHandler(this.chk_tocnolegy_1_CheckedChanged);
+            // 
+            // chk_dain_1
+            // 
+            this.chk_dain_1.AutoSize = true;
+            this.chk_dain_1.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.chk_dain_1.Location = new System.Drawing.Point(131, 208);
+            this.chk_dain_1.Name = "chk_dain_1";
+            this.chk_dain_1.Size = new System.Drawing.Size(114, 30);
+            this.chk_dain_1.TabIndex = 6;
+            this.chk_dain_1.Text = "تربية دينية";
+            this.chk_dain_1.UseVisualStyleBackColor = true;
+            this.chk_dain_1.CheckedChanged += new System.EventHandler(this.chk_dain_1_CheckedChanged);
+            // 
+            // chk_english_1
+            // 
+            this.chk_english_1.AutoSize = true;
+            this.chk_english_1.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.chk_english_1.Location = new System.Drawing.Point(123, 157);
+            this.chk_english_1.Name = "chk_english_1";
+            this.chk_english_1.Size = new System.Drawing.Size(122, 30);
+            this.chk_english_1.TabIndex = 5;
+            this.chk_english_1.Text = "لغة انجليزية";
+            this.chk_english_1.UseVisualStyleBackColor = true;
+            this.chk_english_1.CheckedChanged += new System.EventHandler(this.chk_english_1_CheckedChanged);
+            // 
+            // chk_social_1
+            // 
+            this.chk_social_1.AutoSize = true;
+            this.chk_social_1.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.chk_social_1.Location = new System.Drawing.Point(10, 157);
+            this.chk_social_1.Name = "chk_social_1";
+            this.chk_social_1.Size = new System.Drawing.Size(89, 30);
+            this.chk_social_1.TabIndex = 4;
+            this.chk_social_1.Text = "دراسات";
+            this.chk_social_1.UseVisualStyleBackColor = true;
+            this.chk_social_1.CheckedChanged += new System.EventHandler(this.chk_social_1_CheckedChanged);
+            // 
+            // chk_scince_1
+            // 
+            this.chk_scince_1.AutoSize = true;
+            this.chk_scince_1.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.chk_scince_1.Location = new System.Drawing.Point(26, 208);
+            this.chk_scince_1.Name = "chk_scince_1";
+            this.chk_scince_1.Size = new System.Drawing.Size(73, 30);
+            this.chk_scince_1.TabIndex = 3;
+            this.chk_scince_1.Text = "علوم";
+            this.chk_scince_1.UseVisualStyleBackColor = true;
+            this.chk_scince_1.CheckedChanged += new System.EventHandler(this.chk_scince_1_CheckedChanged);
+            // 
+            // chk_math_1
+            // 
+            this.chk_math_1.AutoSize = true;
+            this.chk_math_1.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.chk_math_1.Location = new System.Drawing.Point(5, 106);
+            this.chk_math_1.Name = "chk_math_1";
+            this.chk_math_1.Size = new System.Drawing.Size(94, 30);
+            this.chk_math_1.TabIndex = 2;
+            this.chk_math_1.Text = "رياضيات";
+            this.chk_math_1.UseVisualStyleBackColor = true;
+            this.chk_math_1.CheckedChanged += new System.EventHandler(this.chk_math_1_CheckedChanged);
+            // 
+            // chk_ar_1
+            // 
+            this.chk_ar_1.AutoSize = true;
+            this.chk_ar_1.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.chk_ar_1.Location = new System.Drawing.Point(139, 106);
+            this.chk_ar_1.Name = "chk_ar_1";
+            this.chk_ar_1.Size = new System.Drawing.Size(106, 30);
+            this.chk_ar_1.TabIndex = 1;
+            this.chk_ar_1.Text = "لغة عربية";
+            this.chk_ar_1.UseVisualStyleBackColor = true;
+            this.chk_ar_1.CheckedChanged += new System.EventHandler(this.chk_ar_1_CheckedChanged);
+            // 
             // chk_term_1
             // 
             this.chk_term_1.AutoSize = true;
@@ -215,6 +311,16 @@ namespace School_Mang.PL.NATIGA
             this.chk_term_1.Text = "غائب كل المواد";
             this.chk_term_1.UseVisualStyleBackColor = true;
             this.chk_term_1.CheckedChanged += new System.EventHandler(this.chk_term_1_CheckedChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.LightGray;
+            this.label1.Location = new System.Drawing.Point(2, 62);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(252, 26);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "________________________";
             // 
             // groupBox2
             // 
@@ -238,114 +344,6 @@ namespace School_Mang.PL.NATIGA
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "الفصل الدراسي الثاني";
             // 
-            // chk_term_2
-            // 
-            this.chk_term_2.AutoSize = true;
-            this.chk_term_2.ForeColor = System.Drawing.Color.IndianRed;
-            this.chk_term_2.Location = new System.Drawing.Point(55, 49);
-            this.chk_term_2.Name = "chk_term_2";
-            this.chk_term_2.Size = new System.Drawing.Size(149, 30);
-            this.chk_term_2.TabIndex = 1;
-            this.chk_term_2.Text = "غائب كل المواد";
-            this.chk_term_2.UseVisualStyleBackColor = true;
-            this.chk_term_2.CheckedChanged += new System.EventHandler(this.chk_term_2_CheckedChanged);
-            // 
-            // chk_ar_1
-            // 
-            this.chk_ar_1.AutoSize = true;
-            this.chk_ar_1.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.chk_ar_1.Location = new System.Drawing.Point(139, 106);
-            this.chk_ar_1.Name = "chk_ar_1";
-            this.chk_ar_1.Size = new System.Drawing.Size(106, 30);
-            this.chk_ar_1.TabIndex = 1;
-            this.chk_ar_1.Text = "لغة عربية";
-            this.chk_ar_1.UseVisualStyleBackColor = true;
-            this.chk_ar_1.CheckedChanged += new System.EventHandler(this.chk_ar_1_CheckedChanged);
-            // 
-            // chk_math_1
-            // 
-            this.chk_math_1.AutoSize = true;
-            this.chk_math_1.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.chk_math_1.Location = new System.Drawing.Point(5, 106);
-            this.chk_math_1.Name = "chk_math_1";
-            this.chk_math_1.Size = new System.Drawing.Size(94, 30);
-            this.chk_math_1.TabIndex = 2;
-            this.chk_math_1.Text = "رياضيات";
-            this.chk_math_1.UseVisualStyleBackColor = true;
-            this.chk_math_1.CheckedChanged += new System.EventHandler(this.chk_math_1_CheckedChanged);
-            // 
-            // chk_scince_1
-            // 
-            this.chk_scince_1.AutoSize = true;
-            this.chk_scince_1.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.chk_scince_1.Location = new System.Drawing.Point(26, 208);
-            this.chk_scince_1.Name = "chk_scince_1";
-            this.chk_scince_1.Size = new System.Drawing.Size(73, 30);
-            this.chk_scince_1.TabIndex = 3;
-            this.chk_scince_1.Text = "علوم";
-            this.chk_scince_1.UseVisualStyleBackColor = true;
-            this.chk_scince_1.CheckedChanged += new System.EventHandler(this.chk_scince_1_CheckedChanged);
-            // 
-            // chk_social_1
-            // 
-            this.chk_social_1.AutoSize = true;
-            this.chk_social_1.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.chk_social_1.Location = new System.Drawing.Point(10, 157);
-            this.chk_social_1.Name = "chk_social_1";
-            this.chk_social_1.Size = new System.Drawing.Size(89, 30);
-            this.chk_social_1.TabIndex = 4;
-            this.chk_social_1.Text = "دراسات";
-            this.chk_social_1.UseVisualStyleBackColor = true;
-            this.chk_social_1.CheckedChanged += new System.EventHandler(this.chk_social_1_CheckedChanged);
-            // 
-            // chk_english_1
-            // 
-            this.chk_english_1.AutoSize = true;
-            this.chk_english_1.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.chk_english_1.Location = new System.Drawing.Point(123, 157);
-            this.chk_english_1.Name = "chk_english_1";
-            this.chk_english_1.Size = new System.Drawing.Size(122, 30);
-            this.chk_english_1.TabIndex = 5;
-            this.chk_english_1.Text = "لغة انجليزية";
-            this.chk_english_1.UseVisualStyleBackColor = true;
-            this.chk_english_1.CheckedChanged += new System.EventHandler(this.chk_english_1_CheckedChanged);
-            // 
-            // chk_dain_1
-            // 
-            this.chk_dain_1.AutoSize = true;
-            this.chk_dain_1.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.chk_dain_1.Location = new System.Drawing.Point(131, 208);
-            this.chk_dain_1.Name = "chk_dain_1";
-            this.chk_dain_1.Size = new System.Drawing.Size(114, 30);
-            this.chk_dain_1.TabIndex = 6;
-            this.chk_dain_1.Text = "تربية دينية";
-            this.chk_dain_1.UseVisualStyleBackColor = true;
-            this.chk_dain_1.CheckedChanged += new System.EventHandler(this.chk_dain_1_CheckedChanged);
-            // 
-            // chk_tocnolegy_1
-            // 
-            this.chk_tocnolegy_1.AutoSize = true;
-            this.chk_tocnolegy_1.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.chk_tocnolegy_1.Location = new System.Drawing.Point(131, 259);
-            this.chk_tocnolegy_1.Name = "chk_tocnolegy_1";
-            this.chk_tocnolegy_1.Size = new System.Drawing.Size(112, 30);
-            this.chk_tocnolegy_1.TabIndex = 7;
-            this.chk_tocnolegy_1.Text = "تكنولوجي";
-            this.chk_tocnolegy_1.UseVisualStyleBackColor = true;
-            this.chk_tocnolegy_1.CheckedChanged += new System.EventHandler(this.chk_tocnolegy_1_CheckedChanged);
-            // 
-            // chk_maharat_1
-            // 
-            this.chk_maharat_1.AutoSize = true;
-            this.chk_maharat_1.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.chk_maharat_1.Location = new System.Drawing.Point(15, 259);
-            this.chk_maharat_1.Name = "chk_maharat_1";
-            this.chk_maharat_1.Size = new System.Drawing.Size(84, 30);
-            this.chk_maharat_1.TabIndex = 8;
-            this.chk_maharat_1.Text = "مهارات";
-            this.chk_maharat_1.UseVisualStyleBackColor = true;
-            this.chk_maharat_1.CheckedChanged += new System.EventHandler(this.chk_maharat_1_CheckedChanged);
-            // 
             // chk_maharat_2
             // 
             this.chk_maharat_2.AutoSize = true;
@@ -357,6 +355,18 @@ namespace School_Mang.PL.NATIGA
             this.chk_maharat_2.Text = "مهارات";
             this.chk_maharat_2.UseVisualStyleBackColor = true;
             this.chk_maharat_2.CheckedChanged += new System.EventHandler(this.chk_maharat_2_CheckedChanged);
+            // 
+            // chk_term_2
+            // 
+            this.chk_term_2.AutoSize = true;
+            this.chk_term_2.ForeColor = System.Drawing.Color.IndianRed;
+            this.chk_term_2.Location = new System.Drawing.Point(55, 49);
+            this.chk_term_2.Name = "chk_term_2";
+            this.chk_term_2.Size = new System.Drawing.Size(149, 30);
+            this.chk_term_2.TabIndex = 1;
+            this.chk_term_2.Text = "غائب كل المواد";
+            this.chk_term_2.UseVisualStyleBackColor = true;
+            this.chk_term_2.CheckedChanged += new System.EventHandler(this.chk_term_2_CheckedChanged);
             // 
             // chk_tocnolegy_2
             // 
@@ -370,6 +380,18 @@ namespace School_Mang.PL.NATIGA
             this.chk_tocnolegy_2.UseVisualStyleBackColor = true;
             this.chk_tocnolegy_2.CheckedChanged += new System.EventHandler(this.chk_tocnolegy_2_CheckedChanged);
             // 
+            // chk_ar_2
+            // 
+            this.chk_ar_2.AutoSize = true;
+            this.chk_ar_2.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.chk_ar_2.Location = new System.Drawing.Point(136, 106);
+            this.chk_ar_2.Name = "chk_ar_2";
+            this.chk_ar_2.Size = new System.Drawing.Size(106, 30);
+            this.chk_ar_2.TabIndex = 9;
+            this.chk_ar_2.Text = "لغة عربية";
+            this.chk_ar_2.UseVisualStyleBackColor = true;
+            this.chk_ar_2.CheckedChanged += new System.EventHandler(this.chk_ar_2_CheckedChanged);
+            // 
             // chk_dain_2
             // 
             this.chk_dain_2.AutoSize = true;
@@ -381,42 +403,6 @@ namespace School_Mang.PL.NATIGA
             this.chk_dain_2.Text = "تربية دينية";
             this.chk_dain_2.UseVisualStyleBackColor = true;
             this.chk_dain_2.CheckedChanged += new System.EventHandler(this.chk_dain_2_CheckedChanged);
-            // 
-            // chk_english_2
-            // 
-            this.chk_english_2.AutoSize = true;
-            this.chk_english_2.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.chk_english_2.Location = new System.Drawing.Point(120, 157);
-            this.chk_english_2.Name = "chk_english_2";
-            this.chk_english_2.Size = new System.Drawing.Size(122, 30);
-            this.chk_english_2.TabIndex = 13;
-            this.chk_english_2.Text = "لغة انجليزية";
-            this.chk_english_2.UseVisualStyleBackColor = true;
-            this.chk_english_2.CheckedChanged += new System.EventHandler(this.chk_english_2_CheckedChanged);
-            // 
-            // chk_social_2
-            // 
-            this.chk_social_2.AutoSize = true;
-            this.chk_social_2.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.chk_social_2.Location = new System.Drawing.Point(7, 157);
-            this.chk_social_2.Name = "chk_social_2";
-            this.chk_social_2.Size = new System.Drawing.Size(89, 30);
-            this.chk_social_2.TabIndex = 12;
-            this.chk_social_2.Text = "دراسات";
-            this.chk_social_2.UseVisualStyleBackColor = true;
-            this.chk_social_2.CheckedChanged += new System.EventHandler(this.chk_social_2_CheckedChanged);
-            // 
-            // chk_scince_2
-            // 
-            this.chk_scince_2.AutoSize = true;
-            this.chk_scince_2.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.chk_scince_2.Location = new System.Drawing.Point(23, 208);
-            this.chk_scince_2.Name = "chk_scince_2";
-            this.chk_scince_2.Size = new System.Drawing.Size(73, 30);
-            this.chk_scince_2.TabIndex = 11;
-            this.chk_scince_2.Text = "علوم";
-            this.chk_scince_2.UseVisualStyleBackColor = true;
-            this.chk_scince_2.CheckedChanged += new System.EventHandler(this.chk_scince_2_CheckedChanged);
             // 
             // chk_math_2
             // 
@@ -430,27 +416,41 @@ namespace School_Mang.PL.NATIGA
             this.chk_math_2.UseVisualStyleBackColor = true;
             this.chk_math_2.CheckedChanged += new System.EventHandler(this.chk_math_2_CheckedChanged);
             // 
-            // chk_ar_2
+            // chk_english_2
             // 
-            this.chk_ar_2.AutoSize = true;
-            this.chk_ar_2.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.chk_ar_2.Location = new System.Drawing.Point(136, 106);
-            this.chk_ar_2.Name = "chk_ar_2";
-            this.chk_ar_2.Size = new System.Drawing.Size(106, 30);
-            this.chk_ar_2.TabIndex = 9;
-            this.chk_ar_2.Text = "لغة عربية";
-            this.chk_ar_2.UseVisualStyleBackColor = true;
-            this.chk_ar_2.CheckedChanged += new System.EventHandler(this.chk_ar_2_CheckedChanged);
+            this.chk_english_2.AutoSize = true;
+            this.chk_english_2.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.chk_english_2.Location = new System.Drawing.Point(120, 157);
+            this.chk_english_2.Name = "chk_english_2";
+            this.chk_english_2.Size = new System.Drawing.Size(122, 30);
+            this.chk_english_2.TabIndex = 13;
+            this.chk_english_2.Text = "لغة انجليزية";
+            this.chk_english_2.UseVisualStyleBackColor = true;
+            this.chk_english_2.CheckedChanged += new System.EventHandler(this.chk_english_2_CheckedChanged);
             // 
-            // label1
+            // chk_scince_2
             // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.Color.LightGray;
-            this.label1.Location = new System.Drawing.Point(2, 62);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(252, 26);
-            this.label1.TabIndex = 9;
-            this.label1.Text = "________________________";
+            this.chk_scince_2.AutoSize = true;
+            this.chk_scince_2.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.chk_scince_2.Location = new System.Drawing.Point(23, 208);
+            this.chk_scince_2.Name = "chk_scince_2";
+            this.chk_scince_2.Size = new System.Drawing.Size(73, 30);
+            this.chk_scince_2.TabIndex = 11;
+            this.chk_scince_2.Text = "علوم";
+            this.chk_scince_2.UseVisualStyleBackColor = true;
+            this.chk_scince_2.CheckedChanged += new System.EventHandler(this.chk_scince_2_CheckedChanged);
+            // 
+            // chk_social_2
+            // 
+            this.chk_social_2.AutoSize = true;
+            this.chk_social_2.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.chk_social_2.Location = new System.Drawing.Point(7, 157);
+            this.chk_social_2.Name = "chk_social_2";
+            this.chk_social_2.Size = new System.Drawing.Size(89, 30);
+            this.chk_social_2.TabIndex = 12;
+            this.chk_social_2.Text = "دراسات";
+            this.chk_social_2.UseVisualStyleBackColor = true;
+            this.chk_social_2.CheckedChanged += new System.EventHandler(this.chk_social_2_CheckedChanged);
             // 
             // label2
             // 
@@ -478,17 +478,6 @@ namespace School_Mang.PL.NATIGA
             this.groupBox4.TabIndex = 102;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "بيانات الطالب";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label3.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.DimGray;
-            this.label3.Location = new System.Drawing.Point(477, 34);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(0, 25);
-            this.label3.TabIndex = 94;
             // 
             // txt_grade
             // 
@@ -531,6 +520,17 @@ namespace School_Mang.PL.NATIGA
             this.label4.Size = new System.Drawing.Size(48, 29);
             this.label4.TabIndex = 103;
             this.label4.Text = "الصف";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.label3.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.DimGray;
+            this.label3.Location = new System.Drawing.Point(477, 34);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(0, 25);
+            this.label3.TabIndex = 94;
             // 
             // FRM_EDIT_ABSENT_STD
             // 

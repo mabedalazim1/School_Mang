@@ -144,8 +144,10 @@ namespace School_Mang.PL.MAIN
         {
             try
             {
+                // Get Data From dataBase
                 cheack_New_Year();
-              // Test Permissions
+
+                // Test Permissions
                 int user = Properties.Settings.Default.user_code;
                 DataTable dt_user = users.Get_User_Permission(user);
                 if (dt_user.Rows[0]["role_id"].ToString() == "1" &&

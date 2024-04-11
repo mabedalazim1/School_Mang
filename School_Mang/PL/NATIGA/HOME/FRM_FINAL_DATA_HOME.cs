@@ -475,6 +475,7 @@ namespace School_Mang.PL.NATIGA.HOME
 
         private void lbl_data_Click(object sender, EventArgs e)
         {
+            FRM_FINAL_COUNT_DATA.Get_Frm_Final_Count_Data.Visible = false;
             FRM_FINAL_COUNT_DATA.Get_Frm_Final_Count_Data.ShowDialog();
         }
 

@@ -12,7 +12,7 @@ namespace School_Mang.PL.SITE
 {
     public partial class FRM_COUNT_USERS : Form
     {
-        BL.SITE.CLS_MANGE_SITE Site = new BL.SITE.CLS_MANGE_SITE();
+        BL.SITE.CLS_MANGE_SITE site = new BL.SITE.CLS_MANGE_SITE();
         BL.Waiting Waiting = new BL.Waiting();
         BL.MSG msg = new BL.MSG();
 
@@ -74,7 +74,7 @@ namespace School_Mang.PL.SITE
                 {
                     Waiting.Wait();
                     DataTable Dt;
-                    Dt = Site.Get_Count_Users_Data();
+                    Dt = site.Get_Count_Users_Data();
                     if (Dt != null)
                     {
                         dt_std_data.DataSource = Dt;
@@ -142,7 +142,7 @@ namespace School_Mang.PL.SITE
                 Waiting.Wait();
                 int grde =Convert.ToInt32(dt_std_data.CurrentRow.Cells["id"].Value);
                 BL.Globals.test_grade_id = grde;
-                FRM_SITE_USER_DATA.Get_Frm_Site_User_Data.ShowDialog();
+                FRM_SITE_USER_DATA.Get_Frm_Site_User_Data.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
                 Waiting.End_WAit();
             }
             catch(Exception ex)

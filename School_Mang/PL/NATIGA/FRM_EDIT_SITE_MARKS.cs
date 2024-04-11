@@ -76,18 +76,28 @@ namespace School_Mang.PL.NATIGA
 
         private void CheckDegree(TextBox textBox, string txt, byte test = 1)
         {
+            int grade = BL.Globals.test_grade_id;
+            byte test_kind_id = Convert.ToByte(txt_test_kind_id.Text);
             try
             {
                 if (test == 1 && textBox.Text != "")
                 {
-                    if (Convert.ToDouble(textBox.Text) > 20 || (Convert.ToDouble(textBox.Text) < 0
-                        ))
+                    if((grade ==9 && test_kind_id == 3) || (grade == 9 && test_kind_id == 6))
                     {
-                        msg.ErrorMesg("تأكد من الدرجة ..!");
-                        textBox.Text = txt;
-                        textBox.Focus();
+                        txt_french.Enabled = false;
                     }
-                    int grade = BL.Globals.test_grade_id;
+                    else
+                    {
+                        txt_french.Enabled = true;
+                        if (Convert.ToDouble(textBox.Text) > 20 || (Convert.ToDouble(textBox.Text) < 0
+                        ))
+                        {
+                            msg.ErrorMesg("تأكد من الدرجة ..!");
+                            textBox.Text = txt;
+                            textBox.Focus();
+                        }
+                    }
+                    
                     double total;
                     switch (grade)
                     {
@@ -141,26 +151,33 @@ namespace School_Mang.PL.NATIGA
                 // Change Mark Color
 
                 double mark = Convert.ToDouble(textBox.Text);
-
-                switch (mark)
+                if ((grade == 9 && test_kind_id == 3) || (grade == 9 && test_kind_id == 6))
                 {
-                    case double n when n < 10:
-                        textBox.BackColor = Color.Red;
-                        textBox.ForeColor = Color.WhiteSmoke;
-                        break;
-                    case double n when n < 15:
-                        textBox.BackColor = Color.Orange;
-                        textBox.ForeColor = Color.WhiteSmoke;
-                        break;
-                    case double n when n < 21:
-                        textBox.BackColor = Color.Green;
-                        textBox.ForeColor = Color.WhiteSmoke;
-                        break;
+                    textBox.BackColor = Color.White;
+                }
+                else
+                {
+                    switch (mark)
+                    {
 
-                    default:
-                        textBox.BackColor = Color.WhiteSmoke;
-                        textBox.ForeColor = Color.Black;
-                        break;
+                        case double n when n < 10:
+                            textBox.BackColor = Color.Red;
+                            textBox.ForeColor = Color.WhiteSmoke;
+                            break;
+                        case double n when n < 15:
+                            textBox.BackColor = Color.Orange;
+                            textBox.ForeColor = Color.WhiteSmoke;
+                            break;
+                        case double n when n < 21:
+                            textBox.BackColor = Color.Green;
+                            textBox.ForeColor = Color.WhiteSmoke;
+                            break;
+
+                        default:
+                            textBox.BackColor = Color.WhiteSmoke;
+                            textBox.ForeColor = Color.Black;
+                            break;
+                    }
                 }
             }
             catch(Exception ex)

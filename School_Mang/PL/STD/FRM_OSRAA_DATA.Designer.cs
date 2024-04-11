@@ -31,6 +31,10 @@ namespace School_Mang.PL.STD
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FRM_OSRAA_DATA));
             this.pn_osraa_data = new System.Windows.Forms.Panel();
+            this.lbl_edit_by = new System.Windows.Forms.Label();
+            this.lbl_by = new System.Windows.Forms.Label();
+            this.lbl_edit_date = new System.Windows.Forms.Label();
+            this.lbl_date = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.cmb_mother_hala = new System.Windows.Forms.ComboBox();
             this.label14 = new System.Windows.Forms.Label();
@@ -77,10 +81,6 @@ namespace School_Mang.PL.STD
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btn_ok = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btn_close_b = new Bunifu.Framework.UI.BunifuThinButton2();
-            this.lbl_edit_by = new System.Windows.Forms.Label();
-            this.lbl_by = new System.Windows.Forms.Label();
-            this.lbl_edit_date = new System.Windows.Forms.Label();
-            this.lbl_date = new System.Windows.Forms.Label();
             this.pn_osraa_data.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -101,6 +101,54 @@ namespace School_Mang.PL.STD
             this.pn_osraa_data.Name = "pn_osraa_data";
             this.pn_osraa_data.Size = new System.Drawing.Size(684, 551);
             this.pn_osraa_data.TabIndex = 0;
+            // 
+            // lbl_edit_by
+            // 
+            this.lbl_edit_by.AutoSize = true;
+            this.lbl_edit_by.Font = new System.Drawing.Font("Noto Naskh Arabic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_edit_by.ForeColor = System.Drawing.Color.Blue;
+            this.lbl_edit_by.Location = new System.Drawing.Point(35, 10);
+            this.lbl_edit_by.Name = "lbl_edit_by";
+            this.lbl_edit_by.Size = new System.Drawing.Size(72, 22);
+            this.lbl_edit_by.TabIndex = 101;
+            this.lbl_edit_by.Text = "تاريخ التعديل";
+            this.lbl_edit_by.Visible = false;
+            // 
+            // lbl_by
+            // 
+            this.lbl_by.AutoSize = true;
+            this.lbl_by.Font = new System.Drawing.Font("Noto Naskh Arabic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_by.ForeColor = System.Drawing.Color.Blue;
+            this.lbl_by.Location = new System.Drawing.Point(110, 10);
+            this.lbl_by.Name = "lbl_by";
+            this.lbl_by.Size = new System.Drawing.Size(70, 22);
+            this.lbl_by.TabIndex = 100;
+            this.lbl_by.Text = "عدل بواسطة";
+            this.lbl_by.Visible = false;
+            // 
+            // lbl_edit_date
+            // 
+            this.lbl_edit_date.AutoSize = true;
+            this.lbl_edit_date.Font = new System.Drawing.Font("Noto Naskh Arabic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_edit_date.ForeColor = System.Drawing.Color.Blue;
+            this.lbl_edit_date.Location = new System.Drawing.Point(256, 10);
+            this.lbl_edit_date.Name = "lbl_edit_date";
+            this.lbl_edit_date.Size = new System.Drawing.Size(72, 22);
+            this.lbl_edit_date.TabIndex = 99;
+            this.lbl_edit_date.Text = "تاريخ التعديل";
+            this.lbl_edit_date.Visible = false;
+            // 
+            // lbl_date
+            // 
+            this.lbl_date.AutoSize = true;
+            this.lbl_date.Font = new System.Drawing.Font("Noto Naskh Arabic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_date.ForeColor = System.Drawing.Color.Blue;
+            this.lbl_date.Location = new System.Drawing.Point(332, 10);
+            this.lbl_date.Name = "lbl_date";
+            this.lbl_date.Size = new System.Drawing.Size(72, 22);
+            this.lbl_date.TabIndex = 98;
+            this.lbl_date.Text = "تاريخ التعديل";
+            this.lbl_date.Visible = false;
             // 
             // groupBox2
             // 
@@ -566,8 +614,8 @@ namespace School_Mang.PL.STD
             // pn_top
             // 
             this.pn_top.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.pn_top.Controls.Add(this.label11);
             this.pn_top.Controls.Add(this.btn_close);
+            this.pn_top.Controls.Add(this.label11);
             this.pn_top.Dock = System.Windows.Forms.DockStyle.Top;
             this.pn_top.Location = new System.Drawing.Point(0, 0);
             this.pn_top.Name = "pn_top";
@@ -672,54 +720,6 @@ namespace School_Mang.PL.STD
             this.btn_close_b.TabIndex = 20;
             this.btn_close_b.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.btn_close_b.Click += new System.EventHandler(this.btn_close_b_Click);
-            // 
-            // lbl_edit_by
-            // 
-            this.lbl_edit_by.AutoSize = true;
-            this.lbl_edit_by.Font = new System.Drawing.Font("Noto Naskh Arabic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_edit_by.ForeColor = System.Drawing.Color.Blue;
-            this.lbl_edit_by.Location = new System.Drawing.Point(35, 10);
-            this.lbl_edit_by.Name = "lbl_edit_by";
-            this.lbl_edit_by.Size = new System.Drawing.Size(72, 22);
-            this.lbl_edit_by.TabIndex = 101;
-            this.lbl_edit_by.Text = "تاريخ التعديل";
-            this.lbl_edit_by.Visible = false;
-            // 
-            // lbl_by
-            // 
-            this.lbl_by.AutoSize = true;
-            this.lbl_by.Font = new System.Drawing.Font("Noto Naskh Arabic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_by.ForeColor = System.Drawing.Color.Blue;
-            this.lbl_by.Location = new System.Drawing.Point(110, 10);
-            this.lbl_by.Name = "lbl_by";
-            this.lbl_by.Size = new System.Drawing.Size(70, 22);
-            this.lbl_by.TabIndex = 100;
-            this.lbl_by.Text = "عدل بواسطة";
-            this.lbl_by.Visible = false;
-            // 
-            // lbl_edit_date
-            // 
-            this.lbl_edit_date.AutoSize = true;
-            this.lbl_edit_date.Font = new System.Drawing.Font("Noto Naskh Arabic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_edit_date.ForeColor = System.Drawing.Color.Blue;
-            this.lbl_edit_date.Location = new System.Drawing.Point(256, 10);
-            this.lbl_edit_date.Name = "lbl_edit_date";
-            this.lbl_edit_date.Size = new System.Drawing.Size(72, 22);
-            this.lbl_edit_date.TabIndex = 99;
-            this.lbl_edit_date.Text = "تاريخ التعديل";
-            this.lbl_edit_date.Visible = false;
-            // 
-            // lbl_date
-            // 
-            this.lbl_date.AutoSize = true;
-            this.lbl_date.Font = new System.Drawing.Font("Noto Naskh Arabic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_date.ForeColor = System.Drawing.Color.Blue;
-            this.lbl_date.Location = new System.Drawing.Point(332, 10);
-            this.lbl_date.Name = "lbl_date";
-            this.lbl_date.Size = new System.Drawing.Size(72, 22);
-            this.lbl_date.TabIndex = 98;
-            this.lbl_date.Text = "تاريخ التعديل";
-            this.lbl_date.Visible = false;
             // 
             // FRM_OSRAA_DATA
             // 

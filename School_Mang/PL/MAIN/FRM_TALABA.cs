@@ -16,6 +16,7 @@ namespace School_Mang.PL.MAIN
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
         BL.USERS users = new BL.USERS();
         BL.MSG msg = new BL.MSG();
+        BL.Waiting waiting = new BL.Waiting();
 
         // Form Closed
         private static FRM_TALABA frm_Talaba;
@@ -200,6 +201,21 @@ namespace School_Mang.PL.MAIN
         private void pic_eltehak_old_Click(object sender, EventArgs e)
         {
             lbl_eltehak_old_Click(sender, e);
+        }
+
+        private void lbl_bian_dragat_Click(object sender, EventArgs e)
+        {
+
+            waiting.Wait();
+            BL.Globals.Current_Year_Data = true;
+            BL.Globals.Degree_Statement = true;
+            STD. FRM_CHOOSE_GRADE frm = new STD.FRM_CHOOSE_GRADE();
+            frm.ShowDialog();
+        }
+
+        private void pic_bian_dragat_Click(object sender, EventArgs e)
+        {
+            lbl_bian_dragat_Click(sender, e);
         }
     }
 }

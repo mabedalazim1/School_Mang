@@ -75,6 +75,7 @@ namespace School_Mang.PL.NATIGA.HOME
                 decimal tocnolegy_practical;
                 decimal nashat_1;
                 decimal nashat_2;
+                
 
                 Waiting.Wait();
                 DataTable dt_information = Excel.GetInformationData(file_name);
@@ -394,8 +395,10 @@ namespace School_Mang.PL.NATIGA.HOME
             {
                 BL.Globals.Amal_Sana = true;
                 BL.Globals.Final_Test = false;
+                BL.Globals.Final_Koshof = false;
                 FRM_CHOSE_FINAL_DATA frm = new FRM_CHOSE_FINAL_DATA();
                 frm.ShowDialog();
+
             }
             catch (Exception ex)
             {
@@ -414,6 +417,7 @@ namespace School_Mang.PL.NATIGA.HOME
             {
                 BL.Globals.Final_Test = true;
                 BL.Globals.Amal_Sana = false;
+                BL.Globals.Final_Koshof = false;
                 FRM_CHOSE_FINAL_DATA frm = new FRM_CHOSE_FINAL_DATA();
                 frm.ShowDialog();
             }
@@ -499,7 +503,134 @@ namespace School_Mang.PL.NATIGA.HOME
             BL.Globals.Amal_Sana = false;
             BL.Globals.Final_Test = false;
             BL.Globals.Final_Nataga = true;
+            BL.Globals.Final_Koshof = false;
             FRM_CHOSE_FINAL_RASD.Get_Frm_Chose_Final_Rasd.ShowDialog();
+        }
+
+        private void lbl_final_koshof_Click(object sender, EventArgs e)
+        {
+            BL.Globals.Amal_Sana = false;
+            BL.Globals.Final_Test = false;
+            BL.Globals.Final_Nataga = false;
+            BL.Globals.Final_Koshof = true;
+            FRM_CHOSE_FINAL_RASD.Get_Frm_Chose_Final_Rasd.ShowDialog();
+        }
+
+        private void pic_final_koshof_Click(object sender, EventArgs e)
+        {
+            lbl_final_koshof_Click(sender, e);
+        }
+
+        private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void pic_sofof_ola_Click(object sender, EventArgs e)
+        {
+            lbl_sofof_ola_Click(sender, e);
+        }
+
+        private void lbl_sofof_ola_Click(object sender, EventArgs e)
+        {
+            string file_name = natag_func.OpenDialoge(openFileDialog1);
+            if (file_name == null)
+            {
+                msg.ErrorMesg("تم إلغاء الإجراء..!");
+                BL.Globals.Dir_Path = "D://Rasd";
+                return;
+            }
+            try
+            {
+                int Golos;
+                decimal arabic;
+                decimal dain;
+                decimal math;
+                decimal english;
+                decimal motadd;
+                decimal badnia;
+
+                Waiting.Wait();
+                DataTable dt_information = Excel.GetInformationData_SofofOla(file_name);
+                DataRow row = dt_information.Rows[0];
+
+                // Test If File Have Valid Value
+                string file_kind = row[0].ToString();
+                if (file_kind == "" || file_kind == null || file_kind !="6")
+                {
+                    msg.ErrorMesg("الملف غير صالح .. يرجى التأكد من الملف المطلوب ..!");
+                    BL.Globals.Dir_Path = "D://Rasd";
+                    return;
+                }
+                else
+                {
+                    string grade = "";
+                    switch (row[1].ToString())
+                    {
+                        case "10":
+                            grade = " KG 1";
+                            break;
+
+                        case "11":
+                            grade = " KG 2";
+                            break;
+                        case "1":
+                            grade = " الصف الأول ب ";
+                            break;
+                        case "2":
+                            grade = " الصف الثاني ب ";
+                            break;
+                        case "3":
+                            grade = " الصف الثالث ب ";
+                            break;
+                    }
+                    string file_info = " سوف يتم تحميل درجات أعمال السنة " +
+                                   "\n" + grade;
+
+                    if (msg.DialogeMsg(file_info + "\n" + "هل تريد المتابعة .. ؟") == DialogResult.Yes)
+                    {
+                        
+                        byte test_grade = Convert.ToByte(row[1]);
+                        DataTable dt_degree = new DataTable();
+                        dt_degree = Excel.Read_Amal_1_2_3(file_name);
+                        foreach (DataRow amal in dt_degree.Rows)
+                        {
+                            Golos = Convert.ToInt32(amal[0]);
+                            arabic = Convert.ToDecimal(amal[1]);
+                            dain = Convert.ToDecimal(amal[2]);
+                            math = Convert.ToDecimal(amal[3]);
+                            english = Convert.ToDecimal(amal[4]);
+                            motadd = Convert.ToDecimal(amal[5]);
+                            badnia = Convert.ToDecimal(amal[6]);
+
+                            NATEG.Add_Amal_Final_1_2_3(Golos,
+                                                    arabic,
+                                                    dain,
+                                                    math,
+                                                    english,
+                                                    motadd,
+                                                    badnia);
+                        }
+                        Waiting.End_WAit();
+                        msg.MyMesg("تم تحديث الدرجات بنجاح .. !");
+
+
+                    }
+                    else
+                    {
+                        msg.ErrorMesg("تم إلغاء الإجراء ..!");
+                        BL.Globals.Dir_Path = "D://Rasd";
+                        return;
+                    }
+                }
+
+                Waiting.End_WAit();
+
+            }
+            catch(Exception ex)
+            {
+                msg.ErrorMesg(ex.Message);
+            }
         }
     }
 }

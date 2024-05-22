@@ -78,6 +78,11 @@ namespace School_Mang.PL.NATIGA
                 lbl_title.Text = "كشوف درجات الإختبار";
                 pic_rasd.Image = Properties.Resources.note_48;
             }
+            else if(BL.Globals.Final_Koshof == true)
+            {
+                lbl_title.Text = "كشوف النتائج النهائية";
+                pic_rasd.Image = Properties.Resources.final_naega_3_48;
+            }
             else
             {
                 lbl_title.Text = "كشوف مراجعة النتائج";
@@ -197,6 +202,41 @@ namespace School_Mang.PL.NATIGA
                 waiting.End_WAit();
             }
         }
+
+        private void OpenFinalKoshof(byte test_kind)
+        {
+            waiting.Wait();
+            try
+            {
+                int grade = Convert.ToInt32(cmb_grade.SelectedValue);
+                int year = Properties.Settings.Default.year_cod;
+
+
+                if (test_kind == 1)
+                {
+                    msg.ErrorMesg("هذا الإجراء متاح فى نهاية العام فقط ..!");
+                    msg.MyExclamationMsg("يرجي التأكد من نوع الاختبار ..!");
+                    cmb_grade.Focus();
+                    return;
+                }
+                else
+                {
+                    RPT.OpenFinal_Koshof(year, grade);
+                }
+
+
+
+                waiting.End_WAit();
+            }
+            catch (Exception e)
+            {
+                msg.ErrorMesg(e.Message);
+            }
+            finally
+            {
+                waiting.End_WAit();
+            }
+        }
         int move;
         int move_x;
         int move_y;
@@ -226,6 +266,7 @@ namespace School_Mang.PL.NATIGA
             BL.Globals.Amal_Sana = false;
             BL.Globals.Final_Test = false;
             BL.Globals.Final_Nataga = false;
+            BL.Globals.Final_Koshof = false;
             this.Close();
         }
 
@@ -252,7 +293,13 @@ namespace School_Mang.PL.NATIGA
                 OpenFinalNatage(test_kind);
 
             }
-            
+            else if (BL.Globals.Final_Koshof)
+            {
+                if (!Verify_Count()) return;
+                OpenFinalKoshof(test_kind);
+
+            }
+
         }
     }
 }

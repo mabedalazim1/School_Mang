@@ -30,10 +30,10 @@ namespace School_Mang.PL.NATIGA
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FRM_SITE_STD_DATA));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.cmb_grade = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -41,7 +41,7 @@ namespace School_Mang.PL.NATIGA
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btn_edit_std = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btn_del_std = new Bunifu.Framework.UI.BunifuThinButton2();
-            this.btn_new_std = new Bunifu.Framework.UI.BunifuThinButton2();
+            this.btn_hide_data = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btn_close_b = new Bunifu.Framework.UI.BunifuThinButton2();
             this.dt_std_data = new System.Windows.Forms.DataGridView();
             this.panel4 = new System.Windows.Forms.Panel();
@@ -49,6 +49,7 @@ namespace School_Mang.PL.NATIGA
             this.txt_std_data = new Bunifu.Framework.UI.BunifuMaterialTextbox();
             this.label11 = new System.Windows.Forms.Label();
             this.pn_top = new System.Windows.Forms.Panel();
+            this.lbl_month = new System.Windows.Forms.Label();
             this.btn_close = new DevExpress.XtraEditors.SimpleButton();
             this.pic_help = new System.Windows.Forms.PictureBox();
             this.groupBox3.SuspendLayout();
@@ -114,7 +115,7 @@ namespace School_Mang.PL.NATIGA
             // 
             this.groupBox3.Controls.Add(this.btn_edit_std);
             this.groupBox3.Controls.Add(this.btn_del_std);
-            this.groupBox3.Controls.Add(this.btn_new_std);
+            this.groupBox3.Controls.Add(this.btn_hide_data);
             this.groupBox3.Controls.Add(this.btn_close_b);
             this.groupBox3.Location = new System.Drawing.Point(10, 511);
             this.groupBox3.Name = "groupBox3";
@@ -141,7 +142,7 @@ namespace School_Mang.PL.NATIGA
             this.btn_edit_std.IdleFillColor = System.Drawing.Color.WhiteSmoke;
             this.btn_edit_std.IdleForecolor = System.Drawing.Color.DodgerBlue;
             this.btn_edit_std.IdleLineColor = System.Drawing.Color.SteelBlue;
-            this.btn_edit_std.Location = new System.Drawing.Point(776, 15);
+            this.btn_edit_std.Location = new System.Drawing.Point(985, 15);
             this.btn_edit_std.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btn_edit_std.Name = "btn_edit_std";
             this.btn_edit_std.Size = new System.Drawing.Size(138, 50);
@@ -175,31 +176,31 @@ namespace School_Mang.PL.NATIGA
             this.btn_del_std.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.btn_del_std.Click += new System.EventHandler(this.btn_del_std_Click);
             // 
-            // btn_new_std
+            // btn_hide_data
             // 
-            this.btn_new_std.ActiveBorderThickness = 1;
-            this.btn_new_std.ActiveCornerRadius = 20;
-            this.btn_new_std.ActiveFillColor = System.Drawing.Color.SeaGreen;
-            this.btn_new_std.ActiveForecolor = System.Drawing.Color.White;
-            this.btn_new_std.ActiveLineColor = System.Drawing.Color.SeaGreen;
-            this.btn_new_std.BackColor = System.Drawing.SystemColors.Control;
-            this.btn_new_std.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_new_std.BackgroundImage")));
-            this.btn_new_std.ButtonText = "إضافة  جديد";
-            this.btn_new_std.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_new_std.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_new_std.ForeColor = System.Drawing.Color.SeaGreen;
-            this.btn_new_std.IdleBorderThickness = 1;
-            this.btn_new_std.IdleCornerRadius = 20;
-            this.btn_new_std.IdleFillColor = System.Drawing.Color.WhiteSmoke;
-            this.btn_new_std.IdleForecolor = System.Drawing.Color.SeaGreen;
-            this.btn_new_std.IdleLineColor = System.Drawing.Color.SeaGreen;
-            this.btn_new_std.Location = new System.Drawing.Point(984, 15);
-            this.btn_new_std.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btn_new_std.Name = "btn_new_std";
-            this.btn_new_std.Size = new System.Drawing.Size(138, 50);
-            this.btn_new_std.TabIndex = 18;
-            this.btn_new_std.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btn_new_std.Click += new System.EventHandler(this.btn_new_std_Click);
+            this.btn_hide_data.ActiveBorderThickness = 1;
+            this.btn_hide_data.ActiveCornerRadius = 20;
+            this.btn_hide_data.ActiveFillColor = System.Drawing.Color.DarkRed;
+            this.btn_hide_data.ActiveForecolor = System.Drawing.Color.White;
+            this.btn_hide_data.ActiveLineColor = System.Drawing.Color.Red;
+            this.btn_hide_data.BackColor = System.Drawing.SystemColors.Control;
+            this.btn_hide_data.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_hide_data.BackgroundImage")));
+            this.btn_hide_data.ButtonText = "حجب النتيجة";
+            this.btn_hide_data.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_hide_data.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_hide_data.ForeColor = System.Drawing.Color.Red;
+            this.btn_hide_data.IdleBorderThickness = 1;
+            this.btn_hide_data.IdleCornerRadius = 20;
+            this.btn_hide_data.IdleFillColor = System.Drawing.Color.WhiteSmoke;
+            this.btn_hide_data.IdleForecolor = System.Drawing.Color.DarkRed;
+            this.btn_hide_data.IdleLineColor = System.Drawing.Color.Firebrick;
+            this.btn_hide_data.Location = new System.Drawing.Point(801, 15);
+            this.btn_hide_data.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_hide_data.Name = "btn_hide_data";
+            this.btn_hide_data.Size = new System.Drawing.Size(138, 50);
+            this.btn_hide_data.TabIndex = 18;
+            this.btn_hide_data.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btn_hide_data.Click += new System.EventHandler(this.btn_hide_data_Click);
             // 
             // btn_close_b
             // 
@@ -231,39 +232,40 @@ namespace School_Mang.PL.NATIGA
             // 
             this.dt_std_data.AllowUserToAddRows = false;
             this.dt_std_data.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dt_std_data.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dt_std_data.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
             this.dt_std_data.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dt_std_data.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("LBC", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dt_std_data.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("LBC", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dt_std_data.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dt_std_data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dt_std_data.Location = new System.Drawing.Point(10, 113);
             this.dt_std_data.Name = "dt_std_data";
             this.dt_std_data.ReadOnly = true;
             this.dt_std_data.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dt_std_data.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dt_std_data.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dt_std_data.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dt_std_data.RowsDefaultCellStyle = dataGridViewCellStyle8;
             this.dt_std_data.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dt_std_data.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dt_std_data.Size = new System.Drawing.Size(1178, 395);
             this.dt_std_data.TabIndex = 76;
             this.dt_std_data.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dt_std_data_CellContentClick);
+            this.dt_std_data.Click += new System.EventHandler(this.dt_std_data_Click);
             this.dt_std_data.DoubleClick += new System.EventHandler(this.dt_std_data_DoubleClick);
             // 
             // panel4
@@ -309,7 +311,6 @@ namespace School_Mang.PL.NATIGA
             this.txt_std_data.Size = new System.Drawing.Size(464, 44);
             this.txt_std_data.TabIndex = 77;
             this.txt_std_data.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txt_std_data.OnValueChanged += new System.EventHandler(this.txt_std_data_OnValueChanged);
             this.txt_std_data.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txt_std_data_KeyUp);
             // 
             // label11
@@ -328,6 +329,7 @@ namespace School_Mang.PL.NATIGA
             // pn_top
             // 
             this.pn_top.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.pn_top.Controls.Add(this.lbl_month);
             this.pn_top.Controls.Add(this.btn_close);
             this.pn_top.Controls.Add(this.label11);
             this.pn_top.Dock = System.Windows.Forms.DockStyle.Top;
@@ -339,6 +341,18 @@ namespace School_Mang.PL.NATIGA
             this.pn_top.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pn_top_MouseDown);
             this.pn_top.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pn_top_MouseMove);
             this.pn_top.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pn_top_MouseUp);
+            // 
+            // lbl_month
+            // 
+            this.lbl_month.AutoSize = true;
+            this.lbl_month.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lbl_month.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_month.ForeColor = System.Drawing.Color.White;
+            this.lbl_month.Location = new System.Drawing.Point(95, 12);
+            this.lbl_month.Name = "lbl_month";
+            this.lbl_month.Size = new System.Drawing.Size(100, 25);
+            this.lbl_month.TabIndex = 86;
+            this.lbl_month.Text = "عدد الطلاب";
             // 
             // btn_close
             // 
@@ -405,7 +419,7 @@ namespace School_Mang.PL.NATIGA
         private System.Windows.Forms.GroupBox groupBox3;
         private Bunifu.Framework.UI.BunifuThinButton2 btn_edit_std;
         private Bunifu.Framework.UI.BunifuThinButton2 btn_del_std;
-        private Bunifu.Framework.UI.BunifuThinButton2 btn_new_std;
+        private Bunifu.Framework.UI.BunifuThinButton2 btn_hide_data;
         private Bunifu.Framework.UI.BunifuThinButton2 btn_close_b;
         private System.Windows.Forms.DataGridView dt_std_data;
         private System.Windows.Forms.Panel panel4;
@@ -415,5 +429,6 @@ namespace School_Mang.PL.NATIGA
         private System.Windows.Forms.Panel pn_top;
         private DevExpress.XtraEditors.SimpleButton btn_close;
         private System.Windows.Forms.PictureBox pic_help;
+        private System.Windows.Forms.Label lbl_month;
     }
 }

@@ -215,6 +215,16 @@ namespace School_Mang.PL.STD.HOME
                                     new_class_id = claas_id + 3;
                                     break;
                                 case 6:
+                                    new_grade = grade + 1;
+                                    if(claas_id == 20)
+                                    {
+                                        new_class_id = 23;
+                                    }
+                                    else
+                                    {
+                                        new_class_id = 24;
+                                    }
+                                    break;
                                 case 7:
                                 case 8:
                                     new_grade = grade + 1;
@@ -233,7 +243,7 @@ namespace School_Mang.PL.STD.HOME
                             if (dt_verify_std.Rows.Count != 0)
                             {
                                 // Delete Std
-                                if (std_status == 4 || std_status == 6 || new_grade == 0)
+                                if (std_status == 3 || std_status == 6 || new_grade == 0)
                                 {
                                     std.Delete_School_Std_Data(std_code, new_year);
                                 }
@@ -252,7 +262,7 @@ namespace School_Mang.PL.STD.HOME
                             else
                             {
                                 // Add New School Std
-                                if (new_grade != 0 && std_status != 6 && std_status != 4 )
+                                if (new_grade != 0 && std_status != 6 && std_status != 3 )
                                 {
 
                                     std.Add_School_Std_Data(

@@ -217,6 +217,38 @@ namespace School_Mang.BL.NATEG
             return Dt;
         }
 
+        public DataTable Toggle_Hide_Data(int student_Id,byte test_kind_Id , string show_data)
+        {
+            bool data ;
+
+            if(show_data != "False")
+            {
+                data = false;
+            }
+            else
+            {
+                data = true;
+            }
+            
+
+            SiteAccessLayer DAL = new SiteAccessLayer();
+
+            SqlParameter[] param = new SqlParameter[3];
+            param[0] = new SqlParameter("@student_Id", SqlDbType.Int);
+            param[0].Value = student_Id;
+
+            param[1] = new SqlParameter("@test_kind_Id", SqlDbType.TinyInt);
+            param[1].Value = test_kind_Id;
+
+            param[2] = new SqlParameter("@show_data", SqlDbType.Bit);
+            param[2].Value = data;
+
+            DataTable Dt;
+
+            Dt = DAL.Selectdata("SP_Toggle_Hide_Data", param);
+            DAL.Close();
+            return Dt;
+        }
         public DataTable Get_Count_Mark(int test_kind_Id)
         {
 
@@ -406,6 +438,43 @@ namespace School_Mang.BL.NATEG
             param[2].Value = Sery;
 
             DAL.ExeucuteCommand("SP_Add_Sery", param);
+        }
+
+        public void Add_Amal_Final_1_2_3(int Golos,
+                                   decimal arabic, decimal dain,
+                                   decimal math, decimal english,
+                                   decimal motadd, decimal badnia)
+        {
+
+            DataAcceseLayer DAL = new DataAcceseLayer();
+
+            SqlParameter[] param = new SqlParameter[8];
+
+            param[0] = new SqlParameter("@Golos", SqlDbType.Int);
+            param[0].Value = Golos;
+
+            param[1] = new SqlParameter("@year_Id", SqlDbType.Int);
+            param[1].Value = Properties.Settings.Default.year_cod;
+
+            param[2] = new SqlParameter("@arabic", SqlDbType.Float);
+            param[2].Value = arabic;
+
+            param[3] = new SqlParameter("@dain", SqlDbType.Float);
+            param[3].Value = dain;
+
+            param[4] = new SqlParameter("@math", SqlDbType.Float);
+            param[4].Value = math;
+
+            param[5] = new SqlParameter("@english", SqlDbType.Float);
+            param[5].Value = english;
+
+            param[6] = new SqlParameter("@motadd", SqlDbType.Float);
+            param[6].Value = motadd;
+
+            param[7] = new SqlParameter("@badnia", SqlDbType.Float);
+            param[7].Value = badnia;
+
+            DAL.ExeucuteCommand("SP_Add_Amal_Final_1_2_3", param);
         }
 
         public void Add_Amal_A_4_5_6(int Golos,
@@ -642,6 +711,7 @@ namespace School_Mang.BL.NATEG
             param[13].Value = nashat_2_A;
 
             DAL.ExeucuteCommand("SP_Add_Amal_A_7_8_9", param);
+            
         }
 
         public void Add_Amal_B_7_8_9(int Golos,

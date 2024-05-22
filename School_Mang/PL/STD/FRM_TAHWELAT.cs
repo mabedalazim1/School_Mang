@@ -347,9 +347,9 @@ namespace School_Mang.PL.STD
                         {
                             to_School = 0;
                         }
-
+                      
                         // Delete Trans Data
-                        std.Delete_Transfers_Data(
+                       std.Delete_Transfers_Data(
                             Transfer_code,
                             std_code,
                             current_year,
@@ -408,7 +408,8 @@ namespace School_Mang.PL.STD
                 }
                 else
                 {
-                    grade_desc = std.Get_Grade_Desc(grade + 1).Rows[0]["GradeDesc"].ToString();
+                    //grade_desc = std.Get_Grade_Desc(grade + 1).Rows[0]["GradeDesc"].ToString();
+                    grade_desc = std.Get_Grade_Desc(grade).Rows[0]["GradeDesc"].ToString();
                 }
                 year_data = std.Get_Year_Desc(sana + 1).Rows[0]["YearDesc"].ToString();
             }

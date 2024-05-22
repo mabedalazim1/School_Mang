@@ -81,7 +81,7 @@ namespace School_Mang.PL.MAIN
             this.pn_home.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pn_home.Location = new System.Drawing.Point(0, 0);
             this.pn_home.Name = "pn_home";
-            this.pn_home.Size = new System.Drawing.Size(1370, 788);
+            this.pn_home.Size = new System.Drawing.Size(1370, 749);
             this.pn_home.TabIndex = 0;
             // 
             // flowLayoutPanel1
@@ -390,6 +390,7 @@ namespace School_Mang.PL.MAIN
             this.lbl_bian_dragat.Size = new System.Drawing.Size(135, 37);
             this.lbl_bian_dragat.TabIndex = 7;
             this.lbl_bian_dragat.Text = "بيان درجات";
+            this.lbl_bian_dragat.Click += new System.EventHandler(this.lbl_bian_dragat_Click);
             // 
             // pic_bian_dragat
             // 
@@ -401,6 +402,7 @@ namespace School_Mang.PL.MAIN
             this.pic_bian_dragat.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pic_bian_dragat.TabIndex = 1;
             this.pic_bian_dragat.TabStop = false;
+            this.pic_bian_dragat.Click += new System.EventHandler(this.pic_bian_dragat_Click);
             // 
             // bunifuCards8
             // 
@@ -453,7 +455,7 @@ namespace School_Mang.PL.MAIN
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1370, 788);
+            this.ClientSize = new System.Drawing.Size(1370, 749);
             this.Controls.Add(this.pn_home);
             this.Font = new System.Drawing.Font("LBC", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.Black;

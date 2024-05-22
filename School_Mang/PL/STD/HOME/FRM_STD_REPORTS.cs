@@ -204,5 +204,19 @@ namespace School_Mang.PL.STD.HOME
         {
             lbl_count_new_Click(sender, e);
         }
+
+        private void lbl_bian_dragat_Click(object sender, EventArgs e)
+        {
+            waiting.Wait();
+            BL.Globals.Current_Year_Data = true;
+            BL.Globals.Degree_Statement = true;
+            FRM_CHOOSE_GRADE frm = new FRM_CHOOSE_GRADE();
+            frm.ShowDialog();
+        }
+
+        private void pic_bian_dragat_Click(object sender, EventArgs e)
+        {
+            lbl_bian_dragat_Click(sender, e);
+        }
     }
 }

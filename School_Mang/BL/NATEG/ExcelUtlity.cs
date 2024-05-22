@@ -696,6 +696,160 @@ namespace School_Mang.BL.NATEG
 
         }
 
+        public System.Data.DataTable GetInformationData_SofofOla(string staticExcelFile)
+
+        {
+            System.Data.DataTable dt = new System.Data.DataTable();
+
+            Application excel;
+            Workbook excelworkBook;
+            Worksheet excelSheet;
+
+            // Start Excel and get Application object.
+            excel = new Application();
+
+            waiting.Wait();
+            try
+            {
+
+                // for making Excel visible
+                excel.Visible = false;
+                excel.DisplayAlerts = false;
+
+                // Creation a new Workbook
+                excelworkBook = excel.Workbooks.Open(staticExcelFile);
+
+                // Workk sheet
+                excelSheet = (Worksheet)excelworkBook.Sheets[1];
+
+                dt.Columns.Add("test_kind", typeof(string));
+                dt.Columns.Add("grade_data", typeof(string));
+               
+
+                //assign new row to DataTable
+                DataRow NewRow = dt.NewRow();
+
+                NewRow["test_kind"] = excelSheet.Cells[5, 16].Value2;
+                NewRow["grade_data"] = excelSheet.Cells[5, 17].Value2;
+                
+
+                dt.Rows.Add(NewRow); //add row to DataTable
+
+                excelworkBook.Close(0);
+
+                excel.DisplayAlerts = true;
+                excel.Quit();
+
+                excelSheet = null;
+                excelworkBook = null;
+                excel = null;
+
+                waiting.End_WAit();
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                waiting.End_WAit();
+                msg.ErrorMesg(ex.Message);
+                return null;
+            }
+            finally
+            {
+                excelSheet = null;
+                excelworkBook = null;
+                excel = null;
+                waiting.End_WAit();
+            }
+
+        }
+
+
+        public System.Data.DataTable Read_Amal_1_2_3(string staticExcelFile)
+
+        {
+            System.Data.DataTable dt = new System.Data.DataTable();
+
+            Application excel;
+            Workbook excelworkBook;
+            Worksheet excelSheet;
+
+            // Start Excel and get Application object.
+            excel = new Application();
+
+            waiting.Wait();
+            try
+            {
+
+                // for making Excel visible
+                excel.Visible = false;
+                excel.DisplayAlerts = false;
+
+                // Creation a new Workbook
+                excelworkBook = excel.Workbooks.Open(staticExcelFile);
+
+                // Workk sheet
+                excelSheet = (Worksheet)excelworkBook.Sheets[1];
+                Range xlRange = excelSheet.UsedRange;
+
+                int rowCount = xlRange.Rows.Count;
+                int colCount = xlRange.Columns.Count;
+
+                dt.Columns.Add("Golos", typeof(int));
+                dt.Columns.Add("arabic", typeof(decimal));
+                dt.Columns.Add("dain", typeof(decimal));
+                dt.Columns.Add("math", typeof(decimal));
+                dt.Columns.Add("english", typeof(decimal));
+                dt.Columns.Add("motadd", typeof(decimal));
+                dt.Columns.Add("badnia", typeof(decimal));
+
+                int rowCounter; //This variable is used for row index number
+                DataRow row;
+                rowCounter = 5;
+
+                for (int i = 4; i <= rowCount; i++) //Loop for available row of excel data
+                {
+                    row = dt.NewRow(); //assign new row to DataTable
+
+                    row["Golos"] = Convert.ToInt32(xlRange.Cells[i, 4].Value2);
+                    row["arabic"] = Convert.ToDecimal(xlRange.Cells[i, 5].Value2);
+                    row["dain"] = Convert.ToDecimal(xlRange.Cells[i, 6].Value2);
+                    row["math"] = Convert.ToDecimal(xlRange.Cells[i, 7].Value2);
+                    row["english"] = Convert.ToDecimal(xlRange.Cells[i, 10].Value2);
+                    row["motadd"] = Convert.ToDecimal(xlRange.Cells[i, 8].Value2);
+                    row["badnia"] = Convert.ToDecimal(xlRange.Cells[i, 13].Value2);
+                    rowCounter++;
+
+                    dt.Rows.Add(row); //add row to DataTable
+                }
+
+                excelworkBook.Close(0);
+
+                excel.DisplayAlerts = true;
+                excel.Quit();
+
+                excelSheet = null;
+                excelworkBook = null;
+                excel = null;
+
+                waiting.End_WAit();
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                waiting.End_WAit();
+                msg.ErrorMesg(ex.Message);
+                return null;
+            }
+            finally
+            {
+                excelSheet = null;
+                excelworkBook = null;
+                excel = null;
+                waiting.End_WAit();
+            }
+
+        }
+
         public System.Data.DataTable Read_Amal_4_5_6(string staticExcelFile)
 
         {

@@ -118,6 +118,9 @@ namespace School_Mang.PL.NATIGA
                     dt_std_data.Columns["Absent_Any"].Visible = false;
                     Check_Absent();
                     lbl_count.Text = Dt.Rows.Count.ToString();
+
+                    ChangLayOut();
+                    
                 }
 
 
@@ -133,6 +136,28 @@ namespace School_Mang.PL.NATIGA
             }
         }
 
+        private void ChangLayOut()
+        {
+            int grade_id = BL.Globals.test_grade_id;
+            if (grade_id < 4 || grade_id > 9)
+            {
+                btn_amal_nesf.Visible = false;
+                btn_amal_akher.Visible = false;
+                btn_test_akher.Visible = true;
+                btn_absent_std.Visible = false;
+                btn_test_nesf.Visible = false;
+                btn_test_akher.ButtonText = "تقييم أخر العام";
+            }
+            else
+            {
+                btn_amal_nesf.Visible = true;
+                btn_amal_akher.Visible = true;
+                btn_test_akher.Visible = true;
+                btn_absent_std.Visible = true;
+                btn_test_nesf.Visible = true;
+                btn_test_akher.ButtonText = "اختبار أخر العام";
+            }
+        }
         private void Check_Absent()
         {
             foreach (DataGridViewRow row in dt_std_data.Rows)
@@ -346,9 +371,9 @@ namespace School_Mang.PL.NATIGA
                         Dt = NATEG.Get_Golos_Edit_Data(grade);
                         dt_std_data.DataSource = Dt;
                     }
-
                     lbl_count.Text = Dt.Rows.Count.ToString();
                 }
+                ChangLayOut();
                 Waiting.End_WAit();
             }
             catch (Exception ex)

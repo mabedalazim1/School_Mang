@@ -384,12 +384,26 @@ namespace School_Mang.PL.NATIGA
                     {
                         ExportTestToExcel(btn_ok, 2);
                     }
-                }
 
+                }
             }
             catch (Exception ex)
             {
                 msg.ErrorMesg(ex.Message);
+            }
+        }
+
+        private void FRM_CHOSE_FINAL_DATA_Load(object sender, EventArgs e)
+        {
+           if(BL.Globals.Amal_Sana)
+            {
+                lbl_title.Text = "أعمال السنة";
+                
+            }
+            else
+            {
+                lbl_title.Text = "درجات الإختبار";
+              
             }
         }
     }

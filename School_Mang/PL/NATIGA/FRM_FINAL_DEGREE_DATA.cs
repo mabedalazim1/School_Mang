@@ -62,9 +62,9 @@ namespace School_Mang.PL.NATIGA
         int move_x;
         int move_y;
 
-        private void Cheack_Gyab(TextBox textBox,byte absent)
+        private void Cheack_Gyab(TextBox textBox, byte absent)
         {
-            if(absent == 1)
+            if (absent == 1)
             {
                 textBox.Text = "غ";
                 textBox.Enabled = false;
@@ -76,8 +76,9 @@ namespace School_Mang.PL.NATIGA
         }
         private void Get_Data(byte test_kind)
         {
+
             // Change Lables For Grades
-            byte test_grade_id =Convert.ToByte(BL.Globals.test_grade_id);
+            byte test_grade_id = Convert.ToByte(BL.Globals.test_grade_id);
             switch (test_grade_id)
             {
                 case 10:
@@ -85,38 +86,35 @@ namespace School_Mang.PL.NATIGA
                 case 1:
                 case 2:
                 case 3:
-
+                    lbl_mahrat.Location = new Point(189, 31);
+                    lbl_mahrat.Text = "بدنية";
+                    txt_test_kind.Text = "تقييم أخر العام";
                     break;
 
                 case 4:
                 case 5:
                 case 6:
-
-                    txt_scince_practical.Enabled = false;
-                    txt_tocnolegy_practical.Enabled = false;
                     lbl_mahrat.Location = new Point(189, 31);
                     lbl_mahrat.Text = "مهارات";
                     lbl_tocnolegy.Location = new Point(96, 31);
                     lbl_tocnolegy.Text = "تكنولوجي";
-
+                    txt_test_kind.Text = BL.Globals.Final_Test_Name;
                     break;
 
                 case 7:
                 case 8:
                 case 9:
-
-                    txt_scince_practical.Enabled = true;
-                    txt_tocnolegy_practical.Enabled = true;
                     lbl_mahrat.Location = new Point(197, 31);
                     lbl_mahrat.Text = "فنية";
                     lbl_tocnolegy.Location = new Point(106, 31);
                     lbl_tocnolegy.Text = "حاسب";
+                    txt_test_kind.Text = BL.Globals.Final_Test_Name;
                     break;
             }
-            txt_test_kind.Text = BL.Globals.Final_Test_Name;
+            
             int Std_Golos = BL.Globals.Std_Golos;
             DataTable Dt = NATEG.Get_Final_All_Data(Std_Golos);
-            if(Dt.Rows.Count == 0)
+            if (Dt.Rows.Count == 0)
             {
                 msg.ErrorMesg("لا توجد بيانات مسجلة لهذا الطالب ..!");
                 return;
@@ -125,7 +123,7 @@ namespace School_Mang.PL.NATIGA
             txt_name.Text = Dt.Rows[0]["stdunet_name"].ToString();
 
             // Get Absent Student
-            byte absent_ar_A =Convert.ToByte(Dt.Rows[0]["absent_ar_A"]);
+            byte absent_ar_A = Convert.ToByte(Dt.Rows[0]["absent_ar_A"]);
             byte absent_ar_B = Convert.ToByte(Dt.Rows[0]["absent_ar_B"]);
             byte absent_math_A = Convert.ToByte(Dt.Rows[0]["absent_math_A"]);
             byte absent_math_B = Convert.ToByte(Dt.Rows[0]["absent_math_B"]);
@@ -141,11 +139,12 @@ namespace School_Mang.PL.NATIGA
             byte absent_maharat_B = Convert.ToByte(Dt.Rows[0]["absent_maharat_B"]);
             byte absent_tocnolegy_A = Convert.ToByte(Dt.Rows[0]["absent_tocnolegy_A"]);
             byte absent_tocnolegy_B = Convert.ToByte(Dt.Rows[0]["absent_tocnolegy_B"]);
-            
+
 
             try
             {
                 Waiting.Wait();
+                lbl_sinces.Text = "علوم";
                 switch (test_kind)
                 {
                     case 1:
@@ -159,6 +158,18 @@ namespace School_Mang.PL.NATIGA
                         txt_maharat.Text = Dt.Rows[0]["maharat_A_1"].ToString();
                         txt_tocnolegy.Text = Dt.Rows[0]["tocnolegy_A_1"].ToString();
                         txt_tocnolegy_practical.Text = Dt.Rows[0]["tocnolegy_A_practical"].ToString();
+                        if (BL.Globals.test_grade_id == 7 || BL.Globals.test_grade_id == 8 || BL.Globals.test_grade_id == 9)
+                        {
+                            txt_scince_practical.Enabled = true;
+                            txt_tocnolegy_practical.Enabled = true;
+                        }
+                        else
+                        {
+                            txt_scince_practical.Enabled = false;
+                            txt_tocnolegy_practical.Enabled = false;
+                        }
+
+
                         break;
                     case 2:
                         txt_ar.Text = Dt.Rows[0]["arabic_A_2"].ToString();
@@ -166,11 +177,13 @@ namespace School_Mang.PL.NATIGA
                         txt_math.Text = Dt.Rows[0]["math_A_2"].ToString();
                         txt_scince.Text = Dt.Rows[0]["scince_A_Test"].ToString();
                         txt_scince_practical.Text = "0";
+                        txt_scince_practical.Enabled = false;
                         txt_social.Text = Dt.Rows[0]["social_A_2"].ToString();
                         txt_english.Text = Dt.Rows[0]["english_A_2"].ToString();
                         txt_maharat.Text = Dt.Rows[0]["maharat_A_2"].ToString();
                         txt_tocnolegy.Text = Dt.Rows[0]["tocnolegy_A_Test"].ToString();
                         txt_tocnolegy_practical.Text = "0";
+                        txt_tocnolegy_practical.Enabled = false;
 
                         // Get Absent Student
                         Cheack_Gyab(txt_ar, absent_ar_A);
@@ -193,20 +206,54 @@ namespace School_Mang.PL.NATIGA
                         txt_maharat.Text = Dt.Rows[0]["maharat_B_1"].ToString();
                         txt_tocnolegy.Text = Dt.Rows[0]["tocnolegy_B_1"].ToString();
                         txt_tocnolegy_practical.Text = Dt.Rows[0]["tocnolegy_B_practical"].ToString();
-
+                        if (BL.Globals.test_grade_id == 7 || BL.Globals.test_grade_id == 8 || BL.Globals.test_grade_id == 9)
+                        {
+                            txt_scince_practical.Enabled = true;
+                            txt_tocnolegy_practical.Enabled = true;
+                        }
+                        else
+                        {
+                            txt_scince_practical.Enabled = false;
+                            txt_tocnolegy_practical.Enabled = false;
+                        }
                         break;
                     case 4:
-                        txt_ar.Text = Dt.Rows[0]["arabic_B_2"].ToString();
-                        txt_din.Text = Dt.Rows[0]["dain_B_2"].ToString();
-                        txt_math.Text = Dt.Rows[0]["math_B_2"].ToString();
-                        txt_scince.Text = Dt.Rows[0]["scince_B_Test"].ToString();
-                        txt_scince_practical.Text = "0";
-                        txt_social.Text = Dt.Rows[0]["social_B_2"].ToString();
-                        txt_english.Text = Dt.Rows[0]["english_B_2"].ToString();
-                        txt_maharat.Text = Dt.Rows[0]["maharat_B_2"].ToString();
-                        txt_tocnolegy.Text = Dt.Rows[0]["tocnolegy_B_Test"].ToString();
-                        txt_tocnolegy_practical.Text = "0";
 
+                        txt_tocnolegy_practical.Enabled = false;
+                        txt_scince_practical.Enabled = false;
+                        
+
+                        if (BL.Globals.test_grade_id < 4 || BL.Globals.test_grade_id > 9)
+                        {
+                            
+                            txt_social.Text = "0";
+                            txt_scince_practical.Text = "0";
+                            txt_tocnolegy.Text = "0";
+                            txt_tocnolegy_practical.Text = "0";
+                            txt_ar.Text = Dt.Rows[0]["arabic_B_1"].ToString();
+                            txt_din.Text = Dt.Rows[0]["dain_B_1"].ToString();
+                            txt_math.Text = Dt.Rows[0]["math_B_1"].ToString();
+                            txt_scince.Text = Dt.Rows[0]["scince_B_1"].ToString();
+                            lbl_sinces.Text = "متعدد";
+                            txt_english.Text = Dt.Rows[0]["english_B_1"].ToString();
+                            txt_maharat.Text = Dt.Rows[0]["maharat_B_1"].ToString();
+                        }
+                        else
+                        {
+                            txt_ar.Text = Dt.Rows[0]["arabic_B_2"].ToString();
+                            txt_din.Text = Dt.Rows[0]["dain_B_2"].ToString();
+                            txt_math.Text = Dt.Rows[0]["math_B_2"].ToString();
+                            txt_scince.Text = Dt.Rows[0]["scince_B_Test"].ToString();
+                            txt_scince_practical.Text = "0";
+                            txt_social.Text = Dt.Rows[0]["social_B_2"].ToString();
+                            txt_english.Text = Dt.Rows[0]["english_B_2"].ToString();
+                            txt_maharat.Text = Dt.Rows[0]["maharat_B_2"].ToString();
+                            txt_tocnolegy.Text = Dt.Rows[0]["tocnolegy_B_Test"].ToString();
+                            txt_tocnolegy_practical.Text = "0";
+
+                        }
+
+                       
                         // Get Absent Student
                         Cheack_Gyab(txt_ar, absent_ar_B);
                         Cheack_Gyab(txt_din, absent_din_B);
@@ -217,9 +264,20 @@ namespace School_Mang.PL.NATIGA
                         Cheack_Gyab(txt_maharat, absent_maharat_B);
                         Cheack_Gyab(txt_tocnolegy, absent_tocnolegy_B);
                         break;
+
+                }
+                if (BL.Globals.test_grade_id < 4 || BL.Globals.test_grade_id > 9)
+                {
+                    txt_social.Enabled = false;
+                    txt_tocnolegy.Enabled = false;
+                }
+                else
+                {
+                    txt_social.Enabled = true;
+                    txt_tocnolegy.Enabled = true;
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 msg.ErrorMesg(e.Message);
             }
@@ -246,7 +304,7 @@ namespace School_Mang.PL.NATIGA
                     case 1:
                     case 2:
                     case 3:
-
+                        max_degree = 4;
                         break;
 
                     case 4:
@@ -274,11 +332,11 @@ namespace School_Mang.PL.NATIGA
                             case 1:
                             case 3:
                                 max_degree = 20;
-                                if(textBox.Name == "txt_scince_practical" || textBox.Name == "txt_tocnolegy_practical")
+                                if (textBox.Name == "txt_scince_practical" || textBox.Name == "txt_tocnolegy_practical")
                                 {
                                     max_degree = 16;
                                 }
-                                
+
                                 break;
                             case 2:
                             case 4:
@@ -291,9 +349,9 @@ namespace School_Mang.PL.NATIGA
                         }
 
                         break;
-                       
+
                 }
-               
+
                 if (Convert.ToDouble(textBox.Text) > max_degree || (Convert.ToDouble(textBox.Text) < 0
                        ))
                 {
@@ -302,15 +360,15 @@ namespace School_Mang.PL.NATIGA
                     textBox.Focus();
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 msg.ErrorMesg(e.Message);
             }
         }
-       
+
         private decimal Get_Degree(TextBox textBox)
         {
-            decimal degree =0;
+            decimal degree = 0;
             try
             {
                 Waiting.Wait();
@@ -323,7 +381,7 @@ namespace School_Mang.PL.NATIGA
                     degree = Convert.ToDecimal(textBox.Text);
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 msg.ErrorMesg(e.Message);
             }
@@ -393,13 +451,13 @@ namespace School_Mang.PL.NATIGA
             maharat_old = txt_maharat.Text;
             tocnolegy_old = txt_tocnolegy.Text;
             tocnolegy_practical_old = txt_tocnolegy_practical.Text;
-            
+
             try
             {
                 byte test_kind = BL.Globals.Final_Test_Kind;
                 Get_Data(test_kind);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 msg.ErrorMesg(ex.Message);
             }
@@ -537,6 +595,10 @@ namespace School_Mang.PL.NATIGA
 
         private void btn_save_Click(object sender, EventArgs e)
         {
+            if (BL.Globals.test_grade_id < 4 || BL.Globals.test_grade_id > 9)
+            {
+                BL.Globals.Final_Test_Kind = 3;
+            }
 
             decimal ar = Get_Degree(txt_ar);
             decimal math = Get_Degree(txt_math);
@@ -548,7 +610,7 @@ namespace School_Mang.PL.NATIGA
             decimal maharat = Get_Degree(txt_maharat);
             decimal tocnolegy = Get_Degree(txt_tocnolegy);
             decimal tocnolegy_practical = Get_Degree(txt_tocnolegy_practical);
-           
+            
             try
             {
                 Waiting.Wait();
@@ -558,7 +620,7 @@ namespace School_Mang.PL.NATIGA
                 msg.MyMesg("تم تعديل الدرجات بنجاح ..!");
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 msg.ErrorMesg(ex.Message);
             }

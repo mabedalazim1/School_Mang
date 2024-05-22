@@ -323,6 +323,46 @@ namespace School_Mang.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap final_naega_3_48 {
+            get {
+                object obj = ResourceManager.GetObject("final_naega_3_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap final_natega_2_48_ {
+            get {
+                object obj = ResourceManager.GetObject("final_natega-2-48 ", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap final_natega_4 {
+            get {
+                object obj = ResourceManager.GetObject("final_natega-4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap final_natega_48 {
+            get {
+                object obj = ResourceManager.GetObject("final_natega-48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap help_80 {
             get {
                 object obj = ResourceManager.GetObject("help-80", resourceCulture);

@@ -51,6 +51,7 @@ namespace School_Mang.PL.NATIGA
             cmb_grade.DataSource = grade_dt;
             cmb_grade.DisplayMember = "GradeDesc";
             cmb_grade.ValueMember = "Grade_Id";
+            lbl_month.Text = BL.Globals.test_month_name;
 
             LoadStdData();
         }
@@ -71,6 +72,7 @@ namespace School_Mang.PL.NATIGA
 
         private async void LoadStdData()
         {
+
             await Test_Intrent();
             try
             {
@@ -102,6 +104,7 @@ namespace School_Mang.PL.NATIGA
                             case 3:
                                 dt_std_data.Columns["دراسات"].Visible = false;
                                 dt_std_data.Columns["مهارات"].Visible = false;
+                                dt_std_data.Columns["تكنولوجيا"].Visible = false;
                                 dt_std_data.Columns["تكنولوجيا"].Visible = false;
                                 dt_std_data.Columns["علوم"].HeaderText = "متعدد";
                                 break;
@@ -163,7 +166,7 @@ namespace School_Mang.PL.NATIGA
                                 break;
 
                         }
-
+                        Waiting.End_WAit();
                     }
 
                     dt_std_data.Columns["test_kind_Id"].Visible = false;
@@ -171,15 +174,20 @@ namespace School_Mang.PL.NATIGA
                     dt_std_data.Columns["الصف"].Visible = false;
                     dt_std_data.Columns["نوع الإختبار"].Visible = false;
                     dt_std_data.Columns["userSchoolId"].Visible = false;
-
+                    dt_std_data.Columns["show_data"].Visible = false;
+                    
                     lbl_count.Text = dt_std_data.Rows.Count.ToString();
+                    dt_std_data.Columns["اسم الطالب"].Width = 200;
+                    Check_Hide_Natega();
+                    Waiting.End_WAit();
                 }
                 else
                 {
                     msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+                    Waiting.End_WAit();
                     this.Close();
                 }
-
+                Waiting.End_WAit();
             }
             catch (Exception e)
             {
@@ -190,6 +198,74 @@ namespace School_Mang.PL.NATIGA
                 Waiting.End_WAit();
             }
 
+        }
+
+        private void Check_Hide_Natega()
+        {
+            try
+            {
+                foreach (DataGridViewRow row in dt_std_data.Rows)
+                {
+                    // Get Absent Student
+                    if (row.Cells["show_data"].Value.ToString() == "False")
+                    {
+                        row.DefaultCellStyle.BackColor = Color.Crimson;
+                        row.DefaultCellStyle.ForeColor = Color.White;
+                        row.DefaultCellStyle.SelectionBackColor = Color.OrangeRed;
+                    }
+                    else
+                    {
+                        row.DefaultCellStyle.BackColor = default;
+                        row.DefaultCellStyle.ForeColor = default;
+                        row.DefaultCellStyle.SelectionBackColor = default;
+
+                    }
+
+                }
+            }
+            catch(Exception e)
+            {
+                msg.ErrorMesg(e.Message);
+            }
+            
+        }
+
+        private async void Serach_Data()
+        {
+            await Test_Intrent();
+            if (!BL.Globals.Test_Internet_Con)
+            {
+                msg.ErrorMesg("تأكد من الإتصال بالإنترنت ..!");
+                return;
+            }
+            try
+            {
+                int test_kind = BL.Globals.test_kind;
+                int grade_id = BL.Globals.test_grade_id;
+                int test_month = BL.Globals.test_month;
+
+                DataTable Dt = new DataTable();
+                switch (test_kind)
+                {
+                    case 1:
+                        Dt = NATEG.Get_Degree_Data(test_month, grade_id, "yes", txt_std_data.Text);
+                        break;
+                    case 2:
+                        Dt = NATEG.Get_Mark_Data(test_month, grade_id, "yes", txt_std_data.Text);
+                        break;
+                }
+
+
+                dt_std_data.DataSource = Dt;
+                lbl_count.Text = dt_std_data.Rows.Count.ToString();
+                dt_std_data.Columns["اسم الطالب"].Width = 200;
+                Check_Hide_Natega();
+            }
+            catch (Exception ex)
+            {
+                msg.ErrorMesg(ex.Message);
+                Waiting.End_WAit();
+            }
         }
         private void pn_top_MouseDown(object sender, MouseEventArgs e)
         {
@@ -259,6 +335,7 @@ namespace School_Mang.PL.NATIGA
                     msg.ErrorMesg("لا توجد بيانات مسجلة لهذا الصف ..!");
                     return;
                 }
+                Waiting.End_WAit();
             }
             catch (Exception ex)
             {
@@ -266,42 +343,9 @@ namespace School_Mang.PL.NATIGA
             }
         }
 
-        private async void txt_std_data_KeyUp(object sender, KeyEventArgs e)
+        private void txt_std_data_KeyUp(object sender, KeyEventArgs e)
         {
-            await Test_Intrent();
-            if (!BL.Globals.Test_Internet_Con)
-            {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت ..!");
-                return;
-            }
-            try
-            {
-                int test_kind = BL.Globals.test_kind;
-                int grade_id = BL.Globals.test_grade_id;
-                int test_month = BL.Globals.test_month;
-
-                DataTable Dt = new DataTable();
-                switch (test_kind)
-                {
-                    case 1:
-                        Dt = NATEG.Get_Degree_Data(test_month, grade_id, "yes", txt_std_data.Text);
-                        break;
-                    case 2:
-                        Dt = NATEG.Get_Mark_Data(test_month, grade_id, "yes", txt_std_data.Text);
-                        break;
-                }
-
-
-                dt_std_data.DataSource = Dt;
-                lbl_count.Text = dt_std_data.Rows.Count.ToString();
-                dt_std_data.Columns["اسم الطالب"].Width = 200;
-
-            }
-            catch (Exception ex)
-            {
-                msg.ErrorMesg(ex.Message);
-                Waiting.End_WAit();
-            }
+            Serach_Data();
         }
 
         private async void btn_edit_std_Click(object sender, EventArgs e)
@@ -440,11 +484,6 @@ namespace School_Mang.PL.NATIGA
 
         }
 
-        private void txt_std_data_OnValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void label11_Click(object sender, EventArgs e)
         {
 
@@ -460,11 +499,7 @@ namespace School_Mang.PL.NATIGA
             msg.ErrorMesg("هذا الإجراء غير متاح ..!");
         }
 
-        private void btn_new_std_Click(object sender, EventArgs e)
-        {
-            msg.ErrorMesg("هذا الإجراء غير متاح ..!");
-        }
-
+       
         private void pn_top_Paint(object sender, PaintEventArgs e)
         {
 
@@ -473,6 +508,61 @@ namespace School_Mang.PL.NATIGA
         private void pic_help_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btn_hide_data_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Waiting.Wait();
+
+                string std_name = dt_std_data.CurrentRow.Cells["اسم الطالب"].Value.ToString();
+                if (msg.DialogeMsg("هل تريد تعديل حالة نتيجة ... ؟ " + "\n" + std_name) == DialogResult.No)
+                {
+                    msg.MyExclamationMsg("تم إلغاء الإجراء..!");
+                    Waiting.End_WAit();
+                    return;
+                }
+
+                int student_id = Convert.ToInt32( dt_std_data.CurrentRow.Cells["userSchoolId"].Value);
+                byte test_kind_id = Convert.ToByte(BL.Globals.test_month);
+                string show_data = dt_std_data.CurrentRow.Cells["show_data"].Value.ToString();
+
+                
+
+                NATEG.Toggle_Hide_Data(student_id,test_kind_id,show_data);
+                cmb_grade_SelectedIndexChanged(sender, e);
+                Serach_Data();
+
+                if(show_data == "False")
+                {
+                    msg.MyMesg("تم إتاحة النتيجة للطالب ..!" + "\n" + std_name);
+                    Waiting.End_WAit();
+                }
+                else
+                {
+                    msg.MyExclamationMsg("تم حجب نتيجة الطالب ..!" + "\n" + std_name);
+                    Waiting.End_WAit();
+                }
+               
+                Waiting.End_WAit();
+            }
+            catch (Exception ex)
+            {
+                msg.ErrorMesg(ex.Message);
+            }
+        }
+
+        private void dt_std_data_Click(object sender, EventArgs e)
+        {
+            if(dt_std_data.CurrentRow.Cells["show_data"].Value.ToString() != "False")
+            {
+                btn_hide_data.ButtonText = "حجب النتيجة";
+            }
+            else
+            {
+                btn_hide_data.ButtonText = "إلغاء الحجب";
+            }
         }
     }
 }

@@ -32,8 +32,8 @@ namespace School_Mang.PL.NATIGA
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FRM_CHOSE_FINAL_DATA));
             this.panel4 = new System.Windows.Forms.Panel();
             this.pn_top = new System.Windows.Forms.Panel();
-            this.lbl_title = new System.Windows.Forms.Label();
             this.btn_close = new DevExpress.XtraEditors.SimpleButton();
+            this.lbl_title = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.pic_rasd = new System.Windows.Forms.PictureBox();
             this.cmb_test = new System.Windows.Forms.ComboBox();
@@ -73,18 +73,6 @@ namespace School_Mang.PL.NATIGA
             this.pn_top.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pn_top_MouseMove);
             this.pn_top.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pn_top_MouseUp);
             // 
-            // lbl_title
-            // 
-            this.lbl_title.AutoSize = true;
-            this.lbl_title.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_title.ForeColor = System.Drawing.Color.White;
-            this.lbl_title.Location = new System.Drawing.Point(210, 13);
-            this.lbl_title.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
-            this.lbl_title.Name = "lbl_title";
-            this.lbl_title.Size = new System.Drawing.Size(110, 25);
-            this.lbl_title.TabIndex = 46;
-            this.lbl_title.Text = "درجات الإختبار";
-            // 
             // btn_close
             // 
             this.btn_close.DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -97,6 +85,18 @@ namespace School_Mang.PL.NATIGA
             this.btn_close.TabIndex = 11;
             this.btn_close.TabStop = false;
             this.btn_close.Click += new System.EventHandler(this.btn_close_Click);
+            // 
+            // lbl_title
+            // 
+            this.lbl_title.AutoSize = true;
+            this.lbl_title.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_title.ForeColor = System.Drawing.Color.White;
+            this.lbl_title.Location = new System.Drawing.Point(210, 13);
+            this.lbl_title.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
+            this.lbl_title.Name = "lbl_title";
+            this.lbl_title.Size = new System.Drawing.Size(110, 25);
+            this.lbl_title.TabIndex = 46;
+            this.lbl_title.Text = "درجات الإختبار";
             // 
             // groupBox1
             // 
@@ -256,6 +256,7 @@ namespace School_Mang.PL.NATIGA
             this.Name = "FRM_CHOSE_FINAL_DATA";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ملفات الرصد";
+            this.Load += new System.EventHandler(this.FRM_CHOSE_FINAL_DATA_Load);
             this.pn_top.ResumeLayout(false);
             this.pn_top.PerformLayout();
             this.groupBox1.ResumeLayout(false);

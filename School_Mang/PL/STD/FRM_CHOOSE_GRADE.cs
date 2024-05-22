@@ -284,13 +284,22 @@ namespace School_Mang.PL.STD
         {
 
             Add_Data();
-            lbl_current_year.Text ="احصاء " + Func.Year_Desc();
+            if (!BL.Globals.Degree_Statement)
+            {
+                lbl_current_year.Text ="احصاء " + Func.Year_Desc();
+            }
+            else
+            {
+                lbl_current_year.Text = "بيانات " + Func.Year_Desc();
+            }
+            
         }
 
         private void btn_close_b_Click(object sender, EventArgs e)
         {
             this.Close();
             BL.Globals.Current_Year_Data = false;
+            BL.Globals.Degree_Statement = false;
         }
 
         private void btn_show_data_Click(object sender, EventArgs e)
@@ -304,7 +313,7 @@ namespace School_Mang.PL.STD
            
             FRM_CURRENT_STD.Get_Current_Std.grade = grade;
             FRM_CURRENT_STD.Get_Current_Std.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
-             this.Hide();
+            this.Hide();
             this.Dispose();
             Waiting.End_WAit();
   

@@ -618,9 +618,9 @@ namespace School_Mang.PL.MAIN
             this.label6.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.label6.Location = new System.Drawing.Point(253, 4);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(75, 20);
+            this.label6.Size = new System.Drawing.Size(84, 20);
             this.label6.TabIndex = 8;
-            this.label6.Text = "2024-4-1";
+            this.label6.Text = "2024-5-23";
             // 
             // lbl_caption
             // 
@@ -649,7 +649,7 @@ namespace School_Mang.PL.MAIN
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(86, 16);
             this.label2.TabIndex = 5;
-            this.label2.Text = "نسخة تجريبية 4";
+            this.label2.Text = "نسخة تجريبية 5";
             // 
             // label3
             // 
@@ -824,9 +824,9 @@ namespace School_Mang.PL.MAIN
             this.label5.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.label5.Location = new System.Drawing.Point(491, 63);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(76, 21);
+            this.label5.Size = new System.Drawing.Size(85, 21);
             this.label5.TabIndex = 10;
-            this.label5.Text = "2024-4-1";
+            this.label5.Text = "2024-5-23";
             // 
             // lbl_Year
             // 

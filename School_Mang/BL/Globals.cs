@@ -142,6 +142,20 @@ namespace School_Mang.BL
             }
         }
 
+        private static bool _Degree_Statement;
+        public static bool Degree_Statement
+        {
+            get
+            {
+                return _Degree_Statement;
+            }
+            set
+            {
+                _Degree_Statement = value;
+            }
+        }
+
+
         private static bool _Update_Taheewl;
         public static bool Update_Taheewl
         {
@@ -354,6 +368,19 @@ namespace School_Mang.BL
             }
         }
 
+        private static string _test_month_name;
+        public static string test_month_name
+        {
+            get
+            {
+                return _test_month_name;
+            }
+            set
+            {
+                _test_month_name = value;
+            }
+        }
+
         private static int _test_grade_id;
         public static int test_grade_id
         {
@@ -443,6 +470,18 @@ namespace School_Mang.BL
             }
         }
 
+        private static bool _Final_Koshof;
+        public static bool Final_Koshof
+        {
+            get
+            {
+                return _Final_Koshof;
+            }
+            set
+            {
+                _Final_Koshof = value;
+            }
+        }
         private static string  _Dir_Path ="";
         public static string Dir_Path
         {

@@ -16,7 +16,7 @@ namespace School_Mang.PL.STD
         BL.MSG msg = new BL.MSG();
         MAIN.CLS_FUNCATIONS Func = new MAIN.CLS_FUNCATIONS();
         BL.Waiting Waiting = new BL.Waiting();
-
+        RPT.REPORT_CONNECTION RPT = new RPT.REPORT_CONNECTION();
 
         int year_cod = Properties.Settings.Default.year_cod;
         int permission_id = Properties.Settings.Default.permission_id;
@@ -153,7 +153,7 @@ namespace School_Mang.PL.STD
         public void Get_School_Year_Data()
         {
             Waiting.Wait();
-            DataTable dt = std.Get_School_year_Data(Current_Year(),Convert.ToInt32(grade), 0);
+            DataTable dt = std.Get_School_year_Data(Current_Year(), Convert.ToInt32(grade), 0);
 
             dt_std_data.DataSource = dt;
             dt_std_data.Columns["std_code"].Visible = false;
@@ -238,6 +238,11 @@ namespace School_Mang.PL.STD
                 msg.ErrorMesg("لا يمكن التعامل مع الطالب المحول .. يرجى حذف طلب التحويل أولاً.. ..!");
                 return true;
             }
+            else if (Convert.ToInt32(dt_std_data.CurrentRow.Cells["Std_Status_Id"].Value) == 1)
+            {
+                msg.ErrorMesg("لا يمكن التعامل مع الطالب المستجد .. يرجى تعديل حالة الطالب أولاً.. ..!");
+                return true;
+            }
             else
             {
                 return false;
@@ -256,6 +261,22 @@ namespace School_Mang.PL.STD
                 return true;
             }
         }
+
+        private void ShowDegreeStatement()
+        {
+            int year = Properties.Settings.Default.year_cod;
+            int grade_id = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Grade_Id"].Value);
+            string std_code = dt_std_data.CurrentRow.Cells["std_code"].Value.ToString();
+            try
+            {
+                RPT.OpenDegree_Statement(year, grade_id, std_code);
+            }
+            catch (Exception e)
+            {
+                msg.ErrorMesg(e.Message);
+            }
+        }
+
         #endregion
 
 
@@ -330,11 +351,12 @@ namespace School_Mang.PL.STD
         private void btn_close_b_Click(object sender, EventArgs e)
         {
             this.Close();
-            
+
             BL.Globals.Current_Year_Data = false;
+            BL.Globals.Degree_Statement = false;
             BL.Globals.Details_Std = false;
             BL.Globals.Elthak_Std = false;
-            this.Dispose();  
+            this.Dispose();
         }
 
         private void btn_close_Click(object sender, EventArgs e)
@@ -366,6 +388,18 @@ namespace School_Mang.PL.STD
 
         private void FRM_CURRENT_STD_Load(object sender, EventArgs e)
         {
+            if (BL.Globals.Degree_Statement)
+            {
+                btn_talab_elthak.Visible = false;
+                btn_del_std.Visible = false;
+                btn_new_std.ButtonText = "بيان درجات";
+            }
+            else
+            {
+                btn_talab_elthak.Visible = true;
+                btn_del_std.Visible = true;
+                btn_new_std.ButtonText = "تعديل البيانات";
+            }
             try
             {
                 dt_std_data.Columns["اسم الطالب"].Width = 200;
@@ -382,16 +416,24 @@ namespace School_Mang.PL.STD
 
         private void btn_new_std_Click(object sender, EventArgs e)
         {
+            
             Waiting.Wait();
+            // Degree Statement
+            if (BL.Globals.Degree_Statement)
+            {
+                ShowDegreeStatement();
+                return;
+            }
+
             if (dt_std_data.SelectedRows.Count > 0)
             {
                 // if (Verify_Std_Status()) return;
 
-                
+
                 int grade = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Grade_Id"].Value);
                 try
                 {
-                    
+
 
                     FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.txt_osra_id.Text = dt_std_data.CurrentRow.Cells["Osraa_Id"].Value.ToString();
                     FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.txt_std_code.Text = dt_std_data.CurrentRow.Cells["std_code"].Value.ToString();
@@ -407,12 +449,12 @@ namespace School_Mang.PL.STD
                     FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.grade = grade;
                     FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.cmb_class.SelectedValue = dt_std_data.CurrentRow.Cells["Class_Id"].Value;
                     FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.cmb_relgien.SelectedValue = dt_std_data.CurrentRow.Cells["Religion_Id"].Value;
-                    
-                    if(dt_std_data.CurrentRow.Cells["Updated_by"].Value.ToString() != "")
+
+                    if (dt_std_data.CurrentRow.Cells["Updated_by"].Value.ToString() != "")
                     {
                         DateTime my_date = Convert.ToDateTime(dt_std_data.CurrentRow.Cells["Updated_At"].Value.ToString());
                         FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.lbl_edit_date.Visible = true;
-                        FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.lbl_by.Visible = true; 
+                        FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.lbl_by.Visible = true;
                         FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.lbl_edit_by.Visible = true;
                         FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.lbl_date.Visible = true;
                         FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.lbl_edit_date.Text = my_date.ToString("dd/MM/yyyy");
@@ -425,7 +467,7 @@ namespace School_Mang.PL.STD
                         FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.lbl_by.Visible = false;
                         FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.lbl_date.Visible = false;
                     }
-                   
+
                     FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.row_index = dt_std_data.CurrentCell.RowIndex;
 
 

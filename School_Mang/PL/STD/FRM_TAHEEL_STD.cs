@@ -298,10 +298,29 @@ namespace School_Mang.PL.STD
                     }
                     else
                     {
+                        switch (grade)
+                        {
+                            case 10:
+                                grade = 11;
+                                break;
+                            case 11:
+                                grade = 1;
+                                break;
+                            case 1:
+                            case 2:
+                            case 3:
+                            case 4:
+                            case 5:
+                            case 6:
+                            case 7:
+                            case 8:
+                                grade += 1;
+                                break;
+                        }
                         Trans_After_Year = false;
+
                     }
-
-
+                   
                     // Add Transfers Data
                     Waiting.Wait();
                     std.Add_Transfers_Data(
@@ -321,6 +340,8 @@ namespace School_Mang.PL.STD
                     Waiting.Wait();
                     if (Cheack_Tarns_Data())
                     {
+                        // Del From New Year
+                        std.Delete_School_Std_Data(txt_std_code.Text, year+2);
                         msg.MyMesg("تم حفظ طلب التحويل بنجاح .. !");
                     }
 

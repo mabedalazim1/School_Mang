@@ -635,5 +635,96 @@ namespace School_Mang.RPT
 
         }
 
+        public void OpenFinal_Koshof(int year_id,
+                                int grade_id)
+        {
+            int October_Sana = year_id + 20;
+            try
+            {
+                ReportDocument myReport = new ReportDocument();
+
+                switch (grade_id)
+                {
+                    case 10:
+                    case 11:
+                    case 1:
+                    case 2:
+                    case 3:
+                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Koshof_Natega_A.rpt");
+
+                        break;
+                    case 4:
+                    case 5:
+                    case 6:
+                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Koshof_Natega_B.rpt");
+
+                        break;
+
+                    case 7:
+                    case 8:
+                    case 9:
+                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Koshof_Natega_C.rpt");
+
+                        break;
+                }
+
+                myReport.SetParameterValue("@year_id", year_id);
+                myReport.SetParameterValue("@grade_id", grade_id);
+                myReport.SetParameterValue("@October_Sana", October_Sana);
+
+                OpenReport(myReport, "كشوف نتيجةأخرالعام", "كشوف نتيجةأخرالعام ");
+            }
+            catch (Exception e)
+            {
+                msg.ErrorMesg(e.Message);
+            }
+
+        }
+
+        public void OpenDegree_Statement(int year_id,
+                               int grade_id,
+                               string std_code)
+        {
+            try
+            {
+                ReportDocument myReport = new ReportDocument();
+
+                switch (grade_id)
+                {
+                    case 10:
+                    case 11:
+                    case 1:
+                    case 2:
+                    case 3:
+                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Degree_Statement_A.rpt");
+
+                        break;
+                    case 4:
+                    case 5:
+                    case 6:
+                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Degree_Statement_B.rpt");
+
+                        break;
+
+                    case 7:
+                    case 8:
+                    case 9:
+                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Degree_Statement_C.rpt");
+
+                        break;
+                }
+
+                myReport.SetParameterValue("@year_id", year_id);
+                myReport.SetParameterValue("@std_code", std_code);
+
+                OpenReport(myReport, "بيان درجات طالب", "بيان درجات طالب ");
+            }
+            catch (Exception e)
+            {
+                msg.ErrorMesg(e.Message);
+            }
+
+        }
+
     }
 }

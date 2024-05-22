@@ -260,6 +260,27 @@
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="MyReports\rpt_Degree_Statement_A.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rpt_Degree_Statement_A.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="MyReports\rpt_Degree_Statement_B.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rpt_Degree_Statement_B.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="MyReports\rpt_Degree_Statement_C.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rpt_Degree_Statement_C.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="MyReports\rpt_Eltehak.cs">
       <DependentUpon>rpt_Eltehak.rpt</DependentUpon>
       <SubType>Component</SubType>
@@ -271,6 +292,27 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Kaema.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="MyReports\rpt_Koshof_Natega_A.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rpt_Koshof_Natega_A.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="MyReports\rpt_Koshof_Natega_B.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rpt_Koshof_Natega_B.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="MyReports\rpt_Koshof_Natega_C.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rpt_Koshof_Natega_C.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
@@ -943,6 +985,10 @@
     <Content Include="EXCEL\Final\Term_B\Term_B_3_Test.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\final_naega_3_48.png" />
+    <None Include="Resources\final_natega-4.png" />
+    <None Include="Resources\final_natega-2-48 .png" />
+    <None Include="Resources\final_natega-48.png" />
     <None Include="Resources\add-user-male-1001.png" />
     <None Include="Resources\add-user-male-100.png" />
     <None Include="Resources\database-site-100.png" />
@@ -1136,6 +1182,36 @@
       <LastGenOutput>rpt_Natega_C_Part_2.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="MyReports\rpt_Koshof_Natega_B.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rpt_Koshof_Natega_B.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MyReports\rpt_Koshof_Natega_C.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rpt_Koshof_Natega_C.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MyReports\rpt_Koshof_Natega_A.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rpt_Koshof_Natega_A.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MyReports\rpt_Degree_Statement_A.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rpt_Degree_Statement_A.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MyReports\rpt_Degree_Statement_B.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rpt_Degree_Statement_B.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MyReports\rpt_Degree_Statement_C.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rpt_Degree_Statement_C.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="PL\MAIN\FRM_AMELIN.resx">
       <DependentUpon>FRM_AMELIN.cs</DependentUpon>
     </EmbeddedResource>
@@ -1150,6 +1226,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PL\NATIGA\FRM_ADD_GOLOS.resx">
       <DependentUpon>FRM_ADD_GOLOS.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="PL\NATIGA\FRM_ADD_SERY.resx">
       <DependentUpon>FRM_ADD_SERY.cs</DependentUpon>

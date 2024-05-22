@@ -54,15 +54,15 @@ namespace School_Mang.PL.STD.HOME
             this.card_current_year = new Bunifu.Framework.UI.BunifuCards();
             this.lbl_count = new System.Windows.Forms.Label();
             this.pic_count = new System.Windows.Forms.PictureBox();
-            this.bunifuCards4 = new Bunifu.Framework.UI.BunifuCards();
-            this.lbl_back = new System.Windows.Forms.Label();
-            this.pic_back = new System.Windows.Forms.PictureBox();
-            this.pn_std_home = new System.Windows.Forms.Panel();
+            this.lbl_cruunt_year = new System.Windows.Forms.Label();
             this.card_new_year = new Bunifu.Framework.UI.BunifuCards();
             this.lbl_count_new = new System.Windows.Forms.Label();
             this.pic_count_new = new System.Windows.Forms.PictureBox();
             this.lbl_new_year = new System.Windows.Forms.Label();
-            this.lbl_cruunt_year = new System.Windows.Forms.Label();
+            this.bunifuCards4 = new Bunifu.Framework.UI.BunifuCards();
+            this.lbl_back = new System.Windows.Forms.Label();
+            this.pic_back = new System.Windows.Forms.PictureBox();
+            this.pn_std_home = new System.Windows.Forms.Panel();
             this.flowLayoutPanel1.SuspendLayout();
             this.bunifuCards6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_bian_dragat)).BeginInit();
@@ -80,11 +80,11 @@ namespace School_Mang.PL.STD.HOME
             ((System.ComponentModel.ISupportInitialize)(this.pic_transfer_to)).BeginInit();
             this.card_current_year.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_count)).BeginInit();
+            this.card_new_year.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_count_new)).BeginInit();
             this.bunifuCards4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_back)).BeginInit();
             this.pn_std_home.SuspendLayout();
-            this.card_new_year.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pic_count_new)).BeginInit();
             this.SuspendLayout();
             // 
             // flowLayoutPanel1
@@ -137,6 +137,7 @@ namespace School_Mang.PL.STD.HOME
             this.lbl_bian_dragat.Size = new System.Drawing.Size(135, 37);
             this.lbl_bian_dragat.TabIndex = 7;
             this.lbl_bian_dragat.Text = "بيان درجات";
+            this.lbl_bian_dragat.Click += new System.EventHandler(this.lbl_bian_dragat_Click);
             // 
             // pic_bian_dragat
             // 
@@ -451,57 +452,17 @@ namespace School_Mang.PL.STD.HOME
             this.pic_count.TabStop = false;
             this.pic_count.Click += new System.EventHandler(this.pic_count_Click);
             // 
-            // bunifuCards4
+            // lbl_cruunt_year
             // 
-            this.bunifuCards4.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.bunifuCards4.BackColor = System.Drawing.Color.White;
-            this.bunifuCards4.BorderRadius = 5;
-            this.bunifuCards4.BottomSahddow = true;
-            this.bunifuCards4.color = System.Drawing.Color.Tomato;
-            this.bunifuCards4.Controls.Add(this.lbl_back);
-            this.bunifuCards4.Controls.Add(this.pic_back);
-            this.bunifuCards4.LeftSahddow = false;
-            this.bunifuCards4.Location = new System.Drawing.Point(765, 407);
-            this.bunifuCards4.Name = "bunifuCards4";
-            this.bunifuCards4.Padding = new System.Windows.Forms.Padding(20);
-            this.bunifuCards4.RightSahddow = true;
-            this.bunifuCards4.ShadowDepth = 20;
-            this.bunifuCards4.Size = new System.Drawing.Size(270, 186);
-            this.bunifuCards4.TabIndex = 22;
-            // 
-            // lbl_back
-            // 
-            this.lbl_back.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.lbl_back.AutoSize = true;
-            this.lbl_back.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lbl_back.Font = new System.Drawing.Font("LBC", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_back.Location = new System.Drawing.Point(57, 115);
-            this.lbl_back.Name = "lbl_back";
-            this.lbl_back.Size = new System.Drawing.Size(169, 37);
-            this.lbl_back.TabIndex = 7;
-            this.lbl_back.Text = "شئون الطلاب";
-            this.lbl_back.Click += new System.EventHandler(this.lbl_back_Click);
-            // 
-            // pic_back
-            // 
-            this.pic_back.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pic_back.Image = global::School_Mang.Properties.Resources.home;
-            this.pic_back.Location = new System.Drawing.Point(74, 23);
-            this.pic_back.Name = "pic_back";
-            this.pic_back.Size = new System.Drawing.Size(118, 97);
-            this.pic_back.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pic_back.TabIndex = 1;
-            this.pic_back.TabStop = false;
-            this.pic_back.Click += new System.EventHandler(this.pic_back_Click);
-            // 
-            // pn_std_home
-            // 
-            this.pn_std_home.Controls.Add(this.flowLayoutPanel1);
-            this.pn_std_home.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pn_std_home.Location = new System.Drawing.Point(0, 0);
-            this.pn_std_home.Name = "pn_std_home";
-            this.pn_std_home.Size = new System.Drawing.Size(1354, 710);
-            this.pn_std_home.TabIndex = 27;
+            this.lbl_cruunt_year.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lbl_cruunt_year.AutoSize = true;
+            this.lbl_cruunt_year.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lbl_cruunt_year.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_cruunt_year.Location = new System.Drawing.Point(82, -4);
+            this.lbl_cruunt_year.Name = "lbl_cruunt_year";
+            this.lbl_cruunt_year.Size = new System.Drawing.Size(107, 25);
+            this.lbl_cruunt_year.TabIndex = 9;
+            this.lbl_cruunt_year.Text = "2022-2023";
             // 
             // card_new_year
             // 
@@ -559,17 +520,57 @@ namespace School_Mang.PL.STD.HOME
             this.lbl_new_year.TabIndex = 8;
             this.lbl_new_year.Text = "2022-2023";
             // 
-            // lbl_cruunt_year
+            // bunifuCards4
             // 
-            this.lbl_cruunt_year.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.lbl_cruunt_year.AutoSize = true;
-            this.lbl_cruunt_year.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lbl_cruunt_year.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_cruunt_year.Location = new System.Drawing.Point(82, -4);
-            this.lbl_cruunt_year.Name = "lbl_cruunt_year";
-            this.lbl_cruunt_year.Size = new System.Drawing.Size(107, 25);
-            this.lbl_cruunt_year.TabIndex = 9;
-            this.lbl_cruunt_year.Text = "2022-2023";
+            this.bunifuCards4.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.bunifuCards4.BackColor = System.Drawing.Color.White;
+            this.bunifuCards4.BorderRadius = 5;
+            this.bunifuCards4.BottomSahddow = true;
+            this.bunifuCards4.color = System.Drawing.Color.Tomato;
+            this.bunifuCards4.Controls.Add(this.lbl_back);
+            this.bunifuCards4.Controls.Add(this.pic_back);
+            this.bunifuCards4.LeftSahddow = false;
+            this.bunifuCards4.Location = new System.Drawing.Point(765, 407);
+            this.bunifuCards4.Name = "bunifuCards4";
+            this.bunifuCards4.Padding = new System.Windows.Forms.Padding(20);
+            this.bunifuCards4.RightSahddow = true;
+            this.bunifuCards4.ShadowDepth = 20;
+            this.bunifuCards4.Size = new System.Drawing.Size(270, 186);
+            this.bunifuCards4.TabIndex = 22;
+            // 
+            // lbl_back
+            // 
+            this.lbl_back.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lbl_back.AutoSize = true;
+            this.lbl_back.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lbl_back.Font = new System.Drawing.Font("LBC", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_back.Location = new System.Drawing.Point(57, 115);
+            this.lbl_back.Name = "lbl_back";
+            this.lbl_back.Size = new System.Drawing.Size(169, 37);
+            this.lbl_back.TabIndex = 7;
+            this.lbl_back.Text = "شئون الطلاب";
+            this.lbl_back.Click += new System.EventHandler(this.lbl_back_Click);
+            // 
+            // pic_back
+            // 
+            this.pic_back.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pic_back.Image = global::School_Mang.Properties.Resources.home;
+            this.pic_back.Location = new System.Drawing.Point(74, 23);
+            this.pic_back.Name = "pic_back";
+            this.pic_back.Size = new System.Drawing.Size(118, 97);
+            this.pic_back.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pic_back.TabIndex = 1;
+            this.pic_back.TabStop = false;
+            this.pic_back.Click += new System.EventHandler(this.pic_back_Click);
+            // 
+            // pn_std_home
+            // 
+            this.pn_std_home.Controls.Add(this.flowLayoutPanel1);
+            this.pn_std_home.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pn_std_home.Location = new System.Drawing.Point(0, 0);
+            this.pn_std_home.Name = "pn_std_home";
+            this.pn_std_home.Size = new System.Drawing.Size(1354, 710);
+            this.pn_std_home.TabIndex = 27;
             // 
             // FRM_STD_REPORTS
             // 
@@ -606,13 +607,13 @@ namespace School_Mang.PL.STD.HOME
             this.card_current_year.ResumeLayout(false);
             this.card_current_year.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_count)).EndInit();
+            this.card_new_year.ResumeLayout(false);
+            this.card_new_year.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_count_new)).EndInit();
             this.bunifuCards4.ResumeLayout(false);
             this.bunifuCards4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_back)).EndInit();
             this.pn_std_home.ResumeLayout(false);
-            this.card_new_year.ResumeLayout(false);
-            this.card_new_year.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pic_count_new)).EndInit();
             this.ResumeLayout(false);
 
         }

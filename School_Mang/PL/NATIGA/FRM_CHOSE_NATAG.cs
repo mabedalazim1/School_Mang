@@ -151,6 +151,7 @@ namespace School_Mang.PL.NATIGA
             }
             BL.Globals.test_kind = Convert.ToInt32(cmb_test.SelectedValue);
             BL.Globals.test_month = Convert.ToInt32(cmb_month.SelectedValue);
+            BL.Globals.test_month_name = cmb_month.Text;
             DataTable Dt ;
 
             switch (BL.Globals.test_kind)

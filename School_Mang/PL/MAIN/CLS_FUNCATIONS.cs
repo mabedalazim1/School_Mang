@@ -81,7 +81,7 @@ namespace School_Mang.PL.MAIN
             catch (Exception e)
             {
                 waiting.End_WAit();
-                msg.ErrorMesg(e.Message);
+                msg.ErrorMesg(e.Message + " error");
             }
         }
 

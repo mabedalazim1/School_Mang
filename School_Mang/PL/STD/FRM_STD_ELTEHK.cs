@@ -155,6 +155,10 @@ namespace School_Mang.PL.STD
                     msg.MyMesg("تم حفظ البيانات");
 
                 }
+                else
+                {
+                    //msg.MyMesg("تم حفظ طلب التحويل بنجاح .. !");
+                }
 
                 btn_new_std.Enabled = false;
                 BL.Globals.Taheewl_To_School = false;

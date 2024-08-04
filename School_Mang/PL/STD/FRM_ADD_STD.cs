@@ -602,8 +602,8 @@ namespace School_Mang.PL.STD
             switch (cmb_grade.SelectedIndex)
             {
                 case 0:
-                case 9:
-                case 10:
+                case 1:
+                case 2:
                     cmb_hala.SelectedIndex = 0;
                     break;
                 default:

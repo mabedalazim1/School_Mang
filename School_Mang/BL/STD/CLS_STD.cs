@@ -1165,7 +1165,19 @@ namespace School_Mang.BL.STD
             return Dt;
         }
 
+        public DataTable Get_Tahewl_Data(string Transfer_code)
+        {
+            DAL.DataAcceseLayer DAL = new DAL.DataAcceseLayer();
+            DataTable Dt;
 
+            SqlParameter[] param = new SqlParameter[1];
+            param[0] = new SqlParameter("@Transfer_code", SqlDbType.NVarChar, 20);
+            param[0].Value = Transfer_code;
+
+            Dt = DAL.Selectdata("SP_Get_Tahewl", param);
+            DAL.Close();
+            return Dt;
+        }
 
         public DataTable Get_Data_For_Site(int Grade_Id = 0, int Golos = 0)
         {

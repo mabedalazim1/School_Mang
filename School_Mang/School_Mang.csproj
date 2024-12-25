@@ -82,7 +82,7 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
@@ -231,6 +231,7 @@
     <Compile Include="BL\NATEG\ExcelUtlity.cs" />
     <Compile Include="BL\SITE\CLS_ADD_USER.cs" />
     <Compile Include="BL\SITE\CLS_MANGE_SITE.cs" />
+    <Compile Include="BL\SITE\SiteExcelUtlity.cs" />
     <Compile Include="BL\STD\CLS_STD.cs" />
     <Compile Include="BL\USERS.cs" />
     <Compile Include="BL\Waiting.cs" />
@@ -239,6 +240,13 @@
     <Compile Include="DAL\TestConcation.cs" />
     <Compile Include="HTTP\HTTPCLINT.cs" />
     <Compile Include="Models\LOGIN_DATA.cs" />
+    <Compile Include="MyReports\rpt_Amal_Degree_A.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rpt_Amal_Degree_A.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="MyReports\rpt_Amal_Degree_B.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -733,6 +741,18 @@
     <Compile Include="PL\SITE\FRM_COUNT_USERS.Designer.cs">
       <DependentUpon>FRM_COUNT_USERS.cs</DependentUpon>
     </Compile>
+    <Compile Include="PL\SITE\FRM_EDIT_DATA.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\SITE\FRM_EDIT_DATA.Designer.cs">
+      <DependentUpon>FRM_EDIT_DATA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PL\SITE\FRM_MANGE_LESSONS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\SITE\FRM_MANGE_LESSONS.Designer.cs">
+      <DependentUpon>FRM_MANGE_LESSONS.cs</DependentUpon>
+    </Compile>
     <Compile Include="PL\SITE\FRM_SITE_USER_DATA.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -853,6 +873,12 @@
     </Compile>
     <Compile Include="PL\STD\FRM_TAHWELAT.Designer.cs">
       <DependentUpon>FRM_TAHWELAT.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PL\STD\FRM_TOEXCEL.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\STD\FRM_TOEXCEL.Designer.cs">
+      <DependentUpon>FRM_TOEXCEL.cs</DependentUpon>
     </Compile>
     <Compile Include="PL\STD\FRM_UPDATE_SCHOOL_STD.cs">
       <SubType>Form</SubType>
@@ -985,6 +1011,48 @@
     <Content Include="EXCEL\Final\Term_B\Term_B_3_Test.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="EXCEL\Lessons\topic.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EXCEL\Lessons\course.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EXCEL\Lessons\subpart.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EXCEL\Lessons\vocabulary.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EXCEL\Lessons\review.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EXCEL\Lessons\quiz.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EXCEL\Lessons\question.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EXCEL\Lessons\answer.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EXCEL\Final\excel_data.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EXCEL\Users\users.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EXCEL\Users\students.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\answer-100.png" />
+    <None Include="Resources\question-100.png" />
+    <None Include="Resources\quiz-100.png" />
+    <None Include="Resources\vocabulary-100.png" />
+    <None Include="Resources\part-100.png" />
+    <None Include="Resources\index-100.png" />
+    <None Include="Resources\lesson-100.png" />
+    <None Include="Resources\study-1001.png" />
+    <None Include="Resources\study-100.png" />
     <None Include="Resources\final_naega_3_48.png" />
     <None Include="Resources\final_natega-4.png" />
     <None Include="Resources\final_natega-2-48 .png" />
@@ -1212,6 +1280,11 @@
       <LastGenOutput>rpt_Degree_Statement_C.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="MyReports\rpt_Amal_Degree_A.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rpt_Amal_Degree_A.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="PL\MAIN\FRM_AMELIN.resx">
       <DependentUpon>FRM_AMELIN.cs</DependentUpon>
     </EmbeddedResource>
@@ -1288,6 +1361,12 @@
     <EmbeddedResource Include="PL\SITE\FRM_COUNT_USERS.resx">
       <DependentUpon>FRM_COUNT_USERS.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PL\SITE\FRM_EDIT_DATA.resx">
+      <DependentUpon>FRM_EDIT_DATA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PL\SITE\FRM_MANGE_LESSONS.resx">
+      <DependentUpon>FRM_MANGE_LESSONS.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PL\SITE\FRM_SITE_USER_DATA.resx">
       <DependentUpon>FRM_SITE_USER_DATA.cs</DependentUpon>
     </EmbeddedResource>
@@ -1347,6 +1426,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PL\STD\FRM_TAHWELAT.resx">
       <DependentUpon>FRM_TAHWELAT.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PL\STD\FRM_TOEXCEL.resx">
+      <DependentUpon>FRM_TOEXCEL.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PL\STD\FRM_UPDATE_SCHOOL_STD.resx">
       <DependentUpon>FRM_UPDATE_SCHOOL_STD.cs</DependentUpon>

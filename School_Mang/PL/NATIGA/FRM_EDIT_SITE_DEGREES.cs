@@ -387,6 +387,7 @@ namespace School_Mang.PL.NATIGA
             }
             catch (Exception ex)
             {
+                msg.MyMesg("44");
                 msg.ErrorMesg(ex.Message);
             }
 

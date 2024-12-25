@@ -294,6 +294,7 @@ namespace School_Mang.PL.NATIGA
             byte test_kind = BL.Globals.Final_Test_Kind;
             double max_degree = 0;
 
+            byte  year = BL.Globals.My_Year;
             byte grade = Convert.ToByte(BL.Globals.test_grade_id);
             try
             {
@@ -303,8 +304,30 @@ namespace School_Mang.PL.NATIGA
                     case 11:
                     case 1:
                     case 2:
-                    case 3:
                         max_degree = 4;
+                        break;
+                    case 3:
+                       switch (year)
+                        {
+                            case 1:
+                            case 2:
+                            case 3:
+                                max_degree = 4;
+                                break;
+                            case var expression when year < 3:
+                                switch (test_kind)
+                                {
+                                    case 1:
+                                    case 3:
+                                        max_degree = 40;
+                                        break;
+                                    case 2:
+                                    case 4:
+                                        max_degree = 60;
+                                        break;
+                                }
+                                break;
+                        }
                         break;
 
                     case 4:
@@ -312,13 +335,33 @@ namespace School_Mang.PL.NATIGA
                     case 6:
                         switch (test_kind)
                         {
+                           
                             case 1:
                             case 3:
-                                max_degree = 70;
+                                switch (year)
+                                {
+                                    case var expression when year < 4:
+                                        max_degree = 70;
+                                        break;
+                                    case var expression when year > 4:
+                                        max_degree = 40;
+                                        break;
+
+                                }
+                                
                                 break;
                             case 2:
                             case 4:
-                                max_degree = 30;
+                                switch (year)
+                                {
+                                    case var expression when year < 4:
+                                        max_degree = 30;
+                                        break;
+                                    case var expression when year > 4:
+                                        max_degree = 60;
+                                        break;
+
+                                }
                                 break;
                         }
 

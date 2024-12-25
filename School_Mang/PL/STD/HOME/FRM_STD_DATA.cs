@@ -306,5 +306,15 @@ namespace School_Mang.PL.STD.HOME
         {
             lbl_update_std_data_Click(sender, e);
         }
+
+        private void lbl_to_excel_Click(object sender, EventArgs e)
+        {
+            FRM_TOEXCEL.get_frm_To_Excel.ShowDialog();
+        }
+
+        private void pic_to_excel_Click(object sender, EventArgs e)
+        {
+            lbl_to_excel_Click(sender, e);
+        }
     }
 }

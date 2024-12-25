@@ -65,5 +65,11 @@
     <Setting Name="Site_Host_Test" Type="System.String" Scope="User">
       <Value Profile="(Default)">google.com</Value>
     </Setting>
+    <Setting Name="save_Users_path" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\Rasd\Users</Value>
+    </Setting>
+    <Setting Name="save_Lessons_path" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\Rasd\Lessons</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

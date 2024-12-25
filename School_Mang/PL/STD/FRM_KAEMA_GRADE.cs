@@ -145,6 +145,7 @@ namespace School_Mang.PL.STD
             }
             if (BL.Globals.Open_Tadarg_Sen)
             {
+               
                 int year_id = Convert.ToInt32(cmb_sana.SelectedValue);
                 if (std.Get_Tadrg_Sen(year_id, grade).Rows.Count == 0)
                 {

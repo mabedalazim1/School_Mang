@@ -274,5 +274,29 @@ namespace School_Mang.Properties {
                 this["Site_Host_Test"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Rasd\\Users")]
+        public string save_Users_path {
+            get {
+                return ((string)(this["save_Users_path"]));
+            }
+            set {
+                this["save_Users_path"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Rasd\\Lessons")]
+        public string save_Lessons_path {
+            get {
+                return ((string)(this["save_Lessons_path"]));
+            }
+            set {
+                this["save_Lessons_path"] = value;
+            }
+        }
     }
 }

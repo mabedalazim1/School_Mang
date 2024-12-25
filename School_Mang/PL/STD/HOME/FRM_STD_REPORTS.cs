@@ -40,6 +40,7 @@ namespace School_Mang.PL.STD.HOME
         public FRM_STD_REPORTS()
         {
             InitializeComponent();
+            FRM_KAEMA_GRADE.Get_Frm_Kaema_Grade.chk_sort.Visible = false;
 
             if (frm_Std_Reports == null)
             {
@@ -99,6 +100,7 @@ namespace School_Mang.PL.STD.HOME
             BL.Globals.Open_Kaema = false;
             BL.Globals.Open_Segel = false;
             BL.Globals.Open_Tadarg_Sen = true;
+            FRM_KAEMA_GRADE.Get_Frm_Kaema_Grade.chk_sort.Visible = true;
             BL.Globals.Open_41_New = false;
             BL.Globals.Open_Transfer_From = false;
             BL.Globals.Open_Transfer_To = false;

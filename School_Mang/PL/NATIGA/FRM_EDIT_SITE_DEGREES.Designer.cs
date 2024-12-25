@@ -32,8 +32,8 @@ namespace School_Mang.PL.NATIGA
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FRM_EDIT_SITE_DEGREES));
             this.panel4 = new System.Windows.Forms.Panel();
             this.pn_top = new System.Windows.Forms.Panel();
-            this.label11 = new System.Windows.Forms.Label();
             this.btn_close = new DevExpress.XtraEditors.SimpleButton();
+            this.label11 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.txt_name = new System.Windows.Forms.TextBox();
             this.txt_grade = new System.Windows.Forms.TextBox();
@@ -99,18 +99,6 @@ namespace School_Mang.PL.NATIGA
             this.pn_top.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pn_top_MouseMove);
             this.pn_top.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pn_top_MouseUp);
             // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.ForeColor = System.Drawing.Color.White;
-            this.label11.Location = new System.Drawing.Point(391, 12);
-            this.label11.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(107, 25);
-            this.label11.TabIndex = 46;
-            this.label11.Text = "تقييم الطالب";
-            // 
             // btn_close
             // 
             this.btn_close.DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -123,6 +111,18 @@ namespace School_Mang.PL.NATIGA
             this.btn_close.TabIndex = 11;
             this.btn_close.TabStop = false;
             this.btn_close.Click += new System.EventHandler(this.btn_close_Click);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.ForeColor = System.Drawing.Color.White;
+            this.label11.Location = new System.Drawing.Point(391, 12);
+            this.label11.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(107, 25);
+            this.label11.TabIndex = 46;
+            this.label11.Text = "تقييم الطالب";
             // 
             // label18
             // 

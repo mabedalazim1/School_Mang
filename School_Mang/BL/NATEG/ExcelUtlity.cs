@@ -330,6 +330,8 @@ namespace School_Mang.BL.NATEG
                 waiting.End_WAit();
             }
         }
+    
+
         public bool WriteSeryDataToExcel(System.Data.DataTable dataTable,
                                          string worksheetName,
                                          string saveAsLocation,
@@ -418,7 +420,7 @@ namespace School_Mang.BL.NATEG
                 waiting.End_WAit();
             }
         }
-
+       
         public System.Data.DataTable ReadRasdDataFromExcel(string staticExcelFile)
 
         {

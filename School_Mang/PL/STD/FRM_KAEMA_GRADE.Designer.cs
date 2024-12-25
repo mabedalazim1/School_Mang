@@ -32,8 +32,8 @@ namespace School_Mang.PL.STD
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FRM_KAEMA_GRADE));
             this.panel4 = new System.Windows.Forms.Panel();
             this.pn_top = new System.Windows.Forms.Panel();
-            this.label11 = new System.Windows.Forms.Label();
             this.btn_close = new DevExpress.XtraEditors.SimpleButton();
+            this.label11 = new System.Windows.Forms.Label();
             this.cmb_grade = new System.Windows.Forms.ComboBox();
             this.btn_print_kaema_all = new Bunifu.Framework.UI.BunifuThinButton2();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -43,6 +43,7 @@ namespace School_Mang.PL.STD
             this.label1 = new System.Windows.Forms.Label();
             this.cmb_sana = new System.Windows.Forms.ComboBox();
             this.label12 = new System.Windows.Forms.Label();
+            this.chk_sort = new System.Windows.Forms.CheckBox();
             this.pn_top.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -71,18 +72,6 @@ namespace School_Mang.PL.STD
             this.pn_top.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pn_top_MouseMove);
             this.pn_top.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pn_top_MouseUp);
             // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.ForeColor = System.Drawing.Color.White;
-            this.label11.Location = new System.Drawing.Point(211, 13);
-            this.label11.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(116, 25);
-            this.label11.TabIndex = 46;
-            this.label11.Text = "قوائم الفصول";
-            // 
             // btn_close
             // 
             this.btn_close.DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -95,6 +84,18 @@ namespace School_Mang.PL.STD
             this.btn_close.TabIndex = 11;
             this.btn_close.TabStop = false;
             this.btn_close.Click += new System.EventHandler(this.btn_close_Click);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.ForeColor = System.Drawing.Color.White;
+            this.label11.Location = new System.Drawing.Point(211, 13);
+            this.label11.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(116, 25);
+            this.label11.TabIndex = 46;
+            this.label11.Text = "قوائم الفصول";
             // 
             // cmb_grade
             // 
@@ -203,6 +204,7 @@ namespace School_Mang.PL.STD
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.chk_sort);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.cmb_sana);
             this.groupBox1.Controls.Add(this.label12);
@@ -255,6 +257,19 @@ namespace School_Mang.PL.STD
             this.label12.TabIndex = 82;
             this.label12.Text = "العام  الدراسى";
             // 
+            // chk_sort
+            // 
+            this.chk_sort.AutoSize = true;
+            this.chk_sort.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chk_sort.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.chk_sort.Location = new System.Drawing.Point(13, 23);
+            this.chk_sort.Name = "chk_sort";
+            this.chk_sort.Size = new System.Drawing.Size(150, 29);
+            this.chk_sort.TabIndex = 84;
+            this.chk_sort.Text = "من الأكبر للأصغر";
+            this.chk_sort.UseVisualStyleBackColor = true;
+            this.chk_sort.Visible = false;
+            // 
             // FRM_KAEMA_GRADE
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -296,5 +311,6 @@ namespace School_Mang.PL.STD
         private Bunifu.Framework.UI.BunifuThinButton2 btn_close_b;
         private System.Windows.Forms.Label label1;
         public System.Windows.Forms.Label label11;
+        public System.Windows.Forms.CheckBox chk_sort;
     }
 }

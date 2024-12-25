@@ -67,7 +67,7 @@ namespace School_Mang.PL.SITE
 
             byte grade = Convert.ToByte(BL.Globals.test_grade_id);
             Load_Data(grade);
-
+            
             Waiting.End_WAit();
         }
 
@@ -91,6 +91,7 @@ namespace School_Mang.PL.SITE
             }
             else
             {
+
                 if (BL.Globals.Get_User_Data)
                 {
                     // Get User Data From School DataBase

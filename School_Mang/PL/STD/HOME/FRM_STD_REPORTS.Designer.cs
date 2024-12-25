@@ -89,7 +89,6 @@ namespace School_Mang.PL.STD.HOME
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.AutoScroll = true;
             this.flowLayoutPanel1.Controls.Add(this.bunifuCards6);
             this.flowLayoutPanel1.Controls.Add(this.bunifuCards10);
             this.flowLayoutPanel1.Controls.Add(this.bunifuCards7);
@@ -565,6 +564,7 @@ namespace School_Mang.PL.STD.HOME
             // 
             // pn_std_home
             // 
+            this.pn_std_home.AutoScroll = true;
             this.pn_std_home.Controls.Add(this.flowLayoutPanel1);
             this.pn_std_home.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pn_std_home.Location = new System.Drawing.Point(0, 0);
@@ -576,7 +576,6 @@ namespace School_Mang.PL.STD.HOME
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1354, 710);
             this.Controls.Add(this.pn_std_home);

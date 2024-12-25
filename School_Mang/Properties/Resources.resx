@@ -124,8 +124,20 @@
   <data name="test-w" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\test-w.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="lesson-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lesson-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="close-11" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\close-11.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="log-out-w40" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\log-out-w40.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="study-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\study-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="password-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\password-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -139,8 +151,11 @@
   <data name="new-std" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\new-std.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="age-64" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\age-64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="vocabulary-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vocabulary-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="question-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\question-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="test-100 (2)" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\test-100 (2).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -172,14 +187,17 @@
   <data name="employees-w" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\employees-w.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icons8-family-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons8-family-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="close-w" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\close-w.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="note-48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\note-48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="site-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\site-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="part-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\part-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="final_natega-2-48 " type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\final_natega-2-48 .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -199,9 +217,6 @@
   <data name="students-w" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\students-w.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="test_48_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\test_48_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="employees-w2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\employees-w2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -214,17 +229,11 @@
   <data name="add-user-male-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\add-user-male-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="exam-a-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\exam-a-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icons8-test-passed-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icons8-test-passed-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icons8-compare-heights-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-compare-heights-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="delete-database-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\delete-database-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="users-data-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\users-data-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="home" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\home.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -241,6 +250,9 @@
   <data name="maximize-w" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\maximize-w.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="age-64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\age-64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="add-golos-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\add-golos-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -255,6 +267,9 @@
   </data>
   <data name="payment-w40" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\payment-w40.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="students-w40" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\students-w40.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="exam-b-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\exam-b-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -271,6 +286,9 @@
   <data name="icons8-edit-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-edit-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="user" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\user.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="final_natega-48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\final_natega-48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -279,9 +297,6 @@
   </data>
   <data name="icons8-students-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-students-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="close-w" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\close-w.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icons8-properties-script-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-properties-script-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -294,6 +309,9 @@
   </data>
   <data name="excel-to-2100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\excel-to-2100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="excel-48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\excel-48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="test-100 (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\test-100 (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -313,11 +331,17 @@
   <data name="icons8-student-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-student-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="students-w40" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\students-w40.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="users-data-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\users-data-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="index-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\index-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="user3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\user3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="study-1001" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\study-1001.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icons8-request-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-request-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -337,9 +361,6 @@
   <data name="settings-w" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\settings-w.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="final_natega-4" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\final_natega-4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="add-user-male-1001" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\add-user-male-1001.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -348,6 +369,9 @@
   </data>
   <data name="students" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\students.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="final_naega_3_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\final_naega_3_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="test-data-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\test-data-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -358,20 +382,23 @@
   <data name="improvement-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\improvement-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="log-out-w40" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\log-out-w40.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icons8-family-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icons8-family-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="family-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\family-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="close-11" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\close-11.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="exam-a-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\exam-a-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="user" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\user.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="quiz-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\quiz-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="excel-48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\excel-48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="final_natega-4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\final_natega-4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="delete-database-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\delete-database-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="maximize11" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\maximize11.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -379,8 +406,8 @@
   <data name="icons8-age-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-age-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icons8-test-passed-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons8-test-passed-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="test_48_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\test_48_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icons8-go-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-go-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -400,7 +427,7 @@
   <data name="maximize" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\maximize.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="final_naega_3_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\final_naega_3_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="answer-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\answer-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

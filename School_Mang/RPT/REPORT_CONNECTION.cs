@@ -362,7 +362,7 @@ namespace School_Mang.RPT
             try
             {
                 string report_name = "rpt_Rasd_Degree_A.rpt";
-
+                byte myYear = Globals.My_Year;
                 int year = Properties.Settings.Default.year_cod;
                 ReportDocument myReport = new ReportDocument();
 
@@ -370,13 +370,26 @@ namespace School_Mang.RPT
                 {
                     case 10:
                     case 11:
-                    case 1:
-                    case 2:
-                    case 3:
-
                         msg.ErrorMesg("لا توجد كشوف للصف المحدد");
                         Waiting.End_WAit();
                         return;
+                    case 1:
+                    case 2:
+                    case 3:
+                        switch (myYear)
+                        {
+                            case 1:
+                            case 2:
+                            case 3:
+                                msg.ErrorMesg("لا توجد كشوف للصف المحدد");
+                                Waiting.End_WAit();
+                                return;
+                           case var expreation when year >3:
+                                report_name = "rpt_Amal_Degree_A.rpt";
+                                break;
+                        }
+
+                        break;
                     case 4:
                     case 5:
                     case 6:

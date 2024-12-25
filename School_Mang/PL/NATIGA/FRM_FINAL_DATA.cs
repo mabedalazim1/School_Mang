@@ -138,8 +138,9 @@ namespace School_Mang.PL.NATIGA
 
         private void ChangLayOut()
         {
+            byte year = BL.Globals.My_Year;
             int grade_id = BL.Globals.test_grade_id;
-            if (grade_id < 4 || grade_id > 9)
+            if (grade_id < 4 || grade_id > 9 && year < 4)
             {
                 btn_amal_nesf.Visible = false;
                 btn_amal_akher.Visible = false;
@@ -147,6 +148,7 @@ namespace School_Mang.PL.NATIGA
                 btn_absent_std.Visible = false;
                 btn_test_nesf.Visible = false;
                 btn_test_akher.ButtonText = "تقييم أخر العام";
+
             }
             else
             {

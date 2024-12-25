@@ -56,6 +56,18 @@ namespace School_Mang.PL.MAIN
         DataTable unmatchedDataBase;
         DataTable unmatchedSite;
 
+        private void changePages(Panel pn, string lbl)
+        {
+            FRM_MAIN.Get_Frm_Main.pn_home.Visible = false;
+            FRM_MAIN.Get_Frm_Main.pn_main.Controls.Clear();
+            FRM_MAIN.Get_Frm_Main.pn_main.Visible = false;
+            FRM_MAIN.Get_Frm_Main.lbl_main.Text = lbl;
+            FRM_MAIN.Get_Frm_Main.lbl_main.Visible = false;
+            FRM_MAIN.Get_Frm_Main.pn_main.BringToFront();
+            FRM_MAIN.Get_Frm_Main.pn_main.Controls.Add(pn);
+            FRM_MAIN.Get_Frm_Main.trans_a.ShowSync(FRM_MAIN.Get_Frm_Main.pn_main);
+            FRM_MAIN.Get_Frm_Main.lbl_main.Visible = true;
+        }
 
         private Boolean Get_Std_Data(bool get_msg = false)
         {
@@ -273,6 +285,10 @@ namespace School_Mang.PL.MAIN
 
         private void lbl_add_user_Click(object sender, EventArgs e)
         {
+            msg.ErrorMesg("هذا الإجراء غير متاح حالياً .. !");
+            return;
+
+            // Un Work
             try
             {
 
@@ -302,6 +318,10 @@ namespace School_Mang.PL.MAIN
 
         private void lbl_update_data_Click(object sender, EventArgs e)
         {
+            msg.ErrorMesg("هذا الإجراء غير متاح حالياً .. !");
+            return;
+
+            // Un Work
             if (msg.DialogeMsg("هل تريد تحديث بيانات الطلاب في الموقع ... ؟") == DialogResult.Yes)
             {
                 msg.MyExclamationMsg("هذا الإجراء سوف يستغرق بعض الوقت .. يرجي الإنتطار ..!");
@@ -324,6 +344,47 @@ namespace School_Mang.PL.MAIN
         private void pic_update_data_Click(object sender, EventArgs e)
         {
             lbl_update_data_Click(sender, e);
+        }
+
+        private void pic_study_Click(object sender, EventArgs e)
+        {
+            lbl_study_Click(sender, e);
+        }
+
+        private async void lbl_study_Click(object sender, EventArgs e)
+        {
+            await Test_Intrent();
+            if (!BL.Globals.Test_Internet_Con)
+            {
+                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+                return;
+            }
+            // Get Std Data Form
+            changePages(FRM_MANGE_LESSONS.Get_Mange_Lessons.pn_mange_lesson, "إدارة المقررات");
+          
+        }
+
+        private void lbl_add_data_Click(object sender, EventArgs e)
+        {
+            SITE.FRM_EDIT_DATA.Get_Frm_Edid_Data.type = 10;
+            SITE.FRM_EDIT_DATA.Get_Frm_Edid_Data.ShowDialog();
+        }
+
+        private void pic_add_data_Click(object sender, EventArgs e)
+        {
+            lbl_add_data_Click(sender, e);
+        }
+
+        private void lbl_add_studentd_Click(object sender, EventArgs e)
+        {
+            FRM_EDIT_DATA.Get_Frm_Edid_Data.type = 11;
+            FRM_EDIT_DATA.Get_Frm_Edid_Data.lbl_title.Text = "إضافة الطلاب";
+            FRM_EDIT_DATA.Get_Frm_Edid_Data.ShowDialog();
+        }
+
+        private void pic_add_studentd_Click(object sender, EventArgs e)
+        {
+            lbl_add_studentd_Click(sender, e);
         }
     }
 }

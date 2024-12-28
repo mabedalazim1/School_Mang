@@ -90,21 +90,45 @@ namespace School_Mang.PL.NATIGA
                 file_name = @"\" + "أعمال السنة - ترم ثاني  -" + grade_desc + ".xlsx";
             }
 
-            byte prep = 0;
+            byte prim = 0;
             // Get staticExcelFile Name
             switch (grade)
             {
                 case 10:
                 case 11:
-                case 1:
-                case 2:
-                case 3:
                     msg.MyMesg("لا توجد ملفات للصف المحدد .. !");
                     return;
+
+                case 1:
+                case 2:
+                    prim = 1;
+                    if (term == 1)
+                    {
+                        staticExcelFile = staticExcelFile + @"Excel\Final\Term_A\Term_A_0.xlsx";
+                    }
+                    else
+                    {
+                        staticExcelFile = staticExcelFile + @"Excel\Final\Term_B\Term_B_0.xlsx";
+                    }
+
+                    break;
+
+                case 3:
+                    prim = 2;
+                    if (term == 1)
+                    {
+                        staticExcelFile = staticExcelFile + @"Excel\Final\Term_A\Term_A_1.xlsx";
+                    }
+                    else
+                    {
+                        staticExcelFile = staticExcelFile + @"Excel\Final\Term_B\Term_B_1.xlsx";
+                    }
+                    break;
 
                 case 4:
                 case 5:
                 case 6:
+                    prim = 3;
                     if (term == 1)
                     {
                         staticExcelFile = staticExcelFile + @"Excel\Final\Term_A\Term_A_2.xlsx";
@@ -119,7 +143,6 @@ namespace School_Mang.PL.NATIGA
                 case 7:
                 case 8:
                 case 9:
-                    prep = 1;
                     if (term == 1)
                     {
                         staticExcelFile = staticExcelFile + @"Excel\Final\Term_A\Term_A_3.xlsx";
@@ -177,7 +200,7 @@ namespace School_Mang.PL.NATIGA
                 if (Excel.WriteAmalDataToExcel(
                     Dt_Rasd, grade_desc, saveAsLocation, title,
                     staticExcelFile, test_kind, grade_data,
-                    year_data, term_kind,grade,term_id, prep))
+                    year_data, term_kind,grade,term_id, prim))
                 {
                     msg.MyMesg("تم إعداد الملف بنجاح !");
                     msg.MyMesg(saveAsLocation + "  مسار الملف هو  ");
@@ -231,9 +254,20 @@ namespace School_Mang.PL.NATIGA
                 case 11:
                 case 1:
                 case 2:
-                case 3:
                     msg.MyMesg("لا توجد ملفات للصف المحدد .. !");
                     return;
+                case 3:
+                    if (term == 1)
+                    {
+                        staticExcelFile = staticExcelFile + @"Excel\Final\Term_A\Term_A_1_Test.xlsx";
+                    }
+                    else
+                    {
+                        term_kind = "الترم الثاني";
+                        staticExcelFile = staticExcelFile + @"Excel\Final\Term_B\Term_B_1_Test.xlsx";
+                    }
+
+                    break;
 
                 case 4:
                 case 5:

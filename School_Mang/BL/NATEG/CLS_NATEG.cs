@@ -477,6 +477,92 @@ namespace School_Mang.BL.NATEG
             DAL.ExeucuteCommand("SP_Add_Amal_Final_1_2_3", param);
         }
 
+        public void Add_Amal_A_1_2(int Golos,
+                                   decimal arabic_A_1, decimal dain_A_1,
+                                   decimal math_A_1, decimal scince_A_1,
+                                   decimal english_A_1, decimal maharat_A_1,
+                                   decimal mabday, decimal nehay)
+        {
+
+            DataAcceseLayer DAL = new DataAcceseLayer();
+
+            SqlParameter[] param = new SqlParameter[10];
+
+            param[0] = new SqlParameter("@Golos", SqlDbType.Int);
+            param[0].Value = Golos;
+
+            param[1] = new SqlParameter("@year_Id", SqlDbType.Int);
+            param[1].Value = Properties.Settings.Default.year_cod;
+
+            param[2] = new SqlParameter("@arabic_A_1", SqlDbType.Float);
+            param[2].Value = arabic_A_1;
+
+            param[3] = new SqlParameter("@dain_A_1", SqlDbType.Float);
+            param[3].Value = dain_A_1;
+
+            param[4] = new SqlParameter("@math_A_1", SqlDbType.Float);
+            param[4].Value = math_A_1;
+
+            param[5] = new SqlParameter("@scince_A_1", SqlDbType.Float);
+            param[5].Value = scince_A_1;
+
+            param[6] = new SqlParameter("@social_A_1", SqlDbType.Float);
+            param[6].Value = mabday;
+
+            param[7] = new SqlParameter("@english_A_1", SqlDbType.Float);
+            param[7].Value = english_A_1;
+
+            param[8] = new SqlParameter("@maharat_A_1", SqlDbType.Float);
+            param[8].Value = maharat_A_1;
+
+            param[9] = new SqlParameter("@tocnolegy_A_1", SqlDbType.Float);
+            param[9].Value = nehay;
+
+            DAL.ExeucuteCommand("SP_Add_Amal_A_4_5_6", param);
+        }
+
+        public void Add_Amal_A_3(int Golos,
+                                decimal arabic_A_1, decimal dain_A_1,
+                                decimal math_A_1, decimal scince_A_1,
+                                decimal english_A_1, decimal maharat_A_1)
+        {
+
+            DataAcceseLayer DAL = new DataAcceseLayer();
+
+            SqlParameter[] param = new SqlParameter[10];
+
+            param[0] = new SqlParameter("@Golos", SqlDbType.Int);
+            param[0].Value = Golos;
+
+            param[1] = new SqlParameter("@year_Id", SqlDbType.Int);
+            param[1].Value = Properties.Settings.Default.year_cod;
+
+            param[2] = new SqlParameter("@arabic_A_1", SqlDbType.Float);
+            param[2].Value = arabic_A_1;
+
+            param[3] = new SqlParameter("@dain_A_1", SqlDbType.Float);
+            param[3].Value = dain_A_1;
+
+            param[4] = new SqlParameter("@math_A_1", SqlDbType.Float);
+            param[4].Value = math_A_1;
+
+            param[5] = new SqlParameter("@scince_A_1", SqlDbType.Float);
+            param[5].Value = scince_A_1;
+
+            param[6] = new SqlParameter("@social_A_1", SqlDbType.Float);
+            param[6].Value = 0;
+
+            param[7] = new SqlParameter("@english_A_1", SqlDbType.Float);
+            param[7].Value = english_A_1;
+
+            param[8] = new SqlParameter("@maharat_A_1", SqlDbType.Float);
+            param[8].Value = maharat_A_1;
+
+            param[9] = new SqlParameter("@tocnolegy_A_1", SqlDbType.Float);
+            param[9].Value = 0;
+
+            DAL.ExeucuteCommand("SP_Add_Amal_A_4_5_6", param);
+        }
         public void Add_Amal_A_4_5_6(int Golos,
                                     decimal arabic_A_1, decimal dain_A_1,
                                     decimal math_A_1, decimal scince_A_1,
@@ -608,6 +694,94 @@ namespace School_Mang.BL.NATEG
 
             DAL.ExeucuteCommand("SP_Add_Test_B", param);
         }
+
+        public void Add_Amal_B_1_2(int Golos,
+                                   decimal arabic_B_1, decimal dain_B_1,
+                                   decimal math_B_1, decimal scince_B_1,
+                                  decimal english_B_1, decimal maharat_B_1,
+                                    decimal mabday, decimal nehay)
+        {
+
+            DataAcceseLayer DAL = new DataAcceseLayer();
+
+            SqlParameter[] param = new SqlParameter[10];
+
+            param[0] = new SqlParameter("@Golos", SqlDbType.Int);
+            param[0].Value = Golos;
+
+            param[1] = new SqlParameter("@year_Id", SqlDbType.Int);
+            param[1].Value = Properties.Settings.Default.year_cod;
+
+            param[2] = new SqlParameter("@arabic_B_1", SqlDbType.Float);
+            param[2].Value = arabic_B_1;
+
+            param[3] = new SqlParameter("@dain_B_1", SqlDbType.Float);
+            param[3].Value = dain_B_1;
+
+            param[4] = new SqlParameter("@math_B_1", SqlDbType.Float);
+            param[4].Value = math_B_1;
+
+            param[5] = new SqlParameter("@scince_B_1", SqlDbType.Float);
+            param[5].Value = scince_B_1;
+
+            param[6] = new SqlParameter("@social_B_1", SqlDbType.Float);
+            param[6].Value = mabday;
+
+            param[7] = new SqlParameter("@english_B_1", SqlDbType.Float);
+            param[7].Value = english_B_1;
+
+            param[8] = new SqlParameter("@maharat_B_1", SqlDbType.Float);
+            param[8].Value = maharat_B_1;
+
+            param[9] = new SqlParameter("@tocnolegy_B_1", SqlDbType.Float);
+            param[9].Value = nehay;
+
+            DAL.ExeucuteCommand("SP_Add_Amal_B_4_5_6", param);
+        }
+
+        public void Add_Amal_B_3(int Golos,
+                                   decimal arabic_B_1, decimal dain_B_1,
+                                   decimal math_B_1, decimal scince_B_1,
+                                  decimal english_B_1,decimal maharat_B_1)
+        {
+
+            DataAcceseLayer DAL = new DataAcceseLayer();
+
+            SqlParameter[] param = new SqlParameter[10];
+
+            param[0] = new SqlParameter("@Golos", SqlDbType.Int);
+            param[0].Value = Golos;
+
+            param[1] = new SqlParameter("@year_Id", SqlDbType.Int);
+            param[1].Value = Properties.Settings.Default.year_cod;
+
+            param[2] = new SqlParameter("@arabic_B_1", SqlDbType.Float);
+            param[2].Value = arabic_B_1;
+
+            param[3] = new SqlParameter("@dain_B_1", SqlDbType.Float);
+            param[3].Value = dain_B_1;
+
+            param[4] = new SqlParameter("@math_B_1", SqlDbType.Float);
+            param[4].Value = math_B_1;
+
+            param[5] = new SqlParameter("@scince_B_1", SqlDbType.Float);
+            param[5].Value = scince_B_1;
+
+            param[6] = new SqlParameter("@social_B_1", SqlDbType.Float);
+            param[6].Value = 0;
+
+            param[7] = new SqlParameter("@english_B_1", SqlDbType.Float);
+            param[7].Value = english_B_1;
+
+            param[8] = new SqlParameter("@maharat_B_1", SqlDbType.Float);
+            param[8].Value = maharat_B_1;
+
+            param[9] = new SqlParameter("@tocnolegy_B_1", SqlDbType.Float);
+            param[9].Value = 0;
+
+            DAL.ExeucuteCommand("SP_Add_Amal_B_4_5_6", param);
+        }
+
 
         public void Add_Amal_B_4_5_6(int Golos,
                                     decimal arabic_B_1, decimal dain_B_1,

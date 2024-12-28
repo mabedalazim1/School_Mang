@@ -121,7 +121,7 @@ namespace School_Mang.BL.NATEG
                                          string term_kind,
                                          short grade,
                                          byte term_id,
-                                         byte prep = 0)
+                                         byte prim = 0)
         {
 
             Application excel;
@@ -178,15 +178,25 @@ namespace School_Mang.BL.NATEG
                     excelSheet.Cells[rowcount, 2] = c_id.ToString();
                     excelSheet.Cells[rowcount, 3] = datarow[1].ToString();
                     excelSheet.Cells[rowcount, 4] = datarow[0].ToString();
-                    if(prep == 0)
+                  
+                    switch (prim)
                     {
-                        excelSheet.Cells[rowcount, 13] = datarow[2].ToString();
-                    }
-                    else
-                    {
-                        excelSheet.Cells[rowcount, 17] = datarow[2].ToString();
-                    }
+                        case 0:
+                            excelSheet.Cells[rowcount, 17] = datarow[2].ToString();
+                            break;
 
+                        case 1:
+                            excelSheet.Cells[rowcount, 13] = datarow[2].ToString();
+                            break;
+
+                        case 2:
+                            excelSheet.Cells[rowcount, 11] = datarow[2].ToString();
+                            break;
+                        case 3:
+                            excelSheet.Cells[rowcount, 13] = datarow[2].ToString();
+                            break;
+                    }
+                    
                 }
 
                 // Delete Unused Rows
@@ -851,6 +861,183 @@ namespace School_Mang.BL.NATEG
             }
 
         }
+        public System.Data.DataTable Read_Amal_1_2(string staticExcelFile)
+
+        {
+            System.Data.DataTable dt = new System.Data.DataTable();
+
+            Application excel;
+            Workbook excelworkBook;
+            Worksheet excelSheet;
+
+            // Start Excel and get Application object.
+            excel = new Application();
+
+            waiting.Wait();
+            try
+            {
+
+                // for making Excel visible
+                excel.Visible = false;
+                excel.DisplayAlerts = false;
+
+                // Creation a new Workbook
+                excelworkBook = excel.Workbooks.Open(staticExcelFile);
+
+                // Workk sheet
+                excelSheet = (Worksheet)excelworkBook.Sheets[1];
+                Range xlRange = excelSheet.UsedRange;
+
+                int rowCount = xlRange.Rows.Count;
+                int colCount = xlRange.Columns.Count;
+
+                dt.Columns.Add("Golos", typeof(int));
+                dt.Columns.Add("arabic", typeof(decimal));
+                dt.Columns.Add("dain", typeof(decimal));
+                dt.Columns.Add("math", typeof(decimal));
+                dt.Columns.Add("scince", typeof(decimal));
+                dt.Columns.Add("english", typeof(decimal));
+                dt.Columns.Add("maharat", typeof(decimal));
+                dt.Columns.Add("mabday", typeof(decimal));
+                dt.Columns.Add("nehay", typeof(decimal));
+
+                int rowCounter; //This variable is used for row index number
+                DataRow row;
+                rowCounter = 5;
+
+                for (int i = 5; i <= rowCount; i++) //Loop for available row of excel data
+                {
+                    row = dt.NewRow(); //assign new row to DataTable
+
+                    row["Golos"] = Convert.ToInt32(xlRange.Cells[i, 4].Value2);
+                    row["arabic"] = Convert.ToDecimal(xlRange.Cells[i, 5].Value2);
+                    row["dain"] = Convert.ToDecimal(xlRange.Cells[i, 6].Value2);
+                    row["math"] = Convert.ToDecimal(xlRange.Cells[i, 7].Value2);
+                    row["scince"] = Convert.ToDecimal(xlRange.Cells[i, 8].Value2);
+                    row["english"] = Convert.ToDecimal(xlRange.Cells[i, 9].Value2);
+                    row["maharat"] = Convert.ToDecimal(xlRange.Cells[i, 10].Value2);
+                    row["mabday"] = Convert.ToDecimal(xlRange.Cells[i, 11].Value2);
+                    row["nehay"] = Convert.ToDecimal(xlRange.Cells[i, 12].Value2);
+                    rowCounter++;
+
+                    dt.Rows.Add(row); //add row to DataTable
+                }
+
+                excelworkBook.Close(0);
+
+                excel.DisplayAlerts = true;
+                excel.Quit();
+
+                excelSheet = null;
+                excelworkBook = null;
+                excel = null;
+
+                waiting.End_WAit();
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                waiting.End_WAit();
+                msg.ErrorMesg(ex.Message);
+                return null;
+            }
+            finally
+            {
+                excelSheet = null;
+                excelworkBook = null;
+                excel = null;
+                waiting.End_WAit();
+            }
+
+        }
+
+        public System.Data.DataTable Read_Amal_3(string staticExcelFile)
+
+        {
+            System.Data.DataTable dt = new System.Data.DataTable();
+
+            Application excel;
+            Workbook excelworkBook;
+            Worksheet excelSheet;
+
+            // Start Excel and get Application object.
+            excel = new Application();
+
+            waiting.Wait();
+            try
+            {
+
+                // for making Excel visible
+                excel.Visible = false;
+                excel.DisplayAlerts = false;
+
+                // Creation a new Workbook
+                excelworkBook = excel.Workbooks.Open(staticExcelFile);
+
+                // Workk sheet
+                excelSheet = (Worksheet)excelworkBook.Sheets[1];
+                Range xlRange = excelSheet.UsedRange;
+
+                int rowCount = xlRange.Rows.Count;
+                int colCount = xlRange.Columns.Count;
+
+                dt.Columns.Add("Golos", typeof(int));
+                dt.Columns.Add("arabic", typeof(decimal));
+                dt.Columns.Add("dain", typeof(decimal));
+                dt.Columns.Add("math", typeof(decimal));
+                dt.Columns.Add("scince", typeof(decimal));
+                dt.Columns.Add("english", typeof(decimal));
+                dt.Columns.Add("maharat", typeof(decimal));
+              
+
+                int rowCounter; //This variable is used for row index number
+                DataRow row;
+                rowCounter = 5;
+
+                for (int i = 5; i <= rowCount; i++) //Loop for available row of excel data
+                {
+                    row = dt.NewRow(); //assign new row to DataTable
+
+                    row["Golos"] = Convert.ToInt32(xlRange.Cells[i, 4].Value2);
+                    row["arabic"] = Convert.ToDecimal(xlRange.Cells[i, 5].Value2);
+                    row["dain"] = Convert.ToDecimal(xlRange.Cells[i, 6].Value2);
+                    row["math"] = Convert.ToDecimal(xlRange.Cells[i, 7].Value2);
+                    row["scince"] = Convert.ToDecimal(xlRange.Cells[i, 8].Value2);
+                    row["english"] = Convert.ToDecimal(xlRange.Cells[i, 9].Value2);
+                    row["maharat"] = Convert.ToDecimal(xlRange.Cells[i, 10].Value2);
+                   
+                    rowCounter++;
+
+                    dt.Rows.Add(row); //add row to DataTable
+                }
+
+                excelworkBook.Close(0);
+
+                excel.DisplayAlerts = true;
+                excel.Quit();
+
+                excelSheet = null;
+                excelworkBook = null;
+                excel = null;
+
+                waiting.End_WAit();
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                waiting.End_WAit();
+                msg.ErrorMesg(ex.Message);
+                return null;
+            }
+            finally
+            {
+                excelSheet = null;
+                excelworkBook = null;
+                excel = null;
+                waiting.End_WAit();
+            }
+
+        }
 
         public System.Data.DataTable Read_Amal_4_5_6(string staticExcelFile)
 
@@ -993,24 +1180,37 @@ namespace School_Mang.BL.NATEG
                     row["Golos"] = Convert.ToInt32(xlRange.Cells[i, 1].Value2);
                     row["arabic"] = Convert.ToDecimal(xlRange.Cells[i, 3].Value2);
                     row["dain"] = Convert.ToDecimal(xlRange.Cells[i, 4].Value2);
-                    if(stage == 1)
+                    switch(stage)
                     {
+                        case 0:
+                            row["math"] = Convert.ToDecimal(xlRange.Cells[i, 5].Value2);
+                            row["scince"] = Convert.ToDecimal(xlRange.Cells[i, 6].Value2);
+                            row["english"] = Convert.ToDecimal(xlRange.Cells[i, 7].Value2);
+                            row["social"] = 0;
+                            row["maharat"] = 0;
+                            row["tocnolegy"] = 0;
+
+                            break;
+
+                        case 1:
                         row["math"] = Convert.ToDecimal(xlRange.Cells[i, 5].Value2);
                         row["scince"] = Convert.ToDecimal(xlRange.Cells[i, 6].Value2);
                         row["social"] = Convert.ToDecimal(xlRange.Cells[i, 7].Value2);
                         row["english"] = Convert.ToDecimal(xlRange.Cells[i, 8].Value2);
                         row["maharat"] = Convert.ToDecimal(xlRange.Cells[i, 9].Value2);
                         row["tocnolegy"] = Convert.ToDecimal(xlRange.Cells[i, 10].Value2);
+                            break;
+
+                        case 2:
+                            row["math"] = Convert.ToDecimal(xlRange.Cells[i, 29].Value2);
+                            row["scince"] = Convert.ToDecimal(xlRange.Cells[i, 7].Value2);
+                            row["social"] = Convert.ToDecimal(xlRange.Cells[i, 8].Value2);
+                            row["english"] = Convert.ToDecimal(xlRange.Cells[i, 9].Value2);
+                            row["maharat"] = Convert.ToDecimal(xlRange.Cells[i, 10].Value2);
+                            row["tocnolegy"] = Convert.ToDecimal(xlRange.Cells[i, 11].Value2);
+                            break;
                     }
-                    else
-                    {
-                        row["math"] = Convert.ToDecimal(xlRange.Cells[i, 29].Value2);
-                        row["scince"] = Convert.ToDecimal(xlRange.Cells[i, 7].Value2);
-                        row["social"] = Convert.ToDecimal(xlRange.Cells[i, 8].Value2);
-                        row["english"] = Convert.ToDecimal(xlRange.Cells[i, 9].Value2);
-                        row["maharat"] = Convert.ToDecimal(xlRange.Cells[i, 10].Value2);
-                        row["tocnolegy"] = Convert.ToDecimal(xlRange.Cells[i, 11].Value2);
-                    }
+                    
                     if(Convert.ToInt32(xlRange.Cells[i, 1].Value2) == 0)
                     {
                         break;

@@ -52,6 +52,7 @@ namespace School_Mang.PL.NATIGA.HOME
 
         private void Check_Data()
         {
+            byte year = Convert.ToByte(Properties.Settings.Default.year_cod);
             string file_name = natag_func.OpenDialoge(openFileDialog1);
             if (file_name == null)
             {
@@ -75,7 +76,8 @@ namespace School_Mang.PL.NATIGA.HOME
                 decimal tocnolegy_practical;
                 decimal nashat_1;
                 decimal nashat_2;
-                
+                decimal mabday;
+                decimal nehay;
 
                 Waiting.Wait();
                 DataTable dt_information = Excel.GetInformationData(file_name);
@@ -122,6 +124,85 @@ namespace School_Mang.PL.NATIGA.HOME
                                     case 1: // Amal Term A
                                         switch (test_grade)
                                         {
+                                            case 10:
+                                            case 11:
+                                                msg.ErrorMesg("لا يمكن رفع درجات هذا الصف ..!");
+                                                return;
+                                            // 1-2-3 Amal term A
+                                            case 1:
+                                            case 2:
+                                            case 3:
+                                                switch (year)
+                                                {
+                                                    case 1:
+                                                    case 2:
+                                                    case 3:
+                                                        msg.ErrorMesg("لا يمكن رفع درجات هذا الصف ..!");
+                                                        return;
+                                                    case var expration when year > 3:
+                                                        switch (test_grade)
+                                                        {
+                                                            // Amal 1-2
+                                                            case 1:
+                                                            case 2:
+                                                                dt_degree = Excel.Read_Amal_1_2(file_name);
+                                                                foreach (DataRow amal in dt_degree.Rows)
+                                                                {
+                                                                    Golos = Convert.ToInt32(amal[0]);
+                                                                    arabic = Convert.ToDecimal(amal[1]);
+                                                                    din = Convert.ToDecimal(amal[2]);
+                                                                    math = Convert.ToDecimal(amal[3]);
+                                                                    scince = Convert.ToDecimal(amal[4]);
+                                                                    english = Convert.ToDecimal(amal[5]);
+                                                                    maharat = Convert.ToDecimal(amal[6]);
+                                                                    mabday = Convert.ToDecimal(amal[7]);
+                                                                    nehay = Convert.ToDecimal(amal[8]);
+                                                                    NATEG.Add_Amal_A_1_2(Golos,
+                                                                                            arabic,
+                                                                                            din,
+                                                                                            math,
+                                                                                            scince,
+                                                                                            english,
+                                                                                            maharat,
+                                                                                            mabday,
+                                                                                            nehay);
+                                                          
+                                                                }
+                                                                Waiting.End_WAit();
+                                                                msg.MyMesg("تم تحديث الدرجات بنجاح .. !");
+
+                                                                break;
+                                                            // Amal 3
+                                                            case 3:
+                                                                dt_degree = Excel.Read_Amal_3(file_name);
+                                                                foreach (DataRow amal in dt_degree.Rows)
+                                                                {
+                                                                    Golos = Convert.ToInt32(amal[0]);
+                                                                    arabic = Convert.ToDecimal(amal[1]);
+                                                                    din = Convert.ToDecimal(amal[2]);
+                                                                    math = Convert.ToDecimal(amal[3]);
+                                                                    scince = Convert.ToDecimal(amal[4]);
+                                                                    english = Convert.ToDecimal(amal[5]);
+                                                                    maharat = Convert.ToDecimal(amal[6]);
+                                                                    
+                                                                    NATEG.Add_Amal_A_3(Golos,
+                                                                                            arabic,
+                                                                                            din,
+                                                                                            math,
+                                                                                            scince,
+                                                                                            english,
+                                                                                            maharat);
+
+                                                                }
+                                                                Waiting.End_WAit();
+                                                                msg.MyMesg("تم تحديث الدرجات بنجاح .. !");
+
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                       
                                             // 4-5-6 Amal term A
                                             case 4:
                                             case 5:
@@ -198,6 +279,20 @@ namespace School_Mang.PL.NATIGA.HOME
 
                                         switch (test_grade)
                                         {
+                                            case 3:
+                                                switch (year)
+                                                {
+                                                    case 1:
+                                                    case 2:
+                                                    case 3:
+                                                        msg.ErrorMesg("لا يمكن رفع درجات هذا الصف ..!");
+                                                        return;
+
+                                                    case var expration when year > 3:
+                                                        dt_degree = Excel.Read_Test(file_name,0);
+                                                        break;
+                                                }
+                                                break;
                                             case 4:
                                             case 5:
                                             case 6:
@@ -247,6 +342,84 @@ namespace School_Mang.PL.NATIGA.HOME
 
                                         switch (test_grade)
                                         {
+                                            case 10:
+                                            case 11:
+                                                msg.ErrorMesg("لا يمكن رفع درجات هذا الصف ..!");
+                                                return;
+                                            // 1-2-3 Amal term A
+                                            case 1:
+                                            case 2:
+                                            case 3:
+                                                switch (year)
+                                                {
+                                                    case 1:
+                                                    case 2:
+                                                    case 3:
+                                                        msg.ErrorMesg("لا يمكن رفع درجات هذا الصف ..!");
+                                                        return;
+                                                    case var expration when year > 3:
+                                                        switch (test_grade)
+                                                        {
+                                                            // Amal 1-2
+                                                            case 1:
+                                                            case 2:
+                                                                dt_degree = Excel.Read_Amal_1_2(file_name);
+                                                                foreach (DataRow amal in dt_degree.Rows)
+                                                                {
+                                                                    Golos = Convert.ToInt32(amal[0]);
+                                                                    arabic = Convert.ToDecimal(amal[1]);
+                                                                    din = Convert.ToDecimal(amal[2]);
+                                                                    math = Convert.ToDecimal(amal[3]);
+                                                                    scince = Convert.ToDecimal(amal[4]);
+                                                                    english = Convert.ToDecimal(amal[5]);
+                                                                    maharat = Convert.ToDecimal(amal[6]);
+                                                                    mabday = Convert.ToDecimal(amal[7]);
+                                                                    nehay = Convert.ToDecimal(amal[8]);
+                                                                    NATEG.Add_Amal_B_1_2(Golos,
+                                                                                            arabic,
+                                                                                            din,
+                                                                                            math,
+                                                                                            scince,
+                                                                                            english,
+                                                                                            maharat,
+                                                                                            mabday,
+                                                                                            nehay);
+
+                                                                }
+                                                                Waiting.End_WAit();
+                                                                msg.MyMesg("تم تحديث الدرجات بنجاح .. !");
+
+                                                                break;
+                                                            // Amal 3
+                                                            case 3:
+                                                                dt_degree = Excel.Read_Amal_3(file_name);
+                                                                foreach (DataRow amal in dt_degree.Rows)
+                                                                {
+                                                                    Golos = Convert.ToInt32(amal[0]);
+                                                                    arabic = Convert.ToDecimal(amal[1]);
+                                                                    din = Convert.ToDecimal(amal[2]);
+                                                                    math = Convert.ToDecimal(amal[3]);
+                                                                    scince = Convert.ToDecimal(amal[4]);
+                                                                    english = Convert.ToDecimal(amal[5]);
+                                                                    maharat = Convert.ToDecimal(amal[6]);
+
+                                                                    NATEG.Add_Amal_B_3(Golos,
+                                                                                            arabic,
+                                                                                            din,
+                                                                                            math,
+                                                                                            scince,
+                                                                                            english,
+                                                                                            maharat);
+
+                                                                }
+                                                                Waiting.End_WAit();
+                                                                msg.MyMesg("تم تحديث الدرجات بنجاح .. !");
+
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
                                             // 4-5-6 Amal term B
                                             case 4:
                                             case 5:
@@ -322,6 +495,20 @@ namespace School_Mang.PL.NATIGA.HOME
                                     case 2: // Test term b
                                         switch (test_grade)
                                         {
+                                            case 3:
+                                                switch (year)
+                                                {
+                                                    case 1:
+                                                    case 2:
+                                                    case 3:
+                                                        msg.ErrorMesg("لا يمكن رفع درجات هذا الصف ..!");
+                                                        return;
+
+                                                    case var expration when year > 3:
+                                                        dt_degree = Excel.Read_Test(file_name, 0);
+                                                        break;
+                                                }
+                                                break;
                                             case 4:
                                             case 5:
                                             case 6:

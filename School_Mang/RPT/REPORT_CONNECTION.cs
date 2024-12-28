@@ -385,7 +385,17 @@ namespace School_Mang.RPT
                                 Waiting.End_WAit();
                                 return;
                            case var expreation when year >3:
-                                report_name = "rpt_Amal_Degree_A.rpt";
+                                switch (grade_id)
+                                {
+                                    case 1:
+                                    case 2:
+                                        report_name = "rpt_Amal_Degree_A_1_2.rpt";
+                                        break;
+                                    case 3:
+                                        report_name = "rpt_Amal_Degree_A.rpt";
+                                        break;
+                                }
+                               
                                 break;
                         }
 
@@ -429,6 +439,7 @@ namespace School_Mang.RPT
         public void OpenResdTest_A(int year_id,
                                  int grade_id = 0)
         {
+            
             try
             {
                 ReportDocument myReport = new ReportDocument();
@@ -437,12 +448,40 @@ namespace School_Mang.RPT
                 {
                     case 10:
                     case 11:
-                    case 1:
-                    case 2:
-                    case 3:
                         msg.ErrorMesg("لا توجد كشوف للصف المحدد");
                         Waiting.End_WAit();
                         return;
+                    case 1:
+                    case 2:
+                    case 3:
+                        switch (year_id)
+                        {
+                            case 1:
+                            case 2:
+                            case 3:
+
+                                msg.ErrorMesg("لا توجد كشوف للصف المحدد");
+                                Waiting.End_WAit();
+                                return;
+                            case var exptration when year_id > 3:
+
+                                switch (grade_id)
+                                {
+                                    case 1:
+                                    case 2:
+                                        msg.ErrorMesg("لا توجد كشوف للصف المحدد");
+                                        Waiting.End_WAit();
+                                        return;
+                                    case 3:
+                                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Rasd_Test_A.rpt");
+
+                                        myReport.SetParameterValue("@Year_Id", year_id);
+                                        myReport.SetParameterValue("@Grade_Id", grade_id);
+                                        break;
+                                }
+                                break;
+                        }
+                        break;
                     case 4:
                     case 5:
                     case 6:

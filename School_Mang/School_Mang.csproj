@@ -520,6 +520,13 @@
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="MyReports\rpt_Review_Rasd_Test_A.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rpt_Review_Rasd_Test_A.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="MyReports\rpt_Review_Rasd_Test_B.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1325,6 +1332,11 @@
     <Content Include="MyReports\rpt_Rasd_Test_A.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Rasd_Test_A.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MyReports\rpt_Review_Rasd_Test_A.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rpt_Review_Rasd_Test_A.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="PL\MAIN\FRM_AMELIN.resx">

@@ -587,12 +587,40 @@ namespace School_Mang.RPT
                 {
                     case 10:
                     case 11:
-                    case 1:
-                    case 2:
-                    case 3:
                         msg.ErrorMesg("لا توجد كشوف للصف المحدد");
                         Waiting.End_WAit();
                         return;
+                    case 1:
+                    case 2:
+                    case 3:
+                        switch (year_id)
+                        {
+                            case 1:
+                            case 2:
+                            case 3:
+
+                                msg.ErrorMesg("لا توجد كشوف للصف المحدد");
+                                Waiting.End_WAit();
+                                return;
+                            case var expration when year_id > 3:
+                                switch (grade_id)
+                                {
+                                    case 1:
+                                    case 2:
+
+                                        break;
+
+                                    case 3:
+                                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Review_Rasd_Test_A.rpt");
+
+                                        myReport.SetParameterValue("@Year_Id", year_id);
+                                        myReport.SetParameterValue("@Grade_Id", grade_id);
+
+                                        break;
+                                }
+                                break;
+                        }
+                        break;
                     case 4:
                     case 5:
                     case 6:

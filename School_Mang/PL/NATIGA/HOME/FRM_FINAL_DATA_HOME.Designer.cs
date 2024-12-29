@@ -88,6 +88,7 @@ namespace School_Mang.PL.NATIGA.HOME
             // 
             // flowLayoutPanel1
             // 
+            this.flowLayoutPanel1.AutoScroll = true;
             this.flowLayoutPanel1.Controls.Add(this.bunifuCards4);
             this.flowLayoutPanel1.Controls.Add(this.bunifuCards6);
             this.flowLayoutPanel1.Controls.Add(this.bunifuCards5);
@@ -103,7 +104,7 @@ namespace School_Mang.PL.NATIGA.HOME
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(20);
             this.flowLayoutPanel1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1354, 785);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1337, 785);
             this.flowLayoutPanel1.TabIndex = 12;
             this.flowLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint);
             // 
@@ -117,7 +118,7 @@ namespace School_Mang.PL.NATIGA.HOME
             this.bunifuCards4.Controls.Add(this.pic_final);
             this.bunifuCards4.Controls.Add(this.lbl_final);
             this.bunifuCards4.LeftSahddow = false;
-            this.bunifuCards4.Location = new System.Drawing.Point(1041, 23);
+            this.bunifuCards4.Location = new System.Drawing.Point(1024, 23);
             this.bunifuCards4.Name = "bunifuCards4";
             this.bunifuCards4.Padding = new System.Windows.Forms.Padding(20);
             this.bunifuCards4.RightSahddow = true;
@@ -160,7 +161,7 @@ namespace School_Mang.PL.NATIGA.HOME
             this.bunifuCards6.Controls.Add(this.pic_final_test);
             this.bunifuCards6.Controls.Add(this.lbl_final_test);
             this.bunifuCards6.LeftSahddow = false;
-            this.bunifuCards6.Location = new System.Drawing.Point(765, 23);
+            this.bunifuCards6.Location = new System.Drawing.Point(748, 23);
             this.bunifuCards6.Name = "bunifuCards6";
             this.bunifuCards6.Padding = new System.Windows.Forms.Padding(20);
             this.bunifuCards6.RightSahddow = true;
@@ -203,7 +204,7 @@ namespace School_Mang.PL.NATIGA.HOME
             this.bunifuCards5.Controls.Add(this.lbl_get_dgree_a);
             this.bunifuCards5.Controls.Add(this.pic_get_dgree_a);
             this.bunifuCards5.LeftSahddow = false;
-            this.bunifuCards5.Location = new System.Drawing.Point(489, 23);
+            this.bunifuCards5.Location = new System.Drawing.Point(472, 23);
             this.bunifuCards5.Name = "bunifuCards5";
             this.bunifuCards5.Padding = new System.Windows.Forms.Padding(20);
             this.bunifuCards5.RightSahddow = true;
@@ -246,7 +247,7 @@ namespace School_Mang.PL.NATIGA.HOME
             this.bunifuCards3.Controls.Add(this.lbl_get_dgree_b);
             this.bunifuCards3.Controls.Add(this.pic_get_dgree_b);
             this.bunifuCards3.LeftSahddow = false;
-            this.bunifuCards3.Location = new System.Drawing.Point(213, 23);
+            this.bunifuCards3.Location = new System.Drawing.Point(196, 23);
             this.bunifuCards3.Name = "bunifuCards3";
             this.bunifuCards3.Padding = new System.Windows.Forms.Padding(20);
             this.bunifuCards3.RightSahddow = true;
@@ -289,7 +290,7 @@ namespace School_Mang.PL.NATIGA.HOME
             this.bunifuCards7.Controls.Add(this.lbl_data);
             this.bunifuCards7.Controls.Add(this.pic_data);
             this.bunifuCards7.LeftSahddow = false;
-            this.bunifuCards7.Location = new System.Drawing.Point(1041, 215);
+            this.bunifuCards7.Location = new System.Drawing.Point(1024, 215);
             this.bunifuCards7.Name = "bunifuCards7";
             this.bunifuCards7.Padding = new System.Windows.Forms.Padding(20);
             this.bunifuCards7.RightSahddow = true;
@@ -332,7 +333,7 @@ namespace School_Mang.PL.NATIGA.HOME
             this.bunifuCards2.Controls.Add(this.lbl_upload_file);
             this.bunifuCards2.Controls.Add(this.pic_upload_file);
             this.bunifuCards2.LeftSahddow = false;
-            this.bunifuCards2.Location = new System.Drawing.Point(765, 215);
+            this.bunifuCards2.Location = new System.Drawing.Point(748, 215);
             this.bunifuCards2.Name = "bunifuCards2";
             this.bunifuCards2.Padding = new System.Windows.Forms.Padding(20);
             this.bunifuCards2.RightSahddow = true;
@@ -375,7 +376,7 @@ namespace School_Mang.PL.NATIGA.HOME
             this.bunifuCards10.Controls.Add(this.lbl_sofof_ola);
             this.bunifuCards10.Controls.Add(this.pic_sofof_ola);
             this.bunifuCards10.LeftSahddow = false;
-            this.bunifuCards10.Location = new System.Drawing.Point(489, 215);
+            this.bunifuCards10.Location = new System.Drawing.Point(472, 215);
             this.bunifuCards10.Name = "bunifuCards10";
             this.bunifuCards10.Padding = new System.Windows.Forms.Padding(20);
             this.bunifuCards10.RightSahddow = true;
@@ -418,7 +419,7 @@ namespace School_Mang.PL.NATIGA.HOME
             this.bunifuCards8.Controls.Add(this.lbl_natega_a);
             this.bunifuCards8.Controls.Add(this.pic_natega_a);
             this.bunifuCards8.LeftSahddow = false;
-            this.bunifuCards8.Location = new System.Drawing.Point(213, 215);
+            this.bunifuCards8.Location = new System.Drawing.Point(196, 215);
             this.bunifuCards8.Name = "bunifuCards8";
             this.bunifuCards8.Padding = new System.Windows.Forms.Padding(20);
             this.bunifuCards8.RightSahddow = true;
@@ -461,7 +462,7 @@ namespace School_Mang.PL.NATIGA.HOME
             this.bunifuCards9.Controls.Add(this.lbl_final_koshof);
             this.bunifuCards9.Controls.Add(this.pic_final_koshof);
             this.bunifuCards9.LeftSahddow = false;
-            this.bunifuCards9.Location = new System.Drawing.Point(1041, 407);
+            this.bunifuCards9.Location = new System.Drawing.Point(1024, 407);
             this.bunifuCards9.Name = "bunifuCards9";
             this.bunifuCards9.Padding = new System.Windows.Forms.Padding(20);
             this.bunifuCards9.RightSahddow = true;
@@ -504,7 +505,7 @@ namespace School_Mang.PL.NATIGA.HOME
             this.bunifuCards1.Controls.Add(this.lbl_back);
             this.bunifuCards1.Controls.Add(this.pic_back);
             this.bunifuCards1.LeftSahddow = false;
-            this.bunifuCards1.Location = new System.Drawing.Point(765, 407);
+            this.bunifuCards1.Location = new System.Drawing.Point(748, 407);
             this.bunifuCards1.Name = "bunifuCards1";
             this.bunifuCards1.Padding = new System.Windows.Forms.Padding(20);
             this.bunifuCards1.RightSahddow = true;
@@ -543,6 +544,7 @@ namespace School_Mang.PL.NATIGA.HOME
             // 
             // pn_home
             // 
+            this.pn_home.AutoScroll = true;
             this.pn_home.Controls.Add(this.flowLayoutPanel1);
             this.pn_home.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pn_home.Location = new System.Drawing.Point(0, 0);
@@ -554,6 +556,7 @@ namespace School_Mang.PL.NATIGA.HOME
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1354, 746);
             this.Controls.Add(this.pn_home);

@@ -97,8 +97,21 @@ namespace School_Mang.PL.NATIGA
             dt = nateg.Get_Final_Degree(grade);
 
             if (dt.Rows.Count == 0)
-            {
+            { 
                 msg.ErrorMesg("لا توجد نتائج مسجلة للصف المحدد");
+                if(grade < 10  && BL.Globals.Final_Test)
+                {
+                    if(grade < 3)
+                    {
+                        msg.MyExclamationMsg("الصفين الأول والثاني ليس لهم درجات اختبار ..!");
+                    }
+                    else
+                    {
+                        msg.MyExclamationMsg("تأكد من رفع ملفات أعمال السنة للصف المحدد. !");
+                    }
+                     
+                }
+               
                 return false;
             }
             else
@@ -156,7 +169,6 @@ namespace School_Mang.PL.NATIGA
                     RPT.OpenResdTest_B(year, grade);
                 }
 
-               
 
                 waiting.End_WAit();
             }

@@ -439,7 +439,6 @@ namespace School_Mang.RPT
         public void OpenResdTest_A(int year_id,
                                  int grade_id = 0)
         {
-            
             try
             {
                 ReportDocument myReport = new ReportDocument();
@@ -470,6 +469,7 @@ namespace School_Mang.RPT
                                     case 1:
                                     case 2:
                                         msg.ErrorMesg("لا توجد كشوف للصف المحدد");
+                                        msg.MyExclamationMsg("الصفين الأول والثاني ليس لهم درجات اختبار ..!");
                                         Waiting.End_WAit();
                                         return;
                                     case 3:
@@ -607,6 +607,10 @@ namespace School_Mang.RPT
                                 {
                                     case 1:
                                     case 2:
+                                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Review_Rasd_Test_A_1_2.rpt");
+
+                                        myReport.SetParameterValue("@Year_Id", year_id);
+                                        myReport.SetParameterValue("@Grade_Id", grade_id);
 
                                         break;
 

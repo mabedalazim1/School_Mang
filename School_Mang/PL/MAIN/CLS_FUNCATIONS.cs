@@ -12,7 +12,7 @@ using Renci.SshNet.Sftp;
 
 namespace School_Mang.PL.MAIN
 {
-    // Mohamed Ahmed
+    // Mohamed Nora
     class CLS_FUNCATIONS
     {
         String Host = Properties.Settings.Default.Server_Name;

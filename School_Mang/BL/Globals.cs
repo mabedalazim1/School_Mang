@@ -547,5 +547,18 @@ namespace School_Mang.BL
             }
         }
 
+        private static bool _Del_Assessment_Data;
+        public static bool Del_Assessment_Data
+        {
+            get
+            {
+                return _Del_Assessment_Data;
+            }
+            set
+            {
+                _Del_Assessment_Data = value;
+            }
+        }
+
     }
 }

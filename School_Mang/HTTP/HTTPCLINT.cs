@@ -63,6 +63,7 @@ namespace School_Mang.HTTP
         {
             try
             {
+                msg.MyExclamationMsg(uri);
                 waiting.Wait();
 
                 if (BL.Globals.accessToken == null) await SignIn();

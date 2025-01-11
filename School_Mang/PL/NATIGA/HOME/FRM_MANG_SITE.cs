@@ -86,7 +86,18 @@ namespace School_Mang.PL.NATIGA.HOME
             }
            
         }
-        
+        // Open Assessment Form
+        private async void open_Assessment_Form()
+        {
+            await Test_Intrent();
+            if (!BL.Globals.Test_Internet_Con)
+            {
+                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+                return;
+            }
+            FRM_ADD_ASSESSMENT_DATA.Get_Frm_Add_Assessment.ShowDialog();
+        }
+
         private void lbl_back_Click(object sender, EventArgs e)
         {
             natag_func.changePages(FRM_NATEG.Get_Frm_Nateg.pn_home, "التقييمات");
@@ -160,6 +171,31 @@ namespace School_Mang.PL.NATIGA.HOME
         private void pic_del_data_from_site_Click(object sender, EventArgs e)
         {
             lbl_del_data_from_site_Click(sender, e);
+        }
+
+        
+        private async void lbl_upload_assessment_Click(object sender, EventArgs e)
+        {
+            BL.Globals.Del_Assessment_Data = false;
+            open_Assessment_Form();
+
+        }
+
+        private void pic_upload_assessment_Click(object sender, EventArgs e)
+        {
+            lbl_upload_assessment_Click(sender, e);
+        }
+
+        private void lbl_del_assessment_Click(object sender, EventArgs e)
+        {
+            BL.Globals.Del_Assessment_Data = true;
+
+            open_Assessment_Form();
+        }
+
+        private void pic_del_assessment_Click(object sender, EventArgs e)
+        {
+            lbl_del_assessment_Click(sender, e);
         }
     }
 }

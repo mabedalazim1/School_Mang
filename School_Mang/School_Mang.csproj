@@ -92,6 +92,7 @@
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup />
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="AxShockwaveFlashObjects, Version=1.0.0.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
     <Reference Include="BCrypt.Net-Next, Version=4.0.3.0, Culture=neutral, PublicKeyToken=1e11be04b6288443, processorArchitecture=MSIL">
@@ -99,6 +100,9 @@
     </Reference>
     <Reference Include="BouncyCastle.Crypto, Version=1.8.9.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
       <HintPath>..\packages\Portable.BouncyCastle.1.8.9\lib\net40\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="Bunifu.UI.WinForms.1.5.3">
+      <HintPath>..\..\..\Prog\Bunifu_UI_WinForms_5.0.3 [PeskTop.com]\Bunifu_UI_WinForms_5.0.3 [PeskTop.com]\ui.winforms.5.0.3\Bunifu.UI.WinForms.1.5.3.dll</HintPath>
     </Reference>
     <Reference Include="Bunifu_UI_v1.52">
       <HintPath>D:\Prog\Bunifu_UI_WinForms_5.0.3 [PeskTop.com]\Bunifu_UI_WinForms_5.0.3 [PeskTop.com]\Bunifu_UI_v1.52.dll</HintPath>
@@ -165,6 +169,9 @@
     <Reference Include="ReachFramework" />
     <Reference Include="Renci.SshNet, Version=2020.0.2.0, Culture=neutral, PublicKeyToken=1cee9f8bde3db106, processorArchitecture=MSIL">
       <HintPath>..\packages\SSH.NET.2020.0.2\lib\net40\Renci.SshNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Renci.SshNet.Async, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Renci.SshNet.Async.1.4.0\lib\net40\Renci.SshNet.Async.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -642,6 +649,12 @@
     </Compile>
     <Compile Include="PL\MAIN\FRM_YEAR.Designer.cs">
       <DependentUpon>FRM_YEAR.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PL\NATIGA\FRM_ADD_ASSESSMENT_DATA.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\NATIGA\FRM_ADD_ASSESSMENT_DATA.Designer.cs">
+      <DependentUpon>FRM_ADD_ASSESSMENT_DATA.cs</DependentUpon>
     </Compile>
     <Compile Include="PL\NATIGA\FRM_ADD_GOLOS.cs">
       <SubType>Form</SubType>
@@ -1362,6 +1375,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PL\MAIN\FRM_YEAR.resx">
       <DependentUpon>FRM_YEAR.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PL\NATIGA\FRM_ADD_ASSESSMENT_DATA.resx">
+      <DependentUpon>FRM_ADD_ASSESSMENT_DATA.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PL\NATIGA\FRM_ADD_GOLOS.resx">
       <DependentUpon>FRM_ADD_GOLOS.cs</DependentUpon>

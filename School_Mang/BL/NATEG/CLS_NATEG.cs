@@ -146,6 +146,25 @@ namespace School_Mang.BL.NATEG
             return Dt;
         }
 
+        public void DeleteAssessmentFromSite(int year_Id,int term_Id, int grade_Id, string sp_name)
+        {
+
+            SiteAccessLayer DAL = new SiteAccessLayer();
+
+            SqlParameter[] param = new SqlParameter[3];
+            param[0] = new SqlParameter("@year_Id", SqlDbType.Int);
+            param[0].Value = year_Id;
+
+            param[1] = new SqlParameter("@term_Id", SqlDbType.Int);
+            param[1].Value = term_Id;
+
+            param[2] = new SqlParameter("@grade_Id", SqlDbType.Int);
+            param[2].Value = grade_Id;
+
+            DAL.ExeucuteCommand("SP_Delete_From_" + sp_name, param);
+        }
+
+
         public void DeleteDegreeFromSite(int grade_Id, int test_kind_Id, int student_Id)
         {
 

@@ -279,8 +279,8 @@ namespace School_Mang.PL.NATIGA
                     upload += "asestocnolegy";
                     break;
                 case 9:
-
-                    return;
+                    upload += "asesgiab"; 
+                    break;
             }
             await UploadFile(upload);
         }

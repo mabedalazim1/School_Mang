@@ -540,6 +540,7 @@ namespace School_Mang.PL.NATIGA
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FRM_FINAL_DEGREE_DATA";
             this.Load += new System.EventHandler(this.FRM_FINAL_DEGREE_DATA_Load);
+            this.Shown += new System.EventHandler(this.FRM_FINAL_DEGREE_DATA_Shown);
             this.groupBox3.ResumeLayout(false);
             this.pn_top.ResumeLayout(false);
             this.pn_top.PerformLayout();

@@ -138,16 +138,20 @@ namespace School_Mang.PL.NATIGA
 
         private void ChangLayOut()
         {
-            byte year = BL.Globals.My_Year;
+            byte year = Convert.ToByte(Properties.Settings.Default.year_cod);
+
             int grade_id = BL.Globals.test_grade_id;
-            if (grade_id < 4 || grade_id > 9 && year < 4)
+            if (grade_id < 4 || grade_id > 9)
             {
-                btn_amal_nesf.Visible = false;
-                btn_amal_akher.Visible = false;
-                btn_test_akher.Visible = true;
-                btn_absent_std.Visible = false;
-                btn_test_nesf.Visible = false;
-                btn_test_akher.ButtonText = "تقييم أخر العام";
+                if(year < 4)
+                {
+                    btn_amal_nesf.Visible = false;
+                    btn_amal_akher.Visible = false;
+                    btn_test_akher.Visible = true;
+                    btn_absent_std.Visible = false;
+                    btn_test_nesf.Visible = false;
+                    btn_test_akher.ButtonText = "تقييم أخر العام";
+                }
 
             }
             else

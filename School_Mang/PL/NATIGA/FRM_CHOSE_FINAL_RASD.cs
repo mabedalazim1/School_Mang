@@ -226,10 +226,43 @@ namespace School_Mang.PL.NATIGA
 
                 if (test_kind == 1)
                 {
-                    msg.ErrorMesg("هذا الإجراء متاح فى نهاية العام فقط ..!");
-                    msg.MyExclamationMsg("يرجي التأكد من نوع الاختبار ..!");
-                    cmb_grade.Focus();
-                    return;
+                    switch (year)
+                    {
+                        case var expration when year < 4:
+                            msg.ErrorMesg("هذا الإجراء متاح فى نهاية العام فقط ..!");
+                            msg.MyExclamationMsg("يرجي التأكد من نوع الاختبار ..!");
+                            cmb_grade.Focus();
+                            waiting.End_WAit();
+                            return;
+                        case var expration when year > 3:
+                            switch (grade)
+                            {
+                                case 10:
+                                case 11:
+                                    msg.ErrorMesg("هذا الإجراء متاح فى نهاية العام فقط ..!");
+                                    msg.MyExclamationMsg("يرجي التأكد من نوع الاختبار ..!");
+                                    cmb_grade.Focus();
+                                    waiting.End_WAit();
+                                    return;
+                                case 1:
+                                case 2:
+                                    msg.ErrorMesg("لم يتم أتاحة هذا الصف!");
+                                    msg.MyExclamationMsg("يرجي التأكد من نوع الاختبار ..!");
+                                    cmb_grade.Focus();
+                                    waiting.End_WAit();
+                                    return;
+                                case 3:
+                                case 4:
+                                case 5:
+                                case 6:
+                                    RPT.OpenFinal_Koshof(year, grade,1);
+                                    waiting.End_WAit();
+                                    return;
+                            }
+
+                            return;
+                    }
+                    
                 }
                 else
                 {

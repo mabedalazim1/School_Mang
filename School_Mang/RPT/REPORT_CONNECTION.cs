@@ -720,43 +720,81 @@ namespace School_Mang.RPT
         }
 
         public void OpenFinal_Koshof(int year_id,
-                                int grade_id)
+                                int grade_id, byte term =2)
         {
             int October_Sana = year_id + 20;
             try
             {
                 ReportDocument myReport = new ReportDocument();
-
-                switch (grade_id)
+                if(term == 1)
                 {
-                    case 10:
-                    case 11:
-                    case 1:
-                    case 2:
-                    case 3:
-                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Koshof_Natega_A.rpt");
+                    switch (grade_id)
+                    {
+                        case 10:
+                        case 11:
+                        case 1:
+                        case 2:
+                            msg.ErrorMesg("لم يتم إتاحة هذا الإجراء .. !");
+                            return;
+                        case 3:
+                            myReport.Load(Application.StartupPath + @"/MyReports/rpt_Koshof_Natega_Term_A_Grade_3_2025.rpt");
+                            break;
+                        case 4:
+                        case 5:
+                        case 6:
+                            myReport.Load(Application.StartupPath + @"/MyReports/rpt_Koshof_Natega_B_Term_A_2025.rpt");
+                            break;
 
-                        break;
-                    case 4:
-                    case 5:
-                    case 6:
-                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Koshof_Natega_B.rpt");
+                        case 7:
+                        case 8:
+                        case 9:
 
-                        break;
-
-                    case 7:
-                    case 8:
-                    case 9:
-                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Koshof_Natega_C.rpt");
-
-                        break;
+                            break;
+                    }
                 }
+                else
+                {
+                    switch (grade_id)
+                    {
+                        case 10:
+                        case 11:
+                        case 1:
+                        case 2:
+                        case 3:
+                            myReport.Load(Application.StartupPath + @"/MyReports/rpt_Koshof_Natega_A.rpt");
+
+                            break;
+                        case 4:
+                        case 5:
+                        case 6:
+                            myReport.Load(Application.StartupPath + @"/MyReports/rpt_Koshof_Natega_B.rpt");
+
+                            break;
+
+                        case 7:
+                        case 8:
+                        case 9:
+                            msg.ErrorMesg(" لم يتم إتاحة هذا الإجراء ..!");
+                            return;
+                            
+                    }
+                }
+               
 
                 myReport.SetParameterValue("@year_id", year_id);
                 myReport.SetParameterValue("@grade_id", grade_id);
                 myReport.SetParameterValue("@October_Sana", October_Sana);
 
-                OpenReport(myReport, "كشوف نتيجةأخرالعام", "كشوف نتيجةأخرالعام ");
+                switch (term)
+                {
+                    case 1:
+                        OpenReport(myReport, "كشوف نتيجةنصف العام", "كشوف نتيجةنصف العام ");
+                        break;
+                    case 2:
+                        OpenReport(myReport, "كشوف نتيجةأخرالعام", "كشوف نتيجةأخرالعام ");
+                        break;
+                }
+               
             }
             catch (Exception e)
             {

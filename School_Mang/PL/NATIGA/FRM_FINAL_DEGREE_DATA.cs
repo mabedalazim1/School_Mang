@@ -294,7 +294,7 @@ namespace School_Mang.PL.NATIGA
             byte test_kind = BL.Globals.Final_Test_Kind;
             double max_degree = 0;
 
-            byte  year = BL.Globals.My_Year;
+            byte  year = Convert.ToByte(Properties.Settings.Default.year_cod);
             byte grade = Convert.ToByte(BL.Globals.test_grade_id);
             try
             {
@@ -314,7 +314,7 @@ namespace School_Mang.PL.NATIGA
                             case 3:
                                 max_degree = 4;
                                 break;
-                            case var expression when year < 3:
+                            case var expression when year > 3:
                                 switch (test_kind)
                                 {
                                     case 1:
@@ -343,7 +343,7 @@ namespace School_Mang.PL.NATIGA
                                     case var expression when year < 4:
                                         max_degree = 70;
                                         break;
-                                    case var expression when year > 4:
+                                    case var expression when year > 3:
                                         max_degree = 40;
                                         break;
 
@@ -357,7 +357,7 @@ namespace School_Mang.PL.NATIGA
                                     case var expression when year < 4:
                                         max_degree = 30;
                                         break;
-                                    case var expression when year > 4:
+                                    case var expression when year > 3:
                                         max_degree = 60;
                                         break;
 
@@ -374,20 +374,48 @@ namespace School_Mang.PL.NATIGA
                         {
                             case 1:
                             case 3:
-                                max_degree = 20;
-                                if (textBox.Name == "txt_scince_practical" || textBox.Name == "txt_tocnolegy_practical")
+                                switch (year)
                                 {
-                                    max_degree = 16;
+                                    case var expression when year < 4:
+                                        max_degree = 20;
+                                        if (textBox.Name == "txt_scince_practical" || textBox.Name == "txt_tocnolegy_practical")
+                                        {
+                                            max_degree = 16;
+                                        }
+                                        break;
+                                    case var expression when year > 3:
+                                        max_degree = 70;
+                                        if (textBox.Name == "txt_scince_practical" || textBox.Name == "txt_tocnolegy_practical")
+                                        {
+                                            max_degree = 6;
+                                        }
+                                        break;
                                 }
+                                
 
                                 break;
                             case 2:
                             case 4:
-                                max_degree = 80;
-                                if (textBox.Name == "txt_scince" || textBox.Name == "txt_tocnolegy")
+
+                                switch (year)
                                 {
-                                    max_degree = 64;
+                                    case var expression when year < 4:
+                                        max_degree = 80;
+                                        if (textBox.Name == "txt_scince" || textBox.Name == "txt_tocnolegy")
+                                        {
+                                            max_degree = 64;
+                                        }
+                                        break;
+                                    case var expression when year > 3:
+                                        max_degree = 30;
+                                        if (textBox.Name == "txt_scince" || textBox.Name == "txt_tocnolegy")
+                                        {
+                                            max_degree = 24;
+                                        }
+                                        break;
                                 }
+
+                                
                                 break;
                         }
 
@@ -395,11 +423,11 @@ namespace School_Mang.PL.NATIGA
 
                 }
 
-                if (Convert.ToDouble(textBox.Text) > max_degree || (Convert.ToDouble(textBox.Text) < 0
-                       ))
-                {
+                if ( (Convert.ToDouble(textBox.Text) > max_degree )|| (Convert.ToDouble(textBox.Text) < 0))
+                       
+                { 
                     msg.ErrorMesg("تأكد من الدرجة ..!");
-                    textBox.Text = txt_old;
+                    textBox.Text = txt_old.ToString();
                     textBox.Focus();
                 }
             }
@@ -483,17 +511,6 @@ namespace School_Mang.PL.NATIGA
             txt_test_kind.TextAlign = HorizontalAlignment.Center;
             txt_grade.TextAlign = HorizontalAlignment.Center;
 
-            // Store Old Degrees
-            ar_old = txt_ar.Text;
-            din_old = txt_din.Text;
-            math_old = txt_math.Text;
-            sinces_old = txt_scince.Text;
-            sinces_practical_old = txt_scince_practical.Text;
-            social_old = txt_social.Text;
-            english_old = txt_english.Text;
-            maharat_old = txt_maharat.Text;
-            tocnolegy_old = txt_tocnolegy.Text;
-            tocnolegy_practical_old = txt_tocnolegy_practical.Text;
 
             try
             {
@@ -671,6 +688,21 @@ namespace School_Mang.PL.NATIGA
             {
                 Waiting.End_WAit();
             }
+        }
+
+        private void FRM_FINAL_DEGREE_DATA_Shown(object sender, EventArgs e)
+        {
+            // Store Old Degrees
+            ar_old = txt_ar.Text;
+            din_old = txt_din.Text;
+            math_old = txt_math.Text;
+            sinces_old = txt_scince.Text;
+            sinces_practical_old = txt_scince_practical.Text;
+            social_old = txt_social.Text;
+            english_old = txt_english.Text;
+            maharat_old = txt_maharat.Text;
+            tocnolegy_old = txt_tocnolegy.Text;
+            tocnolegy_practical_old = txt_tocnolegy_practical.Text;
         }
     }
 }

@@ -63,7 +63,6 @@ namespace School_Mang.HTTP
         {
             try
             {
-                msg.MyExclamationMsg(uri);
                 waiting.Wait();
 
                 if (BL.Globals.accessToken == null) await SignIn();
@@ -93,6 +92,7 @@ namespace School_Mang.HTTP
                 }
                 else
                 {
+                    msg.ErrorMesg(response.ToString());
                     msg.ErrorMesg("لم يتم رفع الملف .. يرجى مراجعة البيانات ... !");
                     msg.ErrorMesg("تم إلغاء العملية");
                 }

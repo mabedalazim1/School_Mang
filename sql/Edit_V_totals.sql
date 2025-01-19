@@ -1,12 +1,13 @@
 USE [KPS_DATA_2023]
 GO
 
-/****** Object:  View [dbo].[totals]    Script Date: 1/17/2025 2:54:40 AM ******/
+/****** Object:  View [dbo].[totals]    Script Date: 1/18/2025 9:49:34 PM ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
+
 
 
 
@@ -39,7 +40,7 @@ tocnolegy_A_Test as 'tocnolegy_test_A',
 maharat_A_2 as 'maharat_test_A',
 
 arabic_A_1 + arabic_A_2 + math_A_1 + math_A_2 + scince_A_1  + scince_A_Test +
-english_A_1 + english_A_2 + dain_A_1 + dain_A_2
+english_A_1 + english_A_2 
 as 'total_A_1_2_3',
 
 arabic_A_1 + arabic_A_2 + math_A_1 + math_A_2 +
@@ -51,7 +52,6 @@ math_A_1 + math_A_2 +
 scince_A_1 + scince_A_practical + scince_A_Test +
 social_A_1 + social_A_2 +
 english_A_1 + english_A_2 +
-dain_A_1 + dain_A_2 + 
 tocnolegy_A_1 + tocnolegy_A_practical + tocnolegy_A_Test +
 maharat_A_1 + maharat_A_2 as 'total_A_4_5_6',
 
@@ -77,18 +77,16 @@ social_B_1 + social_B_2 + english_B_1 + english_B_2 as 'total_B_7_8_9',
 arabic_A_1 + arabic_A_2 + math_A_1 + math_A_2 +
 scince_A_1 + scince_A_practical + scince_A_Test +
 social_A_1 + social_A_2 + english_A_1 + english_A_2 +
-dain_A_1 + dain_A_2 + 
 tocnolegy_A_1 + tocnolegy_A_practical + tocnolegy_A_Test +
 maharat_A_1 + maharat_A_2 +
 
 arabic_B_1 + arabic_B_2 + math_B_1 + math_B_2 +
 scince_B_1 + scince_B_practical + scince_B_Test +
 social_B_1 + social_B_2 + english_B_1 + english_B_2 +
-dain_B_1 + dain_B_2 + 
 tocnolegy_B_1 + tocnolegy_B_practical + tocnolegy_B_Test +
 maharat_B_1 + maharat_B_2 as 'total_B_4_5_6',
 
-arabic_B_1 + dain_B_1 + math_B_1 + 
+arabic_B_1  + math_B_1 + 
 scince_B_1 + english_B_1 + maharat_B_1
 as 'total_B_1_2_3',
 

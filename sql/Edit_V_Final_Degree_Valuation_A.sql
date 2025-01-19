@@ -1,12 +1,13 @@
 USE [KPS_DATA_2023]
 GO
 
-/****** Object:  View [dbo].[V_Final_Degree_Valuation_A]    Script Date: 1/17/2025 3:19:14 PM ******/
+/****** Object:  View [dbo].[V_Final_Degree_Valuation_A]    Script Date: 1/18/2025 9:47:52 PM ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
+
 
 
 
@@ -39,14 +40,14 @@ dbo.get_Prim_Valuation(tocnolegy_A, absent_tocnolegy_A) as 'tocnolegy_A_Val',
 
 
 
-dbo.get_Prim_Term_A_Evaluation(ROUND(total_A_1_2_3/5,0)
+dbo.get_Prim_Term_A_Evaluation(ROUND(total_A_1_2_3/4,0)
 ,absent_term_A) as 'term_A_1_2_3_Eval',
-dbo.get_Prim_Term_A_Evaluation(ROUND(total_A_4_5_6/8,0)
+dbo.get_Prim_Term_A_Evaluation(ROUND(total_A_4_5_6/7,0)
 ,absent_term_A) as 'term_A_4_5_6_Eval',
 
-dbo.get_Prim_Valuation(ROUND(total_A_4_5_6/8,0)
+dbo.get_Prim_Valuation(ROUND(total_A_4_5_6/7,0)
 ,absent_term_A) as 'term_A_4_5_6_Val',
-dbo.get_Prim_Valuation(ROUND(total_A_1_2_3/5,0)
+dbo.get_Prim_Valuation(ROUND(total_A_1_2_3/4,0)
 ,absent_term_A) as 'term_A_1_2_3_Val',
 
 dbo.get_Prim_1_2_3_Evaluation(ar_B, absent_ar_B) as 'arabic_B_Eval',

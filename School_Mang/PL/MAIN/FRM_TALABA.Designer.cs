@@ -46,6 +46,9 @@ namespace School_Mang.PL.MAIN
             this.bunifuCards2 = new Bunifu.Framework.UI.BunifuCards();
             this.lbl_eltehak_old = new System.Windows.Forms.Label();
             this.pic_eltehak_old = new System.Windows.Forms.PictureBox();
+            this.bunifuCards1 = new Bunifu.Framework.UI.BunifuCards();
+            this.lbl_elthak_next_year = new System.Windows.Forms.Label();
+            this.pic_elthak_next_year = new System.Windows.Forms.PictureBox();
             this.bunifuCards4 = new Bunifu.Framework.UI.BunifuCards();
             this.lbl_tahwelat = new System.Windows.Forms.Label();
             this.pic_tahwelat = new System.Windows.Forms.PictureBox();
@@ -67,6 +70,8 @@ namespace School_Mang.PL.MAIN
             ((System.ComponentModel.ISupportInitialize)(this.pic_elthak)).BeginInit();
             this.bunifuCards2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_eltehak_old)).BeginInit();
+            this.bunifuCards1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_elthak_next_year)).BeginInit();
             this.bunifuCards4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_tahwelat)).BeginInit();
             this.bunifuCards6.SuspendLayout();
@@ -77,6 +82,7 @@ namespace School_Mang.PL.MAIN
             // 
             // pn_home
             // 
+            this.pn_home.AutoScroll = true;
             this.pn_home.Controls.Add(this.flowLayoutPanel1);
             this.pn_home.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pn_home.Location = new System.Drawing.Point(0, 0);
@@ -92,6 +98,7 @@ namespace School_Mang.PL.MAIN
             this.flowLayoutPanel1.Controls.Add(this.card_new);
             this.flowLayoutPanel1.Controls.Add(this.bunifuCards3);
             this.flowLayoutPanel1.Controls.Add(this.bunifuCards2);
+            this.flowLayoutPanel1.Controls.Add(this.bunifuCards1);
             this.flowLayoutPanel1.Controls.Add(this.bunifuCards4);
             this.flowLayoutPanel1.Controls.Add(this.bunifuCards6);
             this.flowLayoutPanel1.Controls.Add(this.bunifuCards8);
@@ -100,7 +107,7 @@ namespace School_Mang.PL.MAIN
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(20);
             this.flowLayoutPanel1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1370, 785);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1353, 785);
             this.flowLayoutPanel1.TabIndex = 12;
             // 
             // bunifuCards5
@@ -113,7 +120,7 @@ namespace School_Mang.PL.MAIN
             this.bunifuCards5.Controls.Add(this.lbl_age);
             this.bunifuCards5.Controls.Add(this.pic_age);
             this.bunifuCards5.LeftSahddow = false;
-            this.bunifuCards5.Location = new System.Drawing.Point(1057, 23);
+            this.bunifuCards5.Location = new System.Drawing.Point(1040, 23);
             this.bunifuCards5.Name = "bunifuCards5";
             this.bunifuCards5.Padding = new System.Windows.Forms.Padding(20);
             this.bunifuCards5.RightSahddow = true;
@@ -156,7 +163,7 @@ namespace School_Mang.PL.MAIN
             this.bunifuCards12.Controls.Add(this.lbl_current_stds);
             this.bunifuCards12.Controls.Add(this.pic_current_stds);
             this.bunifuCards12.LeftSahddow = false;
-            this.bunifuCards12.Location = new System.Drawing.Point(781, 23);
+            this.bunifuCards12.Location = new System.Drawing.Point(764, 23);
             this.bunifuCards12.Name = "bunifuCards12";
             this.bunifuCards12.Padding = new System.Windows.Forms.Padding(20);
             this.bunifuCards12.RightSahddow = true;
@@ -199,7 +206,7 @@ namespace School_Mang.PL.MAIN
             this.card_new.Controls.Add(this.lbl_add_std);
             this.card_new.Controls.Add(this.pic_add_std);
             this.card_new.LeftSahddow = false;
-            this.card_new.Location = new System.Drawing.Point(505, 23);
+            this.card_new.Location = new System.Drawing.Point(488, 23);
             this.card_new.Name = "card_new";
             this.card_new.Padding = new System.Windows.Forms.Padding(20);
             this.card_new.RightSahddow = true;
@@ -242,7 +249,7 @@ namespace School_Mang.PL.MAIN
             this.bunifuCards3.Controls.Add(this.lbl_elthak);
             this.bunifuCards3.Controls.Add(this.pic_elthak);
             this.bunifuCards3.LeftSahddow = false;
-            this.bunifuCards3.Location = new System.Drawing.Point(229, 23);
+            this.bunifuCards3.Location = new System.Drawing.Point(212, 23);
             this.bunifuCards3.Name = "bunifuCards3";
             this.bunifuCards3.Padding = new System.Windows.Forms.Padding(20);
             this.bunifuCards3.RightSahddow = true;
@@ -285,7 +292,7 @@ namespace School_Mang.PL.MAIN
             this.bunifuCards2.Controls.Add(this.lbl_eltehak_old);
             this.bunifuCards2.Controls.Add(this.pic_eltehak_old);
             this.bunifuCards2.LeftSahddow = false;
-            this.bunifuCards2.Location = new System.Drawing.Point(1057, 215);
+            this.bunifuCards2.Location = new System.Drawing.Point(1040, 215);
             this.bunifuCards2.Name = "bunifuCards2";
             this.bunifuCards2.Padding = new System.Windows.Forms.Padding(20);
             this.bunifuCards2.RightSahddow = true;
@@ -318,6 +325,49 @@ namespace School_Mang.PL.MAIN
             this.pic_eltehak_old.TabStop = false;
             this.pic_eltehak_old.Click += new System.EventHandler(this.pic_eltehak_old_Click);
             // 
+            // bunifuCards1
+            // 
+            this.bunifuCards1.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.bunifuCards1.BackColor = System.Drawing.Color.White;
+            this.bunifuCards1.BorderRadius = 5;
+            this.bunifuCards1.BottomSahddow = true;
+            this.bunifuCards1.color = System.Drawing.Color.Tomato;
+            this.bunifuCards1.Controls.Add(this.lbl_elthak_next_year);
+            this.bunifuCards1.Controls.Add(this.pic_elthak_next_year);
+            this.bunifuCards1.LeftSahddow = false;
+            this.bunifuCards1.Location = new System.Drawing.Point(764, 215);
+            this.bunifuCards1.Name = "bunifuCards1";
+            this.bunifuCards1.Padding = new System.Windows.Forms.Padding(20);
+            this.bunifuCards1.RightSahddow = true;
+            this.bunifuCards1.ShadowDepth = 20;
+            this.bunifuCards1.Size = new System.Drawing.Size(270, 186);
+            this.bunifuCards1.TabIndex = 16;
+            // 
+            // lbl_elthak_next_year
+            // 
+            this.lbl_elthak_next_year.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lbl_elthak_next_year.AutoSize = true;
+            this.lbl_elthak_next_year.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lbl_elthak_next_year.Font = new System.Drawing.Font("LBC", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_elthak_next_year.Location = new System.Drawing.Point(23, 117);
+            this.lbl_elthak_next_year.Name = "lbl_elthak_next_year";
+            this.lbl_elthak_next_year.Size = new System.Drawing.Size(233, 37);
+            this.lbl_elthak_next_year.TabIndex = 7;
+            this.lbl_elthak_next_year.Text = " التحاق للعام القادم";
+            this.lbl_elthak_next_year.Click += new System.EventHandler(this.lbl_elthak_next_year_Click);
+            // 
+            // pic_elthak_next_year
+            // 
+            this.pic_elthak_next_year.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pic_elthak_next_year.Image = global::School_Mang.Properties.Resources.icons8_sheet_100;
+            this.pic_elthak_next_year.Location = new System.Drawing.Point(74, 23);
+            this.pic_elthak_next_year.Name = "pic_elthak_next_year";
+            this.pic_elthak_next_year.Size = new System.Drawing.Size(118, 97);
+            this.pic_elthak_next_year.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pic_elthak_next_year.TabIndex = 1;
+            this.pic_elthak_next_year.TabStop = false;
+            this.pic_elthak_next_year.Click += new System.EventHandler(this.pic_elthak_next_year_Click);
+            // 
             // bunifuCards4
             // 
             this.bunifuCards4.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -328,7 +378,7 @@ namespace School_Mang.PL.MAIN
             this.bunifuCards4.Controls.Add(this.lbl_tahwelat);
             this.bunifuCards4.Controls.Add(this.pic_tahwelat);
             this.bunifuCards4.LeftSahddow = false;
-            this.bunifuCards4.Location = new System.Drawing.Point(781, 215);
+            this.bunifuCards4.Location = new System.Drawing.Point(488, 215);
             this.bunifuCards4.Name = "bunifuCards4";
             this.bunifuCards4.Padding = new System.Windows.Forms.Padding(20);
             this.bunifuCards4.RightSahddow = true;
@@ -371,7 +421,7 @@ namespace School_Mang.PL.MAIN
             this.bunifuCards6.Controls.Add(this.lbl_bian_dragat);
             this.bunifuCards6.Controls.Add(this.pic_bian_dragat);
             this.bunifuCards6.LeftSahddow = false;
-            this.bunifuCards6.Location = new System.Drawing.Point(505, 215);
+            this.bunifuCards6.Location = new System.Drawing.Point(212, 215);
             this.bunifuCards6.Name = "bunifuCards6";
             this.bunifuCards6.Padding = new System.Windows.Forms.Padding(20);
             this.bunifuCards6.RightSahddow = true;
@@ -414,7 +464,7 @@ namespace School_Mang.PL.MAIN
             this.bunifuCards8.Controls.Add(this.lbl_ehsaa);
             this.bunifuCards8.Controls.Add(this.pic_ehsaa);
             this.bunifuCards8.LeftSahddow = false;
-            this.bunifuCards8.Location = new System.Drawing.Point(229, 215);
+            this.bunifuCards8.Location = new System.Drawing.Point(1040, 407);
             this.bunifuCards8.Name = "bunifuCards8";
             this.bunifuCards8.Padding = new System.Windows.Forms.Padding(20);
             this.bunifuCards8.RightSahddow = true;
@@ -463,6 +513,7 @@ namespace School_Mang.PL.MAIN
             this.Margin = new System.Windows.Forms.Padding(18, 19, 18, 19);
             this.Name = "FRM_TALABA";
             this.Text = "FRM_TALABA";
+            this.Load += new System.EventHandler(this.FRM_TALABA_Load);
             this.pn_home.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.bunifuCards5.ResumeLayout(false);
@@ -480,6 +531,9 @@ namespace School_Mang.PL.MAIN
             this.bunifuCards2.ResumeLayout(false);
             this.bunifuCards2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_eltehak_old)).EndInit();
+            this.bunifuCards1.ResumeLayout(false);
+            this.bunifuCards1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_elthak_next_year)).EndInit();
             this.bunifuCards4.ResumeLayout(false);
             this.bunifuCards4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_tahwelat)).EndInit();
@@ -520,5 +574,8 @@ namespace School_Mang.PL.MAIN
         private Bunifu.Framework.UI.BunifuCards bunifuCards2;
         private System.Windows.Forms.Label lbl_eltehak_old;
         private System.Windows.Forms.PictureBox pic_eltehak_old;
+        private Bunifu.Framework.UI.BunifuCards bunifuCards1;
+        private System.Windows.Forms.Label lbl_elthak_next_year;
+        private System.Windows.Forms.PictureBox pic_elthak_next_year;
     }
 }

@@ -310,7 +310,7 @@ namespace School_Mang.PL.STD
                 grade =Convert.ToInt16(dt_std_data.CurrentRow.Cells[6].Value);
                 
             }
-           
+            
             FRM_CURRENT_STD.Get_Current_Std.grade = grade;
             FRM_CURRENT_STD.Get_Current_Std.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
             this.Hide();

@@ -68,8 +68,7 @@ namespace School_Mang.PL.STD
             // Get School Year Data
             Get_School_Year_Data();
 
-
-            if (BL.Globals.Elthak_Std)
+            if (BL.Globals.Elthak_Std || BL.Globals.Elthak_Std_Next_Year)
             {
                 btn_talab_elthak.Location = new Point(409, 15);
                 btn_del_std.Visible = false;
@@ -85,7 +84,7 @@ namespace School_Mang.PL.STD
             {
                 btn_tahwel.Visible = true;
                 btn_del_std.Location = new Point(208, 15);
-                if (!BL.Globals.Elthak_Std)
+                if (!BL.Globals.Elthak_Std || !BL.Globals.Elthak_Std_Next_Year)
                 {
                     btn_talab_elthak.Location = new Point(610, 15);
                 }
@@ -95,9 +94,9 @@ namespace School_Mang.PL.STD
             {
                 btn_tahwel.Visible = false;
                 btn_del_std.Location = new Point(278, 15);
-                if (!BL.Globals.Elthak_Std)
+                if (!BL.Globals.Elthak_Std || BL.Globals.Elthak_Std_Next_Year)
                 {
-                    btn_talab_elthak.Location = new Point(540, 15);
+                    btn_talab_elthak.Location = new Point(409, 15);
                 }
             }
 
@@ -133,7 +132,9 @@ namespace School_Mang.PL.STD
         private int Current_Year()
         {
             int year;
-            if (BL.Globals.Current_Year_Data)
+            if (BL.Globals.Current_Year_Data ||
+                BL.Globals.Details_Std ||
+                BL.Globals.Elthak_Std_Next_Year)
             {
                 year = year_cod;
             }
@@ -141,10 +142,7 @@ namespace School_Mang.PL.STD
             {
                 year = year_cod + 1;
             }
-            if (BL.Globals.Details_Std)
-            {
-                year = year_cod;
-            }
+           
             return year;
         }
 
@@ -152,8 +150,9 @@ namespace School_Mang.PL.STD
         // Get School Year Data
         public void Get_School_Year_Data()
         {
+             int my_grade =Convert.ToInt32(cmb_grade.SelectedValue);
             Waiting.Wait();
-            DataTable dt = std.Get_School_year_Data(Current_Year(), Convert.ToInt32(grade), 0);
+            DataTable dt = std.Get_School_year_Data(Current_Year(), my_grade, 0);
 
             dt_std_data.DataSource = dt;
             dt_std_data.Columns["std_code"].Visible = false;
@@ -356,6 +355,7 @@ namespace School_Mang.PL.STD
             BL.Globals.Degree_Statement = false;
             BL.Globals.Details_Std = false;
             BL.Globals.Elthak_Std = false;
+            BL.Globals.Elthak_Std_Next_Year = false;
             this.Dispose();
         }
 
@@ -397,9 +397,18 @@ namespace School_Mang.PL.STD
             else
             {
                 btn_talab_elthak.Visible = true;
-                btn_del_std.Visible = true;
+                if (BL.Globals.Elthak_Std || BL.Globals.Elthak_Std_Next_Year)
+                {
+                    btn_del_std.Visible = false;
+                }
+                else
+                {
+                    btn_del_std.Visible = true;
+                }
+                
                 btn_new_std.ButtonText = "تعديل البيانات";
             }
+           
             try
             {
                 dt_std_data.Columns["اسم الطالب"].Width = 200;
@@ -516,7 +525,7 @@ namespace School_Mang.PL.STD
 
         private void dt_std_data_DoubleClick(object sender, EventArgs e)
         {
-            if (BL.Globals.Elthak_Std)
+            if (BL.Globals.Elthak_Std || BL.Globals.Elthak_Std_Next_Year)
             {
                 btn_talab_elthak_Click(sender, e);
             }
@@ -632,6 +641,25 @@ namespace School_Mang.PL.STD
                     string new_grade_desc = "";
                     string year_desc = "";
 
+                    // Get New Std (KG2 And Prim Six) Data For New Year
+                    if (BL.Globals.Elthak_Std_Next_Year)
+                    {
+                        switch (grade)
+                        {
+                            case 11:
+                                sana = (Convert.ToInt32(dt_std_data.CurrentRow.Cells["Year_Id"].Value) + 1) + 2020;
+                                new_grade_desc = "الصف الأول الإبتدائي";
+                                year_desc = std.Get_Year_Desc(sana + 1).Rows[0]["YearDesc"].ToString();
+                                break;
+
+                            case 6:
+                                sana = (Convert.ToInt32(dt_std_data.CurrentRow.Cells["Year_Id"].Value)+1) + 2020;
+                                new_grade_desc = "الصف الأول الإعدادي";
+                                year_desc = std.Get_Year_Desc(sana + 1).Rows[0]["YearDesc"].ToString();
+
+                                break;
+                        }
+                    }
                     // Get Old Std Data
                     switch (grade)
                     {

@@ -44,7 +44,9 @@ namespace School_Mang.PL.MAIN
         public string Year_Desc()
         {
             string desc = " العام الدراسى ";
-            if (BL.Globals.Current_Year_Data || BL.Globals.Details_Std)
+            if (BL.Globals.Current_Year_Data ||
+                BL.Globals.Details_Std ||
+                BL.Globals.Elthak_Std_Next_Year)
             {
                 desc += ToArabic(
                     Properties.Settings.Default.MyYear - 1) + " - " +

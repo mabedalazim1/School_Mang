@@ -120,6 +120,7 @@ namespace School_Mang.PL.MAIN
         private void pic_elthak_Click(object sender, EventArgs e)
         {
             BL.Globals.Elthak_Std = true;
+            BL.Globals.Elthak_Std_Next_Year = false;
 
             STD.FRM_GET_STD.Get_Student.ShowDialog();
         }
@@ -216,6 +217,26 @@ namespace School_Mang.PL.MAIN
         private void pic_bian_dragat_Click(object sender, EventArgs e)
         {
             lbl_bian_dragat_Click(sender, e);
+        }
+
+        private void pic_elthak_next_year_Click(object sender, EventArgs e)
+        {
+            BL.Globals.Elthak_Std_Next_Year = true;
+            BL.Globals.Elthak_Std = false;
+
+            STD.FRM_CURRENT_STD.Get_Current_Std.grade = 11;
+            STD.FRM_CURRENT_STD.Get_Current_Std.ShowDialog();
+        }
+
+        private void lbl_elthak_next_year_Click(object sender, EventArgs e)
+        {
+            pic_elthak_next_year_Click(sender, e);
+        }
+
+        private void FRM_TALABA_Load(object sender, EventArgs e)
+        {
+            BL.Globals.Elthak_Std = false;
+            BL.Globals.Elthak_Std_Next_Year = false;
         }
     }
 }

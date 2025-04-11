@@ -103,6 +103,20 @@ namespace School_Mang.BL
             }
         }
 
+        private static bool _Elthak_Std_Next_Year;
+        public static bool Elthak_Std_Next_Year
+        {
+            get
+            {
+                return _Elthak_Std_Next_Year;
+            }
+            set
+            {
+                _Elthak_Std_Next_Year = value;
+            }
+        }
+
+
         private static bool _EditUser;
         public static bool EditUser
         {

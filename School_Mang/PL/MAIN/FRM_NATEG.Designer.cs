@@ -73,6 +73,7 @@ namespace School_Mang.PL.MAIN
             // 
             // pn_home
             // 
+            this.pn_home.AutoScroll = true;
             this.pn_home.Controls.Add(this.flowLayoutPanel1);
             this.pn_home.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pn_home.ForeColor = System.Drawing.Color.Black;

@@ -35,12 +35,11 @@ namespace School_Mang.PL.STD
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pn_top = new System.Windows.Forms.Panel();
-            this.lbl_current_year = new System.Windows.Forms.Label();
             this.btn_close = new DevExpress.XtraEditors.SimpleButton();
+            this.lbl_current_year = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btn_talab_elthak = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btn_tahwel = new Bunifu.Framework.UI.BunifuThinButton2();
-            this.btn_del_std = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btn_new_std = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btn_close_b = new Bunifu.Framework.UI.BunifuThinButton2();
             this.panel4 = new System.Windows.Forms.Panel();
@@ -55,6 +54,7 @@ namespace School_Mang.PL.STD
             this.cmb_class = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.pic_help = new System.Windows.Forms.PictureBox();
+            this.btn_del_std = new Bunifu.Framework.UI.BunifuThinButton2();
             this.pn_top.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dt_std_data)).BeginInit();
@@ -75,18 +75,6 @@ namespace School_Mang.PL.STD
             this.pn_top.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pn_top_MouseMove);
             this.pn_top.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pn_top_MouseUp);
             // 
-            // lbl_current_year
-            // 
-            this.lbl_current_year.AutoSize = true;
-            this.lbl_current_year.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_current_year.ForeColor = System.Drawing.Color.White;
-            this.lbl_current_year.Location = new System.Drawing.Point(384, 13);
-            this.lbl_current_year.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
-            this.lbl_current_year.Name = "lbl_current_year";
-            this.lbl_current_year.Size = new System.Drawing.Size(259, 25);
-            this.lbl_current_year.TabIndex = 46;
-            this.lbl_current_year.Text = "بيانات العام الدراسى 2021-2022";
-            // 
             // btn_close
             // 
             this.btn_close.DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -99,6 +87,18 @@ namespace School_Mang.PL.STD
             this.btn_close.TabIndex = 11;
             this.btn_close.TabStop = false;
             this.btn_close.Click += new System.EventHandler(this.btn_close_Click);
+            // 
+            // lbl_current_year
+            // 
+            this.lbl_current_year.AutoSize = true;
+            this.lbl_current_year.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_current_year.ForeColor = System.Drawing.Color.White;
+            this.lbl_current_year.Location = new System.Drawing.Point(384, 13);
+            this.lbl_current_year.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
+            this.lbl_current_year.Name = "lbl_current_year";
+            this.lbl_current_year.Size = new System.Drawing.Size(259, 25);
+            this.lbl_current_year.TabIndex = 46;
+            this.lbl_current_year.Text = "بيانات العام الدراسى 2021-2022";
             // 
             // groupBox3
             // 
@@ -165,32 +165,6 @@ namespace School_Mang.PL.STD
             this.btn_tahwel.TabIndex = 74;
             this.btn_tahwel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.btn_tahwel.Click += new System.EventHandler(this.btn_tahwel_Click);
-            // 
-            // btn_del_std
-            // 
-            this.btn_del_std.ActiveBorderThickness = 1;
-            this.btn_del_std.ActiveCornerRadius = 20;
-            this.btn_del_std.ActiveFillColor = System.Drawing.Color.Crimson;
-            this.btn_del_std.ActiveForecolor = System.Drawing.Color.White;
-            this.btn_del_std.ActiveLineColor = System.Drawing.Color.Crimson;
-            this.btn_del_std.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.btn_del_std.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_del_std.BackgroundImage")));
-            this.btn_del_std.ButtonText = "حذف الطالب";
-            this.btn_del_std.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_del_std.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_del_std.ForeColor = System.Drawing.Color.Crimson;
-            this.btn_del_std.IdleBorderThickness = 1;
-            this.btn_del_std.IdleCornerRadius = 20;
-            this.btn_del_std.IdleFillColor = System.Drawing.Color.WhiteSmoke;
-            this.btn_del_std.IdleForecolor = System.Drawing.Color.Crimson;
-            this.btn_del_std.IdleLineColor = System.Drawing.Color.PaleVioletRed;
-            this.btn_del_std.Location = new System.Drawing.Point(208, 15);
-            this.btn_del_std.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btn_del_std.Name = "btn_del_std";
-            this.btn_del_std.Size = new System.Drawing.Size(169, 50);
-            this.btn_del_std.TabIndex = 18;
-            this.btn_del_std.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btn_del_std.Click += new System.EventHandler(this.btn_del_std_Click);
             // 
             // btn_new_std
             // 
@@ -344,7 +318,10 @@ namespace School_Mang.PL.STD
             // 
             // txt_std_data
             // 
+            this.txt_std_data.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.txt_std_data.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
             this.txt_std_data.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txt_std_data.characterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.txt_std_data.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txt_std_data.Font = new System.Drawing.Font("Noto Naskh Arabic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txt_std_data.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -357,6 +334,7 @@ namespace School_Mang.PL.STD
             this.txt_std_data.LineThickness = 5;
             this.txt_std_data.Location = new System.Drawing.Point(396, 65);
             this.txt_std_data.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_std_data.MaxLength = 32767;
             this.txt_std_data.Name = "txt_std_data";
             this.txt_std_data.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.txt_std_data.Size = new System.Drawing.Size(400, 44);
@@ -445,6 +423,32 @@ namespace School_Mang.PL.STD
             this.pic_help.MouseLeave += new System.EventHandler(this.pic_help_MouseLeave);
             this.pic_help.MouseHover += new System.EventHandler(this.pic_help_MouseHover);
             // 
+            // btn_del_std
+            // 
+            this.btn_del_std.ActiveBorderThickness = 1;
+            this.btn_del_std.ActiveCornerRadius = 20;
+            this.btn_del_std.ActiveFillColor = System.Drawing.Color.Crimson;
+            this.btn_del_std.ActiveForecolor = System.Drawing.Color.White;
+            this.btn_del_std.ActiveLineColor = System.Drawing.Color.Crimson;
+            this.btn_del_std.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btn_del_std.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_del_std.BackgroundImage")));
+            this.btn_del_std.ButtonText = "حذف الطالب";
+            this.btn_del_std.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_del_std.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_del_std.ForeColor = System.Drawing.Color.Crimson;
+            this.btn_del_std.IdleBorderThickness = 1;
+            this.btn_del_std.IdleCornerRadius = 20;
+            this.btn_del_std.IdleFillColor = System.Drawing.Color.WhiteSmoke;
+            this.btn_del_std.IdleForecolor = System.Drawing.Color.Crimson;
+            this.btn_del_std.IdleLineColor = System.Drawing.Color.PaleVioletRed;
+            this.btn_del_std.Location = new System.Drawing.Point(208, 15);
+            this.btn_del_std.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_del_std.Name = "btn_del_std";
+            this.btn_del_std.Size = new System.Drawing.Size(169, 50);
+            this.btn_del_std.TabIndex = 18;
+            this.btn_del_std.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btn_del_std.Click += new System.EventHandler(this.btn_del_std_Click);
+            // 
             // FRM_CURRENT_STD
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -499,9 +503,9 @@ namespace School_Mang.PL.STD
         public System.Windows.Forms.ComboBox cmb_grade;
         public System.Windows.Forms.DataGridView dt_std_data;
         public Bunifu.Framework.UI.BunifuThinButton2 btn_tahwel;
-        public Bunifu.Framework.UI.BunifuThinButton2 btn_del_std;
         public Bunifu.Framework.UI.BunifuThinButton2 btn_new_std;
         private Bunifu.Framework.UI.BunifuThinButton2 btn_talab_elthak;
         public Bunifu.Framework.UI.BunifuMaterialTextbox txt_std_data;
+        public Bunifu.Framework.UI.BunifuThinButton2 btn_del_std;
     }
 }

@@ -522,7 +522,9 @@ namespace School_Mang.RPT
 
         public void OpenResdTest_B(int year_id,
                                  int grade_id = 0)
+
         {
+
             try
             {
                 ReportDocument myReport = new ReportDocument();
@@ -531,12 +533,49 @@ namespace School_Mang.RPT
                 {
                     case 10:
                     case 11:
-                    case 1:
-                    case 2:
-                    case 3:
                         msg.ErrorMesg("لا توجد كشوف للصف المحدد");
                         Waiting.End_WAit();
                         return;
+
+                    case 1:
+                    case 2:
+                    case 3:
+                        switch (year_id)
+                        {
+                            case 1:
+                            case 2:
+                            case 3:
+
+                                msg.ErrorMesg("لا توجد كشوف للصف المحدد");
+                                Waiting.End_WAit();
+                                return;
+                            case var exptration when year_id > 3:
+
+                                switch (grade_id)
+                                {
+                                    case 1:
+                                    case 2:
+                                        msg.ErrorMesg("لا توجد كشوف للصف المحدد");
+                                        msg.MyExclamationMsg("الصفين الأول والثاني ليس لهم درجات اختبار ..!");
+                                        Waiting.End_WAit();
+                                        return;
+                                    case 3:
+                                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Rasd_Test_A_Term_2.rpt");
+
+                                        myReport.SetParameterValue("@Year_Id", 0);
+                                        myReport.SetParameterValue("@Grade_Id", 0);
+                                        myReport.SetParameterValue("@Year_Id", year_id, "rpt_Rasd_Test_A_Term_2_Part_1.rpt");
+                                        myReport.SetParameterValue("@Grade_Id", grade_id, "rpt_Rasd_Test_A_Term_2_Part_1.rpt");
+
+                                        myReport.SetParameterValue("@Year_Id", year_id, "rpt_Rasd_Test_A_Term_2_Part_2.rpt");
+                                        myReport.SetParameterValue("@Grade_Id", grade_id, "rpt_Rasd_Test_A_Term_2_Part_2.rpt");
+                                        break;
+                                }
+                                break;
+                        }
+                        break;
+
+                       
                     case 4:
                     case 5:
                     case 6:

@@ -98,6 +98,7 @@ namespace School_Mang.PL.NATIGA
                 }
                 else
                 {
+
                     label11.Text = "درجات الاختبارات النهائية";
                     btn_amal_nesf.ButtonText = "أعمال نصف العام";
                     btn_amal_akher.Visible = true;
@@ -110,7 +111,7 @@ namespace School_Mang.PL.NATIGA
 
                     int grade_id = BL.Globals.test_grade_id;
                     DataTable Dt;
-
+                   
                     Dt = NATEG.Get_Final_Total_Degree(grade_id);
                     dt_std_data.DataSource = null;
                     Waiting.Wait();
@@ -120,7 +121,7 @@ namespace School_Mang.PL.NATIGA
                     lbl_count.Text = Dt.Rows.Count.ToString();
 
                     ChangLayOut();
-                    
+                    DisableBtn();
                 }
 
 
@@ -162,6 +163,26 @@ namespace School_Mang.PL.NATIGA
                 btn_absent_std.Visible = true;
                 btn_test_nesf.Visible = true;
                 btn_test_akher.ButtonText = "اختبار أخر العام";
+
+            }
+
+
+        }
+        private void DisableBtn()
+        {
+            int grade_id = BL.Globals.test_grade_id;
+            switch (grade_id)
+            {
+                case 1:
+                case 2:
+                    btn_test_akher.Enabled = false;
+                    btn_test_nesf.Enabled = false;
+                    break;
+
+                default:
+                    btn_test_akher.Enabled = true;
+                    btn_test_nesf.Enabled = true;
+                    break;
             }
         }
         private void Check_Absent()
@@ -380,6 +401,7 @@ namespace School_Mang.PL.NATIGA
                     lbl_count.Text = Dt.Rows.Count.ToString();
                 }
                 ChangLayOut();
+                DisableBtn();
                 Waiting.End_WAit();
             }
             catch (Exception ex)

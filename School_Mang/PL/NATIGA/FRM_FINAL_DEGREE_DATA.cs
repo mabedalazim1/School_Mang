@@ -79,16 +79,43 @@ namespace School_Mang.PL.NATIGA
 
             // Change Lables For Grades
             byte test_grade_id = Convert.ToByte(BL.Globals.test_grade_id);
+            byte year_id = Convert.ToByte(Properties.Settings.Default.year_cod);
+
             switch (test_grade_id)
             {
                 case 10:
                 case 11:
-                case 1:
-                case 2:
-                case 3:
                     lbl_mahrat.Location = new Point(189, 31);
                     lbl_mahrat.Text = "بدنية";
                     txt_test_kind.Text = "تقييم أخر العام";
+                    break;
+
+                case 1:
+                case 2:
+                    switch (year_id)
+                    {
+                        case 1:
+                        case 2:
+                        case 3:
+                            lbl_mahrat.Location = new Point(189, 31);
+                            lbl_mahrat.Text = "بدنية";
+                            txt_test_kind.Text = "تقييم أخر العام";
+                            break;
+
+                        case var expration when year_id > 3:
+                            lbl_mahrat.Location = new Point(189, 31);
+                            lbl_mahrat.Text = "بدنية";
+                            txt_social.Enabled = true;
+                            txt_tocnolegy.Enabled = true;
+                            lbl_tocnolegy.Text = "نهائي";
+                            lbl_social.Text = "مبدئي";
+                            break;
+                    }
+                    break;
+                case 3:
+                    lbl_mahrat.Location = new Point(189, 31);
+                    lbl_mahrat.Text = "بدنية";
+                    txt_test_kind.Text = BL.Globals.Final_Test_Name;
                     break;
 
                 case 4:
@@ -225,18 +252,34 @@ namespace School_Mang.PL.NATIGA
 
                         if (BL.Globals.test_grade_id < 4 || BL.Globals.test_grade_id > 9)
                         {
-                            
                             txt_social.Text = "0";
                             txt_scince_practical.Text = "0";
                             txt_tocnolegy.Text = "0";
                             txt_tocnolegy_practical.Text = "0";
-                            txt_ar.Text = Dt.Rows[0]["arabic_B_1"].ToString();
-                            txt_din.Text = Dt.Rows[0]["dain_B_1"].ToString();
-                            txt_math.Text = Dt.Rows[0]["math_B_1"].ToString();
-                            txt_scince.Text = Dt.Rows[0]["scince_B_1"].ToString();
                             lbl_sinces.Text = "متعدد";
-                            txt_english.Text = Dt.Rows[0]["english_B_1"].ToString();
-                            txt_maharat.Text = Dt.Rows[0]["maharat_B_1"].ToString();
+                            switch (year_id)
+                            {
+                                case 1:
+                                case 2:
+                                case 3:
+                                    txt_ar.Text = Dt.Rows[0]["arabic_B_1"].ToString();
+                                    txt_din.Text = Dt.Rows[0]["dain_B_1"].ToString();
+                                    txt_math.Text = Dt.Rows[0]["math_B_1"].ToString();
+                                    txt_scince.Text = Dt.Rows[0]["scince_B_1"].ToString();
+                                    txt_english.Text = Dt.Rows[0]["english_B_1"].ToString();
+                                    txt_maharat.Text = Dt.Rows[0]["maharat_B_1"].ToString();
+                                    break;
+                                case var expration when year_id > 3:
+                                    txt_ar.Text = Dt.Rows[0]["arabic_B_2"].ToString();
+                                    txt_din.Text = Dt.Rows[0]["dain_B_2"].ToString();
+                                    txt_math.Text = Dt.Rows[0]["math_B_2"].ToString();
+                                    txt_scince.Text = Dt.Rows[0]["scince_B_Test"].ToString();
+                                    txt_english.Text = Dt.Rows[0]["english_B_2"].ToString();
+                                    txt_maharat.Text = Dt.Rows[0]["maharat_B_2"].ToString();
+                                    break;
+                            }
+                           
+                           
                         }
                         else
                         {
@@ -268,8 +311,29 @@ namespace School_Mang.PL.NATIGA
                 }
                 if (BL.Globals.test_grade_id < 4 || BL.Globals.test_grade_id > 9)
                 {
-                    txt_social.Enabled = false;
-                    txt_tocnolegy.Enabled = false;
+                    switch (year_id)
+                    {
+                        case 1:
+                        case 2:
+                        case 3:
+                            txt_social.Enabled = false;
+                            txt_tocnolegy.Enabled = false;
+                            break;
+                        case var expration when year_id > 3:
+                            switch (test_grade_id)
+                            {
+                                case 1:
+                                case 2:
+                                    txt_social.Enabled = true;
+                                    txt_tocnolegy.Enabled = true;
+                                    break;
+                                default:
+                                    txt_social.Enabled = false;
+                                    txt_tocnolegy.Enabled = false;
+                                    break;
+                            }                        
+                            break;
+                    }                 
                 }
                 else
                 {
@@ -302,9 +366,31 @@ namespace School_Mang.PL.NATIGA
                 {
                     case 10:
                     case 11:
+
                     case 1:
                     case 2:
-                        max_degree = 4;
+                        switch (year)
+                        {
+                            case 1:
+                            case 2:
+                            case 3:
+                                max_degree = 4;
+                                break; 
+                            case var expression when year > 3:
+                                switch (test_kind)
+                                {
+                                    case 1:
+                                    case 3:
+                                        max_degree = 100;
+                                        break;
+                                    case 2:
+                                    case 4:
+                                        max_degree = 0;
+                                        break;
+                                }
+                                break;
+                        }
+                   
                         break;
                     case 3:
                        switch (year)

@@ -713,12 +713,49 @@ namespace School_Mang.RPT
                 {
                     case 10:
                     case 11:
-                    case 1:
-                    case 2:
-                    case 3:
                         msg.ErrorMesg("لا توجد كشوف للصف المحدد");
                         Waiting.End_WAit();
                         return;
+                    case 1:
+                    case 2:
+                    case 3:
+                        switch (year_id)
+                        {
+                            case 1:
+                            case 2:
+                            case 3:
+
+                                msg.ErrorMesg("لا توجد كشوف للصف المحدد");
+                                Waiting.End_WAit();
+                                return;
+                            case var expration when year_id > 3:
+                                switch (grade_id)
+                                {
+                                    case 1:
+                                    case 2:
+                                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Review_Rasd_Test_B_1_2.rpt");
+
+                                        myReport.SetParameterValue("@Year_Id", year_id);
+                                        myReport.SetParameterValue("@Grade_Id", grade_id);
+
+                                        break;
+
+                                    case 3:
+                                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Natega_A.rpt");
+
+                                        myReport.SetParameterValue("@Year_Id", 0);
+                                        myReport.SetParameterValue("@Grade_Id", 0);
+
+                                        myReport.SetParameterValue("@Year_Id", year_id, "rpt_Natega_A_Part_1.rpt");
+                                        myReport.SetParameterValue("@Grade_Id", grade_id, "rpt_Natega_A_Part_1.rpt");
+
+                                        myReport.SetParameterValue("@Year_Id", year_id, "rpt_Natega_A_part_2.rpt");
+                                        myReport.SetParameterValue("@Grade_Id", grade_id, "rpt_Natega_A_part_2.rpt");
+                                        break;
+                                }
+                                break;
+                        }
+                        break;
                     case 4:
                     case 5:
                     case 6:
@@ -787,8 +824,8 @@ namespace School_Mang.RPT
                         case 7:
                         case 8:
                         case 9:
-
-                            break;
+                            msg.MyExclamationMsg("هذا الاجراء غير متاح في نصف العام للصف المحدد .. !");
+                            return;
                     }
                 }
                 else

@@ -741,10 +741,27 @@ namespace School_Mang.PL.NATIGA
 
         private void btn_save_Click(object sender, EventArgs e)
         {
-            if (BL.Globals.test_grade_id < 4 || BL.Globals.test_grade_id > 9)
+            int year = Properties.Settings.Default.year_cod;
+
+            switch (year)
             {
-                BL.Globals.Final_Test_Kind = 3;
+                case 1:
+                case 2:
+                case 3:
+                    if (BL.Globals.test_grade_id < 4 || BL.Globals.test_grade_id > 9)
+                    {
+                        BL.Globals.Final_Test_Kind = 3;
+                    }
+                    break;
+
+                case var expration when year > 3:
+                    if (BL.Globals.test_grade_id < 3 || BL.Globals.test_grade_id > 9)
+                    {
+                        BL.Globals.Final_Test_Kind = 3;
+                    }
+                    break;
             }
+            
 
             decimal ar = Get_Degree(txt_ar);
             decimal math = Get_Degree(txt_math);

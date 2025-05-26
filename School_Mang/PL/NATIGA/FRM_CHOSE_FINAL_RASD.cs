@@ -270,7 +270,13 @@ namespace School_Mang.PL.NATIGA
                 }
                 else
                 {
-                    RPT.OpenFinal_Koshof(year, grade);
+                    switch (year)
+                    {
+                        case 1:
+                            break;
+                    }
+
+                   RPT.OpenFinal_Koshof(year, grade,2);
                 }
 
 

@@ -799,11 +799,13 @@ namespace School_Mang.RPT
                                 int grade_id, byte term =2)
         {
             int October_Sana = year_id + 20;
+            int year = Properties.Settings.Default.year_cod;
             try
             {
                 ReportDocument myReport = new ReportDocument();
                 if(term == 1)
                 {
+
                     switch (grade_id)
                     {
                         case 10:
@@ -830,29 +832,62 @@ namespace School_Mang.RPT
                 }
                 else
                 {
-                    switch (grade_id)
+                    switch (year)
                     {
-                        case 10:
-                        case 11:
                         case 1:
                         case 2:
                         case 3:
-                            myReport.Load(Application.StartupPath + @"/MyReports/rpt_Koshof_Natega_A.rpt");
+                            switch (grade_id)
+                            {
+                                case 10:
+                                case 11:
+                                case 1:
+                                case 2:
+                                case 3:
+                                    myReport.Load(Application.StartupPath + @"/MyReports/rpt_Koshof_Natega_A.rpt");
+                                    break;
+
+                                case 4:
+                                case 5:
+                                case 6:
+                                    myReport.Load(Application.StartupPath + @"/MyReports/rpt_Koshof_Natega_B.rpt");
+                                    break;
+
+                                case 7:
+                                case 8:
+                                case 9:
+                                    myReport.Load(Application.StartupPath + @"/MyReports/rpt_Koshof_Natega_C.rpt");
+                                    break;
+                            }
 
                             break;
-                        case 4:
-                        case 5:
-                        case 6:
-                            myReport.Load(Application.StartupPath + @"/MyReports/rpt_Koshof_Natega_B.rpt");
 
+                        case var expration when year > 3:
+                            switch (grade_id)
+                            {
+                                case 10:
+                                case 11:
+                                case 1:
+                                case 2:
+                                    myReport.Load(Application.StartupPath + @"/MyReports/rpt_Koshof_Natega_A.rpt");
+                                    break;
+
+                                case 3:
+                                    myReport.Load(Application.StartupPath + @"/MyReports/rpt_Koshof_Natega_Term_B_Grade_3_2025.rpt");
+                                    break;
+                                case 4:
+                                case 5:
+                                case 6:
+                                    myReport.Load(Application.StartupPath + @"/MyReports/rpt_Koshof_Natega_B_Term_B_2025.rpt");
+                                    break;
+
+                                case 7:
+                                case 8:
+                                case 9:
+                                    myReport.Load(Application.StartupPath + @"/MyReports/rpt_Koshof_Natega_C.rpt");
+                                    break;
+                            }
                             break;
-
-                        case 7:
-                        case 8:
-                        case 9:
-                            msg.ErrorMesg(" لم يتم إتاحة هذا الإجراء ..!");
-                            return;
-                            
                     }
                 }
                

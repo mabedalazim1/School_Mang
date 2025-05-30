@@ -884,7 +884,7 @@ namespace School_Mang.RPT
                                 case 7:
                                 case 8:
                                 case 9:
-                                    myReport.Load(Application.StartupPath + @"/MyReports/rpt_Koshof_Natega_C.rpt");
+                                    myReport.Load(Application.StartupPath + @"/MyReports/rpt_Koshof_Natega_C_2025.rpt");
                                     break;
                             }
                             break;

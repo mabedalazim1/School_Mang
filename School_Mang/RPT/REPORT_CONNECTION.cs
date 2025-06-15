@@ -928,10 +928,27 @@ namespace School_Mang.RPT
                     case 11:
                     case 1:
                     case 2:
-                    case 3:
                         myReport.Load(Application.StartupPath + @"/MyReports/rpt_Degree_Statement_A.rpt");
+                        break;
+                    case 3:
+
+                        switch (year_id)
+                        {
+                            case 1:
+                            case 2:
+                                case 3:
+
+                                myReport.Load(Application.StartupPath + @"/MyReports/rpt_Degree_Statement_A.rpt");
+
+                                break;
+                            case var expreation when year_id > 3:
+                                myReport.Load(Application.StartupPath + @"/MyReports/rpt_Degree_Statement_A_Grade_3_2025.rpt");
+
+                                break;
+                        }
 
                         break;
+
                     case 4:
                     case 5:
                     case 6:

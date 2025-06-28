@@ -239,11 +239,13 @@
     <Compile Include="BL\NATEG\ExcelUtlity.cs" />
     <Compile Include="BL\SITE\CLS_ADD_USER.cs" />
     <Compile Include="BL\SITE\CLS_MANGE_SITE.cs" />
+    <Compile Include="BL\SITE\CLS_Merge_Data.cs" />
     <Compile Include="BL\SITE\SiteExcelUtlity.cs" />
     <Compile Include="BL\STD\CLS_STD.cs" />
     <Compile Include="BL\USERS.cs" />
     <Compile Include="BL\Waiting.cs" />
     <Compile Include="DAL\DataAcceseLayer.cs" />
+    <Compile Include="DAL\SchoolDataAtSite.cs" />
     <Compile Include="DAL\SiteAccessLayer.cs" />
     <Compile Include="DAL\TestConcation.cs" />
     <Compile Include="HTTP\HTTPCLINT.cs" />

@@ -298,5 +298,53 @@ namespace School_Mang.Properties {
                 this["save_Lessons_path"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("sql8011.site4now.net")]
+        public string School_Site_Server_Name {
+            get {
+                return ((string)(this["School_Site_Server_Name"]));
+            }
+            set {
+                this["School_Site_Server_Name"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("db_a786ad_kpsdata2023")]
+        public string School_Site_Database_Name {
+            get {
+                return ((string)(this["School_Site_Database_Name"]));
+            }
+            set {
+                this["School_Site_Database_Name"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("db_a786ad_kpsdata2023_admin")]
+        public string School_Site_DataBase_User {
+            get {
+                return ((string)(this["School_Site_DataBase_User"]));
+            }
+            set {
+                this["School_Site_DataBase_User"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("kps@2020")]
+        public string School_Site_DataBase_Pass {
+            get {
+                return ((string)(this["School_Site_DataBase_Pass"]));
+            }
+            set {
+                this["School_Site_DataBase_Pass"] = value;
+            }
+        }
     }
 }

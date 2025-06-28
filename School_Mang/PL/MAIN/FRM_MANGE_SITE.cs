@@ -13,6 +13,9 @@ namespace School_Mang.PL.MAIN
 {
     public partial class FRM_MANGE_SITE : Form
     {
+        // Async Data
+        readonly BL.SITE.CLS_Merge_Data Merge_Data = new BL.SITE.CLS_Merge_Data();
+
         // Form Closed
         private static FRM_MANGE_SITE frm_Mange_Site;
         static void frm_Form_Closed(object sender, FormClosedEventArgs e)
@@ -228,21 +231,22 @@ namespace School_Mang.PL.MAIN
 
             try
             {
-                if (Get_Site_Data()) 
+                if (Get_Site_Data())
                 {
                     BL.Globals.Get_Site_Data = true;
-                    FRM_UNMATCH_DATA.Get_Frm_UnMatch_Data.Dt_Un_Mathed = unmatchedSite ;
+                    FRM_UNMATCH_DATA.Get_Frm_UnMatch_Data.Dt_Un_Mathed = unmatchedSite;
                     FRM_UNMATCH_DATA.Get_Frm_UnMatch_Data.ShowDialog();
                 }
                 else
                 {
                     return;
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 msg.ErrorMesg(ex.Message);
             }
-            
+
         }
 
         private void pic_unmach_database_Click(object sender, EventArgs e)
@@ -294,11 +298,12 @@ namespace School_Mang.PL.MAIN
 
                 FRM_ADD_USER.Get_Add_User.ShowDialog();
                 msg.ErrorMesg("لسه ما خلصش ..!");
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 msg.ErrorMesg(ex.Message);
             }
-           
+
         }
 
         private void pic_add_user_Click(object sender, EventArgs e)
@@ -313,7 +318,7 @@ namespace School_Mang.PL.MAIN
 
         private void pic_link_data_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void lbl_update_data_Click(object sender, EventArgs e)
@@ -325,12 +330,13 @@ namespace School_Mang.PL.MAIN
             if (msg.DialogeMsg("هل تريد تحديث بيانات الطلاب في الموقع ... ؟") == DialogResult.Yes)
             {
                 msg.MyExclamationMsg("هذا الإجراء سوف يستغرق بعض الوقت .. يرجي الإنتطار ..!");
-                
+
                 try
                 {
                     BL.SITE.CLS_ADD_USER add_user = new BL.SITE.CLS_ADD_USER();
                     add_user.Update_Site_Data();
-                }catch(Exception ex)
+                }
+                catch (Exception ex)
                 {
                     msg.ErrorMesg(ex.Message);
                 }
@@ -361,7 +367,7 @@ namespace School_Mang.PL.MAIN
             }
             // Get Std Data Form
             changePages(FRM_MANGE_LESSONS.Get_Mange_Lessons.pn_mange_lesson, "إدارة المقررات");
-          
+
         }
 
         private void lbl_add_data_Click(object sender, EventArgs e)
@@ -385,6 +391,35 @@ namespace School_Mang.PL.MAIN
         private void pic_add_studentd_Click(object sender, EventArgs e)
         {
             lbl_add_studentd_Click(sender, e);
+        }
+
+        private async void lbl_async_site_Click(object sender, EventArgs e)
+        {
+            await Test_Intrent();
+            if (!BL.Globals.Test_Internet_Con)
+            {
+                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+                return;
+            }
+
+            try
+            { 
+                Merge_Data.SyncTable("OsraData", new string[] { "Osraa_Id" });
+                Merge_Data.SyncTable("StdData", new string[] { "std_code" });
+                Merge_Data.SyncTable("School_Std_Data", new string[] { "std_code", "Year_Id", "Grade_Id" });
+                Merge_Data.SyncTable("Final_Degrees", new string[] { "Golos", "Year_Id" });
+                Merge_Data.SyncTable("Transfers", new string[] { "Transfer_code" });
+            }
+            catch (Exception ex)
+            {
+                msg.ErrorMesg(ex.Message);
+            }
+
+        }
+
+        private void pic_async_site_Click(object sender, EventArgs e)
+        {
+            lbl_async_site_Click(sender, e);
         }
     }
 }

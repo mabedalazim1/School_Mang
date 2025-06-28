@@ -71,5 +71,17 @@
     <Setting Name="save_Lessons_path" Type="System.String" Scope="User">
       <Value Profile="(Default)">D:\Rasd\Lessons</Value>
     </Setting>
+    <Setting Name="School_Site_Server_Name" Type="System.String" Scope="User">
+      <Value Profile="(Default)">sql8011.site4now.net</Value>
+    </Setting>
+    <Setting Name="School_Site_Database_Name" Type="System.String" Scope="User">
+      <Value Profile="(Default)">db_a786ad_kpsdata2023</Value>
+    </Setting>
+    <Setting Name="School_Site_DataBase_User" Type="System.String" Scope="User">
+      <Value Profile="(Default)">db_a786ad_kpsdata2023_admin</Value>
+    </Setting>
+    <Setting Name="School_Site_DataBase_Pass" Type="System.String" Scope="User">
+      <Value Profile="(Default)">kps@2020</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

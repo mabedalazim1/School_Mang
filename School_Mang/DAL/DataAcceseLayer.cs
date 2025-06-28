@@ -218,6 +218,19 @@ namespace School_Mang.DAL
             }
 
         }
+        // Mothed To Exeucute Query By string 
+        public DataTable SchoolSiteExeucuteQuery(string query)
+        {
+            SqlDataAdapter da = new SqlDataAdapter(query, sqlConnection);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            return dt;
+        }
 
+        public void SchoolSiteExecuteNonQuery(string query)
+        {
+            SqlCommand cmd = new SqlCommand(query, sqlConnection);
+            cmd.ExecuteNonQuery();
+        }
     }
 }

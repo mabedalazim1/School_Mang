@@ -401,20 +401,30 @@ namespace School_Mang.PL.MAIN
                 msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                 return;
             }
-
-            try
-            { 
-                Merge_Data.SyncTable("OsraData", new string[] { "Osraa_Id" });
-                Merge_Data.SyncTable("StdData", new string[] { "std_code" });
-                Merge_Data.SyncTable("School_Std_Data", new string[] { "std_code", "Year_Id", "Grade_Id" });
-                Merge_Data.SyncTable("Final_Degrees", new string[] { "Golos", "Year_Id" });
-                Merge_Data.SyncTable("Transfers", new string[] { "Transfer_code" });
-            }
-            catch (Exception ex)
+            if (Properties.Settings.Default.Server_Name != "192.168.1.135")
             {
-                msg.ErrorMesg(ex.Message);
+                if (msg.DialogeErrMsg("هل تريد مزامنة قاعدة البيانات علي السيرفر ... ؟") == DialogResult.Yes)
+                {
+                    msg.MyExclamationMsg("هذا الإجراء سوف يستغرق بعض الوقت .. يرجي الإنتطار ..!");
+                    try
+                    {
+                        Merge_Data.SyncTable("OsraData", new string[] { "Osraa_Id" });
+                        Merge_Data.SyncTable("StdData", new string[] { "std_code" });
+                        Merge_Data.SyncTable("School_Std_Data", new string[] { "std_code", "Year_Id", "Grade_Id" });
+                        Merge_Data.SyncTable("Final_Degrees", new string[] { "Golos", "Year_Id" });
+                        Merge_Data.SyncTable("Transfers", new string[] { "Transfer_code" });
+                    }
+                    catch (Exception ex)
+                    {
+                        msg.ErrorMesg(ex.Message);
+                    }
+                }
+                else
+                {
+                    msg.ErrorMesg("تم إلغاء الإجراء");
+                    return;
+                } 
             }
-
         }
 
         private void pic_async_site_Click(object sender, EventArgs e)

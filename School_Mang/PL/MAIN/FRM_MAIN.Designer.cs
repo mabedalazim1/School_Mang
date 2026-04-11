@@ -30,7 +30,7 @@ namespace School_Mang.PL.MAIN
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            BunifuAnimatorNS.Animation animation1 = new BunifuAnimatorNS.Animation();
+            BunifuAnimatorNS.Animation animation2 = new BunifuAnimatorNS.Animation();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FRM_MAIN));
             this.pn_topbar = new System.Windows.Forms.Panel();
             this.btn_min = new DevExpress.XtraEditors.SimpleButton();
@@ -618,9 +618,9 @@ namespace School_Mang.PL.MAIN
             this.label6.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.label6.Location = new System.Drawing.Point(253, 4);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(84, 20);
+            this.label6.Size = new System.Drawing.Size(93, 20);
             this.label6.TabIndex = 8;
-            this.label6.Text = "2025-4-11";
+            this.label6.Text = "2025-10-10";
             // 
             // lbl_caption
             // 
@@ -632,7 +632,7 @@ namespace School_Mang.PL.MAIN
             this.lbl_caption.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.lbl_caption.Location = new System.Drawing.Point(1152, 4);
             this.lbl_caption.Name = "lbl_caption";
-            this.lbl_caption.Size = new System.Drawing.Size(116, 16);
+            this.lbl_caption.Size = new System.Drawing.Size(115, 16);
             this.lbl_caption.TabIndex = 6;
             this.lbl_caption.Text = "مدرسة الكوثر الخاصة";
             // 
@@ -643,13 +643,13 @@ namespace School_Mang.PL.MAIN
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.trans_a.SetDecoration(this.label2, BunifuAnimatorNS.DecorationType.None);
             this.label2.Font = new System.Drawing.Font("LBC", 9.749999F);
-            this.label2.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.label2.ForeColor = System.Drawing.Color.DarkGreen;
             this.label2.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.label2.Location = new System.Drawing.Point(59, 4);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(86, 16);
+            this.label2.Size = new System.Drawing.Size(85, 16);
             this.label2.TabIndex = 5;
-            this.label2.Text = "نسخة تجريبية 6";
+            this.label2.Text = "نسخة تجريبية 7";
             // 
             // label3
             // 
@@ -661,7 +661,7 @@ namespace School_Mang.PL.MAIN
             this.label3.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.label3.Location = new System.Drawing.Point(534, 4);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(213, 16);
+            this.label3.Size = new System.Drawing.Size(212, 16);
             this.label3.TabIndex = 5;
             this.label3.Text = "تصميم / محمد أحمد عبد العظيم  2023";
             // 
@@ -681,22 +681,22 @@ namespace School_Mang.PL.MAIN
             // 
             this.trans_a.AnimationType = BunifuAnimatorNS.AnimationType.HorizSlide;
             this.trans_a.Cursor = null;
-            animation1.AnimateOnlyDifferences = true;
-            animation1.BlindCoeff = ((System.Drawing.PointF)(resources.GetObject("animation1.BlindCoeff")));
-            animation1.LeafCoeff = 0F;
-            animation1.MaxTime = 1F;
-            animation1.MinTime = 0F;
-            animation1.MosaicCoeff = ((System.Drawing.PointF)(resources.GetObject("animation1.MosaicCoeff")));
-            animation1.MosaicShift = ((System.Drawing.PointF)(resources.GetObject("animation1.MosaicShift")));
-            animation1.MosaicSize = 0;
-            animation1.Padding = new System.Windows.Forms.Padding(0);
-            animation1.RotateCoeff = 0F;
-            animation1.RotateLimit = 0F;
-            animation1.ScaleCoeff = ((System.Drawing.PointF)(resources.GetObject("animation1.ScaleCoeff")));
-            animation1.SlideCoeff = ((System.Drawing.PointF)(resources.GetObject("animation1.SlideCoeff")));
-            animation1.TimeCoeff = 0F;
-            animation1.TransparencyCoeff = 0F;
-            this.trans_a.DefaultAnimation = animation1;
+            animation2.AnimateOnlyDifferences = true;
+            animation2.BlindCoeff = ((System.Drawing.PointF)(resources.GetObject("animation2.BlindCoeff")));
+            animation2.LeafCoeff = 0F;
+            animation2.MaxTime = 1F;
+            animation2.MinTime = 0F;
+            animation2.MosaicCoeff = ((System.Drawing.PointF)(resources.GetObject("animation2.MosaicCoeff")));
+            animation2.MosaicShift = ((System.Drawing.PointF)(resources.GetObject("animation2.MosaicShift")));
+            animation2.MosaicSize = 0;
+            animation2.Padding = new System.Windows.Forms.Padding(0);
+            animation2.RotateCoeff = 0F;
+            animation2.RotateLimit = 0F;
+            animation2.ScaleCoeff = ((System.Drawing.PointF)(resources.GetObject("animation2.ScaleCoeff")));
+            animation2.SlideCoeff = ((System.Drawing.PointF)(resources.GetObject("animation2.SlideCoeff")));
+            animation2.TimeCoeff = 0F;
+            animation2.TransparencyCoeff = 0F;
+            this.trans_a.DefaultAnimation = animation2;
             this.trans_a.MaxAnimationTime = 500;
             // 
             // lbl_main
@@ -824,11 +824,11 @@ namespace School_Mang.PL.MAIN
             this.label5.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Teal;
             this.label5.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label5.Location = new System.Drawing.Point(491, 63);
+            this.label5.Location = new System.Drawing.Point(469, 64);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(85, 21);
+            this.label5.Size = new System.Drawing.Size(94, 21);
             this.label5.TabIndex = 10;
-            this.label5.Text = "2025-4-11";
+            this.label5.Text = "2025-10-10";
             // 
             // lbl_Year
             // 

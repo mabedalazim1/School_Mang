@@ -1,4 +1,6 @@
-﻿using System;
+﻿using School_Mang.BL.Common.Extensions;
+using School_Mang.BL.SITE;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,43 +10,47 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static DevExpress.Xpo.Helpers.AssociatedCollectionCriteriaHelper;
+using School_Mang.BL.Common.Helper;
+
 
 namespace School_Mang.PL.SITE
 {
     public partial class FRM_EDIT_DATA : Form
     {
         // Form Closed
-        private static FRM_EDIT_DATA Frm_Edid_Data;
+        private static FRM_EDIT_DATA Frm_Edit_Data;
         static void frm_Form_Closed(object sender, FormClosedEventArgs e)
         {
-            Frm_Edid_Data = null;
+            Frm_Edit_Data = null;
         }
-        public static FRM_EDIT_DATA Get_Frm_Edid_Data
+        public static FRM_EDIT_DATA Get_Frm_Edit_Data
         {
             get
             {
-                if (Frm_Edid_Data == null)
+                if (Frm_Edit_Data == null)
                 {
-                    Frm_Edid_Data = new FRM_EDIT_DATA();
-                    Frm_Edid_Data.FormClosed += new FormClosedEventHandler(frm_Form_Closed);
+                    Frm_Edit_Data = new FRM_EDIT_DATA();
+                    Frm_Edit_Data.FormClosed += new FormClosedEventHandler(frm_Form_Closed);
                 }
-                return Frm_Edid_Data;
+                return Frm_Edit_Data;
             }
         }
         BL.MSG msg = new BL.MSG();
         BL.Waiting waiting = new BL.Waiting();
-        BL.SITE.SiteExcelUtlity Excel = new BL.SITE.SiteExcelUtlity();
+        SiteExcelUtlity Excel = new SiteExcelUtlity();
         BL.NATEG.cls_NATAG_FUNCTIONS natag_func = new BL.NATEG.cls_NATAG_FUNCTIONS();
-        BL.SITE.CLS_MANGE_SITE Mange_Site = new BL.SITE.CLS_MANGE_SITE();
+        CLS_MANGE_SITE Mange_Site = new CLS_MANGE_SITE();
+        CLS_READ_EXCEL Read_Excel = new CLS_READ_EXCEL();
 
-        public byte type ;
+        public byte type;
         private string excel_file_name;
         public FRM_EDIT_DATA()
         {
             InitializeComponent();
-            if (Frm_Edid_Data == null)
+            if (Frm_Edit_Data == null)
             {
-                Frm_Edid_Data = this;
+                Frm_Edit_Data = this;
             }
         }
 
@@ -54,7 +60,7 @@ namespace School_Mang.PL.SITE
             string file_name = @"\" + worksheetName + ".xlsx";
 
             string saveAsLocation;
-            
+
             string staticExcelFile = AppDomain.CurrentDomain.BaseDirectory + @"Excel\Lessons\" + worksheetName + ".xlsx";
             switch (type)
             {
@@ -63,8 +69,8 @@ namespace School_Mang.PL.SITE
                     staticExcelFile = AppDomain.CurrentDomain.BaseDirectory + @"Excel\Users\" + worksheetName + ".xlsx";
                     break;
             }
-            
-           
+
+
             // Folder Path
             string folder = Properties.Settings.Default.save_Lessons_path;
             switch (type)
@@ -74,7 +80,7 @@ namespace School_Mang.PL.SITE
                     folder = Properties.Settings.Default.save_Users_path;
                     break;
             }
-                    bool exists = Directory.Exists(folder);
+            bool exists = Directory.Exists(folder);
             if (!exists) Directory.CreateDirectory(folder);
             folderBrowserDialog1.SelectedPath = folder;
 
@@ -114,8 +120,15 @@ namespace School_Mang.PL.SITE
                 msg.ErrorMesg(ex.Message);
             }
         }
-        private void ReadData(byte type)
+        private async void ReadData(byte type)
         {
+            bool isConnected = await InternetHelper.CheckInternetAsync();
+            if (!isConnected)
+            {
+                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+                return;
+            }
+
             try
             {
                 excel_file_name = natag_func.OpenDialoge(openFileDialog1);
@@ -136,7 +149,7 @@ namespace School_Mang.PL.SITE
                         break;
                     case 3:
                         ReadSubPart();
-                        break; 
+                        break;
                     case 4:
                         ReadVocabulary();
                         break;
@@ -152,7 +165,9 @@ namespace School_Mang.PL.SITE
                     case 8:
                         ReadAnswer();
                         break;
-
+                    case 9:
+                        ReadQusestionsByAnswer();
+                        break;
                     case 10:
                         ReadUsers();
                         break;
@@ -162,54 +177,14 @@ namespace School_Mang.PL.SITE
                         break;
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 msg.ErrorMesg(e.Message);
             }
-           
+
         }
 
-        private void ReadTopic()
-        {
-            try
-            {
-                waiting.Wait();
-                DataTable data = Excel.ReadTopicDataFromExcel(excel_file_name);
-
-                if (data == null)
-                {
-                    msg.ErrorMesg("لا توجد بيانات..!");
-                    BL.Globals.Dir_Path = "D://Lessons";
-                    return;
-                }
-                else
-                {
-                    foreach (DataRow row in data.Rows)
-                    {
-                        int TopicId = Convert.ToInt32(row["topic_id"]);
-                        string Title = row["title"].ToString();
-                        string Description = row["description"].ToString();
-                        int GradeId = Convert.ToInt32(row["grade_id"]);
-                        int SubjectId = Convert.ToInt32(row["subject_id"]);
-                        int TermId = Convert.ToInt32(row["term_id"]);
-                        short Lang = Convert.ToByte(row["lang"]);
-                        short TopicSortNo = Convert.ToByte(row["topic_sort_no"]);
-
-                        Mange_Site.Update_Topic_Data(TopicId, Title, Description, GradeId,
-                                                    SubjectId, TermId, Lang, TopicSortNo);
-
-                    }
-                    waiting.End_WAit();
-                    msg.MyMesg("تم تحديث الموضوعات بنجاح .. !");
-                }
-                waiting.End_WAit();
-            }
-            catch (Exception ex)
-            {
-                msg.ErrorMesg(ex.Message);
-                waiting.End_WAit();
-            }
-        }
+       
         private void ReadStudents()
         {
             try
@@ -236,9 +211,9 @@ namespace School_Mang.PL.SITE
                         string Osraa_Id = row["Osraa_Id"].ToString();
                         string std_name = row["std_name"].ToString();
                         string full_name = row["full_name"].ToString();
-                        
 
-                        Mange_Site.Update_Student_Data(Student_Id,Class_Id, Gender_Id, Religion_Id,
+
+                        Mange_Site.Update_Student_Data(Student_Id, Class_Id, Gender_Id, Religion_Id,
                                                     Grade_Id, std_code, Osraa_Id,
                                                     std_name, full_name);
 
@@ -253,8 +228,8 @@ namespace School_Mang.PL.SITE
                 msg.ErrorMesg(ex.Message);
                 waiting.End_WAit();
             }
-        }     
-        
+        }
+
         private void ReadUsers()
         {
             try
@@ -279,9 +254,10 @@ namespace School_Mang.PL.SITE
                         string fullName = row["fullName"].ToString();
                         int roleId = Convert.ToInt32(row["roleId"]);
                         string osraId = row["osraId"].ToString();
+                        string note = row["note"].ToString();
 
                         Mange_Site.Update_User_2025(username, passwordHash, firstName,
-                                                    fullName,roleId,osraId);
+                                                    fullName, roleId, osraId, note);
 
                     }
                     waiting.End_WAit();
@@ -296,303 +272,218 @@ namespace School_Mang.PL.SITE
             }
         }
 
+        private void ReadTopic()
+        {
+            var manager = new ExcelDataManager(Read_Excel, Mange_Site);
+
+            var result = manager.ImportTopicss(
+                excel_file_name,
+                "topic",
+                msg.ErrorMesg,
+                waiting.Wait,
+                waiting.End_WAit,
+                null
+            );
+
+            if (!result.Success)
+            {
+                foreach (var err in result.Errors)
+                    msg.ErrorMesg(err);
+
+                return;
+            }
+
+            msg.MyMesg($"تم بنجاح ✅ عدد الصفوف: {result.ProcessedRows}");
+        }
+
         private void ReadCourse()
         {
-            try
+            var manager = new ExcelDataManager(Read_Excel, Mange_Site);
+
+            var result = manager.ImportCourses(
+                excel_file_name,
+                "course",
+                msg.ErrorMesg,
+                waiting.Wait,
+                waiting.End_WAit,
+                null
+            );
+
+            if (!result.Success)
             {
-                waiting.Wait();
-                DataTable data = Excel.ReadCourseDataFromExcel(excel_file_name);
+                foreach (var err in result.Errors)
+                    msg.ErrorMesg(err);
 
-                if (data == null)
-                {
-                    msg.ErrorMesg("لا توجد بيانات..!");
-                    BL.Globals.Dir_Path = "D://Lessons";
-                    return;
-                }
-                else
-                {
-                    foreach (DataRow row in data.Rows)
-                    {
-                        int courseId = Convert.ToInt32(row["course_id"]);
-                        int topicId = Convert.ToInt32(row["topic_id"]);
-                        string title = row["title"].ToString();
-                        string description = row["description"].ToString();
-                        string courseImg = row["course_img"].ToString();
-                        short courseSortNo = Convert.ToByte(row["course_sort_no"]);
-                        int gradeId = Convert.ToInt32(row["grade_id"]);
-                        int subjectId = Convert.ToInt32(row["subject_id"]);
-                        int termId = Convert.ToInt32(row["term_id"]);
-                       
-
-                        Mange_Site.Update_Course_Data(courseId, topicId, title, description,
-                                                    courseImg,courseSortNo,gradeId,subjectId,termId );
-
-                    }
-                    waiting.End_WAit();
-                    msg.MyMesg("تم تحديث الدروس بنجاح .. !");
-                }
-                waiting.End_WAit();
+                return;
             }
-            catch (Exception ex)
-            {
-                msg.ErrorMesg(ex.Message);
-                waiting.End_WAit();
-            }
+
+            msg.MyMesg($"تم بنجاح ✅ عدد الصفوف: {result.ProcessedRows}");
         }
+
 
         private void ReadSubPart()
         {
-            try
+            var manager = new ExcelDataManager(Read_Excel, Mange_Site);
+
+            var result = manager.ImportSubParts(
+                excel_file_name,
+                "subpart",
+                msg.ErrorMesg,
+                waiting.Wait,
+                waiting.End_WAit,
+                "subparts"
+            );
+
+            if (!result.Success)
             {
-                waiting.Wait();
-                DataTable data = Excel.ReadSubPartDataFromExcel(excel_file_name);
+                foreach (var err in result.Errors)
+                    msg.ErrorMesg(err);
 
-                if (data == null)
-                {
-                    msg.ErrorMesg("لا توجد بيانات..!");
-                    BL.Globals.Dir_Path = "D://Lessons";
-                    return;
-                }
-                else
-                {
-                    foreach (DataRow row in data.Rows)
-                    {
-                        int courseId = Convert.ToInt32(row["course_id"]);
-                        string title = row["title"].ToString();
-                        string description = row["description"].ToString();
-                        string subpartmg = row["subpart_img"].ToString();
-                        short sound = Convert.ToByte(row["sound"]);
-                        int gradeId = Convert.ToInt32(row["grade_id"]);
-                        int subjectId = Convert.ToInt32(row["subject_id"]);
-                        int termId = Convert.ToInt32(row["term_id"]);
-
-
-                        Mange_Site.Update_SubPart_Data(courseId, title, description,
-                                                    subpartmg, sound, gradeId, subjectId, termId);
-
-                    }
-                    waiting.End_WAit();
-                    msg.MyMesg("تم تحديث الفقرات بنجاح .. !");
-                }
-                waiting.End_WAit();
+                return;
             }
-            catch (Exception ex)
-            {
-                msg.ErrorMesg(ex.Message);
-                waiting.End_WAit();
-            }
+
+            msg.MyMesg($"تم بنجاح ✅ عدد الصفوف: {result.ProcessedRows}");
         }
 
         private void ReadVocabulary()
         {
-            try
+            var manager = new ExcelDataManager(Read_Excel, Mange_Site);
+
+            var result = manager.ImportVocabularies(
+                excel_file_name,
+                "vocabulary",
+                msg.ErrorMesg,
+                waiting.Wait,
+                waiting.End_WAit,
+                "vocabularies"
+            );
+
+            if (!result.Success)
             {
-                waiting.Wait();
-                DataTable data = Excel.ReadVocabularyDataFromExcel(excel_file_name);
+                foreach (var err in result.Errors)
+                    msg.ErrorMesg(err);
 
-                if (data == null)
-                {
-                    msg.ErrorMesg("لا توجد بيانات..!");
-                    BL.Globals.Dir_Path = "D://Lessons";
-                    return;
-                }
-                else
-                {
-                    foreach (DataRow row in data.Rows)
-                    {
-                        int courseId = Convert.ToInt32(row["course_id"]);
-                        string vocabulary = row["vocabulary"].ToString();
-                        string vocabularyText = row["vocabulary_text"].ToString();
-                        short vocabularyKind = Convert.ToByte(row["vocabulary_kind"]);
-                        short sound = Convert.ToByte(row["sound"]);
-                        int gradeId = Convert.ToInt32(row["grade_id"]);
-                        int subjectId = Convert.ToInt32(row["subject_id"]);
-                        int termId = Convert.ToInt32(row["term_id"]);
-
-
-                        Mange_Site.Update_Vocabulary_Data(courseId, vocabulary, vocabularyText,
-                                                    vocabularyKind, sound, gradeId, subjectId, termId);
-
-                    }
-                    waiting.End_WAit();
-                    msg.MyMesg("تم تحديث المفردات بنجاح .. !");
-                }
-                waiting.End_WAit();
+                return;
             }
-            catch (Exception ex)
-            {
-                msg.ErrorMesg(ex.Message);
-                waiting.End_WAit();
-            }
-        } 
-        private void ReadReview()
-        {
-            try
-            {
-                waiting.Wait();
-                DataTable data = Excel.ReadReviewDataFromExcel(excel_file_name);
 
-                if (data == null)
-                {
-                    msg.ErrorMesg("لا توجد بيانات..!");
-                    BL.Globals.Dir_Path = "D://Lessons";
-                    return;
-                }
-                else
-                {
-                    foreach (DataRow row in data.Rows)
-                    {
-                        int courseId = Convert.ToInt32(row["course_id"]);
-                        string question = row["question"].ToString();
-                        string answer = row["answer"].ToString();
-                        string questionImg = row["question_img"].ToString();
-                        short sound = Convert.ToByte(row["sound"]);
-                        int gradeId = Convert.ToInt32(row["grade_id"]);
-                        int subjectId = Convert.ToInt32(row["subject_id"]);
-                        int termId = Convert.ToInt32(row["term_id"]);
-
-
-                        Mange_Site.Update_Review_Data(courseId, question, answer,
-                                                    questionImg, sound, gradeId, subjectId, termId);
-
-                    }
-                    waiting.End_WAit();
-                    msg.MyMesg("تم تحديث المراجعات بنجاح .. !");
-                }
-                waiting.End_WAit();
-            }
-            catch (Exception ex)
-            {
-                msg.ErrorMesg(ex.Message);
-                waiting.End_WAit();
-            }
+            msg.MyMesg($"تم بنجاح ✅ عدد الصفوف: {result.ProcessedRows}");
         }
 
 
+        private void ReadReview()
+        {
+            var manager = new ExcelDataManager(Read_Excel, Mange_Site);
+
+            var result = manager.ImportReviews(
+                excel_file_name,
+                "review",
+                msg.ErrorMesg,
+                waiting.Wait,
+                waiting.End_WAit,
+                "reviews"
+            );
+
+            if (!result.Success)
+            {
+                foreach (var err in result.Errors)
+                    msg.ErrorMesg(err);
+
+                return;
+            }
+
+            msg.MyMesg($"تم بنجاح ✅ عدد الصفوف: {result.ProcessedRows}");
+        }
         private void ReadQuiz()
         {
-            try
-            {
-                waiting.Wait();
-                DataTable data = Excel.ReadQuizDataFromExcel(excel_file_name);
+            var manager = new ExcelDataManager(Read_Excel, Mange_Site);
 
-                if (data == null)
-                {
-                    msg.ErrorMesg("لا توجد بيانات..!");
-                    BL.Globals.Dir_Path = "D://Lessons";
-                    return;
-                }
-                else
-                {
-                    foreach (DataRow row in data.Rows)
-                    {  
-                        int quizId = Convert.ToInt32(row["quiz_id"]);
-                        string quizTitle = row["quiz_title"].ToString();
-                        int courseId = Convert.ToInt32(row["course_id"]);
-                        string quizDescription = row["quiz_description"].ToString();
-                        int gradeId = Convert.ToInt32(row["grade_id"]);
-                        int subjectId = Convert.ToInt32(row["subject_id"]);
-                        int termId = Convert.ToInt32(row["term_id"]);
-                        short sound = Convert.ToByte(row["sound"]);
-                        short quizType = Convert.ToByte(row["quizType"]);
-                        Mange_Site.Update_Quiz_Data(quizId, quizTitle,
-                                         courseId, quizDescription, 
-                                         gradeId,subjectId, termId,
-                                         sound, quizType);
-                    }
-                    waiting.End_WAit();
-                    msg.MyMesg("تم تحديث الإختبارات بنجاح .. !");
-                }
-                waiting.End_WAit();
-            }
-            catch (Exception ex)
+            var result = manager.ImportQuizes(
+                excel_file_name,
+                "quiz",
+                msg.ErrorMesg,
+                waiting.Wait,
+                waiting.End_WAit,
+                "quizzes"
+            );
+
+            if (!result.Success)
             {
-                msg.ErrorMesg(ex.Message);
-                waiting.End_WAit();
+                foreach (var err in result.Errors)
+                    msg.ErrorMesg(err);
+
+                return;
             }
+
+            msg.MyMesg($"تم بنجاح ✅ عدد الصفوف: {result.ProcessedRows}");
         }
 
         private void ReadQuestion()
         {
-            try
-            {
-                waiting.Wait();
-                DataTable data = Excel.ReadQuestionDataFromExcel(excel_file_name);
+            var manager = new ExcelDataManager(Read_Excel, Mange_Site);
 
-                if (data == null)
-                {
-                    msg.ErrorMesg("لا توجد بيانات..!");
-                    BL.Globals.Dir_Path = "D://Lessons";
-                    return;
-                }
-                else
-                {
-                    foreach (DataRow row in data.Rows)
-                    {
-                        int questionId = Convert.ToInt32(row["question_id"]);
-                        int quizId = Convert.ToInt32(row["quiz_id"]);
-                        int courseId = Convert.ToInt32(row["course_id"]);
-                        string questionText = row["question_text"].ToString();
-                        short questionType = Convert.ToByte(row["question_type"]);
-                        int gradeId = Convert.ToInt32(row["grade_id"]);
-                        int subjectId = Convert.ToInt32(row["subject_id"]);
-                        int termId = Convert.ToInt32(row["term_id"]);
-                       
-                        Mange_Site.Update_Question_Data(questionId, quizId, courseId, questionText,
-                                                        questionType, gradeId, subjectId,termId);                               
+            var result = manager.ImportQuestions(
+            excel_file_name,
+            "question",
+            msg.ErrorMesg,
+            waiting.Wait,
+            waiting.End_WAit,
+            "questions");
+               
 
-                    }
-                    waiting.End_WAit();
-                    msg.MyMesg("تم تحديث الأسئلة بنجاح .. !");
-                }
-                waiting.End_WAit();
-            }
-            catch (Exception ex)
+            if (!result.Success)
             {
-                msg.ErrorMesg(ex.Message);
-                waiting.End_WAit();
+                foreach (var err in result.Errors)
+                    msg.ErrorMesg(err);
+
+                return;
             }
+
+            msg.MyMesg($"تم بنجاح ✅ عدد الصفوف: {result.ProcessedRows}");
         }
+        
 
         private void ReadAnswer()
         {
-            try
+            var manager = new ExcelDataManager(Read_Excel, Mange_Site);
+
+            var result = manager.ImportAnswers(
+            excel_file_name,
+            "answer",
+            msg.ErrorMesg,
+            waiting.Wait,
+            waiting.End_WAit,
+            "answers");
+
+            if (!result.Success)
             {
-                waiting.Wait();
-                DataTable data = Excel.ReadAnswerDataFromExcel(excel_file_name);
+                foreach (var err in result.Errors)
+                    msg.ErrorMesg(err);
 
-                if (data == null)
-                {
-                    msg.ErrorMesg("لا توجد بيانات..!");
-                    BL.Globals.Dir_Path = "D://Lessons";
-                    return;
-                }
-                else
-                {
-                    foreach (DataRow row in data.Rows)
-                    {
-                        int quizId = Convert.ToInt32(row["quiz_id"]);
-                        int questionId = Convert.ToInt32(row["question_id"]);
-                        string answerText = row["answer_text"].ToString();
-                        short isCorrect = Convert.ToByte(row["is_correct"]);
-                        int gradeId = Convert.ToInt32(row["grade_id"]);
-                        int subjectId = Convert.ToInt32(row["subject_id"]);
-                        int termId = Convert.ToInt32(row["term_id"]);
-
-                        Mange_Site.Update_Answer_Data(quizId, questionId, answerText,
-                                                       isCorrect, gradeId, subjectId, termId);
-
-                    }
-                    waiting.End_WAit();
-                    msg.MyMesg("تم إضافة الإجابات بنجاح .. !");
-                }
-                waiting.End_WAit();
+                return;                
             }
-            catch (Exception ex)
+            msg.MyMesg($"تم بنجاح ✅ عدد الصفوف: {result.ProcessedRows}");
+        }
+
+        private void ReadQusestionsByAnswer()
+        {
+            var manager = new ExcelDataManager(Read_Excel, Mange_Site);
+
+            var result = manager.ImportQuestionsWithAnswers(
+            excel_file_name,
+            "mlutiquestion",
+            msg.ErrorMesg,
+            waiting.Wait,
+            waiting.End_WAit,
+            "questions");
+
+            if (!result.Success)
             {
-                msg.ErrorMesg(ex.Message);
-                waiting.End_WAit();
+                foreach (var err in result.Errors)
+                    msg.ErrorMesg(err);
+
+                return;
             }
+            msg.MyMesg($"تم بنجاح ✅ عدد الصفوف: {result.ProcessedRows}");
         }
 
         int move;
@@ -663,11 +554,13 @@ namespace School_Mang.PL.SITE
                 case 8:
                     exel_name = "answer";
                     break;
-
+                case 9:
+                    exel_name = "questions_by_answers";
+                    break;
                 case 10:
                     exel_name = "users";
-                    break; 
-                
+                    break;
+
                 case 11:
                     exel_name = "students";
                     break;
@@ -688,11 +581,11 @@ namespace School_Mang.PL.SITE
 
         private void label1_Click(object sender, EventArgs e)
         {
-            if(type == 3)
+            if (type == 3)
             {
                 msg.MyExclamationMsg("تحديث الفقرات يعتمد على عنوان الفقرة ..!");
             }
-            if(type == 4)
+            if (type == 4)
             {
                 msg.MyExclamationMsg("تحديث الفقرات يعتمد على المفردة  ..!");
                 msg.MyExclamationMsg("في حالة تغيير المفردة سيتم إضافة مفردة جديدة ..!");

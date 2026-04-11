@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BCrypt.Net;
+using School_Mang.BL.Common.Helper;
 namespace School_Mang.PL.SITE
 {
     public partial class FRM_ADD_USER : Form
@@ -299,14 +300,7 @@ namespace School_Mang.PL.SITE
         }
 
 
-        private async Task Test_Intrent()
-        {
-            Waiting.Wait();
-            //Test Intrent Connection
-            BL.CLS_TEST_INTRNET_CON test_intrent = new BL.CLS_TEST_INTRNET_CON();
-            await test_intrent.ChecK_Internt_Con();
-            Waiting.End_WAit();
-        }
+        
         private void pn_top_MouseDown(object sender, MouseEventArgs e)
         {
             move = 1;
@@ -339,9 +333,9 @@ namespace School_Mang.PL.SITE
 
         private async void btn_save_data_Click(object sender, EventArgs e)
         {
-            await Test_Intrent();
+            bool isConncted = await InternetHelper.CheckInternetAsync();
 
-            if (!BL.Globals.Test_Internet_Con)
+            if (!isConncted)
             {
                 msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                 return;

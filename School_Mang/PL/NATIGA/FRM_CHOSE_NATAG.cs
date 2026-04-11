@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using School_Mang.BL.Common.Helper;
 namespace School_Mang.PL.NATIGA
 {
     public partial class FRM_CHOSE_NATAG : Form
@@ -47,22 +47,14 @@ namespace School_Mang.PL.NATIGA
             Load_Data();
         }
 
-        private async Task Test_Intrent()
-        {
-            Waiting.Wait();
-            //Test Intrent Connection
-            BL.CLS_TEST_INTRNET_CON test_intrent = new BL.CLS_TEST_INTRNET_CON();
-            await test_intrent.ChecK_Internt_Con();
-            Waiting.End_WAit();
-        }
-
+        
         private async  void Load_Data()
         {
-            await Test_Intrent();
-            if (!BL.Globals.Test_Internet_Con)
+            bool isConncted = await InternetHelper.CheckInternetAsync();
+
+            if (!isConncted)
             {
                 msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
-                this.Close();
                 return;
             }
             else
@@ -143,8 +135,9 @@ namespace School_Mang.PL.NATIGA
 
         private async void btn_show_data_Click(object sender, EventArgs e)
         {
-            await Test_Intrent();
-            if (!BL.Globals.Test_Internet_Con)
+            bool isConncted = await InternetHelper.CheckInternetAsync();
+
+            if (!isConncted)
             {
                 msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                 return;

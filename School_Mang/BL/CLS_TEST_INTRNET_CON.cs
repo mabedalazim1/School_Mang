@@ -9,8 +9,8 @@ namespace School_Mang.BL
 {
     class CLS_TEST_INTRNET_CON
     {
-        Waiting Waiting = new Waiting();
-        MSG msg = new MSG();
+       private readonly Waiting Waiting = new Waiting();
+       private readonly MSG msg = new MSG();
 
         public async Task ChecK_Internt_Con()
         {
@@ -30,11 +30,9 @@ namespace School_Mang.BL
                     Globals.Test_Internet_Con = false;
                 }
 
-                Waiting.End_WAit();
             }catch(Exception e)
             {
                 Globals.Test_Internet_Con = false;
-                Waiting.End_WAit();
                 msg.ErrorMesg(e.Message);
             }
             finally

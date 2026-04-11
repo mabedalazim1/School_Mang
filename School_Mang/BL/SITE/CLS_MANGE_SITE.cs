@@ -9,11 +9,17 @@ using System.Threading.Tasks;
 
 namespace School_Mang.BL.SITE
 {
-    class CLS_MANGE_SITE
+   public class CLS_MANGE_SITE
     {
         MSG msg = new MSG();
         Waiting waiting = new Waiting();
 
+        private SiteAccessLayer CreateDAL()
+        {
+            return new SiteAccessLayer();
+        }
+
+        
         public DataTable Get_Count_Users_Data()
         {
             SiteAccessLayer DAL = new SiteAccessLayer();
@@ -26,7 +32,7 @@ namespace School_Mang.BL.SITE
 
         public DataTable Get_Users_Data(string fullName, int code = 0)
         {
-            SiteAccessLayer DAL = new SiteAccessLayer();
+            var DAL = CreateDAL();
             SqlParameter[] param = new SqlParameter[4];
 
             param[0] = new SqlParameter("@grade_Id", SqlDbType.TinyInt);
@@ -51,7 +57,7 @@ namespace School_Mang.BL.SITE
 
         public DataTable Get_Users_Data(int code)
         {
-            SiteAccessLayer DAL = new SiteAccessLayer();
+            var DAL = CreateDAL();
             SqlParameter[] param = new SqlParameter[4];
 
             param[0] = new SqlParameter("@grade_Id", SqlDbType.TinyInt);
@@ -74,7 +80,7 @@ namespace School_Mang.BL.SITE
         }
         public DataTable Get_Users_Data(byte grade_Id)
         {
-            SiteAccessLayer DAL = new SiteAccessLayer();
+            var DAL = CreateDAL();
             SqlParameter[] param = new SqlParameter[4];
 
             param[0] = new SqlParameter("@grade_Id", SqlDbType.TinyInt);
@@ -99,7 +105,7 @@ namespace School_Mang.BL.SITE
         public void Update_User_Data(int Golos, string fullName, string firstName, string stdCode)
         {
 
-            SiteAccessLayer DAL = new SiteAccessLayer();
+            var DAL = CreateDAL();
 
             SqlParameter[] param = new SqlParameter[4];
             param[0] = new SqlParameter("@userSchoolId", SqlDbType.Int);
@@ -125,7 +131,7 @@ namespace School_Mang.BL.SITE
                                         string stdCode)
         {
 
-            SiteAccessLayer DAL = new SiteAccessLayer();
+            var DAL = CreateDAL();
 
             SqlParameter[] param = new SqlParameter[6];
             param[0] = new SqlParameter("@student_Id", SqlDbType.Int);
@@ -151,7 +157,7 @@ namespace School_Mang.BL.SITE
 
         public DataTable Get_User_Code(int Golos = 0)
         {
-            SiteAccessLayer DAL = new SiteAccessLayer();
+            var DAL = CreateDAL();
             DataTable Dt;
 
             SqlParameter[] param = new SqlParameter[1];
@@ -165,7 +171,7 @@ namespace School_Mang.BL.SITE
 
         public DataTable Verify_UserSchoolId(int userSchoolId)
         {
-            SiteAccessLayer DAL = new SiteAccessLayer();
+            var DAL = CreateDAL();
             DataTable Dt;
 
             SqlParameter[] param = new SqlParameter[1];
@@ -179,7 +185,7 @@ namespace School_Mang.BL.SITE
 
         public DataTable Verify_Username(string username)
         {
-            SiteAccessLayer DAL = new SiteAccessLayer();
+            var DAL = CreateDAL();
             DataTable Dt;
 
             SqlParameter[] param = new SqlParameter[1];
@@ -193,7 +199,7 @@ namespace School_Mang.BL.SITE
 
         public DataTable Verify_Std_Degrees(int student_Id)
         {
-            SiteAccessLayer DAL = new SiteAccessLayer();
+            var DAL = CreateDAL();
             DataTable Dt;
 
             SqlParameter[] param = new SqlParameter[1];
@@ -207,7 +213,7 @@ namespace School_Mang.BL.SITE
 
         public DataTable Verify_Std_Marks(int student_Id)
         {
-            SiteAccessLayer DAL = new SiteAccessLayer();
+            var DAL = CreateDAL();
             DataTable Dt;
 
             SqlParameter[] param = new SqlParameter[1];
@@ -222,7 +228,7 @@ namespace School_Mang.BL.SITE
                                   string password,
                                   int roleId)
         {
-            SiteAccessLayer DAL = new SiteAccessLayer();
+            var DAL = CreateDAL();
 
             SqlParameter[] param = new SqlParameter[10];
 
@@ -274,7 +280,7 @@ namespace School_Mang.BL.SITE
                                  int grade_Id,
                                  string stdCode)
         {
-            SiteAccessLayer DAL = new SiteAccessLayer();
+            var DAL = CreateDAL();
 
             SqlParameter[] param = new SqlParameter[11];
 
@@ -318,7 +324,7 @@ namespace School_Mang.BL.SITE
         public void Update_User_stdCode(string stdCode, int Golos )
                                
         {
-            SiteAccessLayer DAL = new SiteAccessLayer();
+            var DAL = CreateDAL();
             SqlParameter[] param = new SqlParameter[2];
 
             param[0] = new SqlParameter("@stdCode", SqlDbType.NVarChar, 50);
@@ -350,12 +356,13 @@ namespace School_Mang.BL.SITE
                                string firstName,
                                string fullName,
                                int roleId,
-                               string osraId)
+                               string osraId,
+                               string note)
         {
             waiting.Wait();
-            SiteAccessLayer DAL = new SiteAccessLayer();
+           var DAL = CreateDAL();
 
-            SqlParameter[] param = new SqlParameter[6];
+            SqlParameter[] param = new SqlParameter[7];
             param[0] = new SqlParameter("@username", SqlDbType.NVarChar,20);
             param[0].Value = username;
 
@@ -374,7 +381,9 @@ namespace School_Mang.BL.SITE
             param[5] = new SqlParameter("@osraId", SqlDbType.NVarChar, 50);
             param[5].Value = osraId;
 
-          
+            param[6] = new SqlParameter("@note", SqlDbType.NVarChar, 250);
+            param[6].Value = note;
+
             DAL.ExeucuteCommand("SP_Add_User_2025", param);
             waiting.End_WAit();
         }
@@ -391,7 +400,7 @@ namespace School_Mang.BL.SITE
                               string full_name)
         {
             waiting.Wait();
-            SiteAccessLayer DAL = new SiteAccessLayer();
+            var DAL = CreateDAL();
 
             SqlParameter[] param = new SqlParameter[9];
             param[0] = new SqlParameter("@Student_Id", SqlDbType.Int);
@@ -436,7 +445,7 @@ namespace School_Mang.BL.SITE
                                 short TopicSortNo)
         {
             waiting.Wait();
-            SiteAccessLayer DAL = new SiteAccessLayer();
+            var DAL = CreateDAL();
 
             SqlParameter[] param = new SqlParameter[8];
             param[0] = new SqlParameter("@TopicId", SqlDbType.Int);
@@ -478,7 +487,7 @@ namespace School_Mang.BL.SITE
                                 int termId)
         {
             waiting.Wait();
-            SiteAccessLayer DAL = new SiteAccessLayer();
+            var DAL = CreateDAL();
 
             SqlParameter[] param = new SqlParameter[9];
             param[0] = new SqlParameter("@courseId", SqlDbType.Int);
@@ -523,7 +532,7 @@ namespace School_Mang.BL.SITE
                               int termId)
         {
             waiting.Wait();
-            SiteAccessLayer DAL = new SiteAccessLayer();
+            var DAL = CreateDAL();
 
             SqlParameter[] param = new SqlParameter[8];
             param[0] = new SqlParameter("@courseId", SqlDbType.Int);
@@ -565,7 +574,7 @@ namespace School_Mang.BL.SITE
                              int termId)
         {
             waiting.Wait();
-            SiteAccessLayer DAL = new SiteAccessLayer();
+            var DAL = CreateDAL();
 
             SqlParameter[] param = new SqlParameter[8];
             param[0] = new SqlParameter("@courseId", SqlDbType.Int);
@@ -607,7 +616,7 @@ namespace School_Mang.BL.SITE
                              int termId)
         {
             waiting.Wait();
-            SiteAccessLayer DAL = new SiteAccessLayer();
+            var DAL = CreateDAL();
 
             SqlParameter[] param = new SqlParameter[8];
             param[0] = new SqlParameter("@courseId", SqlDbType.Int);
@@ -651,7 +660,7 @@ namespace School_Mang.BL.SITE
                              )
         {
             waiting.Wait();
-            SiteAccessLayer DAL = new SiteAccessLayer();
+            var DAL = CreateDAL();
 
             SqlParameter[] param = new SqlParameter[9];
             param[0] = new SqlParameter("@quizId", SqlDbType.Int);
@@ -693,12 +702,13 @@ namespace School_Mang.BL.SITE
                                          short questionType,
                                          int gradeId,
                                          int subjectId,
-                                         int termId)
+                                         int termId,
+                                         short lang = 1)
         {
             waiting.Wait();
-            SiteAccessLayer DAL = new SiteAccessLayer();
+            var DAL = CreateDAL();
 
-            SqlParameter[] param = new SqlParameter[8];
+            SqlParameter[] param = new SqlParameter[9];
             param[0] = new SqlParameter("@questionId", SqlDbType.Int);
             param[0].Value = questionId;
 
@@ -711,7 +721,7 @@ namespace School_Mang.BL.SITE
             param[3] = new SqlParameter("@questionText", SqlDbType.NVarChar,500);
             param[3].Value = questionText;
 
-            param[4] = new SqlParameter("@questionType", SqlDbType.NVarChar, 500);
+            param[4] = new SqlParameter("@questionType", SqlDbType.TinyInt);
             param[4].Value = questionType;
 
             param[5] = new SqlParameter("@gradeId", SqlDbType.Int);
@@ -722,12 +732,16 @@ namespace School_Mang.BL.SITE
 
             param[7] = new SqlParameter("@termId", SqlDbType.Int);
             param[7].Value = termId;
+            
+            param[8] = new SqlParameter("@lang", SqlDbType.TinyInt);
+            param[8].Value = lang;
 
             DAL.ExeucuteCommand("SP_Lessons_Add_Question", param);
             waiting.End_WAit();
         }
 
-        public void Update_Answer_Data(int quizId,
+        public void Update_Answer_Data(int courseId,
+                                       int quizId,
                                        int questionId,
                                        string answerText,
                                        short isCorrect,
@@ -736,32 +750,164 @@ namespace School_Mang.BL.SITE
                                        int termId)
         {
             waiting.Wait();
-            SiteAccessLayer DAL = new SiteAccessLayer();
+            var DAL = CreateDAL();
 
-            SqlParameter[] param = new SqlParameter[7];
-            param[0] = new SqlParameter("@quizId", SqlDbType.Int);
-            param[0].Value = quizId;
+            SqlParameter[] param = new SqlParameter[8];
+            param[0] = new SqlParameter("@courseId", SqlDbType.Int);
+            param[0].Value = courseId;
+            
+            param[1] = new SqlParameter("@quizId", SqlDbType.Int);
+            param[1].Value = quizId;
 
-            param[1] = new SqlParameter("@questionId", SqlDbType.Int);
-            param[1].Value = questionId;
+            param[2] = new SqlParameter("@questionId", SqlDbType.Int);
+            param[2].Value = questionId;
 
-            param[2] = new SqlParameter("@answerText", SqlDbType.NVarChar, 500);
-            param[2].Value = answerText;
+            param[3] = new SqlParameter("@answerText", SqlDbType.NVarChar, 500);
+            param[3].Value = answerText;
 
-            param[3] = new SqlParameter("@isCorrect", SqlDbType.TinyInt);
-            param[3].Value = isCorrect;
+            param[4] = new SqlParameter("@isCorrect", SqlDbType.TinyInt);
+            param[4].Value = isCorrect;
 
-            param[4] = new SqlParameter("@gradeId", SqlDbType.Int);
-            param[4].Value = gradeId;
+            param[5] = new SqlParameter("@gradeId", SqlDbType.Int);
+            param[5].Value = gradeId;
 
-            param[5] = new SqlParameter("@subjectId", SqlDbType.Int);
-            param[5].Value = subjectId;
+            param[6] = new SqlParameter("@subjectId", SqlDbType.Int);
+            param[6].Value = subjectId;
 
-            param[6] = new SqlParameter("@termId", SqlDbType.Int);
-            param[6].Value = termId;
+            param[7] = new SqlParameter("@termId", SqlDbType.Int);
+            param[7].Value = termId;
 
             DAL.ExeucuteCommand("SP_Lessons_Add_Answer", param);
             waiting.End_WAit();
         }
+
+
+
+        // جلب كل المفاتيح الأربعة لكل جدول
+        public HashSet<TableKey> GetTableKeys()
+        {
+            HashSet<TableKey> result = new HashSet<TableKey>();
+
+            var DAL = CreateDAL();
+
+            try
+            {
+                string query = @"
+            SELECT course_id, grade_id, subject_id, term_id 
+            FROM courses";
+
+                DataTable dt = DAL.ReadData_Query(query, null);
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    if (row["course_id"] == DBNull.Value ||
+                        row["grade_id"] == DBNull.Value ||
+                        row["subject_id"] == DBNull.Value ||
+                        row["term_id"] == DBNull.Value)
+                        continue;
+
+                    int k1 = Convert.ToInt32(row["course_id"]);
+                    int k2 = Convert.ToInt32(row["grade_id"]);
+                    int k3 = Convert.ToInt32(row["subject_id"]);
+                    int k4 = Convert.ToInt32(row["term_id"]);
+
+                    // حماية إضافية
+                    if (k1 <= 0 || k2 <= 0 || k3 <= 0 || k4 <= 0)
+                        continue;
+
+                    result.Add(new TableKey(k1, k2, k3, k4));
+                }
+            }
+            finally
+            {
+                DAL.Close();
+            }
+
+            return result;
+        }
+
+        public bool QuizExistsInContext(int courseId, int gradeId, int subjectId, int termId, int quizId)
+        {
+            var DAL = CreateDAL();
+            string query = @"
+                            SELECT TOP 1 1
+                            FROM quizzes
+                            WHERE course_id = @c
+                              AND grade_id = @g
+                              AND subject_id = @s
+                              AND term_id = @t
+                              AND quiz_id = @q";
+
+            var prms = new SqlParameter[]
+                      {
+                        new SqlParameter("@c", courseId),
+                        new SqlParameter("@g", gradeId),
+                        new SqlParameter("@s", subjectId),
+                        new SqlParameter("@t", termId),
+                        new SqlParameter("@q", quizId)
+                      };
+
+
+            DataTable dt = DAL.ReadData_Query(query, prms);
+
+            return dt.Rows.Count > 0;
+        }
+        public bool QuestionHasAnswers(int courseId, int quizId, int questionId, int gradeId, int subjectId, int termId)
+        {
+            var DAL = CreateDAL();
+
+            string query = @"
+        SELECT TOP 1 1
+        FROM answers
+        WHERE course_id = @c
+          AND quiz_id = @qz
+          AND question_id = @q
+          AND grade_id = @g
+          AND subject_id = @s
+          AND term_id = @t";
+
+            var prms = new SqlParameter[]
+            {
+        new SqlParameter("@c", courseId),
+        new SqlParameter("@qz", quizId),
+        new SqlParameter("@q", questionId),
+        new SqlParameter("@g", gradeId),
+        new SqlParameter("@s", subjectId),
+        new SqlParameter("@t", termId)
+            };
+
+            DataTable dt = DAL.ReadData_Query(query, prms);
+
+            return dt.Rows.Count > 0;
+        }
+        public bool QuestionExistsInContext(int courseId, int quizId, int questionId, int gradeId, int subjectId, int termId)
+        {
+            var DAL = CreateDAL();
+
+            string query = @"
+                                SELECT TOP 1 1
+                                FROM questions
+                                WHERE course_id = @c
+                                  AND quiz_id = @qz
+                                  AND question_id = @q
+                                  AND grade_id = @g
+                                  AND subject_id = @s
+                                  AND term_id = @t";
+
+            var prms = new SqlParameter[]
+            {
+        new SqlParameter("@c", courseId),
+        new SqlParameter("@qz", quizId),
+        new SqlParameter("@q", questionId),
+        new SqlParameter("@g", gradeId),
+        new SqlParameter("@s", subjectId),
+        new SqlParameter("@t", termId)
+            };
+
+            DataTable dt = DAL.ReadData_Query(query, prms);
+
+            return dt.Rows.Count > 0;
+        }
+
     }
 }

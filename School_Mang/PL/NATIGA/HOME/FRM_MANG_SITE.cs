@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using School_Mang.PL.MAIN;
+using School_Mang.BL.Common.Helper;
 
 namespace School_Mang.PL.NATIGA.HOME
 {
@@ -49,14 +50,7 @@ namespace School_Mang.PL.NATIGA.HOME
         }
 
 
-        private async Task Test_Intrent()
-        {
-            Waiting.Wait();
-            //Test Intrent Connection
-            BL.CLS_TEST_INTRNET_CON test_intrent = new BL.CLS_TEST_INTRNET_CON();
-            await test_intrent.ChecK_Internt_Con();
-            Waiting.End_WAit();
-        }
+       
 
         // Upload File
         private async Task UploadFile(string path )
@@ -65,8 +59,9 @@ namespace School_Mang.PL.NATIGA.HOME
             {
                 if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 {
-                    await Test_Intrent();
-                    if (!BL.Globals.Test_Internet_Con)
+                    bool isConncted = await InternetHelper.CheckInternetAsync();
+
+                    if (!isConncted)
                     {
                         msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                         return;
@@ -89,8 +84,9 @@ namespace School_Mang.PL.NATIGA.HOME
         // Open Assessment Form
         private async void open_Assessment_Form()
         {
-            await Test_Intrent();
-            if (!BL.Globals.Test_Internet_Con)
+            bool isConncted = await InternetHelper.CheckInternetAsync();
+
+            if (!isConncted)
             {
                 msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                 return;
@@ -110,8 +106,9 @@ namespace School_Mang.PL.NATIGA.HOME
 
         private async void lbl_upload_a_Click(object sender, EventArgs e)
         {
-            await Test_Intrent();
-            if (!BL.Globals.Test_Internet_Con)
+            bool isConncted = await InternetHelper.CheckInternetAsync();
+
+            if (!isConncted)
             {
                 msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                 return;
@@ -127,8 +124,9 @@ namespace School_Mang.PL.NATIGA.HOME
 
         private async void lbl_upload_test_Click(object sender, EventArgs e)
         {
-            await Test_Intrent();
-            if (!BL.Globals.Test_Internet_Con)
+            bool isConncted = await InternetHelper.CheckInternetAsync();
+
+            if (!isConncted)
             {
                 msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                 return;
@@ -143,8 +141,9 @@ namespace School_Mang.PL.NATIGA.HOME
 
         private async void lbl_degree_Click(object sender, EventArgs e)
         {
-            await Test_Intrent();
-            if (!BL.Globals.Test_Internet_Con)
+            bool isConncted = await InternetHelper.CheckInternetAsync();
+
+            if (!isConncted)
             {
                 msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                 return;
@@ -159,8 +158,9 @@ namespace School_Mang.PL.NATIGA.HOME
 
         private async void lbl_del_data_from_site_Click(object sender, EventArgs e)
         {
-            await Test_Intrent();
-            if (!BL.Globals.Test_Internet_Con)
+            bool isConncted = await InternetHelper.CheckInternetAsync();
+
+            if (!isConncted)
             {
                 msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                 return;
@@ -174,7 +174,7 @@ namespace School_Mang.PL.NATIGA.HOME
         }
 
         
-        private async void lbl_upload_assessment_Click(object sender, EventArgs e)
+        private  void lbl_upload_assessment_Click(object sender, EventArgs e)
         {
             BL.Globals.Del_Assessment_Data = false;
             open_Assessment_Form();

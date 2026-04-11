@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using School_Mang.BL.Common.Helper;
 
 namespace School_Mang.PL.NATIGA
 {
@@ -46,14 +47,7 @@ namespace School_Mang.PL.NATIGA
 
         }
 
-        private async Task Test_Intrent()
-        {
-            Waiting.Wait();
-            //Test Intrent Connection
-            BL.CLS_TEST_INTRNET_CON test_intrent = new BL.CLS_TEST_INTRNET_CON();
-            await test_intrent.ChecK_Internt_Con();
-            Waiting.End_WAit();
-        }
+       
 
         int move;
         int move_x;
@@ -99,11 +93,11 @@ namespace School_Mang.PL.NATIGA
         private async void FRM_EDIT_SITE_DEGREES_Load(object sender, EventArgs e)
         {
             //Test Intrent Connection
-            await Test_Intrent();
+            bool isConncted = await InternetHelper.CheckInternetAsync();
 
-            if (!BL.Globals.Test_Internet_Con)
+            if (!isConncted)
             {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت ..!");
+                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                 this.Close();
                 return;
             }
@@ -353,11 +347,11 @@ namespace School_Mang.PL.NATIGA
 
         private async void btn_save_Click(object sender, EventArgs e)
         {
-            await Test_Intrent();
+            bool isConncted = await InternetHelper.CheckInternetAsync();
 
-            if (!BL.Globals.Test_Internet_Con)
+            if (!isConncted)
             {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت ..!");
+                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                 return;
             }
 

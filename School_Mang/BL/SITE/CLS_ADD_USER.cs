@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using School_Mang.BL.Common.Helper;
 
 namespace School_Mang.BL.SITE
 {
@@ -22,7 +23,6 @@ namespace School_Mang.BL.SITE
 
         public CLS_ADD_USER()
         {
-            Check_Intrent();
             // Get Student Data From local DataBase
             Dt_std_data = std.Get_Data_For_Site();
 
@@ -31,22 +31,7 @@ namespace School_Mang.BL.SITE
 
             Dt_user_name.Columns.Add(dc);
         }
-        private async Task Test_Intrent()
-        {
-            Waiting.Wait();
-            //Test Intrent Connection
-            CLS_TEST_INTRNET_CON test_intrent = new CLS_TEST_INTRNET_CON();
-            await test_intrent.ChecK_Internt_Con();
-            Waiting.End_WAit();
-        }
-        private async void Check_Intrent()
-        {
-            await Test_Intrent();
-            if (!Globals.Test_Internet_Con)
-            {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
-            }
-        }
+        
 
         private string Generate_letter(int filed)
         {
@@ -150,10 +135,12 @@ namespace School_Mang.BL.SITE
 
         }
 
-        public void Get_User_Data(int Golos)
+        public async void Get_User_Data(int Golos)
         {
-            if (!Globals.Test_Internet_Con)
+            bool isConnected = await InternetHelper.CheckInternetAsync();
+            if (!isConnected)
             {
+                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                 return;
             }
 
@@ -206,9 +193,18 @@ namespace School_Mang.BL.SITE
 
        
    
-        public void Update_Site_Data()
+        public async void Update_Site_Data()
         {
-
+            bool isConnected = await InternetHelper.CheckInternetAsync();
+            if (!isConnected)
+            {
+                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+                return;
+            }
+            if (!Globals.Test_Internet_Con)
+            {
+                return;
+            }
             DataSet dataSet = new DataSet();
             dataSet.Tables.Add(Dt_user_table_data);
             int Golos;

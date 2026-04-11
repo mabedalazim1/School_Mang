@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using School_Mang.BL.Common.Helper;
 
 namespace School_Mang.PL.SITE
 {
@@ -71,19 +72,12 @@ namespace School_Mang.PL.SITE
             Waiting.End_WAit();
         }
 
-        private async Task Test_Intrent()
-        {
-            Waiting.Wait();
-            //Test Intrent Connection
-            BL.CLS_TEST_INTRNET_CON test_intrent = new BL.CLS_TEST_INTRNET_CON();
-            await test_intrent.ChecK_Internt_Con();
-            Waiting.End_WAit();
-        }
+        
         private async void Load_Data(byte grade)
         {
-            await Test_Intrent();
+            bool isConncted = await InternetHelper.CheckInternetAsync();
 
-            if (!BL.Globals.Test_Internet_Con)
+            if (!isConncted)
             {
                 msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                 this.Close();
@@ -197,7 +191,13 @@ namespace School_Mang.PL.SITE
 
         private async void Check_data()
         {
-            await Test_Intrent();
+            bool isConncted = await InternetHelper.CheckInternetAsync();
+
+            if (!isConncted)
+            {
+                //msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+                return;
+            }
 
         }
         private void pn_top_MouseDown(object sender, MouseEventArgs e)
@@ -237,9 +237,9 @@ namespace School_Mang.PL.SITE
         {
 
             int std_code = Convert.ToInt32(dt_std_data.CurrentRow.Cells["رقم الجلوس"].Value);
-            await Test_Intrent();
+            bool isConncted = await InternetHelper.CheckInternetAsync();
 
-            if (!BL.Globals.Test_Internet_Con)
+            if (!isConncted)
             {
                 msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                 return;
@@ -372,12 +372,6 @@ namespace School_Mang.PL.SITE
                 // Get Site Data 
                 Check_data();
 
-                if (!BL.Globals.Test_Internet_Con)
-                {
-                    msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
-                    Waiting.End_WAit();
-                    return;
-                }
 
                 users = site.Get_Users_Data(new_grade);
                 dt_std_data.DataSource = users;
@@ -453,9 +447,9 @@ namespace School_Mang.PL.SITE
                 return;
             }
             // Search Site Data
-            await Test_Intrent();
+            bool isConncted = await InternetHelper.CheckInternetAsync();
 
-            if (!BL.Globals.Test_Internet_Con)
+            if (!isConncted)
             {
                 msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                 return;

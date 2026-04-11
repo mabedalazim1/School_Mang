@@ -160,7 +160,6 @@ namespace School_Mang.DAL
             {
                 Close();
             }
-            Close();
             return dt;
         }
 
@@ -195,7 +194,6 @@ namespace School_Mang.DAL
             {
                 Close();
             }
-            Close();
             return dt;
         }
 

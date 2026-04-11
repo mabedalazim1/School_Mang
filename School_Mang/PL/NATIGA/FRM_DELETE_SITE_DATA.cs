@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using School_Mang.BL.Common.Helper;
 
 namespace School_Mang.PL.NATIGA
 {
@@ -48,14 +49,7 @@ namespace School_Mang.PL.NATIGA
             Add_To_Comb_Test();
         }
 
-        private async Task Test_Intrent()
-        {
-            Waiting.Wait();
-            //Test Intrent Connection
-            BL.CLS_TEST_INTRNET_CON test_intrent = new BL.CLS_TEST_INTRNET_CON();
-            await test_intrent.ChecK_Internt_Con();
-            Waiting.End_WAit();
-        }
+        
 
 
         private void Load_Data()
@@ -167,13 +161,14 @@ namespace School_Mang.PL.NATIGA
                 }
                 try
                 {
-                    await Test_Intrent();
-                    if (!BL.Globals.Test_Internet_Con)
+                    bool isConncted = await InternetHelper.CheckInternetAsync();
+
+                    if (!isConncted)
                     {
-                        msg.ErrorMesg("تأكد من الإتصال بالإنترنت ..!");
+                        msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                         return;
                     }
-                        int grade = Convert.ToInt32(cmb_grade.SelectedValue);
+                    int grade = Convert.ToInt32(cmb_grade.SelectedValue);
                     int test_kind = Convert.ToInt32(cmb_month.SelectedValue);
 
                     Waiting.Wait();
@@ -201,10 +196,12 @@ namespace School_Mang.PL.NATIGA
 
         private async void FRM_DELETE_SITE_DATA_Load(object sender, EventArgs e)
         {
-            await Test_Intrent();
-            if (BL.Globals.Test_Internet_Con)
+            bool isConncted = await InternetHelper.CheckInternetAsync();
+
+            if (!isConncted)
             {
-                Load_Data();     
+                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+                return;
             }
             else
             {

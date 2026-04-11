@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using School_Mang.PL.NATIGA;
+using School_Mang.BL.Common.Helper;
 
 namespace School_Mang.PL.SITE
 {
@@ -55,19 +56,14 @@ namespace School_Mang.PL.SITE
         int move_y;
         public DataTable Dt_Un_Mathed;
 
-        private async Task Test_intrent()
-        {
-            //Test Intrent Connection
-            BL.CLS_TEST_INTRNET_CON test_intrent = new BL.CLS_TEST_INTRNET_CON();
-            await test_intrent.ChecK_Internt_Con();
-
-        }
+        
 
         public async void Load_Data()
         {
 
-            await Test_intrent();
-            if (!BL.Globals.Test_Internet_Con)
+            bool isConncted = await InternetHelper.CheckInternetAsync();
+
+            if (!isConncted)
             {
                 msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                 this.Close();
@@ -178,9 +174,9 @@ namespace School_Mang.PL.SITE
         private async void btn_show_data_Click(object sender, EventArgs e)
         {
             int std_code = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Golos"].Value);
-            await Test_intrent();
+            bool isConncted = await InternetHelper.CheckInternetAsync();
 
-            if (!BL.Globals.Test_Internet_Con)
+            if (!isConncted)
             {
                 msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                 return;

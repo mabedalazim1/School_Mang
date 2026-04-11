@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using School_Mang.BL.Common.Helper;
 
 namespace School_Mang.PL.MAIN
 {
@@ -48,14 +48,7 @@ namespace School_Mang.PL.MAIN
         }
 
 
-        private async Task Test_Intrent()
-        {
-            Waiting.Wait();
-            //Test Intrent Connection
-            BL.CLS_TEST_INTRNET_CON test_intrent = new BL.CLS_TEST_INTRNET_CON();
-            await test_intrent.ChecK_Internt_Con();
-            Waiting.End_WAit();
-        }
+        
 
         private void lbl_current_stds_Click(object sender, EventArgs e)
         {
@@ -104,10 +97,11 @@ namespace School_Mang.PL.MAIN
 
         private async void lbl_site_Click(object sender, EventArgs e)
         {
-            await Test_Intrent();
-            if (!BL.Globals.Test_Internet_Con)
+            bool isConncted = await InternetHelper.CheckInternetAsync();
+
+            if (!isConncted)
             {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت ..!");
+                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                 return;
             }
             else

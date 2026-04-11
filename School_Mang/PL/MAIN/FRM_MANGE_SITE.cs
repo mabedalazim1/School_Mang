@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using School_Mang.PL.SITE;
-
+using School_Mang.BL.Common.Helper;
 namespace School_Mang.PL.MAIN
 {
     public partial class FRM_MANGE_SITE : Form
@@ -140,14 +140,7 @@ namespace School_Mang.PL.MAIN
             Waiting.End_WAit();
             return has_data;
         }
-        private async Task Test_Intrent()
-        {
-            Waiting.Wait();
-            //Test Intrent Connection
-            BL.CLS_TEST_INTRNET_CON test_intrent = new BL.CLS_TEST_INTRNET_CON();
-            await test_intrent.ChecK_Internt_Con();
-            Waiting.End_WAit();
-        }
+        
 
         private void lbl_back_Click(object sender, EventArgs e)
         {
@@ -173,8 +166,9 @@ namespace School_Mang.PL.MAIN
 
         private async void lbl_final_test_Click(object sender, EventArgs e)
         {
-            await Test_Intrent();
-            if (!BL.Globals.Test_Internet_Con)
+            bool isConncted = await InternetHelper.CheckInternetAsync();
+
+            if (!isConncted)
             {
                 msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                 return;
@@ -222,8 +216,9 @@ namespace School_Mang.PL.MAIN
 
         private async void lbl_unmach_database_Click(object sender, EventArgs e)
         {
-            await Test_Intrent();
-            if (!BL.Globals.Test_Internet_Con)
+            bool isConncted = await InternetHelper.CheckInternetAsync();
+
+            if (!isConncted)
             {
                 msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                 return;
@@ -256,8 +251,9 @@ namespace School_Mang.PL.MAIN
 
         public async void lbl_unmach_site_Click(object sender, EventArgs e)
         {
-            await Test_Intrent();
-            if (!BL.Globals.Test_Internet_Con)
+            bool isConncted = await InternetHelper.CheckInternetAsync();
+
+            if (!isConncted)
             {
                 msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                 return;
@@ -291,18 +287,6 @@ namespace School_Mang.PL.MAIN
         {
             msg.ErrorMesg("هذا الإجراء غير متاح حالياً .. !");
             return;
-
-            // Un Work
-            try
-            {
-
-                FRM_ADD_USER.Get_Add_User.ShowDialog();
-                msg.ErrorMesg("لسه ما خلصش ..!");
-            }
-            catch (Exception ex)
-            {
-                msg.ErrorMesg(ex.Message);
-            }
 
         }
 
@@ -359,8 +343,9 @@ namespace School_Mang.PL.MAIN
 
         private async void lbl_study_Click(object sender, EventArgs e)
         {
-            await Test_Intrent();
-            if (!BL.Globals.Test_Internet_Con)
+            bool isConncted = await InternetHelper.CheckInternetAsync();
+
+            if (!isConncted)
             {
                 msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                 return;
@@ -372,8 +357,8 @@ namespace School_Mang.PL.MAIN
 
         private void lbl_add_data_Click(object sender, EventArgs e)
         {
-            SITE.FRM_EDIT_DATA.Get_Frm_Edid_Data.type = 10;
-            SITE.FRM_EDIT_DATA.Get_Frm_Edid_Data.ShowDialog();
+            SITE.FRM_EDIT_DATA.Get_Frm_Edit_Data.type = 10;
+            SITE.FRM_EDIT_DATA.Get_Frm_Edit_Data.ShowDialog();
         }
 
         private void pic_add_data_Click(object sender, EventArgs e)
@@ -383,9 +368,9 @@ namespace School_Mang.PL.MAIN
 
         private void lbl_add_studentd_Click(object sender, EventArgs e)
         {
-            FRM_EDIT_DATA.Get_Frm_Edid_Data.type = 11;
-            FRM_EDIT_DATA.Get_Frm_Edid_Data.lbl_title.Text = "إضافة الطلاب";
-            FRM_EDIT_DATA.Get_Frm_Edid_Data.ShowDialog();
+            FRM_EDIT_DATA.Get_Frm_Edit_Data.type = 11;
+            FRM_EDIT_DATA.Get_Frm_Edit_Data.lbl_title.Text = "إضافة الطلاب";
+            FRM_EDIT_DATA.Get_Frm_Edit_Data.ShowDialog();
         }
 
         private void pic_add_studentd_Click(object sender, EventArgs e)
@@ -395,7 +380,13 @@ namespace School_Mang.PL.MAIN
 
         private async void lbl_async_site_Click(object sender, EventArgs e)
         {
-            await Test_Intrent();
+            bool isConncted = await InternetHelper.CheckInternetAsync();
+
+            if (!isConncted)
+            {
+                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+                return;
+            }
             if (!BL.Globals.Test_Internet_Con)
             {
                 msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");

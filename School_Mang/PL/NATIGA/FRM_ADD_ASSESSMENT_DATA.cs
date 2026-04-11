@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using School_Mang.BL.Common.Helper;
 
 namespace School_Mang.PL.NATIGA
 {
@@ -50,14 +51,7 @@ namespace School_Mang.PL.NATIGA
         int move_x;
         int move_y;
 
-        private async Task Test_Intrent()
-        {
-            Waiting.Wait();
-            //Test Intrent Connection
-            BL.CLS_TEST_INTRNET_CON test_intrent = new BL.CLS_TEST_INTRNET_CON();
-            await test_intrent.ChecK_Internt_Con();
-            Waiting.End_WAit();
-        }
+       
 
         // Upload File
         private async Task UploadFile(string path)
@@ -66,12 +60,14 @@ namespace School_Mang.PL.NATIGA
             {
                 if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 {
-                    await Test_Intrent();
-                    if (!BL.Globals.Test_Internet_Con)
+                    bool isConncted = await InternetHelper.CheckInternetAsync();
+
+                    if (!isConncted)
                     {
                         msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                         return;
                     }
+
                     await HTTP.UplodFile(openFileDialog1.FileName, path);
                 }
                 else
@@ -243,8 +239,9 @@ namespace School_Mang.PL.NATIGA
                     return;
                 }
             }
-            await Test_Intrent();
-            if (!BL.Globals.Test_Internet_Con)
+            bool isConncted = await InternetHelper.CheckInternetAsync();
+
+            if (!isConncted)
             {
                 msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                 return;

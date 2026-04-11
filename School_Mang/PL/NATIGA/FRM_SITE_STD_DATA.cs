@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using School_Mang.BL.Common.Helper;
 
 namespace School_Mang.PL.NATIGA
 {
@@ -61,19 +62,17 @@ namespace School_Mang.PL.NATIGA
         int move_x;
         int move_y;
 
-        private async Task Test_Intrent()
-        {
-            Waiting.Wait();
-            //Test Intrent Connection
-            BL.CLS_TEST_INTRNET_CON test_intrent = new BL.CLS_TEST_INTRNET_CON();
-            await test_intrent.ChecK_Internt_Con();
-            Waiting.End_WAit();
-        }
-
+        
         private async void LoadStdData()
         {
 
-            await Test_Intrent();
+            bool isConncted = await InternetHelper.CheckInternetAsync();
+
+            if (!isConncted)
+            {
+                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+                return;
+            }
             try
             {
                 int test_kind = BL.Globals.test_kind;
@@ -232,10 +231,11 @@ namespace School_Mang.PL.NATIGA
 
         private async void Serach_Data()
         {
-            await Test_Intrent();
-            if (!BL.Globals.Test_Internet_Con)
+            bool isConncted = await InternetHelper.CheckInternetAsync();
+
+            if (!isConncted)
             {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت ..!");
+                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                 return;
             }
             try
@@ -300,11 +300,12 @@ namespace School_Mang.PL.NATIGA
 
         private async void FRM_SITE_STD_DATA_Load(object sender, EventArgs e)
         {
-            await Test_Intrent();
-            if (!BL.Globals.Test_Internet_Con) 
+            bool isConncted = await InternetHelper.CheckInternetAsync();
+
+            if (!isConncted)
             {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت ..!");
-                this.Close();
+                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+                this.Close();   
                 return;
             }
             dt_std_data.Columns["اسم الطالب"].Width = 200;
@@ -314,11 +315,11 @@ namespace School_Mang.PL.NATIGA
         public async void cmb_grade_DropDownClosed(object sender, EventArgs e)
         {
 
-            await Test_Intrent();
-            if (!BL.Globals.Test_Internet_Con)
+            bool isConncted = await InternetHelper.CheckInternetAsync();
+
+            if (!isConncted)
             {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت ..!");
-                cmb_grade.SelectedValue = BL.Globals.test_grade_id;
+                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                 return;
             }
 
@@ -350,10 +351,11 @@ namespace School_Mang.PL.NATIGA
 
         private async void btn_edit_std_Click(object sender, EventArgs e)
         {
-            await Test_Intrent();
-            if (!BL.Globals.Test_Internet_Con)
+            bool isConncted = await InternetHelper.CheckInternetAsync();
+
+            if (!isConncted)
             {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت ..!");
+                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                 return;
             }
             try

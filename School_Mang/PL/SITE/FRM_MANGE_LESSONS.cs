@@ -44,9 +44,9 @@ namespace School_Mang.PL.SITE
         }
         private void OpenEdidData(string title,byte type)
         {
-            FRM_EDIT_DATA.Get_Frm_Edid_Data.type = type;
-            FRM_EDIT_DATA.Get_Frm_Edid_Data.lbl_title.Text = title;
-            FRM_EDIT_DATA.Get_Frm_Edid_Data.ShowDialog();
+            FRM_EDIT_DATA.Get_Frm_Edit_Data.type = type;
+            FRM_EDIT_DATA.Get_Frm_Edit_Data.lbl_title.Text = title;
+            FRM_EDIT_DATA.Get_Frm_Edit_Data.ShowDialog();
         }
         private void lbl_index_Click(object sender, EventArgs e)
         {
@@ -136,6 +136,16 @@ namespace School_Mang.PL.SITE
         private void pic_home_Click(object sender, EventArgs e)
         {
             lbl_home_Click(sender, e);
+        }
+
+        private void lbl_q_answer_Click(object sender, EventArgs e)
+        {
+            OpenEdidData("الأسئلة مع الإجابات", 9);
+        }
+
+        private void pic_q_answer_Click(object sender, EventArgs e)
+        {
+            lbl_q_answer_Click(sender, e);
         }
     }
 }

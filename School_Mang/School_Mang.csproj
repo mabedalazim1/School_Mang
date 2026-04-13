@@ -234,7 +234,9 @@
     <Compile Include="BL\CLS_TEST_INTRNET_CON.cs" />
     <Compile Include="BL\Common\Extensions\ExcelRowHelper.cs" />
     <Compile Include="BL\Common\Helper\InternetHelper.cs" />
+    <Compile Include="BL\Common\Helper\SqlParam.cs" />
     <Compile Include="BL\ExcelUtils\ExcelValidator.cs" />
+    <Compile Include="BL\ExcelUtils\ValidationResult.cs" />
     <Compile Include="BL\Globals.cs" />
     <Compile Include="BL\HESAB_SEN.cs" />
     <Compile Include="BL\LOGIN\CLS_LOGIN.cs" />

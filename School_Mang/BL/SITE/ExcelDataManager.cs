@@ -2,14 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using School_Mang.BL.Common.Extensions;
+using System.Linq;
 
 namespace School_Mang.BL.SITE
 {
-
     public class ExcelDataManager
     {
         private readonly CLS_READ_EXCEL Read_Excel;
@@ -36,15 +33,17 @@ namespace School_Mang.BL.SITE
             public string Text { get; set; }
             public byte IsCorrect { get; set; }
         }
+
+          
         private ImportResult ImportData(
-           string file,
-           string type,
-           ExcelColumn[] columns,
-           Action<DataRow> handler,
-           Action<string> showError,
-           Action start,
-           Action end,
-           string table)
+            string file,
+            string type,
+            ExcelColumn[] columns,
+            Action<DataRow> handler,
+            Action<string> showError,
+            Action start,
+            Action end,
+            string table)
         {
             var result = new ImportResult();
 
@@ -52,7 +51,7 @@ namespace School_Mang.BL.SITE
 
             try
             {
-                var validation = Validator.ValidateExcel(file, type, columns, showError, table);
+                var validation = Validator.ValidateExcel(file, type, columns, table);
 
                 if (validation == null)
                 {
@@ -60,47 +59,54 @@ namespace School_Mang.BL.SITE
                     return result;
                 }
 
-                result.Data = validation.Data;
-
-                foreach (DataRow row in validation.Data.Rows)
+                if (validation.Errors != null && validation.Errors.Count > 0)
                 {
-                    if (validation.Data == null || validation.Data.Rows.Count == 0)
-                    {
-                        result.Errors.Add("❌ No data found in Excel");
-                        return result;
-                    }
-                    try
-                    {
-                        handler(row);
-                        result.ProcessedRows++;
-                    }
-                    catch (Exception ex)
-                    {
-                        int rowIndex = result.ProcessedRows + 1;
-                        result.Errors.Add($"❌ Row Error (Row {rowIndex}): {ex.Message}");
-                    }
+                    result.Errors.AddRange(validation.Errors);
+                    result.Errors.Add("⛔ تم إيقاف الحفظ بسبب وجود أخطاء في الملف");
+                    return result;
                 }
 
-                result.Success = result.Errors.Count == 0;
-
-                if (!result.Success)
-                    result.Errors.Add("⛔ Import failed");
-
-                if (result.Success && !string.IsNullOrWhiteSpace(table))
+                if (validation.Data == null || validation.Data.Rows.Count == 0)
                 {
-                    try
+                    result.Errors.Add("❌ No data found in Excel");
+                    return result;
+                }
+
+                result.Data = validation.Data;
+
+                try
+                {
+                    Mange_Site.RunInTransaction(() =>
                     {
+                        foreach (DataRow row in validation.Data.Rows)
+                        {
+                            handler(row);
+                            result.ProcessedRows++;
+                        }
+                    });
+
+                    result.Success = true;
+                }
+                catch (Exception ex)
+                {
+                    showError(result.Errors.Count.ToString());
+                    int rowIndex = result.ProcessedRows + 1;
+                    result.Errors.Add($"❌ فشل الحفظ عند الصف {rowIndex}: {ex.Message}");
+                }
+
+                try
+                {
+                    if (!string.IsNullOrWhiteSpace(table))
                         LookupCache.Refresh(Mange_Site);
-                    }
-                    catch (Exception ex)
-                    {
-                        result.Errors.Add("⚠️ Cache error: " + ex.Message);
-                    }
+                }
+                catch (Exception ex)
+                {
+                    result.Errors.Add("⚠️ Cache error: " + ex.Message);
                 }
             }
             catch (Exception ex)
             {
-                result.Errors.Add("❌ System: " + ex.Message);
+                result.Errors.Add(ex.Message);
             }
             finally
             {
@@ -116,7 +122,7 @@ namespace School_Mang.BL.SITE
 
 
         // استيراد الموضوعات
-        public ImportResult ImportTopicss(string excelFile,
+        public ImportResult ImportTopics(string excelFile,
                                          string fileType,
                                          Action<string> showError,
                                          Action waitStart,
@@ -527,5 +533,6 @@ namespace School_Mang.BL.SITE
                 IsCorrect = isCorrect
             });
         }
+
     }
 }

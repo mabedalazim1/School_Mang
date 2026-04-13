@@ -18,6 +18,7 @@ namespace School_Mang.PL.SITE
 {
     public partial class FRM_EDIT_DATA : Form
     {
+
         // Form Closed
         private static FRM_EDIT_DATA Frm_Edit_Data;
         static void frm_Form_Closed(object sender, FormClosedEventArgs e)
@@ -35,16 +36,25 @@ namespace School_Mang.PL.SITE
                 }
                 return Frm_Edit_Data;
             }
+
         }
+
         BL.MSG msg = new BL.MSG();
         BL.Waiting waiting = new BL.Waiting();
         SiteExcelUtlity Excel = new SiteExcelUtlity();
         BL.NATEG.cls_NATAG_FUNCTIONS natag_func = new BL.NATEG.cls_NATAG_FUNCTIONS();
         CLS_MANGE_SITE Mange_Site = new CLS_MANGE_SITE();
         CLS_READ_EXCEL Read_Excel = new CLS_READ_EXCEL();
+        private readonly ExcelDataManager _manager;
+
 
         public byte type;
         private string excel_file_name;
+
+        private Action<string> _error;
+        private Action _start;
+        private Action _end;
+
         public FRM_EDIT_DATA()
         {
             InitializeComponent();
@@ -52,6 +62,30 @@ namespace School_Mang.PL.SITE
             {
                 Frm_Edit_Data = this;
             }
+            _manager = new ExcelDataManager(Read_Excel, Mange_Site);
+            _error = m => msg.ErrorMesg(m);
+            _start = () => waiting.Wait();
+            _end = () => waiting.End_WAit();
+        }
+
+        private void HandleImportResult(ExcelDataManager.ImportResult result)
+        {
+            _end?.Invoke();
+
+            if (result == null)
+            {
+                _error("حدث خطأ غير متوقع");
+                return;
+            }
+
+            if (!result.Success)
+            {
+                foreach (var err in result.Errors)
+                    _error(err);
+                return;
+            }
+
+            msg.MyMesg($"تم بنجاح ✅ عدد الصفوف: {result.ProcessedRows}");
         }
 
         private void Save_Data_TO_Excel(string worksheetName)
@@ -184,7 +218,7 @@ namespace School_Mang.PL.SITE
 
         }
 
-       
+
         private void ReadStudents()
         {
             try
@@ -194,7 +228,7 @@ namespace School_Mang.PL.SITE
 
                 if (data == null)
                 {
-                    msg.ErrorMesg("لا توجد بيانات..!");
+                    _error("لا توجد بيانات..!");
                     BL.Globals.Dir_Path = "D://Users";
                     return;
                 }
@@ -239,7 +273,7 @@ namespace School_Mang.PL.SITE
 
                 if (data == null)
                 {
-                    msg.ErrorMesg("لا توجد بيانات..!");
+                    _error("لا توجد بيانات..!");
                     BL.Globals.Dir_Path = "D://Users";
                     return;
                 }
@@ -267,223 +301,134 @@ namespace School_Mang.PL.SITE
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                _error(ex.Message);
                 waiting.End_WAit();
             }
         }
 
         private void ReadTopic()
         {
-            var manager = new ExcelDataManager(Read_Excel, Mange_Site);
-
-            var result = manager.ImportTopicss(
+            var result = _manager.ImportTopics(
                 excel_file_name,
                 "topic",
-                msg.ErrorMesg,
-                waiting.Wait,
-                waiting.End_WAit,
+                _error,
+                _start,
+                _end,
                 null
             );
 
-            if (!result.Success)
-            {
-                foreach (var err in result.Errors)
-                    msg.ErrorMesg(err);
-
-                return;
-            }
-
-            msg.MyMesg($"تم بنجاح ✅ عدد الصفوف: {result.ProcessedRows}");
+            HandleImportResult(result);
         }
 
         private void ReadCourse()
         {
-            var manager = new ExcelDataManager(Read_Excel, Mange_Site);
-
-            var result = manager.ImportCourses(
+            var result = _manager.ImportCourses(
                 excel_file_name,
                 "course",
-                msg.ErrorMesg,
-                waiting.Wait,
-                waiting.End_WAit,
+                _error,
+                _start,
+                _end,
                 null
             );
 
-            if (!result.Success)
-            {
-                foreach (var err in result.Errors)
-                    msg.ErrorMesg(err);
-
-                return;
-            }
-
-            msg.MyMesg($"تم بنجاح ✅ عدد الصفوف: {result.ProcessedRows}");
+            HandleImportResult(result);
         }
 
 
         private void ReadSubPart()
         {
-            var manager = new ExcelDataManager(Read_Excel, Mange_Site);
-
-            var result = manager.ImportSubParts(
+            var result = _manager.ImportSubParts(
                 excel_file_name,
                 "subpart",
-                msg.ErrorMesg,
-                waiting.Wait,
-                waiting.End_WAit,
+               _error,
+                _start,
+                _end,
                 "subparts"
             );
 
-            if (!result.Success)
-            {
-                foreach (var err in result.Errors)
-                    msg.ErrorMesg(err);
-
-                return;
-            }
-
-            msg.MyMesg($"تم بنجاح ✅ عدد الصفوف: {result.ProcessedRows}");
+            HandleImportResult(result);
         }
 
         private void ReadVocabulary()
         {
-            var manager = new ExcelDataManager(Read_Excel, Mange_Site);
-
-            var result = manager.ImportVocabularies(
+            var result = _manager.ImportVocabularies(
                 excel_file_name,
                 "vocabulary",
-                msg.ErrorMesg,
-                waiting.Wait,
-                waiting.End_WAit,
+               _error,
+                _start,
+                _end,
                 "vocabularies"
             );
 
-            if (!result.Success)
-            {
-                foreach (var err in result.Errors)
-                    msg.ErrorMesg(err);
-
-                return;
-            }
-
-            msg.MyMesg($"تم بنجاح ✅ عدد الصفوف: {result.ProcessedRows}");
+            HandleImportResult(result);
         }
-
 
         private void ReadReview()
         {
-            var manager = new ExcelDataManager(Read_Excel, Mange_Site);
-
-            var result = manager.ImportReviews(
+            var result = _manager.ImportReviews(
                 excel_file_name,
                 "review",
-                msg.ErrorMesg,
-                waiting.Wait,
-                waiting.End_WAit,
+               _error,
+                _start,
+                _end,
                 "reviews"
             );
 
-            if (!result.Success)
-            {
-                foreach (var err in result.Errors)
-                    msg.ErrorMesg(err);
-
-                return;
-            }
-
-            msg.MyMesg($"تم بنجاح ✅ عدد الصفوف: {result.ProcessedRows}");
+            HandleImportResult(result);
         }
+
         private void ReadQuiz()
         {
-            var manager = new ExcelDataManager(Read_Excel, Mange_Site);
-
-            var result = manager.ImportQuizes(
+            var result = _manager.ImportQuizes(
                 excel_file_name,
                 "quiz",
-                msg.ErrorMesg,
-                waiting.Wait,
-                waiting.End_WAit,
+                _error,
+                _start,
+                _end,
                 "quizzes"
             );
 
-            if (!result.Success)
-            {
-                foreach (var err in result.Errors)
-                    msg.ErrorMesg(err);
-
-                return;
-            }
-
-            msg.MyMesg($"تم بنجاح ✅ عدد الصفوف: {result.ProcessedRows}");
+            HandleImportResult(result);
         }
 
         private void ReadQuestion()
         {
-            var manager = new ExcelDataManager(Read_Excel, Mange_Site);
-
-            var result = manager.ImportQuestions(
+            var result = _manager.ImportQuestions(
             excel_file_name,
             "question",
-            msg.ErrorMesg,
-            waiting.Wait,
-            waiting.End_WAit,
+            _error,
+            _start,
+            _end,
             "questions");
-               
 
-            if (!result.Success)
-            {
-                foreach (var err in result.Errors)
-                    msg.ErrorMesg(err);
 
-                return;
-            }
-
-            msg.MyMesg($"تم بنجاح ✅ عدد الصفوف: {result.ProcessedRows}");
+            HandleImportResult(result);
         }
-        
 
         private void ReadAnswer()
         {
-            var manager = new ExcelDataManager(Read_Excel, Mange_Site);
-
-            var result = manager.ImportAnswers(
+            var result = _manager.ImportAnswers(
             excel_file_name,
             "answer",
-            msg.ErrorMesg,
-            waiting.Wait,
-            waiting.End_WAit,
+            _error,
+            _start,
+            _end,
             "answers");
 
-            if (!result.Success)
-            {
-                foreach (var err in result.Errors)
-                    msg.ErrorMesg(err);
-
-                return;                
-            }
-            msg.MyMesg($"تم بنجاح ✅ عدد الصفوف: {result.ProcessedRows}");
+            HandleImportResult(result);
         }
 
         private void ReadQusestionsByAnswer()
         {
-            var manager = new ExcelDataManager(Read_Excel, Mange_Site);
-
-            var result = manager.ImportQuestionsWithAnswers(
+            var result = _manager.ImportQuestionsWithAnswers(
             excel_file_name,
             "mlutiquestion",
-            msg.ErrorMesg,
-            waiting.Wait,
-            waiting.End_WAit,
+            _error,
+            _start,
+            _end,
             "questions");
 
-            if (!result.Success)
-            {
-                foreach (var err in result.Errors)
-                    msg.ErrorMesg(err);
-
-                return;
-            }
-            msg.MyMesg($"تم بنجاح ✅ عدد الصفوف: {result.ProcessedRows}");
+            HandleImportResult(result);
         }
 
         int move;

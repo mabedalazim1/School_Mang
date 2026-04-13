@@ -56,8 +56,8 @@ namespace School_Mang.BL.SITE
 
                 if (file_name != fileType)
                 {
-                    showError?.Invoke("❌ نوع ملف غير صحيح");
-                    return null;
+                    throw new Exception("❌ نوع ملف غير صحيح");
+                   
                 }
 
                 // =========================
@@ -113,8 +113,8 @@ namespace School_Mang.BL.SITE
             }
             catch (Exception ex)
             {
-                showError?.Invoke("❌ Excel Error: " + ex.Message);
-                return null;
+                throw new Exception("Excel Error: " + ex.Message);
+                
             }
             finally
             {

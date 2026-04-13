@@ -1,5 +1,4 @@
-﻿using School_Mang.BL.ExcelUtils;
-using School_Mang.BL.SITE;
+﻿using School_Mang.BL.SITE;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -15,14 +14,6 @@ namespace School_Mang.BL.ExcelUtils
         {
             Read_Excel = r;
             Mange_Site = m;
-        }
-
-        // =========================
-        public class ExcelValidationResult
-        {
-            public DataTable Data { get; set; }
-            public List<string> Errors { get; set; } = new List<string>();
-            public bool IsValid => Errors.Count == 0;
         }
 
         // =========================
@@ -43,201 +34,192 @@ namespace School_Mang.BL.ExcelUtils
             };
 
         // =========================
-        private bool TryGetValue(object value, Type type, string col, int rowNumber, bool allowNull, List<string> errors, out object result)
-        {
-            result = null;
-
-            if (value == null || value == DBNull.Value || string.IsNullOrWhiteSpace(value.ToString()))
-            {
-                if (allowNull)
-                    return true;
-
-                errors.Add($"❌ صف {rowNumber} - العمود [{col}] قيمة فارغة");
-                return false;
-            }
-
-            try
-            {
-                if (type == typeof(int))
-                    result = Convert.ToInt32(value);
-                else if (type == typeof(string))
-                    result = value.ToString().Trim();
-                else
-                    result = value;
-
-                return true;
-            }
-            catch
-            {
-                errors.Add($"❌ صف {rowNumber} - العمود [{col}] قيمة غير صالحة [{value}]");
-                return false;
-            }
-        }
-
-        // =========================
-        private bool ValidateColumnRule(string name, int value, int rowNumber, List<string> errors)
-        {
-            if (!ColumnRules.TryGetValue(name, out var rule))
-                return true;
-
-            if (value == 0 && rule.AllowedValues != null)
-            {
-                errors.Add($"❌ صف {rowNumber} - [{name}] قيمة غير صالحة");
-                return false;
-            }
-
-            if (rule.AllowedValues != null && !rule.AllowedValues.Contains(value))
-            {
-                errors.Add($"❌ صف {rowNumber} - [{name}] قيمة غير مسموحة");
-                return false;
-            }
-
-            if (rule.Min.HasValue && value < rule.Min.Value)
-            {
-                errors.Add($"❌ صف {rowNumber} - [{name}] أقل من المسموح");
-                return false;
-            }
-
-            if (rule.Max.HasValue && value > rule.Max.Value)
-            {
-                errors.Add($"❌ صف {rowNumber} - [{name}] أكبر من المسموح");
-                return false;
-            }
-
-            return true;
-        }
-
-        // =========================
-        private bool ValidateKey(string tableName, DataRow row, int rowNumber, List<string> errors)
-        {
-            int course = row["course_id"] == DBNull.Value ? 0 : Convert.ToInt32(row["course_id"]);
-            int grade = row["grade_id"] == DBNull.Value ? 0 : Convert.ToInt32(row["grade_id"]);
-            int subject = row["subject_id"] == DBNull.Value ? 0 : Convert.ToInt32(row["subject_id"]);
-            int term = row["term_id"] == DBNull.Value ? 0 : Convert.ToInt32(row["term_id"]);
-
-            if (course == 0 || grade == 0 || subject == 0 || term == 0)
-            {
-                errors.Add($"❌ صف {rowNumber} - بيانات الكورس غير مكتملة");
-                return false;
-            }
-
-            var key = new TableKey(course, grade, subject, term);
-
-            // ✅ 1. تحقق من الكورس
-            if (!LookupCache.IsValidCourse(key))
-            {
-                errors.Add($"❌ صف {rowNumber} - الكورس غير موجود");
-                return false;
-            }
-
-            // ✅ 2. Questions
-            if (tableName == "questions")
-            {
-                int quizId = row["quiz_id"] == DBNull.Value ? 0 : Convert.ToInt32(row["quiz_id"]);
-
-                if (quizId == 0)
-                {
-                    errors.Add($"❌ صف {rowNumber} - quiz_id غير موجود");
-                    return false;
-                }
-
-                if (!Mange_Site.QuizExistsInContext(course, grade, subject, term, quizId))
-                {
-                    errors.Add($"❌ صف {rowNumber} - الكويز غير موجود");
-                    return false;
-                }
-            }
-
-            // ✅ 3. Answers
-            if (tableName == "answers")
-            {
-                int quizId = row["quiz_id"] == DBNull.Value ? 0 : Convert.ToInt32(row["quiz_id"]);
-                int questionId = row["question_id"] == DBNull.Value ? 0 : Convert.ToInt32(row["question_id"]);
-
-                if (quizId == 0 || questionId == 0)
-                {
-                    errors.Add($"❌ صف {rowNumber} - بيانات السؤال غير مكتملة");
-                    return false;
-                }
-
-                if (!Mange_Site.QuestionExistsInContext(course, quizId, questionId, grade, subject, term))
-                {
-                    errors.Add($"❌ صف {rowNumber} - السؤال غير موجود");
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        // =========================
-        public ExcelValidationResult ValidateExcel(
+        public ValidationResult ValidateExcel(
             string file,
             string type,
             ExcelColumn[] cols,
-            Action<string> showError,
             string tableName)
         {
-            var result = new ExcelValidationResult();
+            ValidationResult result = new ValidationResult();
 
-            try
+            DataTable data = Read_Excel.ReadExcelData(
+                file, cols, type, Mange_Site, null, null, null);
+
+            if (data == null || data.Rows.Count == 0)
+                return result;
+
+            result.Data = data;
+
+            LookupCache.Refresh(Mange_Site);
+
+            List<string> errors;
+
+            // =========================
+            // 1️⃣ STEP 1: VALUES ONLY
+            // =========================
+            errors = ValidateValues(data, cols);
+
+            if (errors.Count > 0)
             {
-                LookupCache.Load(Mange_Site);
+                return Fail(result, errors);
+            }
 
-                var data = Read_Excel.ReadExcelData(
-                    file, cols, type, Mange_Site, showError, null, null);
+            // =========================
+            // 2️⃣ STEP 2: KEYS ONLY
+            // =========================
+            errors = ValidateKeys(data, tableName);
 
-                if (data == null || data.Rows.Count == 0)
-                    return result;
+            if (errors.Count > 0)
+            {
+                return Fail(result, errors);
+            }
 
-                result.Data = data;
+            return result;
+        }
 
-                for (int i = 0; i < data.Rows.Count; i++)
+        // =========================
+        // STEP 1: Empty + Format + Rules
+        // =========================
+        private List<string> ValidateValues(DataTable data, ExcelColumn[] cols)
+        {
+            List<string> errors = new List<string>();
+
+            int i;
+            for (i = 0; i < data.Rows.Count; i++)
+            {
+                DataRow row = data.Rows[i];
+                int rowNumber = 4 + i;
+
+                int c;
+                for (c = 0; c < cols.Length; c++)
                 {
-                    var row = data.Rows[i];
-                    int rowNumber = 4 + i;
+                    ExcelColumn col = cols[c];
+                    object value = row[col.Name];
 
-                    bool rowValid = true;
-
-                    foreach (var col in cols)
+                    // EMPTY
+                    if (!col.AllowNull &&
+                        (value == null || value == DBNull.Value || string.IsNullOrWhiteSpace(value.ToString())))
                     {
-                        if (!TryGetValue(
-                                row[col.Name],
-                                col.DataType,
-                                col.Name,
-                                rowNumber,
-                                col.AllowNull,
-                                result.Errors,
-                                out object valueObj))
+                        errors.Add("❌ صف " + rowNumber + " - [" + col.Name + "] قيمة فارغة");
+                        continue;
+                    }
+
+                    if (value == null || value == DBNull.Value)
+                        continue;
+
+                    // FORMAT
+                    if (col.DataType == typeof(int))
+                    {
+                        int val;
+                        if (!int.TryParse(value.ToString(), out val))
                         {
-                            rowValid = false;
+                            errors.Add("❌ صف " + rowNumber + " - [" + col.Name + "] قيمة غير صالحة");
                             continue;
                         }
 
-                        if (valueObj != null && col.DataType == typeof(int))
+                        // RULES
+                        ColumnRule rule;
+                        if (ColumnRules.TryGetValue(col.Name, out rule))
                         {
-                            if (!ValidateColumnRule(col.Name, Convert.ToInt32(valueObj), rowNumber, result.Errors))
-                                rowValid = false;
+                            if (rule.AllowedValues != null && !rule.AllowedValues.Contains(val))
+                                errors.Add("❌ صف " + rowNumber + " - [" + col.Name + "] غير مسموح");
+
+                            if (rule.Min.HasValue && val < rule.Min.Value)
+                                errors.Add("❌ صف " + rowNumber + " - [" + col.Name + "] أقل من المسموح");
+
+                            if (rule.Max.HasValue && val > rule.Max.Value)
+                                errors.Add("❌ صف " + rowNumber + " - [" + col.Name + "] أكبر من المسموح");
                         }
-
-                        row[col.Name] = valueObj ?? DBNull.Value;
                     }
+                }
+            }
 
-                    if (!rowValid)
-                        continue;
+            return errors;
+        }
 
-                    if (!ValidateKey(tableName, row, rowNumber, result.Errors))
-                        continue;
+        // =========================
+        // STEP 2: KEYS ONLY
+        // =========================
+        private List<string> ValidateKeys(DataTable data, string tableName)
+        {
+            List<string> errors = new List<string>();
+
+            int i;
+            for (i = 0; i < data.Rows.Count; i++)
+            {
+                DataRow row = data.Rows[i];
+                int rowNumber = 4 + i;
+
+                int course = GetInt(row["course_id"]);
+                int grade = GetInt(row["grade_id"]);
+                int subject = GetInt(row["subject_id"]);
+                int term = GetInt(row["term_id"]);
+
+                if (course == 0 || grade == 0 || subject == 0 || term == 0)
+                {
+                    errors.Add("❌ صف " + rowNumber + " - بيانات الكورس غير مكتملة");
+                    continue;
                 }
 
-                if (result.Errors.Count > 0)
-                    result.Errors.Add("⛔ تم إلغاء العملية");
-            }
-            catch (Exception ex)
-            {
-                result.Errors.Add("❌ System Error: " + ex.Message);
+                TableKey key = new TableKey(course, grade, subject, term);
+
+                if (!LookupCache.IsValidCourse(key))
+                {
+                    errors.Add("❌ صف " + rowNumber + " - الكورس غير موجود");
+                    continue;
+                }
+
+                if (tableName == "questions")
+                {
+                    int quizId = GetInt(row["quiz_id"]);
+
+                    if (quizId == 0)
+                    {
+                        errors.Add("❌ صف " + rowNumber + " - quiz_id غير موجود");
+                        continue;
+                    }
+
+                    if (!Mange_Site.QuizExistsInContext(course, grade, subject, term, quizId))
+                    {
+                        errors.Add("❌ صف " + rowNumber + " - الكويز غير موجود");
+                    }
+                }
+                else if (tableName == "answers")
+                {
+                    int quizId = GetInt(row["quiz_id"]);
+                    int questionId = GetInt(row["question_id"]);
+
+                    if (quizId == 0 || questionId == 0)
+                    {
+                        errors.Add("❌ صف " + rowNumber + " - بيانات السؤال غير مكتملة");
+                        continue;
+                    }
+
+                    if (!Mange_Site.QuestionExistsInContext(course, quizId, questionId, grade, subject, term))
+                    {
+                        errors.Add("❌ صف " + rowNumber + " - السؤال غير موجود");
+                    }
+                }
             }
 
+            return errors;
+        }
+
+        // =========================
+        private int GetInt(object value)
+        {
+            if (value == null || value == DBNull.Value)
+                return 0;
+
+            int r;
+            return int.TryParse(value.ToString(), out r) ? r : 0;
+        }
+
+        // =========================
+        private ValidationResult Fail(ValidationResult result, List<string> errors)
+        {
+            result.Errors.AddRange(errors);
+            result.Errors.Add("⛔ تم إلغاء العملية بسبب وجود أخطاء");
             return result;
         }
     }

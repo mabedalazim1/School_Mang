@@ -1,63 +1,103 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using School_Mang.DAL;
 
 namespace School_Mang.BL
 {
     class CLS_BACKUP_DATABASE
     {
-        DAL.DataAcceseLayer DAL = new DAL.DataAcceseLayer();
-        MSG msg = new MSG();
-        Waiting waiting = new Waiting();
+        private readonly DataAcceseLayer DAL = new DataAcceseLayer();
+        private readonly MSG msg = new MSG();
+        private readonly Waiting waiting = new Waiting();
 
         public string temp_data_name = "";
 
-        // Mothed To BackUp DataBase 
+        // =========================
+        // BACKUP DATABASE
+        // =========================
         public void BackUP_DataBase(string file_name)
         {
             try
             {
                 waiting.Wait();
-                string Query = "Backup Database KPS_DATA_2023 to Disk ='" + file_name + "';";
-                DAL.ExeucuteQuery(Query);
-                temp_data_name = file_name;
-                waiting.End_WAit();
-                msg.MyExclamationMsg("تم إنشاء النسخة الاحتياطية  ..!" + file_name);
-            }
-            catch(Exception e)
-            {
-                msg.ErrorMesg(e.Message);
-                waiting.End_WAit();
-            }
-            
 
+                string safeFile = SanitizePath(file_name);
+
+                string query = $@"
+BACKUP DATABASE KPS_DATA_2023
+TO DISK = '{safeFile}'
+WITH INIT, STATS = 10;
+";
+
+                DAL.ExecuteQuery(query);
+
+                temp_data_name = file_name;
+
+                msg.MyExclamationMsg("تم إنشاء النسخة الاحتياطية بنجاح");
+            }
+            catch (Exception ex)
+            {
+                msg.ErrorMesg(ex.Message);
+            }
+            finally
+            {
+                waiting.End_WAit();
+            }
         }
 
-        // Mothed To Restore DataBase 
+        // =========================
+        // RESTORE DATABASE
+        // =========================
         public void Restore_DataBase(string file_name)
         {
             try
             {
                 waiting.Wait();
-                string Query = "USE master;" +
-                           "ALTER DATABASE KPS_DATA_2023 SET OFFLINE WITH ROLLBACK IMMEDIATE;" +
-                           "Restore Database KPS_DATA_2023 From Disk ='" + file_name +
-                           "' WITH REPLACE; ALTER DATABASE KPS_DATA_2023 SET ONLINE WITH ROLLBACK IMMEDIATE;";
 
-                DAL.ExeucuteQuery(Query);
-                waiting.End_WAit();
+                string safeFile = SanitizePath(file_name);
+
+                // 1 - offline
+                DAL.ExecuteQuery(@"
+USE master;
+ALTER DATABASE KPS_DATA_2023 SET OFFLINE WITH ROLLBACK IMMEDIATE;
+");
+
+                // 2 - restore
+                string restoreQuery = $@"
+RESTORE DATABASE KPS_DATA_2023
+FROM DISK = '{safeFile}'
+WITH REPLACE;
+";
+
+                DAL.ExecuteQuery(restoreQuery);
+
+                // 3 - online
+                DAL.ExecuteQuery(@"
+ALTER DATABASE KPS_DATA_2023 SET ONLINE WITH ROLLBACK IMMEDIATE;
+");
+
+                msg.MyExclamationMsg("تم استرجاع النسخة الاحتياطية بنجاح");
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                msg.ErrorMesg(e.Message);
+                msg.ErrorMesg(ex.Message);
+            }
+            finally
+            {
                 waiting.End_WAit();
             }
+        }
 
-            
+        // =========================
+        // SECURITY HELPERS
+        // =========================
+        private string SanitizePath(string path)
+        {
+            if (string.IsNullOrWhiteSpace(path))
+                throw new Exception("مسار الملف غير صحيح");
+
+            return path
+                .Trim()
+                .Replace("'", "''"); // مهم جدًا لـ SQL string safety
         }
     }
 }

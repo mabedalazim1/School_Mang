@@ -89,7 +89,6 @@ namespace School_Mang.BL.SITE
                 }
                 catch (Exception ex)
                 {
-                    showError(result.Errors.Count.ToString());
                     int rowIndex = result.ProcessedRows + 1;
                     result.Errors.Add($"❌ فشل الحفظ عند الصف {rowIndex}: {ex.Message}");
                 }
@@ -405,12 +404,12 @@ namespace School_Mang.BL.SITE
         }
         // استيراد الأسئلة بالإجابات
         public ImportResult ImportQuestionsWithAnswers(
-    string excelFile,
-    string fileType,
-    Action<string> showError,
-    Action waitStart,
-    Action waitEnd,
-    string tableName)
+                                                     string excelFile,
+                                                     string fileType,
+                                                     Action<string> showError,
+                                                     Action waitStart,
+                                                     Action waitEnd,
+                                                     string tableName)
         {
             var columns = new ExcelColumn[]
             {
@@ -425,7 +424,6 @@ namespace School_Mang.BL.SITE
         new ExcelColumn { Name = "question_text", DataType = typeof(string), Index = 8 },
         new ExcelColumn { Name = "question_type", DataType = typeof(short), Index = 9 },
 
-        // answers
         new ExcelColumn { Name = "a1", DataType = typeof(string), Index = 10, AllowNull = true },
         new ExcelColumn { Name = "t1", DataType = typeof(byte), Index = 21, AllowNull = true },
 
@@ -439,82 +437,162 @@ namespace School_Mang.BL.SITE
         new ExcelColumn { Name = "t4", DataType = typeof(byte), Index = 24, AllowNull = true },
             };
 
-            return ImportData(excelFile, fileType, columns,
-                row =>
-                {
-                    // ======================
-                    // 1. Save Question
-                    // ======================
-                    Mange_Site.Update_Question_Data(
-                        row.GetInt("question_id"),
-                        row.GetInt("quiz_id"),
-                        row.GetInt("course_id"),
-                        row.GetString("question_text"),
-                        row.GetShort("question_type"),
-                        row.GetInt("grade_id"),
-                        row.GetInt("subject_id"),
-                        row.GetInt("term_id"),
-                        row.GetShort("lang")
-                    );
+            waitStart?.Invoke();
 
-                    // ======================
-                    // 2. Build Answers
-                    // ======================
-                    List<AnswerModel> answers = new List<AnswerModel>();
+            try
+            {
+                var validation = Validator.ValidateExcel(
+                    excelFile,
+                    fileType,
+                    columns,
+                    tableName,
+                    row =>
+                    {
+                        var answers = new List<AnswerModel>();
 
-                    AddAnswer(answers, row, "a1", "t1");
-                    AddAnswer(answers, row, "a2", "t2");
-                    AddAnswer(answers, row, "a3", "t3");
-                    AddAnswer(answers, row, "a4", "t4");
+                        AddAnswer(answers, row, "a1", "t1");
+                        AddAnswer(answers, row, "a2", "t2");
+                        AddAnswer(answers, row, "a3", "t3");
+                        AddAnswer(answers, row, "a4", "t4");
 
-                    // ======================
-                    // 3. VALIDATION (IMPORTANT)
-                    // ======================
+                        if (!answers.Any())
+                            return $"السؤال {row.GetInt("question_id")} لا يحتوي على إجابات";
 
-                    // ❌ لو مفيش أي إجابات
-                    if (!answers.Any())
-                        throw new Exception($"❌ السؤال {row.GetInt("question_id")} لا يحتوي على إجابات");
+                        if (!answers.Any(a => a.IsCorrect == 1))
+                            return $"السؤال {row.GetInt("question_id")} يجب أن يحتوي على إجابة صحيحة";
 
-                    // ❌ لازم إجابة صحيحة واحدة على الأقل
-                    if (!answers.Any(a => a.IsCorrect == 1))
-                        throw new Exception($"❌ السؤال {row.GetInt("question_id")} يجب أن يحتوي على إجابة صحيحة");
-
-
-                    // التحقق من الأجابات
-
-                    if (Mange_Site.QuestionHasAnswers(
+                        if (Mange_Site.QuestionHasAnswers(
                             row.GetInt("course_id"),
                             row.GetInt("quiz_id"),
                             row.GetInt("question_id"),
                             row.GetInt("grade_id"),
                             row.GetInt("subject_id"),
                             row.GetInt("term_id")))
-                    {
-                        throw new Exception($"❌ السؤال رقم {row.GetInt("question_id")} -  له إجابات بالفعل");
-                    }
-                    // ======================
-                    // 4. Save Answers
-                    // ======================
-                    foreach (var ans in answers)
-                    {
-                        if (string.IsNullOrWhiteSpace(ans.Text))
-                            continue;
+                        {
+                            return $"السؤال {row.GetInt("question_id")} له إجابات بالفعل";
+                        }
 
-                        Mange_Site.Update_Answer_Data(
-                            row.GetInt("course_id"),
-                            row.GetInt("quiz_id"),
-                            row.GetInt("question_id"),
-                            ans.Text,
-                            ans.IsCorrect,
-                            row.GetInt("grade_id"),
-                            row.GetInt("subject_id"),
-                            row.GetInt("term_id")
-                        );
+                        return null;
+                    });
+
+                // =========================
+                // COLLECT ALL ERRORS
+                // =========================
+                var errors = new List<string>();
+
+                if (validation == null)
+                {
+                    errors.Add("❌ Validation returned null");
+                }
+                else
+                {
+                    if (validation.Errors != null && validation.Errors.Count > 0)
+                        errors.AddRange(validation.Errors);
+
+                    if (validation.Data != null)
+                    {
+                        var duplicates = validation.Data
+                            .AsEnumerable()
+                            .GroupBy(r => new
+                            {
+                                CourseId = Convert.ToInt32(r["course_id"]),
+                                QuizId = Convert.ToInt32(r["quiz_id"]),
+                                QuestionId = Convert.ToInt32(r["question_id"])
+                            })
+                            .Where(g => g.Count() > 1)
+                            .ToList();
+
+                        if (duplicates.Any())
+                        {
+                            errors.AddRange(duplicates.Select(d =>
+                                $"❌ تكرار السؤال {d.Key.QuestionId} داخل الكويز {d.Key.QuizId} (الكورس {d.Key.CourseId})"));
+                        }
                     }
-                },
-                showError, waitStart, waitEnd, tableName
-            );
+                    else
+                    {
+                        errors.Add("❌ No data found in Excel");
+                    }
+                }
+
+                // =========================
+                // STOP IF ERRORS EXIST
+                // =========================
+                if (errors.Any())
+                {
+                    return new ImportResult
+                    {
+                        Success = false,
+                        Errors = errors
+                    };
+                }
+
+                // =========================
+                // SAVE
+                // =========================
+                return ImportData(
+                    excelFile,
+                    fileType,
+                    columns,
+                    row =>
+                    {
+                        int courseId = row.GetInt("course_id");
+                        int quizId = row.GetInt("quiz_id");
+                        int questionId = row.GetInt("question_id");
+                        int gradeId = row.GetInt("grade_id");
+                        int subjectId = row.GetInt("subject_id");
+                        int termId = row.GetInt("term_id");
+
+                        if (questionId <= 0)
+                            return;
+
+                        Mange_Site.Update_Question_Data(
+                            questionId,
+                            quizId,
+                            courseId,
+                            row.GetString("question_text"),
+                            row.GetShort("question_type"),
+                            gradeId,
+                            subjectId,
+                            termId,
+                            row.GetShort("lang")
+                        );
+
+                        var answers = new List<AnswerModel>();
+
+                        AddAnswer(answers, row, "a1", "t1");
+                        AddAnswer(answers, row, "a2", "t2");
+                        AddAnswer(answers, row, "a3", "t3");
+                        AddAnswer(answers, row, "a4", "t4");
+
+                        foreach (var ans in answers)
+                        {
+                            if (string.IsNullOrWhiteSpace(ans.Text))
+                                continue;
+
+                            Mange_Site.Update_Answer_Data(
+                                courseId,
+                                quizId,
+                                questionId,
+                                ans.Text,
+                                ans.IsCorrect,
+                                gradeId,
+                                subjectId,
+                                termId
+                            );
+                        }
+                    },
+                    showError,
+                    waitStart,
+                    waitEnd,
+                    tableName
+                );
+            }
+            finally
+            {
+                waitEnd?.Invoke();
+            }
         }
+
         private void AddAnswer(List<AnswerModel> list, DataRow row, string aCol, string tCol)
         {
             string text = row[aCol]?.ToString();
@@ -533,6 +611,5 @@ namespace School_Mang.BL.SITE
                 IsCorrect = isCorrect
             });
         }
-
     }
 }

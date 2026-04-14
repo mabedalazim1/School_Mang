@@ -16,7 +16,6 @@ namespace School_Mang.BL.ExcelUtils
             Mange_Site = m;
         }
 
-        // =========================
         public class ColumnRule
         {
             public int? Min;
@@ -33,12 +32,23 @@ namespace School_Mang.BL.ExcelUtils
                 { "sound", new ColumnRule { AllowedValues = new HashSet<int>{0,1} } },
             };
 
-        // =========================
+        // ✅ نفس الدالة القديمة (بدون كسر)
         public ValidationResult ValidateExcel(
             string file,
             string type,
             ExcelColumn[] cols,
             string tableName)
+        {
+            return ValidateExcel(file, type, cols, tableName, null);
+        }
+
+        // ✅ النسخة الجديدة (Business Validation)
+        public ValidationResult ValidateExcel(
+            string file,
+            string type,
+            ExcelColumn[] cols,
+            string tableName,
+            Func<DataRow, string> businessValidator)
         {
             ValidationResult result = new ValidationResult();
 
@@ -54,49 +64,61 @@ namespace School_Mang.BL.ExcelUtils
 
             List<string> errors;
 
-            // =========================
-            // 1️⃣ STEP 1: VALUES ONLY
-            // =========================
+            // 1️⃣ VALUES
             errors = ValidateValues(data, cols);
-
             if (errors.Count > 0)
-            {
                 return Fail(result, errors);
-            }
 
-            // =========================
-            // 2️⃣ STEP 2: KEYS ONLY
-            // =========================
+            // 2️⃣ KEYS
             errors = ValidateKeys(data, tableName);
-
             if (errors.Count > 0)
-            {
                 return Fail(result, errors);
+
+            // 3️⃣ BUSINESS 🔥
+            if (businessValidator != null)
+            {
+                errors = ValidateBusiness(data, businessValidator);
+                if (errors.Count > 0)
+                    return Fail(result, errors);
             }
 
             return result;
         }
 
-        // =========================
-        // STEP 1: Empty + Format + Rules
-        // =========================
+        private List<string> ValidateBusiness(DataTable data, Func<DataRow, string> validator)
+        {
+            List<string> errors = new List<string>();
+
+            for (int i = 0; i < data.Rows.Count; i++)
+            {
+                var row = data.Rows[i];
+                int rowNumber = 4 + i;
+
+                var error = validator(row);
+
+                if (!string.IsNullOrEmpty(error))
+                {
+                    errors.Add("❌ صف " + rowNumber + " - " + error);
+                }
+            }
+
+            return errors;
+        }
+
         private List<string> ValidateValues(DataTable data, ExcelColumn[] cols)
         {
             List<string> errors = new List<string>();
 
-            int i;
-            for (i = 0; i < data.Rows.Count; i++)
+            for (int i = 0; i < data.Rows.Count; i++)
             {
                 DataRow row = data.Rows[i];
                 int rowNumber = 4 + i;
 
-                int c;
-                for (c = 0; c < cols.Length; c++)
+                for (int c = 0; c < cols.Length; c++)
                 {
                     ExcelColumn col = cols[c];
                     object value = row[col.Name];
 
-                    // EMPTY
                     if (!col.AllowNull &&
                         (value == null || value == DBNull.Value || string.IsNullOrWhiteSpace(value.ToString())))
                     {
@@ -107,7 +129,6 @@ namespace School_Mang.BL.ExcelUtils
                     if (value == null || value == DBNull.Value)
                         continue;
 
-                    // FORMAT
                     if (col.DataType == typeof(int))
                     {
                         int val;
@@ -117,7 +138,6 @@ namespace School_Mang.BL.ExcelUtils
                             continue;
                         }
 
-                        // RULES
                         ColumnRule rule;
                         if (ColumnRules.TryGetValue(col.Name, out rule))
                         {
@@ -137,15 +157,11 @@ namespace School_Mang.BL.ExcelUtils
             return errors;
         }
 
-        // =========================
-        // STEP 2: KEYS ONLY
-        // =========================
         private List<string> ValidateKeys(DataTable data, string tableName)
         {
             List<string> errors = new List<string>();
 
-            int i;
-            for (i = 0; i < data.Rows.Count; i++)
+            for (int i = 0; i < data.Rows.Count; i++)
             {
                 DataRow row = data.Rows[i];
                 int rowNumber = 4 + i;
@@ -205,7 +221,6 @@ namespace School_Mang.BL.ExcelUtils
             return errors;
         }
 
-        // =========================
         private int GetInt(object value)
         {
             if (value == null || value == DBNull.Value)
@@ -215,7 +230,6 @@ namespace School_Mang.BL.ExcelUtils
             return int.TryParse(value.ToString(), out r) ? r : 0;
         }
 
-        // =========================
         private ValidationResult Fail(ValidationResult result, List<string> errors)
         {
             result.Errors.AddRange(errors);

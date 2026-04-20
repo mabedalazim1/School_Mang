@@ -7,14 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using School_Mang.BL;
 
 namespace School_Mang.PL.NATIGA
 {
     public partial class FRM_FINAL_DATA : Form
     {
-        BL.MSG msg = new BL.MSG();
         BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
-        BL.Waiting Waiting = new BL.Waiting();
+        
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
 
 
@@ -90,7 +90,7 @@ namespace School_Mang.PL.NATIGA
                     DataTable Dt;
                     Dt = NATEG.Get_Golos_Edit_Data(grade_id, "yes");
                     dt_std_data.DataSource = null;
-                    Waiting.Wait();
+                    Waiting.Start();
                     dt_std_data.DataSource = Dt;
                     dt_std_data.Columns["std_code"].Visible = false;
 
@@ -114,7 +114,7 @@ namespace School_Mang.PL.NATIGA
                    
                     Dt = NATEG.Get_Final_Total_Degree(grade_id);
                     dt_std_data.DataSource = null;
-                    Waiting.Wait();
+                    Waiting.Start();
                     dt_std_data.DataSource = Dt;
                     dt_std_data.Columns["Absent_Any"].Visible = false;
                     Check_Absent();
@@ -125,15 +125,15 @@ namespace School_Mang.PL.NATIGA
                 }
 
 
-                Waiting.End_WAit();
+                Waiting.Stop();
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
             finally
             {
-                Waiting.End_WAit();
+                Waiting.Stop();
             }
         }
 
@@ -212,7 +212,7 @@ namespace School_Mang.PL.NATIGA
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
         }
 
@@ -283,7 +283,7 @@ namespace School_Mang.PL.NATIGA
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
         }
 
@@ -337,7 +337,7 @@ namespace School_Mang.PL.NATIGA
                 {
                     int grade = BL.Globals.test_grade_id;
                     string std_name = txt_std_data.Text;
-                    Waiting.Wait();
+                    Waiting.Start();
                   
                     Dt = NATEG.Get_Final_Total_Degree(grade, std_name);
                 }
@@ -350,15 +350,15 @@ namespace School_Mang.PL.NATIGA
 
                 dt_std_data.DataSource = Dt;
                 lbl_count.Text = Dt.Rows.Count.ToString();
-                Waiting.End_WAit();
+                Waiting.Stop();
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
             finally
             {
-                Waiting.End_WAit();
+                Waiting.Stop();
             }
         }
 
@@ -367,14 +367,14 @@ namespace School_Mang.PL.NATIGA
             int grade = Convert.ToInt32(cmb_grade.SelectedValue);
             try
             {
-                Waiting.Wait();
+                Waiting.Start();
                 DataTable Dt;
                 if (!BL.Globals.Edit_Golos)
                 {
                     Dt = NATEG.Get_Final_Total_Degree(grade);
                     if (Dt.Rows.Count == 0)
                     {
-                        msg.ErrorMesg("لا توجد بيانات مسجلة للصف المحدد ..!");
+                        MSG.ErrorMesg("لا توجد بيانات مسجلة للصف المحدد ..!");
                         cmb_grade.SelectedValue = BL.Globals.test_grade_id;
                         return;
                     }
@@ -402,15 +402,15 @@ namespace School_Mang.PL.NATIGA
                 }
                 ChangLayOut();
                 DisableBtn();
-                Waiting.End_WAit();
+                Waiting.Stop();
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
             finally
             {
-                Waiting.End_WAit();
+                Waiting.Stop();
             }
         }
 
@@ -473,7 +473,7 @@ namespace School_Mang.PL.NATIGA
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
         }
     }

@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Bunifu.Framework.UI;
+using School_Mang.BL;
 
 namespace School_Mang.PL.NATIGA
 {
@@ -16,8 +17,7 @@ namespace School_Mang.PL.NATIGA
     {
 
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
-        BL.MSG msg = new BL.MSG();
-        BL.Waiting waiting = new BL.Waiting();
+        
         BL.NATEG.CLS_NATEG nateg = new BL.NATEG.CLS_NATEG();
         BL.NATEG.ExcelUtlity Excel = new BL.NATEG.ExcelUtlity();
         RPT.REPORT_CONNECTION RPT = new RPT.REPORT_CONNECTION();
@@ -134,7 +134,7 @@ namespace School_Mang.PL.NATIGA
             DialogResult result = folderBrowserDialog1.ShowDialog();
             if (result != DialogResult.OK)
             {
-                msg.ErrorMesg("يرجى اختيار مسار الحفظ .. !");
+                MSG.ErrorMesg("يرجى اختيار مسار الحفظ .. !");
                 btn.Focus();
                 return;
             }
@@ -144,35 +144,35 @@ namespace School_Mang.PL.NATIGA
 
                 if (File.Exists(saveAsLocation))
                 {
-                    if (msg.DialogeErrMsg("الصف المحدد تم تصديره سابقاً .. سوف يتم حذف الملف  .. هل تريد المتابعة ؟") == DialogResult.No)
+                    if (MSG.DialogeErrMsg("الصف المحدد تم تصديره سابقاً .. سوف يتم حذف الملف  .. هل تريد المتابعة ؟") == DialogResult.No)
                     {
-                        msg.ErrorMesg("تم إلغاء الإجراء ..!");
+                        MSG.ErrorMesg("تم إلغاء الإجراء ..!");
                         btn.Focus();
                         return;
                     }
                 }
             }
-            waiting.Wait();
+            Waiting.Start();
             try
             {
                 DataTable Dt_Rasd = nateg.Get_Rasd_Data(grade);
                 if (Excel.WriteRasdDataToExcel(Dt_Rasd, grade_desc, saveAsLocation, title, staticExcelFile, test_kind))
                 {
-                    msg.MyMesg("تم إعداد الملف بنجاح !");
-                    msg.MyMesg(saveAsLocation + "  مسار الملف هو  ");
+                    MSG.MyMesg("تم إعداد الملف بنجاح !");
+                    MSG.MyMesg(saveAsLocation + "  مسار الملف هو  ");
                 }
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
-                waiting.End_WAit();
+                MSG.ErrorMesg(ex.Message);
+                Waiting.Stop();
             }
-            waiting.End_WAit();
+            Waiting.Stop();
         }
 
         private void OpenRasdReport(byte test_kind)
         {
-            waiting.Wait();
+            Waiting.Start();
             try
             {
                 int grade = Convert.ToInt32(cmb_grade.SelectedValue);
@@ -181,15 +181,15 @@ namespace School_Mang.PL.NATIGA
 
                 RPT.OpenKoshof_Rasd(grade, month, test_kind);
 
-                waiting.End_WAit();
+                Waiting.Stop();
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
             finally
             {
-                waiting.End_WAit();
+                Waiting.Stop();
             }
             
         }

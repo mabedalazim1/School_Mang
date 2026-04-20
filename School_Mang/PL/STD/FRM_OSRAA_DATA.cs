@@ -8,17 +8,20 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using School_Mang.BL;
+using School_Mang.BL.Services;
 
 namespace School_Mang.PL.STD
 {
     public partial class FRM_OSRAA_DATA : Form
     {
+        private NavigationContext _context;
+
         public string state = "add";
         public string student_state = "";
 
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
-        BL.MSG msg = new BL.MSG();
-        BL.Waiting Waiting = new BL.Waiting();
+        
 
         BL.HESAB_SEN hesab_sen = new BL.HESAB_SEN();
 
@@ -47,6 +50,8 @@ namespace School_Mang.PL.STD
         public FRM_OSRAA_DATA()
         {
             InitializeComponent();
+
+            _context = AppNavigation.CurrentContext;
 
             if (frm_Osrs_Data == null)
             {
@@ -83,18 +88,18 @@ namespace School_Mang.PL.STD
         // checked Data
         private Boolean Checked_Data(TextBox txt, string str)
         {
-            Waiting.Wait();
+            Waiting.Start();
             if (txt.Text == "")
             {
-                msg.ErrorMesg(str);
+                MSG.ErrorMesg(str);
                 txt.BackColor = Color.MistyRose;
                 txt.Focus();
-                Waiting.End_WAit();
+                Waiting.Stop();
                 return false;
             }
             else
             {
-                Waiting.End_WAit();
+                Waiting.Stop();
                 return true;
             }
 
@@ -102,36 +107,36 @@ namespace School_Mang.PL.STD
 
         private Boolean Checked_Phon(TextBox txt, int num)
         {
-            Waiting.Wait();
+            Waiting.Start();
             if (txt.Text.Length != num && txt.Text != "")
             {
-                msg.ErrorMesg("تأكد من رقم الهاتف المدخل  .. ! يجب ألا يقل عن  " + num.ToString());
+                MSG.ErrorMesg("تأكد من رقم الهاتف المدخل  .. ! يجب ألا يقل عن  " + num.ToString());
                 txt.BackColor = Color.MistyRose;
                 txt.Focus();
-                Waiting.End_WAit();
+                Waiting.Stop();
                 return false;
             }
             else
             {
-                Waiting.End_WAit();
+                Waiting.Stop();
                 return true;
             }
         }
 
         private Boolean Checked_Is_Numeric(TextBox txt)
         {
-            Waiting.Wait();
+            Waiting.Start();
             Regex nonNumericRegex = new Regex(@"\D");
             if (nonNumericRegex.IsMatch(txt.Text))
             {
                 txt.BackColor = Color.MistyRose;
-                msg.ErrorMesg("تأكد من القيمة المدخلة .. يسمح بالأرقام فقط ..! ");
-                Waiting.End_WAit();
+                MSG.ErrorMesg("تأكد من القيمة المدخلة .. يسمح بالأرقام فقط ..! ");
+                Waiting.Stop();
                 return false;
             }
             else
             {
-                Waiting.End_WAit();
+                Waiting.Stop();
                 return true;
             }
         }
@@ -142,26 +147,26 @@ namespace School_Mang.PL.STD
             {
                 return true;
             }
-            Waiting.Wait();
+            Waiting.Start();
             Regex nonNumericRegex = new Regex(@"\D");
             if (nonNumericRegex.IsMatch(txt.Text))
             {
                 txt.BackColor = Color.MistyRose;
-                msg.ErrorMesg("تأكد من القيمة المدخلة .. يسمح بالأرقام فقط ..! ");
-                Waiting.End_WAit();
+                MSG.ErrorMesg("تأكد من القيمة المدخلة .. يسمح بالأرقام فقط ..! ");
+                Waiting.Stop();
                 return false;
             }
             else if (txt.Text.Substring(0, 2) != "01" && txt.Text.Length == 11)
             {
-                msg.ErrorMesg("تأكد من رقم الهاتف المدخل  .. ! الرقم يجب أن يبدأ ب  01 ");
+                MSG.ErrorMesg("تأكد من رقم الهاتف المدخل  .. ! الرقم يجب أن يبدأ ب  01 ");
                 txt.BackColor = Color.MistyRose;
                 txt.Focus();
-                Waiting.End_WAit();
+                Waiting.Stop();
                 return false;
             }
             else
             {
-                Waiting.End_WAit();
+                Waiting.Stop();
                 return true;
             }
         }
@@ -170,7 +175,7 @@ namespace School_Mang.PL.STD
         private int Osra_cod()
         {
 
-            Waiting.Wait();
+            Waiting.Start();
             // Student Code
             string year = Properties.Settings.Default.MyYear.ToString().Substring(2, 2);
             string next_year = (Convert.ToInt32(year) + 1).ToString();
@@ -179,12 +184,12 @@ namespace School_Mang.PL.STD
             {
 
                 int Osra_cod = Convert.ToInt32(next_year + "001");
-                Waiting.End_WAit();
+                Waiting.Stop();
                 return Osra_cod;
             }
             else
             {
-                Waiting.End_WAit();
+                Waiting.Stop();
                 return Convert.ToInt32(Dt.Rows[0]["Max_Osra_Id"]) + 1;
             }
 
@@ -218,7 +223,7 @@ namespace School_Mang.PL.STD
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
 
         }
@@ -252,7 +257,7 @@ namespace School_Mang.PL.STD
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
 
         }
@@ -260,7 +265,7 @@ namespace School_Mang.PL.STD
         //Verify Std Nat
         private Boolean Verify_Std_Nat(TextBox txt)
         {
-            Waiting.Wait();
+            Waiting.Start();
             Boolean nat = false;
             try
             {
@@ -270,7 +275,7 @@ namespace School_Mang.PL.STD
                     if (Dt.Rows.Count > 0)
                     {
                         string name = Dt.Rows[0][1].ToString();
-                        msg.ErrorMesg("الرقم القومى للطالب  " + name + "  مسجل من قبل");
+                        MSG.ErrorMesg("الرقم القومى للطالب  " + name + "  مسجل من قبل");
                         txt.BackColor = Color.MistyRose;
                         txt.Focus();
                         nat = true;
@@ -284,13 +289,13 @@ namespace School_Mang.PL.STD
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
             finally
             {
-                Waiting.End_WAit();
+                Waiting.Stop();
             }
-            Waiting.End_WAit();
+            Waiting.Stop();
             return nat;
 
         }
@@ -299,7 +304,7 @@ namespace School_Mang.PL.STD
         {
             Boolean osra_nat = false;
 
-            Waiting.Wait();
+            Waiting.Start();
             int sana = Properties.Settings.Default.MyYear;
             if (hesab_sen.Nat_HesabSen(txt.Text, sana) == null)
             {
@@ -317,7 +322,7 @@ namespace School_Mang.PL.STD
                         if (Dt.Rows.Count > 0)
                         {
                             string name = Dt.Rows[0][0].ToString();
-                            msg.ErrorMesg("الرقم القومى باسم السيد /   " + name + "  مسجل من قبل");
+                            MSG.ErrorMesg("الرقم القومى باسم السيد /   " + name + "  مسجل من قبل");
                             txt.BackColor = Color.MistyRose;
                             txt.Focus();
                             osra_nat = true;
@@ -331,16 +336,16 @@ namespace School_Mang.PL.STD
                 }
                 catch (Exception e)
                 {
-                    msg.ErrorMesg(e.Message);
+                    MSG.ErrorMesg(e.Message);
                 }
                 finally
                 {
-                    Waiting.End_WAit();
+                    Waiting.Stop();
                 }
 
             }
 
-            Waiting.End_WAit();
+            Waiting.Stop();
             return osra_nat;
 
         }
@@ -348,11 +353,16 @@ namespace School_Mang.PL.STD
         private void btn_close_b_Click(object sender, EventArgs e)
         {
             this.Close();
-            if (BL.Globals.Open_Form_Get_osra)
+            if (_context?.OpenFormGetOsra == true)
             {
-                FRM_GET_OSRAA.Get_Osra_data.txt_osra_data_OnValueChanged(sender, e);
-                FRM_GET_OSRAA.Get_Osra_data.Visible = true;
-                BL.Globals.Open_Form_Get_osra = false;
+                var frm = FRM_GET_OSRAA.Get_Osra_data;
+                frm.LoadOsraData();
+                frm.Visible = true;
+
+
+                // FRM_GET_OSRAA.Get_Osra_data.txt_osra_data_OnValueChanged(sender, e);
+                // FRM_GET_OSRAA.Get_Osra_data.Visible = true;
+                
 
             }
 
@@ -537,7 +547,7 @@ namespace School_Mang.PL.STD
 
             if (txt_father_nat.Text == txt_mother_nat.Text)
             {
-                msg.ErrorMesg("الأرقام القومية للوالدين متشابهة... !");
+                MSG.ErrorMesg("الأرقام القومية للوالدين متشابهة... !");
                 txt_father_nat.BackColor = Color.MistyRose;
                 txt_mother_nat.BackColor = Color.MistyRose;
                 txt_father_nat.Focus();
@@ -546,7 +556,7 @@ namespace School_Mang.PL.STD
 
             if (txt_father_nat.Text == FRM_ADD_STD.getAdd_Std_Frm.txt_nat.Text)
             {
-                msg.ErrorMesg(" تم إدخال هذا الرقم للطالب .. يرجى مراجعة الأرقام القومية... !");
+                MSG.ErrorMesg(" تم إدخال هذا الرقم للطالب .. يرجى مراجعة الأرقام القومية... !");
                 txt_father_nat.BackColor = Color.MistyRose;
                 txt_father_nat.Focus();
                 return;
@@ -554,7 +564,7 @@ namespace School_Mang.PL.STD
 
             if (txt_mother_nat.Text == FRM_ADD_STD.getAdd_Std_Frm.txt_nat.Text)
             {
-                msg.ErrorMesg(" تم إدخال هذا الرقم للطالب .. يرجى مراجعة الأرقام القومية... !");
+                MSG.ErrorMesg(" تم إدخال هذا الرقم للطالب .. يرجى مراجعة الأرقام القومية... !");
                 txt_mother_nat.BackColor = Color.MistyRose;
                 txt_mother_nat.Focus();
                 return;
@@ -568,18 +578,27 @@ namespace School_Mang.PL.STD
 
                     Save_Osra_Data();
 
-                    msg.MyMesg("تم حفظ بيانات الأسرة بنجاح ... !");
+                    MSG.MyMesg("تم حفظ بيانات الأسرة بنجاح ... !");
                     if (student_state == "std_add_new_osra")
                     {
                         student_state = "";
-                        FRM_GET_OSRAA.Get_Osra_data.Show();
-                        FRM_GET_OSRAA.Get_Osra_data.btn_ok_Click(sender, e);
+                        var frm = FRM_GET_OSRAA.Get_Osra_data;
+                        frm.Show();
+                        frm.GetData();
+
+                        //FRM_GET_OSRAA.Get_Osra_data.Show();
+                        //FRM_GET_OSRAA.Get_Osra_data.btn_ok_Click(sender, e);
                         //FRM_GET_OSRAA.Get_Osra_data.Close();
                     }
-                    if (BL.Globals.Open_From_Get_Std)
+                    if (_context?.OpenFromGetStd == true)
                     {
-                        BL.Globals.Open_From_Get_Std = false;
-                        FRM_ADD_STD.getAdd_Std_Frm.Show();
+
+                        AppNavigation.Instance.SetContext(c =>
+                        {
+                            c.OpenFromGetStd = false;
+                        }).Show(FRM_ADD_STD.getAdd_Std_Frm,false); // تم التحقق
+
+                       // FRM_ADD_STD.getAdd_Std_Frm.Show();
                     }
                 }
                 else
@@ -587,22 +606,28 @@ namespace School_Mang.PL.STD
                     // Update Osra Data
 
                     Update_Osra_Data();
-                    msg.MyMesg("تم تعديل بيانات الأسرة بنجاح ... !");
+                    MSG.MyMesg("تم تعديل بيانات الأسرة بنجاح ... !");
                 }
 
                 FRM_GET_OSRAA.Get_Osra_data.status = student_state;
                 FRM_GET_OSRAA.Get_Osra_data.dt_osra_data.DataSource = std.Get_All_Osra_Data();
-                if (BL.Globals.Open_Form_Get_osra)
+                if (_context?.OpenFormGetOsra == true)
                 {
-                    BL.Globals.Open_Form_Get_osra = false;
-                    FRM_GET_OSRAA.Get_Osra_data.Show();
+                    AppNavigation.Instance
+                       .SetContext(c =>
+                       {
+                           c.OpenFormGetOsra = false; // 
+                       })
+                       .Show(FRM_GET_OSRAA.Get_Osra_data); // تم التحقق
+
+                    //FRM_GET_OSRAA.Get_Osra_data.Show();
                 }
 
                 this.Close();
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
 
         }

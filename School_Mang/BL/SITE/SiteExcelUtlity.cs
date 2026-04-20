@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Office.Interop.Excel;
+using School_Mang.BL;
 
 namespace School_Mang.BL.SITE
 {
     class SiteExcelUtlity
     {
-        MSG msg = new MSG();
-        Waiting waiting = new Waiting();
 
         public bool WriteLessonsDataToExcel(
                                     string worksheetName,
@@ -23,7 +22,7 @@ namespace School_Mang.BL.SITE
             Workbook excelworkBook;
             Worksheet excelSheet;
 
-            waiting.Wait();
+            Waiting.Start();
             try
             {
                 // Start Excel and get Application object.
@@ -54,13 +53,13 @@ namespace School_Mang.BL.SITE
                 excel.Quit();
                 excel = null;
 
-                waiting.End_WAit();
+                Waiting.Stop();
                 return true;
             }
             catch (Exception ex)
             {
-                waiting.End_WAit();
-                msg.ErrorMesg(ex.Message);
+                Waiting.Stop();
+                MSG.ErrorMesg(ex.Message);
                 return false;
             }
             finally
@@ -69,7 +68,7 @@ namespace School_Mang.BL.SITE
                 excelworkBook = null;
                 excel = null;
 
-                waiting.End_WAit();
+                Waiting.Stop();
             }
         }
 
@@ -86,7 +85,7 @@ namespace School_Mang.BL.SITE
             // Start Excel and get Application object.
             excel = new Application();
 
-            waiting.Wait();
+            Waiting.Start();
             try
             {
                 // for making Excel visible
@@ -110,8 +109,8 @@ namespace School_Mang.BL.SITE
                     excel.DisplayAlerts = true;
                     excel.Quit();
                     excel = null;
-                    msg.ErrorMesg("تأكد من الملف المراد رفعه ..!");
-                    waiting.End_WAit();
+                    MSG.ErrorMesg("تأكد من الملف المراد رفعه ..!");
+                    Waiting.Stop();
                     return null;
                 }
 
@@ -125,7 +124,7 @@ namespace School_Mang.BL.SITE
                     excel.Quit();
                     excel = null;
 
-                    waiting.End_WAit();
+                    Waiting.Stop();
                     return null;
                 }
                 else
@@ -176,14 +175,14 @@ namespace School_Mang.BL.SITE
                 excel.Quit();
                 excel = null;
 
-                waiting.End_WAit();
+                Waiting.Stop();
                 return dt;
             }
             catch (Exception ex)
             {
-                waiting.End_WAit();
-                msg.ErrorMesg(ex.Message);
-                msg.ErrorMesg("يرجي التحقق من البيانات");
+                Waiting.Stop();
+                MSG.ErrorMesg(ex.Message);
+                MSG.ErrorMesg("يرجي التحقق من البيانات");
                 excel.DisplayAlerts = true;
                 excelSheet = null;
                 excelworkBook = null;
@@ -196,7 +195,7 @@ namespace School_Mang.BL.SITE
                 excelSheet = null;
                 excelworkBook = null;
                 excel = null;
-                waiting.End_WAit();
+                Waiting.Stop();
             }
         }
 
@@ -213,7 +212,7 @@ namespace School_Mang.BL.SITE
             // Start Excel and get Application object.
             excel = new Application();
 
-            waiting.Wait();
+            Waiting.Start();
             try
             {
                 // for making Excel visible
@@ -237,8 +236,8 @@ namespace School_Mang.BL.SITE
                     excel.DisplayAlerts = true;
                     excel.Quit();
                     excel = null;
-                    msg.ErrorMesg("تأكد من الملف المراد رفعه ..!");
-                    waiting.End_WAit();
+                    MSG.ErrorMesg("تأكد من الملف المراد رفعه ..!");
+                    Waiting.Stop();
                     return null;
                 }
 
@@ -252,7 +251,7 @@ namespace School_Mang.BL.SITE
                     excel.Quit();
                     excel = null;
 
-                    waiting.End_WAit();
+                    Waiting.Stop();
                     return null;
                 }
                 else
@@ -307,14 +306,14 @@ namespace School_Mang.BL.SITE
                 excel.Quit();
                 excel = null;
 
-                waiting.End_WAit();
+                Waiting.Stop();
                 return dt;
             }
             catch (Exception ex)
             {
-                waiting.End_WAit();
-                msg.ErrorMesg(ex.Message);
-                msg.ErrorMesg("يرجي التحقق من البيانات");
+                Waiting.Stop();
+                MSG.ErrorMesg(ex.Message);
+                MSG.ErrorMesg("يرجي التحقق من البيانات");
                 excel.DisplayAlerts = true;
                 excelSheet = null;
                 excelworkBook = null;
@@ -327,7 +326,7 @@ namespace School_Mang.BL.SITE
                 excelSheet = null;
                 excelworkBook = null;
                 excel = null;
-                waiting.End_WAit();
+                Waiting.Stop();
             }
         }
         

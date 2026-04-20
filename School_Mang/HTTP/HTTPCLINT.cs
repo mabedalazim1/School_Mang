@@ -9,13 +9,12 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using School_Mang.Models;
+using School_Mang.BL;
 
 namespace School_Mang.HTTP
 {
     public class HTTPCLINT
     {
-        BL.MSG msg = new BL.MSG();
-        BL.Waiting waiting = new BL.Waiting();
 
         private static readonly HttpClient client = new HttpClient();
 
@@ -50,12 +49,12 @@ namespace School_Mang.HTTP
                 }
                 else
                 {
-                    msg.MyMesg("Ther Is No respones From Site ... !");
+                    MSG.MyMesg("Ther Is No respones From Site ... !");
                 }
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
         }
 
@@ -63,7 +62,7 @@ namespace School_Mang.HTTP
         {
             try
             {
-                waiting.Wait();
+                Waiting.Start();
 
                 if (BL.Globals.accessToken == null) await SignIn();
                 HttpClient client = new HttpClient();
@@ -87,29 +86,29 @@ namespace School_Mang.HTTP
                 var response = client.PostAsync(uri + addrs, formData).Result;
                
                 if (response.IsSuccessStatusCode)
-                {  
-                    msg.MyMesg("تم رفع الملف بنجاح");
+                {
+                    MSG.MyMesg("تم رفع الملف بنجاح");
                 }
                 else
                 {
-                    msg.ErrorMesg(response.ToString());
-                    msg.ErrorMesg("لم يتم رفع الملف .. يرجى مراجعة البيانات ... !");
-                    msg.ErrorMesg("تم إلغاء العملية");
+                    MSG.ErrorMesg(response.ToString());
+                    MSG.ErrorMesg("لم يتم رفع الملف .. يرجى مراجعة البيانات ... !");
+                    MSG.ErrorMesg("تم إلغاء العملية");
                 }
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
-                waiting.End_WAit();
+                MSG.ErrorMesg(e.Message);
+                Waiting.Stop();
             }
-            waiting.End_WAit();
+            Waiting.Stop();
         }
 
         public async Task GetDataFromSite(string path)
         {
             try
             {
-                waiting.Wait();
+                Waiting.Start();
 
                 if (BL.Globals.accessToken == null) await SignIn();
 
@@ -130,13 +129,13 @@ namespace School_Mang.HTTP
             }
             catch (Exception e)
             {
-                waiting.End_WAit();
-                msg.ErrorMesg(e.Message);
+                Waiting.Stop();
+                MSG.ErrorMesg(e.Message);
 
             }
             finally
             {
-                waiting.End_WAit();
+                Waiting.Stop();
             }
         }
 

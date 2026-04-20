@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using School_Mang.BL.Common.Helper;
+using School_Mang.BL;
 
 namespace School_Mang.PL.SITE
 {
@@ -15,8 +16,7 @@ namespace School_Mang.PL.SITE
     {
         BL.SITE.CLS_MANGE_SITE site = new BL.SITE.CLS_MANGE_SITE();
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
-        BL.Waiting Waiting = new BL.Waiting();
-        BL.MSG msg = new BL.MSG();
+        
 
         // Form Closed
         private static FRM_SITE_USER_DATA Frm_Site_User_Data;
@@ -49,7 +49,7 @@ namespace School_Mang.PL.SITE
 
             dt_std_data.MouseDown += new MouseEventHandler(this.dt_std_data_MouseClick);
 
-            Waiting.Wait();
+            Waiting.Start();
             DataTable grade_dt = std.Get_grades();
 
             DataRow dr = grade_dt.NewRow();
@@ -69,17 +69,17 @@ namespace School_Mang.PL.SITE
             byte grade = Convert.ToByte(BL.Globals.test_grade_id);
             Load_Data(grade);
             
-            Waiting.End_WAit();
+            Waiting.Stop();
         }
 
         
         private async void Load_Data(byte grade)
         {
-            bool isConncted = await InternetHelper.CheckInternetAsync();
+            Waiting.Start();
+            bool isConncted = await InternetFlow.EnsureAsync(retries:2, delayMs:200);
 
             if (!isConncted)
             {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                 this.Close();
                 return;
             }
@@ -91,7 +91,7 @@ namespace School_Mang.PL.SITE
                     // Get User Data From School DataBase
                     try
                     {
-                        Waiting.Wait();
+                       
                         DataTable users;
                         users = std.Get_Data_For_Site();
                         dt_std_data.DataSource = null;
@@ -122,18 +122,17 @@ namespace School_Mang.PL.SITE
                         }
                         else
                         {
-                            msg.ErrorMesg("حدث خطأ فى الإتصال..!");
+                            MSG.ErrorMesg("حدث خطأ فى الإتصال..!");
                             this.Close();
                         }
                     }
                     catch (Exception e)
                     {
-                        msg.ErrorMesg(e.Message);
-                        Waiting.End_WAit();
+                        MSG.ErrorMesg(e.Message);
                     }
                     finally
                     {
-                        Waiting.End_WAit();
+                        Waiting.Stop();
                     }
                 }
                 else
@@ -141,7 +140,7 @@ namespace School_Mang.PL.SITE
                     //Get Site Data
                     try
                     {
-                        Waiting.Wait();
+                        Waiting.Start();
                         DataTable users;
                         users = site.Get_Users_Data(grade);
                         dt_std_data.DataSource = null;
@@ -162,26 +161,26 @@ namespace School_Mang.PL.SITE
                         }
                         else
                         {
-                            msg.ErrorMesg("حدث خطأ فى الإتصال..!");
+                            MSG.ErrorMesg("حدث خطأ فى الإتصال..!");
                             this.Close();
                         }
 
-                        Waiting.End_WAit();
+                        Waiting.Stop();
 
                     }
                     catch (Exception e)
                     {
-                        msg.ErrorMesg(e.Message);
-                        Waiting.End_WAit();
+                        MSG.ErrorMesg(e.Message);
+                        Waiting.Stop();
                     }
                     finally
                     {
-                        Waiting.End_WAit();
+                        Waiting.Stop();
                     }
                 }
 
             }
-            Waiting.End_WAit();
+            Waiting.Stop();
 
         }
         int move;
@@ -191,13 +190,9 @@ namespace School_Mang.PL.SITE
 
         private async void Check_data()
         {
-            bool isConncted = await InternetHelper.CheckInternetAsync();
-
-            if (!isConncted)
-            {
-                //msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+            if (!await InternetFlow.EnsureAsync())
                 return;
-            }
+
 
         }
         private void pn_top_MouseDown(object sender, MouseEventArgs e)
@@ -237,13 +232,10 @@ namespace School_Mang.PL.SITE
         {
 
             int std_code = Convert.ToInt32(dt_std_data.CurrentRow.Cells["رقم الجلوس"].Value);
-            bool isConncted = await InternetHelper.CheckInternetAsync();
 
-            if (!isConncted)
-            {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+            if (!await InternetFlow.EnsureAsync())
                 return;
-            }
+
 
             if (BL.Globals.Get_User_Data)
             {
@@ -255,7 +247,7 @@ namespace School_Mang.PL.SITE
                 }
                 catch (Exception ex)
                 {
-                    msg.ErrorMesg(ex.Message);
+                    MSG.ErrorMesg(ex.Message);
                 }
             }
 
@@ -290,8 +282,8 @@ namespace School_Mang.PL.SITE
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
-                Waiting.End_WAit();
+                MSG.ErrorMesg(ex.Message);
+                Waiting.Stop();
             }
         }
 
@@ -349,7 +341,7 @@ namespace School_Mang.PL.SITE
         private void cmb_grade_SelectedIndexChanged(object sender, EventArgs e)
         {
 
-            Waiting.Wait();
+            Waiting.Start();
             if (cmb_grade.Focused == true)
             {
                 is_cmb_grade_selected = true;
@@ -366,7 +358,7 @@ namespace School_Mang.PL.SITE
                     BL.Globals.test_grade_id = Convert.ToInt32(new_grade);
                     txt_std_data.Text = "";
                     is_cmb_grade_selected = true;
-                    Waiting.End_WAit();
+                    Waiting.Stop();
                     return;
                 }
                 // Get Site Data 
@@ -379,9 +371,9 @@ namespace School_Mang.PL.SITE
                 BL.Globals.test_grade_id = Convert.ToInt32(new_grade);
                 txt_std_data.Text = "";
                 is_cmb_grade_selected = true;
-                Waiting.End_WAit();
+                Waiting.Stop();
             }
-            Waiting.End_WAit();
+            Waiting.Stop();
         }
 
         private void copy_Click(Object sender, EventArgs e)
@@ -418,7 +410,7 @@ namespace School_Mang.PL.SITE
 
         private void btn_absent_std_Click(object sender, EventArgs e)
         {
-            msg.ErrorMesg("هذا الإجراء غير متاح ..!");
+            MSG.ErrorMesg("هذا الإجراء غير متاح ..!");
         }
 
         public async void txt_std_data_OnValueChanged(object sender, EventArgs e)
@@ -441,19 +433,16 @@ namespace School_Mang.PL.SITE
                 }
                 catch (Exception ex)
                 {
-                    msg.ErrorMesg(ex.Message);
+                    MSG.ErrorMesg(ex.Message);
                 }
 
                 return;
             }
-            // Search Site Data
-            bool isConncted = await InternetHelper.CheckInternetAsync();
 
-            if (!isConncted)
-            {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+            // Search Site Data
+            if (!await InternetFlow.EnsureAsync())
                 return;
-            }
+
             try
             {
                 Dt = site.Get_Users_Data(std_name);
@@ -463,7 +452,7 @@ namespace School_Mang.PL.SITE
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
         }
     }

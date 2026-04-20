@@ -10,20 +10,16 @@ namespace School_Mang.BL.SITE
 {
     class CLS_Merge_Data
     {
-        readonly MSG msg = new MSG();
-        readonly Waiting waiting = new Waiting();
         readonly DAL.DataAcceseLayer localDb = new DAL.DataAcceseLayer();
-        readonly DAL.SchoolDataAtSite remoteDb = new DAL.SchoolDataAtSite();
+        readonly DAL.SiteAccessLayer remoteDb = new DAL.SiteAccessLayer();
 
         public void SyncTable(string tableName, string[] primaryKeys)
         {
-            waiting.Wait();
+            Waiting.Start();
             try
             {
-                localDb.Open();
-                remoteDb.Open();
-
-                DataTable localTable = localDb.SchoolSiteExeucuteQuery($"SELECT * FROM {tableName}");
+                
+                DataTable localTable = localDb.LocalDbExeucuteQuery($"SELECT * FROM {tableName}");
                 DataTable remoteTable = remoteDb.SchoolSiteExeucuteQuery($"SELECT * FROM {tableName}");
 
                 // حذف من البعيد
@@ -93,16 +89,15 @@ namespace School_Mang.BL.SITE
                     }
                 }
 
-                localDb.Close();
-                remoteDb.Close();
+               
 
-                waiting.End_WAit();
-                msg.MyMesg($"✅ تمت مزامنة جدول {tableName}");
+                Waiting.Stop();
+                MSG.MyMesg($"✅ تمت مزامنة جدول {tableName}");
             }
             catch (Exception ex)
             {
-                waiting.End_WAit();
-                msg.ErrorMesg(ex.Message);
+                Waiting.Stop();
+                MSG.ErrorMesg(ex.Message);
             }
            
         }

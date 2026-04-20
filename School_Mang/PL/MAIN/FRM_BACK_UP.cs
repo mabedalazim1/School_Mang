@@ -7,12 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using School_Mang.BL;
 
 namespace School_Mang.PL.MAIN
 {
     public partial class FRM_BACK_UP : Form
     {
-        BL.MSG msg = new BL.MSG();
         BL.CLS_BACKUP_DATABASE backup = new BL.CLS_BACKUP_DATABASE();
         CLS_FUNCATIONS func = new CLS_FUNCATIONS();
         public FRM_BACK_UP()
@@ -83,13 +83,13 @@ namespace School_Mang.PL.MAIN
                         backup.Restore_DataBase(file_name);
                     }
 
-                    msg.MyMesg("تم استعادة النسخة الاحتياطية بنجاح ..!");
+                    MSG.MyMesg("تم استعادة النسخة الاحتياطية بنجاح ..!");
                     this.Close();
                     BL.Globals.Restore_DataBase = false;
                 }
                 catch (Exception ex)
                 {
-                    msg.ErrorMesg(ex.Message);
+                    MSG.ErrorMesg(ex.Message);
                 }
             }
             else
@@ -122,12 +122,12 @@ namespace School_Mang.PL.MAIN
                         backup.BackUP_DataBase(file_name);
                     }
 
-                    msg.MyMesg("تم إنشاء النسخة الاحتياطية بنجاح ..!");
+                    MSG.MyMesg("تم إنشاء النسخة الاحتياطية بنجاح ..!");
 
                 }
                 catch (Exception ex)
                 {
-                    msg.ErrorMesg(ex.Message);
+                    MSG.ErrorMesg(ex.Message);
                     return;
                 }
 

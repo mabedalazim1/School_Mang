@@ -10,15 +10,16 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using BCrypt.Net;
 using School_Mang.BL.Common.Helper;
+using School_Mang.BL;
+
 namespace School_Mang.PL.SITE
 {
     public partial class FRM_ADD_USER : Form
     {
 
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
-        BL.MSG msg = new BL.MSG();
         BL.SITE.CLS_MANGE_SITE site = new BL.SITE.CLS_MANGE_SITE();
-        BL.Waiting Waiting = new BL.Waiting();
+        
         BL.SITE.CLS_ADD_USER site_users = new BL.SITE.CLS_ADD_USER();
 
         // Form Closed
@@ -164,7 +165,7 @@ namespace School_Mang.PL.SITE
             else
             {
                 chk_std.Focus();
-                msg.ErrorMesg("يرجى اختيار نوع المستخدم ..!");
+                MSG.ErrorMesg("يرجى اختيار نوع المستخدم ..!");
                 return false;
             }
         }
@@ -182,7 +183,7 @@ namespace School_Mang.PL.SITE
 
             if (textBox.Text == "" || text == string.Empty || textBox.Text == null)
             {
-                msg.ErrorMesg("يرجي استكمال البيانات ..!");
+                MSG.ErrorMesg("يرجي استكمال البيانات ..!");
                 textBox.BackColor = Color.MistyRose;
                 ActiveControl = textBox;
                 textBox.Focus();
@@ -199,7 +200,7 @@ namespace School_Mang.PL.SITE
         {
             if (comboBox.SelectedItem == null)
             {
-                msg.ErrorMesg("يرجي استكمال البيانات ..!");
+                MSG.ErrorMesg("يرجي استكمال البيانات ..!");
                 comboBox.Focus();
                 comboBox.DroppedDown = true;
                 return true;
@@ -217,7 +218,7 @@ namespace School_Mang.PL.SITE
                 ActiveControl = txt_user_name;
                 txt_user_name.Focus();
                 txt_user_name.SelectAll();
-                msg.ErrorMesg("اسم المستخدم يجب أن يكون باللغة الإنجليزية وبدون مسافات..!");
+                MSG.ErrorMesg("اسم المستخدم يجب أن يكون باللغة الإنجليزية وبدون مسافات..!");
                 return false;
             }
 
@@ -229,7 +230,7 @@ namespace School_Mang.PL.SITE
                 ActiveControl = txt_pass;
                 txt_pass.Focus();
                 txt_pass.SelectAll();
-                msg.ErrorMesg("كلمة المرور يجب ألا تقل عن أربعة أحرف ..!");
+                MSG.ErrorMesg("كلمة المرور يجب ألا تقل عن أربعة أحرف ..!");
                 return false;
             }
 
@@ -261,14 +262,14 @@ namespace School_Mang.PL.SITE
                     ActiveControl = txt_user_name;
                     txt_user_name.Focus();
                     txt_user_name.SelectAll();
-                    msg.ErrorMesg("يوجد مستخدم بنفس الاسم .. يرجي تغيير اسم المستخدم ..!");
+                    MSG.ErrorMesg("يوجد مستخدم بنفس الاسم .. يرجي تغيير اسم المستخدم ..!");
                    
                     if (is_student)
                     {
                         Verify_User(Convert.ToInt32(txt_std_code.Text),true);
                     }
                 }
-                Waiting.End_WAit();
+                Waiting.Stop();
                 return true;
             }
             return false;
@@ -285,15 +286,15 @@ namespace School_Mang.PL.SITE
                     ActiveControl = txt_std_code;
                     txt_std_code.Focus();
                     txt_std_code.SelectAll();
-                    msg.ErrorMesg("كود الطالب مستخدم من قبل .. برجي التأكد من الكود ..!");
-                    msg.MyExclamationMsg("الكود مستخدم من قبل للطالب : "
+                    MSG.ErrorMesg("كود الطالب مستخدم من قبل .. برجي التأكد من الكود ..!");
+                    MSG.MyExclamationMsg("الكود مستخدم من قبل للطالب : "
                                             + "\n"
                                             + Dt_std_code.Rows[0]["fullName"].ToString()
                                             + "\n"
                                             + "الصف : "
                                             + Dt_std_code.Rows[0]["grade_desc"].ToString());
                 }
-                Waiting.End_WAit();
+                Waiting.Stop();
                 return true;
             }
             return false;
@@ -333,20 +334,15 @@ namespace School_Mang.PL.SITE
 
         private async void btn_save_data_Click(object sender, EventArgs e)
         {
-            bool isConncted = await InternetHelper.CheckInternetAsync();
-
-            if (!isConncted)
-            {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+            if (!await InternetFlow.EnsureAsync())
                 return;
-            }
 
             try
             {
                 if (Check_Data())
                 {
 
-                    Waiting.Wait();
+                    Waiting.Start();
 
                     string user = txt_user_name.Text;
                     string password = txt_pass.Text;
@@ -385,11 +381,11 @@ namespace School_Mang.PL.SITE
                         // Verify user Is Saved
                         if (Verify_User(code,false))
                         {
-                            msg.MyMesg("تم حفظ بيانات المستخدم بنجاح ..!");
+                            MSG.MyMesg("تم حفظ بيانات المستخدم بنجاح ..!");
                         }
                         else
                         {
-                            msg.ErrorMesg("لم يتم الحفظ .. يرجي مراجعة البيانات ..!");
+                            MSG.ErrorMesg("لم يتم الحفظ .. يرجي مراجعة البيانات ..!");
                         }
                     }
                     else
@@ -400,11 +396,11 @@ namespace School_Mang.PL.SITE
                         //Verify If Username Is Found
                         if (Verify_User(user,false))
                         {
-                            msg.MyMesg("تم حفظ بيانات المستخدم بنجاح ..!");
+                            MSG.MyMesg("تم حفظ بيانات المستخدم بنجاح ..!");
                         }
                         else
                         {
-                            msg.ErrorMesg("لم يتم الحفظ .. يرجي مراجعة البيانات ..!");
+                            MSG.ErrorMesg("لم يتم الحفظ .. يرجي مراجعة البيانات ..!");
                         }
                     }
                 }
@@ -412,14 +408,14 @@ namespace School_Mang.PL.SITE
                 {
                     return;
                 }
-                Waiting.End_WAit();
+                Waiting.Stop();
             }
             catch (Exception ex)
             {
-                Waiting.End_WAit();
-                msg.ErrorMesg(ex.Message);
+                Waiting.Stop();
+                MSG.ErrorMesg(ex.Message);
             }
-            Waiting.End_WAit();
+            Waiting.Stop();
         }
 
         private void txt_user_name_KeyPress(object sender, KeyPressEventArgs e)
@@ -564,7 +560,7 @@ namespace School_Mang.PL.SITE
                         FRM_SITE_USER_DATA.Get_Frm_Site_User_Data.ShowDialog();
                     }catch(Exception ex)
                     {
-                        msg.ErrorMesg(ex.Message);
+                        MSG.ErrorMesg(ex.Message);
                     }
                 }
                 else
@@ -573,7 +569,7 @@ namespace School_Mang.PL.SITE
                     chk_import_data.Checked = false;
                     chk_add_data.Checked = true;
                     txt_std_code.Focus();
-                    msg.ErrorMesg("يرجي التأكد من ادخال رقم الجلوس للطالب ..!");
+                    MSG.ErrorMesg("يرجي التأكد من ادخال رقم الجلوس للطالب ..!");
                 }
             }
 

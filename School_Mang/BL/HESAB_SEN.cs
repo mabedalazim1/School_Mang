@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using School_Mang.BL;
 
 namespace School_Mang.BL
 {
     class HESAB_SEN
     {
-        MSG msg = new MSG();
         public string[] HesabSen(int day, int month, int year,int sana)
         {
             int new_day;
@@ -26,7 +26,7 @@ namespace School_Mang.BL
                 {
                     if (day > 29)
                     {
-                        msg.ErrorMesg(" تأكد من اليوم");
+                        MSG.ErrorMesg(" تأكد من اليوم");
                         return null;
                     }
                 }
@@ -34,7 +34,7 @@ namespace School_Mang.BL
                 {
                     if (day > 28)
                     {
-                        msg.ErrorMesg("تأكد من اليوم ");
+                        MSG.ErrorMesg("تأكد من اليوم ");
                         return null;
                     }
                 }
@@ -48,7 +48,7 @@ namespace School_Mang.BL
 
                         if (day > 30)
                         {
-                            msg.ErrorMesg("تأكد من اليوم");
+                            MSG.ErrorMesg("تأكد من اليوم");
                             return null ;
                         }
                         break;
@@ -85,7 +85,7 @@ namespace School_Mang.BL
 
             }catch(Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
                 return null;
             }
         }
@@ -112,14 +112,14 @@ namespace School_Mang.BL
                         int dd = Convert.ToInt32(txt.Substring(5, 2));
                         if (dd > 31)
                         {
-                            msg.ErrorMesg(" الرقم القومى خطأ .. تأكد من اليوم");
+                            MSG.ErrorMesg(" الرقم القومى خطأ .. تأكد من اليوم");
                             return null;
 
                         };
                         int mm = Convert.ToInt32(txt.Substring(3, 2));
                         if (mm > 12)
                         {
-                            msg.ErrorMesg("الرقم القومى خطأ .. تأكد من الشهر");
+                            MSG.ErrorMesg("الرقم القومى خطأ .. تأكد من الشهر");
                             return null;
 
                         };
@@ -127,7 +127,7 @@ namespace School_Mang.BL
                         int last = Convert.ToInt32(txt.Substring(0, 1));
                         if(yy+2000 > sana && last == 3  || yy + 1900 > sana && last == 2 || last >3)
                         {
-                            msg.ErrorMesg("الرقم القومى خطأ .. تأكد من السنة");
+                            MSG.ErrorMesg("الرقم القومى خطأ .. تأكد من السنة");
                             return null;
                         }
                         if (last > 2)
@@ -148,7 +148,7 @@ namespace School_Mang.BL
                     }
                     else
                     {
-                        msg.ErrorMesg();
+                        MSG.ErrorMesg();
                         return null;
 
                     }
@@ -158,7 +158,7 @@ namespace School_Mang.BL
                 return dat;
             }catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
                 return null;
             }
         }
@@ -166,7 +166,7 @@ namespace School_Mang.BL
         {
             if(txt.Text.Length != 14)
             {
-                msg.ErrorMesg();
+                MSG.ErrorMesg();
                 return -1;
             }
             // Chack Type

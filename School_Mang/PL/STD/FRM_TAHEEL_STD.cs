@@ -1,4 +1,6 @@
-﻿using System;
+﻿using School_Mang.BL;
+using School_Mang.BL.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,11 +12,19 @@ using System.Windows.Forms;
 
 namespace School_Mang.PL.STD
 {
-    public partial class FRM_TAHEEL_STD : Form
+    public partial class FRM_TAHEEL_STD : Form, INavigationAware
     {
+
+        private NavigationContext _context;
+
+        public void SetNavigation(NavigationContext context)
+        {
+            _context = context;
+            ApplyContext();
+        }
+
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
-        BL.MSG msg = new BL.MSG();
-        BL.Waiting Waiting = new BL.Waiting();
+        
         RPT.REPORT_CONNECTION RPT = new RPT.REPORT_CONNECTION();
         public int transfer_status;
         public int grade = 0;
@@ -55,25 +65,7 @@ namespace School_Mang.PL.STD
             {
                 frm_Tahweel_Std = this;
             }
-            chk_kotob_no.Checked = true;
-            chk_resom_no.Checked = true;
-
-
-            // Set User permission
-            switch (permission_id)
-            {
-                case 3:
-                    btn_new_std.Enabled = false;
-                    break;
-                case 1:
-                case 2:
-                    btn_new_std.Enabled = true;
-                    break;
-            }
-
-
-            txt_std_name.Focus();
-            chk_after.Checked = true;
+            ApplyContext();
         }
         #region My Voids
 
@@ -101,10 +93,10 @@ namespace School_Mang.PL.STD
         {
             if (txt.Text == "")
             {
-                msg.ErrorMesg("تأكد من استكمال البيانات ! ..");
+                MSG.ErrorMesg("تأكد من استكمال البيانات ! ..");
                 txt.BackColor = Color.MistyRose;
                 txt.Focus();
-                Waiting.End_WAit();
+                Waiting.Stop();
                 return false;
             }
             else
@@ -117,11 +109,11 @@ namespace School_Mang.PL.STD
         private int Trans_cod()
         {
 
-            Waiting.Wait();
+            Waiting.Start();
             // Trans Code
             string current_year;
             string year = Properties.Settings.Default.MyYear.ToString().Substring(2, 2);
-            if (BL.Globals.Current_Year_Data)
+            if (_context?.CurrentYearData == true)
             {
                 current_year = year;
             }
@@ -134,12 +126,12 @@ namespace School_Mang.PL.STD
             if (Dt.Rows[0]["Max_Trans_Code"].ToString() == "")
             {
                 int Trans_cod = Convert.ToInt32(current_year + "001");
-                Waiting.End_WAit();
+                Waiting.Stop();
                 return Trans_cod;
             }
             else
             {
-                Waiting.End_WAit();
+                Waiting.Stop();
                 return Convert.ToInt32(Dt.Rows[0]["Max_Trans_Code"]) + 1;
             }
 
@@ -150,7 +142,7 @@ namespace School_Mang.PL.STD
             Dt = std.Verify_Std_School_Code(std_code, year);
             if (Dt.Rows.Count == 0)
             {
-                Waiting.End_WAit();
+                Waiting.Stop();
                 return false;
             }
             else
@@ -160,6 +152,28 @@ namespace School_Mang.PL.STD
         }
         #endregion
 
+        private void ApplyContext()
+        {
+            chk_kotob_no.Checked = true;
+            chk_resom_no.Checked = true;
+
+
+            // Set User permission
+            switch (permission_id)
+            {
+                case 3:
+                    btn_new_std.Enabled = false;
+                    break;
+                case 1:
+                case 2:
+                    btn_new_std.Enabled = true;
+                    break;
+            }
+
+
+            txt_std_name.Focus();
+            chk_after.Checked = true;
+        }
         int move;
         int move_x;
         int move_y;
@@ -191,7 +205,7 @@ namespace School_Mang.PL.STD
 
         private void btn_close_b_Click(object sender, EventArgs e)
         {
-            BL.Globals.Update_Taheewl = false;
+
             this.Close();
             this.Dispose();
         }
@@ -255,7 +269,7 @@ namespace School_Mang.PL.STD
         private void btn_new_std_Click(object sender, EventArgs e)
         {
             bool Trans_After_Year = false;
-            Waiting.Wait();
+            Waiting.Start();
 
             // Check Entry Data
             if (!Cheack_Data(txt_to_school)) return;
@@ -264,24 +278,24 @@ namespace School_Mang.PL.STD
             if (!Cheack_Data(txt_transfer_reason)) return;
 
             //  New Trans Data  New Student
-            if (!BL.Globals.Update_Taheewl)
+            if (_context?.TaheewlToSchool != true)
             {
 
                 int year = Properties.Settings.Default.year_cod;
-                if (!BL.Globals.Taheewl_To_School)
+                if (_context?.TaheewlToSchool !=true)
                 {
                     // Cheak If Student Has Data On Next Year Or Not 
                     if (!Verify_Std_School_Code(txt_std_code.Text, year + 1))
                     {
                         if (chk_after.Checked)
                         {
-                            msg.ErrorMesg("لا يمكن تحويل الطالب .. غير مقيد بالعام الجديد .. يمكنك تغيير العام ثم تحويل الطالب ... !");
-                            Waiting.End_WAit();
+                            MSG.ErrorMesg("لا يمكن تحويل الطالب .. غير مقيد بالعام الجديد .. يمكنك تغيير العام ثم تحويل الطالب ... !");
+                            Waiting.Stop();
                             return;
                         }
                         else
                         {
-                            if (msg.DialogeErrMsg("سوف يتم تحويل من المدرسة عن العام السابق .. هل تريد المتابعة ؟ ") != DialogResult.Yes) return;
+                            if (MSG.DialogeErrMsg("سوف يتم تحويل من المدرسة عن العام السابق .. هل تريد المتابعة ؟ ") != DialogResult.Yes) return;
                         }
                     }
                 }
@@ -290,7 +304,7 @@ namespace School_Mang.PL.STD
                 {
 
                     // If Transfer To School
-                    if (BL.Globals.Taheewl_To_School)
+                    if (_context?.TaheewlToSchool == true)
                     {
                         FRM_STD_ELTEHK.Get_Std_Eltehk.btn_new_std_Click(sender, e);
                         year += 1;
@@ -331,7 +345,7 @@ namespace School_Mang.PL.STD
                     }
 
                     // Add Transfers Data
-                    Waiting.Wait();
+                    Waiting.Start();
                     std.Add_Transfers_Data(
                         Trans_cod().ToString(),
                         txt_std_code.Text,
@@ -346,30 +360,31 @@ namespace School_Mang.PL.STD
                         Trans_After_Year);
 
                     // Get Trans Code After Save data
-                    Waiting.Wait();
+                    Waiting.Start();
                     if (Cheack_Tarns_Data())
                     {
                         // Del From New Year
                         std.Delete_School_Std_Data(txt_std_code.Text, year+2);
-                        msg.MyMesg("تم حفظ طلب التحويل بنجاح .. !");
-                        BL.Globals.Taheewl_To_School = false;
+                        MSG.MyMesg("تم حفظ طلب التحويل بنجاح .. !");
+
                     }
 
                     else
                     {
-                        msg.ErrorMesg("لم يتم الحفظ ..!");
-                        Waiting.End_WAit();
+                        MSG.ErrorMesg("لم يتم الحفظ ..!");
+                        Waiting.Stop();
                         return;
                     }
 
                     // Update Current Std Data
-                    FRM_CURRENT_STD.Get_Current_Std.txt_std_data.Text = "";
-                    FRM_CURRENT_STD.Get_Current_Std.cmb_grade_SelectedIndexChanged(sender, e);
+                    var frm = FRM_CURRENT_STD.Get_Current_Std;
+                    frm.txt_std_data.Text = "";
+                    frm.ChangeSelectedData();
                 }
                 catch (Exception ex)
                 {
-                    msg.ErrorMesg(ex.Message);
-                    Waiting.End_WAit();
+                    MSG.ErrorMesg(ex.Message);
+                    Waiting.Stop();
                 }
             }
             // If Update Current Trans Data
@@ -406,15 +421,15 @@ namespace School_Mang.PL.STD
 
                     // Update Current Std Data
 
-                    FRM_TAHWELAT.Get_Frm_Tahwelat.cmb_grade_SelectedIndexChanged(sender, e);
-                    msg.MyMesg("تم تعديل طلب التحويل بنجاح .. !");
+                    FRM_TAHWELAT.Get_Frm_Tahwelat.ChangSelectedData();
+                    MSG.MyMesg("تم تعديل طلب التحويل بنجاح .. !");
 
 
                 }
                 catch (Exception ex)
                 {
-                    msg.ErrorMesg(ex.Message);
-                    Waiting.End_WAit();
+                    MSG.ErrorMesg(ex.Message);
+                    Waiting.Stop();
                 }
             }
             // Update Current Std Data
@@ -426,7 +441,7 @@ namespace School_Mang.PL.STD
             btn_new_std.Enabled = false;
 
 
-            Waiting.End_WAit();
+            Waiting.Stop();
 
         }
 
@@ -454,7 +469,7 @@ namespace School_Mang.PL.STD
         {
 
 
-            if (BL.Globals.Update_Taheewl)
+            if (_context?.TaheewlToSchool == true)
             {
                 lbl_title.Text = "تعديل طلب التحويل";
                 btn_new_std.ButtonText = "تعديل";
@@ -474,7 +489,7 @@ namespace School_Mang.PL.STD
                 save_data = 0;
             }
 
-            if (BL.Globals.Taheewl_To_School)
+            if (_context?.TaheewlToSchool == true)
             {
                 chk_after.Checked = true;
                 chk_before.Visible = false;
@@ -509,7 +524,7 @@ namespace School_Mang.PL.STD
 
             if (chk_before.Checked)
             {
-                if (msg.DialogeErrMsg("سوف يتم تحويل الطالب أثناء الدراسة .. هل تريد المتابعة ؟ ") != DialogResult.Yes)
+                if (MSG.DialogeErrMsg("سوف يتم تحويل الطالب أثناء الدراسة .. هل تريد المتابعة ؟ ") != DialogResult.Yes)
                 {
                     chk_after.Checked = true;
                     chk_before.Checked = false;
@@ -535,7 +550,7 @@ namespace School_Mang.PL.STD
 
         private void btn_edit_std_Click(object sender, EventArgs e)
         {
-            if (BL.Globals.Update_Taheewl)
+            if (_context?.TaheewlToSchool == true)
             {
                 if (Cheack_Tarns_Data())
                 {
@@ -544,7 +559,7 @@ namespace School_Mang.PL.STD
                 else
                 {
                     save_data = 0;
-                    msg.ErrorMesg("يرجى حفظ طلب التحويل أولا .. !");
+                    MSG.ErrorMesg("يرجى حفظ طلب التحويل أولا .. !");
                 }
             }
 
@@ -553,7 +568,7 @@ namespace School_Mang.PL.STD
                 // Check Saved Data
                 if (save_data != 0)
                 {
-                    Waiting.Wait();
+                    Waiting.Start();
                     // Get Year Desc
                     int sana = (Convert.ToInt32(txt_year.Text)) + 2021;
 
@@ -583,7 +598,7 @@ namespace School_Mang.PL.STD
                     string trans_code = txt_trans_code.Text;
 
 
-                    Waiting.End_WAit();
+                    Waiting.Stop();
                     // Open Report
                     if(transfer_saved_status == 3)
                     {
@@ -596,16 +611,16 @@ namespace School_Mang.PL.STD
                 }
                 else
                 {
-                    msg.ErrorMesg("يرجى حفظ طلب التحويل أولا .. !");
+                    MSG.ErrorMesg("يرجى حفظ طلب التحويل أولا .. !");
                     return;
                 }
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
-                Waiting.End_WAit();
+                MSG.ErrorMesg(ex.Message);
+                Waiting.Stop();
             }
-            Waiting.End_WAit();
+            Waiting.Stop();
         }
     }
 }

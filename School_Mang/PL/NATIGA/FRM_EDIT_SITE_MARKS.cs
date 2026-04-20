@@ -8,15 +8,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using School_Mang.BL.Common.Helper;
+using School_Mang.BL;
+
 
 namespace School_Mang.PL.NATIGA
 {
     public partial class FRM_EDIT_SITE_MARKS : Form
     {
 
-        BL.MSG msg = new BL.MSG();
         BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
-        BL.Waiting Waiting = new BL.Waiting();
+        
 
 
         // Form Closed
@@ -86,7 +87,7 @@ namespace School_Mang.PL.NATIGA
                         if (Convert.ToDouble(textBox.Text) > 20 || (Convert.ToDouble(textBox.Text) < 0
                         ))
                         {
-                            msg.ErrorMesg("تأكد من الدرجة ..!");
+                            MSG.ErrorMesg("تأكد من الدرجة ..!");
                             textBox.Text = txt;
                             textBox.Focus();
                         }
@@ -176,7 +177,7 @@ namespace School_Mang.PL.NATIGA
             }
             catch(Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
             
         }
@@ -209,14 +210,8 @@ namespace School_Mang.PL.NATIGA
         private async void FRM_EDIT_SITE_MARKS_Load(object sender, EventArgs e)
         {
             //Test Intrent Connection
-            bool isConncted = await InternetHelper.CheckInternetAsync();
-
-            if (!isConncted)
-            {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
-                this.Close();   
+            if (!await InternetFlow.EnsureAsync())
                 return;
-            }
 
             txt_ar.TextAlign = HorizontalAlignment.Center;
             txt_french.TextAlign = HorizontalAlignment.Center;
@@ -441,7 +436,7 @@ namespace School_Mang.PL.NATIGA
         {
             if(Convert.ToInt32(txt_sort.Text) > 10)
             {
-                msg.ErrorMesg("تأكد من الدرجة ..!");
+                MSG.ErrorMesg("تأكد من الدرجة ..!");
                 txt_sort.Text = sort_old;
                 txt_sort.Focus();
                 return;
@@ -503,13 +498,9 @@ namespace School_Mang.PL.NATIGA
         private async void btn_save_Click(object sender, EventArgs e)
         {
             //Test Intrent Connection
-            bool isConncted = await InternetHelper.CheckInternetAsync();
-
-            if (!isConncted)
-            {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+            if (!await InternetFlow.EnsureAsync())
                 return;
-            }
+
             try
             {
                 int student_Id = Convert.ToInt32(txt_cod.Text);
@@ -530,13 +521,13 @@ namespace School_Mang.PL.NATIGA
                     maharat, tocnolegy, french, general, sort_code, test_kind_Id);
 
                 FRM_SITE_STD_DATA.Get_Frm_Site_Std_Data.cmb_grade_DropDownClosed(sender, e);
-                msg.MyMesg("تم التعديل بنجاح ..!");
+                MSG.MyMesg("تم التعديل بنجاح ..!");
                 this.Close();
 
             }
             catch(Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
         }
     }

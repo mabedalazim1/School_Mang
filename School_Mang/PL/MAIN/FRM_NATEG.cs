@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using School_Mang.BL.Common.Helper;
+using School_Mang.BL;
 
 namespace School_Mang.PL.MAIN
 {
@@ -15,8 +16,6 @@ namespace School_Mang.PL.MAIN
     {
 
         BL.NATEG.cls_NATAG_FUNCTIONS natag_func = new BL.NATEG.cls_NATAG_FUNCTIONS();
-        BL.Waiting Waiting = new BL.Waiting();
-        BL.MSG msg = new BL.MSG();
 
         // Form Closed
         private static FRM_NATEG frm_Nateg;
@@ -97,15 +96,15 @@ namespace School_Mang.PL.MAIN
 
         private async void lbl_site_Click(object sender, EventArgs e)
         {
-            bool isConncted = await InternetHelper.CheckInternetAsync();
+            bool isConncted = await InternetFlow.EnsureAsync(retries: 2, delayMs: 200);
 
             if (!isConncted)
             {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                 return;
             }
             else
             {
+                Waiting.Stop();
                 // Get Std Data Form
                 natag_func.changePages(NATIGA.HOME.FRM_MANG_SITE.Get_Frm_Mang_Site.pn_home, "بيانات الموقع");
             }
@@ -148,7 +147,7 @@ namespace School_Mang.PL.MAIN
             }
             catch(Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
         }
 

@@ -7,13 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using School_Mang.BL;
 
 namespace School_Mang.PL.USERS
 {
     public partial class FRM_ADD_USER : Form
     {
-        BL.MSG msg = new BL.MSG();
-        BL.Waiting waiting = new BL.Waiting();
+        
         BL.USERS users = new BL.USERS();
 
 
@@ -302,19 +302,19 @@ namespace School_Mang.PL.USERS
             {
                 
                     // Save User
-                    waiting.Wait();
+                    Waiting.Start();
                 if (txt_user.Text == "")
                 {
-                    msg.ErrorMesg("ادخل اسم المستخدم ..!");
+                    MSG.ErrorMesg("ادخل اسم المستخدم ..!");
                     txt_user.Focus();
-                    waiting.End_WAit();
+                    Waiting.Stop();
                     return;
                 }
                 if (txt_pass.Text == "")
                 {
-                    msg.ErrorMesg("ادخل كلمة المرور ..!");
+                    MSG.ErrorMesg("ادخل كلمة المرور ..!");
                     txt_pass.Focus();
-                    waiting.End_WAit();
+                    Waiting.Stop();
                     return;
                 }
 
@@ -327,8 +327,8 @@ namespace School_Mang.PL.USERS
                 {
                     if (txt_user.Text == row["اسم المستخدم"].ToString())
                     {
-                        msg.ErrorMesg("تأكد من اسم المستخدم .. الاسم موجود مسبقاً...");
-                        waiting.End_WAit();
+                        MSG.ErrorMesg("تأكد من اسم المستخدم .. الاسم موجود مسبقاً...");
+                        Waiting.Stop();
                         txt_user.Focus();
                         return;
                     }
@@ -339,21 +339,21 @@ namespace School_Mang.PL.USERS
                     chk_talba.Checked || chk_amlin.Checked ||
                     chk_maliat.Checked)
                 {
-                    msg.MyMesg("عدد الأقسام المحددة   " + chk_count.ToString());
+                    MSG.MyMesg("عدد الأقسام المحددة   " + chk_count.ToString());
                 }
                 else
                 {
-                    msg.ErrorMesg("اختر القسم ..!");
+                    MSG.ErrorMesg("اختر القسم ..!");
                     chk_admin.Focus();
-                    waiting.End_WAit();
+                    Waiting.Stop();
                     return;
                 }
 
                 if(permission_id == 0)
                 {
-                    msg.ErrorMesg("اختر الصلاحية ..!");
+                    MSG.ErrorMesg("اختر الصلاحية ..!");
                     chk_some_perm.Focus();
-                    waiting.End_WAit();
+                    Waiting.Stop();
                     return;
                 }
 
@@ -365,20 +365,20 @@ namespace School_Mang.PL.USERS
                     permission_id,
                      role_id_2,
                     role_id_3, role_id_4, role_id_5);
-                    msg.MyMesg("تم إضافة المستخدم بنجاح  " + txt_user.Text);
+                    MSG.MyMesg("تم إضافة المستخدم بنجاح  " + txt_user.Text);
                     txt_pass.Text = "";
                     txt_user.Text = "";
                     MAIN.FRM_SETTINGS.Get_Frm_Settings.dt_users_data.DataSource = users.Get_Users();
-                    waiting.End_WAit();
+                    Waiting.Stop();
 
                     this.Close();
                 }
                 catch (Exception ex)
                 {
-                    msg.ErrorMesg(ex.Message);
-                    waiting.End_WAit();
+                    MSG.ErrorMesg(ex.Message);
+                    Waiting.Stop();
                 }
-                waiting.End_WAit();
+                Waiting.Stop();
             }
 
             if (BL.Globals.EditUser)
@@ -388,23 +388,23 @@ namespace School_Mang.PL.USERS
                     !chk_talba.Checked && !chk_amlin.Checked &&
                     !chk_maliat.Checked)
                 {
-                    msg.ErrorMesg("اختر القسم ..!");
+                    MSG.ErrorMesg("اختر القسم ..!");
                     chk_admin.Focus();
                     return;
                 }
 
                 if (permission_id == 0)
                 {
-                    msg.ErrorMesg("اختر الصلاحية ..!");
+                    MSG.ErrorMesg("اختر الصلاحية ..!");
                     chk_some_perm.Focus();
-                    waiting.End_WAit();
+                    Waiting.Stop();
                     return;
                 }
 
 
                 try
                 {
-                    waiting.Wait();
+                    Waiting.Start();
 
                     // Update User Prams
                     if (new_role_id != 0) 
@@ -414,14 +414,14 @@ namespace School_Mang.PL.USERS
                             Convert.ToInt32(txt_user_role_id.Text),
                             permission_id,
                             Convert.ToInt32(txt_role_permissions_id.Text));
-                        msg.MyMesg(txt_user.Text + "  تم تعديل صلاحيات المستخدم بنجاح...!  ");
+                        MSG.MyMesg(txt_user.Text + "  تم تعديل صلاحيات المستخدم بنجاح...!  ");
                         MAIN.FRM_SETTINGS.Get_Frm_Settings.dt_users_data.DataSource = users.Get_Users();
                     }
                 }
                 catch(Exception ex)
                 {
-                    msg.ErrorMesg(ex.Message);
-                    waiting.End_WAit();
+                    MSG.ErrorMesg(ex.Message);
+                    Waiting.Stop();
                     this.Close();
                 }
                 this.Close();
@@ -435,22 +435,22 @@ namespace School_Mang.PL.USERS
                     !chk_talba.Checked && !chk_amlin.Checked &&
                     !chk_maliat.Checked)
                 {
-                    msg.ErrorMesg("اختر القسم ..!");
+                    MSG.ErrorMesg("اختر القسم ..!");
                     chk_admin.Focus();
                     return;
                 }
 
                 if (permission_id == 0)
                 {
-                    msg.ErrorMesg("اختر الصلاحية ..!");
+                    MSG.ErrorMesg("اختر الصلاحية ..!");
                     chk_some_perm.Focus();
-                    waiting.End_WAit();
+                    Waiting.Stop();
                     return;
                 }
 
                 try
                 {
-                    waiting.Wait();
+                    Waiting.Start();
 
                     // Add User Permissions
 
@@ -463,30 +463,30 @@ namespace School_Mang.PL.USERS
                             compare_role,
                             permission_id);
 
-                        msg.MyMesg(txt_user.Text + "  تم إضافة  صلاحيات للمستخدم بنجاح...!  ");
+                        MSG.MyMesg(txt_user.Text + "  تم إضافة  صلاحيات للمستخدم بنجاح...!  ");
                         MAIN.FRM_SETTINGS.Get_Frm_Settings.dt_users_data.DataSource = users.Get_Users();
                     }
                     else
                     {
-                        msg.ErrorMesg("لا يوجد تغيير فى الصلاحيات .. لم تتم الإضافة .. !");
-                        waiting.End_WAit();
+                        MSG.ErrorMesg("لا يوجد تغيير فى الصلاحيات .. لم تتم الإضافة .. !");
+                        Waiting.Stop();
                         return;
                     }
                                            
                     MAIN.FRM_SETTINGS.Get_Frm_Settings.dt_users_data.DataSource = users.Get_Users();
-                    waiting.End_WAit();
+                    Waiting.Stop();
                 }
                 catch (Exception ex)
                 {
-                    msg.ErrorMesg(ex.Message);
-                    waiting.End_WAit();
+                    MSG.ErrorMesg(ex.Message);
+                    Waiting.Stop();
                     this.Close();
                 }
                 this.Close();
 
             }
            
-            waiting.End_WAit();
+            Waiting.Stop();
 
         }
     }

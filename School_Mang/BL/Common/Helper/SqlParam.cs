@@ -29,12 +29,12 @@ public static class SqlParam
         };
 
     public static SqlParameter NVar(string name, string value, int size = 255)
-        => new SqlParameter(name, SqlDbType.NVarChar, size)
-        {
-            Value = string.IsNullOrWhiteSpace(value)
-                ? (object)DBNull.Value
-                : value
-        };
+    => new SqlParameter(name, SqlDbType.NVarChar, size)
+    {
+        Value = string.IsNullOrWhiteSpace(value)
+            ? ""
+            : value.Trim()
+    };
 
     public static SqlParameter Bit(string name, bool? value)
         => new SqlParameter(name, SqlDbType.Bit)

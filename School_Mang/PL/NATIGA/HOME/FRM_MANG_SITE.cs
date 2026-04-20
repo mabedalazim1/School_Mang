@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using School_Mang.PL.MAIN;
 using School_Mang.BL.Common.Helper;
+using School_Mang.BL;
 
 namespace School_Mang.PL.NATIGA.HOME
 {
     public partial class FRM_MANG_SITE : Form
     {
         HTTP.HTTPCLINT HTTP = new HTTP.HTTPCLINT();
-        BL.MSG msg = new BL.MSG();
         BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
-        BL.Waiting Waiting = new BL.Waiting();
+        
         BL.NATEG.cls_NATAG_FUNCTIONS natag_func = new BL.NATEG.cls_NATAG_FUNCTIONS();
 
         // Form Closed
@@ -59,38 +59,30 @@ namespace School_Mang.PL.NATIGA.HOME
             {
                 if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 {
-                    bool isConncted = await InternetHelper.CheckInternetAsync();
-
-                    if (!isConncted)
-                    {
-                        msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+                    if (!await InternetFlow.EnsureAsync())
                         return;
-                    }
+
                     await HTTP.UplodFile(openFileDialog1.FileName, path);
                 }
                 else
                 {
-                    msg.ErrorMesg("تم إلغاء الإجراء ..!");
+                    MSG.ErrorMesg("تم إلغاء الإجراء ..!");
                     BL.Globals.Dir_Path = "D://Rasd";
                 }
 
             }
             catch(Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
            
         }
         // Open Assessment Form
         private async void open_Assessment_Form()
         {
-            bool isConncted = await InternetHelper.CheckInternetAsync();
-
-            if (!isConncted)
-            {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+            if (!await InternetFlow.EnsureAsync())
                 return;
-            }
+
             FRM_ADD_ASSESSMENT_DATA.Get_Frm_Add_Assessment.ShowDialog();
         }
 
@@ -106,13 +98,9 @@ namespace School_Mang.PL.NATIGA.HOME
 
         private async void lbl_upload_a_Click(object sender, EventArgs e)
         {
-            bool isConncted = await InternetHelper.CheckInternetAsync();
-
-            if (!isConncted)
-            {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+            if (!await InternetFlow.EnsureAsync())
                 return;
-            }
+
             await UploadFile("upload/degree");
 
         }
@@ -124,13 +112,9 @@ namespace School_Mang.PL.NATIGA.HOME
 
         private async void lbl_upload_test_Click(object sender, EventArgs e)
         {
-            bool isConncted = await InternetHelper.CheckInternetAsync();
-
-            if (!isConncted)
-            {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+            if (!await InternetFlow.EnsureAsync())
                 return;
-            }
+
             await UploadFile("upload/mark");
         }
 
@@ -141,13 +125,9 @@ namespace School_Mang.PL.NATIGA.HOME
 
         private async void lbl_degree_Click(object sender, EventArgs e)
         {
-            bool isConncted = await InternetHelper.CheckInternetAsync();
-
-            if (!isConncted)
-            {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+            if (!await InternetFlow.EnsureAsync())
                 return;
-            }
+
             FRM_CHOSE_NATAG.Get_Frm_Chose_Natag.ShowDialog();
         }
 
@@ -158,13 +138,9 @@ namespace School_Mang.PL.NATIGA.HOME
 
         private async void lbl_del_data_from_site_Click(object sender, EventArgs e)
         {
-            bool isConncted = await InternetHelper.CheckInternetAsync();
-
-            if (!isConncted)
-            {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+            if (!await InternetFlow.EnsureAsync())
                 return;
-            }
+
             FRM_DELETE_SITE_DATA.Get_Frm_Delete_Data.ShowDialog();
         }
 

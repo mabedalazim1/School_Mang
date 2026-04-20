@@ -1,4 +1,6 @@
-﻿using System;
+﻿using School_Mang.BL;
+using School_Mang.BL.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,12 +12,21 @@ using System.Windows.Forms;
 
 namespace School_Mang.PL.STD
 {
-    public partial class FRM_CURRENT_STD : Form
+    public partial class FRM_CURRENT_STD : Form, INavigationAware
     {
+
+        private NavigationContext _context;
+
+        public void SetNavigation(NavigationContext context)
+        {
+            _context = context;
+            ApplyContext();
+        }
+
+
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
-        BL.MSG msg = new BL.MSG();
         MAIN.CLS_FUNCATIONS Func = new MAIN.CLS_FUNCATIONS();
-        BL.Waiting Waiting = new BL.Waiting();
+        
         RPT.REPORT_CONNECTION RPT = new RPT.REPORT_CONNECTION();
 
         int year_cod = Properties.Settings.Default.year_cod;
@@ -51,7 +62,13 @@ namespace School_Mang.PL.STD
             {
                 frm_Current_Std = this;
             }
-            Waiting.Wait();
+
+            ApplyContext();
+        }
+
+        private void ApplyContext()
+        {
+            Waiting.Start();
             // Add Grade Data
             DataTable grade_dt = std.Get_grades();
             cmb_grade.DataSource = grade_dt;
@@ -67,8 +84,12 @@ namespace School_Mang.PL.STD
             Get_Class_Data(1);
             // Get School Year Data
             Get_School_Year_Data();
+            var c = _context;
+            if (c == null) return;
 
-            if (BL.Globals.Elthak_Std || BL.Globals.Elthak_Std_Next_Year)
+            bool isElthak = c.ElthakStd || c.ElthakStdNextYear;
+
+            if (isElthak)
             {
                 btn_talab_elthak.Location = new Point(409, 15);
                 btn_del_std.Visible = false;
@@ -80,26 +101,16 @@ namespace School_Mang.PL.STD
                 btn_tahwel.Visible = true;
             }
 
-            if (BL.Globals.Current_Year_Data)
+            if (c.CurrentYearData)
             {
                 btn_tahwel.Visible = true;
                 btn_del_std.Location = new Point(208, 15);
-                if (!BL.Globals.Elthak_Std || !BL.Globals.Elthak_Std_Next_Year)
-                {
-                    btn_talab_elthak.Location = new Point(610, 15);
-                }
-
             }
             else
             {
                 btn_tahwel.Visible = false;
                 btn_del_std.Location = new Point(278, 15);
-                if (!BL.Globals.Elthak_Std || BL.Globals.Elthak_Std_Next_Year)
-                {
-                    btn_talab_elthak.Location = new Point(409, 15);
-                }
             }
-
             // Set User permission
             switch (permission_id)
             {
@@ -120,7 +131,17 @@ namespace School_Mang.PL.STD
                     btn_del_std.Enabled = true;
                     break;
             }
-            Waiting.End_WAit();
+            Waiting.Stop();
+        }
+
+        public void SelectRow(int index)
+        {
+            ChangeSelectedData();
+            if (index < 0 || index >= dt_std_data.Rows.Count)
+                return;
+
+            dt_std_data.FirstDisplayedScrollingRowIndex = index;
+            dt_std_data.Rows[index].Selected = true;
         }
 
         int move;
@@ -132,9 +153,9 @@ namespace School_Mang.PL.STD
         private int Current_Year()
         {
             int year;
-            if (BL.Globals.Current_Year_Data ||
-                BL.Globals.Details_Std ||
-                BL.Globals.Elthak_Std_Next_Year)
+            if (_context?.CurrentYearData == true ||
+               _context?.DetailsStd == true ||
+                _context?.ElthakStdNextYear == true)
             {
                 year = year_cod;
             }
@@ -151,7 +172,7 @@ namespace School_Mang.PL.STD
         public void Get_School_Year_Data()
         {
              int my_grade =Convert.ToInt32(cmb_grade.SelectedValue);
-            Waiting.Wait();
+            Waiting.Start();
             DataTable dt = std.Get_School_year_Data(Current_Year(), my_grade, 0);
 
             dt_std_data.DataSource = dt;
@@ -173,7 +194,7 @@ namespace School_Mang.PL.STD
             dt_std_data.Columns["Updated_At"].Visible = false;
             dt_std_data.Columns["Updated_by"].Visible = false;
 
-            if (BL.Globals.Details_Std)
+            if (_context?.DetailsStd == true)
             {
                 // Open From Details 
 
@@ -205,12 +226,13 @@ namespace School_Mang.PL.STD
             }
             lbl_count.Text = dt.Rows.Count.ToString();
 
-            Waiting.End_WAit();
+            _context?.PostAction?.Invoke();
+            Waiting.Stop();
         }
         // Get Class Data
         public void Get_Class_Data(int Grade_Id, int Class_Id = 0)
         {
-            Waiting.Wait();
+            Waiting.Start();
             DataTable dt = std.Get_Class_Id(Grade_Id);
             DataRow dr = dt.NewRow();
             dr["Class_Desc"] = "الكل";
@@ -226,7 +248,7 @@ namespace School_Mang.PL.STD
             std_dt = std.Get_School_year_Data(Current_Year(), Convert.ToInt32(cmb_grade.SelectedValue), Class_Id);
             lbl_count.Text = std_dt.Rows.Count.ToString();
             dt_std_data.DataSource = std_dt;
-            Waiting.End_WAit();
+            Waiting.Stop();
         }
         // Verify Stdunet Status 
         private Boolean Verify_Std_Status()
@@ -234,12 +256,12 @@ namespace School_Mang.PL.STD
             if (Convert.ToInt32(dt_std_data.CurrentRow.Cells["Std_Status_Id"].Value) == 3 ||
                 Convert.ToInt32(dt_std_data.CurrentRow.Cells["Std_Status_Id"].Value) == 4)
             {
-                msg.ErrorMesg("لا يمكن التعامل مع الطالب المحول .. يرجى حذف طلب التحويل أولاً.. ..!");
+                MSG.ErrorMesg("لا يمكن التعامل مع الطالب المحول .. يرجى حذف طلب التحويل أولاً.. ..!");
                 return true;
             }
             else if (Convert.ToInt32(dt_std_data.CurrentRow.Cells["Std_Status_Id"].Value) == 1)
             {
-                msg.ErrorMesg("لا يمكن التعامل مع الطالب المستجد .. يرجى تعديل حالة الطالب أولاً.. ..!");
+                MSG.ErrorMesg("لا يمكن التعامل مع الطالب المستجد .. يرجى تعديل حالة الطالب أولاً.. ..!");
                 return true;
             }
             else
@@ -272,7 +294,7 @@ namespace School_Mang.PL.STD
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
         }
 
@@ -301,10 +323,14 @@ namespace School_Mang.PL.STD
 
         public void cmb_grade_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ChangeSelectedData();
+        }
+
+        public void ChangeSelectedData()
+        {
             Get_Class_Data(Convert.ToInt32(cmb_grade.SelectedValue));
             txt_std_data.Text = "";
         }
-
         private void pic_help_MouseLeave(object sender, EventArgs e)
         {
             lbl_help.Visible = false;
@@ -350,12 +376,6 @@ namespace School_Mang.PL.STD
         private void btn_close_b_Click(object sender, EventArgs e)
         {
             this.Close();
-
-            BL.Globals.Current_Year_Data = false;
-            BL.Globals.Degree_Statement = false;
-            BL.Globals.Details_Std = false;
-            BL.Globals.Elthak_Std = false;
-            BL.Globals.Elthak_Std_Next_Year = false;
             this.Dispose();
         }
 
@@ -380,15 +400,15 @@ namespace School_Mang.PL.STD
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
-                Waiting.End_WAit();
+                MSG.ErrorMesg(ex.Message);
+                Waiting.Stop();
             }
 
         }
 
         private void FRM_CURRENT_STD_Load(object sender, EventArgs e)
         {
-            if (BL.Globals.Degree_Statement)
+            if (_context?.DegreeStatement == true)
             {
                 btn_talab_elthak.Visible = false;
                 btn_del_std.Visible = false;
@@ -397,7 +417,8 @@ namespace School_Mang.PL.STD
             else
             {
                 btn_talab_elthak.Visible = true;
-                if (BL.Globals.Elthak_Std || BL.Globals.Elthak_Std_Next_Year)
+                if (_context?.ElthakStd == true 
+                    || _context?.ElthakStdNextYear == true)
                 {
                     btn_del_std.Visible = false;
                 }
@@ -413,12 +434,15 @@ namespace School_Mang.PL.STD
             {
                 dt_std_data.Columns["اسم الطالب"].Width = 200;
                 cmb_grade.SelectedValue = grade;
-                lbl_current_year.Text = "بيانات " + Func.Year_Desc();
+                lbl_current_year.Text = "بيانات " + Func.Year_Desc(
+                                                 _context?.CurrentYearData ?? false,
+                                                 _context?.DetailsStd ?? false,
+                                                 _context?.ElthakStdNextYear ?? false);
                 lbl_count.Text = dt_std_data.Rows.Count.ToString();
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
 
         }
@@ -426,9 +450,9 @@ namespace School_Mang.PL.STD
         private void btn_new_std_Click(object sender, EventArgs e)
         {
             
-            Waiting.Wait();
+            Waiting.Start();
             // Degree Statement
-            if (BL.Globals.Degree_Statement)
+            if (_context?.DegreeStatement == true)
             {
                 ShowDegreeStatement();
                 return;
@@ -442,63 +466,70 @@ namespace School_Mang.PL.STD
                 int grade = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Grade_Id"].Value);
                 try
                 {
+                    var frm = FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std;
 
+                    frm.txt_osra_id.Text = dt_std_data.CurrentRow.Cells["Osraa_Id"].Value.ToString();
+                    frm.txt_std_code.Text = dt_std_data.CurrentRow.Cells["std_code"].Value.ToString();
+                    frm.txt_std_name.Text = dt_std_data.CurrentRow.Cells["اسم الطالب"].Value.ToString();
 
-                    FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.txt_osra_id.Text = dt_std_data.CurrentRow.Cells["Osraa_Id"].Value.ToString();
-                    FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.txt_std_code.Text = dt_std_data.CurrentRow.Cells["std_code"].Value.ToString();
-                    FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.txt_std_name.Text = dt_std_data.CurrentRow.Cells["اسم الطالب"].Value.ToString();
+                    frm.txt_first_name.Text = dt_std_data.CurrentRow.Cells["std_name"].Value.ToString();
+                    frm.txt_nat.Text = dt_std_data.CurrentRow.Cells["std_nat"].Value.ToString();
 
-                    FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.txt_first_name.Text = dt_std_data.CurrentRow.Cells["std_name"].Value.ToString();
-                    FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.txt_nat.Text = dt_std_data.CurrentRow.Cells["std_nat"].Value.ToString();
-
-                    FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.cmb_hala.SelectedValue = dt_std_data.CurrentRow.Cells["Std_Status_Id"].Value;
-                    FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.cmb_grade.SelectedValue = dt_std_data.CurrentRow.Cells["Grade_Id"].Value;
-                    FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.cmb_sana.SelectedValue = dt_std_data.CurrentRow.Cells["Year_Id"].Value;
-                    FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.cmb_gender.SelectedValue = dt_std_data.CurrentRow.Cells["Gender_Id"].Value;
-                    FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.grade = grade;
-                    FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.cmb_class.SelectedValue = dt_std_data.CurrentRow.Cells["Class_Id"].Value;
-                    FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.cmb_relgien.SelectedValue = dt_std_data.CurrentRow.Cells["Religion_Id"].Value;
+                    frm.cmb_hala.SelectedValue = dt_std_data.CurrentRow.Cells["Std_Status_Id"].Value;
+                    frm.cmb_grade.SelectedValue = dt_std_data.CurrentRow.Cells["Grade_Id"].Value;
+                    frm.cmb_sana.SelectedValue = dt_std_data.CurrentRow.Cells["Year_Id"].Value;
+                    frm.cmb_gender.SelectedValue = dt_std_data.CurrentRow.Cells["Gender_Id"].Value;
+                    frm.grade = grade;
+                    frm.cmb_class.SelectedValue = dt_std_data.CurrentRow.Cells["Class_Id"].Value;
+                    frm.cmb_relgien.SelectedValue = dt_std_data.CurrentRow.Cells["Religion_Id"].Value;
 
                     if (dt_std_data.CurrentRow.Cells["Updated_by"].Value.ToString() != "")
                     {
                         DateTime my_date = Convert.ToDateTime(dt_std_data.CurrentRow.Cells["Updated_At"].Value.ToString());
-                        FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.lbl_edit_date.Visible = true;
-                        FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.lbl_by.Visible = true;
-                        FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.lbl_edit_by.Visible = true;
-                        FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.lbl_date.Visible = true;
-                        FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.lbl_edit_date.Text = my_date.ToString("dd/MM/yyyy");
-                        FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.lbl_edit_by.Text = dt_std_data.CurrentRow.Cells["Updated_by"].Value.ToString();
+                        frm.lbl_edit_date.Visible = true;
+                        frm.lbl_by.Visible = true;
+                        frm.lbl_edit_by.Visible = true;
+                        frm.lbl_date.Visible = true;
+                        frm.lbl_edit_date.Text = my_date.ToString("dd/MM/yyyy");
+                        frm.lbl_edit_by.Text = dt_std_data.CurrentRow.Cells["Updated_by"].Value.ToString();
                     }
                     else
                     {
-                        FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.lbl_edit_date.Visible = false;
-                        FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.lbl_edit_by.Visible = false;
-                        FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.lbl_by.Visible = false;
-                        FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.lbl_date.Visible = false;
+                        frm.lbl_edit_date.Visible = false;
+                        frm.lbl_edit_by.Visible = false;
+                        frm.lbl_by.Visible = false;
+                        frm.lbl_date.Visible = false;
                     }
 
-                    FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.row_index = dt_std_data.CurrentCell.RowIndex;
+                    frm.row_index = dt_std_data.CurrentCell.RowIndex;
 
 
-                    BL.Globals.Update_Std_Data = true;
+                   // BL.Globals.Update_Std_Data = true;
 
-                    FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
+                    AppNavigation.Instance
+                        .WithOwner(MAIN.FRM_MAIN.Get_Frm_Main)
+                        .SetContext(c =>
+                        {
+                            c.UpdateStdData = true;
+                        }).Show(frm);
+
+                    //FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
 
 
                 }
                 catch (Exception ex)
                 {
-                    msg.ErrorMesg(ex.Message);
-                    Waiting.End_WAit();
+                    MSG.ErrorMesg(ex.Message);
+                    Waiting.Stop();
                 }
             }
             else
             {
-                msg.ErrorMesg("يرجى اختيار طالب ..!");
-                Waiting.End_WAit();
+                MSG.ErrorMesg("يرجى اختيار طالب ..!");
+                Waiting.Stop();
             }
 
-            Waiting.End_WAit();
+            Waiting.Stop();
         }
 
         private void txt_std_data_KeyUp(object sender, KeyEventArgs e)
@@ -518,14 +549,15 @@ namespace School_Mang.PL.STD
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
-                Waiting.End_WAit();
+                MSG.ErrorMesg(ex.Message);
+                Waiting.Stop();
             }
         }
 
         private void dt_std_data_DoubleClick(object sender, EventArgs e)
         {
-            if (BL.Globals.Elthak_Std || BL.Globals.Elthak_Std_Next_Year)
+            if (_context.ElthakStd == true 
+                || _context?.ElthakStdNextYear == true)
             {
                 btn_talab_elthak_Click(sender, e);
             }
@@ -552,7 +584,7 @@ namespace School_Mang.PL.STD
 
                 int selected_class = cmb_class.SelectedIndex;
 
-                if (msg.DialogeErrMsg("هل تريد حذف الطالب  " + std_name + "  ..؟") == DialogResult.Yes)
+                if (MSG.DialogeErrMsg("هل تريد حذف الطالب  " + std_name + "  ..؟") == DialogResult.Yes)
                 {
                     std.Delete_School_Std_Data(std_code, Current_Year());
 
@@ -568,19 +600,19 @@ namespace School_Mang.PL.STD
                     }
 
                     cmb_class.SelectedIndex = selected_class;
-                    msg.MyMesg("تم حذف الطالب  " + std_name + "...! ");
+                    MSG.MyMesg("تم حذف الطالب  " + std_name + "...! ");
 
 
                 }
                 else
                 {
-                    msg.ErrorMesg("تم الغاء عملية الحذف ..!");
+                    MSG.ErrorMesg("تم الغاء عملية الحذف ..!");
                     return;
                 }
             }
             else
             {
-                msg.ErrorMesg("يرجى اختيار طالب .. !");
+                MSG.ErrorMesg("يرجى اختيار طالب .. !");
             }
         }
 
@@ -589,7 +621,7 @@ namespace School_Mang.PL.STD
             if (dt_std_data.SelectedRows.Count > 0)
             {
                 if (Verify_Std_Status()) return;
-                Waiting.Wait();
+                Waiting.Start();
                 try
                 {
 
@@ -604,23 +636,23 @@ namespace School_Mang.PL.STD
                     FRM_TAHEEL_STD.Get_Tahweel_Std.lbl_mohwel.Text = "محول إلى";
                     FRM_TAHEEL_STD.Get_Tahweel_Std.grade = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Grade_Id"].Value);
 
-                    Waiting.End_WAit();
+                    Waiting.Stop();
                     FRM_TAHEEL_STD.Get_Tahweel_Std.ShowDialog();
 
                 }
                 catch (Exception ex)
                 {
-                    msg.ErrorMesg(ex.Message);
-                    Waiting.End_WAit();
+                    MSG.ErrorMesg(ex.Message);
+                    Waiting.Stop();
                 }
             }
             else
             {
-                msg.ErrorMesg("يرجى اختيار طالب .. !");
+                MSG.ErrorMesg("يرجى اختيار طالب .. !");
             }
 
 
-            Waiting.End_WAit();
+            Waiting.Stop();
         }
 
         private void btn_talab_elthak_Click(object sender, EventArgs e)
@@ -642,7 +674,7 @@ namespace School_Mang.PL.STD
                     string year_desc = "";
 
                     // Get New Std (KG2 And Prim Six) Data For New Year
-                    if (BL.Globals.Elthak_Std_Next_Year)
+                    if (_context?.ElthakStdNextYear == true)
                     {
                         switch (grade)
                         {
@@ -677,13 +709,13 @@ namespace School_Mang.PL.STD
                 }
                 catch (Exception ex)
                 {
-                    msg.ErrorMesg(ex.Message);
+                    MSG.ErrorMesg(ex.Message);
 
                 }
             }
             else
             {
-                msg.ErrorMesg("يرجى اختيار طالب .. !");
+                MSG.ErrorMesg("يرجى اختيار طالب .. !");
             }
 
         }

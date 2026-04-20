@@ -7,14 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using School_Mang.BL;
 
 namespace School_Mang.PL.NATIGA
 {
     public partial class FRM_ADD_GOLOS : Form
     {
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
-        BL.MSG msg = new BL.MSG();
-        BL.Waiting waiting = new BL.Waiting();
         BL.NATEG.CLS_NATEG nateg = new BL.NATEG.CLS_NATEG();
 
         int year = Properties.Settings.Default.year_cod;
@@ -43,7 +42,9 @@ namespace School_Mang.PL.NATIGA
 
         private void Get_Count_Grade(int grade)
         {
-            if (nateg.Get_Golos_Sum(grade).Rows[0]["Golos"].ToString() != "")
+            DataTable dt = nateg.Get_Golos_Sum(grade);
+
+            if ( dt != null  && dt.Rows.Count > 0)
             {
                 txt_golos.Text = nateg.Get_Golos_Sum(grade,"min").Rows[0]["Golos"].ToString();
                 btn_save_data.ButtonText = "تعديل الترقيم";
@@ -101,19 +102,19 @@ namespace School_Mang.PL.NATIGA
         {
             if (txt_golos.Text == "")
             {
-                msg.ErrorMesg("يرجى ادخال رقم البداية");
+                MSG.ErrorMesg("يرجى ادخال رقم البداية");
                 txt_golos.Focus();
                 return;
             }
             try
             {
-                if (msg.DialogeMsg("هل تريد إضافة أرقام جلوس للصف المحدد ... ؟") == DialogResult.Yes)
+                if (MSG.DialogeMsg("هل تريد إضافة أرقام جلوس للصف المحدد ... ؟") == DialogResult.Yes)
                 {
                     int grade = Convert.ToInt32(cmb_grade.SelectedValue);
 
                     if (nateg.Get_Golos_Sum(grade).Rows[0]["Golos"].ToString() != "")
                     {
-                        if (msg.DialogeErrMsg("تم إدخال أرقام الجلوس للصف المحدد من قبل .. سوف يتم حذف الأرقام القديمة.. هل تريد المتابعة ؟") == DialogResult.No)
+                        if (MSG.DialogeErrMsg("تم إدخال أرقام الجلوس للصف المحدد من قبل .. سوف يتم حذف الأرقام القديمة.. هل تريد المتابعة ؟") == DialogResult.No)
                         {
                             return;
                         }
@@ -124,15 +125,15 @@ namespace School_Mang.PL.NATIGA
                     int std_code;
                     DataTable std_data = nateg.Get_Golos_Data(grade);
                    
-                    waiting.Wait();
+                    Waiting.Start();
                     foreach(DataRow row in std_data.Rows)
                     {
                        std_code = Convert.ToInt32(row["std_code"]);
                         nateg.Update_Golos_Data(std_code, golos);
                         golos += 1;
                     }
-                    waiting.End_WAit();
-                    msg.MyMesg("تم تعديل أرقام الجلوس بنجاح ..!");
+                    Waiting.Stop();
+                    MSG.MyMesg("تم تعديل أرقام الجلوس بنجاح ..!");
                 }
                 else
                 {
@@ -142,10 +143,10 @@ namespace School_Mang.PL.NATIGA
             }
             catch(Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
-                waiting.End_WAit();
+                MSG.ErrorMesg(ex.Message);
+                Waiting.Stop();
             }
-            waiting.End_WAit();
+            Waiting.Stop();
 
         }
 

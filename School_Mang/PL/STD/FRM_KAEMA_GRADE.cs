@@ -1,4 +1,6 @@
-﻿using System;
+﻿using School_Mang.BL;
+using School_Mang.BL.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,12 +12,20 @@ using System.Windows.Forms;
 
 namespace School_Mang.PL.STD
 {
-    public partial class FRM_KAEMA_GRADE : Form
+    public partial class FRM_KAEMA_GRADE : Form, INavigationAware
     {
-        BL.MSG msg = new BL.MSG();
+
+        private NavigationContext _context;
+
+        public void SetNavigation(NavigationContext context)
+        {
+            _context = context ?? new NavigationContext();
+            ApplyContext();
+        }
+
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
         RPT.REPORT_CONNECTION RPT = new RPT.REPORT_CONNECTION();
-        BL.Waiting waiting = new BL.Waiting();
+        
 
         // Form Closed
         private static FRM_KAEMA_GRADE frm_Kaema_Grade;
@@ -44,7 +54,25 @@ namespace School_Mang.PL.STD
                 frm_Kaema_Grade = this;
             }
 
-            if (BL.Globals.Open_41_New || BL.Globals.Open_Tadarg_Sen)
+            ApplyContext();
+            
+        }
+        int move;
+        int move_x;
+        int move_y;
+
+        private void pn_top_MouseDown(object sender, MouseEventArgs e)
+        {
+            move = 1;
+            move_x = e.X;
+            move_y = e.Y;
+        }
+        private void ApplyContext()
+        {
+            if (_context == null) return;
+
+            if (_context.CurrentReport == NavigationContext.ReportDataType.Open41New
+               || _context.CurrentReport == NavigationContext.ReportDataType.OpenTadargSen)
             {
                 cmb_grade.DataSource = std.Get_grades("yes");
             }
@@ -61,16 +89,6 @@ namespace School_Mang.PL.STD
             cmb_sana.DataSource = std.Get_years();
             cmb_sana.DisplayMember = "YearDesc";
             cmb_sana.ValueMember = "Year_Id";
-        }
-        int move;
-        int move_x;
-        int move_y;
-
-        private void pn_top_MouseDown(object sender, MouseEventArgs e)
-        {
-            move = 1;
-            move_x = e.X;
-            move_y = e.Y;
         }
 
         private void pn_top_MouseUp(object sender, MouseEventArgs e)
@@ -106,7 +124,7 @@ namespace School_Mang.PL.STD
 
                 if (std.Get_Kaema_Data(sana, 0).Rows.Count == 0)
                 {
-                    msg.ErrorMesg("لا توجد بيانات مسجلة .. يرجى التأكد من العام الدراسى !");
+                    MSG.ErrorMesg("لا توجد بيانات مسجلة .. يرجى التأكد من العام الدراسى !");
 
                 }
                 else
@@ -118,7 +136,7 @@ namespace School_Mang.PL.STD
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
         }
 
@@ -135,174 +153,160 @@ namespace School_Mang.PL.STD
 
         private void btn_print_kaema_Click(object sender, EventArgs e)
         {
-            waiting.Wait();
+            Waiting.Start();
             int grade = Convert.ToInt32(cmb_grade.SelectedValue);
-            if (BL.Globals.Open_Kaema)
+            int year_id = Convert.ToInt32(cmb_sana.SelectedValue);
+            try
             {
-                Print_Kaema(grade);
-                waiting.End_WAit();
-                return;
-            }
-            if (BL.Globals.Open_Tadarg_Sen)
-            {
-               
-                int year_id = Convert.ToInt32(cmb_sana.SelectedValue);
-                if (std.Get_Tadrg_Sen(year_id, grade).Rows.Count == 0)
+                switch (_context.CurrentReport)
                 {
-                    msg.ErrorMesg("لا توجد بيانات مسجلة للصف المحدد .. !");
-                    waiting.End_WAit();
-                    return;
-                }
+                    case NavigationContext.ReportDataType.OpenKaema:
 
-                RPT.OpenTadargSen(year_id, grade);
-                waiting.End_WAit();
-                return;
+                        Print_Kaema(grade);
+                        break;
+
+                    case NavigationContext.ReportDataType.OpenTadargSen:
+
+                        if (std.Get_Tadrg_Sen(year_id, grade).Rows.Count == 0)
+                        {
+                            MSG.ErrorMesg("لا توجد بيانات مسجلة للصف المحدد .. !");
+                            return;
+                        }
+
+                        RPT.OpenTadargSen(year_id, grade);
+                        break;
+
+                    case NavigationContext.ReportDataType.OpenSegel:
+
+                        if (std.Get_Segel_Data(year_id, grade).Rows.Count == 0)
+                        {
+                            MSG.ErrorMesg("لا توجد بيانات مسجلة للصف المحدد .. !");
+                            return;
+                        }
+
+                        RPT.OpenSegel(year_id, grade);
+                        break;
+
+                    case NavigationContext.ReportDataType.Open41New:
+
+                        if (std.Get_Segel_Data(year_id, grade).Rows.Count == 0)
+                        {
+                            MSG.ErrorMesg("لا توجد بيانات مسجلة للصف المحدد .. !");
+                            return;
+                        }
+
+                        RPT.OpenMostgdin_41(year_id, grade);
+
+                        break;
+
+                    case NavigationContext.ReportDataType.OpenTransferFrom:
+
+                        if (std.Get_Trans_Reports(year_id - 1, 3, grade).Rows.Count == 0)
+                        {
+                            MSG.ErrorMesg("لا توجد بيانات مسجلة للصف المحدد .. !");
+                            return;
+                        }
+                        RPT.OpenTahewl_Data(year_id - 1, 3, grade);
+                        break;
+
+                    case NavigationContext.ReportDataType.OpenTransferTo:
+
+                        if (std.Get_Trans_Reports(year_id, 4, grade).Rows.Count == 0)
+                        {
+                            MSG.ErrorMesg("لا توجد بيانات مسجلة للصف المحدد .. !");
+                            return;
+                        }
+                        RPT.OpenTahewl_Data(year_id, 4, grade);
+                        break;
+                }
             }
-            if (BL.Globals.Open_Segel)
+            catch (Exception ex)
             {
-                int year_id = Convert.ToInt32(cmb_sana.SelectedValue);
-                if (std.Get_Segel_Data(year_id, grade).Rows.Count == 0)
-                {
-                    msg.ErrorMesg("لا توجد بيانات مسجلة للصف المحدد .. !");
-                    waiting.End_WAit();
-                    return;
-                }
-
-                RPT.OpenSegel(year_id, grade);
-                waiting.End_WAit();
-                return;
+                MSG.ErrorMesg(ex.Message);
             }
-            if (BL.Globals.Open_41_New)
-            {
-                int year_id = Convert.ToInt32(cmb_sana.SelectedValue);
-                if (std.Get_Segel_Data(year_id, grade).Rows.Count == 0)
-                {
-                    msg.ErrorMesg("لا توجد بيانات مسجلة للصف المحدد .. !");
-                    waiting.End_WAit();
-                    return;
-                }
-
-                RPT.OpenMostgdin_41(year_id, grade);
-                waiting.End_WAit();
-                return;
+            finally {
+                Waiting.Stop();
             }
-
-            if (BL.Globals.Open_Transfer_From)
-            {
-                int year_id = Convert.ToInt32(cmb_sana.SelectedValue) ;
-                if (std.Get_Trans_Reports(year_id -1 , 3, grade ).Rows.Count == 0)
-                {
-                    msg.ErrorMesg("لا توجد بيانات مسجلة للصف المحدد .. !");
-                    waiting.End_WAit();
-                    return;
-                }
-                RPT.OpenTahewl_Data(year_id -1 , 3, grade );
-
-                waiting.End_WAit(); 
-                return;
-            }
-            if (BL.Globals.Open_Transfer_To)
-            {
-                int year_id = Convert.ToInt32(cmb_sana.SelectedValue);
-                if (std.Get_Trans_Reports(year_id, 4, grade).Rows.Count == 0)
-                {
-                    msg.ErrorMesg("لا توجد بيانات مسجلة للصف المحدد .. !");
-                    waiting.End_WAit();
-                    return;
-                }
-                RPT.OpenTahewl_Data(year_id, 4, grade);
-                waiting.End_WAit();
-                return;
-            }
-            waiting.End_WAit();
-
         }
 
         private void btn_print_kaema_all_Click(object sender, EventArgs e)
         {
-            waiting.Wait();
+            Waiting.Start();
             int year_id = Convert.ToInt32(cmb_sana.SelectedValue);
-            if (BL.Globals.Open_Kaema)
+
+            try
             {
-                Print_Kaema();
-                waiting.End_WAit();
-                return;
-            }
-            if (BL.Globals.Open_Tadarg_Sen)
-            {
-                if (std.Get_Tadrg_Sen(year_id).Rows.Count == 0)
+                switch (_context.CurrentReport)
                 {
-                    msg.ErrorMesg("لا توجد بيانات مسجلة لهذا العام .. !");
-                    waiting.End_WAit();
-                    return;
+                    case NavigationContext.ReportDataType.OpenKaema:
+
+                        Print_Kaema();
+                        break;
+
+                    case NavigationContext.ReportDataType.OpenTadargSen:
+
+                        if (std.Get_Tadrg_Sen(year_id).Rows.Count == 0)
+                        {
+                            MSG.ErrorMesg("لا توجد بيانات مسجلة لهذا العام .. !");
+                            return;
+                        }
+
+                        if (MSG.DialogeErrMsg("سوف يتم عرض بيانات جميع الطلاب .. هل تريد المتابعة ؟ ") != DialogResult.Yes) return;
+
+                        RPT.OpenTadargSen(year_id);
+                        break;
+
+                    case NavigationContext.ReportDataType.OpenSegel:
+
+                        if (std.Get_Segel_Data(year_id).Rows.Count == 0)
+                        {
+                            MSG.ErrorMesg("لا توجد بيانات مسجلة لهذا العام .. !");
+                            return;
+                        }
+                        RPT.OpenSegel(year_id);
+                        break;
+
+                    case NavigationContext.ReportDataType.Open41New:
+
+                        if (std.Get_Segel_Data(year_id).Rows.Count == 0)
+                        {
+                            MSG.ErrorMesg("لا توجد بيانات مسجلة لهذا العام .. !");
+                            return;
+                        }
+                        if (MSG.DialogeErrMsg("سوف يتم عرض بيانات جميع الطلاب .. هل تريد المتابعة ؟ ") != DialogResult.Yes) return;
+
+
+                        RPT.OpenMostgdin_41(year_id);
+
+                        break;
+
+                    case NavigationContext.ReportDataType.OpenTransferFrom:
+
+                        if (MSG.DialogeErrMsg("سوف يتم عرض بيانات جميع الطلاب .. هل تريد المتابعة ؟ ") != DialogResult.Yes) return;
+                        RPT.OpenTahewl_Data(year_id - 1, 3);
+                        break;
+
+                    case NavigationContext.ReportDataType.OpenTransferTo:
+
+                        if (MSG.DialogeErrMsg("سوف يتم عرض بيانات جميع الطلاب .. هل تريد المتابعة ؟ ") != DialogResult.Yes) return;
+                        RPT.OpenTahewl_Data(year_id, 4);
+                        break;
                 }
-
-                if (msg.DialogeErrMsg("سوف يتم عرض بيانات جميع الطلاب .. هل تريد المتابعة ؟ ") != DialogResult.Yes) return;
-
-                RPT.OpenTadargSen(year_id);
-                waiting.End_WAit();
-                return;
             }
-
-            if (BL.Globals.Open_Segel)
+            catch (Exception ex)
             {
-                if (std.Get_Segel_Data(year_id).Rows.Count == 0)
-                {
-                    msg.ErrorMesg("لا توجد بيانات مسجلة لهذا العام .. !");
-                    waiting.End_WAit();
-                    return;
-                }
-                RPT.OpenSegel(year_id);
-                waiting.End_WAit();
-                return;
+                MSG.ErrorMesg(ex.Message);
             }
-            if (BL.Globals.Open_41_New)
+            finally
             {
-               
-                if (std.Get_Segel_Data(year_id).Rows.Count == 0)
-                {
-                    msg.ErrorMesg("لا توجد بيانات مسجلة لهذا العام .. !");
-                    waiting.End_WAit();
-                    return;
-                }
-                if (msg.DialogeErrMsg("سوف يتم عرض بيانات جميع الطلاب .. هل تريد المتابعة ؟ ") != DialogResult.Yes) return;
-
-
-                RPT.OpenMostgdin_41(year_id);
-                waiting.End_WAit();
-                return;
+                Waiting.Stop();
             }
-
-            if (BL.Globals.Open_Transfer_From)
-            {
-                if (msg.DialogeErrMsg("سوف يتم عرض بيانات جميع الطلاب .. هل تريد المتابعة ؟ ") != DialogResult.Yes) return;
-                RPT.OpenTahewl_Data(year_id - 1, 3);
-                waiting.End_WAit();
-                return;
-
-            }
-
-            if (BL.Globals.Open_Transfer_To)
-            {
-                if (msg.DialogeErrMsg("سوف يتم عرض بيانات جميع الطلاب .. هل تريد المتابعة ؟ ") != DialogResult.Yes) return;
-                RPT.OpenTahewl_Data(year_id, 4);
-                waiting.End_WAit();
-                return;
-
-            }
-            waiting.End_WAit();
+            
         }
 
         private void btn_close_b_Click(object sender, EventArgs e)
         {
-            this.Close();
-
-            BL.Globals.Open_Kaema = false;
-            BL.Globals.Open_Segel = false;
-            BL.Globals.Open_Tadarg_Sen = false;
-            BL.Globals.Open_41_New = false;
-            BL.Globals.Open_Transfer_From = false;
-            BL.Globals.Open_Transfer_To = false;
+            this.Close();           
         }
 
         private void btn_close_Click(object sender, EventArgs e)

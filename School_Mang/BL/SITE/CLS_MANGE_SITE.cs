@@ -4,15 +4,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using School_Mang.BL.Common.Helper;
 
 
 namespace School_Mang.BL.SITE
 {
     public class CLS_MANGE_SITE
     {
-        MSG msg = new MSG();
-        Waiting waiting = new Waiting();
         private readonly SiteAccessLayer DAL = new SiteAccessLayer();
 
 
@@ -169,7 +166,7 @@ namespace School_Mang.BL.SITE
         public void Update_User_2025(string username, string password, string firstName,
                                     string fullName, int roleId, string osraId, string note)
         {
-            waiting.Wait();
+            Waiting.Start();
 
             DAL.ExecNonQuery("SP_Add_User_2025",
                 SqlParam.NVar("@username", username, 20),
@@ -181,7 +178,7 @@ namespace School_Mang.BL.SITE
                 SqlParam.NVar("@note", note, 250)
             );
 
-            waiting.End_WAit();
+            Waiting.Stop();
         }
 
         public void Update_Student_Data(int Student_Id, int Class_Id, int Gender_Id,

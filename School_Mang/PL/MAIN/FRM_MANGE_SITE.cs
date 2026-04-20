@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using School_Mang.PL.SITE;
 using School_Mang.BL.Common.Helper;
+using School_Mang.BL;
+
 namespace School_Mang.PL.MAIN
 {
     public partial class FRM_MANGE_SITE : Form
@@ -47,9 +49,7 @@ namespace School_Mang.PL.MAIN
         }
 
         BL.NATEG.cls_NATAG_FUNCTIONS natag_func = new BL.NATEG.cls_NATAG_FUNCTIONS();
-        BL.MSG msg = new BL.MSG();
         new readonly BL.SITE.CLS_MANGE_SITE Site = new BL.SITE.CLS_MANGE_SITE();
-        BL.Waiting Waiting = new BL.Waiting();
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
 
 
@@ -75,12 +75,12 @@ namespace School_Mang.PL.MAIN
         private Boolean Get_Std_Data(bool get_msg = false)
         {
             bool has_data;
-            Waiting.Wait();
+            Waiting.Start();
             user_code = Site.Get_User_Code();
             std_code = std.Get_Kaema_Data(year, 0);
             if (get_msg)
             {
-                msg.MyMesg("عدد الطلاب المسجلين فى قاعدة البيانات  : " + std_code.Rows.Count.ToString());
+                MSG.MyMesg("عدد الطلاب المسجلين فى قاعدة البيانات  : " + std_code.Rows.Count.ToString());
             }
 
             var unmatchedOnDataBase = from row1 in std_code.AsEnumerable()
@@ -98,24 +98,24 @@ namespace School_Mang.PL.MAIN
             {
                 if (!get_msg)
                 {
-                    msg.ErrorMesg("لا توجد بيانات غير متطابقة..!");
+                    MSG.ErrorMesg("لا توجد بيانات غير متطابقة..!");
                 }
                 has_data = false;
             }
-            Waiting.End_WAit();
+            Waiting.Stop();
             return has_data;
         }
 
         private Boolean Get_Site_Data(bool get_msg = false)
         {
             bool has_data;
-            Waiting.Wait();
+            Waiting.Start();
             user_code = Site.Get_User_Code();
             std_code = std.Get_Kaema_Data(year, 0);
 
             if (get_msg)
             {
-                msg.MyMesg("عدد الطلاب المسجلين فى الموقع  : " + user_code.Rows.Count.ToString());
+                MSG.MyMesg("عدد الطلاب المسجلين فى الموقع  : " + user_code.Rows.Count.ToString());
             }
             var unmatchedOnSite = from row1 in user_code.AsEnumerable()
                                   join row2 in std_code.AsEnumerable()
@@ -133,11 +133,11 @@ namespace School_Mang.PL.MAIN
             {
                 if (!get_msg)
                 {
-                    msg.ErrorMesg("لا توجد بيانات غير متطابقة..!");
+                    MSG.ErrorMesg("لا توجد بيانات غير متطابقة..!");
                 }
                 has_data = false;
             }
-            Waiting.End_WAit();
+            Waiting.Stop();
             return has_data;
         }
         
@@ -155,7 +155,7 @@ namespace School_Mang.PL.MAIN
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
         }
 
@@ -166,13 +166,8 @@ namespace School_Mang.PL.MAIN
 
         private async void lbl_final_test_Click(object sender, EventArgs e)
         {
-            bool isConncted = await InternetHelper.CheckInternetAsync();
-
-            if (!isConncted)
-            {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+            if (!await InternetFlow.EnsureAsync())
                 return;
-            }
 
             try
             {
@@ -180,33 +175,33 @@ namespace School_Mang.PL.MAIN
                 // Load Data
                 if (Get_Std_Data(true))
                 {
-                    msg.MyMesg(" غير موجود في قاعدة الطلاب: " + unmatchedDataBase.Rows.Count.ToString());
+                    MSG.MyMesg(" غير موجود في قاعدة الطلاب: " + unmatchedDataBase.Rows.Count.ToString());
                 }
                 else
                 {
-                    msg.ErrorMesg("لا يوجد طلاب غير مسجل لهم مستخدم على الموقع  ..!");
+                    MSG.ErrorMesg("لا يوجد طلاب غير مسجل لهم مستخدم على الموقع  ..!");
                 }
 
 
                 if (Get_Site_Data(true))
                 {
-                    msg.MyMesg(" غير موجود في قاعدة الطلاب: " + unmatchedSite.Rows.Count.ToString());
+                    MSG.MyMesg(" غير موجود في قاعدة الطلاب: " + unmatchedSite.Rows.Count.ToString());
                 }
                 else
                 {
-                    msg.ErrorMesg("لا يوجد طلاب غير مسجلين في قاعدة البيانات ..!");
+                    MSG.ErrorMesg("لا يوجد طلاب غير مسجلين في قاعدة البيانات ..!");
                 }
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
-                Waiting.End_WAit();
+                MSG.ErrorMesg(ex.Message);
+                Waiting.Stop();
             }
             finally
             {
-                Waiting.End_WAit();
+                Waiting.Stop();
             }
-            Waiting.End_WAit();
+            Waiting.Stop();
         }
 
         private void pic_final_test_Click(object sender, EventArgs e)
@@ -216,13 +211,8 @@ namespace School_Mang.PL.MAIN
 
         private async void lbl_unmach_database_Click(object sender, EventArgs e)
         {
-            bool isConncted = await InternetHelper.CheckInternetAsync();
-
-            if (!isConncted)
-            {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+            if (!await InternetFlow.EnsureAsync())
                 return;
-            }
 
             try
             {
@@ -239,7 +229,7 @@ namespace School_Mang.PL.MAIN
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
 
         }
@@ -251,13 +241,8 @@ namespace School_Mang.PL.MAIN
 
         public async void lbl_unmach_site_Click(object sender, EventArgs e)
         {
-            bool isConncted = await InternetHelper.CheckInternetAsync();
-
-            if (!isConncted)
-            {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+            if (!await InternetFlow.EnsureAsync())
                 return;
-            }
 
             try
             {
@@ -274,7 +259,7 @@ namespace School_Mang.PL.MAIN
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
         }
 
@@ -285,7 +270,7 @@ namespace School_Mang.PL.MAIN
 
         private void lbl_add_user_Click(object sender, EventArgs e)
         {
-            msg.ErrorMesg("هذا الإجراء غير متاح حالياً .. !");
+            MSG.ErrorMesg("هذا الإجراء غير متاح حالياً .. !");
             return;
 
         }
@@ -297,7 +282,7 @@ namespace School_Mang.PL.MAIN
 
         private void lbl_link_data_Click(object sender, EventArgs e)
         {
-            msg.ErrorMesg("لسه ما خلصش ..!");
+            MSG.ErrorMesg("لسه ما خلصش ..!");
         }
 
         private void pic_link_data_Click(object sender, EventArgs e)
@@ -307,13 +292,13 @@ namespace School_Mang.PL.MAIN
 
         private void lbl_update_data_Click(object sender, EventArgs e)
         {
-            msg.ErrorMesg("هذا الإجراء غير متاح حالياً .. !");
+            MSG.ErrorMesg("هذا الإجراء غير متاح حالياً .. !");
             return;
 
             // Un Work
-            if (msg.DialogeMsg("هل تريد تحديث بيانات الطلاب في الموقع ... ؟") == DialogResult.Yes)
+            if (MSG.DialogeMsg("هل تريد تحديث بيانات الطلاب في الموقع ... ؟") == DialogResult.Yes)
             {
-                msg.MyExclamationMsg("هذا الإجراء سوف يستغرق بعض الوقت .. يرجي الإنتطار ..!");
+                MSG.MyExclamationMsg("هذا الإجراء سوف يستغرق بعض الوقت .. يرجي الإنتطار ..!");
 
                 try
                 {
@@ -322,12 +307,12 @@ namespace School_Mang.PL.MAIN
                 }
                 catch (Exception ex)
                 {
-                    msg.ErrorMesg(ex.Message);
+                    MSG.ErrorMesg(ex.Message);
                 }
             }
             else
             {
-                msg.ErrorMesg("تم إلفاء الإجراء ..!");
+                MSG.ErrorMesg("تم إلفاء الإجراء ..!");
             }
         }
 
@@ -343,13 +328,9 @@ namespace School_Mang.PL.MAIN
 
         private async void lbl_study_Click(object sender, EventArgs e)
         {
-            bool isConncted = await InternetHelper.CheckInternetAsync();
-
-            if (!isConncted)
-            {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+            if (!await InternetFlow.EnsureAsync())
                 return;
-            }
+
             // Get Std Data Form
             changePages(FRM_MANGE_LESSONS.Get_Mange_Lessons.pn_mange_lesson, "إدارة المقررات");
 
@@ -380,23 +361,15 @@ namespace School_Mang.PL.MAIN
 
         private async void lbl_async_site_Click(object sender, EventArgs e)
         {
-            bool isConncted = await InternetHelper.CheckInternetAsync();
+            if (!await InternetFlow.EnsureAsync())
+                return;
 
-            if (!isConncted)
-            {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
-                return;
-            }
-            if (!BL.Globals.Test_Internet_Con)
-            {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
-                return;
-            }
+            
             if (Properties.Settings.Default.Server_Name != "192.168.1.135")
             {
-                if (msg.DialogeErrMsg("هل تريد مزامنة قاعدة البيانات علي السيرفر ... ؟") == DialogResult.Yes)
+                if (MSG.DialogeErrMsg("هل تريد مزامنة قاعدة البيانات علي السيرفر ... ؟") == DialogResult.Yes)
                 {
-                    msg.MyExclamationMsg("هذا الإجراء سوف يستغرق بعض الوقت .. يرجي الإنتطار ..!");
+                    MSG.MyExclamationMsg("هذا الإجراء سوف يستغرق بعض الوقت .. يرجي الإنتطار ..!");
                     try
                     {
                         Merge_Data.SyncTable("OsraData", new string[] { "Osraa_Id" });
@@ -407,12 +380,12 @@ namespace School_Mang.PL.MAIN
                     }
                     catch (Exception ex)
                     {
-                        msg.ErrorMesg(ex.Message);
+                        MSG.ErrorMesg(ex.Message);
                     }
                 }
                 else
                 {
-                    msg.ErrorMesg("تم إلغاء الإجراء");
+                    MSG.ErrorMesg("تم إلغاء الإجراء");
                     return;
                 } 
             }

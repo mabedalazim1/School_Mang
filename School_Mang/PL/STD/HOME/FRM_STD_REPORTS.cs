@@ -7,15 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using School_Mang.BL;
+using School_Mang.BL.Services;
 
 namespace School_Mang.PL.STD.HOME
 {
     public partial class FRM_STD_REPORTS : Form
     {
         CLS_STD_FUNCATIONS Func = new CLS_STD_FUNCATIONS();
-        BL.MSG msg = new BL.MSG();
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
-        BL.Waiting waiting = new BL.Waiting();
+        
 
         int year = Properties.Settings.Default.year_cod;
 
@@ -48,29 +49,38 @@ namespace School_Mang.PL.STD.HOME
             }
         }
 
-        private void Open_Report(string title)
+        private void Open_Report(string title, NavigationContext.ReportDataType type )
         {
-            FRM_KAEMA_GRADE.Get_Frm_Kaema_Grade.label11.Text = title;
-            FRM_KAEMA_GRADE.Get_Frm_Kaema_Grade.Text = title;
-            FRM_KAEMA_GRADE.Get_Frm_Kaema_Grade.ShowDialog();
+            var frm = FRM_KAEMA_GRADE.Get_Frm_Kaema_Grade;
+            frm.label11.Text = title;
+            frm.Text = title;
+
+            AppNavigation.Instance
+                .SetContext(c =>
+                {
+                   c.CurrentReport = type;
+                })
+                .Show(frm);
         }
 
         private void Open_Count_Std(int year)
         {
-            waiting.Wait();
+            Waiting.Start();
             try
             {
 
                 RPT.REPORT_CONNECTION RPT = new RPT.REPORT_CONNECTION();
                 RPT.OpenCount_Std(year);
-                waiting.End_WAit();
             }
             catch (Exception ex)
             {
-                msg.MyMesg(ex.Message);
-                waiting.End_WAit();
+                MSG.MyMesg(ex.Message);
             }
-            waiting.End_WAit();
+            finally
+            {
+                Waiting.Stop();
+            }
+            
         }
         private void lbl_back_Click(object sender, EventArgs e)
         {
@@ -84,40 +94,22 @@ namespace School_Mang.PL.STD.HOME
 
         private void lbl_kwaam_fasl_Click(object sender, EventArgs e)
         {
-            BL.Globals.Open_Kaema = true;
-            BL.Globals.Open_Segel = false;
-            BL.Globals.Open_Tadarg_Sen = false;
-            BL.Globals.Open_41_New = false;
-            BL.Globals.Open_Transfer_From = false;
-            BL.Globals.Open_Transfer_To = false;
-
-            Open_Report("قوائم الفصول");
-
+            Open_Report("قوائم الفصول",
+                NavigationContext.ReportDataType.OpenKaema);
         }
 
         private void lbl_kwaam_sen_Click(object sender, EventArgs e)
         {
-            BL.Globals.Open_Kaema = false;
-            BL.Globals.Open_Segel = false;
-            BL.Globals.Open_Tadarg_Sen = true;
             FRM_KAEMA_GRADE.Get_Frm_Kaema_Grade.chk_sort.Visible = true;
-            BL.Globals.Open_41_New = false;
-            BL.Globals.Open_Transfer_From = false;
-            BL.Globals.Open_Transfer_To = false;
-
-            Open_Report("تدرج السن");
+          
+            Open_Report("تدرج السن", 
+                NavigationContext.ReportDataType.OpenTadargSen);
         }
 
         private void lbl_segel_Click(object sender, EventArgs e)
         {
-            BL.Globals.Open_Kaema = false;
-            BL.Globals.Open_Segel = true;
-            BL.Globals.Open_Tadarg_Sen = false;
-            BL.Globals.Open_41_New = false;
-            BL.Globals.Open_Transfer_From = false;
-            BL.Globals.Open_Transfer_To = false;
-
-            Open_Report("سجل الطلاب");
+            Open_Report("سجل الطلاب", 
+                NavigationContext.ReportDataType.OpenSegel);
         }
 
         private void pic__kwaam_sen_Click(object sender, EventArgs e)
@@ -137,14 +129,8 @@ namespace School_Mang.PL.STD.HOME
 
         private void lbl_41_new_Click(object sender, EventArgs e)
         {
-            BL.Globals.Open_Kaema = false;
-            BL.Globals.Open_Segel = false;
-            BL.Globals.Open_Tadarg_Sen = false;
-            BL.Globals.Open_41_New = true;
-            BL.Globals.Open_Transfer_From = false;
-            BL.Globals.Open_Transfer_To = false;
-
-            Open_Report("41 مستجدين");
+            Open_Report("41 مستجدين", 
+                NavigationContext.ReportDataType.Open41New);
         }
 
         private void pic_41_new_Click(object sender, EventArgs e)
@@ -154,26 +140,15 @@ namespace School_Mang.PL.STD.HOME
 
         private void lbl_transfer_from_Click(object sender, EventArgs e)
         {
-            BL.Globals.Open_Kaema = false;
-            BL.Globals.Open_Segel = false;
-            BL.Globals.Open_Tadarg_Sen = false;
-            BL.Globals.Open_41_New = false;
-            BL.Globals.Open_Transfer_From = true;
-            BL.Globals.Open_Transfer_To = false;
 
-            Open_Report("محولون من المدرسة");
+            Open_Report("محولون من المدرسة", 
+                NavigationContext.ReportDataType.OpenTransferFrom);
         }
 
         private void lbl_transfer_to_Click(object sender, EventArgs e)
         {
-            BL.Globals.Open_Kaema = false;
-            BL.Globals.Open_Segel = false;
-            BL.Globals.Open_Tadarg_Sen = false;
-            BL.Globals.Open_41_New = false;
-            BL.Globals.Open_Transfer_From = false;
-            BL.Globals.Open_Transfer_To = true;
-
-            Open_Report("محولون إلى المدرسة");
+            Open_Report("محولون إلى المدرسة", 
+                NavigationContext.ReportDataType.OpenTransferFrom);
         }
 
         private void pic_transfer_from_Click(object sender, EventArgs e)
@@ -209,11 +184,17 @@ namespace School_Mang.PL.STD.HOME
 
         private void lbl_bian_dragat_Click(object sender, EventArgs e)
         {
-            waiting.Wait();
-            BL.Globals.Current_Year_Data = true;
-            BL.Globals.Degree_Statement = true;
-            FRM_CHOOSE_GRADE frm = new FRM_CHOOSE_GRADE();
-            frm.ShowDialog();
+            Waiting.Start();
+
+            AppNavigation.Instance
+                .SetContext(c =>
+                {
+                    c.CurrentYearData = true;
+                    c.DegreeStatement = true;
+                }).Show<FRM_CHOOSE_GRADE>();
+
+            //FRM_CHOOSE_GRADE frm = new FRM_CHOOSE_GRADE();
+            //frm.ShowDialog();
         }
 
         private void pic_bian_dragat_Click(object sender, EventArgs e)

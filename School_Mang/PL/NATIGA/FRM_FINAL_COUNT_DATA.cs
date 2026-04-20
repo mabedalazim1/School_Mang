@@ -7,14 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using School_Mang.BL;
 
 namespace School_Mang.PL.NATIGA
 {
     public partial class FRM_FINAL_COUNT_DATA : Form
     {
         BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
-        BL.Waiting Waiting = new BL.Waiting();
-        BL.MSG msg = new BL.MSG();
+        
 
         // Form Closed
         private static FRM_FINAL_COUNT_DATA Frm_Final_Count_Data;
@@ -93,7 +93,7 @@ namespace School_Mang.PL.NATIGA
         {
             if (dt_std_data.Rows.Count == 0)
             {
-                msg.ErrorMesg("لا توجد بيانات مسجلة");
+                MSG.ErrorMesg("لا توجد بيانات مسجلة");
                 return;
             }
             this.Visible = false;

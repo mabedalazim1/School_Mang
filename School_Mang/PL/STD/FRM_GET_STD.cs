@@ -1,4 +1,6 @@
-﻿using System;
+﻿using School_Mang.BL;
+using School_Mang.BL.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,12 +10,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace School_Mang.PL.STD
 {
-    public partial class FRM_GET_STD : Form
+    public partial class FRM_GET_STD : Form , INavigationAware
     {
-        BL.Waiting waiting = new BL.Waiting();
-        BL.MSG msg = new BL.MSG();
+
+        private NavigationContext _context;
+
+        public void SetNavigation(NavigationContext context)
+        {
+            _context = context;
+        }
 
 
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
@@ -48,10 +56,9 @@ namespace School_Mang.PL.STD
             {
                 frm_Get_Student = this;
             }
-
             cmb_sana.SelectedIndex = 0;
 
-            waiting.Wait();
+            Waiting.Start();
             if (testConcation.IsServerConnected())
             {
                 this.dt_std_data.DataSource = std.Get_All_Std_Data(0);
@@ -94,15 +101,16 @@ namespace School_Mang.PL.STD
                     break;
             }
 
-            waiting.End_WAit();
+            Waiting.Stop();
         }
+
 
         // Verify Stdunet Status 
         private Boolean Verify_Std_Status()
         {
             if (dt_std_data.SelectedRows.Count == 0)
             {
-                msg.ErrorMesg(" يرجى إختيار طالب أولاً ..!");
+                MSG.ErrorMesg(" يرجى إختيار طالب أولاً ..!");
                 return true;
             }
             else
@@ -138,18 +146,16 @@ namespace School_Mang.PL.STD
 
         private void btn_close_b_Click(object sender, EventArgs e)
         {
-            BL.Globals.Add_From_Get_Std = false;
-            BL.Globals.Elthak_Std = false;
-
+            
             this.Close();
         }
 
         public void txt_std_data_OnValueChanged(object sender, EventArgs e)
         {
-            waiting.Wait();
+            Waiting.Start();
             if (!testConcation.IsServerConnected())
             {
-                msg.ErrorMesg("تأكد من الاتصال بالسيرفر.. !");
+                MSG.ErrorMesg("تأكد من الاتصال بالسيرفر.. !");
                 return;
             }
             DataTable Dt;
@@ -163,13 +169,13 @@ namespace School_Mang.PL.STD
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
             finally
             {
-                waiting.End_WAit();
+                Waiting.Stop();
             }
-            waiting.End_WAit();
+            Waiting.Stop();
         }
 
         private void pic_help_MouseHover(object sender, EventArgs e)
@@ -215,9 +221,16 @@ namespace School_Mang.PL.STD
 
         private void btn_new_std_Click(object sender, EventArgs e)
         {
-            BL.Globals.Add_From_Get_Std = true;
             this.Visible = false;
-            FRM_ADD_STD.getAdd_Std_Frm.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
+
+            AppNavigation.Instance.
+                WithOwner(MAIN.FRM_MAIN.Get_Frm_Main)
+                .SetContext(c =>
+                {
+                    c.AddFromGetStd = true;
+                }).Show(FRM_ADD_STD.getAdd_Std_Frm);
+
+            //FRM_ADD_STD.getAdd_Std_Frm.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
         }
 
         private void btn_close_Click(object sender, EventArgs e)
@@ -226,6 +239,10 @@ namespace School_Mang.PL.STD
         }
 
         public void cmb_sana_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LoadStudentData();
+        }
+        public void LoadStudentData()
         {
             try
             {
@@ -240,77 +257,83 @@ namespace School_Mang.PL.STD
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
         }
-
         private void btn_edit_std_Click(object sender, EventArgs e)
         {
             if (Verify_Std_Status()) return;
 
-            BL.Globals.Update_Std_Data = true;
 
-
+            var frm = FRM_ADD_STD.getAdd_Std_Frm;
             try
             {
-                FRM_ADD_STD.getAdd_Std_Frm.txt_std_code.Text =
+                frm.txt_std_code.Text =
                   dt_std_data.CurrentRow.Cells["std_code"].Value.ToString();
 
-                FRM_ADD_STD.getAdd_Std_Frm.txt_nat.Text =
+               frm.txt_nat.Text =
                   dt_std_data.CurrentRow.Cells["الرقم القومى"].Value.ToString();
 
-                FRM_ADD_STD.getAdd_Std_Frm.txt_std_name.Text =
+               frm.txt_std_name.Text =
                   dt_std_data.CurrentRow.Cells["std_name"].Value.ToString();
 
-                FRM_ADD_STD.getAdd_Std_Frm.cmb_type.SelectedValue =
+               frm.cmb_type.SelectedValue =
                  dt_std_data.CurrentRow.Cells["Gender_Id"].Value;
 
-                FRM_ADD_STD.getAdd_Std_Frm.cmb_grade.SelectedValue =
+               frm.cmb_grade.SelectedValue =
                     dt_std_data.CurrentRow.Cells["Grade_Id"].Value;
 
-                FRM_ADD_STD.getAdd_Std_Frm.cmb_hala.SelectedValue =
+               frm.cmb_hala.SelectedValue =
                    dt_std_data.CurrentRow.Cells["Std_Status_Id"].Value;
 
-                FRM_ADD_STD.getAdd_Std_Frm.cmb_national.SelectedValue =
+               frm.cmb_national.SelectedValue =
                   dt_std_data.CurrentRow.Cells["Nationality_Id"].Value;
 
-                FRM_ADD_STD.getAdd_Std_Frm.cmb_sana.SelectedValue =
+               frm.cmb_sana.SelectedValue =
                   dt_std_data.CurrentRow.Cells["Year_Id"].Value;
 
-                FRM_ADD_STD.getAdd_Std_Frm.cmb_religion.SelectedValue =
+               frm.cmb_religion.SelectedValue =
                dt_std_data.CurrentRow.Cells["Religion_Id"].Value;
 
-                FRM_ADD_STD.getAdd_Std_Frm.txt_osra_id.Text =
+               frm.txt_osra_id.Text =
                    dt_std_data.CurrentRow.Cells["id"].Value.ToString();
 
-                FRM_ADD_STD.getAdd_Std_Frm.txt_father_name.Text =
+               frm.txt_father_name.Text =
                    dt_std_data.CurrentRow.Cells["اسم الأب"].Value.ToString();
 
-                FRM_ADD_STD.getAdd_Std_Frm.txt_adrs.Text =
+               frm.txt_adrs.Text =
                     dt_std_data.CurrentRow.Cells["العنوان"].Value.ToString();
 
-                FRM_ADD_STD.getAdd_Std_Frm.txt_wazifa.Text =
+               frm.txt_wazifa.Text =
                     dt_std_data.CurrentRow.Cells["الوظيفة"].Value.ToString();
 
-                FRM_ADD_STD.getAdd_Std_Frm.txt_mother_name.Text =
+               frm.txt_mother_name.Text =
                     dt_std_data.CurrentRow.Cells["اسم الأم"].Value.ToString();
 
-                FRM_ADD_STD.getAdd_Std_Frm.txt_father_tel.Text =
+               frm.txt_father_tel.Text =
                     dt_std_data.CurrentRow.Cells["هاتف الأب"].Value.ToString();
 
-                FRM_ADD_STD.getAdd_Std_Frm.txt_mother_tel.Text =
+               frm.txt_mother_tel.Text =
                     dt_std_data.CurrentRow.Cells["هاتف الأم"].Value.ToString();
 
                 // this.Close();
                 // this.Dispose();
                 this.Visible = false;
-                FRM_ADD_STD.getAdd_Std_Frm.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
+
+                AppNavigation.Instance.
+                    WithOwner(MAIN.FRM_MAIN.Get_Frm_Main)
+                    .SetContext(c =>
+                    {
+                        c.UpdateStdData = true;
+                    }).Show(FRM_ADD_STD.getAdd_Std_Frm); // تم التحقق
+
+               // FRM_ADD_STD.getAdd_Std_Frm.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
 
 
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
 
         }
@@ -324,7 +347,7 @@ namespace School_Mang.PL.STD
                 dt_std_data.Columns["العنوان"].Width = 270;
                 dt_std_data_Click(sender, e);
 
-                if (BL.Globals.Elthak_Std)
+                if (_context?.ElthakStd == true)
                 {
                     btn_new_std.Visible = false;
                     btn_del_std.Visible = false;
@@ -349,14 +372,14 @@ namespace School_Mang.PL.STD
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
 
         }
 
         private void dt_std_data_DoubleClick(object sender, EventArgs e)
         {
-            if (BL.Globals.Elthak_Std)
+            if (_context?.ElthakStd == true)
             {
                 btn_talab_elthak_Click(sender, e);
                 return;
@@ -378,7 +401,7 @@ namespace School_Mang.PL.STD
                 DataTable Dt;
                 Dt = std.Verify_Osra_Data(osrs_id);
 
-                if (msg.DialogeErrMsg("هل تريد حذف البيانات الخاصة بالطالب /  " + name) == DialogResult.Yes)
+                if (MSG.DialogeErrMsg("هل تريد حذف البيانات الخاصة بالطالب /  " + name) == DialogResult.Yes)
                 {
                     std.Delele_Std_Data(dt_std_data.CurrentRow.Cells["std_code"].Value.ToString());
                     this.dt_std_data.DataSource = std.Get_All_Std_Data(Convert.ToInt32(cmb_sana.SelectedValue));
@@ -388,12 +411,12 @@ namespace School_Mang.PL.STD
                         std.Delele_Osra_Data(osrs_id);
                     }
 
-                    msg.ErrorMesg("تم حذف البيانات الخاصة بالطالب /   " + name);
+                    MSG.ErrorMesg("تم حذف البيانات الخاصة بالطالب /   " + name);
 
                 }
                 else
                 {
-                    msg.ErrorMesg("تم إلغاء عملية الحذف الخاصة بالطالب /   " + name);
+                    MSG.ErrorMesg("تم إلغاء عملية الحذف الخاصة بالطالب /   " + name);
                     return;
                 }
 
@@ -403,40 +426,55 @@ namespace School_Mang.PL.STD
         private void btn_talab_elthak_Click(object sender, EventArgs e)
         {
             if (Verify_Std_Status()) return;
-
+            var frmElthak = FRM_STD_ELTEHK.Get_Std_Eltehk;
             int grade = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Grade_Id"].Value);
-            FRM_STD_ELTEHK.Get_Std_Eltehk.txt_std_code.Text = dt_std_data.CurrentRow.Cells["std_code"].Value.ToString();
-            FRM_STD_ELTEHK.Get_Std_Eltehk.txt_std_name.Text = dt_std_data.CurrentRow.Cells["اسم الطالب"].Value.ToString();
-            FRM_STD_ELTEHK.Get_Std_Eltehk.cmb_grade.SelectedValue = dt_std_data.CurrentRow.Cells["Grade_Id"].Value;
-            FRM_STD_ELTEHK.Get_Std_Eltehk.cmb_hala.SelectedValue = dt_std_data.CurrentRow.Cells["Std_Status_Id"].Value;
-            FRM_STD_ELTEHK.Get_Std_Eltehk.cmb_grade.SelectedValue = grade;
-            FRM_STD_ELTEHK.Get_Std_Eltehk.txt_std_nat.Text = dt_std_data.CurrentRow.Cells["الرقم القومى"].Value.ToString(); ;
-            FRM_STD_ELTEHK.Get_Std_Eltehk.txt_sana.Text = dt_std_data.CurrentRow.Cells["Year_Id"].Value.ToString(); ;
+            frmElthak.txt_std_code.Text = dt_std_data.CurrentRow.Cells["std_code"].Value.ToString();
+            frmElthak.txt_std_name.Text = dt_std_data.CurrentRow.Cells["اسم الطالب"].Value.ToString();
+            frmElthak.cmb_grade.SelectedValue = dt_std_data.CurrentRow.Cells["Grade_Id"].Value;
+            frmElthak.cmb_hala.SelectedValue = dt_std_data.CurrentRow.Cells["Std_Status_Id"].Value;
+            frmElthak.cmb_grade.SelectedValue = grade;
+            frmElthak.txt_std_nat.Text = dt_std_data.CurrentRow.Cells["الرقم القومى"].Value.ToString(); ;
+            frmElthak.txt_sana.Text = dt_std_data.CurrentRow.Cells["Year_Id"].Value.ToString(); ;
 
 
             if ((10 > grade && grade > 1))
             {
+                var frm = FRM_TAHEEL_STD.Get_Tahweel_Std;
 
-                BL.Globals.Taheewl_To_School = true;
 
-                FRM_TAHEEL_STD.Get_Tahweel_Std.txt_std_code.Text = dt_std_data.CurrentRow.Cells["std_code"].Value.ToString();
-                FRM_TAHEEL_STD.Get_Tahweel_Std.txt_std_name.Text = dt_std_data.CurrentRow.Cells["اسم الطالب"].Value.ToString();
-                FRM_TAHEEL_STD.Get_Tahweel_Std.txt_guardian_name.Text = dt_std_data.CurrentRow.Cells["اسم الأب"].Value.ToString();
-                FRM_TAHEEL_STD.Get_Tahweel_Std.txt_adrs.Text = dt_std_data.CurrentRow.Cells["العنوان"].Value.ToString();
-                FRM_TAHEEL_STD.Get_Tahweel_Std.txt_transfer_reason.Text = "رغبة ولى الأمر";
-                FRM_TAHEEL_STD.Get_Tahweel_Std.chk_resom_no.Checked = true;
-                FRM_TAHEEL_STD.Get_Tahweel_Std.chk_kotob_no.Checked = true;
-                FRM_TAHEEL_STD.Get_Tahweel_Std.transfer_status = 4;
-                FRM_TAHEEL_STD.Get_Tahweel_Std.lbl_mohwel.Text = "محول من";
+                frm.txt_std_code.Text = dt_std_data.CurrentRow.Cells["std_code"].Value.ToString();
+                frm.txt_std_name.Text = dt_std_data.CurrentRow.Cells["اسم الطالب"].Value.ToString();
+                frm.txt_guardian_name.Text = dt_std_data.CurrentRow.Cells["اسم الأب"].Value.ToString();
+                frm.txt_adrs.Text = dt_std_data.CurrentRow.Cells["العنوان"].Value.ToString();
+                frm.txt_transfer_reason.Text = "رغبة ولى الأمر";
+                frm.chk_resom_no.Checked = true;
+                frm.chk_kotob_no.Checked = true;
+                frm.transfer_status = 4;
+                frm.lbl_mohwel.Text = "محول من";
 
-                FRM_TAHEEL_STD.Get_Tahweel_Std.grade = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Grade_Id"].Value);
+                frm.grade = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Grade_Id"].Value);
 
-                FRM_TAHEEL_STD.Get_Tahweel_Std.ShowDialog();
+
+                AppNavigation.Instance
+                    .SetContext(c =>
+                {
+                    c.TaheewlToSchool = true;
+                })
+                    .Show(FRM_TAHEEL_STD.Get_Tahweel_Std); // تم التحقق
+
+               // FRM_TAHEEL_STD.Get_Tahweel_Std.ShowDialog();
             }
             else
             {
+                AppNavigation.Instance
+                    .WithOwner(MAIN.FRM_MAIN.Get_Frm_Main)
+                    .SetContext(c =>
+                {
+                    c.TaheewlToSchool = true;
+                })
+                    .Show(FRM_STD_ELTEHK.Get_Std_Eltehk);
 
-                FRM_STD_ELTEHK.Get_Std_Eltehk.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
+                //FRM_STD_ELTEHK.Get_Std_Eltehk.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
             }
 
         }

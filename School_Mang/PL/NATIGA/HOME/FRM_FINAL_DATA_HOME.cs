@@ -8,15 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using School_Mang.PL.MAIN;
+using School_Mang.BL;
 
 namespace School_Mang.PL.NATIGA.HOME
 {
     public partial class FRM_FINAL_DATA_HOME : Form
     {
         BL.NATEG.cls_NATAG_FUNCTIONS natag_func = new BL.NATEG.cls_NATAG_FUNCTIONS();
-        BL.MSG msg = new BL.MSG();
         BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
-        BL.Waiting Waiting = new BL.Waiting();
+        
         BL.NATEG.ExcelUtlity Excel = new BL.NATEG.ExcelUtlity();
 
         // Form Closed
@@ -56,7 +56,7 @@ namespace School_Mang.PL.NATIGA.HOME
             string file_name = natag_func.OpenDialoge(openFileDialog1);
             if (file_name == null)
             {
-                msg.ErrorMesg("تم إلغاء الإجراء..!");
+                MSG.ErrorMesg("تم إلغاء الإجراء..!");
                 BL.Globals.Dir_Path = "D://Rasd";
                 return;
             }
@@ -79,7 +79,7 @@ namespace School_Mang.PL.NATIGA.HOME
                 decimal mabday;
                 decimal nehay;
 
-                Waiting.Wait();
+                Waiting.Start();
                 DataTable dt_information = Excel.GetInformationData(file_name);
                 DataRow row = dt_information.Rows[0];
 
@@ -87,7 +87,7 @@ namespace School_Mang.PL.NATIGA.HOME
                 string file_kind = row[0].ToString();
                 if (file_kind == "" || file_kind == null)
                 {
-                    msg.ErrorMesg("الملف غير صالح .. يرجى التأكد من الملف المطلوب ..!");
+                    MSG.ErrorMesg("الملف غير صالح .. يرجى التأكد من الملف المطلوب ..!");
                     BL.Globals.Dir_Path = "D://Rasd";
                     return;
                 }
@@ -99,7 +99,7 @@ namespace School_Mang.PL.NATIGA.HOME
                                     row[2].ToString() + " - " +
                                     row[3].ToString();
 
-                    if (msg.DialogeMsg(file_info + "\n" + "هل تريد المتابعة .. ؟") == DialogResult.Yes)
+                    if (MSG.DialogeMsg(file_info + "\n" + "هل تريد المتابعة .. ؟") == DialogResult.Yes)
                     {
                         byte test_kind = Convert.ToByte(row[4]);
                         byte test_grade = Convert.ToByte(row[5]);
@@ -110,8 +110,8 @@ namespace School_Mang.PL.NATIGA.HOME
 
                         if (file_data == "0" || file_data == null || file_data == "")
                         {
-                            msg.ErrorMesg("يرجى التأكد من الدرجات ..!");
-                            msg.ErrorMesg("تم إلغاء الإجراء ..!");
+                            MSG.ErrorMesg("يرجى التأكد من الدرجات ..!");
+                            MSG.ErrorMesg("تم إلغاء الإجراء ..!");
                             BL.Globals.Dir_Path = "D://Rasd";
                             return;
                         }
@@ -126,7 +126,7 @@ namespace School_Mang.PL.NATIGA.HOME
                                         {
                                             case 10:
                                             case 11:
-                                                msg.ErrorMesg("لا يمكن رفع درجات هذا الصف ..!");
+                                                MSG.ErrorMesg("لا يمكن رفع درجات هذا الصف ..!");
                                                 return;
                                             // 1-2-3 Amal term A
                                             case 1:
@@ -137,7 +137,7 @@ namespace School_Mang.PL.NATIGA.HOME
                                                     case 1:
                                                     case 2:
                                                     case 3:
-                                                        msg.ErrorMesg("لا يمكن رفع درجات هذا الصف ..!");
+                                                        MSG.ErrorMesg("لا يمكن رفع درجات هذا الصف ..!");
                                                         return;
                                                     case var expration when year > 3:
                                                         switch (test_grade)
@@ -168,8 +168,8 @@ namespace School_Mang.PL.NATIGA.HOME
                                                                                             nehay);
                                                           
                                                                 }
-                                                                Waiting.End_WAit();
-                                                                msg.MyMesg("تم تحديث الدرجات بنجاح .. !");
+                                                                Waiting.Stop();
+                                                                MSG.MyMesg("تم تحديث الدرجات بنجاح .. !");
 
                                                                 break;
                                                             // Amal 3
@@ -194,8 +194,8 @@ namespace School_Mang.PL.NATIGA.HOME
                                                                                             maharat);
 
                                                                 }
-                                                                Waiting.End_WAit();
-                                                                msg.MyMesg("تم تحديث الدرجات بنجاح .. !");
+                                                                Waiting.Stop();
+                                                                MSG.MyMesg("تم تحديث الدرجات بنجاح .. !");
 
                                                                 break;
                                                         }
@@ -231,8 +231,8 @@ namespace School_Mang.PL.NATIGA.HOME
                                                                             maharat,
                                                                             tocnolegy);
                                                 }
-                                                Waiting.End_WAit();
-                                                msg.MyMesg("تم تحديث الدرجات بنجاح .. !");
+                                                Waiting.Stop();
+                                                MSG.MyMesg("تم تحديث الدرجات بنجاح .. !");
                                                 break;
                                             // 7-8-9 Amal term A
                                             case 7:
@@ -270,8 +270,8 @@ namespace School_Mang.PL.NATIGA.HOME
                                                                             nashat_1,
                                                                             nashat_2);
                                                 }
-                                                Waiting.End_WAit();
-                                                msg.MyMesg("تم تحديث الدرجات بنجاح .. !");
+                                                Waiting.Stop();
+                                                MSG.MyMesg("تم تحديث الدرجات بنجاح .. !");
                                                 break;
                                         }
                                         break;
@@ -285,7 +285,7 @@ namespace School_Mang.PL.NATIGA.HOME
                                                     case 1:
                                                     case 2:
                                                     case 3:
-                                                        msg.ErrorMesg("لا يمكن رفع درجات هذا الصف ..!");
+                                                        MSG.ErrorMesg("لا يمكن رفع درجات هذا الصف ..!");
                                                         return;
 
                                                     case var expration when year > 3:
@@ -329,8 +329,8 @@ namespace School_Mang.PL.NATIGA.HOME
                                                                     tocnolegy);
                                         }
 
-                                        Waiting.End_WAit();
-                                        msg.MyMesg("تم تحديث الدرجات بنجاح .. !");
+                                        Waiting.Stop();
+                                        MSG.MyMesg("تم تحديث الدرجات بنجاح .. !");
                                         break;
                                 }
                                 break;
@@ -344,7 +344,7 @@ namespace School_Mang.PL.NATIGA.HOME
                                         {
                                             case 10:
                                             case 11:
-                                                msg.ErrorMesg("لا يمكن رفع درجات هذا الصف ..!");
+                                                MSG.ErrorMesg("لا يمكن رفع درجات هذا الصف ..!");
                                                 return;
                                             // 1-2-3 Amal term A
                                             case 1:
@@ -355,7 +355,7 @@ namespace School_Mang.PL.NATIGA.HOME
                                                     case 1:
                                                     case 2:
                                                     case 3:
-                                                        msg.ErrorMesg("لا يمكن رفع درجات هذا الصف ..!");
+                                                        MSG.ErrorMesg("لا يمكن رفع درجات هذا الصف ..!");
                                                         return;
                                                     case var expration when year > 3:
                                                         switch (test_grade)
@@ -386,8 +386,8 @@ namespace School_Mang.PL.NATIGA.HOME
                                                                                             nehay);
 
                                                                 }
-                                                                Waiting.End_WAit();
-                                                                msg.MyMesg("تم تحديث الدرجات بنجاح .. !");
+                                                                Waiting.Stop();
+                                                                MSG.MyMesg("تم تحديث الدرجات بنجاح .. !");
 
                                                                 break;
                                                             // Amal 3
@@ -412,8 +412,8 @@ namespace School_Mang.PL.NATIGA.HOME
                                                                                             maharat);
 
                                                                 }
-                                                                Waiting.End_WAit();
-                                                                msg.MyMesg("تم تحديث الدرجات بنجاح .. !");
+                                                                Waiting.Stop();
+                                                                MSG.MyMesg("تم تحديث الدرجات بنجاح .. !");
 
                                                                 break;
                                                         }
@@ -448,8 +448,8 @@ namespace School_Mang.PL.NATIGA.HOME
                                                                             maharat,
                                                                             tocnolegy);
                                                 }
-                                                Waiting.End_WAit();
-                                                msg.MyMesg("تم تحديث الدرجات بنجاح .. !");
+                                                Waiting.Stop();
+                                                MSG.MyMesg("تم تحديث الدرجات بنجاح .. !");
                                                 break;
                                             // 7-8-9 Amal term B
                                             case 7:
@@ -487,8 +487,8 @@ namespace School_Mang.PL.NATIGA.HOME
                                                                             nashat_1,
                                                                             nashat_2);
                                                 }
-                                                Waiting.End_WAit();
-                                                msg.MyMesg("تم تحديث الدرجات بنجاح .. !");
+                                                Waiting.Stop();
+                                                MSG.MyMesg("تم تحديث الدرجات بنجاح .. !");
                                                 break;
                                         }
                                         break;
@@ -501,7 +501,7 @@ namespace School_Mang.PL.NATIGA.HOME
                                                     case 1:
                                                     case 2:
                                                     case 3:
-                                                        msg.ErrorMesg("لا يمكن رفع درجات هذا الصف ..!");
+                                                        MSG.ErrorMesg("لا يمكن رفع درجات هذا الصف ..!");
                                                         return;
 
                                                     case var expration when year > 3:
@@ -544,8 +544,8 @@ namespace School_Mang.PL.NATIGA.HOME
                                                                     tocnolegy);
                                         }
 
-                                        Waiting.End_WAit();
-                                        msg.MyMesg("تم تحديث الدرجات بنجاح .. !");
+                                        Waiting.Stop();
+                                        MSG.MyMesg("تم تحديث الدرجات بنجاح .. !");
                                         break;
                                 }
                                 break;
@@ -553,21 +553,21 @@ namespace School_Mang.PL.NATIGA.HOME
                     }
                     else
                     {
-                        msg.ErrorMesg("تم إلغاء الإجراء ..!");
+                        MSG.ErrorMesg("تم إلغاء الإجراء ..!");
                         BL.Globals.Dir_Path = "D://Rasd";
                         return;
                     }
                 }
 
-                Waiting.End_WAit();
+                Waiting.Stop();
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
             finally
             {
-                Waiting.End_WAit();
+                Waiting.Stop();
             }
         }
 
@@ -589,7 +589,7 @@ namespace School_Mang.PL.NATIGA.HOME
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
         }
 
@@ -610,7 +610,7 @@ namespace School_Mang.PL.NATIGA.HOME
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
         }
 
@@ -627,11 +627,11 @@ namespace School_Mang.PL.NATIGA.HOME
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
             finally
             {
-                Waiting.End_WAit();
+                Waiting.Stop();
             }
         }
 
@@ -723,7 +723,7 @@ namespace School_Mang.PL.NATIGA.HOME
             string file_name = natag_func.OpenDialoge(openFileDialog1);
             if (file_name == null)
             {
-                msg.ErrorMesg("تم إلغاء الإجراء..!");
+                MSG.ErrorMesg("تم إلغاء الإجراء..!");
                 BL.Globals.Dir_Path = "D://Rasd";
                 return;
             }
@@ -737,7 +737,7 @@ namespace School_Mang.PL.NATIGA.HOME
                 decimal motadd;
                 decimal badnia;
 
-                Waiting.Wait();
+                Waiting.Start();
                 DataTable dt_information = Excel.GetInformationData_SofofOla(file_name);
                 DataRow row = dt_information.Rows[0];
 
@@ -745,7 +745,7 @@ namespace School_Mang.PL.NATIGA.HOME
                 string file_kind = row[0].ToString();
                 if (file_kind == "" || file_kind == null || file_kind !="6")
                 {
-                    msg.ErrorMesg("الملف غير صالح .. يرجى التأكد من الملف المطلوب ..!");
+                    MSG.ErrorMesg("الملف غير صالح .. يرجى التأكد من الملف المطلوب ..!");
                     BL.Globals.Dir_Path = "D://Rasd";
                     return;
                 }
@@ -774,7 +774,7 @@ namespace School_Mang.PL.NATIGA.HOME
                     string file_info = " سوف يتم تحميل درجات أعمال السنة " +
                                    "\n" + grade;
 
-                    if (msg.DialogeMsg(file_info + "\n" + "هل تريد المتابعة .. ؟") == DialogResult.Yes)
+                    if (MSG.DialogeMsg(file_info + "\n" + "هل تريد المتابعة .. ؟") == DialogResult.Yes)
                     {
                         
                         byte test_grade = Convert.ToByte(row[1]);
@@ -798,25 +798,25 @@ namespace School_Mang.PL.NATIGA.HOME
                                                     motadd,
                                                     badnia);
                         }
-                        Waiting.End_WAit();
-                        msg.MyMesg("تم تحديث الدرجات بنجاح .. !");
+                        Waiting.Stop();
+                        MSG.MyMesg("تم تحديث الدرجات بنجاح .. !");
 
 
                     }
                     else
                     {
-                        msg.ErrorMesg("تم إلغاء الإجراء ..!");
+                        MSG.ErrorMesg("تم إلغاء الإجراء ..!");
                         BL.Globals.Dir_Path = "D://Rasd";
                         return;
                     }
                 }
 
-                Waiting.End_WAit();
+                Waiting.Stop();
 
             }
             catch(Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
         }
     }

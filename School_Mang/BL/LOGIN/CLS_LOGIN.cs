@@ -11,7 +11,6 @@ namespace School_Mang.BL.LOGIN
 {
     class CLS_LOGIN
     {
-        private MSG msg = new MSG();
         private DAL.DataAcceseLayer DAL  = new DAL.DataAcceseLayer();
 
         public DataTable Login(string ID, string PWD)
@@ -25,7 +24,7 @@ namespace School_Mang.BL.LOGIN
 
             }catch(Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
                 return null;
             }
         }
@@ -42,7 +41,7 @@ namespace School_Mang.BL.LOGIN
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
                 return null;
             }
         }

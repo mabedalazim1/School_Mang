@@ -1,38 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace School_Mang.BL
 {
-    class MSG
+    public static class MSG
     {
-        public void ErrorMesg(string str = "تأكد من الرقم القومى")
+        private const string Title = "برنامج إدارة المدرسة";
+
+        public static void ErrorMesg(string str = "تأكد من الرقم القومى")
         {
-            MessageBox.Show(str, "برنامج إدارة المدرسة - خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(str, Title + " - خطأ",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
         }
 
-        public void MyMesg(string str)
+        public static void MyMesg(string str)
         {
-            MessageBox.Show(str, "برنامج إدارة المدرسة ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(str, Title,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
         }
 
-        public DialogResult DialogeMsg(string str)
+        public static DialogResult DialogeMsg(string str)
         {
-            DialogResult dialogResult = MessageBox.Show(str +"  ..!", " برنامج إدارة المدرسة", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            return dialogResult;
+            return MessageBox.Show(str + " ..!", Title,
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
         }
 
-        public DialogResult DialogeErrMsg(string str)
+        public static DialogResult DialogeErrMsg(string str)
         {
-            DialogResult dialogResult = MessageBox.Show(str + "  ..!", " برنامج إدارة المدرسة", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            return dialogResult;
+            return MessageBox.Show(str + " ..!", Title,
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
         }
-        public void MyExclamationMsg(string str)
+
+        public static void MyExclamationMsg(string str)
         {
-            MessageBox.Show(str, "برنامج إدارة المدرسة ", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            MessageBox.Show(str, Title,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Exclamation);
+        }
+
+        public static void NoInternet()
+        {
+            MessageBox.Show("تأكد من الإتصال بالإنترنت..!",
+                Title + " - خطأ",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
         }
     }
 }

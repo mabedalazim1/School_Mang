@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace School_Mang.BL
 {
-    class Waiting
+    public static class Waiting
     {
-        public void Wait()
+        public static void Start()
         {
             Application.UseWaitCursor = true;
-            System.Windows.Forms.Cursor.Current = Cursors.WaitCursor;
+            Cursor.Current = Cursors.WaitCursor;
         }
-        public void End_WAit()
+
+        public static void Stop()
         {
             Application.UseWaitCursor = false;
             Cursor.Current = Cursors.Default;

@@ -7,14 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using School_Mang.BL;
 
 namespace School_Mang.PL.NATIGA
 {
     public partial class FRM_FINAL_DEGREE_DATA : Form
     {
-        BL.MSG msg = new BL.MSG();
         BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
-        BL.Waiting Waiting = new BL.Waiting();
+        
 
 
         // Form Closed
@@ -143,7 +143,7 @@ namespace School_Mang.PL.NATIGA
             DataTable Dt = NATEG.Get_Final_All_Data(Std_Golos);
             if (Dt.Rows.Count == 0)
             {
-                msg.ErrorMesg("لا توجد بيانات مسجلة لهذا الطالب ..!");
+                MSG.ErrorMesg("لا توجد بيانات مسجلة لهذا الطالب ..!");
                 return;
             }
             txt_grade.Text = Dt.Rows[0]["GradeDesc"].ToString();
@@ -170,7 +170,7 @@ namespace School_Mang.PL.NATIGA
 
             try
             {
-                Waiting.Wait();
+                Waiting.Start();
                 lbl_sinces.Text = "علوم";
                 switch (test_kind)
                 {
@@ -343,11 +343,11 @@ namespace School_Mang.PL.NATIGA
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
             finally
             {
-                Waiting.End_WAit();
+                Waiting.Stop();
             }
         }
 
@@ -512,14 +512,14 @@ namespace School_Mang.PL.NATIGA
                 if ( (Convert.ToDouble(textBox.Text) > max_degree )|| (Convert.ToDouble(textBox.Text) < 0))
                        
                 { 
-                    msg.ErrorMesg("تأكد من الدرجة ..!");
+                    MSG.ErrorMesg("تأكد من الدرجة ..!");
                     textBox.Text = txt_old.ToString();
                     textBox.Focus();
                 }
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
         }
 
@@ -528,7 +528,7 @@ namespace School_Mang.PL.NATIGA
             decimal degree = 0;
             try
             {
-                Waiting.Wait();
+                Waiting.Start();
                 if (textBox.Text == "غ")
                 {
                     degree = 0;
@@ -540,11 +540,11 @@ namespace School_Mang.PL.NATIGA
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
             finally
             {
-                Waiting.End_WAit();
+                Waiting.Stop();
             }
 
             return degree;
@@ -605,7 +605,7 @@ namespace School_Mang.PL.NATIGA
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
         }
 
@@ -776,20 +776,20 @@ namespace School_Mang.PL.NATIGA
             
             try
             {
-                Waiting.Wait();
+                Waiting.Start();
                 NATEG.Update_Final_Degree_Data(
                     ar, math, scince, scince_practical, social, english
                     , din, maharat, tocnolegy, tocnolegy_practical);
-                msg.MyMesg("تم تعديل الدرجات بنجاح ..!");
+                MSG.MyMesg("تم تعديل الدرجات بنجاح ..!");
 
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
             finally
             {
-                Waiting.End_WAit();
+                Waiting.Stop();
             }
         }
 

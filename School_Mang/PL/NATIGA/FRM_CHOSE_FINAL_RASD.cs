@@ -7,14 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using School_Mang.BL;
+
 
 namespace School_Mang.PL.NATIGA
 {
     public partial class FRM_CHOSE_FINAL_RASD : Form
     {
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
-        BL.MSG msg = new BL.MSG();
-        BL.Waiting waiting = new BL.Waiting();
+        
         BL.NATEG.CLS_NATEG nateg = new BL.NATEG.CLS_NATEG();
         BL.NATEG.ExcelUtlity Excel = new BL.NATEG.ExcelUtlity();
         RPT.REPORT_CONNECTION RPT = new RPT.REPORT_CONNECTION();
@@ -47,13 +48,13 @@ namespace School_Mang.PL.NATIGA
                 frm_Chose_Final_Rasd = this;
             }
             // Fill Combo
-            waiting.Wait();
+            Waiting.Start();
             cmb_grade.DataSource = std.Get_grades();
             cmb_grade.DisplayMember = "GradeDesc";
             cmb_grade.ValueMember = "Grade_Id";
 
             Add_To_Comb_Test();
-            waiting.End_WAit();
+            Waiting.Stop();
         }
 
 
@@ -98,16 +99,16 @@ namespace School_Mang.PL.NATIGA
 
             if (dt.Rows.Count == 0)
             { 
-                msg.ErrorMesg("لا توجد نتائج مسجلة للصف المحدد");
+                MSG.ErrorMesg("لا توجد نتائج مسجلة للصف المحدد");
                 if(grade < 10  && BL.Globals.Final_Test)
                 {
                     if(grade < 3)
                     {
-                        msg.MyExclamationMsg("الصفين الأول والثاني ليس لهم درجات اختبار ..!");
+                        MSG.MyExclamationMsg("الصفين الأول والثاني ليس لهم درجات اختبار ..!");
                     }
                     else
                     {
-                        msg.MyExclamationMsg("تأكد من رفع ملفات أعمال السنة للصف المحدد. !");
+                        MSG.MyExclamationMsg("تأكد من رفع ملفات أعمال السنة للصف المحدد. !");
                     }
                      
                 }
@@ -121,7 +122,7 @@ namespace School_Mang.PL.NATIGA
         }
         private void OpenAmalReport(byte test_kind)
         {
-            waiting.Wait();
+            Waiting.Start();
             try
             {
                 int grade = Convert.ToInt32(cmb_grade.SelectedValue);
@@ -138,22 +139,22 @@ namespace School_Mang.PL.NATIGA
 
                 RPT.Open_Koshof_Amal(grade, month);
 
-                waiting.End_WAit();
+                Waiting.Stop();
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
             finally
             {
-                waiting.End_WAit();
+                Waiting.Stop();
             }
 
         }
 
         private void OpenRasdTestReport(byte test_kind)
         {
-            waiting.Wait();
+            Waiting.Start();
             try
             {
                 int grade = Convert.ToInt32(cmb_grade.SelectedValue);
@@ -170,22 +171,22 @@ namespace School_Mang.PL.NATIGA
                 }
 
 
-                waiting.End_WAit();
+                Waiting.Stop();
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
             finally
             {
-                waiting.End_WAit();
+                Waiting.Stop();
             }
 
         }
 
         private void OpenFinalNatage(byte test_kind)
         {
-            waiting.Wait();
+            Waiting.Start();
             try
             {
                 int grade = Convert.ToInt32(cmb_grade.SelectedValue);
@@ -203,21 +204,21 @@ namespace School_Mang.PL.NATIGA
 
 
 
-                waiting.End_WAit();
+                Waiting.Stop();
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
             finally
             {
-                waiting.End_WAit();
+                Waiting.Stop();
             }
         }
 
         private void OpenFinalKoshof(byte test_kind)
         {
-            waiting.Wait();
+            Waiting.Start();
             try
             {
                 int grade = Convert.ToInt32(cmb_grade.SelectedValue);
@@ -229,27 +230,27 @@ namespace School_Mang.PL.NATIGA
                     switch (year)
                     {
                         case var expration when year < 4:
-                            msg.ErrorMesg("هذا الإجراء متاح فى نهاية العام فقط ..!");
-                            msg.MyExclamationMsg("يرجي التأكد من نوع الاختبار ..!");
+                            MSG.ErrorMesg("هذا الإجراء متاح فى نهاية العام فقط ..!");
+                            MSG.MyExclamationMsg("يرجي التأكد من نوع الاختبار ..!");
                             cmb_grade.Focus();
-                            waiting.End_WAit();
+                            Waiting.Stop();
                             return;
                         case var expration when year > 3:
                             switch (grade)
                             {
                                 case 10:
                                 case 11:
-                                    msg.ErrorMesg("هذا الإجراء متاح فى نهاية العام فقط ..!");
-                                    msg.MyExclamationMsg("يرجي التأكد من نوع الاختبار ..!");
+                                    MSG.ErrorMesg("هذا الإجراء متاح فى نهاية العام فقط ..!");
+                                    MSG.MyExclamationMsg("يرجي التأكد من نوع الاختبار ..!");
                                     cmb_grade.Focus();
-                                    waiting.End_WAit();
+                                    Waiting.Stop();
                                     return;
                                 case 1:
                                 case 2:
-                                    msg.ErrorMesg("لم يتم أتاحة هذا الصف!");
-                                    msg.MyExclamationMsg("يرجي التأكد من نوع الاختبار ..!");
+                                    MSG.ErrorMesg("لم يتم أتاحة هذا الصف!");
+                                    MSG.MyExclamationMsg("يرجي التأكد من نوع الاختبار ..!");
                                     cmb_grade.Focus();
-                                    waiting.End_WAit();
+                                    Waiting.Stop();
                                     return;
                                 case 3:
                                 case 4:
@@ -259,7 +260,7 @@ namespace School_Mang.PL.NATIGA
                                 case 8:
                                 case 9:
                                     RPT.OpenFinal_Koshof(year, grade,1);
-                                    waiting.End_WAit();
+                                    Waiting.Stop();
                                     return;
 
                             }
@@ -281,15 +282,15 @@ namespace School_Mang.PL.NATIGA
 
 
 
-                waiting.End_WAit();
+                Waiting.Stop();
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
             finally
             {
-                waiting.End_WAit();
+                Waiting.Stop();
             }
         }
         int move;

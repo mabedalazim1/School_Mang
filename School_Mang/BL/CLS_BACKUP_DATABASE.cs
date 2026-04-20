@@ -1,13 +1,12 @@
 ﻿using System;
 using School_Mang.DAL;
+using School_Mang.BL;
 
 namespace School_Mang.BL
 {
     class CLS_BACKUP_DATABASE
     {
         private readonly DataAcceseLayer DAL = new DataAcceseLayer();
-        private readonly MSG msg = new MSG();
-        private readonly Waiting waiting = new Waiting();
 
         public string temp_data_name = "";
 
@@ -18,29 +17,29 @@ namespace School_Mang.BL
         {
             try
             {
-                waiting.Wait();
+                Waiting.Start();
 
                 string safeFile = SanitizePath(file_name);
 
                 string query = $@"
-BACKUP DATABASE KPS_DATA_2023
-TO DISK = '{safeFile}'
-WITH INIT, STATS = 10;
-";
+                                BACKUP DATABASE KPS_DATA_2023
+                                TO DISK = '{safeFile}'
+                                WITH INIT, STATS = 10;
+                                ";
 
                 DAL.ExecuteQuery(query);
 
                 temp_data_name = file_name;
 
-                msg.MyExclamationMsg("تم إنشاء النسخة الاحتياطية بنجاح");
+                MSG.MyExclamationMsg("تم إنشاء النسخة الاحتياطية بنجاح");
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
             finally
             {
-                waiting.End_WAit();
+                Waiting.Stop();
             }
         }
 
@@ -51,39 +50,39 @@ WITH INIT, STATS = 10;
         {
             try
             {
-                waiting.Wait();
+                Waiting.Start();
 
                 string safeFile = SanitizePath(file_name);
 
                 // 1 - offline
                 DAL.ExecuteQuery(@"
-USE master;
-ALTER DATABASE KPS_DATA_2023 SET OFFLINE WITH ROLLBACK IMMEDIATE;
-");
+                                USE master;
+                                ALTER DATABASE KPS_DATA_2023 SET OFFLINE WITH ROLLBACK IMMEDIATE;
+                                ");
 
                 // 2 - restore
                 string restoreQuery = $@"
-RESTORE DATABASE KPS_DATA_2023
-FROM DISK = '{safeFile}'
-WITH REPLACE;
-";
+                                        RESTORE DATABASE KPS_DATA_2023
+                                        FROM DISK = '{safeFile}'
+                                        WITH REPLACE;
+                                        ";
 
                 DAL.ExecuteQuery(restoreQuery);
 
                 // 3 - online
                 DAL.ExecuteQuery(@"
-ALTER DATABASE KPS_DATA_2023 SET ONLINE WITH ROLLBACK IMMEDIATE;
-");
+                                ALTER DATABASE KPS_DATA_2023 SET ONLINE WITH ROLLBACK IMMEDIATE;
+                                ");
 
-                msg.MyExclamationMsg("تم استرجاع النسخة الاحتياطية بنجاح");
+                MSG.MyExclamationMsg("تم استرجاع النسخة الاحتياطية بنجاح");
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
             finally
             {
-                waiting.End_WAit();
+                Waiting.Stop();
             }
         }
 

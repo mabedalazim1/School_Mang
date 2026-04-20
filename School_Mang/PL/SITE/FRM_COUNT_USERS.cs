@@ -8,14 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using School_Mang.BL.Common.Helper;
+using School_Mang.BL;
 
 namespace School_Mang.PL.SITE
 {
     public partial class FRM_COUNT_USERS : Form
     {
         BL.SITE.CLS_MANGE_SITE site = new BL.SITE.CLS_MANGE_SITE();
-        BL.Waiting Waiting = new BL.Waiting();
-        BL.MSG msg = new BL.MSG();
+        
 
         // Form Closed
         private static FRM_COUNT_USERS Frm_Count_Users;
@@ -55,12 +55,10 @@ namespace School_Mang.PL.SITE
        
         private async void Load_Data()
         {
-
-            bool isConncted = await InternetHelper.CheckInternetAsync();
-
+            bool isConncted = await InternetFlow.EnsureAsync(retries:2,delayMs:2);
+           
             if (!isConncted)
             {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                 this.Close();
                 return;
             }
@@ -68,7 +66,7 @@ namespace School_Mang.PL.SITE
             {
                 try
                 {
-                    Waiting.Wait();
+                    Waiting.Start();
                     DataTable Dt;
                     Dt = site.Get_Count_Users_Data();
                     if (Dt != null)
@@ -79,19 +77,19 @@ namespace School_Mang.PL.SITE
                     }
                     else
                     {
-                        Waiting.End_WAit();
-                        msg.ErrorMesg("حدث خطأ فى الإتصال..!");
+                        Waiting.Stop();
+                        MSG.ErrorMesg("حدث خطأ فى الإتصال..!");
                         this.Close();
                     }
 
                 }
                 catch (Exception ex)
                 {
-                    Waiting.End_WAit();
-                    msg.ErrorMesg(ex.Message);
+                    Waiting.Stop();
+                    MSG.ErrorMesg(ex.Message);
                 }
             }
-            Waiting.End_WAit();
+            Waiting.Stop();
         }
 
         private void pn_top_MouseDown(object sender, MouseEventArgs e)
@@ -127,25 +125,21 @@ namespace School_Mang.PL.SITE
 
         private async void btn_show_data_Click(object sender, EventArgs e)
         {
-            bool isConncted = await InternetHelper.CheckInternetAsync();
-
-            if (!isConncted)
-            {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+            if (!await InternetFlow.EnsureAsync())
                 return;
-            }
+
             try
             {
-                Waiting.Wait();
+                Waiting.Start();
                 int grde =Convert.ToInt32(dt_std_data.CurrentRow.Cells["id"].Value);
                 BL.Globals.test_grade_id = grde;
                 FRM_SITE_USER_DATA.Get_Frm_Site_User_Data.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
-                Waiting.End_WAit();
+                Waiting.Stop();
             }
             catch(Exception ex)
             {
-                Waiting.End_WAit();
-                msg.ErrorMesg(ex.Message);
+                Waiting.Stop();
+                MSG.ErrorMesg(ex.Message);
             }
         }
 

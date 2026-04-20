@@ -14,6 +14,7 @@ namespace School_Mang.BL.NATEG
     public class CLS_NATEG
     {
         private DataAcceseLayer DAL = new DataAcceseLayer();
+        private SiteAccessLayer SiteAccess = new SiteAccessLayer();
 
         public DataTable Get_Golos_Sum(int Grade_Id, string status = "")
         {  
@@ -75,7 +76,7 @@ namespace School_Mang.BL.NATEG
 
         public void DeleteAssessmentFromSite(int year_Id, int term_Id, int grade_Id, string sp_name)
         {
-            DAL.ExecNonQuery("SP_Delete_From_" + sp_name,
+            SiteAccess.ExecNonQuery("SP_Delete_From_" + sp_name,
                 SqlParam.Int("@year_Id", year_Id),
                 SqlParam.Int("@term_Id", term_Id),
                 SqlParam.Int("@grade_Id", grade_Id)
@@ -84,7 +85,7 @@ namespace School_Mang.BL.NATEG
 
         public void DeleteDegreeFromSite(int grade_Id, int test_kind_Id, int student_Id)
         {
-            DAL.ExecNonQuery("SP_Delete_From_Degree",
+            SiteAccess.ExecNonQuery("SP_Delete_From_Degree",
                 SqlParam.Int("@grade_Id", grade_Id),
                 SqlParam.Int("@test_kind_Id", test_kind_Id),
                 SqlParam.Int("@student_Id", student_Id)
@@ -93,7 +94,7 @@ namespace School_Mang.BL.NATEG
 
         public void DeleteMarkFromSite(int grade_Id, int test_kind_Id, int student_Id)
         {
-            DAL.ExecNonQuery("SP_Delete_From_Mark",
+            SiteAccess.ExecNonQuery("SP_Delete_From_Mark",
                 SqlParam.Int("@grade_Id", grade_Id),
                 SqlParam.Int("@test_kind_Id", test_kind_Id),
                 SqlParam.Int("@student_Id", student_Id)
@@ -102,17 +103,17 @@ namespace School_Mang.BL.NATEG
 
         public DataTable GET_GRADE()
         {
-            return DAL.ExecQuery("SP_GET_GRADE");
+            return SiteAccess.ExecQuery("SP_GET_GRADE");
         }
 
         public DataTable GET_TEST_KIND()
         {
-            return DAL.ExecQuery("SP_GET_TEST_KIND");
+            return SiteAccess.ExecQuery("SP_GET_TEST_KIND");
         }
 
         public DataTable Get_Count_Degree(int test_kind_Id)
         {
-            return DAL.ExecQuery("SP_Get_Count_Degree",
+            return SiteAccess.ExecQuery("SP_Get_Count_Degree",
                 SqlParam.Int("@test_kind_Id", test_kind_Id)
             );
         }
@@ -121,7 +122,7 @@ namespace School_Mang.BL.NATEG
         {
             bool data = show_data == "False" ? true : false;
 
-            return DAL.ExecQuery("SP_Toggle_Hide_Data",
+            return SiteAccess.ExecQuery("SP_Toggle_Hide_Data",
                 SqlParam.Int("@student_Id", student_Id),
                 SqlParam.Byte("@test_kind_Id", test_kind_Id),
                 SqlParam.Bit("@show_data", data)
@@ -129,13 +130,13 @@ namespace School_Mang.BL.NATEG
         }
         public DataTable Get_Count_Mark(int test_kind_Id)
         {
-            return DAL.ExecQuery("SP_Get_Count_Mark",
+            return SiteAccess.ExecQuery("SP_Get_Count_Mark",
                 SqlParam.Int("@test_kind_Id", test_kind_Id)
             );
         }
         public DataTable Get_Mark_Data(int test_kind_Id, int grade_Id, string serach = "no", string std_name = "")
         {
-            return DAL.ExecQuery("SP_Get_Mark_Data",
+            return SiteAccess.ExecQuery("SP_Get_Mark_Data",
                 SqlParam.Int("@test_kind_Id", test_kind_Id),
                 SqlParam.Int("@grade_Id", grade_Id),
                 SqlParam.NVar("@serach", serach, 3),
@@ -144,7 +145,7 @@ namespace School_Mang.BL.NATEG
         }
         public DataTable Get_Degree_Data(int test_kind_Id, int grade_Id, string serach = "no", string std_name = "")
         {
-            return DAL.ExecQuery("SP_Get_Degree_Data",
+            return SiteAccess.ExecQuery("SP_Get_Degree_Data",
                 SqlParam.Int("@test_kind_Id", test_kind_Id),
                 SqlParam.Int("@grade_Id", grade_Id),
                 SqlParam.NVar("@serach", serach, 3),
@@ -158,7 +159,7 @@ namespace School_Mang.BL.NATEG
                     int english_degre, int maharat_degre, int tocnolegy_degre,
                     int badania_degre, int general_degre, int test_kind_Id)
         {
-            DAL.ExecNonQuery("SP_Update_Degree",
+            SiteAccess.ExecNonQuery("SP_Update_Degree",
                 SqlParam.Int("@student_Id", student_Id),
                 SqlParam.Int("@arabic_degre", arabic_degre),
                 SqlParam.Int("@dain_degre", dain_degre),
@@ -180,7 +181,7 @@ namespace School_Mang.BL.NATEG
                            decimal english_degre, decimal maharat_degre, decimal tocnolegy_degre,
                            decimal french_degre, decimal general_degre, int sort_code, int test_kind_Id)
 {
-    DAL.ExecNonQuery("SP_Update_Mark",
+    SiteAccess.ExecNonQuery("SP_Update_Mark",
         SqlParam.Int("@student_Id", student_Id),
         SqlParam.Decimal("@arabic_degre", arabic_degre),
         SqlParam.Decimal("@dain_degre", dain_degre),

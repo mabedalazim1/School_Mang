@@ -7,13 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using School_Mang.BL;
 
 namespace School_Mang.PL.MAIN
 {
     public partial class FRM_YEAR : Form
     {
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
-        BL.MSG msg = new BL.MSG();
         BL.LOGIN.CLS_LOGIN login = new BL.LOGIN.CLS_LOGIN();
         BL.USERS users = new BL.USERS();
         public FRM_YEAR()
@@ -46,7 +46,7 @@ namespace School_Mang.PL.MAIN
             if(txt_pass.Text == "")
             {
                 
-                msg.ErrorMesg("ادخل كلمة المرور.. !");
+                MSG.ErrorMesg("ادخل كلمة المرور.. !");
                 txt_pass.Focus();
                 return;
             }
@@ -66,7 +66,7 @@ namespace School_Mang.PL.MAIN
                     if (Convert.ToInt32(row["permission_id"]) == 1
                         && Convert.ToInt32(row["role_id"]) == 1)
                     {
-                        if(msg.DialogeErrMsg("هل تريد تغيير العام الدراسى للبرنامج")== DialogResult.Yes)
+                        if(MSG.DialogeErrMsg("هل تريد تغيير العام الدراسى للبرنامج")== DialogResult.Yes)
                         {
                             users.Update_Year_Data(
                             Properties.Settings.Default.year_cod,
@@ -75,18 +75,18 @@ namespace School_Mang.PL.MAIN
                             );
                             Properties.Settings.Default.Save();
 
-                            msg.MyMesg("تم تغيير العام الدراسى فى قاعدة البيانات !! ");
+                            MSG.MyMesg("تم تغيير العام الدراسى فى قاعدة البيانات !! ");
                         }
                         else
                         {
-                            msg.ErrorMesg("تم الغاء الإجراء .. لم يتم التعديل");
+                            MSG.ErrorMesg("تم الغاء الإجراء .. لم يتم التعديل");
                             return;
                         }
                        
                     }
                     else
                     {
-                        msg.MyMesg("تم تعديل العام الدراسى");
+                        MSG.MyMesg("تم تعديل العام الدراسى");
                     }
                 }
                     
@@ -100,7 +100,7 @@ namespace School_Mang.PL.MAIN
             }
             else
             {
-                  msg.ErrorMesg(" .. ! عفوا لا يمكنك تغيير العام الدراسى تأكد من كلمة المرور");
+                  MSG.ErrorMesg(" .. ! عفوا لا يمكنك تغيير العام الدراسى تأكد من كلمة المرور");
                 txt_pass.Focus();
             }
         }
@@ -124,7 +124,7 @@ namespace School_Mang.PL.MAIN
             {
                 if (txt_pass.Text == "")
                 {
-                    msg.ErrorMesg("ادخل كلمة المرور");
+                    MSG.ErrorMesg("ادخل كلمة المرور");
                     txt_pass.Focus();
                     return;
                 }

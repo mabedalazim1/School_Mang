@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using School_Mang.BL;
 
 namespace School_Mang.DAL
 {
     public class DataAcceseLayer
     {
-        readonly SqlConnection sqlConnection;
         private readonly string _connectionString;
         private SqlConnection _con;
         private SqlTransaction _trans;
-        private readonly BL.MSG msg = new BL.MSG();
 
         public DataAcceseLayer()
         {
@@ -41,69 +40,52 @@ namespace School_Mang.DAL
         public void Commit()
         {
             _trans?.Commit();
+            _trans = null;
+
             _con?.Close();
+            _con = null;
         }
 
         public void Rollback()
         {
             _trans?.Rollback();
+            _trans = null;
+
             _con?.Close();
+            _con = null;
         }
 
-        public void Open()
-        {
 
-            try
-            {
-                if (sqlConnection.State != ConnectionState.Open)
-                {
-                    sqlConnection.Open();
-                }
-            }
-            catch (Exception e)
-            {
-                msg.ErrorMesg(e.Message);
-            }
-
-        }
-        public void Close()
-        {
-            try
-            {
-                if (sqlConnection.State == ConnectionState.Open)
-                {
-                    sqlConnection.Close();
-                }
-            }
-            catch (Exception e)
-            {
-                msg.ErrorMesg(e.Message);
-            }
-
-        }
         // =========================
         // CORE EXECUTOR
         // =========================
-        private T Exec<T>(string text, CommandType type, SqlParameter[] prms, Func<SqlCommand, T> action)
+        private T Execute<T>(
+             string commandText,
+             CommandType commandType,
+             SqlParameter[] parameters,
+             Func<SqlCommand, T> executor)
         {
             try
             {
                 using (SqlConnection con = CreateConnection())
-                using (SqlCommand cmd = new SqlCommand(text, con))
+                using (SqlCommand cmd = new SqlCommand(commandText, con))
                 {
-                    cmd.CommandType = type;
+                    cmd.CommandType = commandType;
 
-                    if (prms != null)
-                        cmd.Parameters.AddRange(prms);
+                    if (_trans != null)
+                        cmd.Transaction = _trans;
+
+                    if (parameters != null)
+                        cmd.Parameters.AddRange(parameters);
 
                     con.Open();
-                    return action(cmd);
+                    return executor(cmd);
                 }
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
-                return default(T);
+                // مهم: لا UI داخل DAL
+                throw new Exception("Database Error: " + ex.Message, ex);
             }
         }
 
@@ -112,7 +94,7 @@ namespace School_Mang.DAL
         // =========================
         public int ExecNonQuery(string sp, params SqlParameter[] prms)
         {
-            return Exec(sp, CommandType.StoredProcedure, prms,
+            return Execute(sp, CommandType.StoredProcedure, prms,
                 cmd => cmd.ExecuteNonQuery());
         }
 
@@ -121,7 +103,7 @@ namespace School_Mang.DAL
         // =========================
         public DataTable ExecQuery(string sp, params SqlParameter[] prms)
         {
-            return Exec(sp, CommandType.StoredProcedure, prms,
+            return Execute(sp, CommandType.StoredProcedure, prms,
                 cmd =>
                 {
                     DataTable dt = new DataTable();
@@ -138,7 +120,7 @@ namespace School_Mang.DAL
         // =========================
         public DataTable Query(string sql, params SqlParameter[] prms)
         {
-            return Exec(sql, CommandType.Text, prms,
+            return Execute(sql, CommandType.Text, prms,
                 cmd =>
                 {
                     DataTable dt = new DataTable();
@@ -150,23 +132,25 @@ namespace School_Mang.DAL
                 });
         }
 
+
         // =========================
         // EXEC NON QUERY (TEXT)
         // =========================
         public int ExecuteQuery(string sql, params SqlParameter[] prms)
         {
-            return Exec(sql, CommandType.Text, prms,
+            return Execute(sql, CommandType.Text, prms,
                 cmd => cmd.ExecuteNonQuery());
         }
+
 
         // =========================
         // TRANSACTION WRAPPER
         // =========================
         public void RunInTransaction(Action action)
         {
+            BeginTransaction();
             try
             {
-                BeginTransaction();
                 action();
                 Commit();
             }
@@ -176,12 +160,34 @@ namespace School_Mang.DAL
                 throw;
             }
         }
-        public DataTable SchoolSiteExeucuteQuery(string query)
+
+
+        // =========================
+        // RAW QUERY (SITE DB)
+        // =========================
+        public DataTable LocalDbExeucuteQuery(string query)
         {
-            SqlDataAdapter da = new SqlDataAdapter(query, sqlConnection);
-            DataTable dt = new DataTable();
-            da.Fill(dt);
-            return dt;
+            using (var con = CreateConnection())
+            using (var cmd = new SqlCommand(query, con))
+            using (var da = new SqlDataAdapter(cmd))
+            {
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                return dt;
+            }
+        }
+
+        // =========================
+        // RAW NON QUERY (SITE DB)
+        // =========================
+        public void LocalDbExeucuteNonQuery(string query)
+        {
+            using (var con = CreateConnection())
+            using (var cmd = new SqlCommand(query, con))
+            {
+                con.Open();
+                cmd.ExecuteNonQuery();
+            }
         }
     }
 }

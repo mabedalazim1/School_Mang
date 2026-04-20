@@ -1,4 +1,7 @@
-﻿using System;
+﻿using School_Mang.BL;
+using School_Mang.BL.Services;
+using School_Mang.PL.STD;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,8 +18,6 @@ namespace School_Mang.PL.MAIN
         // Get Std
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
         BL.USERS users = new BL.USERS();
-        BL.MSG msg = new BL.MSG();
-        BL.Waiting waiting = new BL.Waiting();
 
         // Form Closed
         private static FRM_TALABA frm_Talaba;
@@ -102,7 +103,7 @@ namespace School_Mang.PL.MAIN
         }
         private void pic_age_Click(object sender, EventArgs e)
         {
-            STD.FRM_HESAB_SEN frm_sen = new STD.FRM_HESAB_SEN();
+            FRM_HESAB_SEN frm_sen = new STD.FRM_HESAB_SEN();
             frm_sen.ShowDialog();
         }
 
@@ -113,16 +114,26 @@ namespace School_Mang.PL.MAIN
 
         private void pic_add_std_Click(object sender, EventArgs e)
         {
-            BL.Globals.Open_Form_Get_osra = false;
-            STD.FRM_ADD_STD.getAdd_Std_Frm.ShowDialog();
+
+            AppNavigation.Instance.SetContext(
+                c=> c.OpenFormGetOsra = false )
+                .Show(FRM_ADD_STD.getAdd_Std_Frm); // تم التحقق
+
+            //STD.FRM_ADD_STD.getAdd_Std_Frm.ShowDialog();
         }
 
         private void pic_elthak_Click(object sender, EventArgs e)
         {
-            BL.Globals.Elthak_Std = true;
-            BL.Globals.Elthak_Std_Next_Year = false;
+           
 
-            STD.FRM_GET_STD.Get_Student.ShowDialog();
+            AppNavigation.Instance.SetContext(c =>
+            {
+                c.ElthakStd = true;
+                c.ElthakStdNextYear = false;
+            })
+                .Show(FRM_GET_STD.Get_Student); // تم التحقق
+                 
+            //STD.FRM_GET_STD.Get_Student.ShowDialog();
         }
 
         private void lbl_add_std_Click(object sender, EventArgs e)
@@ -166,7 +177,7 @@ namespace School_Mang.PL.MAIN
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
         }
 
@@ -195,8 +206,14 @@ namespace School_Mang.PL.MAIN
 
         private void lbl_eltehak_old_Click(object sender, EventArgs e)
         {
-            BL.Globals.Elthak_Std = true;
-            STD.FRM_CURRENT_STD.Get_Current_Std.ShowDialog();
+
+            AppNavigation.Instance.SetContext(c =>
+            {
+                c.ElthakStd = true;
+            })
+                .Show(FRM_CURRENT_STD.Get_Current_Std); // تم التحقق
+            
+            //STD.FRM_CURRENT_STD.Get_Current_Std.ShowDialog();
         }
 
         private void pic_eltehak_old_Click(object sender, EventArgs e)
@@ -207,11 +224,18 @@ namespace School_Mang.PL.MAIN
         private void lbl_bian_dragat_Click(object sender, EventArgs e)
         {
 
-            waiting.Wait();
-            BL.Globals.Current_Year_Data = true;
-            BL.Globals.Degree_Statement = true;
-            STD. FRM_CHOOSE_GRADE frm = new STD.FRM_CHOOSE_GRADE();
-            frm.ShowDialog();
+            Waiting.Start();
+
+            AppNavigation.Instance.SetContext(
+                c =>
+                {
+                    c.CurrentYearData = true;
+                    c.DegreeStatement = true;
+                })
+                .Show<FRM_CHOOSE_GRADE>(); // تم التحقق
+
+            //STD. FRM_CHOOSE_GRADE frm = new STD.FRM_CHOOSE_GRADE();
+            //frm.ShowDialog();
         }
 
         private void pic_bian_dragat_Click(object sender, EventArgs e)
@@ -221,11 +245,18 @@ namespace School_Mang.PL.MAIN
 
         private void pic_elthak_next_year_Click(object sender, EventArgs e)
         {
-            BL.Globals.Elthak_Std_Next_Year = true;
-            BL.Globals.Elthak_Std = false;
+            
 
-            STD.FRM_CURRENT_STD.Get_Current_Std.grade = 11;
-            STD.FRM_CURRENT_STD.Get_Current_Std.ShowDialog();
+            FRM_CURRENT_STD.Get_Current_Std.grade = 11;
+            AppNavigation.Instance.SetContext(c =>
+            {
+                c.ElthakStdNextYear = true;
+                c.ElthakStd = false;
+            })
+                .Show(FRM_CURRENT_STD.Get_Current_Std); // تم التحقق
+
+          
+           //FRM_CURRENT_STD.Get_Current_Std.ShowDialog();
         }
 
         private void lbl_elthak_next_year_Click(object sender, EventArgs e)
@@ -235,8 +266,7 @@ namespace School_Mang.PL.MAIN
 
         private void FRM_TALABA_Load(object sender, EventArgs e)
         {
-            BL.Globals.Elthak_Std = false;
-            BL.Globals.Elthak_Std_Next_Year = false;
+            
         }
     }
 }

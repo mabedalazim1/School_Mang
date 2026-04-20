@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using School_Mang.BL;
 
 namespace School_Mang.DAL
 {
@@ -9,7 +10,6 @@ namespace School_Mang.DAL
         private readonly string _connectionString;
         private SqlConnection _con;
         private SqlTransaction _trans;
-        private readonly BL.MSG msg = new BL.MSG();
 
         public SiteAccessLayer()
         {
@@ -32,48 +32,63 @@ namespace School_Mang.DAL
             _con.Open();
             _trans = _con.BeginTransaction();
         }
+
         public void Commit()
         {
             _trans?.Commit();
+            _trans = null;
+
             _con?.Close();
+            _con = null;
         }
+
         public void Rollback()
         {
             _trans?.Rollback();
+            _trans = null;
+
             _con?.Close();
+            _con = null;
         }
+
         // =========================
         // CORE EXECUTOR
         // =========================
-        private T Exec<T>(string text, CommandType type, SqlParameter[] prms, Func<SqlCommand, T> action)
+        private T Execute<T>(
+            string commandText,
+            CommandType commandType,
+            SqlParameter[] parameters,
+            Func<SqlCommand, T> executor)
         {
             try
             {
                 using (SqlConnection con = CreateConnection())
-                using (SqlCommand cmd = new SqlCommand(text, con))
+                using (SqlCommand cmd = new SqlCommand(commandText, con))
                 {
-                    cmd.CommandType = type;
+                    cmd.CommandType = commandType;
 
-                    if (prms != null && prms.Length > 0)
-                        cmd.Parameters.AddRange(prms);
+                    if (_trans != null)
+                        cmd.Transaction = _trans;
+
+                    if (parameters != null && parameters.Length > 0)
+                        cmd.Parameters.AddRange(parameters);
 
                     con.Open();
-                    return action(cmd);
+                    return executor(cmd);
                 }
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
-                return default(T);
+                // مهم: لا UI داخل DAL
+                throw new Exception("Site DB Error: " + ex.Message, ex);
             }
         }
-
         // =========================
         // EXEC NON QUERY
         // =========================
         public int ExecNonQuery(string sp, params SqlParameter[] prms)
         {
-            return Exec(sp, CommandType.StoredProcedure, prms,
+            return Execute(sp, CommandType.StoredProcedure, prms,
                 cmd => cmd.ExecuteNonQuery());
         }
 
@@ -82,7 +97,7 @@ namespace School_Mang.DAL
         // =========================
         public DataTable ExecQuery(string sp, params SqlParameter[] prms)
         {
-            return Exec(sp, CommandType.StoredProcedure, prms,
+            return Execute(sp, CommandType.StoredProcedure, prms,
                 cmd =>
                 {
                     DataTable dt = new DataTable();
@@ -99,7 +114,7 @@ namespace School_Mang.DAL
         // =========================
         public DataTable Query(string sql, params SqlParameter[] prms)
         {
-            return Exec(sql, CommandType.Text, prms,
+            return Execute(sql, CommandType.Text, prms,
                 cmd =>
                 {
                     DataTable dt = new DataTable();
@@ -110,11 +125,39 @@ namespace School_Mang.DAL
                     return dt;
                 });
         }
+
+
+        public DataTable SchoolSiteExeucuteQuery(string query)
+        {
+            using (var con = CreateConnection())
+            using (var cmd = new SqlCommand(query, con))
+            using (var da = new SqlDataAdapter(cmd))
+            {
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                return dt;
+            }
+        }
+
+        // =========================
+        // RAW NON QUERY (SITE DB)
+        // =========================
+        public void SchoolSiteExecuteNonQuery(string query)
+        {
+            using (var con = CreateConnection())
+            using (var cmd = new SqlCommand(query, con))
+            {
+                con.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
         public void RunInTransaction(Action action)
         {
+            BeginTransaction();
+
             try
             {
-                BeginTransaction();
                 action();
                 Commit();
             }

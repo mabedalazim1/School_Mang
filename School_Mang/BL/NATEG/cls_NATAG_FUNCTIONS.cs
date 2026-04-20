@@ -10,7 +10,6 @@ namespace School_Mang.BL.NATEG
 {
     public class cls_NATAG_FUNCTIONS
     {
-        MSG msg = new MSG();
         public string OpenDialoge(OpenFileDialog FileDialog)
         {
             try
@@ -21,7 +20,7 @@ namespace School_Mang.BL.NATEG
             }
             catch(Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
            
             if (FileDialog.ShowDialog() == DialogResult.OK)

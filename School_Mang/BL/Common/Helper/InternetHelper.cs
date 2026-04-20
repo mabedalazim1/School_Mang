@@ -3,38 +3,41 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using School_Mang.BL;
 
 namespace School_Mang.BL.Common.Helper
 {
     public static class InternetHelper
     {
-        private static readonly Waiting Waiting = new Waiting();
+
 
         /// <summary>
         /// تحقق من الاتصال بالإنترنت بشكل عام
         /// </summary>
-        public static async Task<bool> CheckInternetAsync()
+        public static async Task<bool> CheckInternetAsync(int retries = 3, int delayMs = 500)
         {
-            Waiting.Wait();
             try
             {
-                var testInternet = new CLS_TEST_INTRNET_CON();
-
-                for (int i = 0; i < 3; i++)
+                using (var ping = new System.Net.NetworkInformation.Ping())
                 {
-                    await testInternet.ChecK_Internt_Con();
+                    string host = Properties.Settings.Default.Site_Server_Name;
 
-                    if (Globals.Test_Internet_Con)
-                        return true;
+                    for (int i = 0; i < retries; i++)
+                    {
+                        var reply = await ping.SendPingAsync(host);
 
-                    await Task.Delay(500);
+                        if (reply.Status == System.Net.NetworkInformation.IPStatus.Success)
+                            return true;
+
+                        await Task.Delay(delayMs);
+                    }
+
+                    return false;
                 }
-
-                return false;
             }
-            finally
+            catch
             {
-                Waiting.End_WAit();
+                return false;
             }
         }
     }

@@ -7,13 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using School_Mang.BL;
 
 namespace School_Mang.PL.NATIGA
 {
     public partial class FRM_EDIT_GOLOS : Form
     {
         BL.NATEG.CLS_NATEG NATEG  = new BL.NATEG.CLS_NATEG();
-        BL.MSG msg = new BL.MSG();
 
         // Form Closed
         private static FRM_EDIT_GOLOS frm_Edit_Golos;
@@ -102,8 +102,8 @@ namespace School_Mang.PL.NATIGA
             {
                 if (txt_golos.Text == golos.ToString())
                 {
-                   msg.MyExclamationMsg("يرجي تغيير رقم الجلوس لتتمكن من التعديل ..!");
-                    msg.ErrorMesg("لم يتم تعديل رقم الجلوس ..!");
+                   MSG.MyExclamationMsg("يرجي تغيير رقم الجلوس لتتمكن من التعديل ..!");
+                    MSG.ErrorMesg("لم يتم تعديل رقم الجلوس ..!");
                 }
                 else
                 {
@@ -112,13 +112,13 @@ namespace School_Mang.PL.NATIGA
                     
                     NATEG.Update_Golos_Data(code, golos);
                     FRM_FINAL_DATA.Get_Frm_Final_Data.txt_std_data_OnValueChanged(sender, e);
-                    msg.MyMesg("تم تعديل رقم الجلوس بنجاح ..!");
+                    MSG.MyMesg("تم تعديل رقم الجلوس بنجاح ..!");
                 }
                
 
             }catch(Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
         }
 

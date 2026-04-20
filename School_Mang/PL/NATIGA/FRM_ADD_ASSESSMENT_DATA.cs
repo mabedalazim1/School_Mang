@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using School_Mang.BL.Common.Helper;
+using School_Mang.BL;
 
 namespace School_Mang.PL.NATIGA
 {
@@ -42,8 +43,6 @@ namespace School_Mang.PL.NATIGA
 
         }
 
-        BL.MSG msg = new BL.MSG();
-        BL.Waiting Waiting = new BL.Waiting();
         HTTP.HTTPCLINT HTTP = new HTTP.HTTPCLINT();
         BL.NATEG.CLS_NATEG Nateg = new BL.NATEG.CLS_NATEG();
 
@@ -60,26 +59,21 @@ namespace School_Mang.PL.NATIGA
             {
                 if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 {
-                    bool isConncted = await InternetHelper.CheckInternetAsync();
-
-                    if (!isConncted)
-                    {
-                        msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+                    if (!await InternetFlow.EnsureAsync())
                         return;
-                    }
 
                     await HTTP.UplodFile(openFileDialog1.FileName, path);
                 }
                 else
                 {
-                    msg.ErrorMesg("تم إلغاء الإجراء ..!");
+                    MSG.ErrorMesg("تم إلغاء الإجراء ..!");
                     BL.Globals.Dir_Path = "D://Rasd";
                 }
 
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
 
         }
@@ -89,17 +83,17 @@ namespace School_Mang.PL.NATIGA
         {
             try
             {
-                Waiting.Wait();
+                Waiting.Start();
 
                 Nateg.DeleteAssessmentFromSite(year, term, grade, sp_name);
 
-                Waiting.End_WAit();
-                msg.MyMesg("تم حذف البيان المحدد");
+                Waiting.Stop();
+                MSG.MyMesg("تم حذف البيان المحدد");
             }
             catch(Exception e)
             {
-                msg.ErrorMesg(e.Message);
-                Waiting.End_WAit();
+                MSG.ErrorMesg(e.Message);
+                Waiting.Stop();
             }
             
         }
@@ -226,26 +220,23 @@ namespace School_Mang.PL.NATIGA
 
         private async void btn_show_data_Click(object sender, EventArgs e)
         {
-            if (msg.DialogeErrMsg("سوف يتم رفع درجات استمارةالتقييم .. وسيتم حذف البيانات السابقة للصف المحدد .. هل تريد المتابعة ؟") == DialogResult.No)
+            if (MSG.DialogeErrMsg("سوف يتم رفع درجات استمارةالتقييم .. وسيتم حذف البيانات السابقة للصف المحدد .. هل تريد المتابعة ؟") == DialogResult.No)
             {
-                msg.ErrorMesg("تم إلغاء الإجراء ..!");
+                MSG.ErrorMesg("تم إلغاء الإجراء ..!");
                 return;
             }
             else
             {
-                if (msg.DialogeErrMsg("سوف يتم تغيير درجات مادة   " + cmb_subject.Text +" هل تريد المتابعة ؟ ..  ") == DialogResult.No)
+                if (MSG.DialogeErrMsg("سوف يتم تغيير درجات مادة   " + cmb_subject.Text +" هل تريد المتابعة ؟ ..  ") == DialogResult.No)
                 {
-                    msg.ErrorMesg("تم إلغاء الإجراء ..!");
+                    MSG.ErrorMesg("تم إلغاء الإجراء ..!");
                     return;
                 }
             }
-            bool isConncted = await InternetHelper.CheckInternetAsync();
 
-            if (!isConncted)
-            {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+            if (!await InternetFlow.EnsureAsync())
                 return;
-            }
+
             byte degree_kind = Convert.ToByte(cmb_subject.SelectedValue);
             string upload = "upload/";
             
@@ -284,25 +275,25 @@ namespace School_Mang.PL.NATIGA
 
         private void btn_del_Click(object sender, EventArgs e)
         {
-            if (msg.DialogeMsg("يرجي التأكد من العام والفصل الدراسي والمادة .. هل تريد المتابعة ؟") == DialogResult.No)
+            if (MSG.DialogeMsg("يرجي التأكد من العام والفصل الدراسي والمادة .. هل تريد المتابعة ؟") == DialogResult.No)
             {
-                msg.ErrorMesg("تم إلغاء الإجراء ..!");
+                MSG.ErrorMesg("تم إلغاء الإجراء ..!");
                 return;
             }
             else
             {
-                msg.MyExclamationMsg("سوف يتم حذف " + cmb_subject.Text + " - للصف " + cmb_grade.Text + " العام الدراسي " + cmb_year.Text);
+                MSG.MyExclamationMsg("سوف يتم حذف " + cmb_subject.Text + " - للصف " + cmb_grade.Text + " العام الدراسي " + cmb_year.Text);
             }
-                if (msg.DialogeErrMsg("سوف يتم حذف درجات استمارةالتقييم للصف المحدد .. هل تريد المتابعة ؟") == DialogResult.No)
+                if (MSG.DialogeErrMsg("سوف يتم حذف درجات استمارةالتقييم للصف المحدد .. هل تريد المتابعة ؟") == DialogResult.No)
             {
-                msg.ErrorMesg("تم إلغاء الإجراء ..!");
+                MSG.ErrorMesg("تم إلغاء الإجراء ..!");
                 return;
             }
             else
             {
-                if (msg.DialogeErrMsg("سوف يتم حذف درجات مادة   " + cmb_subject.Text + " هل تريد المتابعة ؟ ..  ") == DialogResult.No)
+                if (MSG.DialogeErrMsg("سوف يتم حذف درجات مادة   " + cmb_subject.Text + " هل تريد المتابعة ؟ ..  ") == DialogResult.No)
                 {
-                    msg.ErrorMesg("تم إلغاء الإجراء ..!");
+                    MSG.ErrorMesg("تم إلغاء الإجراء ..!");
                     return;
                 }
                
@@ -340,7 +331,7 @@ namespace School_Mang.PL.NATIGA
                     sp_name = "AsesTocnolegy";
                     break;
                 case 9:
-                    msg.ErrorMesg("لم يتم تخزين اجراء لهذه العملية ..!");
+                    MSG.ErrorMesg("لم يتم تخزين اجراء لهذه العملية ..!");
                     return;
             }
             deleteAssement(grade, year, term, sp_name);

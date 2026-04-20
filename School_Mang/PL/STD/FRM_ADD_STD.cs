@@ -1,4 +1,7 @@
 ﻿using DevExpress.XtraEditors;
+using School_Mang.BL;
+using School_Mang.BL.Services;
+using School_Mang.BL.STD;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,16 +12,23 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using School_Mang.BL;
-using School_Mang.BL.STD;
 
 
 
 namespace School_Mang.PL.STD
 {
 
-    public partial class FRM_ADD_STD : Form
+    public partial class FRM_ADD_STD : Form, INavigationAware
     {
+        private NavigationContext _context;
+
+        public void SetNavigation(NavigationContext context)
+        {
+            _context = context ?? new NavigationContext();
+            ApplyContext();
+
+        }
+
         public string from_status = "";
 
         // Data
@@ -26,14 +36,11 @@ namespace School_Mang.PL.STD
 
         //Import Classes
         CLS_STD std = new BL.STD.CLS_STD();
-        Waiting Waiting = new BL.Waiting();
-        Globals globals = new BL.Globals();
         // Hesab Sen
         HESAB_SEN Hesab_sen = new BL.HESAB_SEN();
         string[] sen = { };
 
-        // MSG
-        MSG msg = new BL.MSG();
+        
 
         CLS_STD_FUNCATIONS Std_Func = new CLS_STD_FUNCATIONS();
 
@@ -64,9 +71,15 @@ namespace School_Mang.PL.STD
             {
                 frm = this;
             }
+
+            ApplyContext();
+        }
+
+        private void ApplyContext()
+        {
+            Waiting.Start();
             try
             {
-                Waiting.Wait();
                 // Fill Combos
 
                 cmb_sana.DataSource = std.Get_years();
@@ -92,7 +105,7 @@ namespace School_Mang.PL.STD
                 cmb_religion.DataSource = std.Get_religion();
                 cmb_religion.DisplayMember = "ReligionDesc";
                 cmb_religion.ValueMember = "Religion_Id";
-                Waiting.End_WAit();
+                Waiting.Stop();
 
                 // Set User permission
                 switch (permission_id)
@@ -110,12 +123,14 @@ namespace School_Mang.PL.STD
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
-                Waiting.End_WAit();
+                MSG.ErrorMesg(e.Message);
             }
-
-
+            finally
+            {
+                Waiting.Stop();
+            }
         }
+
         int move;
         int move_x;
         int move_y;
@@ -174,7 +189,7 @@ namespace School_Mang.PL.STD
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
             return code;
 
@@ -248,7 +263,7 @@ namespace School_Mang.PL.STD
                         Convert.ToInt32(cmb_sana.SelectedValue),
                         Convert.ToInt32(txt_osra_id.Text));
 
-                msg.MyMesg("تم إضافة الطالب: " + txt_std_name.Text + ": كود  " + sdt_code.ToString());
+                MSG.MyMesg("تم إضافة الطالب: " + txt_std_name.Text + ": كود  " + sdt_code.ToString());
 
                 txt_nat.Text = "";
                 txt_sen.Text = "";
@@ -267,23 +282,23 @@ namespace School_Mang.PL.STD
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
-                msg.ErrorMesg(" حدث خطأ أثناء عملية الحفظ");
-                Waiting.End_WAit();
+                MSG.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(" حدث خطأ أثناء عملية الحفظ");
+                Waiting.Stop();
 
                 return;
 
             }
             finally
             {
-                Waiting.End_WAit();
+                Waiting.Stop();
             }
 
         }
 
         private void Update_Std_Data()
         {
-            Waiting.Wait();
+            Waiting.Start();
             try
             {
 
@@ -305,28 +320,33 @@ namespace School_Mang.PL.STD
                         Convert.ToInt32(cmb_sana.SelectedValue),
                         Convert.ToInt32(txt_osra_id.Text));
 
-                msg.MyMesg("تم تعديل بيانات الطالب: " + txt_std_name.Text);
-                Globals.Add_From_Get_Std = false;
+                MSG.MyMesg("تم تعديل بيانات الطالب: " + txt_std_name.Text);
+
 
                 this.Close();
                 FRM_ADD_STD.frm = null;
 
-                FRM_GET_STD frm = new FRM_GET_STD();
-                frm.ShowDialog();
+                AppNavigation.Instance.SetContext(c =>
+                {
+                    c.AddFromGetStd = false;
+                }).Show<FRM_GET_STD>();
+
+                // FRM_GET_STD frm = new FRM_GET_STD();
+                // frm.ShowDialog();
 
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
-                msg.ErrorMesg(" حدث خطأ أثناء عملية الحفظ");
-                Waiting.End_WAit();
+                MSG.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(" حدث خطأ أثناء عملية الحفظ");
+                Waiting.Stop();
 
                 return;
 
             }
             finally
             {
-                Waiting.End_WAit();
+                Waiting.Stop();
             }
 
         }
@@ -348,38 +368,46 @@ namespace School_Mang.PL.STD
         {
             if (txt_std_name.Text != "" || txt_nat.Text != "")
             {
-                if (!Globals.Update_Std_Data)
+                if (_context?.UpdateStdData != true)
                 {
-                    if (msg.DialogeErrMsg("لم يتم حفظ البيانات المدخلة .. هل تريد الخروج؟") != DialogResult.Yes) return;
+                    if (MSG.DialogeErrMsg("لم يتم حفظ البيانات المدخلة .. هل تريد الخروج؟") != DialogResult.Yes) return;
 
                 }
             }
 
-            if (Globals.Update_Std_Data)
+            if (_context?.UpdateStdData == true)
             {
-                Globals.Update_Std_Data = false;
 
                 this.Close();
                 FRM_ADD_STD.frm = null;
                 this.Dispose();
-                FRM_GET_STD.Get_Student.cmb_sana_SelectedIndexChanged(sender, e);
-                FRM_GET_STD.Get_Student.Visible = true;
+
+                var frm = FRM_GET_STD.Get_Student;
+                frm.LoadStudentData();
+                frm.Visible = true;
+
+                //FRM_GET_STD.Get_Student.cmb_sana_SelectedIndexChanged(sender, e);
+                //FRM_GET_STD.Get_Student.Visible = true;
             }
 
-            if (Globals.Open_Form_Get_osra)
+            if (_context?.OpenFormGetOsra == true)
             {
-                Globals.Open_Form_Get_osra = false;
                 this.Close();
-                FRM_GET_OSRAA.Get_Osra_data.txt_osra_data_OnValueChanged(sender, e);
-                FRM_GET_OSRAA.Get_Osra_data.Visible = true;
+
+                var frm = FRM_GET_OSRAA.Get_Osra_data;
+                frm.LoadOsraData();
+                frm.Visible = true;
+
+               // FRM_GET_OSRAA.Get_Osra_data.txt_osra_data_OnValueChanged(sender, e);
+                //FRM_GET_OSRAA.Get_Osra_data.Visible = true;
             }
-            else if (Globals.Add_From_Get_Std)
+            else if (_context?.AddFromGetStd == true)
             {
-                Globals.Add_From_Get_Std = false;
+
                 this.Close();
                 FRM_ADD_STD.frm = null;
                 this.Dispose();
-                FRM_GET_STD.Get_Student.cmb_sana_SelectedIndexChanged(sender, e);
+                FRM_GET_STD.Get_Student.LoadStudentData();
                 FRM_GET_STD.Get_Student.Visible = true;
             }
             else
@@ -393,35 +421,37 @@ namespace School_Mang.PL.STD
 
         private void link_lbl_osraa_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            AppNavigation.Instance.Show(FRM_OSRAA_DATA.Get_Osra_data);
 
-
-            FRM_OSRAA_DATA.Get_Osra_data.ShowDialog();
+            //FRM_OSRAA_DATA.Get_Osra_data.ShowDialog();
         }
 
         private void btn_ok_Click(object sender, EventArgs e)
         {
 
-            Waiting.Wait();
+            Waiting.Start();
             if (txt_nat.Text == "")
             {
                 txt_nat.BackColor = Color.MistyRose;
                 ActiveControl = txt_nat;
-                msg.ErrorMesg();
-                Waiting.End_WAit();
+                MSG.ErrorMesg();
+                Waiting.Stop();
                 return;
             }
             else
             {
+                bool isUpdateMode = _context?.UpdateStdData ?? false;
+
                 if (!Std_Func.Checked_Is_Numeric(txt_nat)) return;
-                if (Std_Func.Verify_Std_Nat(txt_std_code, txt_nat) == 1) return;
+                if (Std_Func.Verify_Std_Nat(txt_std_code, txt_nat, isUpdateMode) == 1) return;
                 if (Std_Func.Verify_Osra_Nat(txt_nat) == 1) return;
             }
             if (txt_std_name.Text == "")
             {
                 txt_std_name.BackColor = Color.MistyRose;
                 ActiveControl = txt_std_name;
-                msg.ErrorMesg("تأكد من اسم الطالب");
-                Waiting.End_WAit();
+                MSG.ErrorMesg("تأكد من اسم الطالب");
+                Waiting.Stop();
                 return;
             }
 
@@ -430,51 +460,52 @@ namespace School_Mang.PL.STD
             {
                 txt_nat.BackColor = Color.MistyRose;
                 txt_nat.Focus();
-                Waiting.End_WAit();
+                Waiting.Stop();
                 return;
             }
             if (Hesab_sen.Chack_Type(txt_nat) != cmb_type.SelectedIndex)
             {
-                msg.ErrorMesg("تأكد من النوع");
+                MSG.ErrorMesg("تأكد من النوع");
                 cmb_type.Focus();
                 cmb_type.DroppedDown = true;
-                Waiting.End_WAit();
+                Waiting.Stop();
                 return;
             }
 
             if (txt_father_name.Text == "")
             {
-                msg.ErrorMesg("يجب إدخال بيانات الأسرة");
+                MSG.ErrorMesg("يجب إدخال بيانات الأسرة");
                 link_edit_osra.Focus();
-                Waiting.End_WAit();
+                Waiting.Stop();
                 return;
             }
 
 
-            if (!Globals.Update_Std_Data)
+            if (_context?.UpdateStdData != true)
             {
                 Save_Std_Data();
             }
-            else if (Globals.Update_Std_Data)
+            else if (_context?.UpdateStdData == true)
             {
                 Update_Std_Data();
             }
 
-            Waiting.End_WAit();
+            Waiting.Stop();
         }
 
 
         private void txt_nat_Leave(object sender, EventArgs e)
         {
-            Waiting.Wait();
+            Waiting.Start();
             try
             {
                 if (this.ActiveControl != btn_close)
                 {
                     if (txt_nat.Text != "")
                     {
+                        bool isUpdateMode = _context?.UpdateStdData ?? false;
                         if (!Std_Func.Checked_Is_Numeric(txt_nat)) return;
-                        if (Std_Func.Verify_Std_Nat(txt_std_code, txt_nat) == 1) return;
+                        if (Std_Func.Verify_Std_Nat(txt_std_code, txt_nat, isUpdateMode) == 1) return;
                         if (Std_Func.Verify_Osra_Nat(txt_nat) == 1) return;
 
                         sen = Hesab_sen.Nat_HesabSen(txt_nat.Text, Convert.ToInt32(cmb_sana.GetItemText(cmb_sana.SelectedItem).Substring(0, 4)) - 1);
@@ -487,7 +518,7 @@ namespace School_Mang.PL.STD
                         else
                         {
                             txt_nat.BackColor = Color.MistyRose;
-                            Waiting.End_WAit();
+                            Waiting.Stop();
                             txt_nat.Focus();
                             return;
                         }
@@ -496,23 +527,22 @@ namespace School_Mang.PL.STD
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
             finally
             {
-                Waiting.End_WAit();
+                Waiting.Stop();
             }
-            Waiting.End_WAit();
+            Waiting.Stop();
 
         }
         private void FRM_ADD_STD_Load(object sender, EventArgs e)
         {
             try
             {
-                if (!Globals.Update_Std_Data || Globals.Add_From_Get_Std)
+                if (_context?.UpdateStdData != true || _context.AddFromGetStd)
                 {
-                    Waiting.Wait();
-                    DAL.Open();
+                    Waiting.Start();
                     cmb_type.SelectedIndex = 0;
                     cmb_grade.SelectedIndex = 0;
                     cmb_hala.SelectedIndex = 0;
@@ -539,12 +569,12 @@ namespace School_Mang.PL.STD
             }
             catch (Exception err)
             {
-                msg.ErrorMesg(err.Message);
-                Waiting.End_WAit();
+                MSG.ErrorMesg(err.Message);
+                Waiting.Stop();
             }
             finally
             {
-                Waiting.End_WAit();
+                Waiting.Stop();
             }
         }
 
@@ -558,28 +588,46 @@ namespace School_Mang.PL.STD
 
         private void link_new_osra_data_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Globals.Open_From_Get_Std = true;
 
-            FRM_OSRAA_DATA.Get_Osra_data.state = "add";
-            FRM_OSRAA_DATA.Get_Osra_data.student_state = "std_add_new_osra";
+            var frm = FRM_OSRAA_DATA.Get_Osra_data;
 
-            FRM_OSRAA_DATA.Get_Osra_data.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
+            frm.state = "add";
+            frm.student_state = "std_add_new_osra";
+
+            AppNavigation.Instance.
+                WithOwner(MAIN.FRM_MAIN.Get_Frm_Main)
+                .SetContext(c =>
+                {
+                    c.OpenFromGetStd = true;
+                }).Show(FRM_OSRAA_DATA.Get_Osra_data);
+
+            //FRM_OSRAA_DATA.Get_Osra_data.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
         }
 
         private void link_get_osra_data_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             try
             {
-                Globals.Add_Osra_Data_To_Student = true;
-                FRM_GET_OSRAA frm = new FRM_GET_OSRAA
+                var frm = new FRM_GET_OSRAA();
+                frm.status = "from_std";
+
+                AppNavigation.Instance.SetContext(c =>
+                {
+                    c.AddOsraDataToStudent = true;
+                }).Show<FRM_GET_OSRAA>(); // تم التحقق
+
+
+               /* FRM_GET_OSRAA frm = new FRM_GET_OSRAA
                 {
                     status = "from_std"
                 };
                 frm.ShowDialog();
+               */
+
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
         }
 

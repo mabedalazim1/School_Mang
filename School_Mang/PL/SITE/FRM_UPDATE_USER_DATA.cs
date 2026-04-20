@@ -8,15 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using School_Mang.BL.Common.Helper;
+using School_Mang.BL;
 
 namespace School_Mang.PL.SITE
 {
     public partial class FRM_UPDATE_USER_DATA : Form
     {
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
-        BL.MSG msg = new BL.MSG();
         BL.SITE.CLS_MANGE_SITE site = new BL.SITE.CLS_MANGE_SITE();
-        BL.Waiting Waiting = new BL.Waiting();
+        
 
         // Form Closed
         private static FRM_UPDATE_USER_DATA frm_Update_User_Data;
@@ -118,17 +118,12 @@ namespace School_Mang.PL.SITE
 
         private async void btn_save_data_Click(object sender, EventArgs e)
         {
-            bool isConncted = await InternetHelper.CheckInternetAsync();
-
-            if (!isConncted)
-            {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+            if (!await InternetFlow.EnsureAsync())
                 return;
-            }
 
             if (txt_std_code.Text =="")
             {
-                msg.ErrorMesg("يرجى ادخال رقم الجلوس ..!");
+                MSG.ErrorMesg("يرجى ادخال رقم الجلوس ..!");
                
                 txt_std_code.Focus();
                 txt_std_code.SelectAll();
@@ -140,7 +135,7 @@ namespace School_Mang.PL.SITE
                 DataTable Dt = site.Verify_UserSchoolId(code);
                 if(Dt.Rows.Count > 0)
                 {
-                    msg.ErrorMesg("رقم الجلوس مسجل من قبل ..!");
+                    MSG.ErrorMesg("رقم الجلوس مسجل من قبل ..!");
 
                     txt_std_code.Focus();
                     txt_std_code.SelectAll();
@@ -158,15 +153,15 @@ namespace School_Mang.PL.SITE
                 byte gender = Convert.ToByte(cmb_gender.SelectedValue);
                 byte relgien = Convert.ToByte(cmb_relgien.SelectedValue);
                 string stdCode = txt_stdCode.Text;
-                Waiting.Wait();
+                Waiting.Start();
                 site.Update_User_Data(Golos, full_name, first_name, stdCode);
                 site.Update_Student_Data(Golos, grade, class_id, gender, relgien, stdCode);
-                Waiting.End_WAit();
-                msg.MyMesg("تم تحديث بيانات المستخدم بنجاح ..!");
+                Waiting.Stop();
+                MSG.MyMesg("تم تحديث بيانات المستخدم بنجاح ..!");
             }
             catch(Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
         }
 

@@ -8,14 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using School_Mang.BL.Common.Helper;
+using School_Mang.BL;
 
 namespace School_Mang.PL.NATIGA
 {
     public partial class FRM_SITE_STD_DATA : Form
     {
-        BL.MSG msg = new BL.MSG();
         BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
-        BL.Waiting Waiting = new BL.Waiting();
+        
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
 
 
@@ -66,13 +66,9 @@ namespace School_Mang.PL.NATIGA
         private async void LoadStdData()
         {
 
-            bool isConncted = await InternetHelper.CheckInternetAsync();
-
-            if (!isConncted)
-            {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+            if (!await InternetFlow.EnsureAsync())
                 return;
-            }
+
             try
             {
                 int test_kind = BL.Globals.test_kind;
@@ -87,7 +83,7 @@ namespace School_Mang.PL.NATIGA
 
                     dt_std_data.DataSource = null;
 
-                    Waiting.Wait();
+                    Waiting.Start();
 
                     if (test_kind == 1)
                     {
@@ -165,7 +161,7 @@ namespace School_Mang.PL.NATIGA
                                 break;
 
                         }
-                        Waiting.End_WAit();
+                        Waiting.Stop();
                     }
 
                     dt_std_data.Columns["test_kind_Id"].Visible = false;
@@ -178,23 +174,23 @@ namespace School_Mang.PL.NATIGA
                     lbl_count.Text = dt_std_data.Rows.Count.ToString();
                     dt_std_data.Columns["اسم الطالب"].Width = 200;
                     Check_Hide_Natega();
-                    Waiting.End_WAit();
+                    Waiting.Stop();
                 }
                 else
                 {
-                    msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
-                    Waiting.End_WAit();
+                    MSG.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+                    Waiting.Stop();
                     this.Close();
                 }
-                Waiting.End_WAit();
+                Waiting.Stop();
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
             finally
             {
-                Waiting.End_WAit();
+                Waiting.Stop();
             }
 
         }
@@ -224,20 +220,16 @@ namespace School_Mang.PL.NATIGA
             }
             catch(Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
             
         }
 
         private async void Serach_Data()
         {
-            bool isConncted = await InternetHelper.CheckInternetAsync();
-
-            if (!isConncted)
-            {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+            if (!await InternetFlow.EnsureAsync())
                 return;
-            }
+
             try
             {
                 int test_kind = BL.Globals.test_kind;
@@ -263,8 +255,8 @@ namespace School_Mang.PL.NATIGA
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
-                Waiting.End_WAit();
+                MSG.ErrorMesg(ex.Message);
+                Waiting.Stop();
             }
         }
         private void pn_top_MouseDown(object sender, MouseEventArgs e)
@@ -300,14 +292,9 @@ namespace School_Mang.PL.NATIGA
 
         private async void FRM_SITE_STD_DATA_Load(object sender, EventArgs e)
         {
-            bool isConncted = await InternetHelper.CheckInternetAsync();
-
-            if (!isConncted)
-            {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
-                this.Close();   
+            if (!await InternetFlow.EnsureAsync())
                 return;
-            }
+
             dt_std_data.Columns["اسم الطالب"].Width = 200;
             cmb_grade.SelectedValue = BL.Globals.test_grade_id;
         }
@@ -315,13 +302,9 @@ namespace School_Mang.PL.NATIGA
         public async void cmb_grade_DropDownClosed(object sender, EventArgs e)
         {
 
-            bool isConncted = await InternetHelper.CheckInternetAsync();
-
-            if (!isConncted)
-            {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+            if (!await InternetFlow.EnsureAsync())
                 return;
-            }
+
 
             try
             {
@@ -333,14 +316,14 @@ namespace School_Mang.PL.NATIGA
 
                 if (dt_std_data.Rows.Count == 0)
                 {
-                    msg.ErrorMesg("لا توجد بيانات مسجلة لهذا الصف ..!");
+                    MSG.ErrorMesg("لا توجد بيانات مسجلة لهذا الصف ..!");
                     return;
                 }
-                Waiting.End_WAit();
+                Waiting.Stop();
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
         }
 
@@ -351,13 +334,9 @@ namespace School_Mang.PL.NATIGA
 
         private async void btn_edit_std_Click(object sender, EventArgs e)
         {
-            bool isConncted = await InternetHelper.CheckInternetAsync();
-
-            if (!isConncted)
-            {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+            if (!await InternetFlow.EnsureAsync())
                 return;
-            }
+
             try
             {
                 // Mark Or Degree --test_kind_id--
@@ -441,8 +420,8 @@ namespace School_Mang.PL.NATIGA
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg();
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg();
+                MSG.ErrorMesg(ex.Message);
             }
         }
 
@@ -498,7 +477,7 @@ namespace School_Mang.PL.NATIGA
 
         private void btn_del_std_Click(object sender, EventArgs e)
         {
-            msg.ErrorMesg("هذا الإجراء غير متاح ..!");
+            MSG.ErrorMesg("هذا الإجراء غير متاح ..!");
         }
 
        
@@ -516,13 +495,13 @@ namespace School_Mang.PL.NATIGA
         {
             try
             {
-                Waiting.Wait();
+                Waiting.Start();
 
                 string std_name = dt_std_data.CurrentRow.Cells["اسم الطالب"].Value.ToString();
-                if (msg.DialogeMsg("هل تريد تعديل حالة نتيجة ... ؟ " + "\n" + std_name) == DialogResult.No)
+                if (MSG.DialogeMsg("هل تريد تعديل حالة نتيجة ... ؟ " + "\n" + std_name) == DialogResult.No)
                 {
-                    msg.MyExclamationMsg("تم إلغاء الإجراء..!");
-                    Waiting.End_WAit();
+                    MSG.MyExclamationMsg("تم إلغاء الإجراء..!");
+                    Waiting.Stop();
                     return;
                 }
 
@@ -538,20 +517,20 @@ namespace School_Mang.PL.NATIGA
 
                 if(show_data == "False")
                 {
-                    msg.MyMesg("تم إتاحة النتيجة للطالب ..!" + "\n" + std_name);
-                    Waiting.End_WAit();
+                    MSG.MyMesg("تم إتاحة النتيجة للطالب ..!" + "\n" + std_name);
+                    Waiting.Stop();
                 }
                 else
                 {
-                    msg.MyExclamationMsg("تم حجب نتيجة الطالب ..!" + "\n" + std_name);
-                    Waiting.End_WAit();
+                    MSG.MyExclamationMsg("تم حجب نتيجة الطالب ..!" + "\n" + std_name);
+                    Waiting.Stop();
                 }
                
-                Waiting.End_WAit();
+                Waiting.Stop();
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
         }
 

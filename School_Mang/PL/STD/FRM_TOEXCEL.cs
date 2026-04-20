@@ -17,9 +17,7 @@ namespace School_Mang.PL.STD
 
         //Import Classes
         CLS_STD std = new BL.STD.CLS_STD();
-        Waiting waiting = new BL.Waiting();
-        // MSG
-        MSG msg = new BL.MSG();
+
         CLS_STD_FUNCATIONS Std_Func = new CLS_STD_FUNCATIONS();
 
         // Form Closed
@@ -49,19 +47,19 @@ namespace School_Mang.PL.STD
             }
             try
             {
-                waiting.Wait();
+                Waiting.Start();
                 // Fill Combos
 
                 cmb_sana.DataSource = std.Get_years();
                 cmb_sana.DisplayMember = "YearDesc";
                 cmb_sana.ValueMember = "Year_Id";
 
-                waiting.End_WAit();
+                Waiting.Stop();
 
             }
             catch(Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
         }
 

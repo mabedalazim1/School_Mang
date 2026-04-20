@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Globalization;
 using System.Threading;
+using School_Mang.BL;
 
 namespace School_Mang.PL.MAIN
 {
@@ -18,18 +19,14 @@ namespace School_Mang.PL.MAIN
     {
 
 
-        // Msg
-        BL.MSG msg = new BL.MSG();
-        BL.Waiting Waiting = new BL.Waiting();
+        
 
         // Get BL DATA
         BL.LOGIN.CLS_LOGIN login = new BL.LOGIN.CLS_LOGIN();
 
         DAL.TestConcation testConcation = new DAL.TestConcation();
         BL.USERS users = new BL.USERS();
-        // Wating
-        BL.Waiting waiting = new BL.Waiting();
-
+        
         // Test servers
         byte server_kind = 0;
     
@@ -75,7 +72,7 @@ namespace School_Mang.PL.MAIN
 
         private void Add_Img_To_PictureBox(PictureBox pic)
         {
-            waiting.Wait();
+            Waiting.Start();
             int id = Properties.Settings.Default.user_code;
             try
             {
@@ -94,14 +91,14 @@ namespace School_Mang.PL.MAIN
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
 
             }
             finally
             {
-                waiting.End_WAit();
+                Waiting.Stop();
             }
-            waiting.End_WAit();
+            Waiting.Stop();
 
         }
 
@@ -156,42 +153,42 @@ namespace School_Mang.PL.MAIN
 
         private void btn_ok_Click(object sender, EventArgs e)
         {
-            Waiting.Wait();
+            Waiting.Start();
             if (txt_server.Text == "")
             {
-                msg.ErrorMesg("تأكد من اسم السيرفر");
+                MSG.ErrorMesg("تأكد من اسم السيرفر");
                 txt_server.Focus();
-                Waiting.End_WAit();
+                Waiting.Stop();
                 return;
             }
             if (txt_databasee_name.Text == "")
             {
-                msg.ErrorMesg("تأكد من اسم قاعدة البانات");
+                MSG.ErrorMesg("تأكد من اسم قاعدة البانات");
                 txt_databasee_name.Focus();
-                Waiting.End_WAit();
+                Waiting.Stop();
                 return;
             }
             if (txt_databasee_user.Text == "")
             {
-                msg.ErrorMesg("تأكد من اسم المستخدم");
+                MSG.ErrorMesg("تأكد من اسم المستخدم");
                 txt_databasee_user.Focus();
-                Waiting.End_WAit();
+                Waiting.Stop();
                 return;
             }
             if (txt_databasee_name.Text == "")
             {
-                msg.ErrorMesg("تأكد من كلمة المرور");
+                MSG.ErrorMesg("تأكد من كلمة المرور");
                 txt_databasee_name.Focus();
-                Waiting.End_WAit();
+                Waiting.Stop();
                 return;
             }
             if(server_kind == 0)
             {
                 if (txt_url.Text == "")
                 {
-                    msg.ErrorMesg("تأكد من عنوان الموقع");
+                    MSG.ErrorMesg("تأكد من عنوان الموقع");
                     txt_url.Focus();
-                    Waiting.End_WAit();
+                    Waiting.Stop();
                     return;
                 }
             }
@@ -200,7 +197,7 @@ namespace School_Mang.PL.MAIN
 
             if (dialogResult == DialogResult.No)
             {
-                Waiting.End_WAit();
+                Waiting.Stop();
                 return ;
                 
             }
@@ -228,16 +225,16 @@ namespace School_Mang.PL.MAIN
                         break;
                 }
                 Properties.Settings.Default.Save();
-                Waiting.End_WAit();
+                Waiting.Stop();
             }
-            Waiting.End_WAit();
+            Waiting.Stop();
         }
 
        
 
         public void link_login_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Waiting.Wait();
+            Waiting.Start();
             if (FRM_MAIN.Get_Frm_Main.log == false)
             {
                 group_box_login.Visible = true;
@@ -247,22 +244,22 @@ namespace School_Mang.PL.MAIN
                 group_box_pass.Visible = false;
 
                 txt_user.Focus();
-                Waiting.End_WAit();
+                Waiting.Stop();
             }
             else
             {
-                Waiting.End_WAit();
+                Waiting.Stop();
                 string user = Properties.Settings.Default.user_name;
                 DialogResult dialogResult = MessageBox.Show(user + "هل تريد تسجيل الخروج!!" , " مدرسة الكوثر الخاصة", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (dialogResult == DialogResult.No)
                 {
-                    Waiting.End_WAit();
+                    Waiting.Stop();
                     return;
                 }
                 else
                 {
-                    Waiting.End_WAit();
+                    Waiting.Stop();
 
                     // Empty Year data
                     Properties.Settings.Default.year_cod = 0;
@@ -329,12 +326,12 @@ namespace School_Mang.PL.MAIN
             group_box_users.Visible = false;
             group_box_pic.Visible = true;
             group_box_pass.Visible = false;
-            waiting.Wait();
+            Waiting.Start();
             //int id = Properties.Settings.Default.user_code;
              
             Add_Img_To_PictureBox(pic_user);
 
-            waiting.End_WAit();
+            Waiting.Stop();
         }
 
         private void link_server_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -346,7 +343,7 @@ namespace School_Mang.PL.MAIN
 
         private void btn_cancel_Click(object sender, EventArgs e)
         {
-            Waiting.Wait();
+            Waiting.Start();
             txt_user.Text = "";
             txt_pass.Text = "";
             group_box_login.Visible = false;
@@ -358,7 +355,7 @@ namespace School_Mang.PL.MAIN
             FRM_MAIN.Get_Frm_Main.fromMain = false;
             FRM_MAIN.Get_Frm_Main.show_home = false;
 
-            Waiting.End_WAit();
+            Waiting.Stop();
 
         }
         private void btn_login_Click(object sender, EventArgs e)
@@ -367,22 +364,22 @@ namespace School_Mang.PL.MAIN
 
             BL.Globals.Dir_Path = "D:\\Rasd";
 
-            Waiting.Wait();
+            Waiting.Start();
             // Enable Test Con
             BL.Globals.Test_Internet_Con = true;
             
             if (testConcation.IsConnectedToInternet() == false) {
-                if (msg.DialogeErrMsg("لا يوجد اتصال بالشبكة  .. هل تريد المتابعة؟") != DialogResult.Yes)
+                if (MSG.DialogeErrMsg("لا يوجد اتصال بالشبكة  .. هل تريد المتابعة؟") != DialogResult.Yes)
                 {
-                    msg.ErrorMesg("تأكد من الاتصال بالشبكة");
-                    Waiting.End_WAit();
+                    MSG.ErrorMesg("تأكد من الاتصال بالشبكة");
+                    Waiting.Stop();
                     BL.Globals.Test_Internet_Con = true;
                     return;
                 }
                 else
                 {
                    BL.Globals.Test_Internet_Con = false;
-                   Waiting.End_WAit();
+                   Waiting.Stop();
                 }
             }
             try
@@ -393,7 +390,7 @@ namespace School_Mang.PL.MAIN
                     if (Dt.Rows.Count > 0)
                     {
                         MessageBox.Show("تم تسجيل الدخول بنجاح");
-                        Waiting.End_WAit();
+                        Waiting.Stop();
                         FRM_MAIN.Get_Frm_Main.btn_home_Click(sender, e);
                         if (FRM_MAIN.Get_Frm_Main.show_home == true)
                         {
@@ -519,37 +516,33 @@ namespace School_Mang.PL.MAIN
                         }
                         // Clear Vars 
 
-                        BL.Globals.Add_From_Get_Std = false;
-                        BL.Globals.Add_Osra_Data_To_Student = false;
-                        BL.Globals.Elthak_Std = false;
-                        BL.Globals.Open_Form_Get_osra = false;
-                        BL.Globals.Update_Std_Data = false;
+                       
 
-                        Waiting.End_WAit();
+                        Waiting.Stop();
                     }
                     else
                     {
-                        msg.ErrorMesg("تأكد من بيانات الدخول");
-                        Waiting.End_WAit();
+                        MSG.ErrorMesg("تأكد من بيانات الدخول");
+                        Waiting.Stop();
                     }
                 }
                 else
                 {
-                    Waiting.End_WAit();
+                    Waiting.Stop();
                     return;
                 }
                
                 
             }catch(Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
             finally
             {
-                Waiting.End_WAit();
+                Waiting.Stop();
             }
            
-            Waiting.End_WAit();
+            Waiting.Stop();
         }
 
         private void txt_user_KeyUp(object sender, KeyEventArgs e){
@@ -562,7 +555,7 @@ namespace School_Mang.PL.MAIN
                 }
                 else
                 {
-                    msg.ErrorMesg("ادخل اسم المستخدم");
+                    MSG.ErrorMesg("ادخل اسم المستخدم");
                     txt_user.Focus();
                     return;
                 }
@@ -575,7 +568,7 @@ namespace School_Mang.PL.MAIN
             {
                 if (txt_pass.Text == "")
                 {
-                    msg.ErrorMesg("ادخل كلمة المرور");
+                    MSG.ErrorMesg("ادخل كلمة المرور");
                     txt_pass.Focus();
                     return;
                 }
@@ -593,7 +586,7 @@ namespace School_Mang.PL.MAIN
             group_box_users.Visible = true;
             group_box_pic.Visible = false;
             txt_user_data.Focus();
-            waiting.Wait();
+            Waiting.Start();
             if (testConcation.IsServerConnected())
             {
                 dt_users_data.DataSource = users.Get_Users();
@@ -604,14 +597,14 @@ namespace School_Mang.PL.MAIN
                 dt_users_data.Columns["Role_Permissions_id"].Visible = false;
                 dt_users_data.Columns["User_Role_id"].Visible = false;
             }
-            waiting.End_WAit();
+            Waiting.Stop();
         }
 
         private void btn_test_con_Click(object sender, EventArgs e)
         {
             try
             {
-                waiting.Wait();
+                Waiting.Start();
                 if (testConcation.IsServerConnected(
                     txt_server.Text,
                     txt_databasee_name.Text,
@@ -619,20 +612,20 @@ namespace School_Mang.PL.MAIN
                     txt_databasee_pass.Text
                     ))
                 {
-                    msg.MyMesg("تم الإتصال بالسيرفر بنجاح .. !");
+                    MSG.MyMesg("تم الإتصال بالسيرفر بنجاح .. !");
                 }
                 else
                 {
-                    msg.ErrorMesg("فشل الإتصال بقاعدة البيانات .. تحقق من السيرفر ..!");
+                    MSG.ErrorMesg("فشل الإتصال بقاعدة البيانات .. تحقق من السيرفر ..!");
                 }
 
                 }catch(Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
             finally
             {
-                waiting.End_WAit();
+                Waiting.Stop();
             }
         }
 
@@ -650,7 +643,7 @@ namespace School_Mang.PL.MAIN
 
         private void btn_img_ok_Click(object sender, EventArgs e)
         { 
-            waiting.Wait(); 
+            Waiting.Start(); 
             try
             {
                 if (pic_user.Image != Properties.Resources.img_200)
@@ -666,11 +659,11 @@ namespace School_Mang.PL.MAIN
             }
             catch(Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
             finally
             {
-                Waiting.End_WAit();
+                Waiting.Stop();
             }
             
         }
@@ -693,10 +686,10 @@ namespace School_Mang.PL.MAIN
 
         private void txt_user_data_OnValueChanged(object sender, EventArgs e)
         {
-            waiting.Wait();
+            Waiting.Start();
             if (!testConcation.IsServerConnected())
             {
-                msg.ErrorMesg("تأكد من الاتصال بالسيرفر.. !");
+                MSG.ErrorMesg("تأكد من الاتصال بالسيرفر.. !");
                 return;
             }
             try
@@ -711,13 +704,13 @@ namespace School_Mang.PL.MAIN
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
             finally
             {
-                waiting.End_WAit();
+                Waiting.Stop();
             }
-            waiting.End_WAit();
+            Waiting.Stop();
         }
 
         private void btn_add_user_Click(object sender, EventArgs e)
@@ -741,27 +734,27 @@ namespace School_Mang.PL.MAIN
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
             
             try
             {
                 if (user_name == "admin")
                 {
-                    msg.ErrorMesg("لا يمكن حذف مدير النظام ... !!");
-                    waiting.End_WAit();
+                    MSG.ErrorMesg("لا يمكن حذف مدير النظام ... !!");
+                    Waiting.Stop();
                     return;
                 }
 
-                waiting.Wait();
-                if (msg.DialogeMsg("هل تريد حذف صلاحيات المستخدم .. " + user_name) == DialogResult.Yes)
+                Waiting.Start();
+                if (MSG.DialogeMsg("هل تريد حذف صلاحيات المستخدم .. " + user_name) == DialogResult.Yes)
                 {
                     // Delete Permissions And Roles
                     if (dt_users_data.CurrentRow!= null)
                     {
                         try
                         {
-                            if (msg.DialogeMsg("سوف يتم حذف المستخدم .. " + user_name) == DialogResult.Yes)
+                            if (MSG.DialogeMsg("سوف يتم حذف المستخدم .. " + user_name) == DialogResult.Yes)
                             {
                                 users.Delete_User_Permissions(
                             Convert.ToInt32(dt_users_data.CurrentRow.Cells["Role_Permissions_id"].Value),
@@ -769,23 +762,23 @@ namespace School_Mang.PL.MAIN
                             }
                             else
                             {
-                                msg.ErrorMesg("لفد قمت بإلغاء عملية الحذف .. !");
-                                waiting.End_WAit();
+                                MSG.ErrorMesg("لفد قمت بإلغاء عملية الحذف .. !");
+                                Waiting.Stop();
                                 return;
                             }
                                
                         }
                         catch (Exception ex) 
                         {
-                            msg.ErrorMesg(ex.Message);
-                            waiting.End_WAit();
+                            MSG.ErrorMesg(ex.Message);
+                            Waiting.Stop();
                             return;
                         }                        
                     }
                     else
                     {
-                        msg.ErrorMesg("يرجى تحديد المستخدم المراد حذفه ... ! ");
-                        waiting.End_WAit();
+                        MSG.ErrorMesg("يرجى تحديد المستخدم المراد حذفه ... ! ");
+                        Waiting.Stop();
                         return;
                     }
                        
@@ -801,26 +794,26 @@ namespace School_Mang.PL.MAIN
 
                     if(xCount == 1)
                     {
-                       // msg.MyMesg("سوف يتم حذف المستخدم  " + user_name +"  ..!");
+                       // MSG.MyMesg("سوف يتم حذف المستخدم  " + user_name +"  ..!");
                         users.Delete_User(Convert.ToInt32(user_id));
                     }
                     
-                    msg.MyMesg("تم حذف المستخدم   " + user_name + "  ..!");
+                    MSG.MyMesg("تم حذف المستخدم   " + user_name + "  ..!");
                     dt_users_data.DataSource = users.Get_Users();
                 }
                 else
                 {
-                    msg.ErrorMesg("لفد قمت بإلغاء عملية الحذف .. !");
+                    MSG.ErrorMesg("لفد قمت بإلغاء عملية الحذف .. !");
                 }
 
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
             finally
             {
-                waiting.End_WAit();
+                Waiting.Stop();
             }
             dt_users_data.DataSource = users.Get_Users();
         }
@@ -851,30 +844,30 @@ namespace School_Mang.PL.MAIN
         {
             if (txt_old_pass.Text == "")
             {
-                msg.ErrorMesg("يجب ادخال كلمة المرور القديمة");
+                MSG.ErrorMesg("يجب ادخال كلمة المرور القديمة");
                 txt_old_pass.Focus();
                 return;
             }
             if (txt_new_pass1.Text == "")
             {
-                msg.ErrorMesg("يجب ادخال كلمة المرور الجديدة");
+                MSG.ErrorMesg("يجب ادخال كلمة المرور الجديدة");
                 txt_new_pass1.Focus();
                 return;
             }
             if (txt_new_pass2.Text == "")
             {
-                msg.ErrorMesg("يجب تأكيد كلمة المرور الجديدة");
+                MSG.ErrorMesg("يجب تأكيد كلمة المرور الجديدة");
                 txt_new_pass2.Focus();
                 return;
             }
             if (txt_new_pass1.Text != txt_new_pass2.Text)
             {
-                msg.ErrorMesg("كلمة المرور الجديدة غير مطابقة");
+                MSG.ErrorMesg("كلمة المرور الجديدة غير مطابقة");
                 txt_new_pass2.Focus();
                 return;
             }
             string user_name = Properties.Settings.Default.user_name;
-            waiting.Wait();
+            Waiting.Start();
            try
             {
                 if (login.Login(user_name, txt_old_pass.Text) != null)
@@ -883,7 +876,7 @@ namespace School_Mang.PL.MAIN
                     if (Dt.Rows.Count > 0)
                     {
                         login.Change_PassWord(user_name, txt_new_pass2.Text);
-                        msg.MyMesg("تم تغيير كلمة المرور بنجاح ... !");
+                        MSG.MyMesg("تم تغيير كلمة المرور بنجاح ... !");
                         group_box_pass.Visible = false;
                         txt_old_pass.Text = "";
                         txt_new_pass1.Text = "";
@@ -891,20 +884,20 @@ namespace School_Mang.PL.MAIN
                     }
                     else
                     {
-                        msg.ErrorMesg("لم يتم تغيير كلمة المرور .. !");
+                        MSG.ErrorMesg("لم يتم تغيير كلمة المرور .. !");
                     }
                 }
             }
             catch(Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
             finally
             {
-                waiting.End_WAit();
+                Waiting.Stop();
             }
 
-            waiting.End_WAit();
+            Waiting.Stop();
         }
 
         private void dt_users_data_Leave(object sender, EventArgs e)
@@ -925,8 +918,8 @@ namespace School_Mang.PL.MAIN
         {
             if (dt_users_data.CurrentRow.Cells["اسم المستخدم"].Value.ToString() == "admin")
             {
-                msg.ErrorMesg("لا يمكن تعديل صلاحيات مدير النظام ... !!");
-                waiting.End_WAit();
+                MSG.ErrorMesg("لا يمكن تعديل صلاحيات مدير النظام ... !!");
+                Waiting.Stop();
                 return;
             }
 

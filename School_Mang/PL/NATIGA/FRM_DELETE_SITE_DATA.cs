@@ -8,14 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using School_Mang.BL.Common.Helper;
+using School_Mang.BL;
 
 namespace School_Mang.PL.NATIGA
 {
     public partial class FRM_DELETE_SITE_DATA : Form
     {
-        BL.MSG msg = new BL.MSG();
         BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
-        BL.Waiting Waiting = new BL.Waiting();
+
         BL.LOGIN.CLS_LOGIN login = new BL.LOGIN.CLS_LOGIN();
 
         // Form Closed
@@ -49,47 +49,37 @@ namespace School_Mang.PL.NATIGA
             Add_To_Comb_Test();
         }
 
-        
 
 
-        private void Load_Data()
+
+        private async void Load_Data()
         {
-            if (!BL.Globals.Test_Internet_Con)
+            if (!await InternetFlow.EnsureAsync())
             {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                 this.Close();
                 return;
             }
-            else
+               
+            try
             {
-                try
-                {
-                    Waiting.Wait();
-                    if (BL.Globals.Test_Internet_Con)
-                    {
-                        cmb_grade.DataSource = NATEG.GET_GRADE();
-                        cmb_grade.DisplayMember = "grade_desc";
-                        cmb_grade.ValueMember = "id";
+                Waiting.Start();
+                cmb_grade.DataSource = NATEG.GET_GRADE();
+                cmb_grade.DisplayMember = "grade_desc";
+                cmb_grade.ValueMember = "id";
 
-                        cmb_month.DataSource = NATEG.GET_TEST_KIND();
-                        cmb_month.DisplayMember = "testkind_desc";
-                        cmb_month.ValueMember = "id";
-                    }
-                    else
-                    {
-                        msg.ErrorMesg("تأكد من الإتصال بالإنترنت ..!");
-                    }
-                }
-                catch (Exception e)
-                {
-                    BL.Globals.Test_Internet_Con = false;
-                    Waiting.End_WAit();
-                    msg.ErrorMesg(e.Message);
-                }
-                finally
-                {
-                    Waiting.End_WAit();
-                }
+                cmb_month.DataSource = NATEG.GET_TEST_KIND();
+                cmb_month.DisplayMember = "testkind_desc";
+                cmb_month.ValueMember = "id";
+
+            }
+            catch (Exception e)
+            {
+                BL.Globals.Test_Internet_Con = false;
+                MSG.ErrorMesg(e.Message);
+            }
+            finally
+            {
+                Waiting.Stop();
             }
         }
 
@@ -139,39 +129,32 @@ namespace School_Mang.PL.NATIGA
 
         private async void btn_save_data_Click(object sender, EventArgs e)
         {
-            if (!BL.Globals.Test_Internet_Con) 
-            {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت ..!");
+            if (!await InternetFlow.EnsureAsync())
                 return;
-            }
-            if (txt_user.Text =="" || txt_pass.Text == "")
+
+            if (txt_user.Text == "" || txt_pass.Text == "")
             {
-                msg.ErrorMesg("تأكد من اسم المستخدم وكلمة المرور ..!");
+                MSG.ErrorMesg("تأكد من اسم المستخدم وكلمة المرور ..!");
                 txt_user.Focus();
                 return;
             }
             else
             {
                 DataTable Dt = login.Login(txt_user.Text, txt_pass.Text);
-                if(Dt.Rows.Count == 0)
+                if (Dt.Rows.Count == 0)
                 {
-                    msg.ErrorMesg("تأكد من اسم المستخدم وكلمة المرور ..!");
+                    MSG.ErrorMesg("تأكد من اسم المستخدم وكلمة المرور ..!");
                     txt_user.Focus();
                     return;
                 }
                 try
                 {
-                    bool isConncted = await InternetHelper.CheckInternetAsync();
+                    
 
-                    if (!isConncted)
-                    {
-                        msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
-                        return;
-                    }
                     int grade = Convert.ToInt32(cmb_grade.SelectedValue);
                     int test_kind = Convert.ToInt32(cmb_month.SelectedValue);
 
-                    Waiting.Wait();
+                    Waiting.Start();
                     switch (cmb_test.SelectedValue)
                     {
                         case 1:
@@ -181,31 +164,30 @@ namespace School_Mang.PL.NATIGA
                             NATEG.DeleteMarkFromSite(grade, test_kind, 0);
                             break;
                     }
-                    msg.MyMesg("تم حذف البيان المحدد");
+                    MSG.MyMesg("تم حذف البيان المحدد");
                 }
                 catch (Exception ex)
                 {
-                    msg.ErrorMesg(ex.Message);
+                    MSG.ErrorMesg(ex.Message);
                 }
                 finally
                 {
-                    Waiting.End_WAit();
+                    Waiting.Stop();
                 }
             }
         }
 
         private async void FRM_DELETE_SITE_DATA_Load(object sender, EventArgs e)
         {
-            bool isConncted = await InternetHelper.CheckInternetAsync();
+            bool isConncted = await InternetFlow.EnsureAsync(retries:2, delayMs:2);
 
             if (!isConncted)
             {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                 return;
             }
             else
             {
-                this.Close();
+                Load_Data();
             }
         }
     }

@@ -7,14 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using School_Mang.BL;
+using School_Mang.BL.Services;
 
 namespace School_Mang.PL.STD
 {
     public partial class FRM_TAHWELAT : Form
     {
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
-        BL.MSG msg = new BL.MSG();
-        BL.Waiting Waiting = new BL.Waiting();
+        
         MAIN.CLS_FUNCATIONS Func = new MAIN.CLS_FUNCATIONS();
 
         private byte test_year = 0;
@@ -51,7 +52,7 @@ namespace School_Mang.PL.STD
             // Set year val
             BL.Globals.My_Year = Convert.ToByte(Properties.Settings.Default.year_cod);
             lbl_year_b.Text = Properties.Settings.Default.MyYear.ToString();
-            Waiting.Wait();
+            Waiting.Start();
             // Add Grade Data
             DataTable grade_dt = std.Get_grades();
             cmb_grade.DataSource = grade_dt;
@@ -93,7 +94,7 @@ namespace School_Mang.PL.STD
                     break;
             }
 
-            Waiting.End_WAit();
+            Waiting.Stop();
         }
 
         #region My Voids
@@ -103,7 +104,7 @@ namespace School_Mang.PL.STD
         {
             if (dt_std_data.SelectedRows.Count == 0)
             {
-                msg.ErrorMesg("يرجى اختيار طالب ..!");
+                MSG.ErrorMesg("يرجى اختيار طالب ..!");
                 return true;
             }
             else
@@ -118,7 +119,7 @@ namespace School_Mang.PL.STD
 
             if (Dt_Trans_Current_Year.Rows.Count == 0 && Dt_Trans_Next_Year.Rows.Count == 00)
             {
-                msg.ErrorMesg("لا يوجد طلبات تحويل مسجلة هذا العام .. !");
+                MSG.ErrorMesg("لا يوجد طلبات تحويل مسجلة هذا العام .. !");
                 return;
             }
         }
@@ -173,15 +174,18 @@ namespace School_Mang.PL.STD
 
         public void cmb_grade_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ChangSelectedData();
+        }
+
+        public void ChangSelectedData()
+        {
             dt_std_data.DataSource = std.GET_Trans_Data(
             Convert.ToInt32(cmb_grade.SelectedValue),
             Convert.ToInt32(cmb_status.SelectedIndex) + 3);
 
             lbl_count.Text = dt_std_data.Rows.Count.ToString();
             txt_std_data.Text = "";
-
         }
-
         private void cmb_status_SelectedIndexChanged(object sender, EventArgs e)
         {
             cmb_grade_SelectedIndexChanged(sender, e);
@@ -245,8 +249,8 @@ namespace School_Mang.PL.STD
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
-                Waiting.End_WAit();
+                MSG.ErrorMesg(ex.Message);
+                Waiting.Stop();
             }
         }
 
@@ -254,54 +258,62 @@ namespace School_Mang.PL.STD
         {
             if (Verify_Std()) return;
 
-            BL.Globals.Update_Taheewl = true;
+            //BL.Globals.Update_Taheewl = true;
+
             byte resom = Convert.ToByte(dt_std_data.CurrentRow.Cells["Resom"].Value);
             byte kotob = Convert.ToByte(dt_std_data.CurrentRow.Cells["Kotob"].Value);
 
+            var frm = FRM_TAHEEL_STD.Get_Tahweel_Std;
 
-            FRM_TAHEEL_STD.Get_Tahweel_Std.txt_trans_code.Text = dt_std_data.CurrentRow.Cells["Transfer_code"].Value.ToString();
-            FRM_TAHEEL_STD.Get_Tahweel_Std.txt_std_name.Text = dt_std_data.CurrentRow.Cells["اسم الطالب"].Value.ToString();
-            FRM_TAHEEL_STD.Get_Tahweel_Std.txt_guardian_name.Text = dt_std_data.CurrentRow.Cells["Guardian_name"].Value.ToString();
-            FRM_TAHEEL_STD.Get_Tahweel_Std.txt_adrs.Text = dt_std_data.CurrentRow.Cells["adrs"].Value.ToString();
-            FRM_TAHEEL_STD.Get_Tahweel_Std.txt_transfer_reason.Text = dt_std_data.CurrentRow.Cells["Transfer_reason"].Value.ToString();
-            FRM_TAHEEL_STD.Get_Tahweel_Std.txt_to_school.Text = dt_std_data.CurrentRow.Cells["Transfer_School"].Value.ToString();
-            FRM_TAHEEL_STD.Get_Tahweel_Std.txt_std_code.Text = dt_std_data.CurrentRow.Cells["std_code"].Value.ToString();
+            frm.txt_trans_code.Text = dt_std_data.CurrentRow.Cells["Transfer_code"].Value.ToString();
+            frm.txt_std_name.Text = dt_std_data.CurrentRow.Cells["اسم الطالب"].Value.ToString();
+            frm.txt_guardian_name.Text = dt_std_data.CurrentRow.Cells["Guardian_name"].Value.ToString();
+            frm.txt_adrs.Text = dt_std_data.CurrentRow.Cells["adrs"].Value.ToString();
+            frm.txt_transfer_reason.Text = dt_std_data.CurrentRow.Cells["Transfer_reason"].Value.ToString();
+            frm.txt_to_school.Text = dt_std_data.CurrentRow.Cells["Transfer_School"].Value.ToString();
+            frm.txt_std_code.Text = dt_std_data.CurrentRow.Cells["std_code"].Value.ToString();
 
             if (resom == 0)
             {
-                FRM_TAHEEL_STD.Get_Tahweel_Std.chk_resom_no.Checked = true;
-                FRM_TAHEEL_STD.Get_Tahweel_Std.chk_resom_yes.Checked = false;
+                frm.chk_resom_no.Checked = true;
+                frm.chk_resom_yes.Checked = false;
             }
             else
             {
-                FRM_TAHEEL_STD.Get_Tahweel_Std.chk_resom_no.Checked = false;
-                FRM_TAHEEL_STD.Get_Tahweel_Std.chk_resom_yes.Checked = true;
+                frm.chk_resom_no.Checked = false;
+                frm.chk_resom_yes.Checked = true;
             }
 
             if (kotob == 0)
             {
-                FRM_TAHEEL_STD.Get_Tahweel_Std.chk_kotob_no.Checked = true;
-                FRM_TAHEEL_STD.Get_Tahweel_Std.chk_kotob_yes.Checked = false;
+                frm.chk_kotob_no.Checked = true;
+                frm.chk_kotob_yes.Checked = false;
             }
             else
             {
-                FRM_TAHEEL_STD.Get_Tahweel_Std.chk_kotob_no.Checked = false;
-                FRM_TAHEEL_STD.Get_Tahweel_Std.chk_kotob_yes.Checked = true;
+                frm.chk_kotob_no.Checked = false;
+                frm.chk_kotob_yes.Checked = true;
             }
 
-            FRM_TAHEEL_STD.Get_Tahweel_Std.transfer_status = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Std_Status_Id"].Value);
+            frm.transfer_status = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Std_Status_Id"].Value);
             if (Convert.ToInt32(dt_std_data.CurrentRow.Cells["Std_Status_Id"].Value) == 3)
             {
-                FRM_TAHEEL_STD.Get_Tahweel_Std.lbl_mohwel.Text = "محول إلى";
+                frm.lbl_mohwel.Text = "محول إلى";
             }
             else
             {
-                FRM_TAHEEL_STD.Get_Tahweel_Std.lbl_mohwel.Text = "محول من";
+                frm.lbl_mohwel.Text = "محول من";
             }
 
-            FRM_TAHEEL_STD.Get_Tahweel_Std.grade = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Grade_Id"].Value);
+            frm.grade = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Grade_Id"].Value);
 
-            FRM_TAHEEL_STD.Get_Tahweel_Std.ShowDialog();
+            AppNavigation.Instance
+                .SetContext(c =>
+                {
+                    c.UpdateTaheewl=true;
+                }).Show(frm);
+
+           // FRM_TAHEEL_STD.Get_Tahweel_Std.ShowDialog();
         }
 
         private void btn_del_std_Click(object sender, EventArgs e)
@@ -332,7 +344,7 @@ namespace School_Mang.PL.STD
                 int to_School;
                 try
                 {
-                    if (msg.DialogeErrMsg("هل تريد حذف طلب التحويل للطالب  / " + std_name + " .. !") == DialogResult.Yes)
+                    if (MSG.DialogeErrMsg("هل تريد حذف طلب التحويل للطالب  / " + std_name + " .. !") == DialogResult.Yes)
                     {
 
                         // Delete Trans Data
@@ -364,22 +376,22 @@ namespace School_Mang.PL.STD
 
                         cmb_grade_SelectedIndexChanged(sender, e);
 
-                        msg.MyMesg("تم حذف طلب التحويل للطالب  /  " + std_name + "...! ");
+                        MSG.MyMesg("تم حذف طلب التحويل للطالب  /  " + std_name + "...! ");
                     }
                     else
                     {
-                        msg.ErrorMesg("تم الغاء عملية الحذف ..!");
+                        MSG.ErrorMesg("تم الغاء عملية الحذف ..!");
                         return;
                     }
                 }
                 catch (Exception ex)
                 {
-                    msg.ErrorMesg(ex.Message);
+                    MSG.ErrorMesg(ex.Message);
                 }
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
         }
 
@@ -438,7 +450,7 @@ namespace School_Mang.PL.STD
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using School_Mang.BL.Services;
 
 
 namespace School_Mang.PL.MAIN
@@ -17,7 +18,14 @@ namespace School_Mang.PL.MAIN
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FRM_MAIN());
+
+            // 👇 إنشاء الـ Main Form (Singleton عندك)
+            var mainForm = FRM_MAIN.Get_Frm_Main;
+
+            AppNavigation.Instance
+                .WithOwner(mainForm);
+
+            Application.Run(mainForm);
         }
     }
 }

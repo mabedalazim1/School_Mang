@@ -7,14 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using School_Mang.BL;
 
 namespace School_Mang.PL.NATIGA
 {
     public partial class FRM_EDIT_ABSENT_STD : Form
     {
-        BL.MSG msg = new BL.MSG();
         BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
-        BL.Waiting Waiting = new BL.Waiting();
+        
 
         // Form Closed
         private static FRM_EDIT_ABSENT_STD frm_Edit_absent_std;
@@ -282,7 +282,7 @@ namespace School_Mang.PL.NATIGA
                 DataTable Dt = NATEG.Get_Final_All_Data(Std_Golos);
                 if (Dt.Rows.Count == 0)
                 {
-                    msg.ErrorMesg("لا توجد بيانات مسجلة لهذا الطالب ..!");
+                    MSG.ErrorMesg("لا توجد بيانات مسجلة لهذا الطالب ..!");
                     this.Close();
                     BL.Globals.Std_Golos = 0;
                     FRM_FINAL_DATA.Get_Frm_Final_Data.Show();
@@ -360,7 +360,7 @@ namespace School_Mang.PL.NATIGA
             }
             catch(Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
         }
 
@@ -386,7 +386,7 @@ namespace School_Mang.PL.NATIGA
             bool absent_term_B = chk_term_2.Checked;
             try
             {
-                Waiting.Wait();
+                Waiting.Start();
                 NATEG.Update_Final_Absent(
                                         absent_ar_A, absent_ar_B,
                                         absent_math_A, absent_math_B,
@@ -397,16 +397,16 @@ namespace School_Mang.PL.NATIGA
                                         absent_maharat_A, absent_maharat_B,
                                         absent_tocnolegy_A, absent_tocnolegy_B,
                                         absent_term_A, absent_term_B);
-                msg.MyMesg("تم تسجيل غياب الطالب .. !");
-                Waiting.End_WAit();
+                MSG.MyMesg("تم تسجيل غياب الطالب .. !");
+                Waiting.Stop();
             }
             catch(Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
             finally
             {
-                Waiting.End_WAit();
+                Waiting.Stop();
             }   
         }
     }

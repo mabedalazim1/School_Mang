@@ -8,15 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using School_Mang.BL.Common.Helper;
+using School_Mang.BL;
 
 namespace School_Mang.PL.NATIGA
 {
     public partial class FRM_EDIT_SITE_DEGREES : Form
     {
 
-        BL.MSG msg = new BL.MSG();
         BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
-        BL.Waiting Waiting = new BL.Waiting();
+        
 
         // Form Closed
         private static FRM_EDIT_SITE_DEGREES frm_Edit_Site_Degree;
@@ -93,14 +93,8 @@ namespace School_Mang.PL.NATIGA
         private async void FRM_EDIT_SITE_DEGREES_Load(object sender, EventArgs e)
         {
             //Test Intrent Connection
-            bool isConncted = await InternetHelper.CheckInternetAsync();
-
-            if (!isConncted)
-            {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
-                this.Close();
+            if (!await InternetFlow.EnsureAsync())
                 return;
-            }
 
             txt_ar.TextAlign = HorizontalAlignment.Center;
             txt_badnia.TextAlign = HorizontalAlignment.Center;
@@ -189,7 +183,7 @@ namespace School_Mang.PL.NATIGA
                 if (Convert.ToInt32(textBox.Text) > 4 || (Convert.ToInt32(textBox.Text) < 1
                     ))
                 {
-                    msg.ErrorMesg("تأكد من الدرجة ..!");
+                    MSG.ErrorMesg("تأكد من الدرجة ..!");
                     textBox.Text = txt;
                     textBox.Focus();
                 }
@@ -347,13 +341,9 @@ namespace School_Mang.PL.NATIGA
 
         private async void btn_save_Click(object sender, EventArgs e)
         {
-            bool isConncted = await InternetHelper.CheckInternetAsync();
-
-            if (!isConncted)
-            {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+            if (!await InternetFlow.EnsureAsync())
                 return;
-            }
+
 
             try
             {
@@ -374,15 +364,15 @@ namespace School_Mang.PL.NATIGA
                     maharat, tocnolegy, badania, general, test_kind_Id);
 
                 FRM_SITE_STD_DATA.Get_Frm_Site_Std_Data.cmb_grade_DropDownClosed(sender, e);
-                msg.MyMesg("تم التعديل بنجاح ..!");
+                MSG.MyMesg("تم التعديل بنجاح ..!");
                 this.Close();
 
 
             }
             catch (Exception ex)
             {
-                msg.MyMesg("44");
-                msg.ErrorMesg(ex.Message);
+                MSG.MyMesg("44");
+                MSG.ErrorMesg(ex.Message);
             }
 
         }

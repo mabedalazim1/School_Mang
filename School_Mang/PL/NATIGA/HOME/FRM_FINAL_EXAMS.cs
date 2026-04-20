@@ -8,15 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using School_Mang.PL.MAIN;
+using School_Mang.BL;
 
 namespace School_Mang.PL.NATIGA.HOME
 {
     public partial class FRM_FINAL_EXAMS : Form
     {
 
-        BL.MSG msg = new BL.MSG();
         BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
-        BL.Waiting Waiting = new BL.Waiting();
+        
         BL.NATEG.cls_NATAG_FUNCTIONS natag_func = new BL.NATEG.cls_NATAG_FUNCTIONS();
         BL.NATEG.ExcelUtlity Excel = new BL.NATEG.ExcelUtlity();
 
@@ -68,17 +68,17 @@ namespace School_Mang.PL.NATIGA.HOME
                 string file_name = natag_func.OpenDialoge(openFileDialog1);
                 if (file_name == null) 
                 {
-                    msg.ErrorMesg("تم إلغاء الإجراء..!");
+                    MSG.ErrorMesg("تم إلغاء الإجراء..!");
                     BL.Globals.Dir_Path = "D://Rasd";
                     return;
                 }
-                Waiting.Wait();
+                Waiting.Start();
               
                 DataTable dt_sery = Excel.ReadSeryData(file_name);
 
                 if (dt_sery == null)
                 {
-                    msg.ErrorMesg("لا توجد بيانات..!");
+                    MSG.ErrorMesg("لا توجد بيانات..!");
                     BL.Globals.Dir_Path = "D://Rasd";
                     return;
                 }
@@ -90,14 +90,14 @@ namespace School_Mang.PL.NATIGA.HOME
                     NATEG.Update_Sery_Data(Golos, Sery);
                   
                 }
-                Waiting.End_WAit();
-                msg.MyMesg("تم تحديث الأرقام السرية بنجاح .. !");
+                Waiting.Stop();
+                MSG.MyMesg("تم تحديث الأرقام السرية بنجاح .. !");
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
-            Waiting.End_WAit();
+            Waiting.Stop();
         }
 
         private void pic_upload_sery_Click(object sender, EventArgs e)
@@ -115,7 +115,7 @@ namespace School_Mang.PL.NATIGA.HOME
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
         }
 

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using School_Mang.BL;
+using School_Mang.BL.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,10 +12,18 @@ using System.Windows.Forms;
 
 namespace School_Mang.PL.STD
 {
-    public partial class FRM_STD_ELTEHK : Form
+    public partial class FRM_STD_ELTEHK : Form, INavigationAware
     {
+
+        private NavigationContext _context;
+
+        public void SetNavigation(NavigationContext context)
+        {
+            _context = context;
+            ApplyContext();
+        }
+
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
-        BL.MSG msg = new BL.MSG();
         RPT.REPORT_CONNECTION RPT = new RPT.REPORT_CONNECTION();
 
         int permission_id = Properties.Settings.Default.permission_id;
@@ -46,6 +56,12 @@ namespace School_Mang.PL.STD
             {
                 frm_Std_Eltehk = this;
             }
+
+            ApplyContext(); 
+        }
+
+        private void ApplyContext()
+        {
             // Fill Combos
 
             cmb_sana.DataSource = std.Get_years();
@@ -75,7 +91,6 @@ namespace School_Mang.PL.STD
                     btn_new_std.Enabled = true;
                     break;
             }
-
         }
 
         int move;
@@ -109,13 +124,13 @@ namespace School_Mang.PL.STD
 
         private void btn_close_b_Click(object sender, EventArgs e)
         {
-            BL.Globals.Taheewl_To_School = false;
             this.Close();
             this.Dispose();
 
-            FRM_GET_STD.Get_Student.txt_std_data.Text = "";
-            FRM_GET_STD.Get_Student.cmb_sana_SelectedIndexChanged(sender, e);
-            FRM_GET_STD.Get_Student.txt_std_data.Focus();
+            var frm = FRM_GET_STD.Get_Student;
+            frm.txt_std_data.Text = "";
+            frm.LoadStudentData(); 
+            frm.txt_std_data.Focus();
 
         }
 
@@ -136,7 +151,7 @@ namespace School_Mang.PL.STD
             try
             {
                 //IF Tahweel To School Get New Year
-                if (BL.Globals.Taheewl_To_School)
+                if (_context?.TaheewlToSchool == true)
                 {
                     cmb_sana.SelectedValue = (Properties.Settings.Default.year_cod) + 1;
 
@@ -150,25 +165,25 @@ namespace School_Mang.PL.STD
                     Convert.ToInt32(cmb_class.SelectedValue)
                     );
 
-                if (!BL.Globals.Taheewl_To_School)
+                if (_context?.TaheewlToSchool != true)
                 {
-                    msg.MyMesg("تم حفظ البيانات");
+                    MSG.MyMesg("تم حفظ البيانات");
 
                 }
                 else
                 {
-                    //msg.MyMesg("تم حفظ طلب التحويل بنجاح .. !");
+                    //MSG.MyMesg("تم حفظ طلب التحويل بنجاح .. !");
                 }
 
                 btn_new_std.Enabled = false;
-                BL.Globals.Taheewl_To_School = false;
-                FRM_GET_STD.Get_Student.txt_std_data.Text = "";
-                FRM_GET_STD.Get_Student.cmb_sana_SelectedIndexChanged(sender, e);
 
+                var frm = FRM_GET_STD.Get_Student;
+                frm.txt_std_data.Text = "";
+               frm.LoadStudentData(); 
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
         }
 
@@ -187,7 +202,7 @@ namespace School_Mang.PL.STD
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
         }
 

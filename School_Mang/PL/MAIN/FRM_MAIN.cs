@@ -51,7 +51,6 @@ namespace School_Mang.PL.MAIN
         FRM_SETTINGS frm_settings = new FRM_SETTINGS();
         FRM_MANGE_SITE frm_mange_site = new FRM_MANGE_SITE();
         BL.USERS users = new BL.USERS();
-        BL.MSG msg = new BL.MSG();
 
         // Move Form
         int move;

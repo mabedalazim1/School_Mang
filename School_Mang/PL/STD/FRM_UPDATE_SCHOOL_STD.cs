@@ -1,21 +1,30 @@
-﻿using System;
+﻿using School_Mang.BL;
+using School_Mang.BL.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Text.RegularExpressions;
 
 namespace School_Mang.PL.STD
 {
-    public partial class FRM_UPDATE_SCHOOL_STD : Form
+    public partial class FRM_UPDATE_SCHOOL_STD : Form, INavigationAware
     {
+        private NavigationContext _context;
+
+        public void SetNavigation(NavigationContext context)
+        {
+            _context = context ?? new NavigationContext();
+            ApplyContext();
+        }
+
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
-        BL.MSG msg = new BL.MSG();
-        BL.Waiting Waiting = new BL.Waiting();
+        
         CLS_STD_FUNCATIONS Std_Func = new CLS_STD_FUNCATIONS();
         CLS_STD_FUNCATIONS function = new CLS_STD_FUNCATIONS();
 
@@ -57,6 +66,12 @@ namespace School_Mang.PL.STD
             {
                 frm_Update_School_Std = this;
             }
+            ApplyContext();
+            
+        }
+
+        private void ApplyContext()
+        {
             // Fill Combos
 
             cmb_sana.DataSource = std.Get_years();
@@ -74,7 +89,7 @@ namespace School_Mang.PL.STD
             cmb_gender.DataSource = std.Get_genders();
             cmb_gender.DisplayMember = "GenderDesc";
             cmb_gender.ValueMember = "Gender_Id";
-            
+
             cmb_relgien.DataSource = std.Get_religion();
             cmb_relgien.DisplayMember = "ReligionDesc";
             cmb_relgien.ValueMember = "Religion_Id";
@@ -94,7 +109,6 @@ namespace School_Mang.PL.STD
             }
 
         }
-
         int move;
         int move_x;
         int move_y;
@@ -135,7 +149,7 @@ namespace School_Mang.PL.STD
                     if (Convert.ToInt32(cmb_hala.SelectedValue) == 3 ||
                    Convert.ToInt32(cmb_hala.SelectedValue) == 4)
                     {
-                        msg.ErrorMesg("لتحويل طالب .. يرجى تسجيل طلب تحويل أولا ..!");
+                        MSG.ErrorMesg("لتحويل طالب .. يرجى تسجيل طلب تحويل أولا ..!");
                         cmb_hala.Focus();
                         cmb_hala.SelectedValue = status;
                         return;
@@ -146,7 +160,7 @@ namespace School_Mang.PL.STD
 
                 if(status == 6)
                 {
-                    if (msg.DialogeMsg("  الطالب كان مسجل سحب ملف  ..  " + txt_first_name.Text+ "  هل تريد المتابعة ؟   ") == DialogResult.Yes)
+                    if (MSG.DialogeMsg("  الطالب كان مسجل سحب ملف  ..  " + txt_first_name.Text+ "  هل تريد المتابعة ؟   ") == DialogResult.Yes)
                     {
                         int year = Properties.Settings.Default.year_cod + 1;
                         int grade = Convert.ToInt32(cmb_grade.SelectedValue);
@@ -195,7 +209,7 @@ namespace School_Mang.PL.STD
                     }
                     else
                     {
-                        msg.ErrorMesg("تم إلغاء عملية الحفظ");
+                        MSG.ErrorMesg("تم إلغاء عملية الحفظ");
                         cmb_hala.SelectedValue = status;
                         cmb_hala.Focus();
                         return;
@@ -203,14 +217,14 @@ namespace School_Mang.PL.STD
                 }
                 if (Convert.ToInt32(cmb_hala.SelectedValue) == 6)
                 {
-                    if(msg.DialogeMsg("   سوف يتم سحب ملف الطالب ..   " +txt_first_name.Text)== DialogResult.Yes)
+                    if(MSG.DialogeMsg("   سوف يتم سحب ملف الطالب ..   " +txt_first_name.Text)== DialogResult.Yes)
                     {
                         int year = Properties.Settings.Default.year_cod + 1;
                         std.Delete_School_Std_Data(txt_std_code.Text, year);
                     }
                     else
                     {
-                        msg.ErrorMesg("تم إلغاء عملية الحفظ");
+                        MSG.ErrorMesg("تم إلغاء عملية الحفظ");
                         cmb_hala.SelectedValue = status;
                         cmb_hala.Focus();
                         return;
@@ -236,24 +250,32 @@ namespace School_Mang.PL.STD
 
                 // Update Data in Current Std Form
 
-                BL.Globals.Update_Std_Data = false;
-                FRM_CURRENT_STD.Get_Current_Std.cmb_grade_SelectedIndexChanged(sender, e);
+      
+                var frm = FRM_CURRENT_STD.Get_Current_Std;
+
+                AppNavigation.Instance
+                        .SetContext(c =>
+                        {
+                            c.UpdateStdData = false;
+                            c.PostAction = () =>
+                            {
+                                frm.SelectRow(row_index);
+                            };
+                        }).Show(frm);
+                        
                 this.Close();
-               
-                FRM_CURRENT_STD.Get_Current_Std.dt_std_data.FirstDisplayedScrollingRowIndex = row_index;
-                FRM_CURRENT_STD.Get_Current_Std.dt_std_data.Rows[row_index].Selected = true;
-                msg.MyMesg("تم حفظ البيانات");
+                
+                MSG.MyMesg("تم حفظ البيانات");
             }
             catch(Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
             
         }
 
         private void btn_close_b_Click(object sender, EventArgs e)
         {
-            BL.Globals.Update_Std_Data = false;
 
             this.Close();
         }
@@ -309,7 +331,7 @@ namespace School_Mang.PL.STD
             }
             catch(Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
         }
 
@@ -330,15 +352,16 @@ namespace School_Mang.PL.STD
 
         private void txt_nat_Leave(object sender, EventArgs e)
         {
-            Waiting.Wait();
+            Waiting.Start();
             try
             {
                 if (this.ActiveControl != btn_close)
                 {
                     if (txt_nat.Text != "")
                     {
+                         bool isUpdateMode = _context?.UpdateStdData ?? false;
                         if (!Std_Func.Checked_Is_Numeric(txt_nat)) return;
-                        if (Std_Func.Verify_Std_Nat(txt_std_code,txt_nat) == 1) return;
+                        if (Std_Func.Verify_Std_Nat(txt_std_code,txt_nat,isUpdateMode) == 1) return;
                         if (Std_Func.Verify_Osra_Nat(txt_nat) == 1) return;
 
                         sen = Hesab_sen.Nat_HesabSen(txt_nat.Text, Convert.ToInt32(cmb_sana.GetItemText(cmb_sana.SelectedItem).Substring(0, 4)) - 1);
@@ -351,7 +374,7 @@ namespace School_Mang.PL.STD
                         else
                         {
                             txt_nat.BackColor = Color.MistyRose;
-                            Waiting.End_WAit();
+                            Waiting.Stop();
                             txt_nat.Focus();
                             return;
                         }
@@ -360,13 +383,13 @@ namespace School_Mang.PL.STD
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
             finally
             {
-                Waiting.End_WAit();
+                Waiting.Stop();
             }
-            Waiting.End_WAit();
+            Waiting.Stop();
         }
 
         private void FRM_UPDATE_SCHOOL_STD_Load(object sender, EventArgs e)

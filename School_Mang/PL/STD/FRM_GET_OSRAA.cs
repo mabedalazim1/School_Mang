@@ -1,4 +1,6 @@
-﻿using System;
+﻿using School_Mang.BL;
+using School_Mang.BL.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,14 +12,21 @@ using System.Windows.Forms;
 
 namespace School_Mang.PL.STD
 {
-    public partial class FRM_GET_OSRAA : Form
+    public partial class FRM_GET_OSRAA : Form, INavigationAware
     {
+
+        private NavigationContext _context;
+
+        public void SetNavigation(NavigationContext context)
+        {
+            _context = context;
+        }
+
         public string status = "osra_data";
 
         // GET Classes
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
-        BL.Waiting waiting = new BL.Waiting();
-        BL.MSG msg = new BL.MSG();
+        
         DAL.TestConcation testConcation = new DAL.TestConcation();
         CLS_STD_FUNCATIONS function = new CLS_STD_FUNCATIONS();
 
@@ -54,7 +63,7 @@ namespace School_Mang.PL.STD
             }
 
 
-            waiting.Wait();
+            Waiting.Start();
             if (testConcation.IsServerConnected())
             {
                 this.dt_osra_data.DataSource = std.Get_All_Osra_Data();
@@ -88,7 +97,7 @@ namespace School_Mang.PL.STD
                     btn_edit_osra.ButtonText = "تعديل بيانات أسرة ";
                     break;
             }
-            waiting.End_WAit();
+            Waiting.Stop();
         }
 
 
@@ -123,10 +132,14 @@ namespace School_Mang.PL.STD
 
         public void txt_osra_data_OnValueChanged(object sender, EventArgs e)
         {
-            waiting.Wait();
+            LoadOsraData();
+        }
+
+        public void LoadOsraData()
+        {
             if (!testConcation.IsServerConnected())
             {
-                msg.ErrorMesg("تأكد من الاتصال بالسيرفر.. !");
+                MSG.ErrorMesg("تأكد من الاتصال بالسيرفر.. !");
                 return;
             }
             try
@@ -137,19 +150,16 @@ namespace School_Mang.PL.STD
                 {
                     dt_osra_data.DataSource = Dt;
                 }
-
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(e.Message);
             }
-            finally
-            {
-                waiting.End_WAit();
+            finally {
+                Waiting.Stop();
             }
-            waiting.End_WAit();
+            
         }
-
         private void btn_close_b_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -157,8 +167,12 @@ namespace School_Mang.PL.STD
 
         public void btn_ok_Click(object sender, EventArgs e)
         {
-
-            BL.Globals.Add_Osra_Data_To_Student = false;
+            GetData();
+            
+        }
+        public void GetData()
+        {
+            //BL.Globals.Add_Osra_Data_To_Student = false; // تحذف
             try
             {
                 FRM_ADD_STD.getAdd_Std_Frm.txt_osra_id.Text =
@@ -185,39 +199,53 @@ namespace School_Mang.PL.STD
 
                 if (status == "from_std")
                 {
-                    this.Visible= false;
+                    this.Hide();
 
                     FRM_ADD_STD.getAdd_Std_Frm.txt_nat.Focus();
 
                 }
                 else if (status == "std_add_new_osra")
                 {
-                    this.Visible = false;
-                    FRM_ADD_STD.getAdd_Std_Frm.Show(MAIN.FRM_MAIN.Get_Frm_Main);
+                    this.Hide();
+                    var frm = FRM_ADD_STD.getAdd_Std_Frm;
+         
+                    frm.BringToFront();
 
                 }
                 else
                 {
-                    this.Visible = false;
-                    FRM_ADD_STD.getAdd_Std_Frm.Show(MAIN.FRM_MAIN.Get_Frm_Main);
+                    this.Hide();
+                    var frm = FRM_ADD_STD.getAdd_Std_Frm;
+                
+                    frm.BringToFront();
                 }
             }
 
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
         }
-
         private void btn_new_osra_Click(object sender, EventArgs e)
         {
             if (status == "from_std")
             {
                 FRM_ADD_STD.getAdd_Std_Frm.Hide();
             }
-            BL.Globals.Open_Form_Get_osra = true;
+
+            //BL.Globals.Open_Form_Get_osra = true; // تخذف
             this.Visible = false;
-            FRM_OSRAA_DATA.Get_Osra_data.Show(MAIN.FRM_MAIN.Get_Frm_Main);
+
+            AppNavigation.Instance
+                       .WithOwner(MAIN.FRM_MAIN.Get_Frm_Main)
+                       .SetContext(c =>
+                       {
+                           c.OpenFormGetOsra = true; 
+                       })
+                       .Show(FRM_OSRAA_DATA.Get_Osra_data); // تم التحقق
+           
+
+           // FRM_OSRAA_DATA.Get_Osra_data.Show(MAIN.FRM_MAIN.Get_Frm_Main);
         }
 
 
@@ -274,30 +302,32 @@ namespace School_Mang.PL.STD
 
                 // Add Data
 
-                FRM_OSRAA_DATA.Get_Osra_data.state = "edit";
-                FRM_OSRAA_DATA.Get_Osra_data.txt_father_name.Text = Dt.Rows[0]["father_name"].ToString();
-                FRM_OSRAA_DATA.Get_Osra_data.txt_last_name.Text = Dt.Rows[0]["father_last_name"].ToString();
-                FRM_OSRAA_DATA.Get_Osra_data.txt_father_nat.Text = Dt.Rows[0]["father_nat"].ToString();
-                FRM_OSRAA_DATA.Get_Osra_data.cmb_father_halaa.SelectedValue = Dt.Rows[0]["father_hala"];
-                FRM_OSRAA_DATA.Get_Osra_data.txt_adrs.Text = Dt.Rows[0]["address"].ToString();
-                FRM_OSRAA_DATA.Get_Osra_data.txt_father_moahel.Text = Dt.Rows[0]["father_moahel"].ToString();
-                FRM_OSRAA_DATA.Get_Osra_data.txt_father_wazifa.Text = Dt.Rows[0]["father_wazifa"].ToString();
-                FRM_OSRAA_DATA.Get_Osra_data.txt_tel.Text = Dt.Rows[0]["tel"].ToString();
-                FRM_OSRAA_DATA.Get_Osra_data.txt_father_mobil1.Text = Dt.Rows[0]["father_mobil_1"].ToString();
-                FRM_OSRAA_DATA.Get_Osra_data.txt_father_mobil2.Text = Dt.Rows[0]["father_mobil_2"].ToString();
-                FRM_OSRAA_DATA.Get_Osra_data.txt_mother_name.Text = Dt.Rows[0]["mother_name"].ToString();
-                FRM_OSRAA_DATA.Get_Osra_data.txt_mother_nat.Text = Dt.Rows[0]["mother_nat"].ToString();
-                FRM_OSRAA_DATA.Get_Osra_data.txt_mother_moahel.Text = Dt.Rows[0]["mother_moahel"].ToString();
-                FRM_OSRAA_DATA.Get_Osra_data.txt_mother_wazifa.Text = Dt.Rows[0]["mother_wazifa"].ToString();
-                FRM_OSRAA_DATA.Get_Osra_data.cmb_mother_hala.SelectedValue = Dt.Rows[0]["mother_hala"];
-                FRM_OSRAA_DATA.Get_Osra_data.txt_mother_mobil_1.Text = Dt.Rows[0]["mother_mobil_1"].ToString();
-                FRM_OSRAA_DATA.Get_Osra_data.txt_mother_mobil2.Text = Dt.Rows[0]["mother_mobil_2"].ToString();
-                FRM_OSRAA_DATA.Get_Osra_data.txt_memo.Text = Dt.Rows[0]["comments"].ToString();
-                FRM_OSRAA_DATA.Get_Osra_data.txt_osra_code.Text = Dt.Rows[0]["Osraa_Id"].ToString();
+                var frm = FRM_OSRAA_DATA.Get_Osra_data;
+
+                frm.state = "edit";
+                frm.txt_father_name.Text = Dt.Rows[0]["father_name"].ToString();
+                frm.txt_last_name.Text = Dt.Rows[0]["father_last_name"].ToString();
+                frm.txt_father_nat.Text = Dt.Rows[0]["father_nat"].ToString();
+                frm.cmb_father_halaa.SelectedValue = Dt.Rows[0]["father_hala"];
+                frm.txt_adrs.Text = Dt.Rows[0]["address"].ToString();
+                frm.txt_father_moahel.Text = Dt.Rows[0]["father_moahel"].ToString();
+                frm.txt_father_wazifa.Text = Dt.Rows[0]["father_wazifa"].ToString();
+                frm.txt_tel.Text = Dt.Rows[0]["tel"].ToString();
+                frm.txt_father_mobil1.Text = Dt.Rows[0]["father_mobil_1"].ToString();
+                frm.txt_father_mobil2.Text = Dt.Rows[0]["father_mobil_2"].ToString();
+                frm.txt_mother_name.Text = Dt.Rows[0]["mother_name"].ToString();
+                frm.txt_mother_nat.Text = Dt.Rows[0]["mother_nat"].ToString();
+                frm.txt_mother_moahel.Text = Dt.Rows[0]["mother_moahel"].ToString();
+                frm.txt_mother_wazifa.Text = Dt.Rows[0]["mother_wazifa"].ToString();
+                frm.cmb_mother_hala.SelectedValue = Dt.Rows[0]["mother_hala"];
+                frm.txt_mother_mobil_1.Text = Dt.Rows[0]["mother_mobil_1"].ToString();
+                frm.txt_mother_mobil2.Text = Dt.Rows[0]["mother_mobil_2"].ToString();
+                frm.txt_memo.Text = Dt.Rows[0]["comments"].ToString();
+                frm.txt_osra_code.Text = Dt.Rows[0]["Osraa_Id"].ToString();
 
                 function.Get_Update_Name_For_OSRAA_DATA(Dt);
 
-                this.Visible = false;
+                this.Hide();
 
                 FRM_OSRAA_DATA.Get_Osra_data.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
                 FRM_OSRAA_DATA.Get_Osra_data.txt_adrs.Focus();
@@ -306,7 +336,7 @@ namespace School_Mang.PL.STD
             }
             else
             {
-                msg.ErrorMesg("برجى اختيار البيانات المراد تعديلها ... !");
+                MSG.ErrorMesg("برجى اختيار البيانات المراد تعديلها ... !");
                 return;
             }
         }
@@ -323,19 +353,19 @@ namespace School_Mang.PL.STD
                 Dt = std.Verify_Osra_Data(osrs_id);
                 if (Convert.ToInt32(Dt.Rows[0]["Id"].ToString()) != 0)
                 {
-                    msg.ErrorMesg("لا يمكن حذف البيانات الخاصة بالسيد /   " + name);
+                    MSG.ErrorMesg("لا يمكن حذف البيانات الخاصة بالسيد /   " + name);
                 }
                 else
                 {
-                    if (msg.DialogeMsg("هل تريد حذف البيانات الخاصة بالسيد /  " + name) == DialogResult.Yes)
+                    if (MSG.DialogeMsg("هل تريد حذف البيانات الخاصة بالسيد /  " + name) == DialogResult.Yes)
                     {
                         std.Delele_Osra_Data(osrs_id);
                         this.dt_osra_data.DataSource = std.Get_All_Osra_Data();
-                        msg.ErrorMesg("تم حذف البيانات الخاصة بالسيد /   " + name);
+                        MSG.ErrorMesg("تم حذف البيانات الخاصة بالسيد /   " + name);
                     }
                     else
                     {
-                        msg.ErrorMesg("تم إلغاء عملية الحذف الخاصة بالسيد /   " + name);
+                        MSG.ErrorMesg("تم إلغاء عملية الحذف الخاصة بالسيد /   " + name);
                         return;
                     }
 
@@ -351,7 +381,7 @@ namespace School_Mang.PL.STD
                 return;
             }
 
-            if (BL.Globals.Add_Osra_Data_To_Student)
+            if (_context?.AddOsraDataToStudent ==true)
             {
                 btn_ok_Click(sender, e);
             }

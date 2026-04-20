@@ -1,44 +1,54 @@
-﻿using System;
+﻿using School_Mang.BL;
+using School_Mang.BL.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace School_Mang.PL.STD
 {
-    public partial class FRM_CHOOSE_GRADE : Form
+    public partial class FRM_CHOOSE_GRADE : Form, INavigationAware
     {
+
+        private NavigationContext _context;
+
+        public void SetNavigation(NavigationContext context)
+        {
+            _context = context;
+            ApplyContext();
+        }
+
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
-        BL.Waiting Waiting = new BL.Waiting();
+
         MAIN.CLS_FUNCATIONS Func = new MAIN.CLS_FUNCATIONS();
 
         DataTable dt_count = new DataTable();
         int year_code = Properties.Settings.Default.year_cod;
         int year;
+
+
+
         // Form Closed
-       
+
         public FRM_CHOOSE_GRADE()
         {
             InitializeComponent();
 
-            if (BL.Globals.Current_Year_Data)
-            {
-                year = year_code;
-            }
-            else
-            {
-                year = year_code + 1;
-            }
-
-            dt_count = std.Get_School_year_Data(year, 0, 0);
-            Waiting.End_WAit();
+           ApplyContext();
+           
+           
         }
-
-        int move;
+        private void ApplyContext()
+        {
+           // MSG.MyMesg(_context.CurrentYearData.ToString());
+        }
+            int move;
         int move_x;
         int move_y;
 
@@ -237,15 +247,15 @@ namespace School_Mang.PL.STD
         };
             dt_std_data.Rows.Add(row);
 
-            foreach(DataGridViewRow dtrow in dt_std_data.Rows)
+            foreach (DataGridViewRow dtrow in dt_std_data.Rows)
             {
                 if (dtrow.Cells[0].Value.ToString() == "جملة رياض أطفال" ||
                     dtrow.Cells[0].Value.ToString() == "جملة المرحلة الإبتدائية" ||
-                    dtrow.Cells[0].Value.ToString() == "جملة المرحلة الإعدادية") 
+                    dtrow.Cells[0].Value.ToString() == "جملة المرحلة الإعدادية")
                 {
                     dtrow.DefaultCellStyle.BackColor = Color.LightGray;
                 }
-                if (dtrow.Cells[0].Value.ToString() == "الجملة العامة") 
+                if (dtrow.Cells[0].Value.ToString() == "الجملة العامة")
                 {
                     dtrow.DefaultCellStyle.BackColor = Color.Teal;
                 }
@@ -272,7 +282,7 @@ namespace School_Mang.PL.STD
 
         private void pn_top_MouseUp(object sender, MouseEventArgs e)
         {
-                move = 0;
+            move = 0;
         }
 
         private void btn_close_Click(object sender, EventArgs e)
@@ -282,41 +292,65 @@ namespace School_Mang.PL.STD
 
         private void FRM_CHOOSE_GRADE_Load(object sender, EventArgs e)
         {
-
-            Add_Data();
-            if (!BL.Globals.Degree_Statement)
+            Waiting.Start();
+            if (_context != null && _context.CurrentYearData)
             {
-                lbl_current_year.Text ="احصاء " + Func.Year_Desc();
+                year = year_code;
             }
             else
             {
-                lbl_current_year.Text = "بيانات " + Func.Year_Desc();
+                year = year_code + 1;
             }
-            
+            dt_count = std.Get_School_year_Data(year, 0, 0);
+
+            Add_Data();
+
+            if (_context?.DegreeStatement == true)
+            {
+                lbl_current_year.Text = "احصاء " + Func.Year_Desc(
+                                                    _context?.CurrentYearData ?? false,
+                                                    _context?.DetailsStd ?? false,
+                                                    _context?.ElthakStdNextYear ?? false);
+            }
+            else
+            {
+                lbl_current_year.Text = "بيانات " + Func.Year_Desc(
+                                                    _context?.CurrentYearData ?? false,
+                                                    _context?.DetailsStd ?? false,
+                                                    _context?.ElthakStdNextYear ?? false);
+            }
+            Waiting.Stop();
         }
 
         private void btn_close_b_Click(object sender, EventArgs e)
         {
             this.Close();
-            BL.Globals.Current_Year_Data = false;
-            BL.Globals.Degree_Statement = false;
+            
         }
 
         private void btn_show_data_Click(object sender, EventArgs e)
         {
-            Waiting.Wait();
+            Waiting.Start();
             if (dt_std_data.SelectedRows.Count != 0)
             {
-                grade =Convert.ToInt16(dt_std_data.CurrentRow.Cells[6].Value);
-                
+                grade = Convert.ToInt16(dt_std_data.CurrentRow.Cells[6].Value);
+
             }
-            
             FRM_CURRENT_STD.Get_Current_Std.grade = grade;
-            FRM_CURRENT_STD.Get_Current_Std.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
+
+            AppNavigation.Instance
+                .WithOwner(MAIN.FRM_MAIN.Get_Frm_Main)
+                .SetContext(c =>
+            {
+                c.CurrentYearData = _context.CurrentYearData;
+            }).Show(FRM_CURRENT_STD.Get_Current_Std);
+                ;
+            
+            //FRM_CURRENT_STD.Get_Current_Std.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
             this.Hide();
             this.Dispose();
-            Waiting.End_WAit();
-  
+            Waiting.Stop();
+
         }
 
         private void dt_std_data_DoubleClick(object sender, EventArgs e)

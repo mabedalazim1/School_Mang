@@ -6,12 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using School_Mang.BL.Common.Helper;
 
+
 namespace School_Mang.BL.SITE
 {
     public class CLS_ADD_USER
     {
-        Waiting Waiting = new Waiting();
-        MSG msg = new MSG();
         STD.CLS_STD std = new STD.CLS_STD();
         CLS_MANGE_SITE site = new CLS_MANGE_SITE();
 
@@ -105,7 +104,7 @@ namespace School_Mang.BL.SITE
                std_nat,
                Convert.ToInt32(field1), 
                Convert.ToInt32(field2));
-            msg.MyMesg("user name is : " + user_name);
+            MSG.MyMesg("user name is : " + user_name);
 
         }
 
@@ -137,14 +136,10 @@ namespace School_Mang.BL.SITE
 
         public async void Get_User_Data(int Golos)
         {
-            bool isConnected = await InternetHelper.CheckInternetAsync();
-            if (!isConnected)
-            {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+            if (!await InternetFlow.EnsureAsync())
                 return;
-            }
 
-            if (Golos != 0)
+                if (Golos != 0)
             {
                 var std_nat = Dt_std_data.AsEnumerable()
                          .Where(row => row.Field<int>("Golos") == Golos)
@@ -167,7 +162,7 @@ namespace School_Mang.BL.SITE
                 }
                 else
                 {
-                    msg.ErrorMesg("لا يوجد طالب يرجي التأكد من رقم الجلوس ..!");
+                    MSG.ErrorMesg("لا يوجد طالب يرجي التأكد من رقم الجلوس ..!");
                 }
             }
 
@@ -182,12 +177,12 @@ namespace School_Mang.BL.SITE
                                 .Where(g => g.Count() > 1)
                                 .SelectMany(g => g)
                                 .ToList();
-           
-            msg.MyMesg("عدد " + filed_name + " المكرر..! : " + allDuplicates.Count.ToString());
+
+            MSG.MyMesg("عدد " + filed_name + " المكرر..! : " + allDuplicates.Count.ToString());
 
             foreach (var item in allDuplicates)
             {
-                msg.MyMesg(item.Field<string>(filed_name).ToString());
+                MSG.MyMesg(item.Field<string>(filed_name).ToString());
             }
         }
 
@@ -195,21 +190,15 @@ namespace School_Mang.BL.SITE
    
         public async void Update_Site_Data()
         {
-            bool isConnected = await InternetHelper.CheckInternetAsync();
-            if (!isConnected)
-            {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+            if (!await InternetFlow.EnsureAsync())
                 return;
-            }
-            if (!Globals.Test_Internet_Con)
-            {
-                return;
-            }
+
+
             DataSet dataSet = new DataSet();
             dataSet.Tables.Add(Dt_user_table_data);
             int Golos;
             string std_code;
-            Waiting.Wait();
+            Waiting.Start();
             foreach (DataRow std in Dt_std_data.Rows)
             {
                 std_code = std["std_code"].ToString();
@@ -229,8 +218,8 @@ namespace School_Mang.BL.SITE
                 }
                 //site.Update_User_stdCode(std_code, Golos);
                 }
-            Waiting.End_WAit();
-            msg.MyMesg("تم تحديث البيانات ..!");
+            Waiting.Stop();
+            MSG.MyMesg("تم تحديث البيانات ..!");
         }
     }
 }

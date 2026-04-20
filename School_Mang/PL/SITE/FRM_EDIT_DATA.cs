@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static DevExpress.Xpo.Helpers.AssociatedCollectionCriteriaHelper;
 using School_Mang.BL.Common.Helper;
+using School_Mang.BL;
 
 
 namespace School_Mang.PL.SITE
@@ -39,8 +40,7 @@ namespace School_Mang.PL.SITE
 
         }
 
-        BL.MSG msg = new BL.MSG();
-        BL.Waiting waiting = new BL.Waiting();
+        
         SiteExcelUtlity Excel = new SiteExcelUtlity();
         BL.NATEG.cls_NATAG_FUNCTIONS natag_func = new BL.NATEG.cls_NATAG_FUNCTIONS();
         CLS_MANGE_SITE Mange_Site = new CLS_MANGE_SITE();
@@ -63,9 +63,9 @@ namespace School_Mang.PL.SITE
                 Frm_Edit_Data = this;
             }
             _manager = new ExcelDataManager(Read_Excel, Mange_Site);
-            _error = m => msg.ErrorMesg(m);
-            _start = () => waiting.Wait();
-            _end = () => waiting.End_WAit();
+            _error = m => MSG.ErrorMesg(m);
+            _start = () => Waiting.Start();
+            _end = () => Waiting.Stop();
         }
 
         private void HandleImportResult(ExcelDataManager.ImportResult result)
@@ -85,7 +85,7 @@ namespace School_Mang.PL.SITE
                 return;
             }
 
-            msg.MyMesg($"تم بنجاح ✅ عدد الصفوف: {result.ProcessedRows}");
+            MSG.MyMesg($"تم بنجاح ✅ عدد الصفوف: {result.ProcessedRows}");
         }
 
         private void Save_Data_TO_Excel(string worksheetName)
@@ -122,7 +122,7 @@ namespace School_Mang.PL.SITE
             DialogResult result = folderBrowserDialog1.ShowDialog();
             if (result != DialogResult.OK)
             {
-                msg.ErrorMesg("يرجى اختيار مسار الحفظ .. !");
+                MSG.ErrorMesg("يرجى اختيار مسار الحفظ .. !");
                 return;
             }
             else
@@ -131,37 +131,33 @@ namespace School_Mang.PL.SITE
 
                 if (File.Exists(saveAsLocation))
                 {
-                    if (msg.DialogeErrMsg("الصف المحدد تم تصديره سابقاً .. سوف يتم حذف الملف  .. هل تريد المتابعة ؟") == DialogResult.No)
+                    if (MSG.DialogeErrMsg("الصف المحدد تم تصديره سابقاً .. سوف يتم حذف الملف  .. هل تريد المتابعة ؟") == DialogResult.No)
                     {
-                        msg.ErrorMesg("تم إلغاء الإجراء ..!");
+                        MSG.ErrorMesg("تم إلغاء الإجراء ..!");
                         return;
                     }
                 }
             }
-            waiting.Wait();
+            Waiting.Start();
 
             try
             {
 
                 if (Excel.WriteLessonsDataToExcel(worksheetName, saveAsLocation, title, staticExcelFile))
                 {
-                    msg.MyMesg("تم إعداد الملف بنجاح !");
-                    msg.MyMesg(saveAsLocation + "  مسار الملف هو  ");
+                    MSG.MyMesg("تم إعداد الملف بنجاح !");
+                    MSG.MyMesg(saveAsLocation + "  مسار الملف هو  ");
                 }
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
         }
         private async void ReadData(byte type)
         {
-            bool isConnected = await InternetHelper.CheckInternetAsync();
-            if (!isConnected)
-            {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+            if (!await InternetFlow.EnsureAsync())
                 return;
-            }
 
             try
             {
@@ -169,7 +165,7 @@ namespace School_Mang.PL.SITE
 
                 if (excel_file_name == null)
                 {
-                    msg.ErrorMesg("تم إلغاء الإجراء..!");
+                    MSG.ErrorMesg("تم إلغاء الإجراء..!");
                     BL.Globals.Dir_Path = "D://Lessons";
                     return;
                 }
@@ -213,7 +209,7 @@ namespace School_Mang.PL.SITE
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
 
         }
@@ -223,7 +219,7 @@ namespace School_Mang.PL.SITE
         {
             try
             {
-                waiting.Wait();
+                Waiting.Start();
                 DataTable data = Excel.ReadStudentsDataFromExcel(excel_file_name);
 
                 if (data == null)
@@ -252,15 +248,15 @@ namespace School_Mang.PL.SITE
                                                     std_name, full_name);
 
                     }
-                    waiting.End_WAit();
-                    msg.MyMesg("تم تحديث الطلاب بنجاح .. !");
+                    Waiting.Stop();
+                    MSG.MyMesg("تم تحديث الطلاب بنجاح .. !");
                 }
-                waiting.End_WAit();
+                Waiting.Stop();
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
-                waiting.End_WAit();
+                MSG.ErrorMesg(ex.Message);
+                Waiting.Stop();
             }
         }
 
@@ -268,7 +264,7 @@ namespace School_Mang.PL.SITE
         {
             try
             {
-                waiting.Wait();
+                Waiting.Start();
                 DataTable data = Excel.ReadUsersDataFromExcel(excel_file_name);
 
                 if (data == null)
@@ -294,15 +290,15 @@ namespace School_Mang.PL.SITE
                                                     fullName, roleId, osraId, note);
 
                     }
-                    waiting.End_WAit();
-                    msg.MyMesg("تم تحديث المستخدمين بنجاح .. !");
+                    Waiting.Stop();
+                    MSG.MyMesg("تم تحديث المستخدمين بنجاح .. !");
                 }
-                waiting.End_WAit();
+                Waiting.Stop();
             }
             catch (Exception ex)
             {
                 _error(ex.Message);
-                waiting.End_WAit();
+                Waiting.Stop();
             }
         }
 
@@ -528,17 +524,17 @@ namespace School_Mang.PL.SITE
         {
             if (type == 3)
             {
-                msg.MyExclamationMsg("تحديث الفقرات يعتمد على عنوان الفقرة ..!");
+                MSG.MyExclamationMsg("تحديث الفقرات يعتمد على عنوان الفقرة ..!");
             }
             if (type == 4)
             {
-                msg.MyExclamationMsg("تحديث الفقرات يعتمد على المفردة  ..!");
-                msg.MyExclamationMsg("في حالة تغيير المفردة سيتم إضافة مفردة جديدة ..!");
+                MSG.MyExclamationMsg("تحديث الفقرات يعتمد على المفردة  ..!");
+                MSG.MyExclamationMsg("في حالة تغيير المفردة سيتم إضافة مفردة جديدة ..!");
             }
             if (type == 8)
             {
-                msg.MyExclamationMsg("سوف يتم إضافة جميع الإجابات ..!");
-                if (msg.DialogeErrMsg("هل تريد إضافة جميع الإجابات ... ؟") == DialogResult.No)
+                MSG.MyExclamationMsg("سوف يتم إضافة جميع الإجابات ..!");
+                if (MSG.DialogeErrMsg("هل تريد إضافة جميع الإجابات ... ؟") == DialogResult.No)
                 {
                     return;
                 }

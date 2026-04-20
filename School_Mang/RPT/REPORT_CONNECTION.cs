@@ -11,14 +11,13 @@ namespace School_Mang.RPT
 {
     class REPORT_CONNECTION
     {
-        Waiting Waiting = new Waiting();
-        MSG msg = new MSG();
+
         string[] sen = { };
 
         private void OpenReport(ReportDocument rpt, string frm_caption,string frm_text )
                                
         {
-            Waiting.Wait();
+            Waiting.Start();
 
             string server = Properties.Settings.Default.Server_Name;
             string dataBase = Properties.Settings.Default.DataBasee_name;
@@ -31,15 +30,15 @@ namespace School_Mang.RPT
                 FRM_REPORTS.Get_Frm_report.lbl_caption.Text = frm_caption;
                 FRM_REPORTS.Get_Frm_report.Text = frm_text;
                 FRM_REPORTS.Get_Frm_report.crystalReportViewer1.ReportSource = rpt;
-                Waiting.End_WAit();
+                Waiting.Stop();
                 FRM_REPORTS.Get_Frm_report.ShowDialog();
             }
             catch(Exception e)
             {
-                msg.ErrorMesg(e.Message);
-                Waiting.End_WAit();
+                MSG.ErrorMesg(e.Message);
+                Waiting.Stop();
             }
-            Waiting.End_WAit();
+            Waiting.Stop();
 
         }
         public void OpenElthakReport(string std_code, 
@@ -69,7 +68,7 @@ namespace School_Mang.RPT
             }
             catch(Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
             
         }
@@ -93,7 +92,7 @@ namespace School_Mang.RPT
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
 
         }
@@ -115,7 +114,7 @@ namespace School_Mang.RPT
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
 
         }
@@ -136,7 +135,7 @@ namespace School_Mang.RPT
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
 
         }
@@ -162,7 +161,7 @@ namespace School_Mang.RPT
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
 
         }
@@ -191,7 +190,7 @@ namespace School_Mang.RPT
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
 
         }
@@ -217,7 +216,7 @@ namespace School_Mang.RPT
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
 
 
@@ -241,7 +240,7 @@ namespace School_Mang.RPT
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
 
         }
@@ -261,7 +260,7 @@ namespace School_Mang.RPT
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
 
         }
@@ -351,7 +350,7 @@ namespace School_Mang.RPT
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
 
         }
@@ -370,8 +369,8 @@ namespace School_Mang.RPT
                 {
                     case 10:
                     case 11:
-                        msg.ErrorMesg("لا توجد كشوف للصف المحدد");
-                        Waiting.End_WAit();
+                        MSG.ErrorMesg("لا توجد كشوف للصف المحدد");
+                        Waiting.Stop();
                         return;
                     case 1:
                     case 2:
@@ -381,8 +380,8 @@ namespace School_Mang.RPT
                             case 1:
                             case 2:
                             case 3:
-                                msg.ErrorMesg("لا توجد كشوف للصف المحدد");
-                                Waiting.End_WAit();
+                                MSG.ErrorMesg("لا توجد كشوف للصف المحدد");
+                                Waiting.Stop();
                                 return;
                            case var expreation when year >3:
                                 switch (grade_id)
@@ -431,7 +430,7 @@ namespace School_Mang.RPT
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
 
         }
@@ -447,8 +446,8 @@ namespace School_Mang.RPT
                 {
                     case 10:
                     case 11:
-                        msg.ErrorMesg("لا توجد كشوف للصف المحدد");
-                        Waiting.End_WAit();
+                        MSG.ErrorMesg("لا توجد كشوف للصف المحدد");
+                        Waiting.Stop();
                         return;
                     case 1:
                     case 2:
@@ -459,8 +458,8 @@ namespace School_Mang.RPT
                             case 2:
                             case 3:
 
-                                msg.ErrorMesg("لا توجد كشوف للصف المحدد");
-                                Waiting.End_WAit();
+                                MSG.ErrorMesg("لا توجد كشوف للصف المحدد");
+                                Waiting.Stop();
                                 return;
                             case var exptration when year_id > 3:
 
@@ -468,9 +467,9 @@ namespace School_Mang.RPT
                                 {
                                     case 1:
                                     case 2:
-                                        msg.ErrorMesg("لا توجد كشوف للصف المحدد");
-                                        msg.MyExclamationMsg("الصفين الأول والثاني ليس لهم درجات اختبار ..!");
-                                        Waiting.End_WAit();
+                                        MSG.ErrorMesg("لا توجد كشوف للصف المحدد");
+                                        MSG.MyExclamationMsg("الصفين الأول والثاني ليس لهم درجات اختبار ..!");
+                                        Waiting.Stop();
                                         return;
                                     case 3:
                                         myReport.Load(Application.StartupPath + @"/MyReports/rpt_Rasd_Test_A.rpt");
@@ -515,7 +514,7 @@ namespace School_Mang.RPT
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
 
         }
@@ -533,8 +532,8 @@ namespace School_Mang.RPT
                 {
                     case 10:
                     case 11:
-                        msg.ErrorMesg("لا توجد كشوف للصف المحدد");
-                        Waiting.End_WAit();
+                        MSG.ErrorMesg("لا توجد كشوف للصف المحدد");
+                        Waiting.Stop();
                         return;
 
                     case 1:
@@ -546,8 +545,8 @@ namespace School_Mang.RPT
                             case 2:
                             case 3:
 
-                                msg.ErrorMesg("لا توجد كشوف للصف المحدد");
-                                Waiting.End_WAit();
+                                MSG.ErrorMesg("لا توجد كشوف للصف المحدد");
+                                Waiting.Stop();
                                 return;
                             case var exptration when year_id > 3:
 
@@ -555,9 +554,9 @@ namespace School_Mang.RPT
                                 {
                                     case 1:
                                     case 2:
-                                        msg.ErrorMesg("لا توجد كشوف للصف المحدد");
-                                        msg.MyExclamationMsg("الصفين الأول والثاني ليس لهم درجات اختبار ..!");
-                                        Waiting.End_WAit();
+                                        MSG.ErrorMesg("لا توجد كشوف للصف المحدد");
+                                        MSG.MyExclamationMsg("الصفين الأول والثاني ليس لهم درجات اختبار ..!");
+                                        Waiting.Stop();
                                         return;
                                     case 3:
                                         myReport.Load(Application.StartupPath + @"/MyReports/rpt_Rasd_Test_A_Term_2.rpt");
@@ -610,7 +609,7 @@ namespace School_Mang.RPT
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
 
         }
@@ -626,8 +625,8 @@ namespace School_Mang.RPT
                 {
                     case 10:
                     case 11:
-                        msg.ErrorMesg("لا توجد كشوف للصف المحدد");
-                        Waiting.End_WAit();
+                        MSG.ErrorMesg("لا توجد كشوف للصف المحدد");
+                        Waiting.Stop();
                         return;
                     case 1:
                     case 2:
@@ -638,8 +637,8 @@ namespace School_Mang.RPT
                             case 2:
                             case 3:
 
-                                msg.ErrorMesg("لا توجد كشوف للصف المحدد");
-                                Waiting.End_WAit();
+                                MSG.ErrorMesg("لا توجد كشوف للصف المحدد");
+                                Waiting.Stop();
                                 return;
                             case var expration when year_id > 3:
                                 switch (grade_id)
@@ -697,7 +696,7 @@ namespace School_Mang.RPT
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
 
         }
@@ -713,8 +712,8 @@ namespace School_Mang.RPT
                 {
                     case 10:
                     case 11:
-                        msg.ErrorMesg("لا توجد كشوف للصف المحدد");
-                        Waiting.End_WAit();
+                        MSG.ErrorMesg("لا توجد كشوف للصف المحدد");
+                        Waiting.Stop();
                         return;
                     case 1:
                     case 2:
@@ -725,8 +724,8 @@ namespace School_Mang.RPT
                             case 2:
                             case 3:
 
-                                msg.ErrorMesg("لا توجد كشوف للصف المحدد");
-                                Waiting.End_WAit();
+                                MSG.ErrorMesg("لا توجد كشوف للصف المحدد");
+                                Waiting.Stop();
                                 return;
                             case var expration when year_id > 3:
                                 switch (grade_id)
@@ -790,7 +789,7 @@ namespace School_Mang.RPT
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
 
         }
@@ -812,7 +811,7 @@ namespace School_Mang.RPT
                         case 11:
                         case 1:
                         case 2:
-                            msg.ErrorMesg("لم يتم إتاحة هذا الإجراء .. !");
+                            MSG.ErrorMesg("لم يتم إتاحة هذا الإجراء .. !");
                             return;
                         case 3:
                             myReport.Load(Application.StartupPath + @"/MyReports/rpt_Koshof_Natega_Term_A_Grade_3_2025.rpt");
@@ -826,7 +825,7 @@ namespace School_Mang.RPT
                         case 7:
                         case 8:
                         case 9:
-                            msg.MyExclamationMsg("هذا الاجراء غير متاح في نصف العام للصف المحدد .. !");
+                            MSG.MyExclamationMsg("هذا الاجراء غير متاح في نصف العام للصف المحدد .. !");
                             return;
                     }
                 }
@@ -909,7 +908,7 @@ namespace School_Mang.RPT
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
 
         }
@@ -971,7 +970,7 @@ namespace School_Mang.RPT
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
 
         }

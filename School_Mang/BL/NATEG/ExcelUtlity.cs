@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Office.Interop.Excel;
+using School_Mang.BL;
 
 namespace School_Mang.BL.NATEG
 {
     class ExcelUtlity
     {
-        MSG msg = new MSG();
-        Waiting waiting = new Waiting();
 
         public bool WriteRasdDataToExcel(System.Data.DataTable dataTable,
                                           string worksheetName,
@@ -24,7 +23,7 @@ namespace School_Mang.BL.NATEG
             Workbook excelworkBook;
             Worksheet excelSheet;
 
-            waiting.Wait();
+            Waiting.Start();
             try
             {
                 // Start Excel and get Application object.
@@ -91,13 +90,13 @@ namespace School_Mang.BL.NATEG
                 excel.Quit();
                 excel = null;
 
-                waiting.End_WAit();
+                Waiting.Stop();
                 return true;
             }
             catch (Exception ex)
             {
-                waiting.End_WAit();
-                msg.ErrorMesg(ex.Message);
+                Waiting.Stop();
+                MSG.ErrorMesg(ex.Message);
                 return false;
             }
             finally
@@ -106,7 +105,7 @@ namespace School_Mang.BL.NATEG
                 excelworkBook = null;
                 excel = null;
 
-                waiting.End_WAit();
+                Waiting.Stop();
             }
         }
 
@@ -128,7 +127,7 @@ namespace School_Mang.BL.NATEG
             Workbook excelworkBook;
             Worksheet excelSheet;
 
-            waiting.Wait();
+            Waiting.Start();
             try
             {
                 // Start Excel and get Application object.
@@ -218,13 +217,13 @@ namespace School_Mang.BL.NATEG
                 excel.Quit();
                 excel = null;
 
-                waiting.End_WAit();
+                Waiting.Stop();
                 return true;
             }
             catch (Exception ex)
             {
-                waiting.End_WAit();
-                msg.ErrorMesg(ex.Message);
+                Waiting.Stop();
+                MSG.ErrorMesg(ex.Message);
                 return false;
             }
             finally
@@ -233,7 +232,7 @@ namespace School_Mang.BL.NATEG
                 excelworkBook = null;
                 excel = null;
 
-                waiting.End_WAit();
+                Waiting.Stop();
             }
         }
 
@@ -255,7 +254,7 @@ namespace School_Mang.BL.NATEG
             Workbook excelworkBook;
             Worksheet excelSheet;
 
-            waiting.Wait();
+            Waiting.Start();
             try
             {
                 // Start Excel and get Application object.
@@ -322,13 +321,13 @@ namespace School_Mang.BL.NATEG
                 excel.Quit();
                 excel = null;
 
-                waiting.End_WAit();
+                Waiting.Stop();
                 return true;
             }
             catch (Exception ex)
             {
-                waiting.End_WAit();
-                msg.ErrorMesg(ex.Message);
+                Waiting.Stop();
+                MSG.ErrorMesg(ex.Message);
                 return false;
             }
             finally
@@ -337,7 +336,7 @@ namespace School_Mang.BL.NATEG
                 excelworkBook = null;
                 excel = null;
 
-                waiting.End_WAit();
+                Waiting.Stop();
             }
         }
     
@@ -353,7 +352,7 @@ namespace School_Mang.BL.NATEG
             Workbook excelworkBook;
             Worksheet excelSheet;
 
-            waiting.Wait();
+            Waiting.Start();
             try
             {
                 // Start Excel and get Application object.
@@ -411,13 +410,13 @@ namespace School_Mang.BL.NATEG
                 excel.Quit();
                 excel = null;
 
-                waiting.End_WAit();
+                Waiting.Stop();
                 return true;
             }
             catch (Exception ex)
             {
-                waiting.End_WAit();
-                msg.ErrorMesg(ex.Message);
+                Waiting.Stop();
+                MSG.ErrorMesg(ex.Message);
                 return false;
             }
             finally
@@ -427,7 +426,7 @@ namespace School_Mang.BL.NATEG
                 excelworkBook = null;
                 excel = null;
 
-                waiting.End_WAit();
+                Waiting.Stop();
             }
         }
        
@@ -444,7 +443,7 @@ namespace School_Mang.BL.NATEG
             // Start Excel and get Application object.
             excel = new Application();
 
-            waiting.Wait();
+            Waiting.Start();
             try
             {
 
@@ -527,13 +526,13 @@ namespace School_Mang.BL.NATEG
               
                 
 
-                waiting.End_WAit();
+                Waiting.Stop();
                 return dt;
             }
             catch (Exception ex)
             {
-                waiting.End_WAit();
-                msg.ErrorMesg(ex.Message);
+                Waiting.Stop();
+                MSG.ErrorMesg(ex.Message);
                 return null;
             }
             finally
@@ -542,7 +541,7 @@ namespace School_Mang.BL.NATEG
                 excelSheet = null;
                 excelworkBook = null;
                 excel = null;
-                waiting.End_WAit();
+                Waiting.Stop();
             }
 
         }
@@ -560,7 +559,7 @@ namespace School_Mang.BL.NATEG
             // Start Excel and get Application object.
             excel = new Application();
 
-            waiting.Wait();
+            Waiting.Start();
             try
             {
 
@@ -612,13 +611,13 @@ namespace School_Mang.BL.NATEG
                 excelworkBook = null;
                 excel = null;
 
-                waiting.End_WAit();
+                Waiting.Stop();
                 return dt;
             }
             catch (Exception ex)
             {
-                waiting.End_WAit();
-                msg.ErrorMesg(ex.Message);
+                Waiting.Stop();
+                MSG.ErrorMesg(ex.Message);
                 return null;
             }
             finally
@@ -626,7 +625,7 @@ namespace School_Mang.BL.NATEG
                 excelSheet = null;
                 excelworkBook = null;
                 excel = null;
-                waiting.End_WAit();
+                Waiting.Stop();
             }
 
         }
@@ -643,7 +642,7 @@ namespace School_Mang.BL.NATEG
             // Start Excel and get Application object.
             excel = new Application();
 
-            waiting.Wait();
+            Waiting.Start();
             try
             {
 
@@ -689,13 +688,13 @@ namespace School_Mang.BL.NATEG
                 excelworkBook = null;
                 excel = null;
 
-                waiting.End_WAit();
+                Waiting.Stop();
                 return dt;
             }
             catch (Exception ex)
             {
-                waiting.End_WAit();
-                msg.ErrorMesg(ex.Message);
+                Waiting.Stop();
+                MSG.ErrorMesg(ex.Message);
                 return null;
             }
             finally
@@ -703,7 +702,7 @@ namespace School_Mang.BL.NATEG
                 excelSheet = null;
                 excelworkBook = null;
                 excel = null;
-                waiting.End_WAit();
+                Waiting.Stop();
             }
 
         }
@@ -720,7 +719,7 @@ namespace School_Mang.BL.NATEG
             // Start Excel and get Application object.
             excel = new Application();
 
-            waiting.Wait();
+            Waiting.Start();
             try
             {
 
@@ -756,13 +755,13 @@ namespace School_Mang.BL.NATEG
                 excelworkBook = null;
                 excel = null;
 
-                waiting.End_WAit();
+                Waiting.Stop();
                 return dt;
             }
             catch (Exception ex)
             {
-                waiting.End_WAit();
-                msg.ErrorMesg(ex.Message);
+                Waiting.Stop();
+                MSG.ErrorMesg(ex.Message);
                 return null;
             }
             finally
@@ -770,7 +769,7 @@ namespace School_Mang.BL.NATEG
                 excelSheet = null;
                 excelworkBook = null;
                 excel = null;
-                waiting.End_WAit();
+                Waiting.Stop();
             }
 
         }
@@ -788,7 +787,7 @@ namespace School_Mang.BL.NATEG
             // Start Excel and get Application object.
             excel = new Application();
 
-            waiting.Wait();
+            Waiting.Start();
             try
             {
 
@@ -843,13 +842,13 @@ namespace School_Mang.BL.NATEG
                 excelworkBook = null;
                 excel = null;
 
-                waiting.End_WAit();
+                Waiting.Stop();
                 return dt;
             }
             catch (Exception ex)
             {
-                waiting.End_WAit();
-                msg.ErrorMesg(ex.Message);
+                Waiting.Stop();
+                MSG.ErrorMesg(ex.Message);
                 return null;
             }
             finally
@@ -857,7 +856,7 @@ namespace School_Mang.BL.NATEG
                 excelSheet = null;
                 excelworkBook = null;
                 excel = null;
-                waiting.End_WAit();
+                Waiting.Stop();
             }
 
         }
@@ -873,7 +872,7 @@ namespace School_Mang.BL.NATEG
             // Start Excel and get Application object.
             excel = new Application();
 
-            waiting.Wait();
+            Waiting.Start();
             try
             {
 
@@ -932,13 +931,13 @@ namespace School_Mang.BL.NATEG
                 excelworkBook = null;
                 excel = null;
 
-                waiting.End_WAit();
+                Waiting.Stop();
                 return dt;
             }
             catch (Exception ex)
             {
-                waiting.End_WAit();
-                msg.ErrorMesg(ex.Message);
+                Waiting.Stop();
+                MSG.ErrorMesg(ex.Message);
                 return null;
             }
             finally
@@ -946,7 +945,7 @@ namespace School_Mang.BL.NATEG
                 excelSheet = null;
                 excelworkBook = null;
                 excel = null;
-                waiting.End_WAit();
+                Waiting.Stop();
             }
 
         }
@@ -963,7 +962,7 @@ namespace School_Mang.BL.NATEG
             // Start Excel and get Application object.
             excel = new Application();
 
-            waiting.Wait();
+            Waiting.Start();
             try
             {
 
@@ -1020,13 +1019,13 @@ namespace School_Mang.BL.NATEG
                 excelworkBook = null;
                 excel = null;
 
-                waiting.End_WAit();
+                Waiting.Stop();
                 return dt;
             }
             catch (Exception ex)
             {
-                waiting.End_WAit();
-                msg.ErrorMesg(ex.Message);
+                Waiting.Stop();
+                MSG.ErrorMesg(ex.Message);
                 return null;
             }
             finally
@@ -1034,7 +1033,7 @@ namespace School_Mang.BL.NATEG
                 excelSheet = null;
                 excelworkBook = null;
                 excel = null;
-                waiting.End_WAit();
+                Waiting.Stop();
             }
 
         }
@@ -1051,7 +1050,7 @@ namespace School_Mang.BL.NATEG
             // Start Excel and get Application object.
             excel = new Application();
 
-            waiting.Wait();
+            Waiting.Start();
             try
             {
 
@@ -1110,13 +1109,13 @@ namespace School_Mang.BL.NATEG
                 excelworkBook = null;
                 excel = null;
 
-                waiting.End_WAit();
+                Waiting.Stop();
                 return dt;
             }
             catch (Exception ex)
             {
-                waiting.End_WAit();
-                msg.ErrorMesg(ex.Message);
+                Waiting.Stop();
+                MSG.ErrorMesg(ex.Message);
                 return null;
             }
             finally
@@ -1124,7 +1123,7 @@ namespace School_Mang.BL.NATEG
                 excelSheet = null;
                 excelworkBook = null;
                 excel = null;
-                waiting.End_WAit();
+                Waiting.Stop();
             }
 
         } 
@@ -1141,7 +1140,7 @@ namespace School_Mang.BL.NATEG
             // Start Excel and get Application object.
             excel = new Application();
 
-            waiting.Wait();
+            Waiting.Start();
             try
             {
 
@@ -1229,13 +1228,13 @@ namespace School_Mang.BL.NATEG
                 excelworkBook = null;
                 excel = null;
 
-                waiting.End_WAit();
+                Waiting.Stop();
                 return dt;
             }
             catch (Exception ex)
             {
-                waiting.End_WAit();
-                msg.ErrorMesg(ex.Message);
+                Waiting.Stop();
+                MSG.ErrorMesg(ex.Message);
                 return null;
             }
             finally
@@ -1243,7 +1242,7 @@ namespace School_Mang.BL.NATEG
                 excelSheet = null;
                 excelworkBook = null;
                 excel = null;
-                waiting.End_WAit();
+                Waiting.Stop();
             }
 
         }
@@ -1260,7 +1259,7 @@ namespace School_Mang.BL.NATEG
             // Start Excel and get Application object.
             excel = new Application();
 
-            waiting.Wait();
+            Waiting.Start();
             try
             {
 
@@ -1327,13 +1326,13 @@ namespace School_Mang.BL.NATEG
                 excelworkBook = null;
                 excel = null;
 
-                waiting.End_WAit();
+                Waiting.Stop();
                 return dt;
             }
             catch (Exception ex)
             {
-                waiting.End_WAit();
-                msg.ErrorMesg(ex.Message);
+                Waiting.Stop();
+                MSG.ErrorMesg(ex.Message);
                 return null;
             }
             finally
@@ -1341,7 +1340,7 @@ namespace School_Mang.BL.NATEG
                 excelSheet = null;
                 excelworkBook = null;
                 excel = null;
-                waiting.End_WAit();
+                Waiting.Stop();
             }
 
         }

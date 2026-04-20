@@ -7,44 +7,46 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Data;
+using School_Mang.BL;
 
 namespace School_Mang.PL.STD
 {
     class CLS_STD_FUNCATIONS
     {
-        BL.Waiting Waiting = new BL.Waiting();
-        BL.MSG msg = new BL.MSG();
+        
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
 
 
         public Boolean Checked_Is_Numeric(TextBox txt_nat)
         {
-            Waiting.Wait();
+            Waiting.Start();
             Regex nonNumericRegex = new Regex(@"\D");
             if (nonNumericRegex.IsMatch(txt_nat.Text))
             {
                 txt_nat.BackColor = Color.MistyRose;
-                msg.ErrorMesg("تأكد من القيمة المدخلة .. يسمح بالأرقام فقط ..! ");
-                Waiting.End_WAit();
+                MSG.ErrorMesg("تأكد من القيمة المدخلة .. يسمح بالأرقام فقط ..! ");
+                Waiting.Stop();
                 return false;
             }
             else
             {
-                Waiting.End_WAit();
+                Waiting.Stop();
                 return true;
             }
 
         }
 
         //Verify Std Nat
-        public int Verify_Std_Nat(TextBox txt_std_code , TextBox txt_nat)
+        public int Verify_Std_Nat(TextBox txt_std_code ,
+                                  TextBox txt_nat, 
+                                  bool isUpdateMode = false)
         {
-            Waiting.Wait();
+            Waiting.Start();
             int nat = 0;
             string std_code = "0";
             try
             {
-                if (BL.Globals.Update_Std_Data)
+                if (isUpdateMode)
                 {
                     std_code = txt_std_code.Text;
                 }
@@ -54,7 +56,7 @@ namespace School_Mang.PL.STD
                     if (Dt.Rows.Count > 0)
                     {
                         string name = Dt.Rows[0][1].ToString();
-                        msg.ErrorMesg(" الرقم القومى للطالب  " + name + "  مسجل من قبل");
+                        MSG.ErrorMesg(" الرقم القومى للطالب  " + name + "  مسجل من قبل");
                         txt_nat.BackColor = Color.MistyRose;
                         txt_nat.Focus();
                         nat = 1;
@@ -68,20 +70,20 @@ namespace School_Mang.PL.STD
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
             finally
             {
-                Waiting.End_WAit();
+                Waiting.Stop();
             }
-            Waiting.End_WAit();
+            Waiting.Stop();
             return nat;
 
         }
 
         public int Verify_Osra_Nat( TextBox txt_nat)
         {
-            Waiting.Wait();
+            Waiting.Start();
             int osra_nat = 0;
             try
             {
@@ -91,7 +93,7 @@ namespace School_Mang.PL.STD
                     if (Dt.Rows.Count > 0)
                     {
                         string name = Dt.Rows[0][1].ToString();
-                        msg.ErrorMesg("الرقم القومى مسجل من قبل");
+                        MSG.ErrorMesg("الرقم القومى مسجل من قبل");
                         txt_nat.BackColor = Color.MistyRose;
                         txt_nat.Focus();
                         osra_nat = 1;
@@ -105,13 +107,13 @@ namespace School_Mang.PL.STD
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
             }
             finally
             {
-                Waiting.End_WAit();
+                Waiting.Stop();
             }
-            Waiting.End_WAit();
+            Waiting.Stop();
             return osra_nat;
 
         }

@@ -8,13 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using School_Mang.BL.Common.Helper;
+using School_Mang.BL;
+
+
 namespace School_Mang.PL.NATIGA
 {
     public partial class FRM_NATAG_DATA : Form
     {
         BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
-        BL.Waiting Waiting = new BL.Waiting();
-        BL.MSG msg = new BL.MSG();
+        
 
 
         // Form Closed
@@ -51,11 +53,10 @@ namespace School_Mang.PL.NATIGA
 
         private async void Load_Data()
         {
-            bool isConncted = await InternetHelper.CheckInternetAsync();
+            bool isConncted = await InternetFlow.EnsureAsync(retries:2, delayMs:2);
 
             if (!isConncted)
             {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                 this.Close();
                 return;
             }
@@ -64,7 +65,7 @@ namespace School_Mang.PL.NATIGA
                 DataTable Dt = null;
                 try
                 {
-                    Waiting.Wait();
+                    
 
                     switch (BL.Globals.test_kind)
                     {
@@ -91,25 +92,22 @@ namespace School_Mang.PL.NATIGA
                     }
                     else
                     {
-                        msg.ErrorMesg("حدث خطأ فى الإتصال..!");
+                        MSG.ErrorMesg("حدث خطأ فى الإتصال..!");
                         this.Close();
                     }
 
-                    Waiting.End_WAit();
 
                 }
                 catch (Exception e)
                 {
-                    msg.ErrorMesg(e.Message);
-                    Waiting.End_WAit();
+                    MSG.ErrorMesg(e.Message);
                 }
                 finally
                 {
-                    Waiting.End_WAit();
+                    Waiting.Stop();
                 }
             }
                
-            Waiting.End_WAit();
         }
 
         int move;
@@ -153,13 +151,8 @@ namespace School_Mang.PL.NATIGA
 
         private async void btn_show_data_Click(object sender, EventArgs e)
         {
-            bool isConncted = await InternetHelper.CheckInternetAsync();
-
-            if (!isConncted)
-            {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+            if (!await InternetFlow.EnsureAsync())
                 return;
-            }
 
             BL.Globals.test_grade_id = Convert.ToInt32(dt_std_data.CurrentRow.Cells["grade_Id"].Value);
             BL.Globals.test_month = Convert.ToInt32(dt_std_data.CurrentRow.Cells["test_kind_Id"].Value);

@@ -9,14 +9,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using School_Mang.BL;
 
 namespace School_Mang.PL.NATIGA
 {
     public partial class FRM_ADD_SERY : Form
     {
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
-        BL.MSG msg = new BL.MSG();
-        BL.Waiting waiting = new BL.Waiting();
         BL.NATEG.CLS_NATEG nateg = new BL.NATEG.CLS_NATEG();
         BL.NATEG.ExcelUtlity Excel = new BL.NATEG.ExcelUtlity();
        
@@ -51,7 +50,7 @@ namespace School_Mang.PL.NATIGA
             DialogResult result = folderBrowserDialog1.ShowDialog();
             if (result != DialogResult.OK)
             {
-                msg.ErrorMesg("يرجى اختيار مسار الحفظ .. !");
+                MSG.ErrorMesg("يرجى اختيار مسار الحفظ .. !");
                 btn.Focus();
                 return;
             }
@@ -61,28 +60,28 @@ namespace School_Mang.PL.NATIGA
 
                 if (File.Exists(saveAsLocation))
                 {
-                    if (msg.DialogeErrMsg("الصف المحدد تم تصديره سابقاً .. سوف يتم حذف الملف  .. هل تريد المتابعة ؟") == DialogResult.No)
+                    if (MSG.DialogeErrMsg("الصف المحدد تم تصديره سابقاً .. سوف يتم حذف الملف  .. هل تريد المتابعة ؟") == DialogResult.No)
                     {
-                        msg.ErrorMesg("تم إلغاء الإجراء ..!");
+                        MSG.ErrorMesg("تم إلغاء الإجراء ..!");
                         btn.Focus();
                         return;
                     }
                 }
             }
-            waiting.Wait();
+            Waiting.Start();
 
             try
             {
                 DataTable Dt_Rasd = nateg.Get_Rasd_Data(grade,1);
                 if (Excel.WriteSeryDataToExcel(Dt_Rasd, grade_desc, saveAsLocation, title, staticExcelFile))
                 {
-                    msg.MyMesg("تم إعداد الملف بنجاح !");
-                    msg.MyMesg(saveAsLocation + "  مسار الملف هو  ");
+                    MSG.MyMesg("تم إعداد الملف بنجاح !");
+                    MSG.MyMesg(saveAsLocation + "  مسار الملف هو  ");
                 }
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
         }
 

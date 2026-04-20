@@ -8,13 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using School_Mang.BL.Common.Helper;
+using School_Mang.BL;
+
 namespace School_Mang.PL.NATIGA
 {
     public partial class FRM_CHOSE_NATAG : Form
     {
-        BL.MSG msg = new BL.MSG();
         BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
-        BL.Waiting Waiting = new BL.Waiting();
+        
 
         // Form Closed
         private static FRM_CHOSE_NATAG frm_Chose_Natag;
@@ -50,38 +51,30 @@ namespace School_Mang.PL.NATIGA
         
         private async  void Load_Data()
         {
-            bool isConncted = await InternetHelper.CheckInternetAsync();
+            
+            bool isConncted = await InternetFlow.EnsureAsync(retries: 2, delayMs: 200);
 
             if (!isConncted)
             {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
                 return;
             }
             else
             {
                 try
                 {
-                    Waiting.Wait();
-                    if (BL.Globals.Test_Internet_Con)
-                    {
+                    Waiting.Start();
                         cmb_month.DataSource = NATEG.GET_TEST_KIND();
                         cmb_month.DisplayMember = "testkind_desc";
                         cmb_month.ValueMember = "id";
-                    }
-                    else
-                    {
-                        msg.ErrorMesg("تأكد من الإتصال بالإنترنت ..!");
-                    }
+                    
                 }
                 catch (Exception e)
                 {
-                    BL.Globals.Test_Internet_Con = false;
-                    Waiting.End_WAit();
-                    msg.ErrorMesg(e.Message);
+                    MSG.ErrorMesg(e.Message);
                 }
                 finally
                 {
-                    Waiting.End_WAit();
+                    Waiting.Stop();
                 }
             }
         }
@@ -135,13 +128,9 @@ namespace School_Mang.PL.NATIGA
 
         private async void btn_show_data_Click(object sender, EventArgs e)
         {
-            bool isConncted = await InternetHelper.CheckInternetAsync();
-
-            if (!isConncted)
-            {
-                msg.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
+            if (!await InternetFlow.EnsureAsync())
                 return;
-            }
+
             BL.Globals.test_kind = Convert.ToInt32(cmb_test.SelectedValue);
             BL.Globals.test_month = Convert.ToInt32(cmb_month.SelectedValue);
             BL.Globals.test_month_name = cmb_month.Text;
@@ -153,7 +142,7 @@ namespace School_Mang.PL.NATIGA
                     Dt = NATEG.Get_Count_Degree(BL.Globals.test_month);
                     if (Dt.Rows.Count == 0)
                     {
-                        msg.ErrorMesg("لا توجد بيانات مسجلة ..!");
+                        MSG.ErrorMesg("لا توجد بيانات مسجلة ..!");
                         return;
                     }
                     break;
@@ -161,7 +150,7 @@ namespace School_Mang.PL.NATIGA
                     Dt = NATEG.Get_Count_Mark(BL.Globals.test_month);
                     if (Dt.Rows.Count == 0)
                     {
-                        msg.ErrorMesg("لا توجد بيانات مسجلة ..!");
+                        MSG.ErrorMesg("لا توجد بيانات مسجلة ..!");
                         return;
                     }
                     break;

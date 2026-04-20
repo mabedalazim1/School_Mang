@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using School_Mang.BL;
 
 namespace School_Mang.PL.STD
 {
@@ -24,7 +25,6 @@ namespace School_Mang.PL.STD
 
         }
 
-        BL.MSG msg = new BL.MSG();
         private void btn_close_Click(object sender, EventArgs e)
         {
             btn_close_b_Click(sender, e);
@@ -60,7 +60,7 @@ namespace School_Mang.PL.STD
         {
             if (cmb_chose_year.SelectedIndex == -1)
             {
-                msg.ErrorMesg("اختر العام الدراسى");
+                MSG.ErrorMesg("اختر العام الدراسى");
                 cmb_chose_year.Focus();
                 return;
             }
@@ -70,19 +70,19 @@ namespace School_Mang.PL.STD
 
                 if (cmb_day.SelectedIndex == -1)
                 {
-                    msg.ErrorMesg("اختر اليوم");
+                    MSG.ErrorMesg("اختر اليوم");
                     cmb_day.Focus();
                     return;
                 }
                 if (cmb_month.SelectedIndex == -1)
                 {
-                    msg.ErrorMesg("اختر الشهر");
+                    MSG.ErrorMesg("اختر الشهر");
                     cmb_month.Focus();
                     return;
                 }
                 if (cmb_year.SelectedIndex == -1)
                 {
-                    msg.ErrorMesg("اختر السنة");
+                    MSG.ErrorMesg("اختر السنة");
                     cmb_year.Focus();
                     return;
                 }
@@ -124,14 +124,14 @@ namespace School_Mang.PL.STD
                     }
                     else
                     {
-                        msg.ErrorMesg();
+                        MSG.ErrorMesg();
                         txt_nat.Focus();
                         return;
                     }
                 }
                 else
                 {
-                    msg.ErrorMesg("يجب إدخال الرقم القومى");
+                    MSG.ErrorMesg("يجب إدخال الرقم القومى");
                     txt_nat.Focus();
                     return;
                 }

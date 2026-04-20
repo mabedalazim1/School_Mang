@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Renci.SshNet;
 using Renci.SshNet.Common;
 using Renci.SshNet.Sftp;
-
+using School_Mang.BL;
 
 namespace School_Mang.PL.MAIN
 {
@@ -21,9 +21,7 @@ namespace School_Mang.PL.MAIN
         String Password = "kps2020";
 
 
-        BL.MSG msg = new BL.MSG();
-        BL.Waiting waiting = new BL.Waiting();
-
+       
         public string ToArabic(long num)
         {
             const string _arabicDigits = "۰۱۲۳٤٥٦۷۸۹";
@@ -34,40 +32,39 @@ namespace School_Mang.PL.MAIN
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
+                MSG.ErrorMesg(e.Message);
                 return num.ToString();
             }
 
         }
 
         // Get Year Desc
-        public string Year_Desc()
+        public string Year_Desc(
+                                bool currentYearData = false,
+                                bool detailsStd = false,
+                                bool elthakNextYear = false)
         {
             string desc = " العام الدراسى ";
-            if (BL.Globals.Current_Year_Data ||
-                BL.Globals.Details_Std ||
-                BL.Globals.Elthak_Std_Next_Year)
+
+            if (currentYearData || detailsStd || elthakNextYear)
             {
-                desc += ToArabic(
-                    Properties.Settings.Default.MyYear - 1) + " - " +
-                    ToArabic(Properties.Settings.Default.MyYear);
-                return desc;
+                desc += ToArabic(Properties.Settings.Default.MyYear - 1) + " - " +
+                        ToArabic(Properties.Settings.Default.MyYear);
             }
             else
             {
-                desc += ToArabic(
-                     Properties.Settings.Default.MyYear) + " - " +
-                     ToArabic(Properties.Settings.Default.MyYear + 1);
-                return desc;
+                desc += ToArabic(Properties.Settings.Default.MyYear) + " - " +
+                        ToArabic(Properties.Settings.Default.MyYear + 1);
             }
 
+            return desc;
         }
 
         public void DowanloadDataBase(string LocalDestinationFilename, string RemoteFileName)
         {
             try
             {
-                waiting.Wait();
+                Waiting.Start();
                 using (SftpClient sftp = new SftpClient(Host, Port, Username, Password))
                 {
                     sftp.Connect();
@@ -78,13 +75,13 @@ namespace School_Mang.PL.MAIN
                     }
 
                     sftp.Disconnect();
-                    waiting.End_WAit();
+                    Waiting.Stop();
                 }
             }
             catch (Exception e)
             {
-                waiting.End_WAit();
-                msg.ErrorMesg(e.Message + " error");
+                Waiting.Stop();
+                MSG.ErrorMesg(e.Message + " error");
             }
         }
 
@@ -92,7 +89,7 @@ namespace School_Mang.PL.MAIN
         {
             try
             {
-                waiting.Wait();
+                Waiting.Start();
                 SftpClient sftp = new SftpClient(Host, Port, Username, Password);
 
                 sftp.Connect();
@@ -104,12 +101,12 @@ namespace School_Mang.PL.MAIN
                 }
 
                 sftp.Disconnect();
-                waiting.End_WAit();
+                Waiting.Stop();
             }
             catch (Exception e)
             {
-                msg.ErrorMesg(e.Message);
-                waiting.End_WAit();
+                MSG.ErrorMesg(e.Message);
+                Waiting.Stop();
             }
         }
     }

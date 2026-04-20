@@ -231,8 +231,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BL\CLS_BACKUP_DATABASE.cs" />
-    <Compile Include="BL\CLS_TEST_INTRNET_CON.cs" />
     <Compile Include="BL\Common\Extensions\ExcelRowHelper.cs" />
+    <Compile Include="BL\Common\Helper\InternetFlow.cs" />
     <Compile Include="BL\Common\Helper\InternetHelper.cs" />
     <Compile Include="BL\Common\Helper\SqlParam.cs" />
     <Compile Include="BL\ExcelUtils\ExcelValidator.cs" />
@@ -244,6 +244,10 @@
     <Compile Include="BL\NATEG\cls_NATAG_FUNCTIONS.cs" />
     <Compile Include="BL\NATEG\CLS_NATEG.cs" />
     <Compile Include="BL\NATEG\ExcelUtlity.cs" />
+    <Compile Include="BL\Services\AppSession.cs" />
+    <Compile Include="BL\Services\INavigationAware.cs" />
+    <Compile Include="BL\Services\NavigationContext.cs" />
+    <Compile Include="BL\Services\AppNavigation.cs" />
     <Compile Include="BL\SITE\CLS_ADD_USER.cs" />
     <Compile Include="BL\SITE\CLS_MANGE_SITE.cs" />
     <Compile Include="BL\SITE\CLS_Merge_Data.cs" />
@@ -256,7 +260,6 @@
     <Compile Include="BL\USERS.cs" />
     <Compile Include="BL\Waiting.cs" />
     <Compile Include="DAL\DataAcceseLayer.cs" />
-    <Compile Include="DAL\SchoolDataAtSite.cs" />
     <Compile Include="DAL\SiteAccessLayer.cs" />
     <Compile Include="DAL\TestConcation.cs" />
     <Compile Include="HTTP\HTTPCLINT.cs" />

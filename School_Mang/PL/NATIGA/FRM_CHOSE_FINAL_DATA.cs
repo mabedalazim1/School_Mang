@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using School_Mang.BL;
 
 namespace School_Mang.PL.NATIGA
 {
@@ -16,8 +17,6 @@ namespace School_Mang.PL.NATIGA
     {
 
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
-        BL.MSG msg = new BL.MSG();
-        BL.Waiting waiting = new BL.Waiting();
         BL.NATEG.CLS_NATEG nateg = new BL.NATEG.CLS_NATEG();
         BL.NATEG.ExcelUtlity Excel = new BL.NATEG.ExcelUtlity();
 
@@ -27,13 +26,13 @@ namespace School_Mang.PL.NATIGA
             InitializeComponent();
 
             // Fill Combo
-            waiting.Wait();
+            Waiting.Start();
             cmb_grade.DataSource = std.Get_grades();
             cmb_grade.DisplayMember = "GradeDesc";
             cmb_grade.ValueMember = "Grade_Id";
 
             Add_To_Comb_Test();
-            waiting.End_WAit();
+            Waiting.Stop();
 
         }
 
@@ -96,7 +95,7 @@ namespace School_Mang.PL.NATIGA
             {
                 case 10:
                 case 11:
-                    msg.MyMesg("لا توجد ملفات للصف المحدد .. !");
+                    MSG.MyMesg("لا توجد ملفات للصف المحدد .. !");
                     return;
 
                 case 1:
@@ -175,7 +174,7 @@ namespace School_Mang.PL.NATIGA
             DialogResult result = folderBrowserDialog1.ShowDialog();
             if (result != DialogResult.OK)
             {
-                msg.ErrorMesg("يرجى اختيار مسار الحفظ .. !");
+                MSG.ErrorMesg("يرجى اختيار مسار الحفظ .. !");
                 btn.Focus();
                 return;
             }
@@ -185,15 +184,15 @@ namespace School_Mang.PL.NATIGA
 
                 if (File.Exists(saveAsLocation))
                 {
-                    if (msg.DialogeErrMsg("الصف المحدد تم تصديره سابقاً .. سوف يتم حذف الملف  .. هل تريد المتابعة ؟") == DialogResult.No)
+                    if (MSG.DialogeErrMsg("الصف المحدد تم تصديره سابقاً .. سوف يتم حذف الملف  .. هل تريد المتابعة ؟") == DialogResult.No)
                     {
-                        msg.ErrorMesg("تم إلغاء الإجراء ..!");
+                        MSG.ErrorMesg("تم إلغاء الإجراء ..!");
                         btn.Focus();
                         return;
                     }
                 }
             }
-            waiting.Wait();
+            Waiting.Start();
             try
             {
                 DataTable Dt_Rasd = nateg.Get_Rasd_Data(grade);
@@ -202,16 +201,16 @@ namespace School_Mang.PL.NATIGA
                     staticExcelFile, test_kind, grade_data,
                     year_data, term_kind,grade,term_id, prim))
                 {
-                    msg.MyMesg("تم إعداد الملف بنجاح !");
-                    msg.MyMesg(saveAsLocation + "  مسار الملف هو  ");
+                    MSG.MyMesg("تم إعداد الملف بنجاح !");
+                    MSG.MyMesg(saveAsLocation + "  مسار الملف هو  ");
                 }
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
-                waiting.End_WAit();
+                MSG.ErrorMesg(ex.Message);
+                Waiting.Stop();
             }
-            waiting.End_WAit();
+            Waiting.Stop();
         }
 
         private void ExportTestToExcel(BunifuThinButton2 btn, byte term)
@@ -254,7 +253,7 @@ namespace School_Mang.PL.NATIGA
                 case 11:
                 case 1:
                 case 2:
-                    msg.MyMesg("لا توجد ملفات للصف المحدد .. !");
+                    MSG.MyMesg("لا توجد ملفات للصف المحدد .. !");
                     return;
                 case 3:
                     if (term == 1)
@@ -319,7 +318,7 @@ namespace School_Mang.PL.NATIGA
             DialogResult result = folderBrowserDialog1.ShowDialog();
             if (result != DialogResult.OK)
             {
-                msg.ErrorMesg("يرجى اختيار مسار الحفظ .. !");
+                MSG.ErrorMesg("يرجى اختيار مسار الحفظ .. !");
                 btn.Focus();
                 return;
             }
@@ -329,15 +328,15 @@ namespace School_Mang.PL.NATIGA
 
                 if (File.Exists(saveAsLocation))
                 {
-                    if (msg.DialogeErrMsg("الصف المحدد تم تصديره سابقاً .. سوف يتم حذف الملف  .. هل تريد المتابعة ؟") == DialogResult.No)
+                    if (MSG.DialogeErrMsg("الصف المحدد تم تصديره سابقاً .. سوف يتم حذف الملف  .. هل تريد المتابعة ؟") == DialogResult.No)
                     {
-                        msg.ErrorMesg("تم إلغاء الإجراء ..!");
+                        MSG.ErrorMesg("تم إلغاء الإجراء ..!");
                         btn.Focus();
                         return;
                     }
                 }
             }
-            waiting.Wait();
+            Waiting.Start();
             try
             {
                 DataTable Dt_Rasd = nateg.Get_Rasd_Data(grade, 1);
@@ -345,16 +344,16 @@ namespace School_Mang.PL.NATIGA
                                                 title, staticExcelFile, test_kind, grade_data,
                                                 year_data, term_kind,grade,term_id))
                 {
-                    msg.MyMesg("تم إعداد الملف بنجاح !");
-                    msg.MyMesg(saveAsLocation + "  مسار الملف هو  ");
+                    MSG.MyMesg("تم إعداد الملف بنجاح !");
+                    MSG.MyMesg(saveAsLocation + "  مسار الملف هو  ");
                 }
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
-                waiting.End_WAit();
+                MSG.ErrorMesg(ex.Message);
+                Waiting.Stop();
             }
-            waiting.End_WAit();
+            Waiting.Stop();
         }
         int move;
         int move_x;
@@ -423,7 +422,7 @@ namespace School_Mang.PL.NATIGA
             }
             catch (Exception ex)
             {
-                msg.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(ex.Message);
             }
         }
 

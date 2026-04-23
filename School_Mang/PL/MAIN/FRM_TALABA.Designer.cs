@@ -513,7 +513,6 @@ namespace School_Mang.PL.MAIN
             this.Margin = new System.Windows.Forms.Padding(18, 19, 18, 19);
             this.Name = "FRM_TALABA";
             this.Text = "FRM_TALABA";
-            this.Load += new System.EventHandler(this.FRM_TALABA_Load);
             this.pn_home.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.bunifuCards5.ResumeLayout(false);

@@ -292,10 +292,13 @@ namespace School_Mang.PL.STD
 
         private void FRM_CHOOSE_GRADE_Load(object sender, EventArgs e)
         {
+            MSG.MyMesg(_context.DegreeStatement.ToString()+ " Bian");
+
             Waiting.Start();
             if (_context != null && _context.CurrentYearData)
             {
                 year = year_code;
+               
             }
             else
             {
@@ -305,7 +308,7 @@ namespace School_Mang.PL.STD
 
             Add_Data();
 
-            if (_context?.DegreeStatement == true)
+            if (_context?.DegreeStatement != true)
             {
                 lbl_current_year.Text = "احصاء " + Func.Year_Desc(
                                                     _context?.CurrentYearData ?? false,
@@ -343,6 +346,7 @@ namespace School_Mang.PL.STD
                 .SetContext(c =>
             {
                 c.CurrentYearData = _context.CurrentYearData;
+                c.DegreeStatement = _context.DegreeStatement;
             }).Show(FRM_CURRENT_STD.Get_Current_Std);
                 ;
             

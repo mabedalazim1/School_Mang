@@ -184,6 +184,10 @@ namespace School_Mang.BL.STD
             => DAL.ExecQuery("SP_Get_Year_Desc",
                 SqlParam.Int("@year", year));
 
+        public DataTable Get_Year_By_Id(int yearId)
+            => DAL.ExecQuery("SP_Get_Year_By_Id",
+                SqlParam.Int("@Year_Id", yearId));
+
         public DataTable Get_Grade_Desc(int grade_id)
             => DAL.ExecQuery("SP_Get_Grade_Desc",
                 SqlParam.Int("@grade_id", grade_id));

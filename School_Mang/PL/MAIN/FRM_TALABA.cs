@@ -1,23 +1,17 @@
 ﻿using School_Mang.BL;
 using School_Mang.BL.Services;
 using School_Mang.PL.STD;
+using School_Mang.PL.STD.HOME;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace School_Mang.PL.MAIN
 {
     public partial class FRM_TALABA : Form
     {
-        // Get Std
-        BL.STD.CLS_STD std = new BL.STD.CLS_STD();
-        BL.USERS users = new BL.USERS();
+
+        private readonly UserService userService = new UserService();
+        private readonly StudentService studentService = new StudentService();
 
         // Form Closed
         private static FRM_TALABA frm_Talaba;
@@ -29,7 +23,7 @@ namespace School_Mang.PL.MAIN
         {
             get
             {
-                if (frm_Talaba == null)
+                if (frm_Talaba == null || frm_Talaba.IsDisposed)
                 {
                     frm_Talaba = new FRM_TALABA();
                     frm_Talaba.FormClosed += new FormClosedEventHandler(frm_Form_Closed);
@@ -48,7 +42,9 @@ namespace School_Mang.PL.MAIN
             }
 
             // Set User permission
-            switch (Properties.Settings.Default.permission_id)
+
+            var settings = Properties.Settings.Default;
+            switch (settings.permission_id)
             {
                 case 3:
                     card_new.Visible = false;
@@ -61,119 +57,118 @@ namespace School_Mang.PL.MAIN
         }
 
         // Change Pages
-        private void changePages(Panel pn, string lbl)
+        private void ChangePages(Panel pn, string lbl)
         {
-            FRM_MAIN.Get_Frm_Main.pn_home.Visible = false;
-            FRM_MAIN.Get_Frm_Main.pn_main.Controls.Clear();
-            FRM_MAIN.Get_Frm_Main.pn_main.Visible = false;
-            FRM_MAIN.Get_Frm_Main.lbl_main.Text = lbl;
-            FRM_MAIN.Get_Frm_Main.lbl_main.Visible = false;
-            FRM_MAIN.Get_Frm_Main.pn_main.BringToFront();
-            FRM_MAIN.Get_Frm_Main.pn_main.Controls.Add(pn);
-            FRM_MAIN.Get_Frm_Main.trans_a.ShowSync(FRM_MAIN.Get_Frm_Main.pn_main);
-            FRM_MAIN.Get_Frm_Main.lbl_main.Visible = true;
+            var frmMain = FRM_MAIN.Get_Frm_Main;
+            frmMain.pn_home.Visible = false;
+            frmMain.pn_main.Controls.Clear();
+            frmMain.pn_main.Visible = false;
+            frmMain.lbl_main.Text = lbl;
+            frmMain.lbl_main.Visible = false;
+            frmMain.pn_main.BringToFront();
+            frmMain.pn_main.Controls.Add(pn);
+            frmMain.trans_a.ShowSync(frmMain.pn_main);
+            frmMain.lbl_main.Visible = true;
         }
 
         // Hide New Year
-        private void cheack_New_Year()
+        private void CheckNewYear()
         {
             // Get Year
+            var stdData = FRM_STD_DATA.Get_Frm_Std_Data;
+            var stdReports = FRM_STD_REPORTS.Get_Frm_Std_Reports;
 
-            STD.HOME.FRM_STD_DATA.Get_Frm_Std_Data.lbl_year.Text = Properties.Settings.Default.Year_Desc;
-            STD.HOME.FRM_STD_REPORTS.Get_Frm_Std_Reports.lbl_cruunt_year.Text = Properties.Settings.Default.Year_Desc;
-            int new_year = Properties.Settings.Default.MyYear + 1;
-            STD.HOME.FRM_STD_DATA.Get_Frm_Std_Data.lbl_new_year.Text = std.Get_years(new_year).Rows[0][1].ToString();
-            STD.HOME.FRM_STD_REPORTS.Get_Frm_Std_Reports.lbl_new_year.Text = std.Get_years(new_year).Rows[0][1].ToString();
+            var settings = Properties.Settings.Default;
+            stdData.lbl_year.Text = settings.Year_Desc;
+            stdReports.lbl_cruunt_year.Text = settings.Year_Desc;
+            int new_year = settings.MyYear + 1;
+            var newYearText = studentService.GetYearName(new_year);
+
+            stdData.lbl_new_year.Text = newYearText;
+            stdReports.lbl_new_year.Text = newYearText;
 
             // Hide New Year Card If There Is no Student On New Year
-            int year_code = Properties.Settings.Default.year_cod + 1;
-            DataTable dt_count;
-            dt_count = std.Get_School_year_Data(year_code, 0, 0);
-            if (dt_count.Rows.Count == 0)
-            {
-                STD.HOME.FRM_STD_DATA.Get_Frm_Std_Data.card_new_year.Visible = false;
-                STD.HOME.FRM_STD_REPORTS.Get_Frm_Std_Reports.card_new_year.Visible = false;
-            }
-            else
-            {
-                STD.HOME.FRM_STD_DATA.Get_Frm_Std_Data.card_new_year.Visible = true;
-                STD.HOME.FRM_STD_REPORTS.Get_Frm_Std_Reports.card_new_year.Visible = true;
+            int year_code = settings.year_cod + 1;
 
-            }
+            bool hasStudents = studentService.HasStudentsInYear(year_code);
+
+            stdData.card_new_year.Visible = hasStudents;
+            stdReports.card_new_year.Visible = hasStudents;
+        }
+
+
+        private void GetAge()
+        {
+            //FRM_HESAB_SEN frm_sen = new STD.FRM_HESAB_SEN();
+
+            AppNavigation.Instance.Show<FRM_HESAB_SEN>();
+
+            //frm_sen.ShowDialog();
+        }
+        private void lbl_age_Click(object sender, EventArgs e)
+        {
+            GetAge();
         }
         private void pic_age_Click(object sender, EventArgs e)
         {
-            FRM_HESAB_SEN frm_sen = new STD.FRM_HESAB_SEN();
-            frm_sen.ShowDialog();
+            GetAge();
         }
 
-        private void lbl_age_Click(object sender, EventArgs e)
+        private void AddStudent()
         {
-            pic_age_Click(sender, e);
-        }
-
-        private void pic_add_std_Click(object sender, EventArgs e)
-        {
-
             AppNavigation.Instance.SetContext(
-                c=> c.OpenFormGetOsra = false )
-                .Show(FRM_ADD_STD.getAdd_Std_Frm); // تم التحقق
+                            c => c.OpenFormGetOsra = false)
+                            .Show(FRM_ADD_STD.getAdd_Std_Frm); // تم التحقق
 
             //STD.FRM_ADD_STD.getAdd_Std_Frm.ShowDialog();
         }
-
-        private void pic_elthak_Click(object sender, EventArgs e)
+        private void pic_add_std_Click(object sender, EventArgs e)
         {
-           
+            AddStudent();
+        }
+        private void lbl_add_std_Click(object sender, EventArgs e)
+        {
+            AddStudent();
+        }
 
+        private void ElthakStudent()
+        {
             AppNavigation.Instance.SetContext(c =>
             {
                 c.ElthakStd = true;
                 c.ElthakStdNextYear = false;
             })
                 .Show(FRM_GET_STD.Get_Student); // تم التحقق
-                 
+
             //STD.FRM_GET_STD.Get_Student.ShowDialog();
         }
-
-        private void lbl_add_std_Click(object sender, EventArgs e)
+        private void pic_elthak_Click(object sender, EventArgs e)
         {
-            pic_add_std_Click(sender, e);
+            ElthakStudent();
         }
-
 
         private void lbl_elthak_Click(object sender, EventArgs e)
         {
-            pic_elthak_Click(sender, e);
+            ElthakStudent();
         }
 
-        private void pic_current_stds_Click(object sender, EventArgs e)
-        {
-            lbl_current_stds_Click(sender, e);
-        }
+        
 
-
-        private void lbl_current_stds_Click(object sender, EventArgs e)
+        private void CurrentStudent()
         {
             try
             {
                 // Get Data From dataBase
-                cheack_New_Year();
-
+                CheckNewYear();
                 // Test Permissions
-                int user = Properties.Settings.Default.user_code;
-                DataTable dt_user = users.Get_User_Permission(user);
-                if (dt_user.Rows[0]["role_id"].ToString() == "1" &&
-                    dt_user.Rows[0]["permission_id"].ToString() == "1")
-                {
-                    STD.HOME.FRM_STD_DATA.Get_Frm_Std_Data.card_update_data.Visible = true;
-                }
-                else
-                {
-                    STD.HOME.FRM_STD_DATA.Get_Frm_Std_Data.card_update_data.Visible = false;
-                }
+                var settings = Properties.Settings.Default;
+                int user = settings.user_code;
+                bool isAdmin = userService.IsAdmin(user);
+
+                FRM_STD_DATA.Get_Frm_Std_Data.card_update_data.Visible = isAdmin;
+
                 // Get Std Data Form
-                changePages(STD.HOME.FRM_STD_DATA.Get_Frm_Std_Data.pn_std_home, "بيانات الطلاب");
+                ChangePages(FRM_STD_DATA.Get_Frm_Std_Data.pn_std_home, "بيانات الطلاب");
             }
             catch (Exception ex)
             {
@@ -181,49 +176,65 @@ namespace School_Mang.PL.MAIN
             }
         }
 
+        private void lbl_current_stds_Click(object sender, EventArgs e)
+        {
+            CurrentStudent();
+        }
+        private void pic_current_stds_Click(object sender, EventArgs e)
+        {
+            CurrentStudent();
+        }
+        private void Tahwelat()
+        {
+            FRM_STD_DATA.Get_Frm_Std_Data.TahwletFromStudent();
+        }
         private void lbl_tahwelat_Click(object sender, EventArgs e)
         {
-            PL.STD.HOME.FRM_STD_DATA.Get_Frm_Std_Data.lbl_tahwelat_Click(sender, e);
+            Tahwelat();
         }
 
         private void pic_tahwelat_Click(object sender, EventArgs e)
         {
-            lbl_tahwelat_Click(sender, e);
+            Tahwelat();
         }
-
-        private void lbl_ehsaa_Click(object sender, EventArgs e)
+        private void Ehsaa()
         {
             // Hide New Year Data
-            cheack_New_Year();
+            CheckNewYear();
             // Get Std Data Form
-            changePages(STD.HOME.FRM_STD_REPORTS.Get_Frm_Std_Reports.pn_std_home, "تقارير - احصائيات");
+            ChangePages(FRM_STD_REPORTS.Get_Frm_Std_Reports.pn_std_home, "تقارير - احصائيات");
+        }
+        private void lbl_ehsaa_Click(object sender, EventArgs e)
+        {
+            Ehsaa();
         }
 
         private void pic_ehsaa_Click(object sender, EventArgs e)
         {
-            lbl_ehsaa_Click(sender, e);
+            Ehsaa();
         }
-
-        private void lbl_eltehak_old_Click(object sender, EventArgs e)
+        private void EltehakOld()
         {
-
             AppNavigation.Instance.SetContext(c =>
             {
                 c.ElthakStd = true;
             })
                 .Show(FRM_CURRENT_STD.Get_Current_Std); // تم التحقق
-            
+
             //STD.FRM_CURRENT_STD.Get_Current_Std.ShowDialog();
+        }
+        private void lbl_eltehak_old_Click(object sender, EventArgs e)
+        {
+            EltehakOld();    
         }
 
         private void pic_eltehak_old_Click(object sender, EventArgs e)
         {
-            lbl_eltehak_old_Click(sender, e);
+            EltehakOld();
         }
 
-        private void lbl_bian_dragat_Click(object sender, EventArgs e)
+        private void BianDragat()
         {
-
             Waiting.Start();
 
             AppNavigation.Instance.SetContext(
@@ -237,17 +248,20 @@ namespace School_Mang.PL.MAIN
             //STD. FRM_CHOOSE_GRADE frm = new STD.FRM_CHOOSE_GRADE();
             //frm.ShowDialog();
         }
+        private void lbl_bian_dragat_Click(object sender, EventArgs e)
+        {
+            BianDragat();
+        }
 
         private void pic_bian_dragat_Click(object sender, EventArgs e)
         {
-            lbl_bian_dragat_Click(sender, e);
+            BianDragat();
         }
 
-        private void pic_elthak_next_year_Click(object sender, EventArgs e)
+        private void NextYear()
         {
-            
-
-            FRM_CURRENT_STD.Get_Current_Std.grade = 11;
+            const int LAST_GRADE = 11;
+            FRM_CURRENT_STD.Get_Current_Std.grade = LAST_GRADE;
             AppNavigation.Instance.SetContext(c =>
             {
                 c.ElthakStdNextYear = true;
@@ -255,18 +269,18 @@ namespace School_Mang.PL.MAIN
             })
                 .Show(FRM_CURRENT_STD.Get_Current_Std); // تم التحقق
 
-          
-           //FRM_CURRENT_STD.Get_Current_Std.ShowDialog();
+
+            //FRM_CURRENT_STD.Get_Current_Std.ShowDialog();
+        }
+        private void pic_elthak_next_year_Click(object sender, EventArgs e)
+        {
+            NextYear();
         }
 
         private void lbl_elthak_next_year_Click(object sender, EventArgs e)
         {
-            pic_elthak_next_year_Click(sender, e);
+            NextYear();
         }
 
-        private void FRM_TALABA_Load(object sender, EventArgs e)
-        {
-            
-        }
     }
 }

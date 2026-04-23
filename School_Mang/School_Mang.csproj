@@ -244,10 +244,17 @@
     <Compile Include="BL\NATEG\cls_NATAG_FUNCTIONS.cs" />
     <Compile Include="BL\NATEG\CLS_NATEG.cs" />
     <Compile Include="BL\NATEG\ExcelUtlity.cs" />
+    <Compile Include="BL\Services\AgeService.cs" />
     <Compile Include="BL\Services\AppSession.cs" />
     <Compile Include="BL\Services\INavigationAware.cs" />
+    <Compile Include="BL\Services\NationalIdService.cs" />
     <Compile Include="BL\Services\NavigationContext.cs" />
     <Compile Include="BL\Services\AppNavigation.cs" />
+    <Compile Include="BL\Services\StudentCodeService.cs" />
+    <Compile Include="BL\Services\StudentSaveService.cs" />
+    <Compile Include="BL\Services\StudentService.cs" />
+    <Compile Include="BL\Services\UserService.cs" />
+    <Compile Include="BL\Services\StudentDataMigrationService.cs" />
     <Compile Include="BL\SITE\CLS_ADD_USER.cs" />
     <Compile Include="BL\SITE\CLS_MANGE_SITE.cs" />
     <Compile Include="BL\SITE\CLS_Merge_Data.cs" />

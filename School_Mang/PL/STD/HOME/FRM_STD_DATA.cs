@@ -2,19 +2,18 @@
 using School_Mang.BL.Services;
 using School_Mang.PL.MAIN;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using System.Windows.Forms;
 
 namespace School_Mang.PL.STD.HOME
 {
     public partial class FRM_STD_DATA : Form
     {
+        private readonly StudentService studentService = new StudentService();
+
+        private readonly StudentDataMigrationService dataMigration = new StudentDataMigrationService();
+
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
 
         CLS_STD_FUNCATIONS Func = new CLS_STD_FUNCATIONS();
@@ -62,8 +61,7 @@ namespace School_Mang.PL.STD.HOME
         }
 
 
-
-        private void lbl_current_stds_Click(object sender, EventArgs e)
+        private void GetCurrentStudent()
         {
             Waiting.Start();
             // Globals.Current_Year_Data = true; // تحذف
@@ -77,13 +75,21 @@ namespace School_Mang.PL.STD.HOME
                         .Show<FRM_CHOOSE_GRADE>();
             // تم التعديل علي نظام Navgation
         }
+        private void lbl_current_stds_Click(object sender, EventArgs e)
+        {
+            GetCurrentStudent();
+        }
 
-        private void lbl_back_Click(object sender, EventArgs e)
+        private void GoBack()
         {
             Func.changePages(MAIN.FRM_TALABA.Get_Frm_Talaba.pn_home);
         }
+        private void lbl_back_Click(object sender, EventArgs e)
+        {
+            GoBack();
+        }
 
-        private void lbl_show_stds_Click(object sender, EventArgs e)
+        private void ShowStudent()
         {
             DataTable Dt = std.Get_All_Std_Data(0);
             if (Dt.Rows.Count == 0)
@@ -95,11 +101,13 @@ namespace School_Mang.PL.STD.HOME
 
             // لا يوجد context في هذا الجزء
         }
-
-        private void lbl_get_osra_data_Click(object sender, EventArgs e)
+        private void lbl_show_stds_Click(object sender, EventArgs e)
         {
+            ShowStudent();
+        }
 
-
+        private void GetOsraData()
+        {
             //FRM_GET_OSRAA.Get_Osra_data.ShowDialog();
 
             AppNavigation.Instance
@@ -112,47 +120,52 @@ namespace School_Mang.PL.STD.HOME
             //OpenFormGetOsra  تم وغالبا الفورم لا يستخدم 
             // لأانه بيكرر هناك اسناد true
         }
-
-        private void lbl_add_std_Click(object sender, EventArgs e)
+        private void lbl_get_osra_data_Click(object sender, EventArgs e)
         {
+            GetOsraData();
+        }
 
-
-
+        private void AddStudent()
+        {
             // FRM_ADD_STD.getAdd_Std_Frm.ShowDialog(); //frm = new FRM_ADD_STD();
             //frm.ShowDialog();
             AppNavigation.Instance
                             .SetContext(c =>
                             {
-                            c.OpenFormGetOsra = false;
+                                c.OpenFormGetOsra = false;
                             })
                             .Show(FRM_ADD_STD.getAdd_Std_Frm); // تم التحقق
+        }
+        private void lbl_add_std_Click(object sender, EventArgs e)
+        {
+            AddStudent();
         }
 
         private void pic_current_stds_Click(object sender, EventArgs e)
         {
-            lbl_current_stds_Click(sender, e);
+            GetCurrentStudent();
         }
 
         private void pic_add_std_Click(object sender, EventArgs e)
         {
-            lbl_add_std_Click(sender, e);
+            AddStudent();
         }
 
         private void pic_get_osra_data_Click(object sender, EventArgs e)
         {
-            lbl_get_osra_data_Click(sender, e);
+            GetOsraData();
         }
 
         private void pic_show_stds_Click(object sender, EventArgs e)
         {
-            lbl_show_stds_Click(sender, e);
+            ShowStudent();
         }
 
-        private void lbl_next_year_Click(object sender, EventArgs e)
+        private void NextYearData()
         {
-           
-                                                  //FRM_CHOOSE_GRADE frm = new FRM_CHOOSE_GRADE();
-                                                  //frm.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
+
+            //FRM_CHOOSE_GRADE frm = new FRM_CHOOSE_GRADE();
+            //frm.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
 
             AppNavigation.Instance
                        .WithOwner(FRM_MAIN.Get_Frm_Main)
@@ -163,202 +176,109 @@ namespace School_Mang.PL.STD.HOME
                        })
                        .Show<FRM_CHOOSE_GRADE>(); // تم التحقق
         }
+        private void lbl_next_year_Click(object sender, EventArgs e)
+        {
+           NextYearData();
+        }
 
         private void pic_next_year_Click(object sender, EventArgs e)
         {
-            lbl_next_year_Click(sender, e);
+            NextYearData();
         }
 
         private void pic_back_Click(object sender, EventArgs e)
         {
-            lbl_back_Click(sender, e);
+            GoBack();
         }
 
-        public void lbl_tahwelat_Click(object sender, EventArgs e)
+        public void TahwletFromStudent()
         {
             AppNavigation.Instance
-                .Show(FRM_TAHWELAT.Get_Frm_Tahwelat);
+               .Show(FRM_TAHWELAT.Get_Frm_Tahwelat);
 
             //FRM_TAHWELAT.Get_Frm_Tahwelat.ShowDialog();
+        }
+        public void lbl_tahwelat_Click(object sender, EventArgs e)
+        {
+            TahwletFromStudent();
         }
 
         private void pic_tahwelat_Click(object sender, EventArgs e)
         {
-            lbl_tahwelat_Click(sender, e);
+            TahwletFromStudent();
         }
 
-        private void lbl_std_details_Click(object sender, EventArgs e)
+        void StudentDetails()
         {
             AppNavigation.Instance
-                .SetContext(c =>
-                {
-                    c.DetailsStd = true;
-                })
-                .Show(FRM_CURRENT_STD.Get_Current_Std); // تم التحقق
-               
+               .SetContext(c =>
+               {
+                   c.DetailsStd = true;
+               })
+               .Show(FRM_CURRENT_STD.Get_Current_Std); // تم التحقق
+
             //FRM_CURRENT_STD.Get_Current_Std.ShowDialog();
+        }
+        private void lbl_std_details_Click(object sender, EventArgs e)
+        {
+            StudentDetails();
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            lbl_std_details_Click(sender, e);
+            StudentDetails();
         }
 
-        private void lbl_update_std_data_Click(object sender, EventArgs e)
+        private void UpdateNewYearData()
         {
-            DataTable dt_verify_std;
-            int year = Properties.Settings.Default.year_cod;
-            int new_year = year + 1;
 
-
-            if (MSG.DialogeMsg("هل تريد ترحيل بيانات العام الحالى ..!") == DialogResult.Yes)
+            if (MSG.DialogeMsg("هل تريد ترحيل بيانات العام الحالى ..!") != DialogResult.Yes)
             {
-                // Update Student New Year Data
-
-                Waiting.Start();
-                DataTable Dt = std.Get_School_year_Data(year, 0, 0);
-                if (Dt.Rows.Count == 0)
-                {
-                    MSG.ErrorMesg("لا يوجد بيانات مسجلة .. !");
-                    Waiting.Stop();
-                    return;
-                }
-                else
-                {
-                    try
-                    {
-
-                        foreach (DataRow row in Dt.Rows)
-                        {
-                            int new_grade = 0;
-                            int new_class_id = 0;
-                            string std_code = row["std_code"].ToString();
-                            int grade = Convert.ToInt32(row["Grade_Id"]);
-                            int std_status = Convert.ToInt32(row["Std_Status_Id"]);
-                            int claas_id = Convert.ToInt32(row["Class_Id"]);
-                            switch (grade)
-                            {
-                                case 10:
-                                    new_grade = 11;
-                                    new_class_id = claas_id + 2;
-
-                                    break;
-                                case 11:
-                                    new_grade = 1;
-                                    new_class_id = claas_id + 2;
-
-                                    break;
-                                case 1:
-                                case 2:
-                                case 3:
-                                case 4:
-                                case 5:
-                                    new_grade = grade + 1;
-                                    new_class_id = claas_id + 3;
-                                    break;
-                                case 6:
-                                    new_grade = grade + 1;
-                                    if (claas_id == 20)
-                                    {
-                                        new_class_id = 23;
-                                    }
-                                    else
-                                    {
-                                        new_class_id = 24;
-                                    }
-                                    break;
-                                case 7:
-                                case 8:
-                                    new_grade = grade + 1;
-                                    new_class_id = claas_id + 2;
-                                    break;
-                                case 9:
-                                    new_grade = 0;
-                                    break;
-
-                                default:
-                                    new_grade = 0;
-                                    break;
-                            }
-
-                            dt_verify_std = std.Verify_Std_School_Code(std_code, new_year);
-                            if (dt_verify_std.Rows.Count != 0)
-                            {
-                                // Delete Std
-                                if (std_status == 3 || std_status == 6 || new_grade == 0)
-                                {
-                                    std.Delete_School_Std_Data(std_code, new_year);
-                                }
-                                else
-                                {
-                                    // Update Std
-                                    std.Update_New_School_Std(
-                                    std_code,
-                                    new_grade,
-                                    2,
-                                    new_class_id,
-                                    new_year);
-                                }
-
-                            }
-                            else
-                            {
-                                // Add New School Std
-                                if (new_grade != 0 && std_status != 6 && std_status != 3)
-                                {
-
-                                    std.Add_School_Std_Data(
-                                        std_code,
-                                        new_year,
-                                        new_grade,
-                                        2,
-                                        new_class_id);
-                                }
-                            }
-
-                        }
-                        Waiting.Stop();
-                        MSG.MyMesg("تم تحديث بيانات العام الجديد بنجاح");
-                        // Update data
-                        DataTable dt_count;
-                        dt_count = std.Get_School_year_Data(new_year, 0, 0);
-                        if (dt_count.Rows.Count != 0)
-                        {
-                            FRM_STD_DATA.Get_Frm_Std_Data.card_new_year.Visible = true;
-                        }
-
-                    }
-                    catch (Exception ex)
-                    {
-                        MSG.ErrorMesg(ex.Message);
-                        Waiting.Stop();
-                        return;
-                    }
-                }
-
+                MSG.ErrorMesg("تم إلغاء التحديث");
+                return;
             }
-            else
+
+            try
+            {
+                Waiting.Start();
+
+                dataMigration.PromoteYear();
+
+                MSG.MyMesg("تم تحديث بيانات العام الجديد بنجاح");
+            }
+            catch (Exception ex)
+            {
+                MSG.ErrorMesg(ex.Message);
+            }
+            finally
             {
                 Waiting.Stop();
-                MSG.ErrorMesg("تم إلغاء تحديث بيانات العام الجديد..!");
             }
+        }
+        private void lbl_update_std_data_Click(object sender, EventArgs e)
+        {
+            UpdateNewYearData();
         }
 
         private void pic_update_std_data_Click(object sender, EventArgs e)
         {
-            lbl_update_std_data_Click(sender, e);
+            UpdateNewYearData();
         }
 
-        private void lbl_to_excel_Click(object sender, EventArgs e)
+        void ExeclData()
         {
             AppNavigation.Instance.Show(FRM_TOEXCEL.get_frm_To_Excel);
 
-           // FRM_TOEXCEL.get_frm_To_Excel.ShowDialog();
+            // FRM_TOEXCEL.get_frm_To_Excel.ShowDialog();
+        }
+        private void lbl_to_excel_Click(object sender, EventArgs e)
+        {
+            ExeclData();
         }
 
         private void pic_to_excel_Click(object sender, EventArgs e)
         {
-            lbl_to_excel_Click(sender, e);
+            ExeclData();
         }
     }
 }

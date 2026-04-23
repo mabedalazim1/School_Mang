@@ -1,16 +1,8 @@
-﻿using DevExpress.XtraEditors;
-using School_Mang.BL;
+﻿using School_Mang.BL;
 using School_Mang.BL.Services;
 using School_Mang.BL.STD;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
@@ -21,7 +13,8 @@ namespace School_Mang.PL.STD
     public partial class FRM_ADD_STD : Form, INavigationAware
     {
         private NavigationContext _context;
-
+        private readonly StudentCodeService _codeService = new StudentCodeService();
+        private readonly StudentSaveService _saveService = new StudentSaveService();
         public void SetNavigation(NavigationContext context)
         {
             _context = context ?? new NavigationContext();
@@ -40,7 +33,7 @@ namespace School_Mang.PL.STD
         HESAB_SEN Hesab_sen = new BL.HESAB_SEN();
         string[] sen = { };
 
-        
+
 
         CLS_STD_FUNCATIONS Std_Func = new CLS_STD_FUNCATIONS();
 
@@ -150,144 +143,31 @@ namespace School_Mang.PL.STD
             move_y = e.Y;
         }
 
-        private bool test_std_cod(int code)
+       
+        private void SaveStdData()
         {
-            DataTable std_Dt = std.Verify_Std_Code(Convert.ToString(code));
-            if (std_Dt.Rows.Count == 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-
-        }
-
-        private int Verify_Std_Code(string sdt_code)
-        {
-
-            Boolean code_status = false;
-            int code = Convert.ToInt32(sdt_code);
-            // Verify Student Code 
 
             try
             {
-                while (!code_status)
-                {
-                    if (test_std_cod(code))
-                    {
-                        int myCode = code + 1;
-                        if (test_std_cod(myCode))
-                        {
-                            code_status = true;
-                        }
+                _saveService.SaveStudent(
+                                         txt_std_name.Text,
+                                         txt_nat.Text,
+                                         Convert.ToInt32(cmb_sana.SelectedValue),
+                                         Convert.ToInt32(cmb_grade.SelectedValue),
+                                         Convert.ToInt32(cmb_type.SelectedValue),
+                                         Convert.ToInt32(cmb_national.SelectedValue),
+                                         Convert.ToInt32(cmb_religion.SelectedValue),
+                                         Convert.ToInt32(cmb_hala.SelectedValue),
+                                         Convert.ToInt32(txt_osra_id.Text));
 
-                    }
-                    code += 1;
-                }
-            }
-            catch (Exception e)
-            {
-                MSG.ErrorMesg(e.Message);
-            }
-            return code;
-
-        }
-
-        private void Save_Std_Data()
-        {
-            int count_std;
-            int sdt_code;
-
-            // Student Code
-            string year = cmb_sana.Text.ToString().Substring(2, 2);
-            string grade = "";
-            switch (cmb_grade.SelectedValue)
-            {
-                case 1:
-                case 2:
-                case 3:
-                case 4:
-                case 5:
-                case 6:
-                case 7:
-                case 8:
-                case 9:
-
-                    grade = cmb_grade.SelectedValue.ToString() + "000";
-
-                    break;
-                case 10:
-                    grade = "0100";
-                    break;
-
-                case 11:
-                    grade = "0200";
-                    break;
-
-                default:
-
-                    break;
-            }
-
-            DataTable Dt = std.GET_Code_Std_Grade(Convert.ToInt32(cmb_grade.SelectedValue), Convert.ToInt32(cmb_sana.SelectedValue), "yes");
-            count_std = Convert.ToInt32(Dt.Rows[0]["count_std"]);
-            sdt_code = Convert.ToInt32(year + grade) + count_std + 1;
-
-            // Verify Student Code 
-
-            if (!test_std_cod(sdt_code))
-            {
-                sdt_code = Verify_Std_Code(sdt_code.ToString());
-            }
-
-            try
-            {
-
-                // Add Std Data 
-
-                sen = Hesab_sen.Nat_HesabSen(txt_nat.Text, Convert.ToInt32(cmb_sana.GetItemText(cmb_sana.SelectedItem).Substring(0, 4)) - 1);
-
-                string tarikh = sen[5].ToString() + "-" + sen[4].ToString() + "-" + sen[3].ToString();
-
-                std.Add_Std_Data(Convert.ToString(sdt_code),
-                        txt_std_name.Text,
-                        txt_nat.Text,
-                        Convert.ToDateTime(tarikh),
-                        Convert.ToInt32(cmb_type.SelectedValue),
-                        Convert.ToInt32(cmb_national.SelectedValue),
-                        Convert.ToInt32(cmb_religion.SelectedValue),
-                        Convert.ToInt32(cmb_hala.SelectedValue),
-                        Convert.ToInt32(cmb_grade.SelectedValue),
-                        Convert.ToInt32(cmb_sana.SelectedValue),
-                        Convert.ToInt32(txt_osra_id.Text));
-
-                MSG.MyMesg("تم إضافة الطالب: " + txt_std_name.Text + ": كود  " + sdt_code.ToString());
-
-                txt_nat.Text = "";
-                txt_sen.Text = "";
-                txt_std_name.Text = "";
-                txt_tarikh.Text = "";
-                txt_father_name.Text = "";
-                txt_father_tel.Text = "";
-                txt_mother_name.Text = "";
-                txt_mother_tel.Text = "";
-                txt_wazifa.Text = "";
-                txt_osra_id.Text = "";
-                txt_adrs.Text = "";
-                txt_nat.Focus();
-
-
+                MSG.MyMesg("تم إضافة الطالب: " + txt_std_name.Text + ": كود  " + "".ToString());
+                ClearForm();
             }
             catch (Exception ex)
             {
                 MSG.ErrorMesg(ex.Message);
                 MSG.ErrorMesg(" حدث خطأ أثناء عملية الحفظ");
-                Waiting.Stop();
-
                 return;
-
             }
             finally
             {
@@ -296,6 +176,23 @@ namespace School_Mang.PL.STD
 
         }
 
+        private void ClearForm()
+        {
+            txt_nat.Clear();
+            txt_sen.Clear();
+            txt_std_name.Clear();
+            txt_tarikh.Clear();
+            txt_father_name.Clear();
+            txt_father_tel.Clear();
+            txt_mother_name.Clear();
+            txt_mother_tel.Clear();
+            txt_wazifa.Clear();
+            txt_osra_id.Clear();
+            txt_adrs.Clear();
+            txt_nat.Focus();
+        }
+        //----------------------------------
+        // أخر التعديل
         private void Update_Std_Data()
         {
             Waiting.Start();
@@ -398,7 +295,7 @@ namespace School_Mang.PL.STD
                 frm.LoadOsraData();
                 frm.Visible = true;
 
-               // FRM_GET_OSRAA.Get_Osra_data.txt_osra_data_OnValueChanged(sender, e);
+                // FRM_GET_OSRAA.Get_Osra_data.txt_osra_data_OnValueChanged(sender, e);
                 //FRM_GET_OSRAA.Get_Osra_data.Visible = true;
             }
             else if (_context?.AddFromGetStd == true)
@@ -483,7 +380,7 @@ namespace School_Mang.PL.STD
 
             if (_context?.UpdateStdData != true)
             {
-                Save_Std_Data();
+                SaveStdData();
             }
             else if (_context?.UpdateStdData == true)
             {
@@ -617,12 +514,12 @@ namespace School_Mang.PL.STD
                 }).Show<FRM_GET_OSRAA>(); // تم التحقق
 
 
-               /* FRM_GET_OSRAA frm = new FRM_GET_OSRAA
-                {
-                    status = "from_std"
-                };
-                frm.ShowDialog();
-               */
+                /* FRM_GET_OSRAA frm = new FRM_GET_OSRAA
+                 {
+                     status = "from_std"
+                 };
+                 frm.ShowDialog();
+                */
 
             }
             catch (Exception ex)

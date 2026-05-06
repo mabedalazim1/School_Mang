@@ -40,6 +40,7 @@ namespace School_Mang.PL.STD
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btn_talab_elthak = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btn_tahwel = new Bunifu.Framework.UI.BunifuThinButton2();
+            this.btn_del_std = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btn_new_std = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btn_close_b = new Bunifu.Framework.UI.BunifuThinButton2();
             this.panel4 = new System.Windows.Forms.Panel();
@@ -54,7 +55,6 @@ namespace School_Mang.PL.STD
             this.cmb_class = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.pic_help = new System.Windows.Forms.PictureBox();
-            this.btn_del_std = new Bunifu.Framework.UI.BunifuThinButton2();
             this.pn_top.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dt_std_data)).BeginInit();
@@ -165,6 +165,32 @@ namespace School_Mang.PL.STD
             this.btn_tahwel.TabIndex = 74;
             this.btn_tahwel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.btn_tahwel.Click += new System.EventHandler(this.btn_tahwel_Click);
+            // 
+            // btn_del_std
+            // 
+            this.btn_del_std.ActiveBorderThickness = 1;
+            this.btn_del_std.ActiveCornerRadius = 20;
+            this.btn_del_std.ActiveFillColor = System.Drawing.Color.Crimson;
+            this.btn_del_std.ActiveForecolor = System.Drawing.Color.White;
+            this.btn_del_std.ActiveLineColor = System.Drawing.Color.Crimson;
+            this.btn_del_std.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btn_del_std.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_del_std.BackgroundImage")));
+            this.btn_del_std.ButtonText = "حذف الطالب";
+            this.btn_del_std.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_del_std.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_del_std.ForeColor = System.Drawing.Color.Crimson;
+            this.btn_del_std.IdleBorderThickness = 1;
+            this.btn_del_std.IdleCornerRadius = 20;
+            this.btn_del_std.IdleFillColor = System.Drawing.Color.WhiteSmoke;
+            this.btn_del_std.IdleForecolor = System.Drawing.Color.Crimson;
+            this.btn_del_std.IdleLineColor = System.Drawing.Color.PaleVioletRed;
+            this.btn_del_std.Location = new System.Drawing.Point(208, 15);
+            this.btn_del_std.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_del_std.Name = "btn_del_std";
+            this.btn_del_std.Size = new System.Drawing.Size(169, 50);
+            this.btn_del_std.TabIndex = 18;
+            this.btn_del_std.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btn_del_std.Click += new System.EventHandler(this.btn_del_std_Click);
             // 
             // btn_new_std
             // 
@@ -423,32 +449,6 @@ namespace School_Mang.PL.STD
             this.pic_help.MouseLeave += new System.EventHandler(this.pic_help_MouseLeave);
             this.pic_help.MouseHover += new System.EventHandler(this.pic_help_MouseHover);
             // 
-            // btn_del_std
-            // 
-            this.btn_del_std.ActiveBorderThickness = 1;
-            this.btn_del_std.ActiveCornerRadius = 20;
-            this.btn_del_std.ActiveFillColor = System.Drawing.Color.Crimson;
-            this.btn_del_std.ActiveForecolor = System.Drawing.Color.White;
-            this.btn_del_std.ActiveLineColor = System.Drawing.Color.Crimson;
-            this.btn_del_std.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.btn_del_std.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_del_std.BackgroundImage")));
-            this.btn_del_std.ButtonText = "حذف الطالب";
-            this.btn_del_std.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_del_std.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_del_std.ForeColor = System.Drawing.Color.Crimson;
-            this.btn_del_std.IdleBorderThickness = 1;
-            this.btn_del_std.IdleCornerRadius = 20;
-            this.btn_del_std.IdleFillColor = System.Drawing.Color.WhiteSmoke;
-            this.btn_del_std.IdleForecolor = System.Drawing.Color.Crimson;
-            this.btn_del_std.IdleLineColor = System.Drawing.Color.PaleVioletRed;
-            this.btn_del_std.Location = new System.Drawing.Point(208, 15);
-            this.btn_del_std.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btn_del_std.Name = "btn_del_std";
-            this.btn_del_std.Size = new System.Drawing.Size(169, 50);
-            this.btn_del_std.TabIndex = 18;
-            this.btn_del_std.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btn_del_std.Click += new System.EventHandler(this.btn_del_std_Click);
-            // 
             // FRM_CURRENT_STD
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -498,14 +498,14 @@ namespace School_Mang.PL.STD
         private System.Windows.Forms.Label lbl_count;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pic_help;
-        private System.Windows.Forms.ComboBox cmb_class;
         private System.Windows.Forms.Label label4;
         public System.Windows.Forms.ComboBox cmb_grade;
         public System.Windows.Forms.DataGridView dt_std_data;
         public Bunifu.Framework.UI.BunifuThinButton2 btn_tahwel;
         public Bunifu.Framework.UI.BunifuThinButton2 btn_new_std;
-        private Bunifu.Framework.UI.BunifuThinButton2 btn_talab_elthak;
         public Bunifu.Framework.UI.BunifuMaterialTextbox txt_std_data;
         public Bunifu.Framework.UI.BunifuThinButton2 btn_del_std;
+        public Bunifu.Framework.UI.BunifuThinButton2 btn_talab_elthak;
+        public System.Windows.Forms.ComboBox cmb_class;
     }
 }

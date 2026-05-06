@@ -20,46 +20,6 @@ namespace School_Mang.PL.MAIN
         String Username = "kpsftp";
         String Password = "kps2020";
 
-
-       
-        public string ToArabic(long num)
-        {
-            const string _arabicDigits = "۰۱۲۳٤٥٦۷۸۹";
-            try
-            {
-
-                return new string(num.ToString().Select(c => _arabicDigits[c - '0']).ToArray());
-            }
-            catch (Exception e)
-            {
-                MSG.ErrorMesg(e.Message);
-                return num.ToString();
-            }
-
-        }
-
-        // Get Year Desc
-        public string Year_Desc(
-                                bool currentYearData = false,
-                                bool detailsStd = false,
-                                bool elthakNextYear = false)
-        {
-            string desc = " العام الدراسى ";
-
-            if (currentYearData || detailsStd || elthakNextYear)
-            {
-                desc += ToArabic(Properties.Settings.Default.MyYear - 1) + " - " +
-                        ToArabic(Properties.Settings.Default.MyYear);
-            }
-            else
-            {
-                desc += ToArabic(Properties.Settings.Default.MyYear) + " - " +
-                        ToArabic(Properties.Settings.Default.MyYear + 1);
-            }
-
-            return desc;
-        }
-
         public void DowanloadDataBase(string LocalDestinationFilename, string RemoteFileName)
         {
             try

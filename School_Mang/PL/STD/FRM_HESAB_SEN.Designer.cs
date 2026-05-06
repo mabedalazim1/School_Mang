@@ -368,7 +368,24 @@ namespace School_Mang.PL.STD
             "2020",
             "2021",
             "2022",
-            "2023"});
+            "2023",
+            "2024",
+            "2025",
+            "2026",
+            "2027",
+            "2028",
+            "2029",
+            "2030",
+            "2031",
+            "2032",
+            "2033",
+            "2034",
+            "2035",
+            "2036",
+            "2037",
+            "2038",
+            "2039",
+            "2040"});
             this.cmb_year.Location = new System.Drawing.Point(26, 36);
             this.cmb_year.Name = "cmb_year";
             this.cmb_year.RightToLeft = System.Windows.Forms.RightToLeft.Yes;

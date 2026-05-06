@@ -61,7 +61,7 @@ namespace School_Mang.PL.SITE
             cmb_grade.ValueMember = "Grade_Id";
             cmb_grade.SelectedValue = 1;
 
-            cmb_class.DataSource = std.Get_Class_Id(1);
+            cmb_class.DataSource = std.Get_Grad_Data(1);
             cmb_class.DisplayMember = "Class_Desc";
             cmb_class.ValueMember = "Class_Id";
 
@@ -583,7 +583,7 @@ namespace School_Mang.PL.SITE
 
         private void cmb_grade_DropDownClosed(object sender, EventArgs e)
         {
-            cmb_class.DataSource = std.Get_Class_Id(Convert.ToInt32(cmb_grade.SelectedValue));
+            cmb_class.DataSource = std.Get_Grad_Data(Convert.ToInt32(cmb_grade.SelectedValue));
 
         }
     }

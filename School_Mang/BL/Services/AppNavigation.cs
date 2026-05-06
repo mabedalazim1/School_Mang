@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace School_Mang.BL.Services
@@ -10,14 +11,41 @@ namespace School_Mang.BL.Services
 
         public static AppNavigation Instance => _instance.Value;
 
-        public static NavigationContext CurrentContext { get; private set; }
-
         private NavigationContext _context;
         private Form _owner;
 
+        public event Action<NavigationContext> ContextChanged;
+
+        public NavigationContext GetContext()
+        {
+            return _context;
+        }
+
         private AppNavigation()
         {
+            // default context
             _context = new NavigationContext();
+        }
+
+        // =========================
+        // Attach Navigation
+        // =========================
+        private void AttachNavigation(Form form, NavigationContext context)
+        {
+            if (form is INavigationAware aware)
+                aware.SetNavigation(context);
+
+            if (form is INavigationAwareLoaded loaded)
+            {
+                EventHandler handler = null;
+                handler = (s, e) =>
+                {
+                    form.Shown -= handler;
+                    loaded.OnNavigatedTo();
+                };
+
+                form.Shown += handler;
+            }
         }
 
         // =========================
@@ -30,59 +58,75 @@ namespace School_Mang.BL.Services
         }
 
         // =========================
-        // Context
+        // Context (NEW SAFE VERSION)
         // =========================
         public AppNavigation SetContext(Action<NavigationContext> config)
         {
+            // 🔥 Always create fresh context per navigation
             _context = new NavigationContext();
+
             config?.Invoke(_context);
+
+            ContextChanged?.Invoke(_context);
+
             return this;
         }
 
         // =========================
         // Generic Show (T)
-        // isDialog = true  => ShowDialog
-        // isDialog = false => Show
         // =========================
         public Form Show<T>(
             bool isDialog = true,
             bool useOwner = true
         ) where T : Form, new()
         {
-            try
+            // 🔥 ensure context exists
+            if (_context == null)
+                _context = new NavigationContext();
+
+            var existing = Application.OpenForms.OfType<T>().FirstOrDefault();
+
+            if (existing != null)
             {
-                CurrentContext = _context;
+                if (existing.WindowState == FormWindowState.Minimized)
+                    existing.WindowState = FormWindowState.Normal;
 
-                var form = new T();
+                if (!existing.Visible)
+                    existing.Show();
 
-                if (form is INavigationAware aware)
-                    aware.SetNavigation(_context);
+                existing.BringToFront();
+                existing.Focus();
 
-                if (isDialog)
-                {
-                    if (useOwner && _owner != null)
-                        form.ShowDialog(_owner);
-                    else
-                        form.ShowDialog();
-                }
+                return existing;
+            }
+
+            var form = new T();
+
+            // 🔥 pass context reference (shared for this navigation only)
+            var context = _context;
+
+            AttachNavigation(form, context);
+
+            if (isDialog)
+            {
+                if (useOwner && _owner != null)
+                    form.ShowDialog(_owner);
                 else
-                {
-                    if (useOwner && _owner != null)
-                        form.Show(_owner);
-                    else
-                        form.Show();
-                }
-
-                return form;
+                    form.ShowDialog();
             }
-            finally
+            else
             {
-                CurrentContext = null;
+                if (useOwner && _owner != null)
+                    form.Show(_owner);
+                else
+                    form.Show();
             }
+
+            return form;
         }
 
         // =========================
-        // Instance Show (existing form)
+        // Instance Show
         // =========================
         public void Show(
             Form form,
@@ -90,8 +134,29 @@ namespace School_Mang.BL.Services
             bool useOwner = true
         )
         {
-            if (form is INavigationAware aware)
-                aware.SetNavigation(_context);
+            var existing = Application.OpenForms
+                .Cast<Form>()
+                .FirstOrDefault(f => f.GetType() == form.GetType());
+
+            if (existing != null)
+            {
+                if (existing.WindowState == FormWindowState.Minimized)
+                    existing.WindowState = FormWindowState.Normal;
+
+                if (!existing.Visible)
+                    existing.Show();
+
+                existing.BringToFront();
+                existing.Focus();
+                return;
+            }
+
+            if (_context == null)
+                _context = new NavigationContext();
+
+            var context = _context;
+
+            AttachNavigation(form, context);
 
             if (isDialog)
             {

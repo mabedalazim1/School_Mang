@@ -1,4 +1,6 @@
 ﻿using School_Mang.BL;
+using School_Mang.BL.Common;
+using School_Mang.BL.Enums;
 using School_Mang.BL.Services;
 using System;
 using System.Collections.Generic;
@@ -11,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace School_Mang.PL.STD
 {
     public partial class FRM_CHOOSE_GRADE : Form, INavigationAware
@@ -21,13 +24,10 @@ namespace School_Mang.PL.STD
         public void SetNavigation(NavigationContext context)
         {
             _context = context;
-            ApplyContext();
+            
         }
 
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
-
-        MAIN.CLS_FUNCATIONS Func = new MAIN.CLS_FUNCATIONS();
-
         DataTable dt_count = new DataTable();
         int year_code = Properties.Settings.Default.year_cod;
         int year;
@@ -39,16 +39,10 @@ namespace School_Mang.PL.STD
         public FRM_CHOOSE_GRADE()
         {
             InitializeComponent();
-
-           ApplyContext();
-           
            
         }
-        private void ApplyContext()
-        {
-           // MSG.MyMesg(_context.CurrentYearData.ToString());
-        }
-            int move;
+            
+        int move;
         int move_x;
         int move_y;
 
@@ -68,11 +62,11 @@ namespace School_Mang.PL.STD
             string[] row = new string[]
             {
                 "KG 1",
-                Func.ToArabic(dt_count.Select("Grade_Id = 10").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id = 10  and Gender_Id =1").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id = 10  and Gender_Id =2").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id = 10 and Religion_Id =1").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id = 10 and Religion_Id =2").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id = 10").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id = 10  and Gender_Id =1").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id = 10  and Gender_Id =2").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id = 10 and Religion_Id =1").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id = 10 and Religion_Id =2").Length),
                 "10"
         };
             dt_std_data.Rows.Add(row);
@@ -80,11 +74,11 @@ namespace School_Mang.PL.STD
             row = new string[]
             {
                 "KG 2",
-                Func.ToArabic(dt_count.Select("Grade_Id = 11").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id = 11  and Gender_Id =1").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id = 11  and Gender_Id =2").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id = 11 and Religion_Id =1").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id = 11 and Religion_Id =2").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id = 11").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id = 11  and Gender_Id =1").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id = 11  and Gender_Id =2").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id = 11 and Religion_Id =1").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id = 11 and Religion_Id =2").Length),
                 "11"
         };
             dt_std_data.Rows.Add(row);
@@ -92,11 +86,11 @@ namespace School_Mang.PL.STD
             row = new string[]
             {
                 "جملة رياض أطفال",
-                Func.ToArabic(dt_count.Select("Grade_Id >9").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id >9  and Gender_Id =1").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id >9  and Gender_Id =2").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id >9 and Religion_Id =1").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id >9 and Religion_Id =2").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id >9").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id >9  and Gender_Id =1").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id >9  and Gender_Id =2").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id >9 and Religion_Id =1").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id >9 and Religion_Id =2").Length),
                 "10"
         };
             dt_std_data.Rows.Add(row);
@@ -104,11 +98,11 @@ namespace School_Mang.PL.STD
             row = new string[]
             {
                 "الأول ب",
-                Func.ToArabic(dt_count.Select("Grade_Id =1").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =1  and Gender_Id =1").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =1  and Gender_Id =2").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =1 and Religion_Id =1").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =1 and Religion_Id =2").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =1").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =1  and Gender_Id =1").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =1  and Gender_Id =2").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =1 and Religion_Id =1").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =1 and Religion_Id =2").Length),
                 "1"
         };
             dt_std_data.Rows.Add(row);
@@ -116,11 +110,11 @@ namespace School_Mang.PL.STD
             row = new string[]
             {
                 "الثانى ب",
-                Func.ToArabic(dt_count.Select("Grade_Id =2").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =2  and Gender_Id =1").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =2  and Gender_Id =2").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =2 and Religion_Id =1").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =2 and Religion_Id =2").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =2").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =2  and Gender_Id =1").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =2  and Gender_Id =2").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =2 and Religion_Id =1").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =2 and Religion_Id =2").Length),
                 "2"
         };
             dt_std_data.Rows.Add(row);
@@ -128,11 +122,11 @@ namespace School_Mang.PL.STD
             row = new string[]
            {
                 "الثالث ب",
-                Func.ToArabic(dt_count.Select("Grade_Id =3").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =3  and Gender_Id =1").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =3  and Gender_Id =2").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =3 and Religion_Id =1").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =3 and Religion_Id =2").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =3").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =3  and Gender_Id =1").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =3  and Gender_Id =2").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =3 and Religion_Id =1").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =3 and Religion_Id =2").Length),
                 "3"
        };
             dt_std_data.Rows.Add(row);
@@ -141,11 +135,11 @@ namespace School_Mang.PL.STD
             row = new string[]
          {
                 "الرابع ب",
-                Func.ToArabic(dt_count.Select("Grade_Id =4").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =4  and Gender_Id =1").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =4  and Gender_Id =2").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =4 and Religion_Id =1").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =4 and Religion_Id =2").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =4").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =4  and Gender_Id =1").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =4  and Gender_Id =2").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =4 and Religion_Id =1").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =4 and Religion_Id =2").Length),
                 "4"
      };
             dt_std_data.Rows.Add(row);
@@ -153,11 +147,11 @@ namespace School_Mang.PL.STD
             row = new string[]
            {
                 "الخامس ب",
-                Func.ToArabic(dt_count.Select("Grade_Id =5").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =5  and Gender_Id =1").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =5  and Gender_Id =2").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =5 and Religion_Id =1").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =5 and Religion_Id =2").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =5").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =5  and Gender_Id =1").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =5  and Gender_Id =2").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =5 and Religion_Id =1").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =5 and Religion_Id =2").Length),
                 "5"
        };
             dt_std_data.Rows.Add(row);
@@ -165,11 +159,11 @@ namespace School_Mang.PL.STD
             row = new string[]
           {
                 "السادس ب",
-                Func.ToArabic(dt_count.Select("Grade_Id =6").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =6  and Gender_Id =1").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =6  and Gender_Id =2").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =6 and Religion_Id =1").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =6 and Religion_Id =2").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =6").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =6  and Gender_Id =1").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =6  and Gender_Id =2").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =6 and Religion_Id =1").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =6 and Religion_Id =2").Length),
                 "6"
       };
             dt_std_data.Rows.Add(row);
@@ -177,11 +171,11 @@ namespace School_Mang.PL.STD
             row = new string[]
             {
                 "جملة المرحلة الإبتدائية",
-                Func.ToArabic(dt_count.Select("Grade_Id < 7").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id < 7  and Gender_Id =1").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id < 7  and Gender_Id =2").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id < 7 and Religion_Id =1").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id < 7 and Religion_Id =2").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id < 7").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id < 7  and Gender_Id =1").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id < 7  and Gender_Id =2").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id < 7 and Religion_Id =1").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id < 7 and Religion_Id =2").Length),
                 "1"
         };
             dt_std_data.Rows.Add(row);
@@ -190,11 +184,11 @@ namespace School_Mang.PL.STD
             row = new string[]
          {
                 "الأول ع",
-                Func.ToArabic(dt_count.Select("Grade_Id =7").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =7  and Gender_Id =1").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =7  and Gender_Id =2").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =7 and Religion_Id =1").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =7 and Religion_Id =2").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =7").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =7  and Gender_Id =1").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =7  and Gender_Id =2").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =7 and Religion_Id =1").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =7 and Religion_Id =2").Length),
                 "7"
      };
             dt_std_data.Rows.Add(row);
@@ -202,11 +196,11 @@ namespace School_Mang.PL.STD
             row = new string[]
            {
                 "الثانى ع",
-                Func.ToArabic(dt_count.Select("Grade_Id =8").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =8  and Gender_Id =1").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =8  and Gender_Id =2").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =8 and Religion_Id =1").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =8 and Religion_Id =2").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =8").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =8  and Gender_Id =1").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =8  and Gender_Id =2").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =8 and Religion_Id =1").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =8 and Religion_Id =2").Length),
                 "8"
        };
             dt_std_data.Rows.Add(row);
@@ -214,11 +208,11 @@ namespace School_Mang.PL.STD
             row = new string[]
           {
                 "الثالث ع",
-                Func.ToArabic(dt_count.Select("Grade_Id =9").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =9  and Gender_Id =1").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =9  and Gender_Id =2").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =9 and Religion_Id =1").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id =9 and Religion_Id =2").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =9").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =9  and Gender_Id =1").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =9  and Gender_Id =2").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =9 and Religion_Id =1").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id =9 and Religion_Id =2").Length),
                 "9"
       };
             dt_std_data.Rows.Add(row);
@@ -226,11 +220,11 @@ namespace School_Mang.PL.STD
             row = new string[]
             {
                 "جملة المرحلة الإعدادية",
-                Func.ToArabic(dt_count.Select("Grade_Id > 6 and  Grade_Id < 10").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id > 6 and Grade_Id < 10  and Gender_Id =1").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id > 6 and Grade_Id < 10  and Gender_Id =2").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id > 6 and Grade_Id < 10 and Religion_Id =1").Length),
-                Func.ToArabic(dt_count.Select("Grade_Id > 6 and Grade_Id < 10 and Religion_Id =2").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id > 6 and  Grade_Id < 10").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id > 6 and Grade_Id < 10  and Gender_Id =1").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id > 6 and Grade_Id < 10  and Gender_Id =2").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id > 6 and Grade_Id < 10 and Religion_Id =1").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id > 6 and Grade_Id < 10 and Religion_Id =2").Length),
                 "7"
         };
             dt_std_data.Rows.Add(row);
@@ -238,11 +232,11 @@ namespace School_Mang.PL.STD
             row = new string[]
             {
                 "الجملة العامة",
-                Func.ToArabic(dt_count.Select("Grade_Id >0").Length),
-                Func.ToArabic(dt_count.Select("Gender_Id =1").Length),
-                Func.ToArabic(dt_count.Select("Gender_Id =2").Length),
-                Func.ToArabic(dt_count.Select("Religion_Id =1").Length),
-                Func.ToArabic(dt_count.Select("Religion_Id =2").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Grade_Id >0").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Gender_Id =1").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Gender_Id =2").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Religion_Id =1").Length),
+                SchoolFormatter.ToArabic(dt_count.Select("Religion_Id =2").Length),
                 "0"
         };
             dt_std_data.Rows.Add(row);
@@ -290,15 +284,13 @@ namespace School_Mang.PL.STD
             btn_close_b_Click(sender, e);
         }
 
-        private void FRM_CHOOSE_GRADE_Load(object sender, EventArgs e)
+        private void LoadData()
         {
-            MSG.MyMesg(_context.DegreeStatement.ToString()+ " Bian");
-
             Waiting.Start();
             if (_context != null && _context.CurrentYearData)
             {
                 year = year_code;
-               
+
             }
             else
             {
@@ -307,22 +299,30 @@ namespace School_Mang.PL.STD
             dt_count = std.Get_School_year_Data(year, 0, 0);
 
             Add_Data();
+            int myYear = Properties.Settings.Default.MyYear;
 
-            if (_context?.DegreeStatement != true)
+            if (_context?.StudentCase.HasFlag(GetStudentCase.DegreeStatement) != true)
             {
-                lbl_current_year.Text = "احصاء " + Func.Year_Desc(
-                                                    _context?.CurrentYearData ?? false,
-                                                    _context?.DetailsStd ?? false,
-                                                    _context?.ElthakStdNextYear ?? false);
+
+                lbl_current_year.Text = "احصاء " + SchoolFormatter.Year_Desc(
+                     myYear,
+                      _context?.CurrentYearData ?? false,
+                      _context?.StudentCase.HasFlag(GetStudentCase.StudentDetails) ?? false,
+                      _context?.StudentCase.HasFlag(GetStudentCase.ElthakStdNextYear) ?? false);
             }
             else
             {
-                lbl_current_year.Text = "بيانات " + Func.Year_Desc(
-                                                    _context?.CurrentYearData ?? false,
-                                                    _context?.DetailsStd ?? false,
-                                                    _context?.ElthakStdNextYear ?? false);
+                lbl_current_year.Text = "بيانات " + SchoolFormatter.Year_Desc(
+                     myYear,
+                     _context?.CurrentYearData ?? false,
+                     _context?.StudentCase.HasFlag(GetStudentCase.StudentDetails) ?? false,
+                     _context?.StudentCase.HasFlag(GetStudentCase.ElthakStdNextYear) ?? false);
             }
             Waiting.Stop();
+        }
+        private void FRM_CHOOSE_GRADE_Load(object sender, EventArgs e)
+        {
+            LoadData(); 
         }
 
         private void btn_close_b_Click(object sender, EventArgs e)
@@ -341,18 +341,27 @@ namespace School_Mang.PL.STD
             }
             FRM_CURRENT_STD.Get_Current_Std.grade = grade;
 
+
             AppNavigation.Instance
                 .WithOwner(MAIN.FRM_MAIN.Get_Frm_Main)
                 .SetContext(c =>
             {
                 c.CurrentYearData = _context.CurrentYearData;
-                c.DegreeStatement = _context.DegreeStatement;
+
+                if (_context.StudentCase.HasFlag(GetStudentCase.DegreeStatement))
+                {
+                    c.StudentCase |= GetStudentCase.DegreeStatement;
+                }
+                if (_context.StudentCase.HasFlag(GetStudentCase.ElthakStdNextYear))
+                {
+                    c.StudentCase |= GetStudentCase.ElthakStdNextYear;
+                }
+
             }).Show(FRM_CURRENT_STD.Get_Current_Std);
-                ;
-            
+                
+
             //FRM_CURRENT_STD.Get_Current_Std.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
-            this.Hide();
-            this.Dispose();
+            this.Close();
             Waiting.Stop();
 
         }

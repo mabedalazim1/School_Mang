@@ -76,7 +76,6 @@ namespace School_Mang.PL.STD
             {
                 Waiting.Stop();
             }
-            Waiting.Stop();
             return nat;
 
         }

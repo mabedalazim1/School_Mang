@@ -3,7 +3,7 @@ using School_Mang.BL.Services;
 using School_Mang.PL.MAIN;
 using System;
 using System.Data;
-
+using School_Mang.BL.Enums;
 using System.Windows.Forms;
 
 namespace School_Mang.PL.STD.HOME
@@ -113,7 +113,9 @@ namespace School_Mang.PL.STD.HOME
             AppNavigation.Instance
                         .SetContext(c =>
                         {
-                            c.OpenFormGetOsra = true; // تأكد من استخدامها فى الفورم الى بتستدعيه
+                            c.OsraMode = GetOsraMode.OpenFormGetOsra;
+
+                            //c.OpenFormGetOsra = true; // تأكد من استخدامها فى الفورم الى بتستدعيه
                         })
                         .Show(FRM_GET_OSRAA.Get_Osra_data);
 
@@ -132,7 +134,9 @@ namespace School_Mang.PL.STD.HOME
             AppNavigation.Instance
                             .SetContext(c =>
                             {
-                                c.OpenFormGetOsra = false;
+                                c.OsraMode = GetOsraMode.Normal;
+                                c.StudentMode = GetStudentMode.AddNewStudent;
+                                //c.OpenFormGetOsra = false;
                             })
                             .Show(FRM_ADD_STD.getAdd_Std_Frm); // تم التحقق
         }
@@ -163,7 +167,6 @@ namespace School_Mang.PL.STD.HOME
 
         private void NextYearData()
         {
-
             //FRM_CHOOSE_GRADE frm = new FRM_CHOOSE_GRADE();
             //frm.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
 
@@ -172,7 +175,7 @@ namespace School_Mang.PL.STD.HOME
                        .SetContext(c =>
                        {
                            c.CurrentYearData = false;
-                           c.Year = Properties.Settings.Default.year_cod;
+                           c.StudentCase = GetStudentCase.ElthakStdNextYear;
                        })
                        .Show<FRM_CHOOSE_GRADE>(); // تم التحقق
         }
@@ -213,7 +216,7 @@ namespace School_Mang.PL.STD.HOME
             AppNavigation.Instance
                .SetContext(c =>
                {
-                   c.DetailsStd = true;
+                   c.StudentCase = GetStudentCase.StudentDetails;
                })
                .Show(FRM_CURRENT_STD.Get_Current_Std); // تم التحقق
 

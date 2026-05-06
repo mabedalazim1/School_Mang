@@ -1,5 +1,6 @@
 ﻿using School_Mang.BL;
 using School_Mang.BL.Services;
+using School_Mang.BL.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -76,7 +77,7 @@ namespace School_Mang.PL.STD
             cmb_hala.DisplayMember = "StatusDesc";
             cmb_hala.ValueMember = "Std_Status_Id";
 
-            cmb_class.DataSource = std.Get_Class_Id(1);
+            cmb_class.DataSource = std.Get_Grad_Data(1);
             cmb_class.DisplayMember = "Class_Desc";
             cmb_class.ValueMember = "Class_Id";
 
@@ -141,7 +142,7 @@ namespace School_Mang.PL.STD
 
         private void cmb_grade_SelectedIndexChanged(object sender, EventArgs e)
         {
-            cmb_class.DataSource = std.Get_Class_Id(Convert.ToInt32(cmb_grade.SelectedValue));
+            cmb_class.DataSource = std.Get_Grad_Data(Convert.ToInt32(cmb_grade.SelectedValue));
 
         }
 
@@ -151,7 +152,7 @@ namespace School_Mang.PL.STD
             try
             {
                 //IF Tahweel To School Get New Year
-                if (_context?.TaheewlToSchool == true)
+                if (_context?.StudentCase.HasFlag(GetStudentCase.TaheewlToSchool) == true)
                 {
                     cmb_sana.SelectedValue = (Properties.Settings.Default.year_cod) + 1;
 
@@ -165,7 +166,7 @@ namespace School_Mang.PL.STD
                     Convert.ToInt32(cmb_class.SelectedValue)
                     );
 
-                if (_context?.TaheewlToSchool != true)
+                if (_context?.StudentCase.HasFlag(GetStudentCase.TaheewlToSchool) != true)
                 {
                     MSG.MyMesg("تم حفظ البيانات");
 

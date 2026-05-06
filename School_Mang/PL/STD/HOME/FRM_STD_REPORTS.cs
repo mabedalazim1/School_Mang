@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using School_Mang.BL;
 using School_Mang.BL.Services;
+using School_Mang.BL.Enums;
 
 namespace School_Mang.PL.STD.HOME
 {
@@ -49,7 +50,7 @@ namespace School_Mang.PL.STD.HOME
             }
         }
 
-        private void Open_Report(string title, NavigationContext.ReportDataType type )
+        private void Open_Report(string title, ReportDataType type )
         {
             var frm = FRM_KAEMA_GRADE.Get_Frm_Kaema_Grade;
             frm.label11.Text = title;
@@ -94,22 +95,22 @@ namespace School_Mang.PL.STD.HOME
 
         private void lbl_kwaam_fasl_Click(object sender, EventArgs e)
         {
-            Open_Report("قوائم الفصول",
-                NavigationContext.ReportDataType.OpenKaema);
+            Open_Report("قوائم الفصول", ReportDataType.OpenKaema);
+               
         }
 
         private void lbl_kwaam_sen_Click(object sender, EventArgs e)
         {
             FRM_KAEMA_GRADE.Get_Frm_Kaema_Grade.chk_sort.Visible = true;
           
-            Open_Report("تدرج السن", 
-                NavigationContext.ReportDataType.OpenTadargSen);
+            Open_Report("تدرج السن", ReportDataType.OpenTadargSen);
+                
         }
 
         private void lbl_segel_Click(object sender, EventArgs e)
         {
-            Open_Report("سجل الطلاب", 
-                NavigationContext.ReportDataType.OpenSegel);
+            Open_Report("سجل الطلاب", ReportDataType.OpenSegel);
+                
         }
 
         private void pic__kwaam_sen_Click(object sender, EventArgs e)
@@ -129,8 +130,8 @@ namespace School_Mang.PL.STD.HOME
 
         private void lbl_41_new_Click(object sender, EventArgs e)
         {
-            Open_Report("41 مستجدين", 
-                NavigationContext.ReportDataType.Open41New);
+            Open_Report("41 مستجدين", ReportDataType.Open41New);
+               
         }
 
         private void pic_41_new_Click(object sender, EventArgs e)
@@ -141,14 +142,13 @@ namespace School_Mang.PL.STD.HOME
         private void lbl_transfer_from_Click(object sender, EventArgs e)
         {
 
-            Open_Report("محولون من المدرسة", 
-                NavigationContext.ReportDataType.OpenTransferFrom);
+            Open_Report("محولون من المدرسة", ReportDataType.OpenTransferFrom);
+                
         }
 
         private void lbl_transfer_to_Click(object sender, EventArgs e)
         {
-            Open_Report("محولون إلى المدرسة", 
-                NavigationContext.ReportDataType.OpenTransferFrom);
+            Open_Report("محولون إلى المدرسة", ReportDataType.OpenTransferFrom);
         }
 
         private void pic_transfer_from_Click(object sender, EventArgs e)
@@ -190,7 +190,7 @@ namespace School_Mang.PL.STD.HOME
                 .SetContext(c =>
                 {
                     c.CurrentYearData = true;
-                    c.DegreeStatement = true;
+                    c.StudentCase = GetStudentCase.DegreeStatement;
                 }).Show<FRM_CHOOSE_GRADE>();
 
             //FRM_CHOOSE_GRADE frm = new FRM_CHOOSE_GRADE();

@@ -58,7 +58,7 @@ namespace School_Mang.PL.SITE
             cmb_relgien.DisplayMember = "ReligionDesc";
             cmb_relgien.ValueMember = "Religion_Id";
 
-            cmb_class.DataSource = std.Get_Class_Id(grade);
+            cmb_class.DataSource = std.Get_Grad_Data(grade);
             cmb_class.DisplayMember = "Class_Desc";
             cmb_class.ValueMember = "Class_Id";
 
@@ -92,7 +92,7 @@ namespace School_Mang.PL.SITE
 
         private void cmb_grade_SelectedIndexChanged(object sender, EventArgs e)
         {
-            cmb_class.DataSource = std.Get_Class_Id(Convert.ToInt32(cmb_grade.SelectedValue));
+            cmb_class.DataSource = std.Get_Grad_Data(Convert.ToInt32(cmb_grade.SelectedValue));
         }
 
         private void btn_close_b_Click(object sender, EventArgs e)

@@ -1,4 +1,6 @@
 ﻿using School_Mang.BL;
+using School_Mang.BL.DTO;
+using School_Mang.BL.Enums;
 using School_Mang.BL.Services;
 using System;
 using System.Collections.Generic;
@@ -13,7 +15,7 @@ using System.Windows.Forms;
 
 namespace School_Mang.PL.STD
 {
-    public partial class FRM_GET_STD : Form , INavigationAware
+    public partial class FRM_GET_STD : Form , INavigationAware, INavigationAwareLoaded
     {
 
         private NavigationContext _context;
@@ -23,6 +25,13 @@ namespace School_Mang.PL.STD
             _context = context;
         }
 
+        public void OnNavigatedTo()
+        {
+            if (_context?.OsraMode.HasFlag(GetOsraMode.OpenFromAddstudent) == true)
+                LoadStudentData();
+            if (_context?.OsraMode.HasFlag(GetOsraMode.EditStudent) == true)
+                LoadStudentData();
+        }
 
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
         DAL.TestConcation testConcation = new DAL.TestConcation();
@@ -227,7 +236,8 @@ namespace School_Mang.PL.STD
                 WithOwner(MAIN.FRM_MAIN.Get_Frm_Main)
                 .SetContext(c =>
                 {
-                    c.AddFromGetStd = true;
+                    c.OsraMode = GetOsraMode.AddFromGetStd;
+                    //c.AddFromGetStd = true;
                 }).Show(FRM_ADD_STD.getAdd_Std_Frm);
 
             //FRM_ADD_STD.getAdd_Std_Frm.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
@@ -268,63 +278,36 @@ namespace School_Mang.PL.STD
             var frm = FRM_ADD_STD.getAdd_Std_Frm;
             try
             {
-                frm.txt_std_code.Text =
-                  dt_std_data.CurrentRow.Cells["std_code"].Value.ToString();
-
-               frm.txt_nat.Text =
-                  dt_std_data.CurrentRow.Cells["الرقم القومى"].Value.ToString();
-
-               frm.txt_std_name.Text =
-                  dt_std_data.CurrentRow.Cells["std_name"].Value.ToString();
-
-               frm.cmb_type.SelectedValue =
-                 dt_std_data.CurrentRow.Cells["Gender_Id"].Value;
-
-               frm.cmb_grade.SelectedValue =
-                    dt_std_data.CurrentRow.Cells["Grade_Id"].Value;
-
-               frm.cmb_hala.SelectedValue =
-                   dt_std_data.CurrentRow.Cells["Std_Status_Id"].Value;
-
-               frm.cmb_national.SelectedValue =
-                  dt_std_data.CurrentRow.Cells["Nationality_Id"].Value;
-
-               frm.cmb_sana.SelectedValue =
-                  dt_std_data.CurrentRow.Cells["Year_Id"].Value;
-
-               frm.cmb_religion.SelectedValue =
-               dt_std_data.CurrentRow.Cells["Religion_Id"].Value;
-
-               frm.txt_osra_id.Text =
-                   dt_std_data.CurrentRow.Cells["id"].Value.ToString();
-
-               frm.txt_father_name.Text =
-                   dt_std_data.CurrentRow.Cells["اسم الأب"].Value.ToString();
-
-               frm.txt_adrs.Text =
-                    dt_std_data.CurrentRow.Cells["العنوان"].Value.ToString();
-
-               frm.txt_wazifa.Text =
-                    dt_std_data.CurrentRow.Cells["الوظيفة"].Value.ToString();
-
-               frm.txt_mother_name.Text =
-                    dt_std_data.CurrentRow.Cells["اسم الأم"].Value.ToString();
-
-               frm.txt_father_tel.Text =
-                    dt_std_data.CurrentRow.Cells["هاتف الأب"].Value.ToString();
-
-               frm.txt_mother_tel.Text =
-                    dt_std_data.CurrentRow.Cells["هاتف الأم"].Value.ToString();
-
-                // this.Close();
-                // this.Dispose();
+                var row = dt_std_data.CurrentRow;
+        
                 this.Visible = false;
 
                 AppNavigation.Instance.
                     WithOwner(MAIN.FRM_MAIN.Get_Frm_Main)
                     .SetContext(c =>
                     {
-                        c.UpdateStdData = true;
+                        c.StudentMode = GetStudentMode.UpdateStdData;
+
+                        c.StudentData = new StudentDTO
+                        {
+                            StdCode = row.Cells["std_code"].Value?.ToString(),
+                            Nat = row.Cells["الرقم القومى"].Value?.ToString(),
+                            StdName = row.Cells["std_name"].Value?.ToString(),
+
+                            GradeId = Convert.ToInt32(row.Cells["Grade_Id"].Value),
+                            YearId = Convert.ToInt32(row.Cells["Year_Id"].Value),
+                            GenderId = Convert.ToInt32(row.Cells["Gender_Id"].Value),
+                            ReligionId = Convert.ToInt32(row.Cells["Religion_Id"].Value),
+                            NationalityId = Convert.ToInt32(row.Cells["Nationality_Id"].Value),
+                            OsraId = Convert.ToInt32(row.Cells["id"].Value),
+
+                            FatherName = row.Cells["اسم الأب"].Value?.ToString(),
+                            MotherName = row.Cells["اسم الأم"].Value?.ToString(),
+                            Address = row.Cells["العنوان"].Value?.ToString(),
+                            Wazifa = row.Cells["الوظيفة"].Value?.ToString(),
+                            FatherTel = row.Cells["هاتف الأب"].Value?.ToString(),
+                            MotherTel = row.Cells["هاتف الأم"].Value?.ToString()
+                        };
                     }).Show(FRM_ADD_STD.getAdd_Std_Frm); // تم التحقق
 
                // FRM_ADD_STD.getAdd_Std_Frm.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
@@ -347,7 +330,7 @@ namespace School_Mang.PL.STD
                 dt_std_data.Columns["العنوان"].Width = 270;
                 dt_std_data_Click(sender, e);
 
-                if (_context?.ElthakStd == true)
+                if (_context?.StudentCase.HasFlag(GetStudentCase.ElthakStd) == true)
                 {
                     btn_new_std.Visible = false;
                     btn_del_std.Visible = false;
@@ -379,7 +362,7 @@ namespace School_Mang.PL.STD
 
         private void dt_std_data_DoubleClick(object sender, EventArgs e)
         {
-            if (_context?.ElthakStd == true)
+            if (_context?.StudentCase.HasFlag(GetStudentCase.ElthakStd) == true)
             {
                 btn_talab_elthak_Click(sender, e);
                 return;
@@ -426,6 +409,7 @@ namespace School_Mang.PL.STD
         private void btn_talab_elthak_Click(object sender, EventArgs e)
         {
             if (Verify_Std_Status()) return;
+
             var frmElthak = FRM_STD_ELTEHK.Get_Std_Eltehk;
             int grade = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Grade_Id"].Value);
             frmElthak.txt_std_code.Text = dt_std_data.CurrentRow.Cells["std_code"].Value.ToString();
@@ -458,7 +442,7 @@ namespace School_Mang.PL.STD
                 AppNavigation.Instance
                     .SetContext(c =>
                 {
-                    c.TaheewlToSchool = true;
+                    c.StudentCase = GetStudentCase.TaheewlToSchool;
                 })
                     .Show(FRM_TAHEEL_STD.Get_Tahweel_Std); // تم التحقق
 
@@ -470,7 +454,7 @@ namespace School_Mang.PL.STD
                     .WithOwner(MAIN.FRM_MAIN.Get_Frm_Main)
                     .SetContext(c =>
                 {
-                    c.TaheewlToSchool = true;
+                    c.StudentCase = GetStudentCase.TaheewlToSchool;
                 })
                     .Show(FRM_STD_ELTEHK.Get_Std_Eltehk);
 

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using School_Mang.BL;
 using CrystalDecisions.CrystalReports.Engine;
 using System.Windows.Forms;
+using School_Mang.BL.Services;
 
 namespace School_Mang.RPT
 {
@@ -53,10 +54,9 @@ namespace School_Mang.RPT
                 ReportDocument myReport = new ReportDocument();
                 myReport.Load(Application.StartupPath + @"/MyReports/rpt_Eltehak.rpt");
                 //rpt_Eltehak myReport = new rpt_Eltehak();
-                HESAB_SEN hesab_sen = new HESAB_SEN();
 
-                sen = hesab_sen.Nat_HesabSen(nat, sana);
-                string octber_date = sen[0] + " يوم - " + sen[1] + " شهر - " + sen[2] + " سنة";
+               var sen = AgeService.NatAgeHesabSen(nat, sana);
+               string octber_date = sen.Days + " يوم - " + sen.Months + " شهر - " + sen.Years + " سنة";
 
 
                 myReport.SetParameterValue("@std_code", std_code);
@@ -148,7 +148,6 @@ namespace School_Mang.RPT
                 ReportDocument myReport = new ReportDocument();
                 myReport.Load(Application.StartupPath + @"/MyReports/rpt_Tadarg_Sen.rpt");
                 //rpt_Tadarg_Sen myReport = new rpt_Tadarg_Sen();
-                HESAB_SEN hesab_sen = new HESAB_SEN();
 
                 int October_Sana =  year_id + 20;
               
@@ -173,7 +172,6 @@ namespace School_Mang.RPT
             {
                 ReportDocument myReport = new ReportDocument();
                 myReport.Load(Application.StartupPath + @"/MyReports/rpt_Segel_Data.rpt");
-                HESAB_SEN hesab_sen = new HESAB_SEN();
 
                 int October_Sana = year_id + 20;
                
@@ -203,7 +201,6 @@ namespace School_Mang.RPT
                 ReportDocument myReport = new ReportDocument();
                 myReport.Load(Application.StartupPath + @"/MyReports/rpt_Mostgdin_41.rpt");
                 //rpt_Tadarg_Sen myReport = new rpt_Tadarg_Sen();
-                HESAB_SEN hesab_sen = new HESAB_SEN();
 
                 int October_Sana = year_id + 20;
 

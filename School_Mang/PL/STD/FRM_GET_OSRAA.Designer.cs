@@ -1,7 +1,7 @@
 ﻿
 namespace School_Mang.PL.STD
 {
-    partial class FRM_GET_OSRAA
+    partial class FRM_GET_OSRAA 
     {
         /// <summary>
         /// Required designer variable.

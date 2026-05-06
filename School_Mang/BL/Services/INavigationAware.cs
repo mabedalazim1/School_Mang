@@ -10,4 +10,8 @@ namespace School_Mang.BL.Services
     {
         void SetNavigation(NavigationContext context);
     }
+    public interface INavigationAwareLoaded
+    {
+        void OnNavigatedTo();
+    }
 }

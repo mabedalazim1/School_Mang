@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using School_Mang.BL.Enums;
 
 namespace School_Mang.PL.STD
 {
@@ -71,8 +72,8 @@ namespace School_Mang.PL.STD
         {
             if (_context == null) return;
 
-            if (_context.CurrentReport == NavigationContext.ReportDataType.Open41New
-               || _context.CurrentReport == NavigationContext.ReportDataType.OpenTadargSen)
+            if (_context.CurrentReport == ReportDataType.Open41New
+               || _context.CurrentReport == ReportDataType.OpenTadargSen)
             {
                 cmb_grade.DataSource = std.Get_grades("yes");
             }
@@ -160,12 +161,12 @@ namespace School_Mang.PL.STD
             {
                 switch (_context.CurrentReport)
                 {
-                    case NavigationContext.ReportDataType.OpenKaema:
+                    case ReportDataType.OpenKaema:
 
                         Print_Kaema(grade);
                         break;
 
-                    case NavigationContext.ReportDataType.OpenTadargSen:
+                    case ReportDataType.OpenTadargSen:
 
                         if (std.Get_Tadrg_Sen(year_id, grade).Rows.Count == 0)
                         {
@@ -176,7 +177,7 @@ namespace School_Mang.PL.STD
                         RPT.OpenTadargSen(year_id, grade);
                         break;
 
-                    case NavigationContext.ReportDataType.OpenSegel:
+                    case ReportDataType.OpenSegel:
 
                         if (std.Get_Segel_Data(year_id, grade).Rows.Count == 0)
                         {
@@ -187,7 +188,7 @@ namespace School_Mang.PL.STD
                         RPT.OpenSegel(year_id, grade);
                         break;
 
-                    case NavigationContext.ReportDataType.Open41New:
+                    case ReportDataType.Open41New:
 
                         if (std.Get_Segel_Data(year_id, grade).Rows.Count == 0)
                         {
@@ -199,7 +200,7 @@ namespace School_Mang.PL.STD
 
                         break;
 
-                    case NavigationContext.ReportDataType.OpenTransferFrom:
+                    case ReportDataType.OpenTransferFrom:
 
                         if (std.Get_Trans_Reports(year_id - 1, 3, grade).Rows.Count == 0)
                         {
@@ -209,7 +210,7 @@ namespace School_Mang.PL.STD
                         RPT.OpenTahewl_Data(year_id - 1, 3, grade);
                         break;
 
-                    case NavigationContext.ReportDataType.OpenTransferTo:
+                    case ReportDataType.OpenTransferTo:
 
                         if (std.Get_Trans_Reports(year_id, 4, grade).Rows.Count == 0)
                         {
@@ -238,12 +239,12 @@ namespace School_Mang.PL.STD
             {
                 switch (_context.CurrentReport)
                 {
-                    case NavigationContext.ReportDataType.OpenKaema:
+                    case ReportDataType.OpenKaema:
 
                         Print_Kaema();
                         break;
 
-                    case NavigationContext.ReportDataType.OpenTadargSen:
+                    case ReportDataType.OpenTadargSen:
 
                         if (std.Get_Tadrg_Sen(year_id).Rows.Count == 0)
                         {
@@ -256,7 +257,7 @@ namespace School_Mang.PL.STD
                         RPT.OpenTadargSen(year_id);
                         break;
 
-                    case NavigationContext.ReportDataType.OpenSegel:
+                    case ReportDataType.OpenSegel:
 
                         if (std.Get_Segel_Data(year_id).Rows.Count == 0)
                         {
@@ -266,7 +267,7 @@ namespace School_Mang.PL.STD
                         RPT.OpenSegel(year_id);
                         break;
 
-                    case NavigationContext.ReportDataType.Open41New:
+                    case ReportDataType.Open41New:
 
                         if (std.Get_Segel_Data(year_id).Rows.Count == 0)
                         {
@@ -280,13 +281,13 @@ namespace School_Mang.PL.STD
 
                         break;
 
-                    case NavigationContext.ReportDataType.OpenTransferFrom:
+                    case ReportDataType.OpenTransferFrom:
 
                         if (MSG.DialogeErrMsg("سوف يتم عرض بيانات جميع الطلاب .. هل تريد المتابعة ؟ ") != DialogResult.Yes) return;
                         RPT.OpenTahewl_Data(year_id - 1, 3);
                         break;
 
-                    case NavigationContext.ReportDataType.OpenTransferTo:
+                    case ReportDataType.OpenTransferTo:
 
                         if (MSG.DialogeErrMsg("سوف يتم عرض بيانات جميع الطلاب .. هل تريد المتابعة ؟ ") != DialogResult.Yes) return;
                         RPT.OpenTahewl_Data(year_id, 4);

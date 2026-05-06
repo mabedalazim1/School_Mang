@@ -1,5 +1,6 @@
 ﻿using School_Mang.BL;
 using School_Mang.BL.Services;
+using School_Mang.BL.Services.STD;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,6 +11,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using School_Mang.BL.Enums;
 
 namespace School_Mang.PL.STD
 {
@@ -28,8 +30,6 @@ namespace School_Mang.PL.STD
         CLS_STD_FUNCATIONS Std_Func = new CLS_STD_FUNCATIONS();
         CLS_STD_FUNCATIONS function = new CLS_STD_FUNCATIONS();
 
-        BL.HESAB_SEN Hesab_sen = new BL.HESAB_SEN();
-        string[] sen = { };
 
         public int grade = 1;
         public int row_index = 0;
@@ -67,7 +67,6 @@ namespace School_Mang.PL.STD
                 frm_Update_School_Std = this;
             }
             ApplyContext();
-            
         }
 
         private void ApplyContext()
@@ -94,7 +93,7 @@ namespace School_Mang.PL.STD
             cmb_relgien.DisplayMember = "ReligionDesc";
             cmb_relgien.ValueMember = "Religion_Id";
 
-            cmb_class.DataSource = std.Get_Class_Id(grade);
+            cmb_class.DataSource = std.Get_Grad_Data(grade);
             cmb_class.DisplayMember = "Class_Desc";
             cmb_class.ValueMember = "Class_Id";
 
@@ -107,6 +106,30 @@ namespace School_Mang.PL.STD
             {
                 btn_save_data.Enabled = true;
             }
+
+        }
+
+        private void LoadEditData()
+        {
+            var d = _context?.StudentData;
+            if (d == null) return;
+
+            txt_osra_id.Text = d.OsraId.ToString();
+            txt_std_code.Text = d.StdCode;
+            txt_std_name.Text = d.StudentFullName;
+
+            txt_first_name.Text = d.StdName;
+            txt_nat.Text = d.Nat;
+
+            this.BeginInvoke(new Action(() =>
+            {
+                cmb_hala.SelectedValue = d.StudentStatus;
+                cmb_grade.SelectedValue = d.GradeId;
+                cmb_sana.SelectedValue = d.Sana;
+                cmb_gender.SelectedValue = d.GenderId;
+                cmb_class.SelectedValue = d.ClassId;
+                cmb_relgien.SelectedValue = d.ReligionId;
+            }));
 
         }
         int move;
@@ -135,7 +158,7 @@ namespace School_Mang.PL.STD
 
         private void cmb_grade_SelectedIndexChanged(object sender, EventArgs e)
         {
-            cmb_class.DataSource = std.Get_Class_Id(Convert.ToInt32(cmb_grade.SelectedValue));
+            cmb_class.DataSource = std.Get_Grad_Data(Convert.ToInt32(cmb_grade.SelectedValue));
         }
 
         private void btn_save_data_Click(object sender, EventArgs e)
@@ -231,16 +254,17 @@ namespace School_Mang.PL.STD
                     }
                 }
                 // Sen
-                sen = Hesab_sen.Nat_HesabSen(txt_nat.Text, Convert.ToInt32(cmb_sana.GetItemText(cmb_sana.SelectedItem).Substring(0, 4)) - 1);
+                 var sen = AgeService.NatAgeHesabSen(txt_nat.Text, Convert.ToInt32(cmb_sana.GetItemText(cmb_sana.SelectedItem).Substring(0, 4)) - 1);
 
-                string tarikh = sen[5].ToString() + "-" + sen[4].ToString() + "-" + sen[3].ToString();
-                
+                DateTime birthDate = new DateTime(sen.BirthYear, sen.BirthMonth, sen.BirthDay);
+
+
                 //Update Std_School
                 std.Update_School_Std_Data(
                     txt_std_code.Text,
                     txt_first_name.Text,
                     txt_nat.Text,
-                    Convert.ToDateTime(tarikh),
+                    birthDate,
                     Convert.ToInt32(cmb_grade.SelectedValue),
                     Convert.ToInt32(cmb_hala.SelectedValue),
                     Convert.ToInt32(cmb_class.SelectedValue),
@@ -249,20 +273,15 @@ namespace School_Mang.PL.STD
                     Convert.ToInt32(cmb_sana.SelectedValue));
 
                 // Update Data in Current Std Form
-
-      
                 var frm = FRM_CURRENT_STD.Get_Current_Std;
 
-                AppNavigation.Instance
-                        .SetContext(c =>
-                        {
-                            c.UpdateStdData = false;
-                            c.PostAction = () =>
-                            {
-                                frm.SelectRow(row_index);
-                            };
-                        }).Show(frm);
-                        
+                frm.Get_School_Year_Data();
+
+                frm.BeginInvoke(new Action(() =>
+                {
+                    frm.SelectRow(row_index);
+                }));
+
                 this.Close();
                 
                 MSG.MyMesg("تم حفظ البيانات");
@@ -295,7 +314,6 @@ namespace School_Mang.PL.STD
                 this.Close();
                 // Add Data
 
-                FRM_OSRAA_DATA.Get_Osra_data.state = "edit_from_Update_Std";
                 FRM_OSRAA_DATA.Get_Osra_data.txt_father_name.Text = Dt.Rows[0]["father_name"].ToString();
                 FRM_OSRAA_DATA.Get_Osra_data.txt_father_name.Enabled = false;
                 FRM_OSRAA_DATA.Get_Osra_data.txt_last_name.Text = Dt.Rows[0]["father_last_name"].ToString();
@@ -359,20 +377,23 @@ namespace School_Mang.PL.STD
                 {
                     if (txt_nat.Text != "")
                     {
-                         bool isUpdateMode = _context?.UpdateStdData ?? false;
+                        var mode = _context?.StudentMode ?? GetStudentMode.Normal;
+
+                        bool isUpdateMode = mode.HasFlag(GetStudentMode.UpdateStdData);
+
                         if (!Std_Func.Checked_Is_Numeric(txt_nat)) return;
                         if (Std_Func.Verify_Std_Nat(txt_std_code,txt_nat,isUpdateMode) == 1) return;
                         if (Std_Func.Verify_Osra_Nat(txt_nat) == 1) return;
-
-                        sen = Hesab_sen.Nat_HesabSen(txt_nat.Text, Convert.ToInt32(cmb_sana.GetItemText(cmb_sana.SelectedItem).Substring(0, 4)) - 1);
-                        if (sen != null)
+                        try
                         {
-                            txt_tarikh.Text = sen[3] + " / " + sen[4] + " / " + sen[5];
-                            txt_sen.Text = sen[0] + " يوم - " + sen[1] + " شهر - " + sen[2] + " سنة";
-                            cmb_gender.SelectedIndex = Hesab_sen.Chack_Type(txt_nat);
+                            var sen = AgeService.NatAgeHesabSen(txt_nat.Text, Convert.ToInt32(cmb_sana.GetItemText(cmb_sana.SelectedItem).Substring(0, 4)) - 1);
+                            txt_tarikh.Text = $"{sen.BirthDay} / {sen.BirthMonth} / {sen.BirthYear}";
+                            txt_sen.Text = $"{sen.Days} يوم - {sen.Months} شهر - {sen.Years} سنة";
+                            cmb_gender.SelectedIndex = GetTypeService.CheckType(txt_nat);
                         }
-                        else
+                        catch (Exception ex) 
                         {
+                            MSG.ErrorMesg(ex.Message);
                             txt_nat.BackColor = Color.MistyRose;
                             Waiting.Stop();
                             txt_nat.Focus();
@@ -394,7 +415,7 @@ namespace School_Mang.PL.STD
 
         private void FRM_UPDATE_SCHOOL_STD_Load(object sender, EventArgs e)
         {
-          
+            LoadEditData();
             txt_nat_Leave(sender, e);
             if (Convert.ToInt32(cmb_hala.SelectedValue) == 3 || Convert.ToInt32(cmb_hala.SelectedValue) == 4)
             {

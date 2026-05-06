@@ -1,4 +1,6 @@
-﻿using System;
+﻿using School_Mang.BL;
+using School_Mang.BL.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,14 +9,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using School_Mang.BL;
 
 namespace School_Mang.PL.STD
 {
     public partial class FRM_HESAB_SEN : Form
     {
-        // Load Bl HesabSen
-        BL.HESAB_SEN BL = new BL.HESAB_SEN();
         int move;
         int move_x;
         int move_y;
@@ -92,42 +91,63 @@ namespace School_Mang.PL.STD
                 int yy = Convert.ToInt32(cmb_year.SelectedItem);
                 int sana = Convert.ToInt32(cmb_chose_year.SelectedItem);
 
-                if (BL.HesabSen(dd, mm, yy, sana) != null)
+                try
                 {
+                    var result = AgeService.CalculateAge(dd, mm, yy, sana);
 
-                    lbl_day.Text = BL.HesabSen(dd, mm, yy, sana)[0];
-                    lbl_month.Text = BL.HesabSen(dd, mm, yy, sana)[1];
-                    lbl_year.Text = BL.HesabSen(dd, mm, yy, sana)[2];
+                    lbl_day.Text = result.Days.ToString();
+                    lbl_month.Text = result.Months.ToString();
+                    lbl_year.Text = result.Years.ToString();
                 }
-                else
+                catch (Exception ex)
                 {
+                    MSG.ErrorMesg(ex.Message);
                     lbl_day.Text = "";
                     lbl_month.Text = "";
                     lbl_year.Text = "";
+
+                    
                 }
+
             }
             // By Nat
             else
             {
                 if (txt_nat != null)
                 {
-
-                    int sana = Convert.ToInt32(cmb_chose_year.SelectedItem);
-                    if (txt_nat.TextLength == 14)
+                    try
                     {
-                        if (BL.Nat_HesabSen(txt_nat.Text, sana) != null)
+                        int sana = Convert.ToInt32(cmb_chose_year.SelectedItem);
+                        if (txt_nat.TextLength == 14)
                         {
-                            lbl_day.Text = BL.Nat_HesabSen(txt_nat.Text, sana)[0];
-                            lbl_month.Text = BL.Nat_HesabSen(txt_nat.Text, sana)[1];
-                            lbl_year.Text = BL.Nat_HesabSen(txt_nat.Text, sana)[2];
+                            string nat= txt_nat.Text;
+                            var result = AgeService.NatAgeHesabSen(nat, sana);
+                            lbl_day.Text = result.Days.ToString();
+                            lbl_month.Text = result.Months.ToString();
+                            lbl_year.Text = result.Years.ToString();
+
+                            /*if (BL.Nat_HesabSen(txt_nat.Text, sana) != null)
+                            {
+                                lbl_day.Text = BL.Nat_HesabSen(txt_nat.Text, sana)[0];
+                                lbl_month.Text = BL.Nat_HesabSen(txt_nat.Text, sana)[1];
+                                lbl_year.Text = BL.Nat_HesabSen(txt_nat.Text, sana)[2];
+                            }*/
+                        }
+                        else
+                        {
+                            MSG.ErrorMesg();
+                            txt_nat.Focus();
+                            return;
                         }
                     }
-                    else
+                    catch(Exception ex)
                     {
-                        MSG.ErrorMesg();
-                        txt_nat.Focus();
-                        return;
+                        MSG.ErrorMesg(ex.Message);
+                        lbl_day.Text = "";
+                        lbl_month.Text = "";
+                        lbl_year.Text = "";
                     }
+                    
                 }
                 else
                 {

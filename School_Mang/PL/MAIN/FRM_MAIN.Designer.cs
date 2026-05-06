@@ -30,7 +30,7 @@ namespace School_Mang.PL.MAIN
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            BunifuAnimatorNS.Animation animation2 = new BunifuAnimatorNS.Animation();
+            BunifuAnimatorNS.Animation animation3 = new BunifuAnimatorNS.Animation();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FRM_MAIN));
             this.pn_topbar = new System.Windows.Forms.Panel();
             this.btn_min = new DevExpress.XtraEditors.SimpleButton();
@@ -618,9 +618,9 @@ namespace School_Mang.PL.MAIN
             this.label6.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.label6.Location = new System.Drawing.Point(253, 4);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(93, 20);
+            this.label6.Size = new System.Drawing.Size(75, 20);
             this.label6.TabIndex = 8;
-            this.label6.Text = "2025-10-10";
+            this.label6.Text = "2026-5-3";
             // 
             // lbl_caption
             // 
@@ -643,13 +643,13 @@ namespace School_Mang.PL.MAIN
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.trans_a.SetDecoration(this.label2, BunifuAnimatorNS.DecorationType.None);
             this.label2.Font = new System.Drawing.Font("LBC", 9.749999F);
-            this.label2.ForeColor = System.Drawing.Color.DarkGreen;
+            this.label2.ForeColor = System.Drawing.Color.SteelBlue;
             this.label2.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.label2.Location = new System.Drawing.Point(59, 4);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(85, 16);
             this.label2.TabIndex = 5;
-            this.label2.Text = "نسخة تجريبية 7";
+            this.label2.Text = "نسخة تجريبية 8";
             // 
             // label3
             // 
@@ -681,22 +681,22 @@ namespace School_Mang.PL.MAIN
             // 
             this.trans_a.AnimationType = BunifuAnimatorNS.AnimationType.HorizSlide;
             this.trans_a.Cursor = null;
-            animation2.AnimateOnlyDifferences = true;
-            animation2.BlindCoeff = ((System.Drawing.PointF)(resources.GetObject("animation2.BlindCoeff")));
-            animation2.LeafCoeff = 0F;
-            animation2.MaxTime = 1F;
-            animation2.MinTime = 0F;
-            animation2.MosaicCoeff = ((System.Drawing.PointF)(resources.GetObject("animation2.MosaicCoeff")));
-            animation2.MosaicShift = ((System.Drawing.PointF)(resources.GetObject("animation2.MosaicShift")));
-            animation2.MosaicSize = 0;
-            animation2.Padding = new System.Windows.Forms.Padding(0);
-            animation2.RotateCoeff = 0F;
-            animation2.RotateLimit = 0F;
-            animation2.ScaleCoeff = ((System.Drawing.PointF)(resources.GetObject("animation2.ScaleCoeff")));
-            animation2.SlideCoeff = ((System.Drawing.PointF)(resources.GetObject("animation2.SlideCoeff")));
-            animation2.TimeCoeff = 0F;
-            animation2.TransparencyCoeff = 0F;
-            this.trans_a.DefaultAnimation = animation2;
+            animation3.AnimateOnlyDifferences = true;
+            animation3.BlindCoeff = ((System.Drawing.PointF)(resources.GetObject("animation3.BlindCoeff")));
+            animation3.LeafCoeff = 0F;
+            animation3.MaxTime = 1F;
+            animation3.MinTime = 0F;
+            animation3.MosaicCoeff = ((System.Drawing.PointF)(resources.GetObject("animation3.MosaicCoeff")));
+            animation3.MosaicShift = ((System.Drawing.PointF)(resources.GetObject("animation3.MosaicShift")));
+            animation3.MosaicSize = 0;
+            animation3.Padding = new System.Windows.Forms.Padding(0);
+            animation3.RotateCoeff = 0F;
+            animation3.RotateLimit = 0F;
+            animation3.ScaleCoeff = ((System.Drawing.PointF)(resources.GetObject("animation3.ScaleCoeff")));
+            animation3.SlideCoeff = ((System.Drawing.PointF)(resources.GetObject("animation3.SlideCoeff")));
+            animation3.TimeCoeff = 0F;
+            animation3.TransparencyCoeff = 0F;
+            this.trans_a.DefaultAnimation = animation3;
             this.trans_a.MaxAnimationTime = 500;
             // 
             // lbl_main
@@ -826,9 +826,9 @@ namespace School_Mang.PL.MAIN
             this.label5.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.label5.Location = new System.Drawing.Point(469, 64);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(94, 21);
+            this.label5.Size = new System.Drawing.Size(76, 21);
             this.label5.TabIndex = 10;
-            this.label5.Text = "2025-10-10";
+            this.label5.Text = "2026-5-3";
             // 
             // lbl_Year
             // 

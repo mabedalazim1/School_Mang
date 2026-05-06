@@ -1,4 +1,5 @@
 ﻿using School_Mang.BL;
+using School_Mang.BL.Enums;
 using School_Mang.BL.Services;
 using School_Mang.PL.STD;
 using School_Mang.PL.STD.HOME;
@@ -117,7 +118,9 @@ namespace School_Mang.PL.MAIN
         private void AddStudent()
         {
             AppNavigation.Instance.SetContext(
-                            c => c.OpenFormGetOsra = false)
+                            c => {
+                                c.OsraMode = GetOsraMode.Normal;
+                            })
                             .Show(FRM_ADD_STD.getAdd_Std_Frm); // تم التحقق
 
             //STD.FRM_ADD_STD.getAdd_Std_Frm.ShowDialog();
@@ -135,8 +138,7 @@ namespace School_Mang.PL.MAIN
         {
             AppNavigation.Instance.SetContext(c =>
             {
-                c.ElthakStd = true;
-                c.ElthakStdNextYear = false;
+                c.StudentCase = GetStudentCase.ElthakStd;
             })
                 .Show(FRM_GET_STD.Get_Student); // تم التحقق
 
@@ -217,7 +219,7 @@ namespace School_Mang.PL.MAIN
         {
             AppNavigation.Instance.SetContext(c =>
             {
-                c.ElthakStd = true;
+                c.StudentCase = GetStudentCase.ElthakStd;
             })
                 .Show(FRM_CURRENT_STD.Get_Current_Std); // تم التحقق
 
@@ -241,7 +243,7 @@ namespace School_Mang.PL.MAIN
                 c =>
                 {
                     c.CurrentYearData = true;
-                    c.DegreeStatement = true;
+                    c.StudentCase = GetStudentCase.DegreeStatement;
                 })
                 .Show<FRM_CHOOSE_GRADE>(); // تم التحقق
 
@@ -264,8 +266,7 @@ namespace School_Mang.PL.MAIN
             FRM_CURRENT_STD.Get_Current_Std.grade = LAST_GRADE;
             AppNavigation.Instance.SetContext(c =>
             {
-                c.ElthakStdNextYear = true;
-                c.ElthakStd = false;
+                c.StudentCase = GetStudentCase.ElthakStdNextYear;
             })
                 .Show(FRM_CURRENT_STD.Get_Current_Std); // تم التحقق
 

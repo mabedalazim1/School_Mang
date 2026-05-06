@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using School_Mang.BL;
 using School_Mang.BL.Services;
+using School_Mang.BL.Enums;
 
 namespace School_Mang.PL.STD
 {
@@ -310,7 +311,7 @@ namespace School_Mang.PL.STD
             AppNavigation.Instance
                 .SetContext(c =>
                 {
-                    c.UpdateTaheewl=true;
+                    c.StudentCase = GetStudentCase.UpdateTaheewl;
                 }).Show(frm);
 
            // FRM_TAHEEL_STD.Get_Tahweel_Std.ShowDialog();

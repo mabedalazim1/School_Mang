@@ -42,7 +42,7 @@ namespace School_Mang.BL.STD
         public DataTable Get_OSRA_STAT_MALE()
             => DAL.ExecQuery("SP_OSRA_STAT_MALE", null);
 
-        public DataTable Get_Class_Id(int Grade_Id)
+        public DataTable Get_Grad_Data(int Grade_Id)
             => DAL.ExecQuery("SP_Get_Class_Id",
                 SqlParam.Int("@Grade_Id", Grade_Id));
 

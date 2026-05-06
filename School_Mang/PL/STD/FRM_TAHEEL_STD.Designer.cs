@@ -32,6 +32,7 @@ namespace School_Mang.PL.STD
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FRM_TAHEEL_STD));
             this.panel4 = new System.Windows.Forms.Panel();
             this.pn_top = new System.Windows.Forms.Panel();
+            this.txt_trans_after = new System.Windows.Forms.TextBox();
             this.txt_year = new System.Windows.Forms.TextBox();
             this.txt_trans_code = new System.Windows.Forms.TextBox();
             this.txt_std_code = new System.Windows.Forms.TextBox();
@@ -61,7 +62,6 @@ namespace School_Mang.PL.STD
             this.chk_before = new System.Windows.Forms.CheckBox();
             this.chk_after = new System.Windows.Forms.CheckBox();
             this.txt_grade = new System.Windows.Forms.TextBox();
-            this.txt_trans_after = new System.Windows.Forms.TextBox();
             this.pn_top.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -93,6 +93,17 @@ namespace School_Mang.PL.STD
             this.pn_top.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pn_top_MouseDown);
             this.pn_top.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pn_top_MouseMove);
             this.pn_top.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pn_top_MouseUp);
+            // 
+            // txt_trans_after
+            // 
+            this.txt_trans_after.Enabled = false;
+            this.txt_trans_after.Font = new System.Drawing.Font("Noto Naskh Arabic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_trans_after.Location = new System.Drawing.Point(157, 25);
+            this.txt_trans_after.MaxLength = 11;
+            this.txt_trans_after.Name = "txt_trans_after";
+            this.txt_trans_after.Size = new System.Drawing.Size(19, 40);
+            this.txt_trans_after.TabIndex = 85;
+            this.txt_trans_after.Visible = false;
             // 
             // txt_year
             // 
@@ -252,7 +263,7 @@ namespace School_Mang.PL.STD
             this.txt_transfer_reason.Name = "txt_transfer_reason";
             this.txt_transfer_reason.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txt_transfer_reason.Size = new System.Drawing.Size(407, 40);
-            this.txt_transfer_reason.TabIndex = 4;
+            this.txt_transfer_reason.TabIndex = 3;
             this.txt_transfer_reason.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_transfer_reason_KeyPress);
             // 
             // txt_adrs
@@ -263,7 +274,7 @@ namespace School_Mang.PL.STD
             this.txt_adrs.Name = "txt_adrs";
             this.txt_adrs.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txt_adrs.Size = new System.Drawing.Size(407, 40);
-            this.txt_adrs.TabIndex = 3;
+            this.txt_adrs.TabIndex = 2;
             this.txt_adrs.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_adrs_KeyPress);
             // 
             // txt_guardian_name
@@ -274,7 +285,7 @@ namespace School_Mang.PL.STD
             this.txt_guardian_name.Name = "txt_guardian_name";
             this.txt_guardian_name.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txt_guardian_name.Size = new System.Drawing.Size(407, 40);
-            this.txt_guardian_name.TabIndex = 2;
+            this.txt_guardian_name.TabIndex = 1;
             this.txt_guardian_name.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_guardian_name_KeyPress);
             // 
             // txt_to_school
@@ -285,7 +296,7 @@ namespace School_Mang.PL.STD
             this.txt_to_school.Name = "txt_to_school";
             this.txt_to_school.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txt_to_school.Size = new System.Drawing.Size(407, 40);
-            this.txt_to_school.TabIndex = 1;
+            this.txt_to_school.TabIndex = 0;
             this.txt_to_school.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_to_school_KeyPress);
             // 
             // label5
@@ -491,17 +502,6 @@ namespace School_Mang.PL.STD
             this.txt_grade.Size = new System.Drawing.Size(15, 40);
             this.txt_grade.TabIndex = 79;
             this.txt_grade.Visible = false;
-            // 
-            // txt_trans_after
-            // 
-            this.txt_trans_after.Enabled = false;
-            this.txt_trans_after.Font = new System.Drawing.Font("Noto Naskh Arabic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_trans_after.Location = new System.Drawing.Point(157, 25);
-            this.txt_trans_after.MaxLength = 11;
-            this.txt_trans_after.Name = "txt_trans_after";
-            this.txt_trans_after.Size = new System.Drawing.Size(19, 40);
-            this.txt_trans_after.TabIndex = 85;
-            this.txt_trans_after.Visible = false;
             // 
             // FRM_TAHEEL_STD
             // 

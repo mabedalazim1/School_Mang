@@ -32,6 +32,25 @@ namespace School_Mang.BL.Services
         {
             return _std.Get_School_year_Data(yearCode, p1, p2);
         }
+        public DataTable GetStudentsByYear(int year, int gradeId, int classId)
+        {
+            return _std.Get_School_year_Data(year, gradeId, classId);
+        }
+        public DataTable GetGradeData(int gradeId)
+        {
+            return _std.Get_Grad_Data(gradeId);
+        }
+        public DataTable SearchSchoolyearData(int year,
+                                              int grade,
+                                              int classId,
+                                              string name)
+        {
+            return _std.Search_School_year_Data(year, grade, classId, name);
+        }
 
+        public void DeleteSchoolStdData(string stdCode, int year)
+        {
+            _std.Delete_School_Std_Data(stdCode, year);
+        }
     }
 }

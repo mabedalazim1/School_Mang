@@ -24,6 +24,8 @@ namespace School_Mang.BL.DTO
         public int StudentStatus {  get; set; }
         public int Sana {  get; set; }
         public int ClassId { get; set; }
+        public int TransferStatus { get; set; }
+        public string TransferReason { get; set; }
 
         // بيانات الأسرة
         public string FatherName { get; set; }

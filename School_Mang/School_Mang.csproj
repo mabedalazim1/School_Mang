@@ -240,12 +240,14 @@
     <Compile Include="BL\Common\SchoolDateHelper.cs" />
     <Compile Include="BL\Common\SchoolFormatter.cs" />
     <Compile Include="BL\DTO\StudentDTO.cs" />
+    <Compile Include="BL\DTO\TransferRequest.cs" />
     <Compile Include="BL\Enums\StdudentMode.cs" />
     <Compile Include="BL\Enums\ReportDataType.cs" />
     <Compile Include="BL\ExcelUtils\ExcelValidator.cs" />
     <Compile Include="BL\ExcelUtils\ValidationResult.cs" />
     <Compile Include="BL\Globals.cs" />
     <Compile Include="BL\LOGIN\CLS_LOGIN.cs" />
+    <Compile Include="BL\Models\TransferData.cs" />
     <Compile Include="BL\MSG.cs" />
     <Compile Include="BL\NATEG\cls_NATAG_FUNCTIONS.cs" />
     <Compile Include="BL\NATEG\CLS_NATEG.cs" />
@@ -266,6 +268,7 @@
     <Compile Include="BL\Services\STD\StudentSaveService.cs" />
     <Compile Include="BL\Services\STD\StudentService.cs" />
     <Compile Include="BL\Services\STD\StudentUpdateService.cs" />
+    <Compile Include="BL\Services\STD\TransferService.cs" />
     <Compile Include="BL\Services\UserService.cs" />
     <Compile Include="BL\Services\STD\StudentDataMigrationService.cs" />
     <Compile Include="BL\SITE\CLS_ADD_USER.cs" />

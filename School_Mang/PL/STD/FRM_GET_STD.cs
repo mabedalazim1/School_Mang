@@ -409,6 +409,7 @@ namespace School_Mang.PL.STD
         private void btn_talab_elthak_Click(object sender, EventArgs e)
         {
             if (Verify_Std_Status()) return;
+            var row = dt_std_data.CurrentRow;
 
             var frmElthak = FRM_STD_ELTEHK.Get_Std_Eltehk;
             int grade = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Grade_Id"].Value);
@@ -425,24 +426,24 @@ namespace School_Mang.PL.STD
             {
                 var frm = FRM_TAHEEL_STD.Get_Tahweel_Std;
 
-
-                frm.txt_std_code.Text = dt_std_data.CurrentRow.Cells["std_code"].Value.ToString();
-                frm.txt_std_name.Text = dt_std_data.CurrentRow.Cells["اسم الطالب"].Value.ToString();
-                frm.txt_guardian_name.Text = dt_std_data.CurrentRow.Cells["اسم الأب"].Value.ToString();
-                frm.txt_adrs.Text = dt_std_data.CurrentRow.Cells["العنوان"].Value.ToString();
-                frm.txt_transfer_reason.Text = "رغبة ولى الأمر";
                 frm.chk_resom_no.Checked = true;
                 frm.chk_kotob_no.Checked = true;
-                frm.transfer_status = 4;
                 frm.lbl_mohwel.Text = "محول من";
 
-                frm.grade = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Grade_Id"].Value);
-
-
+                
                 AppNavigation.Instance
                     .SetContext(c =>
                 {
                     c.StudentCase = GetStudentCase.TaheewlToSchool;
+                    c.StudentData = new StudentDTO {
+                        StdCode = row.Cells["std_code"].Value?.ToString(),
+                        StudentFullName = row.Cells["اسم الطالب"].Value?.ToString(),
+                        FatherName = row.Cells["اسم الأب"].Value?.ToString(),
+                        Address = row.Cells["العنوان"].Value?.ToString(),
+                        GradeId = Convert.ToInt32(row.Cells["Grade_Id"].Value),
+                        TransferStatus = 4,
+                        TransferReason = "رغبة ولى الأمر"
+                    };
                 })
                     .Show(FRM_TAHEEL_STD.Get_Tahweel_Std); // تم التحقق
 

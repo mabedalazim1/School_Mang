@@ -457,10 +457,9 @@ namespace School_Mang.PL.STD
                 {
 
                     var frm = FRM_TAHEEL_STD.Get_Tahweel_Std;
-                    frm.txt_transfer_reason.Text = "رغبة ولى الأمر";
+
                     frm.chk_resom_no.Checked = true;
                     frm.chk_kotob_no.Checked = true;
-                    frm.transfer_status = 3;
                     frm.lbl_mohwel.Text = "محول إلى";
 
                     var row = dt_std_data.CurrentRow;
@@ -474,7 +473,9 @@ namespace School_Mang.PL.STD
                                 StudentFullName = row.Cells["اسم الطالب"].Value?.ToString(),
                                 FatherName = row.Cells["father_name"].Value?.ToString(),
                                 Address = row.Cells["العنوان"].Value?.ToString(),
-                                GradeId = Convert.ToInt32(row.Cells["Grade_Id"].Value)
+                                GradeId = Convert.ToInt32(row.Cells["Grade_Id"].Value),
+                                TransferStatus = 3,
+                                TransferReason = "رغبة ولى الأمر"
                             };
                         })
                         .Show(frm);

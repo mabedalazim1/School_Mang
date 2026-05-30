@@ -170,6 +170,11 @@ namespace School_Mang.BL
             get => Current.Del_Assessment_Data;
             set => Current.Del_Assessment_Data = value;
         }
+        public static bool AhsaaEdara
+        {
+            get => Current.AhsaaEdara;
+            set => Current.AhsaaEdara = value;
+        }
     }
 }
 

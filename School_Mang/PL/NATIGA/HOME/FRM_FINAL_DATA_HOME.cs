@@ -691,6 +691,7 @@ namespace School_Mang.PL.NATIGA.HOME
             BL.Globals.Final_Test = false;
             BL.Globals.Final_Nataga = true;
             BL.Globals.Final_Koshof = false;
+            BL.Globals.AhsaaEdara = false;
             FRM_CHOSE_FINAL_RASD.Get_Frm_Chose_Final_Rasd.ShowDialog();
         }
 
@@ -700,6 +701,7 @@ namespace School_Mang.PL.NATIGA.HOME
             BL.Globals.Final_Test = false;
             BL.Globals.Final_Nataga = false;
             BL.Globals.Final_Koshof = true;
+            BL.Globals.AhsaaEdara = false;
             FRM_CHOSE_FINAL_RASD.Get_Frm_Chose_Final_Rasd.ShowDialog();
         }
 
@@ -818,6 +820,21 @@ namespace School_Mang.PL.NATIGA.HOME
             {
                 MSG.ErrorMesg(ex.Message);
             }
+        }
+
+        private void lbl_ahsaa_Click(object sender, EventArgs e)
+        {
+            BL.Globals.Amal_Sana = false;
+            BL.Globals.Final_Test = false;
+            BL.Globals.Final_Nataga = false;
+            BL.Globals.Final_Koshof = false;
+            BL.Globals.AhsaaEdara = true;
+            FRM_CHOSE_FINAL_RASD.Get_Frm_Chose_Final_Rasd.ShowDialog();
+        }
+
+        private void picl_ahsaa_Click(object sender, EventArgs e)
+        {
+            lbl_ahsaa_Click(sender, e);
         }
     }
 }

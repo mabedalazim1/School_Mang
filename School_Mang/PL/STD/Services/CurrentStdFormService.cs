@@ -1,7 +1,7 @@
 ﻿using DevExpress.Utils.MVVM.Services;
 using School_Mang.BL;
 using School_Mang.BL.Common;
-using School_Mang.BL.Common.Extensions;
+using School_Mang.BL.Extensions;
 using School_Mang.BL.DTO;
 using School_Mang.BL.Enums;
 using School_Mang.BL.Services;
@@ -210,7 +210,7 @@ namespace School_Mang.PL.STD.Services
                 .WithOwner(MAIN.FRM_MAIN.Get_Frm_Main)
                 .SetContext(c =>
                 {
-                    c.StudentMode = GetStudentMode.UpdateStdData;
+                    c.StudentState.UpdateStdData = true;
                     c.StudentData = new StudentDTO
                     {
                         OsraId = Convert.ToInt32(row.Cells["Osraa_Id"].Value),

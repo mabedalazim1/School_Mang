@@ -92,19 +92,14 @@ namespace School_Mang.BL.Services.STD
                      return ValidationResult.Fail("حدث خطأ في قراءة حالة الطالب");
                 }
 
-                if (status == 3 || status == 4)
+                if (status == 3 || status == 4 || status == 7)
                 {
                     return ValidationResult.Fail(
                         "لا يمكن التعامل مع الطالب المحول .. يرجى حذف طلب التحويل أولاً.."
                         );
                 }
 
-                if (status == 1)
-                {
-                    return ValidationResult.Fail(
-                        "لا يمكن التعامل مع الطالب المستجد .. يرجى تعديل حالة الطالب أولاً.."
-                        );
-                }
+
                 return ValidationResult.Ok();
             }
             catch (Exception ex)

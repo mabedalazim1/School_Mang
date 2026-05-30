@@ -1,12 +1,14 @@
 ﻿using School_Mang.BL;
+using School_Mang.BL.Common;
+using School_Mang.BL.Common.Helper;
+using School_Mang.BL.DTO;
+using School_Mang.BL.Models;
 using School_Mang.BL.Services;
 using School_Mang.BL.Services.STD;
 using School_Mang.BL.STD;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using School_Mang.BL.Enums;
-using School_Mang.BL.Common;
 
 
 namespace School_Mang.PL.STD
@@ -23,7 +25,10 @@ namespace School_Mang.PL.STD
         public void SetNavigation(NavigationContext context)
         {
             _context = context ?? new NavigationContext();
-            //ApplyContext();
+            if (_context.OsraState.OpenFormGetOsra == true)
+            {
+                LoadOsraData();
+            }
 
         }
 
@@ -132,6 +137,16 @@ namespace School_Mang.PL.STD
             txt_father_tel.Text = fatherTel;
             txt_mother_tel.Text = motherTel;
         }
+        public void FillOsraData(StudentDTO d)
+        {
+            txt_osra_id.Text = d.OsraId.ToString();
+            txt_father_name.Text = d.FatherName;
+            txt_mother_name.Text = d.MotherName;
+            txt_adrs.Text = d.Address;
+            txt_wazifa.Text = d.Wazifa;
+            txt_father_tel.Text = d.FatherTel;
+            txt_mother_tel.Text = d.MotherTel;
+        }
         private void btn_close_Click(object sender, EventArgs e)
         {
             btn_close_b_Click(sender, e);
@@ -144,21 +159,25 @@ namespace School_Mang.PL.STD
             move_y = e.Y;
         }
 
-       
+
         private void SaveStdData()
         {
             try
             {
-              string saveCode = _saveService.SaveStudent(
-                                         txt_std_name.Text,
-                                         txt_nat.Text,
-                                         Convert.ToInt32(cmb_sana.SelectedValue),
-                                         Convert.ToInt32(cmb_grade.SelectedValue),
-                                         Convert.ToInt32(cmb_type.SelectedValue),
-                                         Convert.ToInt32(cmb_national.SelectedValue),
-                                         Convert.ToInt32(cmb_religion.SelectedValue),
-                                         Convert.ToInt32(cmb_hala.SelectedValue),
-                                         Convert.ToInt32(txt_osra_id.Text));
+                var req = new StudentSaveRequest
+                {
+                    StudentName = txt_std_name.Text,
+                    NationalId = txt_nat.Text,
+                    YearId = SafeConverter.GetInt(cmb_sana.SelectedValue),
+                    GradeId = SafeConverter.GetInt(cmb_grade.SelectedValue),
+                    GenderId = SafeConverter.GetInt(cmb_type.SelectedValue),
+                    NationalityId = SafeConverter.GetInt(cmb_national.SelectedValue),
+                    ReligionId = SafeConverter.GetInt(cmb_religion.SelectedValue),
+                    StatusId = SafeConverter.GetInt(cmb_hala.SelectedValue),
+                    OsraId = SafeConverter.GetInt(txt_osra_id.Text)
+                };
+
+                string saveCode = _saveService.SaveStudent(req);
 
                 MSG.MyMesg("تم إضافة الطالب: " + txt_std_name.Text + ": كود  " + saveCode);
                 ClearForm();
@@ -190,12 +209,12 @@ namespace School_Mang.PL.STD
             txt_adrs.Clear();
             txt_nat.Focus();
         }
-       
+
         private void Update_Std_Data()
-        { 
+        {
             Waiting.Start();
             try
-            {  
+            {
                 // Update Std Data 
                 _updateService.UpdateStudentData(
                         txt_std_code.Text,
@@ -212,13 +231,13 @@ namespace School_Mang.PL.STD
                 MSG.MyMesg("تم تعديل بيانات الطالب: " + txt_std_name.Text);
 
                 var frm = FRM_GET_STD.Get_Student;
-                frm.LoadStudentData();
+                frm.SearchStudents();
 
                 AppNavigation.Instance
                     .WithOwner(MAIN.FRM_MAIN.Get_Frm_Main)
                     .SetContext(c =>
                     {
-                        c.OsraMode = GetOsraMode.EditStudent;
+                        c.StudentState.EditStudent = true;
                     })
                     .Show(frm);
 
@@ -253,7 +272,7 @@ namespace School_Mang.PL.STD
 
             if (txt_std_name.Text != "" && txt_nat.Text != "")
             {
-                if (_context?.StudentMode.HasFlag(GetStudentMode.UpdateStdData) != true)
+                if (_context.StudentState.UpdateStdData != true)
                 {
                     if (MSG.DialogeErrMsg("لم يتم حفظ البيانات المدخلة .. هل تريد الخروج؟") != DialogResult.Yes) return;
 
@@ -262,7 +281,7 @@ namespace School_Mang.PL.STD
 
             _isClosing = true;
 
-            if (_context?.StudentMode.HasFlag(GetStudentMode.UpdateStdData) == true)
+            if (_context.StudentState.UpdateStdData == true)
             {
 
                 this.Close();
@@ -273,14 +292,14 @@ namespace School_Mang.PL.STD
                 AppNavigation.Instance
                     .SetContext(c =>
                     {
-                        c.OsraMode = GetOsraMode.OpenFromAddstudent;
+                        c.StudentState.OpenFromAddstudent = true;
 
-                       // c.OpenFromAddstudent = true;
+                        // c.OpenFromAddstudent = true;
                     })
-                    .Show(frm, false);               
+                    .Show(frm, false);
             }
 
-            if (_context?.OsraMode.HasFlag(GetOsraMode.OpenFormGetOsra)==true)
+            if (_context.OsraState.OpenFormGetOsra == true)
             {
                 this.Close();
                 FRM_ADD_STD.frm = null;
@@ -290,13 +309,13 @@ namespace School_Mang.PL.STD
                 AppNavigation.Instance
                     .SetContext(c =>
                     {
-                        c.OsraMode = GetOsraMode.OpenFromAddstudent;
+                        c.StudentState.OpenFromAddstudent = true;
 
                         //c.OpenFromAddstudent = true; // frm.LoadOsraData()
                     })
-                    .Show(frm, false);  
+                    .Show(frm, false);
             }
-            else if (_context?.OsraMode.HasFlag(GetOsraMode.AddFromGetStd) == true)
+            else if (_context.StudentState.AddFromGetStd == true)
             {
 
                 this.Close();
@@ -306,7 +325,7 @@ namespace School_Mang.PL.STD
                 AppNavigation.Instance
                    .SetContext(c =>
                    {
-                       c.OsraMode = GetOsraMode.OpenFromAddstudent;
+                       c.StudentState.OpenFromAddstudent = true;
 
                        //c.OpenFromAddstudent = true; //frm.LoadStudentData()
                    })
@@ -364,8 +383,8 @@ namespace School_Mang.PL.STD
             var studentNat = StdValidationService.VerifyStdNat(
                         txt_std_code.Text,
                         txt_nat.Text,
-                        _context?.StudentMode.HasFlag(GetStudentMode.UpdateStdData) == true
-            );       
+                        _context.StudentState.UpdateStdData
+            );
 
             if (!studentNat.IsValid)
             {
@@ -431,7 +450,7 @@ namespace School_Mang.PL.STD
                 if (!ValidateStudent())
                     return;
 
-                if (_context?.StudentMode.HasFlag(GetStudentMode.UpdateStdData) != true)
+                if (_context.StudentState.UpdateStdData != true)
                     SaveStdData();
                 else
                     Update_Std_Data();
@@ -490,7 +509,7 @@ namespace School_Mang.PL.STD
 
             try
             {
-                if(!ValidateNatOnly())
+                if (!ValidateNatOnly())
                     return;
 
                 if (!TryGetYearFromCombo(out int year))
@@ -505,11 +524,11 @@ namespace School_Mang.PL.STD
             }
             catch (Exception ex)
             {
-                txt_nat.BackColor= Color.MistyRose;
+                txt_nat.BackColor = Color.MistyRose;
                 txt_nat.Focus();
                 MSG.ErrorMesg(ex.Message);
             }
-            
+
         }
 
         private void txt_nat_Leave(object sender, EventArgs e)
@@ -543,15 +562,30 @@ namespace School_Mang.PL.STD
                 cmb_national.SelectedValue = d.NationalityId;
             }));
         }
+
+        private void LoadOsraData()
+        {
+            var d = _context?.StudentData;
+            if (d == null) return;
+
+            txt_osra_id.Text = d.OsraId.ToString();
+            txt_father_name.Text = d.FatherName;
+            txt_mother_name.Text = d.MotherName;
+            txt_adrs.Text = d.Address;
+            txt_wazifa.Text = d.Wazifa;
+            txt_father_tel.Text = d.FatherTel;
+            txt_mother_tel.Text = d.MotherTel;
+            txt_nat.Focus();
+        }
         private void FRM_ADD_STD_Load(object sender, EventArgs e)
         {
             try
             {
                 ApplyContext();
-                
 
-                if (!_context?.StudentMode.HasFlag(GetStudentMode.UpdateStdData) == true
-                        || _context?.OsraMode.HasFlag(GetOsraMode.AddFromGetStd) == true)
+
+                if (!_context.StudentState.UpdateStdData == true
+                        || _context.StudentState.AddFromGetStd == true)
                 {
                     Waiting.Start();
                     cmb_type.SelectedIndex = 0;
@@ -606,9 +640,10 @@ namespace School_Mang.PL.STD
                 WithOwner(MAIN.FRM_MAIN.Get_Frm_Main)
                 .SetContext(c =>
                 {
-                    c.OsraMode = GetOsraMode.AddNewOsra |
-                                 GetOsraMode.OpenFromAddstudent|
-                                 GetOsraMode.AddOsraDataToStudent;
+                    c.StudentState.AddNewStudent = true;
+                    c.StudentState.OpenFromAddstudent = true;
+                    c.OsraState.AddOsraDataToStudent = true;
+                    c.OsraState.AddNewOsra = true;
 
                     //c.AddNewStudent = true;
                     //c.AddNewOsra = true;
@@ -623,7 +658,7 @@ namespace School_Mang.PL.STD
             {
                 AppNavigation.Instance.SetContext(c =>
                 {
-                    c.OsraMode = GetOsraMode.OpenFromAddstudent;
+                    c.StudentState.OpenFromAddstudent = true;
                 }).Show<FRM_GET_OSRAA>(); // تم التحقق
 
             }

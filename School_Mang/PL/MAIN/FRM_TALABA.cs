@@ -117,10 +117,7 @@ namespace School_Mang.PL.MAIN
 
         private void AddStudent()
         {
-            AppNavigation.Instance.SetContext(
-                            c => {
-                                c.OsraMode = GetOsraMode.Normal;
-                            })
+            AppNavigation.Instance
                             .Show(FRM_ADD_STD.getAdd_Std_Frm); // تم التحقق
 
             //STD.FRM_ADD_STD.getAdd_Std_Frm.ShowDialog();

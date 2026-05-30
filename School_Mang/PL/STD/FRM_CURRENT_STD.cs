@@ -1,11 +1,13 @@
 ﻿using School_Mang.BL;
 using School_Mang.BL.Common;
-using School_Mang.BL.Common.Extensions;
+using School_Mang.BL.Common.Helper;
 using School_Mang.BL.DTO;
 using School_Mang.BL.Enums;
+using School_Mang.BL.Extensions;
 using School_Mang.BL.Services;
 using School_Mang.BL.Services.Reports;
 using School_Mang.BL.Services.STD;
+using School_Mang.PL.STD.Mappers;
 using School_Mang.PL.STD.Services;
 using System;
 using System.Data;
@@ -18,8 +20,8 @@ namespace School_Mang.PL.STD
         private CurrentStdFormService _service;
         private NavigationContext _context;
         private readonly StudentService studentService = new StudentService();
-        private readonly StudentReportService _reportService = new StudentReportService();
         private readonly ElthakReportService _elthakService = new ElthakReportService();
+
         public void SetNavigation(NavigationContext context)
         {
             _context = context;
@@ -39,7 +41,7 @@ namespace School_Mang.PL.STD
                 Properties.Settings.Default.permission_id
             );
         }
-        
+
 
         int year_cod = Properties.Settings.Default.year_cod;
         int permission_id = Properties.Settings.Default.permission_id;
@@ -76,7 +78,7 @@ namespace School_Mang.PL.STD
             }
         }
 
-        
+
         public void SelectRow(int index)
         {
             if (index < 0) return;
@@ -98,63 +100,23 @@ namespace School_Mang.PL.STD
 
         #region My Voids
 
-        // أخفاء الأعمدة 
-        private void HideColumns(params string[] columns)
-        {
-            foreach (var col in columns)
-            {
-                if (dt_std_data.Columns.Contains(col))
-                    dt_std_data.Columns[col].Visible = false;
-            }
-        }
-        // إظهار الأعمدة
-        private void ShowColumns(params string[] columns)
-        {
-            foreach (var col in columns)
-            {
-                if (dt_std_data.Columns.Contains(col))
-                    dt_std_data.Columns[col].Visible = true;
-            }
-        }
         // Get School Year Data
         public void Get_School_Year_Data()
-        {  
+        {
             try
             {
-                int my_grade = Convert.ToInt32(cmb_grade.SelectedValue);
-                int year = SchoolDateHelper.GetCurrentYear(year_cod, _context);
                 Waiting.Start();
-                var dt = studentService.GetStudentsByYear(year, my_grade, 0);
 
+                int my_grade = SafeConverter.GetInt(cmb_grade.SelectedValue);
+                int year = SchoolDateHelper.GetCurrentYear(year_cod, _context);
+
+                var dt = studentService.GetStudentsByYear(year, my_grade, 0);
 
                 dt_std_data.DataSource = dt;
 
-                HideColumns(
-                     "std_code", "Grade_Id", "Religion_Id", "Gender_Id",
-                     "Std_Status_Id", "Osraa_Id", "Year_Id", "Class_No", "Class_Id",
-                     "father_name", "std_name", "std_nat", "year", "old_grade",
-                     "year_desc", "Updated_At", "Updated_by"
-                 );
+                ApplyBaseGridLayout();
+                ApplyContextGridLayout();
 
-                if (_context.StudentCase.IsDetails())
-                {
-                    // Open From Details 
-                    HideColumns("الفصل", "الديانة", "النوع", "الحالة");
-
-                    ShowColumns("العنوان", "هاتف الأب", "هاتف الأم");
-                    btn_del_std.Visible = false;
-                    btn_talab_elthak.Visible = false;
-                }
-                else
-                {
-                    // Open From School Data
-                    HideColumns("العنوان", "هاتف الأب", "هاتف الأم");
-
-                    ShowColumns("الفصل", "الديانة", "النوع", "الحالة");
-
-                    btn_del_std.Visible = true;
-                    btn_talab_elthak.Visible = true;
-                }
                 lbl_count.Text = dt.Rows.Count.ToString();
 
                 _context?.PostAction?.Invoke();
@@ -162,12 +124,53 @@ namespace School_Mang.PL.STD
             catch (Exception ex)
             {
                 MSG.ErrorMesg(ex.Message);
-            }finally
-            { 
+            }
+            finally
+            {
                 Waiting.Stop();
             }
-            
         }
+
+        private void ApplyBaseGridLayout()
+        {
+            GridHelper.SetColumnsVisibility(dt_std_data,
+                ColumnVisibility.Hide,
+                "std_code", "Grade_Id", "Religion_Id", "Gender_Id",
+                "Std_Status_Id", "Osraa_Id", "Year_Id", "Class_No", "Class_Id",
+                "father_name", "std_name", "std_nat", "year", "old_grade",
+                "year_desc", "Updated_At", "Updated_by"
+            );
+        }
+        private void ApplyContextGridLayout()
+        {
+            if (_context.StudentCase.IsDetails())
+            {
+                GridHelper.SetColumnsVisibility(dt_std_data,
+                    ColumnVisibility.Hide,
+                    "الفصل", "الديانة", "النوع", "الحالة");
+
+                GridHelper.SetColumnsVisibility(dt_std_data,
+                    ColumnVisibility.Show,
+                    "العنوان", "هاتف الأب", "هاتف الأم");
+
+                btn_del_std.Visible = false;
+                btn_talab_elthak.Visible = false;
+            }
+            else
+            {
+                GridHelper.SetColumnsVisibility(dt_std_data,
+                    ColumnVisibility.Hide,
+                    "العنوان", "هاتف الأب", "هاتف الأم");
+
+                GridHelper.SetColumnsVisibility(dt_std_data,
+                    ColumnVisibility.Show,
+                    "الفصل", "الديانة", "النوع", "الحالة");
+
+                btn_del_std.Visible = true;
+                btn_talab_elthak.Visible = true;
+            }
+        }
+
         // Get Class Data
         public void Get_Class_Data(int gradeId, int classId = 0)
         {
@@ -216,8 +219,8 @@ namespace School_Mang.PL.STD
 
         // Verify Stdunet Status 
 
-        
-        
+
+
         private void LoadClases()
         {
             if (cmb_grade.SelectedIndex < 0 || cmb_class.SelectedIndex < 0)
@@ -230,7 +233,7 @@ namespace School_Mang.PL.STD
                 int year = SchoolDateHelper.GetCurrentYear(year_cod, _context);
                 std_dt = studentService.GetStudentsByYear(
                      year,
-                    Convert.ToInt32(cmb_grade.SelectedValue),
+                    SafeConverter.GetInt(cmb_grade.SelectedValue),
                     cmb_class.SelectedIndex);
 
                 lbl_count.Text = std_dt.Rows.Count.ToString();
@@ -278,7 +281,7 @@ namespace School_Mang.PL.STD
         public void ChangeSelectedData()
         {
 
-            Get_Class_Data(Convert.ToInt32(cmb_grade.SelectedValue));
+            Get_Class_Data(SafeConverter.GetInt(cmb_grade.SelectedValue));
             txt_std_data.Text = "";
         }
         private void pic_help_MouseLeave(object sender, EventArgs e)
@@ -361,20 +364,20 @@ namespace School_Mang.PL.STD
                 {
                     btn_del_std.Visible = true;
                 }
-                
+
                 btn_new_std.ButtonText = "تعديل البيانات";
             }
-           
+
             try
             {
                 dt_std_data.Columns["اسم الطالب"].Width = 200;
                 cmb_grade.SelectedValue = grade;
                 int myYear = Properties.Settings.Default.MyYear;
                 lbl_current_year.Text = "بيانات " + SchoolFormatter.Year_Desc(
-                       myYear,       
+                       myYear,
                        _context?.CurrentYearData ?? false,
-                       _context?.StudentCase.HasFlag(GetStudentCase.StudentDetails) ?? false,
-                       _context?.StudentCase.HasFlag(GetStudentCase.ElthakStdNextYear) ?? false);
+                       _context?.StudentCase.Has(GetStudentCase.StudentDetails) ?? false,
+                       _context?.StudentCase.Has(GetStudentCase.ElthakStdNextYear) ?? false);
                 lbl_count.Text = dt_std_data.Rows.Count.ToString();
             }
             catch (Exception ex)
@@ -395,12 +398,12 @@ namespace School_Mang.PL.STD
             {
                 int year = SchoolDateHelper.GetCurrentYear(year_cod, _context);
 
-               // DataTable dt;
-               var dt = studentService.SearchSchoolyearData(
-                    year,
-                    Convert.ToInt32(cmb_grade.SelectedValue),
-                    Convert.ToInt32(cmb_class.SelectedValue),
-                    txt_std_data.Text);
+                // DataTable dt;
+                var dt = studentService.SearchSchoolyearData(
+                     year,
+                     SafeConverter.GetInt(cmb_grade.SelectedValue),
+                     SafeConverter.GetInt(cmb_class.SelectedValue),
+                     txt_std_data.Text);
 
                 dt_std_data.DataSource = dt;
 
@@ -436,12 +439,13 @@ namespace School_Mang.PL.STD
             _service.HandleDeleteStudent(
                      dt_std_data.CurrentRow,
                      cmb_class.SelectedIndex,
-                     Convert.ToInt32(cmb_grade.SelectedValue)
+                     SafeConverter.GetInt(cmb_grade.SelectedValue)
             );
         }
 
         private void btn_tahwel_Click(object sender, EventArgs e)
         {
+            var StudentStatus = dt_std_data.CurrentRow?.Cells["Std_Status_Id"]?.Value;
             if (dt_std_data.SelectedRows.Count > 0)
             {
                 var result = StdValidationService.VerifyStdStatus(
@@ -455,7 +459,6 @@ namespace School_Mang.PL.STD
                 }
                 try
                 {
-
                     var frm = FRM_TAHEEL_STD.Get_Tahweel_Std;
 
                     frm.chk_resom_no.Checked = true;
@@ -467,16 +470,7 @@ namespace School_Mang.PL.STD
 
                         SetContext(c =>
                         {
-                            c.StudentData = new StudentDTO
-                            {
-                                StdCode = row.Cells["std_code"].Value?.ToString(),
-                                StudentFullName = row.Cells["اسم الطالب"].Value?.ToString(),
-                                FatherName = row.Cells["father_name"].Value?.ToString(),
-                                Address = row.Cells["العنوان"].Value?.ToString(),
-                                GradeId = Convert.ToInt32(row.Cells["Grade_Id"].Value),
-                                TransferStatus = 3,
-                                TransferReason = "رغبة ولى الأمر"
-                            };
+                            c.StudentData = FRM_CURRENT_STD_Mappes.MapToTahweelStd(row);
                         })
                         .Show(frm);
 
@@ -485,7 +479,7 @@ namespace School_Mang.PL.STD
                 {
                     MSG.ErrorMesg(ex.Message);
                 }
-                
+
             }
             else
             {
@@ -499,37 +493,41 @@ namespace School_Mang.PL.STD
         private void btn_talab_elthak_Click(object sender, EventArgs e)
         {
 
-            if (dt_std_data.SelectedRows.Count > 0)
-            {
-                // if (Verify_Std_Status()) return;
-                try
-                {
-                    string std_code = dt_std_data.CurrentRow.Cells[0].Value.ToString();
-                    string std_name = dt_std_data.CurrentRow.Cells["اسم الطالب"].Value.ToString();
-                    string std_nat = dt_std_data.CurrentRow.Cells["std_nat"].Value.ToString();
-                    int sana = (Convert.ToInt32(dt_std_data.CurrentRow.Cells["year"].Value)) +2020; 
-                    int grade = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Grade_Id"].Value);
-                    string grade_desc = dt_std_data.CurrentRow.Cells["old_grade"].Value.ToString();
-
-                    // Get New Std (KG2 And Prim Six) Data For New Year
-                    bool nextYearElthak = _context.StudentCase.IsNextYearElthak();
-
-
-                    _elthakService.OpenElthakReport(grade,grade_desc,std_code, 
-                                                    std_name, std_nat, sana,nextYearElthak);
-                                                   
-                }
-                catch (Exception ex)
-                {
-                    MSG.ErrorMesg(ex.Message);
-
-                }
-            }
-            else
+            if (dt_std_data.SelectedRows.Count <= 0)
             {
                 MSG.ErrorMesg("يرجى اختيار طالب .. !");
+                return;
             }
 
+            try
+            {
+                DataGridViewRow row = dt_std_data.SelectedRows[0];
+                string std_code = row.Cells[0].Value?.ToString();
+                if (string.IsNullOrWhiteSpace(std_code))
+                {
+                    MSG.ErrorMesg("يرجى اختيار طالب .. !");
+                    return;
+                }
+
+                string std_name = row.Cells["اسم الطالب"].Value?.ToString();
+                string std_nat = row.Cells["std_nat"].Value.ToString();
+                int sana = (SafeConverter.GetInt(row.Cells["year"].Value)) + 2020;
+                int grade = SafeConverter.GetInt(row.Cells["Grade_Id"].Value);
+                string grade_desc = row.Cells["old_grade"].Value.ToString();
+
+                // Get New Std (KG2 And Prim Six) Data For New Year
+                bool nextYearElthak = _context.StudentCase.IsNextYearElthak();
+
+
+                _elthakService.OpenElthakReport(grade, grade_desc, std_code,
+                                                std_name, std_nat, sana, nextYearElthak);
+
+            }
+            catch (Exception ex)
+            {
+                MSG.ErrorMesg(ex.Message);
+
+            }
         }
     }
 }

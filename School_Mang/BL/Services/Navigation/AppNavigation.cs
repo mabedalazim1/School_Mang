@@ -173,5 +173,10 @@ namespace School_Mang.BL.Services
                     form.Show();
             }
         }
+        // Rest
+        public void Reset()
+        {
+            _context = new NavigationContext();
+        }
     }
 }

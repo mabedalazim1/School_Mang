@@ -1,15 +1,10 @@
 ﻿using School_Mang.BL;
 using School_Mang.BL.Services;
+using School_Mang.BL.Extensions;
 using School_Mang.BL.Services.STD;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using School_Mang.BL.Enums;
 
@@ -34,6 +29,7 @@ namespace School_Mang.PL.STD
         public int grade = 1;
         public int row_index = 0;
         int status;
+        private byte StudentCurrentHala;
 
         int permission_id = Properties.Settings.Default.permission_id;
 
@@ -166,15 +162,17 @@ namespace School_Mang.PL.STD
 
             try
             {
-                // If Hala = 3 Or 4
-                if(cmb_hala.Enabled == true)
+                // If Hala = 3 Or 4 Or 7 محول من - محول إلى - محول أثناء العام
+
+                if (cmb_hala.Enabled == true)
                 {
-                    if (Convert.ToInt32(cmb_hala.SelectedValue) == 3 ||
-                   Convert.ToInt32(cmb_hala.SelectedValue) == 4)
+                    if (Convert.ToByte(cmb_hala.SelectedValue) == 3 ||
+                   Convert.ToByte(cmb_hala.SelectedValue) == 4
+                   || Convert.ToByte(cmb_hala.SelectedValue) == 7)
                     {
                         MSG.ErrorMesg("لتحويل طالب .. يرجى تسجيل طلب تحويل أولا ..!");
                         cmb_hala.Focus();
-                        cmb_hala.SelectedValue = status;
+                        cmb_hala.SelectedValue = StudentCurrentHala;
                         return;
                     }
                 }
@@ -377,9 +375,7 @@ namespace School_Mang.PL.STD
                 {
                     if (txt_nat.Text != "")
                     {
-                        var mode = _context?.StudentMode ?? GetStudentMode.Normal;
-
-                        bool isUpdateMode = mode.HasFlag(GetStudentMode.UpdateStdData);
+                        bool isUpdateMode = _context.StudentState.UpdateStdData;
 
                         if (!Std_Func.Checked_Is_Numeric(txt_nat)) return;
                         if (Std_Func.Verify_Std_Nat(txt_std_code,txt_nat,isUpdateMode) == 1) return;
@@ -417,6 +413,8 @@ namespace School_Mang.PL.STD
         {
             LoadEditData();
             txt_nat_Leave(sender, e);
+             StudentCurrentHala = Convert.ToByte(cmb_hala.SelectedValue);
+
             if (Convert.ToInt32(cmb_hala.SelectedValue) == 3 || Convert.ToInt32(cmb_hala.SelectedValue) == 4)
             {
                 cmb_hala.Enabled = false;

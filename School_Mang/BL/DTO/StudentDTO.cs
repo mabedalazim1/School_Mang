@@ -21,9 +21,9 @@ namespace School_Mang.BL.DTO
         public int ReligionId { get; set; }
         public int NationalityId { get; set; }
         public int OsraId { get; set; }
-        public int StudentStatus {  get; set; }
         public int Sana {  get; set; }
         public int ClassId { get; set; }
+        public int StudentStatus { get; set; }
         public int TransferStatus { get; set; }
         public string TransferReason { get; set; }
 
@@ -34,5 +34,20 @@ namespace School_Mang.BL.DTO
         public string Wazifa { get; set; }
         public string FatherTel { get; set; }
         public string MotherTel { get; set; }
+        public string FatherLastName { get; set; }
+        public string FatherNat { get; set; }
+        public int FatherHala { get; set; }
+        public string FatherMoahel { get; set; }
+        public string FatherWazifa { get; set; }
+        public string Tel { get; set; }
+        public string FatherMobil_1 { get; set; }
+        public string FatherMobil_2 { get; set; }
+        public string MotherNat { get; set; }
+        public string MotherMoahel { get; set; }
+        public string MotherWazifa { get; set; }
+        public int MotherHala { get; set; }
+        public string MotherMbil_1 { get; set; }
+        public string MotherMbil_2 { get; set; }
+        public string Comments { get; set; }
     }
 }

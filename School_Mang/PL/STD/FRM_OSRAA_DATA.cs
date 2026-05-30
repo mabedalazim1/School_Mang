@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using School_Mang.BL;
 using School_Mang.BL.Services;
 using School_Mang.BL.Enums;
 using School_Mang.BL.Common;
+using School_Mang.BL.Extensions;
 
 namespace School_Mang.PL.STD
 {
@@ -175,6 +171,35 @@ namespace School_Mang.PL.STD
             }
         }
 
+        // Get Osra Data
+        private void GetOsraData()
+        {
+            var d = _context?.StudentData;
+            if (d == null) return;
+
+            txt_father_name.Text = d.FatherName;
+            txt_last_name.Text = d.FatherLastName;
+            txt_father_nat.Text = d.FatherNat;
+            txt_adrs.Text = d.Address;
+            txt_father_moahel.Text = d.FatherMoahel;
+            txt_father_wazifa.Text = d.FatherWazifa;
+            txt_tel.Text = d.Tel;
+            txt_father_mobil1.Text =d.FatherMobil_1;
+            txt_father_mobil2.Text = d.FatherMobil_2;
+            txt_mother_name.Text = d.MotherName;
+            txt_mother_nat.Text = d.MotherNat;
+            txt_mother_moahel.Text = d.MotherMoahel;
+            txt_mother_wazifa.Text = d.MotherWazifa;
+            txt_mother_mobil_1.Text = d.MotherMbil_1;
+            txt_mother_mobil2.Text = d.MotherMbil_2;
+            txt_memo.Text = d.Comments;
+            txt_osra_code.Text = d.OsraId.ToString();
+            this.BeginInvoke(new Action(() =>
+            {
+                cmb_father_halaa.SelectedValue = d.FatherHala;
+                cmb_mother_hala.SelectedValue = d.MotherHala;
+            }));
+        }
         // Generate Osra Code 
         private int Osra_cod()
         {
@@ -316,11 +341,11 @@ namespace School_Mang.PL.STD
 
         }
 
-        private Boolean Verify_Osra_Nat(TextBox txt, int osra_code)
+        private bool Verify_Osra_Nat(TextBox txt, int osra_code)
         {
             if(txt == null || txt.TextLength < 14) return false;
             bool isValidNat = true;
-            Boolean osra_nat = false;
+            bool osra_nat = false;
 
             Waiting.Start();
             int sana = Properties.Settings.Default.MyYear;
@@ -378,7 +403,7 @@ namespace School_Mang.PL.STD
         private void btn_close_b_Click(object sender, EventArgs e)
         {
             this.Close();
-            if (_context?.OsraMode.HasFlag(GetOsraMode.OpenFormGetOsra) == true)
+            if (_context.OsraState.OpenFormGetOsra == true)
             {
                 var frm = FRM_GET_OSRAA.Get_Osra_data;
                 frm.LoadOsraData();
@@ -395,10 +420,17 @@ namespace School_Mang.PL.STD
 
         private void txt_father_nat_Leave(object sender, EventArgs e)
         {
-            if (txt_father_nat.Text != "" || txt_father_nat.Text.Length == 14)
+            if (txt_father_nat.Text.Length < 14) 
+            {
+                MSG.ErrorMesg("الرقم القومى يجب ألا يقل عن 14 رقم..!");
+                txt_father_nat.Focus();
+                return;
+            }
+            if (!string.IsNullOrWhiteSpace(txt_father_nat.Text)
+                                            && txt_father_nat.Text.Length == 14)
             {
 
-                if (_context?.OsraMode.HasFlag(GetOsraMode.AddNewOsra) == true)
+                if (_context?.OsraState.AddNewOsra == true)
                 {
                     Verify_Osra_Nat(txt_father_nat, 0);
                 }
@@ -486,7 +518,7 @@ namespace School_Mang.PL.STD
         {
             if (txt_mother_nat.Text != "" || txt_mother_nat.Text.Length == 14)
             {
-                if (_context?.OsraMode.HasFlag(GetOsraMode.AddNewOsra) == true)
+                if (_context.OsraState.AddNewOsra == true)
                 {
                     Verify_Osra_Nat(txt_mother_nat, 0);
                 }
@@ -509,7 +541,7 @@ namespace School_Mang.PL.STD
 
             if (!Checked_Is_Numeric(txt_father_nat)) return;
 
-            if (_context?.OsraMode.HasFlag(GetOsraMode.AddNewOsra) == true)
+            if (_context.OsraState.AddNewOsra == true)
             {
                 Verify_Osra_Nat(txt_father_nat, 0);
             }
@@ -552,7 +584,7 @@ namespace School_Mang.PL.STD
             if (!Checked_Phon_End_NO(txt_mother_mobil_1)) return;
             if (!Checked_Is_Numeric(txt_mother_mobil_1)) return;
 
-            if (_context?.OsraMode.HasFlag(GetOsraMode.AddNewOsra) == true)
+            if (_context.OsraState.AddNewOsra == true)
             {
                 Verify_Osra_Nat(txt_mother_nat, 0);
             }
@@ -595,14 +627,14 @@ namespace School_Mang.PL.STD
 
           try
             {
-                if (_context?.OsraMode.HasFlag(GetOsraMode.AddNewOsra) == true)
+                if (_context.OsraState.AddNewOsra == true)
                 {
                     // Save Osra Data
 
                     _result = Save_Osra_Data();
 
                     MSG.MyMesg("تم حفظ بيانات الأسرة بنجاح ... !");
-                    if (_context?.OsraMode.HasFlag(GetOsraMode.AddOsraDataToStudent) == true)
+                    if (_context.OsraState.AddOsraDataToStudent == true)
                     {
 
                         if (_result.Success)
@@ -629,12 +661,12 @@ namespace School_Mang.PL.STD
                         //FRM_GET_OSRAA.Get_Osra_data.btn_ok_Click(sender, e);
                         //FRM_GET_OSRAA.Get_Osra_data.Close();
                     }
-                    if (_context?.OsraMode.HasFlag(GetOsraMode.OpenFromGetStd) == true)
+                    if (_context.StudentState.OpenFromGetStd == true)
                     {
 
                         AppNavigation.Instance.SetContext(c =>
                         {
-                           // c.OpenFromGetStd = false;
+                           c.StudentState.OpenFromGetStd = false;
                         }).Show(FRM_ADD_STD.getAdd_Std_Frm,false); // تم التحقق
 
                        // FRM_ADD_STD.getAdd_Std_Frm.Show();
@@ -651,12 +683,12 @@ namespace School_Mang.PL.STD
                 var frmOsrs = FRM_GET_OSRAA.Get_Osra_data;
                 frmOsrs.LoadAllOsraData();
 
-                if (_context?.OsraMode.HasFlag(GetOsraMode.OpenFormGetOsra) == true)
+                if (_context.OsraState.OpenFormGetOsra == true)
                 {
                     AppNavigation.Instance
                        .SetContext(c =>
                        {
-                           c.OsraMode = GetOsraMode.EditOsra;
+                           c.OsraState.EditOsra = true;
                        })
                        .Show(frmOsrs); // تم التحقق
 
@@ -713,7 +745,7 @@ namespace School_Mang.PL.STD
 
         private void FRM_OSRAA_DATA_Load(object sender, EventArgs e)
         {
-            if (_context?.OsraMode.HasFlag(GetOsraMode.AddNewOsra) == true)
+            if (_context.OsraState.AddNewOsra == true)
             {
                 label11.Text = "إضافة بيانات الأسرة";
                 btn_ok.ButtonText = "إضافة";
@@ -732,6 +764,10 @@ namespace School_Mang.PL.STD
 
             string name = txt_father_name.Text;
 
+            if (_context.OsraState.OpenFormGetOsra == true)
+            {
+                GetOsraData();
+            }
         }
 
         private void pn_top_MouseDown(object sender, MouseEventArgs e)

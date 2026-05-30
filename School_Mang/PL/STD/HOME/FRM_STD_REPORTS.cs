@@ -1,23 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using School_Mang.BL;
-using School_Mang.BL.Services;
+﻿using School_Mang.BL;
 using School_Mang.BL.Enums;
+using School_Mang.BL.Services;
+using School_Mang.BL.Services.Reports;
+using School_Mang.BL.Services.STD;
+using System;
+using System.Windows.Forms;
 
 namespace School_Mang.PL.STD.HOME
 {
     public partial class FRM_STD_REPORTS : Form
     {
         CLS_STD_FUNCATIONS Func = new CLS_STD_FUNCATIONS();
-        BL.STD.CLS_STD std = new BL.STD.CLS_STD();
-        
+        private readonly StudentReportService _reportService = new StudentReportService();
 
         int year = Properties.Settings.Default.year_cod;
 
@@ -69,9 +63,7 @@ namespace School_Mang.PL.STD.HOME
             Waiting.Start();
             try
             {
-
-                RPT.REPORT_CONNECTION RPT = new RPT.REPORT_CONNECTION();
-                RPT.OpenCount_Std(year);
+                _reportService.OpenCountStd(year);
             }
             catch (Exception ex)
             {

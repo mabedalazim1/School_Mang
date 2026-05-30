@@ -1,10 +1,7 @@
 ﻿using School_Mang.BL.Enums;
 using School_Mang.BL.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using School_Mang.BL.Extensions;
+
 
 namespace School_Mang.BL.Common
 {
@@ -17,8 +14,8 @@ namespace School_Mang.BL.Common
                 return yearCod + 1;
 
             // السلوك القديم
-            if (context?.StudentCase.HasFlag(GetStudentCase.StudentDetails) == true ||
-                context?.StudentCase.HasFlag(GetStudentCase.ElthakStdNextYear) == true)
+            if (context?.StudentCase.Has(GetStudentCase.StudentDetails) == true ||
+                context?.StudentCase.Has(GetStudentCase.ElthakStdNextYear) == true)
             {
                 return yearCod;
             }

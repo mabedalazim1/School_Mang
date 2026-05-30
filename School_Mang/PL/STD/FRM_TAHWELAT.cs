@@ -1,28 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using School_Mang.BL;
-using School_Mang.BL.Services;
+﻿using School_Mang.BL;
+using School_Mang.BL.DTO;
 using School_Mang.BL.Enums;
+using School_Mang.BL.Services;
+using School_Mang.BL.Services.STD;
+using School_Mang.BL.Common.Helper;
+using System;
+using System.Data;
+using System.Windows.Forms;
 
 namespace School_Mang.PL.STD
 {
     public partial class FRM_TAHWELAT : Form
     {
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
-        
-        MAIN.CLS_FUNCATIONS Func = new MAIN.CLS_FUNCATIONS();
+
+        private readonly TransferService _transferService = new TransferService();
+
 
         private byte test_year = 0;
 
         int permission_id = Properties.Settings.Default.permission_id;
 
+        private bool _isLoading = true;
         // Form Closed
         private static FRM_TAHWELAT frm_Tahwelat;
         static void frm_Form_Closed(object sender, FormClosedEventArgs e)
@@ -49,38 +48,71 @@ namespace School_Mang.PL.STD
             {
                 frm_Tahwelat = this;
             }
-
             // Set year val
-            BL.Globals.My_Year = Convert.ToByte(Properties.Settings.Default.year_cod);
+            Globals.My_Year = Convert.ToByte(Properties.Settings.Default.year_cod);
             lbl_year_b.Text = Properties.Settings.Default.MyYear.ToString();
+            LoadData();
+        }
+
+
+        #region My Voids
+        private void LoadData()
+        {
+            _isLoading = true;
+            this.SuspendLayout();
+
             Waiting.Start();
+
+            LoadGrades();
+            LoadTransfers();
+            ApplyPermissions();
+
+            Waiting.Stop();
+
+            this.ResumeLayout();
+            _isLoading = false;
+        }
+        private void LoadGrades()
+        {
             // Add Grade Data
-            DataTable grade_dt = std.Get_grades();
-            cmb_grade.DataSource = grade_dt;
-            cmb_grade.DisplayMember = "GradeDesc";
-            cmb_grade.ValueMember = "Grade_Id";
+            var grade_dt = std.Get_grades();
 
             DataRow dr = grade_dt.NewRow();
             dr["GradeDesc"] = "الكل";
             dr["Grade_Id"] = 0;
+
             grade_dt.Rows.InsertAt(dr, 0);
 
+            cmb_grade.DisplayMember = "GradeDesc";
+            cmb_grade.ValueMember = "Grade_Id";
+            cmb_grade.DataSource = grade_dt;
+        }
+        private void LoadTransfers()
+        {
             // Get Trans  Data
-            dt_std_data.DataSource = std.GET_Trans_Data(0, 3);
-            dt_std_data.Columns["std_code"].Visible = false;
-            dt_std_data.Columns["Year_Id"].Visible = false;
-            dt_std_data.Columns["Grade_Id"].Visible = false;
-            dt_std_data.Columns["Std_Status_Id"].Visible = false;
-            dt_std_data.Columns["adrs"].Visible = false;
-            dt_std_data.Columns["Kotob"].Visible = false;
-            dt_std_data.Columns["Resom"].Visible = false;
-            dt_std_data.Columns["Transfer_School"].Visible = false;
-            dt_std_data.Columns["Transfer_reason"].Visible = false;
-            dt_std_data.Columns["Guardian_name"].Visible = false;
-            dt_std_data.Columns["Transfer_code"].Visible = false;
-            dt_std_data.Columns["Class_Id"].Visible = false;
-            dt_std_data.Columns["Trans_After_Year"].Visible = false;
-
+            dt_std_data.DataSource = std.GET_Trans_Data(0, 3, 7);
+            HideGridColumns();
+        }
+        private void HideGridColumns()
+        {
+            GridHelper.SetColumnsVisibility(dt_std_data,
+                 ColumnVisibility.Hide,
+                "std_code",
+                "Year_Id",
+                "Grade_Id",
+                "Std_Status_Id",
+                "adrs",
+                "Kotob",
+                "Resom",
+                "Transfer_School",
+                "Transfer_reason",
+                "Guardian_name",
+                "Transfer_code",
+                "Class_Id",
+                "Trans_After_Year");
+        }
+        private void ApplyPermissions()
+        {
             // Set User permission
             switch (permission_id)
             {
@@ -94,11 +126,7 @@ namespace School_Mang.PL.STD
                     btn_del_std.Enabled = true;
                     break;
             }
-
-            Waiting.Stop();
         }
-
-        #region My Voids
 
         // Verify Stdunet Status 
         private Boolean Verify_Std()
@@ -115,10 +143,7 @@ namespace School_Mang.PL.STD
         }
         private void Test_Data()
         {
-            DataTable Dt_Trans_Current_Year = std.GET_Trans_Data(0, 3);
-            DataTable Dt_Trans_Next_Year = std.GET_Trans_Data(0, 4);
-
-            if (Dt_Trans_Current_Year.Rows.Count == 0 && Dt_Trans_Next_Year.Rows.Count == 00)
+            if (!_transferService.HasTransfers())
             {
                 MSG.ErrorMesg("لا يوجد طلبات تحويل مسجلة هذا العام .. !");
                 return;
@@ -175,14 +200,23 @@ namespace School_Mang.PL.STD
 
         public void cmb_grade_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (_isLoading) return;
             ChangSelectedData();
         }
 
         public void ChangSelectedData()
         {
-            dt_std_data.DataSource = std.GET_Trans_Data(
-            Convert.ToInt32(cmb_grade.SelectedValue),
-            Convert.ToInt32(cmb_status.SelectedIndex) + 3);
+            int gradeId = Convert.ToInt32(cmb_grade.SelectedValue);
+
+            if (cmb_status.SelectedIndex == 0)
+            {
+                dt_std_data.DataSource = std.GET_Trans_Data(gradeId, 3, 7);
+            }
+            else
+            {
+
+                dt_std_data.DataSource = std.GET_Trans_Data(gradeId, 4);
+            }
 
             lbl_count.Text = dt_std_data.Rows.Count.ToString();
             txt_std_data.Text = "";
@@ -237,15 +271,12 @@ namespace School_Mang.PL.STD
         {
             try
             {
-                DataTable dt;
-                dt = std.Search_Trans_Data(
-
-                    Convert.ToInt32(cmb_grade.SelectedValue),
-                    Convert.ToInt32(cmb_status.SelectedIndex + 3),
-                    txt_std_data.Text);
+                var grade = Convert.ToInt32(cmb_grade.SelectedValue);
+                var status = Convert.ToInt32(cmb_status.SelectedIndex + 3);
+                var text = txt_std_data.Text;
+                var dt = _transferService.SearchTransferData(grade, status, text);
 
                 dt_std_data.DataSource = dt;
-
                 lbl_count.Text = dt.Rows.Count.ToString();
             }
             catch (Exception ex)
@@ -255,140 +286,80 @@ namespace School_Mang.PL.STD
             }
         }
 
+        private TransferEditData MapRowToTransfer(DataGridViewRow row)
+        {
+            return new TransferEditData
+            {
+                TransferCode = row.Cells["Transfer_code"].Value.ToString(),
+                StdName = row.Cells["اسم الطالب"].Value.ToString(),
+                StdCode = row.Cells["std_code"].Value.ToString(),
+                GuardianName = row.Cells["Guardian_name"].Value.ToString(),
+                Address = row.Cells["adrs"].Value.ToString(),
+                Reason = row.Cells["Transfer_reason"].Value.ToString(),
+                ToSchool = row.Cells["Transfer_School"].Value.ToString(),
+                Resom = Convert.ToByte(row.Cells["Resom"].Value),
+                Kotob = Convert.ToByte(row.Cells["Kotob"].Value),
+                StatusId = Convert.ToInt32(row.Cells["Std_Status_Id"].Value),
+                GradeId = Convert.ToInt32(row.Cells["Grade_Id"].Value)
+            };
+        }
         private void btn_new_std_Click(object sender, EventArgs e)
         {
             if (Verify_Std()) return;
 
-            //BL.Globals.Update_Taheewl = true;
-
-            byte resom = Convert.ToByte(dt_std_data.CurrentRow.Cells["Resom"].Value);
-            byte kotob = Convert.ToByte(dt_std_data.CurrentRow.Cells["Kotob"].Value);
-
+            var row = dt_std_data.CurrentRow;
+            var data = MapRowToTransfer(row);
             var frm = FRM_TAHEEL_STD.Get_Tahweel_Std;
-
-            frm.txt_trans_code.Text = dt_std_data.CurrentRow.Cells["Transfer_code"].Value.ToString();
-            frm.txt_std_name.Text = dt_std_data.CurrentRow.Cells["اسم الطالب"].Value.ToString();
-            frm.txt_guardian_name.Text = dt_std_data.CurrentRow.Cells["Guardian_name"].Value.ToString();
-            frm.txt_adrs.Text = dt_std_data.CurrentRow.Cells["adrs"].Value.ToString();
-            frm.txt_transfer_reason.Text = dt_std_data.CurrentRow.Cells["Transfer_reason"].Value.ToString();
-            frm.txt_to_school.Text = dt_std_data.CurrentRow.Cells["Transfer_School"].Value.ToString();
-            frm.txt_std_code.Text = dt_std_data.CurrentRow.Cells["std_code"].Value.ToString();
-
-            if (resom == 0)
-            {
-                frm.chk_resom_no.Checked = true;
-                frm.chk_resom_yes.Checked = false;
-            }
-            else
-            {
-                frm.chk_resom_no.Checked = false;
-                frm.chk_resom_yes.Checked = true;
-            }
-
-            if (kotob == 0)
-            {
-                frm.chk_kotob_no.Checked = true;
-                frm.chk_kotob_yes.Checked = false;
-            }
-            else
-            {
-                frm.chk_kotob_no.Checked = false;
-                frm.chk_kotob_yes.Checked = true;
-            }
-
-            frm.transfer_status = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Std_Status_Id"].Value);
-            if (Convert.ToInt32(dt_std_data.CurrentRow.Cells["Std_Status_Id"].Value) == 3)
-            {
-                frm.lbl_mohwel.Text = "محول إلى";
-            }
-            else
-            {
-                frm.lbl_mohwel.Text = "محول من";
-            }
-
-            frm.grade = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Grade_Id"].Value);
-
+            
             AppNavigation.Instance
                 .SetContext(c =>
                 {
                     c.StudentCase = GetStudentCase.UpdateTaheewl;
+                    c.TransferData = data;
                 }).Show(frm);
 
-           // FRM_TAHEEL_STD.Get_Tahweel_Std.ShowDialog();
+            // FRM_TAHEEL_STD.Get_Tahweel_Std.ShowDialog();
         }
 
+        private DeleteTransferRequest MapRowToDelete(DataGridViewRow row , string stdName)
+        {
+           
+            return new DeleteTransferRequest
+            {
+                StdCode = row.Cells["std_code"].Value.ToString(),
+                StdName = stdName,
+                ClassId = SafeConverter.GetInt(row.Cells["Class_Id"].Value),
+                GradeId = Convert.ToInt32(row.Cells["Grade_Id"].Value),
+                Year = Properties.Settings.Default.year_cod,
+                TransferCode = Convert.ToInt32(row.Cells["Transfer_code"].Value),
+                CurrentYear = Convert.ToInt32(row.Cells["Year_Id"].Value),
+                TransAfterYear = Convert.ToBoolean(row.Cells["Trans_After_Year"].Value),
+                StatusId = Convert.ToInt32(row.Cells["Std_Status_Id"].Value)
+            };
+        }
         private void btn_del_std_Click(object sender, EventArgs e)
         {
-            if (Verify_Std()) return;
+            if (Verify_Std())
+                return;
             try
             {
-                string std_name = dt_std_data.CurrentRow.Cells["اسم الطالب"].Value.ToString();
-                string std_code = dt_std_data.CurrentRow.Cells["std_code"].Value.ToString();
-                int class_id = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Class_Id"].Value);
-                int grade = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Grade_Id"].Value);
-                int year = Properties.Settings.Default.year_cod;
+                var row = dt_std_data.CurrentRow;
 
-                if (grade > 6)
+                string stdName = row.Cells["اسم الطالب"].Value.ToString();
+
+                if (MSG.DialogeErrMsg("هل تريد حذف طلب التحويل للطالب / " + stdName + " ؟") != DialogResult.Yes)
                 {
-                    class_id += 2;
-                }
-                else
-                {
-                    class_id += 3;
+                    MSG.ErrorMesg("تم الغاء عملية الحذف");
+                    return;
                 }
 
-                bool Trans_After_Year = Convert.ToBoolean(dt_std_data.CurrentRow.Cells["Trans_After_Year"].Value);
-                int Transfer_code = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Transfer_code"].Value);
-                int current_year = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Year_Id"].Value);
-                int new_year = Convert.ToInt32(std.Get_Count_New_Year(year + 1).Rows[0][0]);
-                int std_found = Convert.ToInt32(std.Get_Count_Trans_Std(new_year, std_code).Rows[0][0]);
-                int to_School;
-                try
-                {
-                    if (MSG.DialogeErrMsg("هل تريد حذف طلب التحويل للطالب  / " + std_name + " .. !") == DialogResult.Yes)
-                    {
+                var data = MapRowToDelete(row, stdName);
 
-                        // Delete Trans Data
+                _transferService.DeleteTransfer(data);
 
-                        if (dt_std_data.CurrentRow.Cells["Std_Status_Id"].Value.ToString() == "4")
-                        {
-                            // If Std Trans To School
-                            to_School = 1;
-                            new_year = 0;
-                        }
-                        else
-                        {
-                            to_School = 0;
-                        }
-                      
-                        // Delete Trans Data
-                       std.Delete_Transfers_Data(
-                            Transfer_code,
-                            std_code,
-                            current_year,
-                            grade,
-                            class_id,
-                            new_year,// = 0 If Std Trans To School 
-                            std_found, // = 0 If Std Not Found On Table
-                            to_School, // = 1 If Std Trans To School,
-                            Trans_After_Year // 1 if Trans After Year Begin
-                            );
-                        // Update DataGrid
+                cmb_grade_SelectedIndexChanged(sender, e);
 
-                        cmb_grade_SelectedIndexChanged(sender, e);
-
-                        MSG.MyMesg("تم حذف طلب التحويل للطالب  /  " + std_name + "...! ");
-                    }
-                    else
-                    {
-                        MSG.ErrorMesg("تم الغاء عملية الحذف ..!");
-                        return;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MSG.ErrorMesg(ex.Message);
-                }
+                MSG.MyMesg("تم حذف طلب التحويل للطالب / " + stdName);
             }
             catch (Exception ex)
             {
@@ -401,18 +372,21 @@ namespace School_Mang.PL.STD
         {
             if (Verify_Std()) return;
 
+            
             // Get Trans Data
-            int grade = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Grade_Id"].Value);
-            int Std_Status_Id = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Std_Status_Id"].Value);
-            string trans_code = dt_std_data.CurrentRow.Cells["Transfer_code"].Value.ToString();
-            string std_name = dt_std_data.CurrentRow.Cells["اسم الطالب"].Value.ToString();
-            int sana = (Convert.ToInt32(dt_std_data.CurrentRow.Cells["Year_Id"].Value)) + 2021;
+            var row = dt_std_data.CurrentRow;
+
+            int grade = Convert.ToInt32(row.Cells["Grade_Id"].Value);
+            int Std_Status_Id = Convert.ToInt32(row.Cells["Std_Status_Id"].Value);
+            string trans_code = row.Cells["Transfer_code"].Value.ToString();
+            string std_name = row.Cells["اسم الطالب"].Value.ToString();
+            int sana = (Convert.ToInt32(row.Cells["Year_Id"].Value)) + 2021;
             string year_data;
             string grade_desc = "";
-            bool Trans_After_Year = Convert.ToBoolean(dt_std_data.CurrentRow.Cells["Trans_After_Year"].Value);
+            bool Trans_After_Year = Convert.ToBoolean(row.Cells["Trans_After_Year"].Value);
 
             // Get New Year & Grade For Tahewl To School
-            if (Std_Status_Id == 3)
+            if (Std_Status_Id == 3 || Std_Status_Id == 7)
             {
                 // If Trans After School
                 if (Trans_After_Year)
@@ -439,9 +413,8 @@ namespace School_Mang.PL.STD
             RPT.REPORT_CONNECTION RPT = new RPT.REPORT_CONNECTION();
             try
             {
-                if (Std_Status_Id == 3)
+                if (Std_Status_Id == 3 || Std_Status_Id == 7)
                 {
-
                     RPT.OpenTahwel_From_Report(trans_code, std_name, year_desc, grade_desc);
                 }
                 else

@@ -143,16 +143,20 @@ namespace School_Mang.BL.STD
             => DAL.ExecQuery("SP_Get_Trans_Code",
                 SqlParam.NVar("@year", year, 2));
 
-        public DataTable GET_Trans_Data(int Grade_Id, int Status_Id)
+        public DataTable GET_Trans_Data(int Grade_Id, params int[] statusIds)
         {
-            int year = (Status_Id == 3)
-                ? Convert.ToInt32(Globals.My_Year - 1)
+            bool hasTransferStatus = statusIds.Contains(3) || statusIds.Contains(7);
+
+            int year = hasTransferStatus
+               ? Convert.ToInt32(Globals.My_Year - 1)
                 : Convert.ToInt32(Globals.My_Year);
+            string statusList = string.Join(",", statusIds);
 
             return DAL.ExecQuery("SP_GET_Trans_Data",
                 SqlParam.Int("@Year_Id", year),
                 SqlParam.Int("@Grade_Id", Grade_Id),
-                SqlParam.Int("@Status_Id", Status_Id));
+                SqlParam.NVar("@Status_Ids", statusList)
+            );
         }
 
         public DataTable Search_Trans_Data(int Grade_Id, int Status_Id, string std_name)
@@ -203,11 +207,12 @@ namespace School_Mang.BL.STD
                 SqlParam.Int("@Grade_Id", grade_id),
                 SqlParam.Int("@October_Sana", year_id + 20));
 
-        public DataTable Get_Tadrg_Sen(int year_id, int grade_id = 0)
+        public DataTable Get_Tadrg_Sen(int year_id, int grade_id = 0,bool isDesc = false)
             => DAL.ExecQuery("SP_Get_Tadrg_Sen",
                 SqlParam.Int("@year_id", year_id),
                 SqlParam.Int("@Grade_Id", grade_id),
-                SqlParam.Int("@October_Sana", year_id + 20));
+                SqlParam.Int("@October_Sana", year_id + 20),
+                SqlParam.Bit("@isDesc", isDesc));
 
         public DataTable Get_Trans_Reports(int Year_Id, int Status_Id, int Grade_Id = 0)
             => DAL.ExecQuery("SP_GET_Trans_Data",
@@ -394,7 +399,8 @@ namespace School_Mang.BL.STD
                                string Transfer_reason,
                                byte Resom, byte Kotob,
                                string adrs, int New_Grade,
-                               bool Trans_After_Year)
+                               bool Trans_After_Year,
+                               bool NewStudentInThisYear)
         {
             DAL.ExecNonQuery("SP_Add_Transfers_Data",
                 SqlParam.NVar("@Transfer_code", Transfer_code, 20),
@@ -410,7 +416,8 @@ namespace School_Mang.BL.STD
                 SqlParam.NVar("@Created_by", Properties.Settings.Default.user_name, 15),
                 SqlParam.NVar("@Updated_by", Properties.Settings.Default.user_name, 15),
                 SqlParam.Int("@New_Grade", New_Grade),
-                SqlParam.Bit("@Trans_After_Year", Trans_After_Year)
+                SqlParam.Bit("@Trans_After_Year", Trans_After_Year),
+                SqlParam.Bit("@NewStudentInThisYear", NewStudentInThisYear)
             );
         }
         public DataTable GET_Code_Std_Grade(int Grade_Id, int Year_Id, string Is_Valied)

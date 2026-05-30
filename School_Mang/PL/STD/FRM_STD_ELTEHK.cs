@@ -1,27 +1,38 @@
 ﻿using School_Mang.BL;
 using School_Mang.BL.Services;
 using School_Mang.BL.Enums;
+using School_Mang.BL.Extensions;
+using School_Mang.BL.Models;
+using School_Mang.BL.Common;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using School_Mang.BL.Common.Helper;
 
 namespace School_Mang.PL.STD
 {
-    public partial class FRM_STD_ELTEHK : Form, INavigationAware
+    public partial class FRM_STD_ELTEHK : Form, INavigationAware, INavigationAwareLoaded
     {
 
         private NavigationContext _context;
+        private readonly StudentSaveService _saveService = new StudentSaveService();
 
         public void SetNavigation(NavigationContext context)
         {
             _context = context;
             ApplyContext();
+        }
+        public void OnNavigatedTo()
+        {
+            var d = _context?.StudentData;
+            if (d == null) return;
+            cmb_grade.SelectedValue = d.GradeId;
+            cmb_hala.SelectedValue = d.StudentStatus;
+            cmb_class.DataSource = std.Get_Grad_Data(d.GradeId);
+            if (d.GradeId != 10)
+            {
+                if (cmb_class.Items.Count > 1)
+                    cmb_class.SelectedIndex = 1;
+            }
         }
 
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
@@ -57,11 +68,64 @@ namespace School_Mang.PL.STD
             {
                 frm_Std_Eltehk = this;
             }
-
-            ApplyContext(); 
         }
 
         private void ApplyContext()
+        {
+            LoadCombos();
+            // Set User permission
+            switch (permission_id)
+            {
+                case 3:
+                    btn_new_std.Enabled = false;
+                    break;
+                case 1:
+                case 2:
+                    btn_new_std.Enabled = true;
+                    break;
+            }
+            LoadFromContext();
+        }
+        public void SaveTahweel()
+        {
+            try
+            {
+                // Add Std
+
+                var req = new StudentSaveRequest
+                {
+                    StdCode = txt_std_code.Text,
+                    YearId = SafeConverter.GetInt(cmb_sana.SelectedValue),
+                    GradeId = SafeConverter.GetInt(cmb_grade.SelectedValue),
+                    StatusId = SafeConverter.GetInt(cmb_hala.SelectedValue),
+                    ClassId = SafeConverter.GetInt(cmb_class.SelectedValue)
+                };
+                _saveService.AddToSchool(req);  
+                
+
+                if (_context?.StudentCase.Has(GetStudentCase.TaheewlToSchool) != true)
+                {
+                    MSG.MyMesg("تم حفظ البيانات");
+
+                }
+                else
+                {
+                    //MSG.MyMesg("تم حفظ طلب التحويل بنجاح .. !");
+                }
+
+                btn_new_std.Enabled = false;
+
+                var frm = FRM_GET_STD.Get_Student;
+                frm.RefreshStudents();
+            }
+            catch (Exception ex)
+            {
+                MSG.ErrorMesg("Here");
+
+                MSG.ErrorMesg(ex.Message);
+            }
+        }
+        private void LoadCombos()
         {
             // Fill Combos
 
@@ -81,17 +145,16 @@ namespace School_Mang.PL.STD
             cmb_class.DisplayMember = "Class_Desc";
             cmb_class.ValueMember = "Class_Id";
 
-            // Set User permission
-            switch (permission_id)
-            {
-                case 3:
-                    btn_new_std.Enabled = false;
-                    break;
-                case 1:
-                case 2:
-                    btn_new_std.Enabled = true;
-                    break;
-            }
+        }
+        private void LoadFromContext()
+        {
+            var d = _context?.StudentData;
+            if (d == null) return;
+
+            txt_std_code.Text = d.StdCode;
+            txt_std_name.Text = d.StdName;
+            txt_std_nat.Text = d.Nat;
+            txt_sana.Text = d.YearId.ToString();
         }
 
         int move;
@@ -129,10 +192,7 @@ namespace School_Mang.PL.STD
             this.Dispose();
 
             var frm = FRM_GET_STD.Get_Student;
-            frm.txt_std_data.Text = "";
-            frm.LoadStudentData(); 
-            frm.txt_std_data.Focus();
-
+            frm.RefreshStudents();
         }
 
         private void FRM_STD_ELTEHK_Load(object sender, EventArgs e)
@@ -148,44 +208,7 @@ namespace School_Mang.PL.STD
 
         public void btn_new_std_Click(object sender, EventArgs e)
         {
-
-            try
-            {
-                //IF Tahweel To School Get New Year
-                if (_context?.StudentCase.HasFlag(GetStudentCase.TaheewlToSchool) == true)
-                {
-                    cmb_sana.SelectedValue = (Properties.Settings.Default.year_cod) + 1;
-
-                }
-                // Add Std
-                std.Add_School_Std_Data(
-                    txt_std_code.Text,
-                    Convert.ToInt32(cmb_sana.SelectedValue),
-                    Convert.ToInt32(cmb_grade.SelectedValue),
-                    Convert.ToInt32(cmb_hala.SelectedValue),
-                    Convert.ToInt32(cmb_class.SelectedValue)
-                    );
-
-                if (_context?.StudentCase.HasFlag(GetStudentCase.TaheewlToSchool) != true)
-                {
-                    MSG.MyMesg("تم حفظ البيانات");
-
-                }
-                else
-                {
-                    //MSG.MyMesg("تم حفظ طلب التحويل بنجاح .. !");
-                }
-
-                btn_new_std.Enabled = false;
-
-                var frm = FRM_GET_STD.Get_Student;
-                frm.txt_std_data.Text = "";
-               frm.LoadStudentData(); 
-            }
-            catch (Exception ex)
-            {
-                MSG.ErrorMesg(ex.Message);
-            }
+            SaveTahweel();
         }
 
         private void btn_print_elthak_Click(object sender, EventArgs e)

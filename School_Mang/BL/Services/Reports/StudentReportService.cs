@@ -14,5 +14,9 @@ namespace School_Mang.BL.Services.Reports
         {
             _rpt.OpenDegree_Statement(year, gradeId, stdCode);
         }
+        public void OpenCountStd(int year)
+        {
+            _rpt.OpenCount_Std(year);
+        }
     }
 }

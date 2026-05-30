@@ -24,6 +24,7 @@ namespace School_Mang.RPT
             string dataBase = Properties.Settings.Default.DataBasee_name;
             string user = Properties.Settings.Default.DataBasee_User;
             string pass = Properties.Settings.Default.DataBasee_Pass;
+
             try
             {
                 rpt.DataSourceConnections[0].IntegratedSecurity = false;
@@ -141,7 +142,8 @@ namespace School_Mang.RPT
         }
 
         public void OpenTadargSen(int year_id,
-                                  int grade_id =0)
+                                  int grade_id =0,
+                                   bool isDesc = false)
         {
             try
             {
@@ -154,8 +156,9 @@ namespace School_Mang.RPT
                 myReport.SetParameterValue("@year_id", year_id);
                 myReport.SetParameterValue("@grade_id", grade_id);
                 myReport.SetParameterValue("@October_Sana", October_Sana);
-                
+                myReport.SetParameterValue("@isDesc", isDesc);
 
+                
                 OpenReport(myReport, "تدرج السن" , "تدرج السن");
             }
             catch (Exception e)
@@ -166,7 +169,7 @@ namespace School_Mang.RPT
         }
 
         public void OpenSegel(int year_id,
-                                  int grade_id = 0)
+                              int grade_id = 0)
         {
             try
             {
@@ -910,6 +913,29 @@ namespace School_Mang.RPT
 
         }
 
+        public void OpenAhsaaEdara(int year_id,int grade_id)                   
+        {
+            ReportDocument myReport = new ReportDocument();
+            switch (grade_id)
+            {
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                    myReport.Load(Application.StartupPath + @"/MyReports/rpt_Analysis_prim.rpt");
+                    break;
+                case 7:
+                case 8:
+                    myReport.Load(Application.StartupPath + @"/MyReports/rpt_Analysis_prep.rpt");
+                    break;
+
+            }
+            myReport.SetParameterValue("@Year_Id", year_id);
+            myReport.SetParameterValue("@Grade_Id", grade_id);
+            OpenReport(myReport, "إحصاء النتيجة", "إحصاء النتيجة");
+        }
         public void OpenDegree_Statement(int year_id,
                                int grade_id,
                                string std_code)

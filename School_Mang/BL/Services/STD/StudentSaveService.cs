@@ -3,6 +3,7 @@ using School_Mang.BL.Services.STD;
 using School_Mang.BL.STD;
 using System;
 using System.Data;
+using School_Mang.BL.Models;
 
 namespace School_Mang.BL.Services
 {
@@ -16,50 +17,49 @@ namespace School_Mang.BL.Services
             _std = new CLS_STD();
             _codeService = new StudentCodeService();
         }
-        public string SaveStudent(
-                                string studentName,
-                                string nationalId,
-                                int yearId,
-                                int gradeId,
-                                int genderId,
-                                int nationalityId,
-                                int religionId,
-                                int statusId,
-                                int osraId)
+        public string SaveStudent(StudentSaveRequest req)
                                     {
             int studentCode = _codeService.GetStudentCode(
-                yearId, 
-                gradeId
-                );
+                req.YearId, req.GradeId);
+                
 
             if (!_std.Verify_Std_Code(studentCode.ToString()).Rows.Count.Equals(0))
             {
                 throw new Exception("كود الطالب غير صالح");
             }
-            int year = SchoolYearService.GetCalculationYear(yearId);
+            int year = SchoolYearService.GetCalculationYear(req.YearId);
 
-            var sen = AgeService.NatAgeHesabSen(nationalId, year);
+            var sen = AgeService.NatAgeHesabSen(req.NationalId, year);
 
 
             DateTime tarikh = Convert.ToDateTime(sen.BirthDate);
 
             _std.Add_Std_Data(
                 studentCode.ToString(),
-                studentName,
-                nationalId,
+                req.StudentName,
+                req.NationalId,
                 tarikh,
-                genderId,
-                nationalityId,
-                religionId,
-                statusId,
-                gradeId,
-                yearId,
-                osraId
+                req.GenderId,
+                req.NationalityId,
+                req.ReligionId,
+                req.StatusId,
+                req.GradeId,
+                req.YearId,
+                req.OsraId
             );
 
             return studentCode.ToString();
         }
 
-       
+        public void AddToSchool(StudentSaveRequest req)
+        {
+            _std.Add_School_Std_Data(
+                req.StdCode,
+                req.YearId,
+                req.GradeId,
+                req.StatusId,
+                req.ClassId
+            );
+        }
     }
 }

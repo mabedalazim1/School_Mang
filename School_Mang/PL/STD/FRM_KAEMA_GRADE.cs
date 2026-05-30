@@ -157,6 +157,8 @@ namespace School_Mang.PL.STD
             Waiting.Start();
             int grade = Convert.ToInt32(cmb_grade.SelectedValue);
             int year_id = Convert.ToInt32(cmb_sana.SelectedValue);
+            bool sort = chk_sort.Checked;
+
             try
             {
                 switch (_context.CurrentReport)
@@ -174,7 +176,7 @@ namespace School_Mang.PL.STD
                             return;
                         }
 
-                        RPT.OpenTadargSen(year_id, grade);
+                        RPT.OpenTadargSen(year_id, grade, sort);
                         break;
 
                     case ReportDataType.OpenSegel:
@@ -234,6 +236,7 @@ namespace School_Mang.PL.STD
         {
             Waiting.Start();
             int year_id = Convert.ToInt32(cmb_sana.SelectedValue);
+            bool sort = chk_sort.Checked;
 
             try
             {
@@ -254,7 +257,7 @@ namespace School_Mang.PL.STD
 
                         if (MSG.DialogeErrMsg("سوف يتم عرض بيانات جميع الطلاب .. هل تريد المتابعة ؟ ") != DialogResult.Yes) return;
 
-                        RPT.OpenTadargSen(year_id);
+                        RPT.OpenTadargSen(year_id,0, sort);
                         break;
 
                     case ReportDataType.OpenSegel:

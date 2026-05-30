@@ -40,10 +40,10 @@ namespace School_Mang.PL.STD
             this.btn_close_b = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btn_print_kaema = new Bunifu.Framework.UI.BunifuThinButton2();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.chk_sort = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cmb_sana = new System.Windows.Forms.ComboBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.chk_sort = new System.Windows.Forms.CheckBox();
             this.pn_top.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -219,6 +219,19 @@ namespace School_Mang.PL.STD
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "الصف - العام الدراسى";
             // 
+            // chk_sort
+            // 
+            this.chk_sort.AutoSize = true;
+            this.chk_sort.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chk_sort.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.chk_sort.Location = new System.Drawing.Point(13, 23);
+            this.chk_sort.Name = "chk_sort";
+            this.chk_sort.Size = new System.Drawing.Size(150, 29);
+            this.chk_sort.TabIndex = 84;
+            this.chk_sort.Text = "من الأصغر للأكبر";
+            this.chk_sort.UseVisualStyleBackColor = true;
+            this.chk_sort.Visible = false;
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -256,19 +269,6 @@ namespace School_Mang.PL.STD
             this.label12.Size = new System.Drawing.Size(98, 29);
             this.label12.TabIndex = 82;
             this.label12.Text = "العام  الدراسى";
-            // 
-            // chk_sort
-            // 
-            this.chk_sort.AutoSize = true;
-            this.chk_sort.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chk_sort.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-            this.chk_sort.Location = new System.Drawing.Point(13, 23);
-            this.chk_sort.Name = "chk_sort";
-            this.chk_sort.Size = new System.Drawing.Size(150, 29);
-            this.chk_sort.TabIndex = 84;
-            this.chk_sort.Text = "من الأكبر للأصغر";
-            this.chk_sort.UseVisualStyleBackColor = true;
-            this.chk_sort.Visible = false;
             // 
             // FRM_KAEMA_GRADE
             // 

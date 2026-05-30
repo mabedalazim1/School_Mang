@@ -20,60 +20,68 @@ namespace School_Mang.DAL
 
         public bool IsConnectedToInternet()
         {
-            string host = "192.168.1.1";  
-            bool result = false;
-            Ping p = new Ping();
-
-            if (!BL.Globals.Test_Internet_Con) return true;
+            if (!BL.Globals.Test_Internet_Con)
+                return true;
 
             try
             {
-                PingReply reply = p.Send(host, 3000);
-                if (reply.Status == IPStatus.Success)
-                    return true;
-                
+                using (Ping ping = new Ping())
+                {
+                    PingReply reply = ping.Send("192.168.1.1", 3000);
+
+                    return reply.Status == IPStatus.Success;
+                }
             }
-            catch{ }
-            return result;
+            catch
+            {
+                return false;
+            }
         }
+
         public bool IsServerConnected()
         {
-
-            SqlConnection connection = new SqlConnection(@"Server=" + server + ";Database= " +
-                                    database_name + "; User Id = " + database_user +
-                                    "; Password = " + database_pass + ";");
-            {
-                try
-                {
-                    connection.Open();
-                    return true;
-                }
-                catch (SqlException)
-                {
-                    return false;
-                }
-            }
+            return CheckServerConnection(
+                server,
+                database_name,
+                database_user,
+                database_pass);
         }
 
         public bool IsServerConnected(
             string server,
-            string database_name ,
-            string database_user ,
+            string database_name,
+            string database_user,
             string database_pass)
         {
-            SqlConnection connection = new SqlConnection(@"Server=" + server + ";Database= " +
-                                    database_name + "; User Id = " + database_user +
-                                    "; Password = " + database_pass + ";");
+            return CheckServerConnection(
+                server,
+                database_name,
+                database_user,
+                database_pass);
+        }
+       
+        private bool CheckServerConnection(
+            string server,
+            string database_name,
+            string database_user,
+            string database_pass)
+        {
+            try
             {
-                try
+                using (SqlConnection connection = new SqlConnection(
+                    @"Server=" + server +
+                    ";Database=" + database_name +
+                    ";User Id=" + database_user +
+                    ";Password=" + database_pass + ";"))
                 {
                     connection.Open();
-                    return true;
+
+                    return connection.State == ConnectionState.Open;
                 }
-                catch (SqlException)
-                {
-                    return false;
-                }
+            }
+            catch (SqlException)
+            {
+                return false;
             }
         }
 

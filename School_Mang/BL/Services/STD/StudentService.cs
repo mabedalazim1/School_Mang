@@ -52,5 +52,12 @@ namespace School_Mang.BL.Services
         {
             _std.Delete_School_Std_Data(stdCode, year);
         }
+        public void ViVerifyIsThereSudents()
+        {
+            var dt = _std.Get_All_Std_Data(0);
+
+            if (dt.Rows.Count == 0)
+                throw new Exception("لم يتم تسجيل طلاب جدد لهذا العام .. !");
+        }
     }
 }

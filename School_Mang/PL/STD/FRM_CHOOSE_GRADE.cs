@@ -2,15 +2,10 @@
 using School_Mang.BL.Common;
 using School_Mang.BL.Enums;
 using School_Mang.BL.Services;
+using School_Mang.BL.Extensions;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Runtime.Remoting.Contexts;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
@@ -243,21 +238,19 @@ namespace School_Mang.PL.STD
 
             foreach (DataGridViewRow dtrow in dt_std_data.Rows)
             {
-                if (dtrow.Cells[0].Value.ToString() == "جملة رياض أطفال" ||
-                    dtrow.Cells[0].Value.ToString() == "جملة المرحلة الإبتدائية" ||
-                    dtrow.Cells[0].Value.ToString() == "جملة المرحلة الإعدادية")
+                if (dtrow.Cells[0].Value?.ToString() == "جملة رياض أطفال" ||
+                    dtrow.Cells[0].Value?.ToString() == "جملة المرحلة الإبتدائية" ||
+                    dtrow.Cells[0].Value?.ToString() == "جملة المرحلة الإعدادية")
                 {
                     dtrow.DefaultCellStyle.BackColor = Color.LightGray;
                 }
-                if (dtrow.Cells[0].Value.ToString() == "الجملة العامة")
+                if (dtrow.Cells[0].Value?.ToString() == "الجملة العامة")
                 {
                     dtrow.DefaultCellStyle.BackColor = Color.Teal;
                 }
-
+            }
                 dt_std_data.Columns[0].Width = 200;
                 dt_std_data.Columns[6].Visible = false;
-            }
-
         }
         private void pn_top_MouseDown(object sender, MouseEventArgs e)
         {
@@ -301,22 +294,22 @@ namespace School_Mang.PL.STD
             Add_Data();
             int myYear = Properties.Settings.Default.MyYear;
 
-            if (_context?.StudentCase.HasFlag(GetStudentCase.DegreeStatement) != true)
+            if (_context?.StudentCase.Has(GetStudentCase.DegreeStatement) != true)
             {
 
                 lbl_current_year.Text = "احصاء " + SchoolFormatter.Year_Desc(
                      myYear,
                       _context?.CurrentYearData ?? false,
-                      _context?.StudentCase.HasFlag(GetStudentCase.StudentDetails) ?? false,
-                      _context?.StudentCase.HasFlag(GetStudentCase.ElthakStdNextYear) ?? false);
+                      _context?.StudentCase.Has(GetStudentCase.StudentDetails) ?? false,
+                      _context?.StudentCase.Has(GetStudentCase.ElthakStdNextYear) ?? false);
             }
             else
             {
                 lbl_current_year.Text = "بيانات " + SchoolFormatter.Year_Desc(
                      myYear,
                      _context?.CurrentYearData ?? false,
-                     _context?.StudentCase.HasFlag(GetStudentCase.StudentDetails) ?? false,
-                     _context?.StudentCase.HasFlag(GetStudentCase.ElthakStdNextYear) ?? false);
+                     _context?.StudentCase.Has(GetStudentCase.StudentDetails) ?? false,
+                     _context?.StudentCase.Has(GetStudentCase.ElthakStdNextYear) ?? false);
             }
             Waiting.Stop();
         }
@@ -348,11 +341,11 @@ namespace School_Mang.PL.STD
             {
                 c.CurrentYearData = _context.CurrentYearData;
 
-                if (_context.StudentCase.HasFlag(GetStudentCase.DegreeStatement))
+                if (_context.StudentCase.Has(GetStudentCase.DegreeStatement))
                 {
                     c.StudentCase |= GetStudentCase.DegreeStatement;
                 }
-                if (_context.StudentCase.HasFlag(GetStudentCase.ElthakStdNextYear))
+                if (_context.StudentCase.Has(GetStudentCase.ElthakStdNextYear))
                 {
                     c.StudentCase |= GetStudentCase.ElthakStdNextYear;
                 }

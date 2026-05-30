@@ -71,5 +71,6 @@ namespace School_Mang.BL.Services
         public bool From_Un_Matched { get; set; }
         public bool Get_User_Data { get; set; }
         public bool Del_Assessment_Data { get; set; }
+        public bool AhsaaEdara { get; set; }
     }
 }

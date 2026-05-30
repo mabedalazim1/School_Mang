@@ -14,8 +14,6 @@ namespace School_Mang.PL.STD.HOME
 
         private readonly StudentDataMigrationService dataMigration = new StudentDataMigrationService();
 
-        BL.STD.CLS_STD std = new BL.STD.CLS_STD();
-
         CLS_STD_FUNCATIONS Func = new CLS_STD_FUNCATIONS();
 
         int permission_id = Properties.Settings.Default.permission_id;
@@ -64,7 +62,6 @@ namespace School_Mang.PL.STD.HOME
         private void GetCurrentStudent()
         {
             Waiting.Start();
-            // Globals.Current_Year_Data = true; // تحذف
 
             AppNavigation.Instance
                         .WithOwner(FRM_MAIN.Get_Frm_Main)
@@ -73,7 +70,6 @@ namespace School_Mang.PL.STD.HOME
                             c.CurrentYearData = true;
                         })
                         .Show<FRM_CHOOSE_GRADE>();
-            // تم التعديل علي نظام Navgation
         }
         private void lbl_current_stds_Click(object sender, EventArgs e)
         {
@@ -91,15 +87,17 @@ namespace School_Mang.PL.STD.HOME
 
         private void ShowStudent()
         {
-            DataTable Dt = std.Get_All_Std_Data(0);
-            if (Dt.Rows.Count == 0)
+            try
             {
-                MSG.ErrorMesg("لم يتم تسجيل طلاب جدد لهذا العام .. !");
-                return;
-            }
-            AppNavigation.Instance.Show(FRM_GET_STD.Get_Student);
+                studentService.ViVerifyIsThereSudents();
 
-            // لا يوجد context في هذا الجزء
+                AppNavigation.Instance.Show(FRM_GET_STD.Get_Student);
+            }
+            catch (Exception ex)
+            {
+                MSG.ErrorMesg(ex.Message);
+            }
+
         }
         private void lbl_show_stds_Click(object sender, EventArgs e)
         {
@@ -108,19 +106,12 @@ namespace School_Mang.PL.STD.HOME
 
         private void GetOsraData()
         {
-            //FRM_GET_OSRAA.Get_Osra_data.ShowDialog();
-
             AppNavigation.Instance
                         .SetContext(c =>
                         {
-                            c.OsraMode = GetOsraMode.OpenFormGetOsra;
-
-                            //c.OpenFormGetOsra = true; // تأكد من استخدامها فى الفورم الى بتستدعيه
+                            c.OsraState.OpenFormGetOsra = true; // Update
                         })
                         .Show(FRM_GET_OSRAA.Get_Osra_data);
-
-            //OpenFormGetOsra  تم وغالبا الفورم لا يستخدم 
-            // لأانه بيكرر هناك اسناد true
         }
         private void lbl_get_osra_data_Click(object sender, EventArgs e)
         {
@@ -134,8 +125,7 @@ namespace School_Mang.PL.STD.HOME
             AppNavigation.Instance
                             .SetContext(c =>
                             {
-                                c.OsraMode = GetOsraMode.Normal;
-                                c.StudentMode = GetStudentMode.AddNewStudent;
+                                c.StudentState.AddNewStudent = true;
                                 //c.OpenFormGetOsra = false;
                             })
                             .Show(FRM_ADD_STD.getAdd_Std_Frm); // تم التحقق

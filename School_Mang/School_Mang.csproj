@@ -231,8 +231,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BL\CLS_BACKUP_DATABASE.cs" />
-    <Compile Include="BL\Common\Extensions\ExcelRowHelper.cs" />
-    <Compile Include="BL\Common\Extensions\StudentCaseExtensions.cs" />
+    <Compile Include="BL\Common\Helper\SafeConverter.cs" />
+    <Compile Include="BL\Common\Helper\GridHelper.cs" />
+    <Compile Include="BL\Common\ServiceResult.cs" />
+    <Compile Include="BL\Enums\ColumnVisibility.cs" />
+    <Compile Include="BL\Extensions\ExcelRowHelper.cs" />
+    <Compile Include="BL\Extensions\StudentCaseExtensions.cs" />
     <Compile Include="BL\Common\Helper\InternetFlow.cs" />
     <Compile Include="BL\Common\Helper\InternetHelper.cs" />
     <Compile Include="BL\Common\Helper\SqlParam.cs" />
@@ -245,26 +249,33 @@
     <Compile Include="BL\Enums\ReportDataType.cs" />
     <Compile Include="BL\ExcelUtils\ExcelValidator.cs" />
     <Compile Include="BL\ExcelUtils\ValidationResult.cs" />
+    <Compile Include="BL\Extensions\EnumExtensions.cs" />
     <Compile Include="BL\Globals.cs" />
     <Compile Include="BL\LOGIN\CLS_LOGIN.cs" />
+    <Compile Include="BL\Models\StudentSaveRequest.cs" />
     <Compile Include="BL\Models\TransferData.cs" />
     <Compile Include="BL\MSG.cs" />
     <Compile Include="BL\NATEG\cls_NATAG_FUNCTIONS.cs" />
     <Compile Include="BL\NATEG\CLS_NATEG.cs" />
     <Compile Include="BL\NATEG\ExcelUtlity.cs" />
+    <Compile Include="BL\Services\Navigation\OsraContext.cs" />
+    <Compile Include="BL\Services\Navigation\StudentContext.cs" />
     <Compile Include="BL\Services\Reports\ElthakReportService.cs" />
     <Compile Include="BL\Services\Reports\StudentReportService.cs" />
     <Compile Include="BL\Services\STD\AgeService.cs" />
-    <Compile Include="BL\Services\AppSession.cs" />
-    <Compile Include="BL\Services\INavigationAware.cs" />
+    <Compile Include="BL\Services\Navigation\AppSession.cs" />
+    <Compile Include="BL\Services\Navigation\INavigationAware.cs" />
+    <Compile Include="BL\Services\STD\ClassService.cs" />
     <Compile Include="BL\Services\STD\GetTypeService.cs" />
     <Compile Include="BL\Services\STD\NationalIdService.cs" />
-    <Compile Include="BL\Services\NavigationContext.cs" />
-    <Compile Include="BL\Services\AppNavigation.cs" />
+    <Compile Include="BL\Services\Navigation\NavigationContext.cs" />
+    <Compile Include="BL\Services\Navigation\AppNavigation.cs" />
     <Compile Include="BL\Services\STD\NumericService.cs" />
+    <Compile Include="BL\Services\STD\OsraDataService.cs" />
     <Compile Include="BL\Services\STD\SchoolYearService.cs" />
     <Compile Include="BL\Services\STD\StdValidationService.cs" />
     <Compile Include="BL\Services\STD\StudentCodeService.cs" />
+    <Compile Include="BL\Services\STD\StudentDataService.cs" />
     <Compile Include="BL\Services\STD\StudentSaveService.cs" />
     <Compile Include="BL\Services\STD\StudentService.cs" />
     <Compile Include="BL\Services\STD\StudentUpdateService.cs" />
@@ -707,13 +718,6 @@
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Tadarg_Sen.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>rpt_Tadarg_Sen.rpt</DependentUpon>
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
     <Compile Include="MyReports\rpt_Tahewl_Data.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1049,6 +1053,8 @@
     <Compile Include="PL\STD\HOME\FRM_STD_REPORTS.Designer.cs">
       <DependentUpon>FRM_STD_REPORTS.cs</DependentUpon>
     </Compile>
+    <Compile Include="PL\STD\Mappers\FRM_CURRENT_STD_Mappes.cs" />
+    <Compile Include="PL\STD\Mappers\FRM_GET_STD_Mapper.cs" />
     <Compile Include="PL\STD\Services\CurrentStdFormService.cs" />
     <Compile Include="PL\USERS\FRM_ADD_USER.cs">
       <SubType>Form</SubType>
@@ -1073,11 +1079,6 @@
     <Content Include="MyReports\rpt_Kaema.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Kaema.cs</LastGenOutput>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MyReports\rpt_Tadarg_Sen.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>rpt_Tadarg_Sen.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="MyReports\rpt_Tahewl_From.rpt">
@@ -1224,6 +1225,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="EXCEL\Lessons\questions_by_answers.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MyReports\rpt_Analysis_prep.rpt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MyReports\rpt_Analysis_prim.rpt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MyReports\rpt_Tadarg_Sen.rpt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />

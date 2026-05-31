@@ -7,7 +7,7 @@ using School_Mang.BL;
 using School_Mang.BL.Services;
 using School_Mang.BL.Enums;
 using School_Mang.BL.Common;
-using School_Mang.BL.Extensions;
+using School_Mang.BL.Services.STD;
 
 namespace School_Mang.PL.STD
 {
@@ -23,7 +23,8 @@ namespace School_Mang.PL.STD
 
 
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
-        
+        private readonly VerifyService _verify = new VerifyService();
+        private readonly GetDataService _stdData = new GetDataService();
 
 
         int permission_id = Properties.Settings.Default.permission_id;
@@ -58,11 +59,11 @@ namespace School_Mang.PL.STD
                 frm_Osrs_Data = this;
             }
 
-            cmb_father_halaa.DataSource = std.Get_OSRA_STAT_MALE();
+            cmb_father_halaa.DataSource = _stdData.Get_OSRA_STAT_MALE();
             cmb_father_halaa.DisplayMember = "StatusDesc";
             cmb_father_halaa.ValueMember = "Id";
 
-            cmb_mother_hala.DataSource = std.Get_OSRA_STAT_FEMALE();
+            cmb_mother_hala.DataSource = _stdData.Get_OSRA_STAT_FEMALE();
             cmb_mother_hala.DisplayMember = "StatusDesc";
             cmb_mother_hala.ValueMember = "Id";
 
@@ -208,7 +209,7 @@ namespace School_Mang.PL.STD
             // Student Code
             string year = Properties.Settings.Default.MyYear.ToString().Substring(2, 2);
             string next_year = (Convert.ToInt32(year) + 1).ToString();
-            DataTable Dt = std.Verify_Osra_Code(next_year);
+            DataTable Dt = _verify.Verify_Osra_Code(next_year);
             if (Dt.Rows[0]["Max_Osra_Id"].ToString() == "")
             {
 
@@ -310,7 +311,7 @@ namespace School_Mang.PL.STD
             Boolean nat = false;
             try
             {
-                DataTable Dt = std.Verify_Std_Nat(txt.Text);
+                DataTable Dt = _verify.Verify_Std_Nat(txt.Text);
                 if (Dt != null)
                 {
                     if (Dt.Rows.Count > 0)
@@ -367,7 +368,7 @@ namespace School_Mang.PL.STD
             if(isValidNat) {  
                 try
                 {
-                    DataTable Dt = std.Verify_Osra_Nat(txt.Text, osra_code);
+                    DataTable Dt = _verify.Verify_Osra_Nat(txt.Text, osra_code);
                     if (Dt != null)
                     {
                         if (Dt.Rows.Count > 0)

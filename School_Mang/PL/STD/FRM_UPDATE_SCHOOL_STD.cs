@@ -1,6 +1,5 @@
 ﻿using School_Mang.BL;
 using School_Mang.BL.Services;
-using School_Mang.BL.Extensions;
 using School_Mang.BL.Services.STD;
 using System;
 using System.Data;
@@ -13,6 +12,11 @@ namespace School_Mang.PL.STD
     public partial class FRM_UPDATE_SCHOOL_STD : Form, INavigationAware
     {
         private NavigationContext _context;
+        private readonly OsraDataService _osraData = new OsraDataService();
+        private readonly StudentDataMigrationService _studentData = new StudentDataMigrationService();
+        private readonly StudentService _studentService = new StudentService();
+        private readonly LookupService _stdData = new LookupService();
+
 
         public void SetNavigation(NavigationContext context)
         {
@@ -69,27 +73,27 @@ namespace School_Mang.PL.STD
         {
             // Fill Combos
 
-            cmb_sana.DataSource = std.Get_years();
+            cmb_sana.DataSource = _stdData.Get_years();
             cmb_sana.DisplayMember = "YearDesc";
             cmb_sana.ValueMember = "Year_Id";
 
-            cmb_grade.DataSource = std.Get_grades();
+            cmb_grade.DataSource = _stdData.Get_grades();
             cmb_grade.DisplayMember = "GradeDesc";
             cmb_grade.ValueMember = "Grade_Id";
 
-            cmb_hala.DataSource = std.Get_stdStat();
+            cmb_hala.DataSource = _stdData.Get_stdStat();
             cmb_hala.DisplayMember = "StatusDesc";
             cmb_hala.ValueMember = "Std_Status_Id";
 
-            cmb_gender.DataSource = std.Get_genders();
+            cmb_gender.DataSource = _stdData.Get_genders();
             cmb_gender.DisplayMember = "GenderDesc";
             cmb_gender.ValueMember = "Gender_Id";
 
-            cmb_relgien.DataSource = std.Get_religion();
+            cmb_relgien.DataSource = _stdData.Get_religion();
             cmb_relgien.DisplayMember = "ReligionDesc";
             cmb_relgien.ValueMember = "Religion_Id";
 
-            cmb_class.DataSource = std.Get_Grad_Data(grade);
+            cmb_class.DataSource = _stdData.Get_Grad_Data(grade);
             cmb_class.DisplayMember = "Class_Desc";
             cmb_class.ValueMember = "Class_Id";
 
@@ -154,7 +158,7 @@ namespace School_Mang.PL.STD
 
         private void cmb_grade_SelectedIndexChanged(object sender, EventArgs e)
         {
-            cmb_class.DataSource = std.Get_Grad_Data(Convert.ToInt32(cmb_grade.SelectedValue));
+            cmb_class.DataSource = _stdData.Get_Grad_Data(Convert.ToInt32(cmb_grade.SelectedValue));
         }
 
         private void btn_save_data_Click(object sender, EventArgs e)
@@ -217,10 +221,10 @@ namespace School_Mang.PL.STD
                         }
                         if(grade != 9)
                         {
-                            DataTable dt_school_data = std.Get_School_year_Data(year, 0, 0);
+                            DataTable dt_school_data = _studentService.Get_School_year_Data(year, 0, 0);
                             if(dt_school_data.Rows.Count != 0)
                             {
-                                std.Add_School_Std_Data(txt_std_code.Text,
+                                _studentService.Add_School_Std_Data(txt_std_code.Text,
                                                       year,
                                                       new_grade,
                                                       2,
@@ -241,7 +245,7 @@ namespace School_Mang.PL.STD
                     if(MSG.DialogeMsg("   سوف يتم سحب ملف الطالب ..   " +txt_first_name.Text)== DialogResult.Yes)
                     {
                         int year = Properties.Settings.Default.year_cod + 1;
-                        std.Delete_School_Std_Data(txt_std_code.Text, year);
+                        _studentService.Delete_School_Std_Data(txt_std_code.Text, year);
                     }
                     else
                     {
@@ -306,7 +310,7 @@ namespace School_Mang.PL.STD
         private void btn_show_data_Click(object sender, EventArgs e)
         {
             DataTable Dt;
-            Dt = std.Get_osra_Data_ById(Convert.ToInt32(txt_osra_id.Text));
+            Dt = _osraData.Get_osra_Data_ById(Convert.ToInt32(txt_osra_id.Text));
             try
             {
                 this.Close();

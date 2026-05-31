@@ -1,24 +1,14 @@
 ﻿using School_Mang.BL;
 using School_Mang.BL.STD;
+using School_Mang.BL.Services;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace School_Mang.PL.STD
 {
     public partial class FRM_TOEXCEL : Form
     {
-
-        //Import Classes
-        CLS_STD std = new BL.STD.CLS_STD();
-
-        CLS_STD_FUNCATIONS Std_Func = new CLS_STD_FUNCATIONS();
+        private readonly LookupService _stdData = new LookupService();
 
         // Form Closed
         private static FRM_TOEXCEL frm_To_Excel;
@@ -50,7 +40,7 @@ namespace School_Mang.PL.STD
                 Waiting.Start();
                 // Fill Combos
 
-                cmb_sana.DataSource = std.Get_years();
+                cmb_sana.DataSource = _stdData.Get_years();
                 cmb_sana.DisplayMember = "YearDesc";
                 cmb_sana.ValueMember = "Year_Id";
 

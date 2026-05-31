@@ -19,6 +19,8 @@ namespace School_Mang.PL.STD
         private NavigationContext _context;
         private readonly StudentSaveService _saveService = new StudentSaveService();
         private readonly StudentUpdateService _updateService = new StudentUpdateService();
+        private readonly LookupService _lookUpService = new LookupService();
+
         private bool _isFormReady = false;
         private bool _isClosing = false;
         private bool _loading = false;
@@ -31,9 +33,6 @@ namespace School_Mang.PL.STD
             }
 
         }
-
-        //Import Classes
-        CLS_STD std = new CLS_STD();
 
         int permission_id = Properties.Settings.Default.permission_id;
 
@@ -72,27 +71,27 @@ namespace School_Mang.PL.STD
             {
                 // Fill Combos
 
-                cmb_sana.DataSource = std.Get_years();
+                cmb_sana.DataSource = _lookUpService.Get_years();
                 cmb_sana.DisplayMember = "YearDesc";
                 cmb_sana.ValueMember = "Year_Id";
 
-                cmb_type.DataSource = std.Get_genders();
+                cmb_type.DataSource = _lookUpService.Get_genders();
                 cmb_type.DisplayMember = "GenderDesc";
                 cmb_type.ValueMember = "Gender_Id";
 
-                cmb_grade.DataSource = std.Get_grades();
+                cmb_grade.DataSource = _lookUpService.Get_grades();
                 cmb_grade.DisplayMember = "GradeDesc";
                 cmb_grade.ValueMember = "Grade_Id";
 
-                cmb_national.DataSource = std.Get_nationalities();
+                cmb_national.DataSource = _lookUpService.Get_nationalities();
                 cmb_national.DisplayMember = "NationalityDesc";
                 cmb_national.ValueMember = "Nationality_Id";
 
-                cmb_hala.DataSource = std.Get_stdStat();
+                cmb_hala.DataSource = _lookUpService.Get_stdStat();
                 cmb_hala.DisplayMember = "StatusDesc";
                 cmb_hala.ValueMember = "Std_Status_Id";
 
-                cmb_religion.DataSource = std.Get_religion();
+                cmb_religion.DataSource = _lookUpService.Get_religion();
                 cmb_religion.DisplayMember = "ReligionDesc";
                 cmb_religion.ValueMember = "Religion_Id";
 

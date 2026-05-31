@@ -1,26 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using School_Mang.BL;
+using School_Mang.BL.Services;
 
 namespace School_Mang.PL.MAIN
 {
     public partial class FRM_YEAR : Form
     {
-        BL.STD.CLS_STD std = new BL.STD.CLS_STD();
+        private readonly LookupService _stdData = new LookupService();
         BL.LOGIN.CLS_LOGIN login = new BL.LOGIN.CLS_LOGIN();
         BL.USERS users = new BL.USERS();
         public FRM_YEAR()
         {
             InitializeComponent();
             // Fill Combos
-            cmb_year.DataSource = std.Get_years(2022);
+            cmb_year.DataSource = _stdData.Get_years(2022);
             cmb_year.DisplayMember = "YearDesc";
             cmb_year.ValueMember = "Year";
             lbl_year.Text = Properties.Settings.Default.MyYear.ToString();

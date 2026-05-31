@@ -1,15 +1,11 @@
 ﻿using Bunifu.Framework.UI;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using School_Mang.BL;
+using School_Mang.BL.Services;
 
 namespace School_Mang.PL.NATIGA
 {
@@ -19,12 +15,12 @@ namespace School_Mang.PL.NATIGA
         BL.NATEG.CLS_NATEG nateg = new BL.NATEG.CLS_NATEG();
         BL.NATEG.ExcelUtlity Excel = new BL.NATEG.ExcelUtlity();
        
-
+        private readonly LookupService _stdData = new LookupService();
         public FRM_ADD_SERY()
         {
             InitializeComponent();
             // Fill Combo
-            cmb_grade.DataSource = std.Get_grades();
+            cmb_grade.DataSource = _stdData.Get_grades();
             cmb_grade.DisplayMember = "GradeDesc";
             cmb_grade.ValueMember = "Grade_Id";
         }

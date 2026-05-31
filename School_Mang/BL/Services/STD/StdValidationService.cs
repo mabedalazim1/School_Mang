@@ -33,6 +33,7 @@ namespace School_Mang.BL.Services.STD
     public static class StdValidationService
     {
         private static readonly BL.STD.CLS_STD std = new BL.STD.CLS_STD();
+        private static readonly VerifyService _verify = new VerifyService();
 
         public static ValidationResult VerifyStdNat(string stdCode, string nat, bool isUpdateMode = false)
         {
@@ -43,7 +44,7 @@ namespace School_Mang.BL.Services.STD
                 if (isUpdateMode)
                     code = stdCode;
 
-                DataTable dt = std.Verify_Std_Nat(nat, code);
+                DataTable dt = _verify.Verify_Std_Nat(nat, code);
 
                 if (dt != null && dt.Rows.Count > 0)
                 {
@@ -65,7 +66,7 @@ namespace School_Mang.BL.Services.STD
         {
             try
             {
-                DataTable dt = std.Verify_Osra_Nat(nat, 0);
+                DataTable dt = _verify.Verify_Osra_Nat(nat, 0);
 
                 if (dt != null && dt.Rows.Count > 0)
                 {

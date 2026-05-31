@@ -1,26 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using BCrypt.Net;
 using School_Mang.BL.Common.Helper;
 using School_Mang.BL;
+using School_Mang.BL.Services;
+using School_Mang.BL.Services.STD;
 
 namespace School_Mang.PL.SITE
 {
     public partial class FRM_ADD_USER : Form
     {
 
-        BL.STD.CLS_STD std = new BL.STD.CLS_STD();
         BL.SITE.CLS_MANGE_SITE site = new BL.SITE.CLS_MANGE_SITE();
         
         BL.SITE.CLS_ADD_USER site_users = new BL.SITE.CLS_ADD_USER();
+        private readonly VerifyService _verify = new VerifyService();
+        private readonly LookupService _stdData = new LookupService();
+        private readonly GetDataService _getData = new GetDataService();
+
 
         // Form Closed
         private static FRM_ADD_USER frm_Add_User;
@@ -52,20 +52,20 @@ namespace School_Mang.PL.SITE
 
             // Fill Combos
 
-            cmb_gender.DataSource = std.Get_genders();
+            cmb_gender.DataSource = _stdData.Get_genders();
             cmb_gender.DisplayMember = "GenderDesc";
             cmb_gender.ValueMember = "Gender_Id";
 
-            cmb_grade.DataSource = std.Get_grades();
+            cmb_grade.DataSource = _stdData.Get_grades();
             cmb_grade.DisplayMember = "GradeDesc";
             cmb_grade.ValueMember = "Grade_Id";
             cmb_grade.SelectedValue = 1;
 
-            cmb_class.DataSource = std.Get_Grad_Data(1);
+            cmb_class.DataSource = _stdData.Get_Grad_Data(1);
             cmb_class.DisplayMember = "Class_Desc";
             cmb_class.ValueMember = "Class_Id";
 
-            cmb_relgien.DataSource = std.Get_religion();
+            cmb_relgien.DataSource = _stdData.Get_religion();
             cmb_relgien.DisplayMember = "ReligionDesc";
             cmb_relgien.ValueMember = "Religion_Id";
 
@@ -90,10 +90,10 @@ namespace School_Mang.PL.SITE
 
             while (!code_status)
             {
-                DataTable std_Dt = std.Verify_Std_Code(code.ToString());
+                DataTable std_Dt = _verify.Verify_Std_Code(code.ToString());
                 if (std_Dt.Rows.Count != 0)
                 {
-                    DataTable Dt = std.GET_Code_Std_Grade(Convert.ToInt32(cmb_grade.SelectedValue),year, "no");
+                    DataTable Dt = _getData.GET_Code_Std_Grade(Convert.ToInt32(cmb_grade.SelectedValue),year, "no");
                     code = Convert.ToInt32(Dt.Rows[0]["count_std"]) + 1;
                 }
                 else
@@ -142,13 +142,13 @@ namespace School_Mang.PL.SITE
                     break;
             }
             int year_code = Properties.Settings.Default.year_cod;
-            DataTable Dt = std.GET_Code_Std_Grade(Convert.ToInt32(cmb_grade.SelectedValue), year_code, "yes");
+            DataTable Dt = _getData.GET_Code_Std_Grade(Convert.ToInt32(cmb_grade.SelectedValue), year_code, "yes");
             count_std = Convert.ToInt32(Dt.Rows[0]["count_std"]);
             sdt_code = Convert.ToInt32(year + grade) + count_std + 1;
 
             // Verify Student Code 
 
-            DataTable std_Dt = std.Verify_Std_Code(Convert.ToString(sdt_code));
+            DataTable std_Dt = _verify.Verify_Std_Code(Convert.ToString(sdt_code));
             if (std_Dt.Rows.Count != 0)
             {
                 sdt_code = Verify_Std_Code(sdt_code.ToString());
@@ -583,7 +583,7 @@ namespace School_Mang.PL.SITE
 
         private void cmb_grade_DropDownClosed(object sender, EventArgs e)
         {
-            cmb_class.DataSource = std.Get_Grad_Data(Convert.ToInt32(cmb_grade.SelectedValue));
+            cmb_class.DataSource = _stdData.Get_Grad_Data(Convert.ToInt32(cmb_grade.SelectedValue));
 
         }
     }

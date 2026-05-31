@@ -1,15 +1,9 @@
 ﻿using School_Mang.BL;
-using School_Mang.BL.Services;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using School_Mang.BL.Enums;
+using School_Mang.BL.Services;
+using School_Mang.BL.Services.STD;
+using System;
+using System.Windows.Forms;
 
 namespace School_Mang.PL.STD
 {
@@ -17,7 +11,8 @@ namespace School_Mang.PL.STD
     {
 
         private NavigationContext _context;
-
+        private readonly LookupService _lookupService = new LookupService();
+        private readonly GetDataService _getData = new GetDataService();
         public void SetNavigation(NavigationContext context)
         {
             _context = context ?? new NavigationContext();
@@ -75,19 +70,19 @@ namespace School_Mang.PL.STD
             if (_context.CurrentReport == ReportDataType.Open41New
                || _context.CurrentReport == ReportDataType.OpenTadargSen)
             {
-                cmb_grade.DataSource = std.Get_grades("yes");
+                cmb_grade.DataSource = _lookupService.Get_grades("yes");
             }
 
             else
             {
-                cmb_grade.DataSource = std.Get_grades();
+                cmb_grade.DataSource = _lookupService.Get_grades();
             }
 
 
             cmb_grade.DisplayMember = "GradeDesc";
             cmb_grade.ValueMember = "Grade_Id";
 
-            cmb_sana.DataSource = std.Get_years();
+            cmb_sana.DataSource = _lookupService.Get_years();
             cmb_sana.DisplayMember = "YearDesc";
             cmb_sana.ValueMember = "Year_Id";
         }
@@ -118,7 +113,7 @@ namespace School_Mang.PL.STD
                 }
                 else
                 {
-                    grade_desc = std.Get_Grade_Desc(grade).Rows[0]["GradeDesc"].ToString();
+                    grade_desc = _getData.Get_Grade_Desc(grade).Rows[0]["GradeDesc"].ToString();
                 }
 
                 // Test If Tere Is Data Or Not

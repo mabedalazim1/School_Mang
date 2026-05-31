@@ -1,4 +1,5 @@
-﻿using School_Mang.BL.STD;
+﻿using School_Mang.BL.Services.STD;
+using School_Mang.BL.STD;
 using System;
 using System.Data;
 using System.Linq;
@@ -9,11 +10,13 @@ namespace School_Mang.BL.Services
     public class StudentCodeService
     {
 
-        private readonly CLS_STD _std;
+        private readonly GetDataService _getData;
+        private readonly VerifyService _verify;
 
         public StudentCodeService()
         {
-            _std = new CLS_STD();
+            _getData = new GetDataService();
+            _verify = new VerifyService();
         }
 
         public int GetStudentCode(int yearId, int gradeId)
@@ -23,7 +26,7 @@ namespace School_Mang.BL.Services
 
             int baseCode = int.Parse(yearPart + gradePart);
 
-            var dt = _std.GET_Code_Std_Grade(gradeId, yearId, "yes");
+            var dt = _getData.GET_Code_Std_Grade(gradeId, yearId, "yes");
 
             int count = 0;
             if (dt?.Rows.Count > 0)
@@ -51,7 +54,7 @@ namespace School_Mang.BL.Services
         {
             try
             {
-                return _std.Verify_Std_Code(code.ToString()).Rows.Count == 0;
+                return _verify.Verify_Std_Code(code.ToString()).Rows.Count == 0;
             }
             catch
             {
@@ -76,7 +79,7 @@ namespace School_Mang.BL.Services
         }
         private string GetYearCode(int yearId)
         {
-            var dt = _std.Get_Year_By_Id(yearId);
+            var dt = _getData.Get_Year_By_Id(yearId);
 
             if (dt == null || dt.Rows.Count == 0)
                 throw new Exception("Invalid Year Id");

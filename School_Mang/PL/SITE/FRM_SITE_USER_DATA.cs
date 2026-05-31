@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using School_Mang.BL.Common.Helper;
 using School_Mang.BL;
+using School_Mang.BL.Services;
 
 namespace School_Mang.PL.SITE
 {
@@ -17,7 +13,7 @@ namespace School_Mang.PL.SITE
         BL.SITE.CLS_MANGE_SITE site = new BL.SITE.CLS_MANGE_SITE();
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
         
-
+        private readonly LookupService _stdData=new LookupService();
         // Form Closed
         private static FRM_SITE_USER_DATA Frm_Site_User_Data;
         static void frm_Form_Closed(object sender, FormClosedEventArgs e)
@@ -50,7 +46,7 @@ namespace School_Mang.PL.SITE
             dt_std_data.MouseDown += new MouseEventHandler(this.dt_std_data_MouseClick);
 
             Waiting.Start();
-            DataTable grade_dt = std.Get_grades();
+            DataTable grade_dt = _stdData.Get_grades();
 
             DataRow dr = grade_dt.NewRow();
             dr["GradeDesc"] = "الكل";

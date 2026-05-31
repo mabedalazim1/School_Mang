@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using School_Mang.BL.Common.Helper;
 using School_Mang.BL;
+using School_Mang.BL.Services;
 
 namespace School_Mang.PL.SITE
 {
@@ -16,7 +11,8 @@ namespace School_Mang.PL.SITE
     {
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
         BL.SITE.CLS_MANGE_SITE site = new BL.SITE.CLS_MANGE_SITE();
-        
+        private readonly LookupService _stdData = new LookupService();
+
 
         // Form Closed
         private static FRM_UPDATE_USER_DATA frm_Update_User_Data;
@@ -46,19 +42,19 @@ namespace School_Mang.PL.SITE
                 frm_Update_User_Data = this;
             }
 
-            cmb_grade.DataSource = std.Get_grades();
+            cmb_grade.DataSource = _stdData.Get_grades();
             cmb_grade.DisplayMember = "GradeDesc";
             cmb_grade.ValueMember = "Grade_Id";
 
-            cmb_gender.DataSource = std.Get_genders();
+            cmb_gender.DataSource = _stdData.Get_genders();
             cmb_gender.DisplayMember = "GenderDesc";
             cmb_gender.ValueMember = "Gender_Id";
 
-            cmb_relgien.DataSource = std.Get_religion();
+            cmb_relgien.DataSource = _stdData.Get_religion();
             cmb_relgien.DisplayMember = "ReligionDesc";
             cmb_relgien.ValueMember = "Religion_Id";
 
-            cmb_class.DataSource = std.Get_Grad_Data(grade);
+            cmb_class.DataSource = _stdData.Get_Grad_Data(grade);
             cmb_class.DisplayMember = "Class_Desc";
             cmb_class.ValueMember = "Class_Id";
 
@@ -92,7 +88,7 @@ namespace School_Mang.PL.SITE
 
         private void cmb_grade_SelectedIndexChanged(object sender, EventArgs e)
         {
-            cmb_class.DataSource = std.Get_Grad_Data(Convert.ToInt32(cmb_grade.SelectedValue));
+            cmb_class.DataSource = _stdData.Get_Grad_Data(Convert.ToInt32(cmb_grade.SelectedValue));
         }
 
         private void btn_close_b_Click(object sender, EventArgs e)

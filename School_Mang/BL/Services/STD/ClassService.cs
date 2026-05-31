@@ -6,11 +6,11 @@ namespace School_Mang.BL.Services.STD
 {
     public class ClassService
     {
-        private readonly CLS_STD _std = new CLS_STD();
+        private readonly LookupService _stdData = new LookupService();
 
         public int GetClassByGrade(int gradeId)
         {
-            var dt = _std.Get_Grad_Data(gradeId);
+            var dt = _stdData.Get_Grad_Data(gradeId);
 
             if (dt == null || dt.Rows.Count == 0)
                 throw new Exception("لا يوجد فصول لهذا الصف");

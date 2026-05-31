@@ -10,13 +10,18 @@ namespace School_Mang.BL.Services.STD
 {
     public class OsraDataService
     {
-        private readonly TestConcation testConcation = new TestConcation();
-        private readonly CLS_STD std = new CLS_STD();
+        private readonly TestConcation _testConcation;
+        private readonly DataAcceseLayer _dal;
 
 
+        public OsraDataService() 
+        {
+            _testConcation = new TestConcation();
+            _dal = new DataAcceseLayer();
+        }
         private ServiceResult CheckConnection()
         {
-            if (!testConcation.IsServerConnected())
+            if (!_testConcation.IsServerConnected())
                 return ServiceResult.Fail(ServiceMessages.ServerConnectionFailed);
 
             return ServiceResult.Ok();
@@ -29,7 +34,7 @@ namespace School_Mang.BL.Services.STD
             if (!connection.Success)
                 return ServiceResult<DataTable>.Fail(connection.Message);
 
-            var dt = std.Get_All_Osra_Data();
+            var dt = Get_All_Osra_Data();
 
             return ServiceResult<DataTable>.Ok(dt);
         }
@@ -41,7 +46,7 @@ namespace School_Mang.BL.Services.STD
             if (!connection.Success)
                 return ServiceResult<DataTable>.Fail(connection.Message);
 
-            var dt = std.Search_Osra_Data(text);
+            var dt = Search_Osra_Data(text);
 
             return ServiceResult<DataTable>.Ok(dt);
         }
@@ -53,7 +58,7 @@ namespace School_Mang.BL.Services.STD
             if (!connection.Success)
                 return ServiceResult<DataTable>.Fail(connection.Message);
 
-            var dt = std.Get_osra_Data_ById(osraId);
+            var dt = Get_osra_Data_ById(osraId);
 
             return ServiceResult<DataTable>.Ok(dt);
         }
@@ -83,7 +88,7 @@ namespace School_Mang.BL.Services.STD
             if (!connection.Success)
                 return connection;
 
-            var dt = std.Verify_Osra_Data(osraId);
+            var dt = Verify_Osra_Data(osraId);
 
             if (dt == null || dt.Rows.Count == 0)
                 return ServiceResult.Fail("خطأ في التحقق من البيانات");
@@ -91,10 +96,27 @@ namespace School_Mang.BL.Services.STD
             if (SafeConverter.GetInt(dt.Rows[0]["Id"]) != 0)
                 return ServiceResult.Fail("لا يمكن حذف هذه البيانات لأنها مرتبطة ببيانات أخرى");
 
-            std.Delele_Osra_Data(osraId);
+            Delele_Osra_Data(osraId);
 
             return ServiceResult.Ok("تم حذف البيانات بنجاح");
         }
+        public DataTable Verify_Osra_Data(int Osraa_Id)
+          => _dal.ExecQuery("SP_Verify_Osra_Data",
+              SqlParam.Int("@Osraa_Id", Osraa_Id));
+
+        public DataTable Get_osra_Data_ById(int Osraa_Id)
+           => _dal.ExecQuery("SP_Get_osra_Data_ById",
+               SqlParam.Int("@Osraa_Id", Osraa_Id));
+
+        private DataTable Get_All_Osra_Data()
+            => _dal.ExecQuery("SP_Get_All_Osra_Data", null);
+        private DataTable Search_Osra_Data(string osra_data)
+            => _dal.ExecQuery("SP_Search_Osra_Data",
+                SqlParam.NVar("@osra_data", osra_data, 100));
+
+        private void Delele_Osra_Data(int Osra_Id)
+           => _dal.ExecNonQuery("SP_Delele_Osra_Data",
+               SqlParam.Int("@Osra_Id", Osra_Id));
 
     }
 }

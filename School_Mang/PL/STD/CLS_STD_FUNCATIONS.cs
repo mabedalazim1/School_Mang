@@ -8,15 +8,20 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Data;
 using School_Mang.BL;
+using School_Mang.BL.Services.STD;
 
 namespace School_Mang.PL.STD
 {
-    class CLS_STD_FUNCATIONS
+    public class CLS_STD_FUNCATIONS
     {
         
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
+        private readonly VerifyService _verify;
 
-
+        public CLS_STD_FUNCATIONS()
+        {
+            _verify = new VerifyService();
+        }
         public Boolean Checked_Is_Numeric(TextBox txt_nat)
         {
             Waiting.Start();
@@ -50,7 +55,7 @@ namespace School_Mang.PL.STD
                 {
                     std_code = txt_std_code.Text;
                 }
-                DataTable Dt = std.Verify_Std_Nat(txt_nat.Text, std_code);
+                DataTable Dt = _verify.Verify_Std_Nat(txt_nat.Text, std_code);
                 if (Dt != null)
                 {
                     if (Dt.Rows.Count > 0)
@@ -86,7 +91,7 @@ namespace School_Mang.PL.STD
             int osra_nat = 0;
             try
             {
-                DataTable Dt = std.Verify_Osra_Nat(txt_nat.Text, 0);
+                DataTable Dt = _verify.Verify_Osra_Nat(txt_nat.Text, 0);
                 if (Dt != null)
                 {
                     if (Dt.Rows.Count > 0)
@@ -151,7 +156,5 @@ namespace School_Mang.PL.STD
                 FRM_OSRAA_DATA.Get_Osra_data.lbl_date.Visible = false;
             }
         }
-
-
     }
 }

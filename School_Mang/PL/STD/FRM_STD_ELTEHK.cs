@@ -3,7 +3,7 @@ using School_Mang.BL.Services;
 using School_Mang.BL.Enums;
 using School_Mang.BL.Extensions;
 using School_Mang.BL.Models;
-using School_Mang.BL.Common;
+using School_Mang.BL.Services.STD;
 using System;
 using System.Windows.Forms;
 using School_Mang.BL.Common.Helper;
@@ -15,7 +15,7 @@ namespace School_Mang.PL.STD
 
         private NavigationContext _context;
         private readonly StudentSaveService _saveService = new StudentSaveService();
-
+        private readonly LookupService _stdData = new LookupService();
         public void SetNavigation(NavigationContext context)
         {
             _context = context;
@@ -27,7 +27,7 @@ namespace School_Mang.PL.STD
             if (d == null) return;
             cmb_grade.SelectedValue = d.GradeId;
             cmb_hala.SelectedValue = d.StudentStatus;
-            cmb_class.DataSource = std.Get_Grad_Data(d.GradeId);
+            cmb_class.DataSource = _stdData.Get_Grad_Data(d.GradeId);
             if (d.GradeId != 10)
             {
                 if (cmb_class.Items.Count > 1)
@@ -35,7 +35,6 @@ namespace School_Mang.PL.STD
             }
         }
 
-        BL.STD.CLS_STD std = new BL.STD.CLS_STD();
         RPT.REPORT_CONNECTION RPT = new RPT.REPORT_CONNECTION();
 
         int permission_id = Properties.Settings.Default.permission_id;
@@ -129,19 +128,19 @@ namespace School_Mang.PL.STD
         {
             // Fill Combos
 
-            cmb_sana.DataSource = std.Get_years();
+            cmb_sana.DataSource = _stdData.Get_years();
             cmb_sana.DisplayMember = "YearDesc";
             cmb_sana.ValueMember = "Year_Id";
 
-            cmb_grade.DataSource = std.Get_grades();
+            cmb_grade.DataSource = _stdData.Get_grades();
             cmb_grade.DisplayMember = "GradeDesc";
             cmb_grade.ValueMember = "Grade_Id";
 
-            cmb_hala.DataSource = std.Get_stdStat();
+            cmb_hala.DataSource = _stdData.Get_stdStat();
             cmb_hala.DisplayMember = "StatusDesc";
             cmb_hala.ValueMember = "Std_Status_Id";
 
-            cmb_class.DataSource = std.Get_Grad_Data(1);
+            cmb_class.DataSource = _stdData.Get_Grad_Data(1);
             cmb_class.DisplayMember = "Class_Desc";
             cmb_class.ValueMember = "Class_Id";
 
@@ -202,7 +201,7 @@ namespace School_Mang.PL.STD
 
         private void cmb_grade_SelectedIndexChanged(object sender, EventArgs e)
         {
-            cmb_class.DataSource = std.Get_Grad_Data(Convert.ToInt32(cmb_grade.SelectedValue));
+            cmb_class.DataSource = _stdData.Get_Grad_Data(Convert.ToInt32(cmb_grade.SelectedValue));
 
         }
 

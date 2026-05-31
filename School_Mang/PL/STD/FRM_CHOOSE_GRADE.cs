@@ -7,13 +7,14 @@ using System;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
+using School_Mang.BL.Services.STD;
 
 
 namespace School_Mang.PL.STD
 {
     public partial class FRM_CHOOSE_GRADE : Form, INavigationAware
     {
-
+        private readonly StudentDataService _dataService = new StudentDataService();
         private NavigationContext _context;
 
         public void SetNavigation(NavigationContext context)
@@ -22,7 +23,6 @@ namespace School_Mang.PL.STD
             
         }
 
-        BL.STD.CLS_STD std = new BL.STD.CLS_STD();
         DataTable dt_count = new DataTable();
         int year_code = Properties.Settings.Default.year_cod;
         int year;
@@ -289,7 +289,7 @@ namespace School_Mang.PL.STD
             {
                 year = year_code + 1;
             }
-            dt_count = std.Get_School_year_Data(year, 0, 0);
+            dt_count = _dataService.Get_School_year_Data(year, 0, 0);
 
             Add_Data();
             int myYear = Properties.Settings.Default.MyYear;

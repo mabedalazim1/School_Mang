@@ -424,7 +424,7 @@ namespace School_Mang.PL.STD
        
         private void btn_edit_std_Click(object sender, EventArgs e)
         {
-
+            EditStudent();
         }
 
         private void FRM_GET_STD_Load(object sender, EventArgs e)

@@ -20,10 +20,9 @@ namespace School_Mang.PL.STD.Services
         private readonly NavigationContext _context;
         private readonly int _permissionId;
         private readonly StudentReportService _reportService = new StudentReportService();
-        private readonly ElthakReportService _elthakService = new ElthakReportService();
         private readonly int _yearCod;
         private readonly StudentService _studentService; 
-        private readonly BL.STD.CLS_STD _std = new BL.STD.CLS_STD();
+        private readonly LookupService _stdData = new LookupService();
 
         public CurrentStdFormService(
             FRM_CURRENT_STD form,
@@ -53,7 +52,7 @@ namespace School_Mang.PL.STD.Services
 
         private void LoadGrades()
         {
-            DataTable grade_dt = _std.Get_grades();
+            DataTable grade_dt = _stdData.Get_grades();
 
             DataRow dr = grade_dt.NewRow();
             dr["GradeDesc"] = "الكل";
@@ -259,7 +258,7 @@ namespace School_Mang.PL.STD.Services
 
             int year = SchoolDateHelper.GetCurrentYear(_yearCod, _context);
 
-            _studentService.DeleteSchoolStdData(std_code, year);
+            _studentService.Delete_School_Std_Data(std_code, year);
 
             // 🔥 هنا الفرق
             _form.Get_Class_Data(gradeId);

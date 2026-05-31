@@ -12,12 +12,19 @@ namespace School_Mang.BL.Services.STD
 {
     public class StudentDataService
     {
-        private readonly TestConcation testConcation = new TestConcation();
-        private readonly CLS_STD std = new CLS_STD();
+        private readonly TestConcation _testConcation;
+        private readonly DataAcceseLayer _dal;
+        private readonly OsraDataService _osra;
 
+        public StudentDataService()
+        {
+            _testConcation = new TestConcation();
+            _dal = new DataAcceseLayer();
+            _osra = new OsraDataService();
+        }
         private ServiceResult CheckConnection()
         {
-            if (!testConcation.IsServerConnected())
+            if (!_testConcation.IsServerConnected())
                 return ServiceResult.Fail(ServiceMessages.ServerConnectionFailed);
 
             return ServiceResult.Ok();
@@ -30,7 +37,7 @@ namespace School_Mang.BL.Services.STD
             if (!connection.Success)
                 return ServiceResult<DataTable>.Fail(connection.Message);
 
-            var dt = std.Get_All_Std_Data(year);
+            var dt = Get_All_Std_Data(year);
 
             return ServiceResult<DataTable>.Ok(dt);
         }
@@ -43,7 +50,7 @@ namespace School_Mang.BL.Services.STD
             if (!connection.Success)
                 return ServiceResult<DataTable>.Fail(connection.Message);
 
-            var dt = std.Search_Std_Data(txt,year);
+            var dt = Search_Std_Data(txt,year);
 
             return ServiceResult<DataTable>.Ok(dt);
         }
@@ -56,10 +63,10 @@ namespace School_Mang.BL.Services.STD
             try
             {
                 // 1- حذف الطالب
-                std.Delele_Std_Data(stdCode);
+                Delele_Std_Data(stdCode);
 
                 // 2- التحقق من الأسرة
-                DataTable dt = std.Verify_Osra_Data(osraId);
+                DataTable dt = _osra.Verify_Osra_Data(osraId);
 
                 bool hasOtherStudents =
                     dt != null &&
@@ -69,7 +76,7 @@ namespace School_Mang.BL.Services.STD
                 // 3- حذف الأسرة لو الطالب الوحيد
                 if (!hasOtherStudents)
                 {
-                    std.Delele_Osra_Data(osraId);
+                    Delele_Osra_Data(osraId);
                 }
 
                 return ServiceResult.Ok("تم حذف الطالب بنجاح");
@@ -79,6 +86,29 @@ namespace School_Mang.BL.Services.STD
                 return ServiceResult.Fail(ex.Message);
             }
         }
+
+        public DataTable Get_School_year_Data(int Year_Id, int Grade_Id, int Class_Id)
+           => _dal.ExecQuery("SP_Get_School_year_Data",
+               SqlParam.Int("@Year_Id", Year_Id),
+               SqlParam.Int("@Grade_Id", Grade_Id),
+               SqlParam.Int("@Class_Id", Class_Id));
+
+        public DataTable Get_All_Std_Data(int Year_Id)
+           => _dal.ExecQuery("SP_Get_All_Std_Data",
+               SqlParam.Int("@Year_Id", Year_Id));
+
+        private DataTable Search_Std_Data(string std_data, int Year_Id)
+            => _dal.ExecQuery("SP_Search_Std_Data",
+                SqlParam.NVar("@std_data", std_data, 100),
+                SqlParam.Int("@Year_Id", Year_Id));
+        private void Delele_Std_Data(string std_code)
+            => _dal.ExecNonQuery("SP_Delele_Std_Data",
+                SqlParam.NVar("@std_code", std_code, 20));
+
+        private void Delele_Osra_Data(int Osra_Id)
+           => _dal.ExecNonQuery("SP_Delele_Osra_Data",
+               SqlParam.Int("@Osra_Id", Osra_Id));
+
     }
 }
    

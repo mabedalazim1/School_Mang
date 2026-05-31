@@ -11,8 +11,8 @@ namespace School_Mang.BL.Services.STD
     {
         public static int GetCalculationYear(int yearId)
         {
-            CLS_STD _std = new CLS_STD();
-            var dt = _std.Get_Year_By_Id(yearId);
+            GetDataService _getData = new GetDataService();
+            var dt = _getData.Get_Year_By_Id(yearId);
 
             if (dt == null || dt.Rows.Count == 0)
                 throw new Exception("السنة الدراسية غير موجودة");

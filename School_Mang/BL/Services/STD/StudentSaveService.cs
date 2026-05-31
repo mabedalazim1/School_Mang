@@ -11,11 +11,15 @@ namespace School_Mang.BL.Services
     {
         private readonly CLS_STD _std;
         private readonly StudentCodeService _codeService;
+        private readonly StudentService  _studentService;
+        private readonly VerifyService _verify;
 
         public StudentSaveService()
         {
             _std = new CLS_STD();
             _codeService = new StudentCodeService();
+            _studentService = new StudentService();
+            _verify = new VerifyService();
         }
         public string SaveStudent(StudentSaveRequest req)
                                     {
@@ -23,7 +27,7 @@ namespace School_Mang.BL.Services
                 req.YearId, req.GradeId);
                 
 
-            if (!_std.Verify_Std_Code(studentCode.ToString()).Rows.Count.Equals(0))
+            if (!_verify.Verify_Std_Code(studentCode.ToString()).Rows.Count.Equals(0))
             {
                 throw new Exception("كود الطالب غير صالح");
             }
@@ -53,7 +57,7 @@ namespace School_Mang.BL.Services
 
         public void AddToSchool(StudentSaveRequest req)
         {
-            _std.Add_School_Std_Data(
+            _studentService.Add_School_Std_Data(
                 req.StdCode,
                 req.YearId,
                 req.GradeId,

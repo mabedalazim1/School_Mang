@@ -7,9 +7,9 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using School_Mang.BL;
+using School_Mang.BL.Services;
 
 namespace School_Mang.PL.NATIGA
 {
@@ -19,7 +19,7 @@ namespace School_Mang.PL.NATIGA
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
         BL.NATEG.CLS_NATEG nateg = new BL.NATEG.CLS_NATEG();
         BL.NATEG.ExcelUtlity Excel = new BL.NATEG.ExcelUtlity();
-
+        private readonly LookupService _stdData = new LookupService();
 
         public FRM_CHOSE_FINAL_DATA()
         {
@@ -27,7 +27,7 @@ namespace School_Mang.PL.NATIGA
 
             // Fill Combo
             Waiting.Start();
-            cmb_grade.DataSource = std.Get_grades();
+            cmb_grade.DataSource = _stdData.Get_grades();
             cmb_grade.DisplayMember = "GradeDesc";
             cmb_grade.ValueMember = "Grade_Id";
 

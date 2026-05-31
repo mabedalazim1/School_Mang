@@ -258,6 +258,7 @@
     <Compile Include="BL\NATEG\cls_NATAG_FUNCTIONS.cs" />
     <Compile Include="BL\NATEG\CLS_NATEG.cs" />
     <Compile Include="BL\NATEG\ExcelUtlity.cs" />
+    <Compile Include="BL\Services\LookupService.cs" />
     <Compile Include="BL\Services\Navigation\OsraContext.cs" />
     <Compile Include="BL\Services\Navigation\StudentContext.cs" />
     <Compile Include="BL\Services\Reports\ElthakReportService.cs" />
@@ -280,6 +281,8 @@
     <Compile Include="BL\Services\STD\StudentService.cs" />
     <Compile Include="BL\Services\STD\StudentUpdateService.cs" />
     <Compile Include="BL\Services\STD\TransferService.cs" />
+    <Compile Include="BL\Services\STD\GetDataService.cs" />
+    <Compile Include="BL\Services\STD\VerifyService.cs" />
     <Compile Include="BL\Services\UserService.cs" />
     <Compile Include="BL\Services\STD\StudentDataMigrationService.cs" />
     <Compile Include="BL\SITE\CLS_ADD_USER.cs" />

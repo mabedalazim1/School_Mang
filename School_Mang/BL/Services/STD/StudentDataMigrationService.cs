@@ -11,14 +11,20 @@ namespace School_Mang.BL.Services
 {
     public class StudentDataMigrationService
     {
-        private readonly CLS_STD std = new CLS_STD();
+        private readonly StudentService _std;
+        private readonly DataAcceseLayer _dal;
 
+        public StudentDataMigrationService() 
+        { 
+            _std = new StudentService();
+            _dal = new DataAcceseLayer();
+        }
         public void PromoteYear()
         {
 
             int currentYear = Properties.Settings.Default.year_cod;
             int newYear = currentYear + 1;
-            DataTable dt = std.Get_School_year_Data(currentYear, 0, 0);
+            DataTable dt = _std.Get_School_year_Data(currentYear, 0, 0);
 
             if (dt.Rows.Count == 0)
                 throw new Exception("لا يوجد بيانات مسجلة لهذا العام");
@@ -37,7 +43,7 @@ namespace School_Mang.BL.Services
                     out int newClassId
                 );
 
-                var exists = std.Verify_Std_School_Code(std_code, newYear);
+                var exists = _std.Verify_Std_School_Code(std_code, newYear);
 
                 if (exists.Rows.Count > 0)
                 {
@@ -101,11 +107,11 @@ namespace School_Mang.BL.Services
         {
             if (status == 3 || status == 6 || newGrade == 0)
             {
-                std.Delete_School_Std_Data(std_code, newYear);
+                _std.Delete_School_Std_Data(std_code, newYear);
             }
             else
             {
-                std.Update_New_School_Std(
+                Update_New_School_Std(
                     std_code,
                     newGrade,
                     2,
@@ -120,12 +126,27 @@ namespace School_Mang.BL.Services
             if (newGrade == 0 || status == 3 || status == 6)
                 return;
 
-            std.Add_School_Std_Data(
+            _std.Add_School_Std_Data(
                 std_code,
                 newYear,
                 newGrade,
                 2,
                 newClassId
+            );
+        }
+        private void Update_New_School_Std(string std_code,
+                                   int Grade_Id,
+                                   int Std_Status_Id,
+                                   int Class_Id,
+                                   int Year_Id)
+        {
+            _dal.ExecNonQuery("SP_Update_New_School_Std",
+                SqlParam.NVar("@std_code", std_code, 20),
+                SqlParam.Int("@Grade_Id", Grade_Id),
+                SqlParam.Int("@Std_Status_Id", Std_Status_Id),
+                SqlParam.Int("@Class_Id", Class_Id),
+                SqlParam.Int("@Year_Id", Year_Id),
+                SqlParam.NVar("@Updated_by", Properties.Settings.Default.user_name, 15)
             );
         }
     }

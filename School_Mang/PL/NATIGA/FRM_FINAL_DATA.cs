@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using School_Mang.BL;
+using School_Mang.BL.Services;
 
 namespace School_Mang.PL.NATIGA
 {
@@ -17,7 +13,7 @@ namespace School_Mang.PL.NATIGA
         
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
 
-
+        private readonly LookupService _stdData= new LookupService();
         // Form Closed
         private static FRM_FINAL_DATA frm_Final_Data;
         static void frm_Form_Closed(object sender, FormClosedEventArgs e)
@@ -47,7 +43,7 @@ namespace School_Mang.PL.NATIGA
             if (BL.Globals.Edit_Golos)
             {
                 // Add Grade Data
-                DataTable grade_dt = std.Get_grades();
+                DataTable grade_dt = _stdData.Get_grades();
                 cmb_grade.DataSource = grade_dt;
                 cmb_grade.DisplayMember = "GradeDesc";
                 cmb_grade.ValueMember = "Grade_Id";
@@ -60,7 +56,7 @@ namespace School_Mang.PL.NATIGA
             }
             else
             {
-                DataTable grade_dt = std.Get_grades();
+                DataTable grade_dt = _stdData.Get_grades();
                 cmb_grade.DataSource = grade_dt;
                 cmb_grade.DisplayMember = "GradeDesc";
                 cmb_grade.ValueMember = "Grade_Id";

@@ -15,6 +15,8 @@ namespace School_Mang.PL.STD
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
 
         private readonly TransferService _transferService = new TransferService();
+        private readonly GetDataService _getData = new GetDataService();
+        private readonly LookupService _stdData = new LookupService();
 
 
         private byte test_year = 0;
@@ -75,7 +77,7 @@ namespace School_Mang.PL.STD
         private void LoadGrades()
         {
             // Add Grade Data
-            var grade_dt = std.Get_grades();
+            var grade_dt = _stdData.Get_grades();
 
             DataRow dr = grade_dt.NewRow();
             dr["GradeDesc"] = "الكل";
@@ -391,18 +393,18 @@ namespace School_Mang.PL.STD
                 // If Trans After School
                 if (Trans_After_Year)
                 {
-                    grade_desc = std.Get_Grade_Desc(grade).Rows[0]["GradeDesc"].ToString();
+                    grade_desc = _getData.Get_Grade_Desc(grade).Rows[0]["GradeDesc"].ToString();
                 }
                 else
                 {
                     //grade_desc = std.Get_Grade_Desc(grade + 1).Rows[0]["GradeDesc"].ToString();
-                    grade_desc = std.Get_Grade_Desc(grade).Rows[0]["GradeDesc"].ToString();
+                    grade_desc = _getData.Get_Grade_Desc(grade).Rows[0]["GradeDesc"].ToString();
                 }
-                year_data = std.Get_Year_Desc(sana + 1).Rows[0]["YearDesc"].ToString();
+                year_data = _getData.Get_Year_Desc(sana + 1).Rows[0]["YearDesc"].ToString();
             }
             else
             {
-                year_data = std.Get_Year_Desc(sana).Rows[0]["YearDesc"].ToString();
+                year_data = _getData.Get_Year_Desc(sana).Rows[0]["YearDesc"].ToString();
 
             }
 

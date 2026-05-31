@@ -11,9 +11,13 @@ namespace School_Mang.BL.Services.STD
     public class TransferService
     {
         private readonly BL.STD.CLS_STD _std;
+        private readonly StudentService _studentService;
+        private readonly GetDataService _getData;
         public TransferService()
         {
             _std = new BL.STD.CLS_STD();
+            _studentService = new StudentService();
+            _getData = new GetDataService();
         }
         public DataTable SearchTransferData(int gradeId, int statusId, string searchText)
         {
@@ -85,7 +89,7 @@ namespace School_Mang.BL.Services.STD
         }
         public bool IsStudentRegistered(string std_code, int year)
         {
-           var  dt = _std.Verify_Std_School_Code(std_code, year);
+           var  dt = _studentService.Verify_Std_School_Code(std_code, year);
             if (dt.Rows.Count == 0)
             {
                 return false;
@@ -161,7 +165,7 @@ namespace School_Mang.BL.Services.STD
                 return;
             }
 
-            _std.Delete_School_Std_Data(
+            _studentService.Delete_School_Std_Data(
                 request.StdCode,
                 context.RequestYear + 2);
         }
@@ -263,7 +267,7 @@ namespace School_Mang.BL.Services.STD
 
             // To School
             string yearDataToSchool =
-                _std.Get_Year_Desc(sana)
+                _getData.Get_Year_Desc(sana)
                 .Rows[0]["YearDesc"]
                 .ToString();
 
@@ -275,7 +279,7 @@ namespace School_Mang.BL.Services.STD
 
             // From School
             string yearData =
-                _std.Get_Year_Desc(sana + 1)
+                _getData.Get_Year_Desc(sana + 1)
                 .Rows[0]["YearDesc"]
                 .ToString();
 
@@ -291,14 +295,14 @@ namespace School_Mang.BL.Services.STD
             if (transAfterYear)
             {
                 gradeDesc =
-                    _std.Get_Grade_Desc(data.GradeId)
+                    _getData.Get_Grade_Desc(data.GradeId)
                     .Rows[0]["GradeDesc"]
                     .ToString();
             }
             else
             {
                 gradeDesc =
-                    _std.Get_Grade_Desc(data.GradeId + 1)
+                    _getData.Get_Grade_Desc(data.GradeId + 1)
                     .Rows[0]["GradeDesc"]
                     .ToString();
             }

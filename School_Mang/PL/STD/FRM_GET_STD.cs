@@ -351,7 +351,7 @@ namespace School_Mang.PL.STD
             this.Close();
         }
 
-        public void txt_std_data_OnValueChanged(object sender, EventArgs e)
+        private void txt_std_data_OnValueChanged(object sender, EventArgs e)
         {
             SearchStudents();
         }
@@ -417,7 +417,7 @@ namespace School_Mang.PL.STD
             btn_close_b_Click(sender, e);
         }
 
-        public void cmb_sana_SelectedIndexChanged(object sender, EventArgs e)
+        private void cmb_sana_SelectedIndexChanged(object sender, EventArgs e)
         {
             SearchStudents();
         }

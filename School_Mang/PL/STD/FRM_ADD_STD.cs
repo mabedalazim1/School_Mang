@@ -126,7 +126,7 @@ namespace School_Mang.PL.STD
 
         // checked Data
 
-        public void FillOsraData(OperationResult<int> result, string fatherName, string motherName, string address, string wazifa, string fatherTel, string motherTel)
+        public void FillOsraData(ServiceResult<int> result, string fatherName, string motherName, string address, string wazifa, string fatherTel, string motherTel)
         {
             txt_osra_id.Text = result.Data.ToString();
             txt_father_name.Text = fatherName;
@@ -296,6 +296,9 @@ namespace School_Mang.PL.STD
                         // c.OpenFromAddstudent = true;
                     })
                     .Show(frm, false);
+
+                // UpdateData
+                frm.SearchStudents();
             }
 
             if (_context.OsraState.OpenFormGetOsra == true)
@@ -329,6 +332,9 @@ namespace School_Mang.PL.STD
                        //c.OpenFromAddstudent = true; //frm.LoadStudentData()
                    })
                    .Show(frm, false);
+
+                // Update Data
+                frm.SearchStudents();
             }
             else
             {

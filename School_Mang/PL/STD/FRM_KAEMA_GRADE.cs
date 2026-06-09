@@ -1,9 +1,11 @@
-﻿using School_Mang.BL;
+﻿using DevExpress.Utils.MVVM.Services;
+using School_Mang.BL;
 using School_Mang.BL.Enums;
 using School_Mang.BL.Services;
 using School_Mang.BL.Services.STD;
 using System;
 using System.Windows.Forms;
+using School_Mang.BL.Services.Reports;
 
 namespace School_Mang.PL.STD
 {
@@ -13,15 +15,13 @@ namespace School_Mang.PL.STD
         private NavigationContext _context;
         private readonly LookupService _lookupService = new LookupService();
         private readonly GetDataService _getData = new GetDataService();
+        private readonly StudentReportService _reportService = new StudentReportService();
         public void SetNavigation(NavigationContext context)
         {
             _context = context ?? new NavigationContext();
             ApplyContext();
         }
 
-        BL.STD.CLS_STD std = new BL.STD.CLS_STD();
-        RPT.REPORT_CONNECTION RPT = new RPT.REPORT_CONNECTION();
-        
 
         // Form Closed
         private static FRM_KAEMA_GRADE frm_Kaema_Grade;
@@ -103,31 +103,15 @@ namespace School_Mang.PL.STD
         {
             try
             {
-                string grade_desc;
+                var yearId = Convert.ToInt32(cmb_sana.SelectedValue);
+                grade = Convert.ToInt32(cmb_grade.SelectedValue);
 
-                int sana = Convert.ToInt32(cmb_sana.SelectedValue);
+                var result = _reportService.PrintKaema(yearId, grade);
 
-                if (grade == 0)
+                if (!result.Success)
                 {
-                    grade_desc = "كل الصفوف";
+                    MSG.ErrorMesg(result.Message);
                 }
-                else
-                {
-                    grade_desc = _getData.Get_Grade_Desc(grade).Rows[0]["GradeDesc"].ToString();
-                }
-
-                // Test If Tere Is Data Or Not
-
-                if (std.Get_Kaema_Data(sana, 0).Rows.Count == 0)
-                {
-                    MSG.ErrorMesg("لا توجد بيانات مسجلة .. يرجى التأكد من العام الدراسى !");
-
-                }
-                else
-                {
-                    RPT.Open_Kaema_Report(sana, grade, grade_desc);
-                }
-
 
             }
             catch (Exception ex)
@@ -153,6 +137,7 @@ namespace School_Mang.PL.STD
             int grade = Convert.ToInt32(cmb_grade.SelectedValue);
             int year_id = Convert.ToInt32(cmb_sana.SelectedValue);
             bool sort = chk_sort.Checked;
+            StudentReportService.Result result = StudentReportService.Result.Ok();
 
             try
             {
@@ -165,57 +150,32 @@ namespace School_Mang.PL.STD
 
                     case ReportDataType.OpenTadargSen:
 
-                        if (std.Get_Tadrg_Sen(year_id, grade).Rows.Count == 0)
-                        {
-                            MSG.ErrorMesg("لا توجد بيانات مسجلة للصف المحدد .. !");
-                            return;
-                        }
-
-                        RPT.OpenTadargSen(year_id, grade, sort);
+                        result = _reportService.PrintTadargSen(year_id, grade, sort);
                         break;
 
                     case ReportDataType.OpenSegel:
 
-                        if (std.Get_Segel_Data(year_id, grade).Rows.Count == 0)
-                        {
-                            MSG.ErrorMesg("لا توجد بيانات مسجلة للصف المحدد .. !");
-                            return;
-                        }
-
-                        RPT.OpenSegel(year_id, grade);
+                        result = _reportService.PrintSegel(year_id, grade);
                         break;
 
                     case ReportDataType.Open41New:
 
-                        if (std.Get_Segel_Data(year_id, grade).Rows.Count == 0)
-                        {
-                            MSG.ErrorMesg("لا توجد بيانات مسجلة للصف المحدد .. !");
-                            return;
-                        }
-
-                        RPT.OpenMostgdin_41(year_id, grade);
-
+                        result = _reportService.Print41New(year_id, grade);
                         break;
 
                     case ReportDataType.OpenTransferFrom:
 
-                        if (std.Get_Trans_Reports(year_id - 1, 3, grade).Rows.Count == 0)
-                        {
-                            MSG.ErrorMesg("لا توجد بيانات مسجلة للصف المحدد .. !");
-                            return;
-                        }
-                        RPT.OpenTahewl_Data(year_id - 1, 3, grade);
+                        result = _reportService.PrintTransfer(year_id -1 , grade,3,7);
                         break;
 
                     case ReportDataType.OpenTransferTo:
 
-                        if (std.Get_Trans_Reports(year_id, 4, grade).Rows.Count == 0)
-                        {
-                            MSG.ErrorMesg("لا توجد بيانات مسجلة للصف المحدد .. !");
-                            return;
-                        }
-                        RPT.OpenTahewl_Data(year_id, 4, grade);
+                        result = _reportService.PrintTransfer(year_id - 1,grade, 4);
                         break;
+                }
+                if (!result.Success)
+                {
+                    MSG.ErrorMesg(result.Message);
                 }
             }
             catch (Exception ex)
@@ -232,6 +192,7 @@ namespace School_Mang.PL.STD
             Waiting.Start();
             int year_id = Convert.ToInt32(cmb_sana.SelectedValue);
             bool sort = chk_sort.Checked;
+            StudentReportService.Result result = StudentReportService.Result.Ok();
 
             try
             {
@@ -244,52 +205,40 @@ namespace School_Mang.PL.STD
 
                     case ReportDataType.OpenTadargSen:
 
-                        if (std.Get_Tadrg_Sen(year_id).Rows.Count == 0)
-                        {
-                            MSG.ErrorMesg("لا توجد بيانات مسجلة لهذا العام .. !");
-                            return;
-                        }
-
                         if (MSG.DialogeErrMsg("سوف يتم عرض بيانات جميع الطلاب .. هل تريد المتابعة ؟ ") != DialogResult.Yes) return;
 
-                        RPT.OpenTadargSen(year_id,0, sort);
+                        result = _reportService.PrintTadargSen(year_id, 0, sort);
                         break;
 
                     case ReportDataType.OpenSegel:
+                        if (MSG.DialogeErrMsg("سوف يتم عرض بيانات جميع الطلاب .. هل تريد المتابعة ؟ ") != DialogResult.Yes) return;
 
-                        if (std.Get_Segel_Data(year_id).Rows.Count == 0)
-                        {
-                            MSG.ErrorMesg("لا توجد بيانات مسجلة لهذا العام .. !");
-                            return;
-                        }
-                        RPT.OpenSegel(year_id);
+                        result = _reportService.PrintSegel(year_id);
                         break;
 
                     case ReportDataType.Open41New:
 
-                        if (std.Get_Segel_Data(year_id).Rows.Count == 0)
-                        {
-                            MSG.ErrorMesg("لا توجد بيانات مسجلة لهذا العام .. !");
-                            return;
-                        }
                         if (MSG.DialogeErrMsg("سوف يتم عرض بيانات جميع الطلاب .. هل تريد المتابعة ؟ ") != DialogResult.Yes) return;
-
-
-                        RPT.OpenMostgdin_41(year_id);
-
+                       
+                        result = _reportService.Print41New(year_id);
                         break;
 
                     case ReportDataType.OpenTransferFrom:
 
                         if (MSG.DialogeErrMsg("سوف يتم عرض بيانات جميع الطلاب .. هل تريد المتابعة ؟ ") != DialogResult.Yes) return;
-                        RPT.OpenTahewl_Data(year_id - 1, 3);
+                        result = _reportService.PrintTransfer(year_id - 1,0, 3,7);
                         break;
 
                     case ReportDataType.OpenTransferTo:
 
                         if (MSG.DialogeErrMsg("سوف يتم عرض بيانات جميع الطلاب .. هل تريد المتابعة ؟ ") != DialogResult.Yes) return;
-                        RPT.OpenTahewl_Data(year_id, 4);
+                        result = _reportService.PrintTransfer(year_id - 1,0, 4);
                         break;
+                }
+
+                if (!result.Success)
+                {
+                    MSG.ErrorMesg(result.Message);
                 }
             }
             catch (Exception ex)

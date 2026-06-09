@@ -223,8 +223,8 @@ namespace School_Mang.RPT
         } 
         
         public void OpenTahewl_Data(int year_id,
-                                 int Status_Id,
-                                 int grade_id = 0)
+                                 int grade_id = 0,
+                                 params int[] statuses)
         {
             try
             {
@@ -234,8 +234,8 @@ namespace School_Mang.RPT
 
                 myReport.SetParameterValue("@year_id", year_id);
                 myReport.SetParameterValue("@grade_id", grade_id);
-                myReport.SetParameterValue("@Status_Id", Status_Id);
-
+                myReport.SetParameterValue("@Status_Ids", string.Join(",", statuses));
+   
                 OpenReport(myReport, "بيان الطلاب المحولين", "بيان الطلاب المحولين");
             }
             catch (Exception e)

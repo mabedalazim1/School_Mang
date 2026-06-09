@@ -1,10 +1,8 @@
 ﻿using School_Mang.BL.DTO;
 using School_Mang.BL.Models;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Windows.Forms;
-using System.Threading.Tasks;
+using School_Mang.BL.Common;
 
 namespace School_Mang.BL.Services.STD
 {
@@ -291,22 +289,11 @@ namespace School_Mang.BL.Services.STD
 
             // Grade
             string gradeDesc;
-
-            if (transAfterYear)
-            {
                 gradeDesc =
                     _getData.Get_Grade_Desc(data.GradeId)
                     .Rows[0]["GradeDesc"]
                     .ToString();
-            }
-            else
-            {
-                gradeDesc =
-                    _getData.Get_Grade_Desc(data.GradeId + 1)
-                    .Rows[0]["GradeDesc"]
-                    .ToString();
-            }
-
+           
             return new TransferReportData
             {
                 StudentName = "",
@@ -317,8 +304,74 @@ namespace School_Mang.BL.Services.STD
                 TransferSavedStatus = data.TransferSavedStatus
             };
         }
+        public void SahbMalf(string stdCode, int year, bool CurrentYearData)
+        {
+            //
+
+            _studentService.Delete_School_Std_Data(
+                stdCode,
+                year);
+        }
+
+        public void RestoreSahbMalf(int year,
+                                            string stdCode,
+                                            int currentGrade,
+                                            int currentClassId)
+        {
+            if (currentGrade == 9)
+                return;
+
+            int newGrade = 0;
+            int newClassId = 0;
+
+            switch (currentGrade)
+            {
+                case 10:
+                    newGrade = 11;
+                    newClassId = currentClassId + 2;
+                    break;
+
+                case 11:
+                    newGrade = 1;
+                    newClassId = currentClassId + 2;
+                    break;
+
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                    newGrade = currentGrade + 1;
+                    newClassId = currentClassId + 3;
+                    break;
+
+                case 6:
+                case 7:
+                case 8:
+                    newGrade = currentGrade + 1;
+                    newClassId = currentClassId + 2;
+                    break;
+            }
+
+            DataTable dtSchoolData =
+                _studentService.Get_School_year_Data(year, 0, 0);
+
+            if (dtSchoolData.Rows.Count == 0)
+                return;
+
+            _studentService.Add_School_Std_Data(
+                stdCode,
+                year,
+                newGrade,
+                2,
+                newClassId);
+        }
+
     }
 }
+
+
+
 internal class TransferContext
 {
     public int RequestYear { get; set; }

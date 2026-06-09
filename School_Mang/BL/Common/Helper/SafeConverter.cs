@@ -17,5 +17,21 @@ namespace School_Mang.BL.Common.Helper
                 ? result
                 : defaultValue;
         }
+        public static string GetString(object value)
+        {
+            return value == DBNull.Value || value == null
+                ? string.Empty
+                : value.ToString();
+        }
+        public static DateTime? GetDateTimeNullable(object value)
+        {
+            if (value == null || value == DBNull.Value)
+                return null;
+
+            if (DateTime.TryParse(value.ToString(), out DateTime result))
+                return result;
+
+            return null;
+        }
     }
 }

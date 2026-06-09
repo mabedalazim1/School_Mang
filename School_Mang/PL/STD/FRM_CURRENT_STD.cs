@@ -220,7 +220,7 @@ namespace School_Mang.PL.STD
         // Verify Stdunet Status 
 
 
-
+        
         private void LoadClases()
         {
             if (cmb_grade.SelectedIndex < 0 || cmb_class.SelectedIndex < 0)
@@ -273,7 +273,7 @@ namespace School_Mang.PL.STD
             }
         }
 
-        public void cmb_grade_SelectedIndexChanged(object sender, EventArgs e)
+        private void cmb_grade_SelectedIndexChanged(object sender, EventArgs e)
         {
             ChangeSelectedData();
         }

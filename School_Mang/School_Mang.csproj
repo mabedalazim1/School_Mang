@@ -230,6 +230,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BL\AppEnvironment.cs" />
     <Compile Include="BL\CLS_BACKUP_DATABASE.cs" />
     <Compile Include="BL\Common\Helper\SafeConverter.cs" />
     <Compile Include="BL\Common\Helper\GridHelper.cs" />
@@ -741,6 +742,9 @@
       <DependentUpon>rpt_Tahewl_To.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="PL\Controls\UC_EnvironmentIndicator.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="PL\MAIN\CLS_FUNCATIONS.cs" />
     <Compile Include="PL\MAIN\FRM_AMELIN.cs">
@@ -1551,6 +1555,9 @@
       <LastGenOutput>rpt_Degree_Statement_A_Grade_3_2025.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="PL\Controls\UC_EnvironmentIndicator.resx">
+      <DependentUpon>UC_EnvironmentIndicator.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PL\MAIN\FRM_AMELIN.resx">
       <DependentUpon>FRM_AMELIN.cs</DependentUpon>
     </EmbeddedResource>

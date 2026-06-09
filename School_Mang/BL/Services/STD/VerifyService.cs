@@ -1,5 +1,9 @@
-﻿using System.Data;
+﻿using School_Mang.BL.Common;
 using School_Mang.DAL;
+using System;
+using System.Data;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace School_Mang.BL.Services.STD
 {
@@ -9,6 +13,64 @@ namespace School_Mang.BL.Services.STD
         public VerifyService() 
         {
             _dal = new DataAcceseLayer();
+        }
+
+        public ServiceResult ValidateIsNumeric(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return ServiceResult.Fail("القيمة فارغة");
+            }
+
+            if (value.Any(c => !char.IsDigit(c)))
+            {
+                return ServiceResult.Fail("تأكد من القيمة المدخلة .. يسمح بالأرقام فقط ..!");
+            }
+
+            return ServiceResult.Ok();
+
+        }
+
+        public ServiceResult VerifyStudentNationalId(string nationalId, string studentCode = "0")
+        {
+            try
+            {
+                var dt = Verify_Std_Nat(nationalId, studentCode);
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    var name = dt.Rows[0][1].ToString();
+
+                    return ServiceResult.Fail($"الرقم القومي مسجل من قبل باسم الطالب  / {name} ");
+                }
+
+                return ServiceResult.Ok();
+            }
+            catch (Exception ex)
+            {
+                return ServiceResult.Fail(ex.Message);
+            }
+        }
+
+        public ServiceResult VerifyOsraNationalId(string nationalId, int osraId = 0)
+        {
+            try
+            {
+                var dt = Verify_Osra_Nat(nationalId, osraId);
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    string name = dt.Rows[0][0].ToString();
+
+                    return ServiceResult.Fail("الرقم القومي مسجل من قبل باسم ولى الأمر  :  " + name);
+                }
+
+                return ServiceResult.Ok();
+            }
+            catch (Exception ex)
+            {
+                return ServiceResult.Fail(ex.Message);
+            }
         }
 
         public DataTable Verify_Std_Code(string std_code)

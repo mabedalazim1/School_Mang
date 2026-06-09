@@ -1,4 +1,6 @@
 ﻿using DevExpress.XtraEditors;
+using School_Mang.BL;
+using School_Mang.PL.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -33,6 +35,8 @@ namespace School_Mang.PL.MAIN
                 return frm_main;
             }
         }
+        //Timer
+        private UC_EnvironmentIndicator envIndicator;
 
         // Color
         public Color color = Color.FromArgb(0, 224, 224, 224);
@@ -315,8 +319,10 @@ namespace School_Mang.PL.MAIN
                 FRM_SETTINGS.Get_Frm_Settings.txt_user.Focus();
                 FRM_SETTINGS.Get_Frm_Settings.lbl_user.Visible = false;
             }
+            // 👇 تحديث اسم السيرفر في الـ Indicator
+            envIndicator.SetServerName(Properties.Settings.Default.Server_Name);
 
-               InputLanguage.CurrentInputLanguage =
+            InputLanguage.CurrentInputLanguage =
                InputLanguage.FromCulture(new System.Globalization.CultureInfo("en-US"));
             show_home = true;
            
@@ -330,6 +336,11 @@ namespace School_Mang.PL.MAIN
 
         private void FRM_MAIN_Load(object sender, EventArgs e)
         {
+            //Timer
+            envIndicator = new UC_EnvironmentIndicator();
+            envIndicator.Dock = DockStyle.Right;
+            pn_topbar.Controls.Add(envIndicator);
+            envIndicator.BringToFront();
             link_login.Focus();
             ActiveControl = link_login;
         }
@@ -341,6 +352,11 @@ namespace School_Mang.PL.MAIN
             whiteColor(btn_site);
             changePages("إدارة الموقع", frm_mange_site.pn_home);
             
+        }
+
+        private void pn_top_title_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

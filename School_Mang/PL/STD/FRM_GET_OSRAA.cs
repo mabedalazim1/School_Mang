@@ -15,7 +15,7 @@ namespace School_Mang.PL.STD
     {
 
         private NavigationContext _context => AppNavigation.Instance.GetContext();
-        private readonly OsraDataService osraData = new OsraDataService();
+        private readonly OsraDataService _osraData = new OsraDataService();
 
         public void OnNavigatedTo()
         {
@@ -153,7 +153,7 @@ namespace School_Mang.PL.STD
 
             try
             {
-                var result = osraData.SearchOsra(txt_osra_data.Text);
+                var result = _osraData.SearchOsra(txt_osra_data.Text);
 
                 if (!result.Success)
                 {
@@ -179,7 +179,7 @@ namespace School_Mang.PL.STD
             Waiting.Start();
             try
             {
-                var result = osraData.GetOsraData();
+                var result = _osraData.GetOsraData();
                 if (!result.Success)
                 {
                     MSG.ErrorMesg(result.Message);
@@ -229,12 +229,12 @@ namespace School_Mang.PL.STD
                     frm.FillOsraData(new StudentDTO
                     {
                         OsraId = SafeConverter.GetInt(row.Cells["id"].Value),
-                        FatherName = row.Cells["اسم الأب"].Value.ToString(),
-                        Address = row.Cells["العنوان"].Value.ToString(),
-                        Wazifa = row.Cells["الوظيفة"].Value.ToString(),
-                        MotherName = row.Cells["اسم الأم"].Value.ToString(),
-                        FatherTel = row.Cells["هاتف الأب"].Value.ToString(),
-                        MotherTel = row.Cells["هاتف الأم"].Value.ToString()
+                        FatherName = SafeConverter.GetString(row.Cells["اسم الأب"].Value),
+                        Address = SafeConverter.GetString(row.Cells["العنوان"].Value),
+                        Wazifa = SafeConverter.GetString(row.Cells["الوظيفة"].Value),
+                        MotherName = SafeConverter.GetString(row.Cells["اسم الأم"].Value),
+                        FatherTel = SafeConverter.GetString(row.Cells["هاتف الأب"].Value),
+                        MotherTel = SafeConverter.GetString(row.Cells["هاتف الأم"].Value)
                     });
 
                 AppNavigation.Instance.
@@ -328,7 +328,7 @@ namespace School_Mang.PL.STD
             {
                 int osrs_id = SafeConverter.GetInt(value);
 
-                var result = osraData.GetOsraDataById(osrs_id);
+                var result = _osraData.GetOsraDataById(osrs_id);
 
 
                 if (!result.Success)
@@ -349,51 +349,40 @@ namespace School_Mang.PL.STD
                 // Add Data
                 var row = dt.Rows[0];
                 var frm = FRM_OSRAA_DATA.Get_Osra_data;
-
-                var info = osraData.GetUpdateInfo(dt);
-                bool hasData = info.updatedBy != null;
-
-                frm.lbl_edit_date.Visible = hasData;
-                frm.lbl_by.Visible = hasData;
-                frm.lbl_edit_by.Visible = hasData;
-                frm.lbl_date.Visible = hasData;
-
-                if (hasData)
+                var info = _osraData.GetUpdateInfo(dt);
+                var data = new StudentDTO
                 {
-                    frm.lbl_edit_date.Text = info.updatedAt?.ToString("dd/MM/yyyy");
-                    frm.lbl_edit_by.Text = info.updatedBy;
-                }
+                    FatherName = SafeConverter.GetString(row["father_name"]),
+                    FatherLastName = SafeConverter.GetString(row["father_last_name"]),
+                    FatherNat = SafeConverter.GetString(row["father_nat"]),
+                    FatherHala = SafeConverter.GetInt(row["father_hala"]),
+                    Address = SafeConverter.GetString(row["address"]),
+                    FatherMoahel = SafeConverter.GetString(row["father_moahel"]),
+                    FatherWazifa = SafeConverter.GetString(row["father_wazifa"]),
+                    Tel = SafeConverter.GetString(row["tel"]),
+                    FatherMobil_1 = SafeConverter.GetString(row["father_mobil_1"]),
+                    FatherMobil_2 = SafeConverter.GetString(row["father_mobil_2"]),
+                    MotherName = SafeConverter.GetString(row["mother_name"]),
+                    MotherNat = SafeConverter.GetString(row["mother_nat"]),
+                    MotherMoahel = SafeConverter.GetString(row["mother_moahel"]),
+                    MotherWazifa = SafeConverter.GetString(row["mother_wazifa"]),
+                    MotherHala = SafeConverter.GetInt(row["mother_hala"]),
+                    MotherMbil_1 = SafeConverter.GetString(row["mother_mobil_1"]),
+                    MotherMbil_2 = SafeConverter.GetString(row["mother_mobil_2"]),
+                    Comments = SafeConverter.GetString(row["comments"]),
+                    OsraId = SafeConverter.GetInt(row["Osraa_Id"]),
+                    UpdatedBy = info.updatedBy,
+                    UpdatedAt = info.updatedAt
+                };
 
                 this.Hide();
-
+                
                 AppNavigation.Instance.
                     WithOwner(MAIN.FRM_MAIN.Get_Frm_Main)
                     .SetContext(c =>
                     {
                         c.OsraState.OpenFormGetOsra = true; // Update
-                        c.StudentData = new StudentDTO
-                        {
-                            FatherName = row["father_name"].ToString(),
-                            FatherLastName = row["father_last_name"].ToString(),
-                            FatherNat = row["father_nat"].ToString(),
-                            FatherHala = SafeConverter.GetInt(row["father_hala"]),
-                            Address = row["address"].ToString(),
-                            FatherMoahel = row["father_moahel"].ToString(),
-                            FatherWazifa = row["father_wazifa"].ToString(),
-                            Tel = row["tel"].ToString(),
-                            FatherMobil_1 = row["father_mobil_1"].ToString(),
-                            FatherMobil_2 = row["father_mobil_2"].ToString(),
-                            MotherName = row["mother_name"].ToString(),
-                            MotherNat = row["mother_nat"].ToString(),
-                            MotherMoahel = row["mother_moahel"].ToString(),
-                            MotherWazifa = row["mother_wazifa"].ToString(),
-                            MotherHala = SafeConverter.GetInt(row["mother_hala"]),
-                            MotherMbil_1 = row["mother_mobil_1"].ToString(),
-                            MotherMbil_2 = row["mother_mobil_2"].ToString(),
-                            Comments = row["comments"].ToString(),
-                            OsraId = SafeConverter.GetInt(row["Osraa_Id"])
-                        };
-                        
+                        c.StudentData = data;
                     })
                     .Show(frm);
                 frm.txt_adrs.Focus();
@@ -428,7 +417,7 @@ namespace School_Mang.PL.STD
             if (confirm != DialogResult.Yes)
                 return;
 
-            var result = osraData.DeleteOsra(osrs_id);
+            var result = _osraData.DeleteOsra(osrs_id);
 
             if (!result.Success)
             {
@@ -436,7 +425,7 @@ namespace School_Mang.PL.STD
                 return;
             }
 
-            var newData = osraData.GetOsraData();
+            var newData = _osraData.GetOsraData();
             if (!newData.Success)
             {
                 MSG.ErrorMesg(newData.Message);

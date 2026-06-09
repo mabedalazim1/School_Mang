@@ -2,14 +2,17 @@
 using School_Mang.BL.Services.STD;
 using School_Mang.BL.STD;
 using System;
-using System.Data;
+using School_Mang.DAL;
 using School_Mang.BL.Models;
+using School_Mang.BL.DTO;
+using School_Mang.BL.Common;
 
 namespace School_Mang.BL.Services
 {
     public class StudentSaveService
     {
         private readonly CLS_STD _std;
+        private readonly DataAcceseLayer _dal;
         private readonly StudentCodeService _codeService;
         private readonly StudentService  _studentService;
         private readonly VerifyService _verify;
@@ -20,6 +23,7 @@ namespace School_Mang.BL.Services
             _codeService = new StudentCodeService();
             _studentService = new StudentService();
             _verify = new VerifyService();
+            _dal = new DataAcceseLayer();
         }
         public string SaveStudent(StudentSaveRequest req)
                                     {
@@ -63,6 +67,36 @@ namespace School_Mang.BL.Services
                 req.GradeId,
                 req.StatusId,
                 req.ClassId
+            );
+        }
+
+        public ServiceResult UpdateStudent(StudentDTO dto)
+        {
+            try
+            {
+                UpdateSchoolStdData(dto);
+                return ServiceResult.Ok("تم تحديث بيانات الطالب بنجاح");
+            }
+            catch (Exception ex)
+            {
+                return ServiceResult.Fail("حدث خطأ أثناء التحديث: " + ex.Message);
+            }
+            
+        }
+        private void UpdateSchoolStdData(StudentDTO dto)
+        {
+            _dal.ExecNonQuery("SP_Update_School_Std_Data",
+                SqlParam.NVar("@std_code", dto.StdCode, 20),
+                SqlParam.NVar("@std_name", dto.StdName, 12),
+                SqlParam.NVar("@std_nat", dto.Nat, 14),
+                SqlParam.Date("@std_date", dto.BirthDate),
+                SqlParam.Int("@Grade_Id", dto.GradeId),
+                SqlParam.Int("@Std_Status_Id", dto.StudentStatus),
+                SqlParam.Int("@Class_Id", dto.ClassId),
+                SqlParam.Int("@Gender_Id", dto.GenderId),
+                SqlParam.Int("@Religion_Id", dto.ReligionId),
+                SqlParam.Int("@Year_Id", dto.YearId),
+                SqlParam.NVar("@Updated_by", dto.UserName, 15)
             );
         }
     }

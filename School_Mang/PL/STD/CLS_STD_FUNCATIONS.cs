@@ -15,14 +15,13 @@ namespace School_Mang.PL.STD
     public class CLS_STD_FUNCATIONS
     {
         
-        BL.STD.CLS_STD std = new BL.STD.CLS_STD();
         private readonly VerifyService _verify;
 
         public CLS_STD_FUNCATIONS()
         {
             _verify = new VerifyService();
         }
-        public Boolean Checked_Is_Numeric(TextBox txt_nat)
+        public bool Checked_Is_Numeric(TextBox txt_nat)
         {
             Waiting.Start();
             Regex nonNumericRegex = new Regex(@"\D");
@@ -134,27 +133,6 @@ namespace School_Mang.PL.STD
             MAIN.FRM_MAIN.Get_Frm_Main.pn_main.Controls.Add(pn);
             MAIN.FRM_MAIN.Get_Frm_Main.trans_a.ShowSync(MAIN.FRM_MAIN.Get_Frm_Main.pn_main);
             MAIN.FRM_MAIN.Get_Frm_Main.lbl_main.Visible = true;
-        }
-
-        public void Get_Update_Name_For_OSRAA_DATA(DataTable Dt)
-        {
-            if (Dt.Rows[0]["Updated_by"].ToString() != "")
-            {
-                DateTime my_date = Convert.ToDateTime(Dt.Rows[0]["Updated_At"].ToString());
-                FRM_OSRAA_DATA.Get_Osra_data.lbl_edit_date.Visible = true;
-                FRM_OSRAA_DATA.Get_Osra_data.lbl_by.Visible = true;
-                FRM_OSRAA_DATA.Get_Osra_data.lbl_edit_by.Visible = true;
-                FRM_OSRAA_DATA.Get_Osra_data.lbl_date.Visible = true;
-                FRM_OSRAA_DATA.Get_Osra_data.lbl_edit_date.Text = my_date.ToString("dd/MM/yyyy");
-                FRM_OSRAA_DATA.Get_Osra_data.lbl_edit_by.Text = Dt.Rows[0]["Updated_by"].ToString();
-            }
-            else
-            {
-                FRM_OSRAA_DATA.Get_Osra_data.lbl_edit_date.Visible = false;
-                FRM_OSRAA_DATA.Get_Osra_data.lbl_edit_by.Visible = false;
-                FRM_OSRAA_DATA.Get_Osra_data.lbl_by.Visible = false;
-                FRM_OSRAA_DATA.Get_Osra_data.lbl_date.Visible = false;
-            }
         }
     }
 }

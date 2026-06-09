@@ -365,7 +365,7 @@ namespace School_Mang.PL.STD
                     // Update Current Std Data
                     var frm = FRM_CURRENT_STD.Get_Current_Std;
                     frm.txt_std_data.Text = "";
-                    frm.ChangeSelectedData();
+                    frm.Get_School_Year_Data();
 
                     var frmNewStd = FRM_GET_STD.Get_Student;
                     frmNewStd.SearchStudents();

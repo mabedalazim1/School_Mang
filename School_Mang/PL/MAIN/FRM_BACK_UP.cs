@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using School_Mang.BL;
+using School_Mang.BL.Services;
 
 namespace School_Mang.PL.MAIN
 {
@@ -58,9 +60,11 @@ namespace School_Mang.PL.MAIN
                             DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss")
                             + ".bak";
 
-            string local_data_name = txt_bath.Text + "\\KPS_DATA_2023-" +
-                            DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss")
-                             + ".bak";
+            string local_data_name = Path.Combine(
+                txt_bath.Text,
+                "KPS_DATA_2023-" 
+                + DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss") + ".bak"
+            );
 
             if (BL.Globals.Restore_DataBase)
             {
@@ -96,7 +100,8 @@ namespace School_Mang.PL.MAIN
             {
                 try
                 {
-                    if (server.Substring(0, 2) == "19")
+                    if (server.Substring(0, 2) == "19" ||
+                        server.Substring(0, 2) == "10")
                     {
                         file_name = "/data/mssql/backup/KPS_DATA_2023.bak";
                         // Backup DataBase

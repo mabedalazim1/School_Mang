@@ -17,13 +17,20 @@ namespace School_Mang.PL.MAIN
     {
         String Host = Properties.Settings.Default.Server_Name;
         int Port = 22;
-        String Username = "kpsftp";
+        String Username = "kps";
         String Password = "kps2020";
 
         public void DowanloadDataBase(string LocalDestinationFilename, string RemoteFileName)
         {
             try
             {
+                string folder = Path.GetDirectoryName(LocalDestinationFilename);
+
+                if (!Directory.Exists(folder))
+                {
+                    Directory.CreateDirectory(folder);
+                }
+
                 Waiting.Start();
                 using (SftpClient sftp = new SftpClient(Host, Port, Username, Password))
                 {

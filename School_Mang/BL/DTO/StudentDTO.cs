@@ -13,6 +13,7 @@ namespace School_Mang.BL.DTO
         public string StdName { get; set; }
         public string Nat { get; set; }
         public string StudentFullName { get; set; }
+        public DateTime? BirthDate { get; set; }
 
         // الأكواد
         public int GradeId { get; set; }
@@ -49,5 +50,9 @@ namespace School_Mang.BL.DTO
         public string MotherMbil_1 { get; set; }
         public string MotherMbil_2 { get; set; }
         public string Comments { get; set; }
+        // User
+        public string UserName { get; set; }
+        public string UpdatedBy { get; set; }
+        public DateTime? UpdatedAt { get; set; }
     }
 }

@@ -36,6 +36,18 @@ namespace School_Mang.BL.STD
             );
         }
 
+        public DataTable GET_Trans_Data_By_Year(int year, int Grade_Id, params int[] statusIds)
+        {
+            
+            string statusList = string.Join(",", statusIds);
+
+            return DAL.ExecQuery("SP_GET_Trans_Data",
+                SqlParam.Int("@Year_Id", year),
+                SqlParam.Int("@Grade_Id", Grade_Id),
+                SqlParam.NVar("@Status_Ids", statusList)
+            );
+        }
+
         public DataTable Search_Trans_Data(int Grade_Id, int Status_Id, string std_name)
         {
             int year = (Status_Id == 3)
@@ -83,11 +95,6 @@ namespace School_Mang.BL.STD
                 SqlParam.Int("@October_Sana", year_id + 20),
                 SqlParam.Bit("@isDesc", isDesc));
 
-        public DataTable Get_Trans_Reports(int Year_Id, int Status_Id, int Grade_Id = 0)
-            => DAL.ExecQuery("SP_GET_Trans_Data",
-                SqlParam.Int("@Year_Id", Year_Id),
-                SqlParam.Int("@Grade_Id", Grade_Id),
-                SqlParam.Int("@Status_Id", Status_Id));
 
         #endregion
 
@@ -154,97 +161,8 @@ namespace School_Mang.BL.STD
                 SqlParam.NVar("@Updated_by", Properties.Settings.Default.user_name, 15)
             );
         }
-        public void Add_Osra_Data(string father_nat,
-                         string address, string father_name, string father_last_name,
-                         string father_moahel, string father_wazifa, string tel,
-                         string father_mobil_1, string father_mobil_2, int father_hala,
-                         string mother_nat, string mother_name,
-                         string mother_moahel, string mother_wazifa,
-                         string mother_mobil_1, string mother_mobil_2,
-                         int mother_hala, string comments, int Osraa_Id)
-        {
-            DAL.ExecNonQuery("SP_Add_Osra_Data",
-                SqlParam.NVar("@father_nat", father_nat, 14),
-                SqlParam.NVar("@address", address, 100),
-                SqlParam.NVar("@father_name", father_name, 40),
-                SqlParam.NVar("@father_last_name", father_last_name, 12),
-                SqlParam.NVar("@father_moahel", father_moahel, 50),
-                SqlParam.NVar("@father_wazifa", father_wazifa, 50),
-                SqlParam.NVar("@tel", tel, 7),
-                SqlParam.NVar("@father_mobil_1", father_mobil_1, 11),
-                SqlParam.NVar("@father_mobil_2", father_mobil_2, 11),
-                SqlParam.Int("@father_hala", father_hala),
-                SqlParam.NVar("@mother_nat", mother_nat, 14),
-                SqlParam.NVar("@mother_name", mother_name, 50),
-                SqlParam.NVar("@mother_moahel", mother_moahel, 50),
-                SqlParam.NVar("@mother_wazifa", mother_wazifa, 50),
-                SqlParam.NVar("@mother_mobil_1", mother_mobil_1, 11),
-                SqlParam.NVar("@mother_mobil_2", mother_mobil_2, 11),
-                SqlParam.Int("@mother_hala", mother_hala),
-                SqlParam.NVar("@comments", comments, 250),
-                SqlParam.Int("@Osraa_Id", Osraa_Id),
-                SqlParam.NVar("@Created_by", Properties.Settings.Default.user_name, 15),
-                SqlParam.NVar("@Updated_by", Properties.Settings.Default.user_name, 15)
-            );
-        }
-        public void Update_Osra_Data(string father_nat,
-                             string address, string father_name, string father_last_name,
-                             string father_moahel, string father_wazifa, string tel,
-                             string father_mobil_1, string father_mobil_2, int father_hala,
-                             string mother_nat, string mother_name,
-                             string mother_moahel, string mother_wazifa,
-                             string mother_mobil_1, string mother_mobil_2,
-                             int mother_hala, string comments, int Osraa_Id)
-        {
-            DAL.ExecNonQuery("SP_Update_Osra_Data",
-                SqlParam.NVar("@father_nat", father_nat, 14),
-                SqlParam.NVar("@address", address, 100),
-                SqlParam.NVar("@father_name", father_name, 40),
-                SqlParam.NVar("@father_last_name", father_last_name, 12),
-                SqlParam.NVar("@father_moahel", father_moahel, 50),
-                SqlParam.NVar("@father_wazifa", father_wazifa, 50),
-                SqlParam.NVar("@tel", tel, 7),
-                SqlParam.NVar("@father_mobil_1", father_mobil_1, 11),
-                SqlParam.NVar("@father_mobil_2", father_mobil_2, 11),
-                SqlParam.Int("@father_hala", father_hala),
-                SqlParam.NVar("@mother_nat", mother_nat, 14),
-                SqlParam.NVar("@mother_name", mother_name, 50),
-                SqlParam.NVar("@mother_moahel", mother_moahel, 50),
-                SqlParam.NVar("@mother_wazifa", mother_wazifa, 50),
-                SqlParam.NVar("@mother_mobil_1", mother_mobil_1, 11),
-                SqlParam.NVar("@mother_mobil_2", mother_mobil_2, 11),
-                SqlParam.Int("@mother_hala", mother_hala),
-                SqlParam.NVar("@comments", comments, 250),
-                SqlParam.Int("@Osraa_Id", Osraa_Id),
-                SqlParam.NVar("@Updated_by", Properties.Settings.Default.user_name, 15)
-            );
-        }
         
-        public void Update_School_Std_Data(string std_code,
-                                   string std_name,
-                                   string std_nat,
-                                   DateTime std_date,
-                                   int Grade_Id,
-                                   int Std_Status_Id,
-                                   int Class_Id,
-                                   int Gender_Id,
-                                   int Religion_Id,
-                                   int Year_Id)
-        {
-            DAL.ExecNonQuery("SP_Update_School_Std_Data",
-                SqlParam.NVar("@std_code", std_code, 20),
-                SqlParam.NVar("@std_name", std_name, 12),
-                SqlParam.NVar("@std_nat", std_nat, 14),
-                SqlParam.Date("@std_date", std_date),
-                SqlParam.Int("@Grade_Id", Grade_Id),
-                SqlParam.Int("@Std_Status_Id", Std_Status_Id),
-                SqlParam.Int("@Class_Id", Class_Id),
-                SqlParam.Int("@Gender_Id", Gender_Id),
-                SqlParam.Int("@Religion_Id", Religion_Id),
-                SqlParam.Int("@Year_Id", Year_Id),
-                SqlParam.NVar("@Updated_by", Properties.Settings.Default.user_name, 15)
-            );
-        }
+        
         public void Add_Transfers_Data(string Transfer_code,
                                string std_code,
                                string Transfer_School,

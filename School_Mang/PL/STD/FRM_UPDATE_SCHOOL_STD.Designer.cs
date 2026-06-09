@@ -606,7 +606,6 @@ namespace School_Mang.PL.STD
             this.Name = "FRM_UPDATE_SCHOOL_STD";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "تعديل بيانات الطالب";
-            this.Activated += new System.EventHandler(this.FRM_UPDATE_SCHOOL_STD_Activated);
             this.Load += new System.EventHandler(this.FRM_UPDATE_SCHOOL_STD_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FRM_UPDATE_SCHOOL_STD_KeyDown);
             this.groupBox3.ResumeLayout(false);

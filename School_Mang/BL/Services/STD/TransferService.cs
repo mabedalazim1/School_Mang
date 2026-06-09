@@ -304,13 +304,31 @@ namespace School_Mang.BL.Services.STD
                 TransferSavedStatus = data.TransferSavedStatus
             };
         }
-        public void SahbMalf(string stdCode, int year, bool CurrentYearData)
-        {
-            //
 
+
+        public void SahbMalf(string stdCode, int year, bool CurrentYearData, int status)
+        {
+            if (!CurrentYearData) 
+            {
+                if (VerifayStudent(stdCode, year))
+                {
+                   throw new Exception("لا يمكن سحب ملف للطالب المسجل فى العام السابق .. !");
+                }
+            }
+            if (status == 3 || status == 4 || status == 7) 
+            {
+                throw new Exception("لا يمكن سحب ملف للطالب المحول .. !");
+            }
+            int newYear = year + 1;
             _studentService.Delete_School_Std_Data(
                 stdCode,
-                year);
+                newYear);
+        }
+
+        private bool VerifayStudent(string stdCode, int year)
+        {
+            DataTable dt = _studentService.Verify_Std_School_Code(stdCode, year);
+            return dt != null && dt.Rows.Count > 0;
         }
 
         public void RestoreSahbMalf(int year,

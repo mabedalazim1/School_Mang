@@ -19,11 +19,6 @@ namespace School_Mang.BL
             set => Current.Test_Internet_Con = value;
         }
 
-        public static bool Open_Form_Get_osra
-        {
-            get => Current.Open_Form_Get_osra;
-            set => Current.Open_Form_Get_osra = value;
-        }
 
         public static bool EditUser
         {

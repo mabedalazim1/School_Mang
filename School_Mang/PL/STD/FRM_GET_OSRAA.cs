@@ -244,7 +244,6 @@ namespace School_Mang.PL.STD
                        })
                            .Show(frm);
 
-                this.Hide();
                 frm.BringToFront();
             }
 

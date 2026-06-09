@@ -10,34 +10,11 @@ namespace School_Mang.BL.Services
     public class AppSession
     {
         public bool Test_Internet_Con { get; set; }
-        public bool Open_Form_Get_osra { get; set; }
-        public bool Add_Osra_Data_To_Student { get; set; }
-        public bool Add_From_Get_Std { get; set; }
-        public bool Open_From_Get_Std { get; set; }
-        public bool Update_Std_Data { get; set; }
-        public bool Elthak_Std { get; set; }
-        public bool Elthak_Std_Next_Year { get; set; }
 
         public bool EditUser { get; set; }
         public bool Add_User_Permission { get; set; }
 
-        public bool Current_Year_Data { get; set; }
-        public bool Degree_Statement { get; set; }
-
-        public bool Update_Taheewl { get; set; }
-        public bool Taheewl_To_School { get; set; }
-
-        public bool Details_Std { get; set; }
-
         public bool Restore_DataBase { get; set; }
-
-        public bool Open_Kaema { get; set; }
-        public bool Open_Tadarg_Sen { get; set; }
-        public bool Open_Segel { get; set; }
-        public bool Open_41_New { get; set; }
-
-        public bool Open_Transfer_From { get; set; }
-        public bool Open_Transfer_To { get; set; }
 
         public byte My_Year { get; set; }
 

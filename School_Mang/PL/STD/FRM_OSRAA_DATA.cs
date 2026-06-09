@@ -97,6 +97,154 @@ namespace School_Mang.PL.STD
         int move_y;
 
         // checked Data
+
+        private bool ValidateInputs()
+        {
+            if (!Checked_Data(txt_father_name, "يرجى إدخال اسم الأب ... !")) return false;
+            if (!Checked_Data(txt_last_name, "يرجى إدخال اسم العائلة ... !")) return false;
+            if (!Checked_Data(txt_father_nat, "يرجى إدخال الرقم القومى للأب ... !")) return false;
+
+            if (!Checked_Is_Numeric(txt_father_nat)) return false;
+
+            if (_context.OsraState.AddNewOsra)
+                Verify_Osra_Nat(txt_father_nat, 0);
+            else
+                Verify_Osra_Nat(txt_father_nat, Convert.ToInt32(txt_osra_code.Text));
+
+            if (Verify_Std_Nat(txt_father_nat)) return false;
+
+            if (!Checked_Data(txt_adrs, "يرجى إدخال العنوان ... !")) return false;
+            if (!Checked_Data(txt_father_moahel, "يرجى إدخال مؤهل الأب  ... !")) return false;
+            if (!Checked_Data(txt_father_wazifa, "يرجى إدخال وظيفة الأب  ... !")) return false;
+            if (!Checked_Data(txt_father_mobil1, "يرجى إدخال هاتف الأب  ... !")) return false;
+
+            if (!Checked_Phon(txt_father_mobil1, 11)) return false;
+            if (!Checked_Is_Numeric(txt_father_mobil1)) return false;
+
+            if (!Checked_Phon(txt_father_mobil2, 11)) return false;
+            if (!Checked_Is_Numeric(txt_father_mobil2)) return false;
+
+            if (!Checked_Phon(txt_tel, 7)) return false;
+            if (!Checked_Is_Numeric(txt_tel)) return false;
+
+            if (!Checked_Phon_End_NO(txt_father_mobil1)) return false;
+            if (!Checked_Phon_End_NO(txt_father_mobil2)) return false;
+
+            if (!Checked_Data(txt_mother_name, "يرجى إدخال اسم الأم  ... !")) return false;
+            if (!Checked_Data(txt_mother_nat, "يرجى إدخال الرقم القومى للأم  ... !")) return false;
+
+            if (!Checked_Is_Numeric(txt_mother_nat)) return false;
+
+            if (Verify_Std_Nat(txt_mother_nat)) return false;
+
+            if (!Checked_Data(txt_mother_wazifa, "يرجى إدخال وظيفة الأم  ... !")) return false;
+            if (!Checked_Data(txt_mother_moahel, "يرجى إدخال مؤهل الأم  ... !")) return false;
+
+            if (!Checked_Data(txt_mother_mobil_1, "يرجى إدخال هاتف الأم  ... !")) return false;
+            if (!Checked_Phon_End_NO(txt_mother_mobil_1)) return false;
+            if (!Checked_Is_Numeric(txt_mother_mobil_1)) return false;
+
+            if (_context.OsraState.AddNewOsra)
+                Verify_Osra_Nat(txt_mother_nat, 0);
+            else
+                Verify_Osra_Nat(txt_mother_nat, Convert.ToInt32(txt_osra_code.Text));
+
+            if (!Checked_Phon(txt_mother_mobil_1, 11)) return false;
+            if (!Checked_Phon(txt_mother_mobil2, 11)) return false;
+            if (!Checked_Is_Numeric(txt_mother_mobil2)) return false;
+
+            if (!Checked_Phon_End_NO(txt_mother_mobil2)) return false;
+
+            if (txt_father_nat.Text == txt_mother_nat.Text)
+            {
+                MSG.ErrorMesg("الأرقام القومية للوالدين متشابهة... !");
+                return false;
+            }
+
+            if (txt_father_nat.Text == FRM_ADD_STD.getAdd_Std_Frm.txt_nat.Text)
+            {
+                MSG.ErrorMesg("تم إدخال هذا الرقم للطالب ... !");
+                return false;
+            }
+
+            if (txt_mother_nat.Text == FRM_ADD_STD.getAdd_Std_Frm.txt_nat.Text)
+            {
+                MSG.ErrorMesg("تم إدخال هذا الرقم للطالب ... !");
+                return false;
+            }
+
+            return true;
+        }
+
+        private void SaveOrUpdate(StudentDTO osraData)
+        {
+            if (_context.OsraState.AddNewOsra)
+            {
+                int year = int.Parse(Properties.Settings.Default.MyYear.ToString().Substring(2, 2));
+                int nextYear = year + 1;
+
+                _result = _osraData.SaveOsraData(osraData, nextYear);
+
+                if (!_result.Success)
+                {
+                    MSG.ErrorMesg(_result.Message);
+                    return;
+                }
+
+                MSG.MyMesg("تم حفظ بيانات الأسرة بنجاح ... !");
+            }
+            else
+            {
+                int OsraId = SafeConverter.GetInt(txt_osra_code.Text);
+
+                _result = _osraData.UpdateOsraService(osraData, OsraId);
+
+                if (_result.Success)
+                    MSG.MyMesg("تم تعديل بيانات الأسرة بنجاح ... !");
+                else
+                    MSG.ErrorMesg(_result.Message);
+            }
+        }
+        private void PostActions()
+        {
+            var frmOsrs = FRM_GET_OSRAA.Get_Osra_data;
+            frmOsrs.LoadAllOsraData();
+
+            if (_context.OsraState.OpenFormGetOsra)
+            {
+                AppNavigation.Instance
+                    .SetContext(c => c.OsraState.EditOsra = true)
+                    .Show(frmOsrs);
+            }
+
+            if (_context.OsraState.AddOsraDataToStudent)
+            {
+                var frmStd = FRM_ADD_STD.getAdd_Std_Frm;
+                frmStd.FillOsraData(_result,
+                    txt_father_name.Text,
+                    txt_mother_name.Text,
+                    txt_adrs.Text,
+                    txt_father_wazifa.Text,
+                    txt_father_mobil1.Text,
+                    txt_mother_mobil_1.Text);
+
+                frmStd.Show();
+            }
+        }
+        private void HandleSave()
+        {
+            if (!ValidateInputs())
+                return;
+
+            var osraData = BuildOsraDto();
+
+            SaveOrUpdate(osraData);
+
+            PostActions();
+
+            this.Close();
+        }
+
         private bool Checked_Data(TextBox txt, string str)
         {
             Waiting.Start();
@@ -496,177 +644,14 @@ namespace School_Mang.PL.STD
         }
         private void btn_ok_Click(object sender, EventArgs e)
         {
-            // Check Data
 
-            if (!Checked_Data(txt_father_name, "يرجى إدخال اسم الأب ... !")) return;
-            if (!Checked_Data(txt_last_name, "يرجى إدخال اسم العائلة ... !")) return;
-            if (!Checked_Data(txt_father_nat, "يرجى إدخال الرقم القومى للأب ... !")) return;
-
-            if (!Checked_Is_Numeric(txt_father_nat)) return;
-
-            if (_context.OsraState.AddNewOsra == true)
+            try
             {
-                Verify_Osra_Nat(txt_father_nat, 0);
-            }
-            else
-            {
-                Verify_Osra_Nat(txt_father_nat, Convert.ToInt32(txt_osra_code.Text));
-            }
+                HandleSave();
 
-            if (Verify_Std_Nat(txt_father_nat)) return;
-
-            if (!Checked_Data(txt_adrs, "يرجى إدخال العنوان ... !")) return;
-            if (!Checked_Data(txt_father_moahel, "يرجى إدخال مؤهل الأب  ... !")) return;
-            if (!Checked_Data(txt_father_wazifa, "يرجى إدخال وظيفة الأب  ... !")) return;
-            if (!Checked_Data(txt_father_mobil1, "يرجى إدخال هاتف الأب  ... !")) return;
-
-            if (!Checked_Phon(txt_father_mobil1, 11)) return;
-            if (!Checked_Is_Numeric(txt_father_mobil1)) return;
-            if (!Checked_Phon(txt_father_mobil2, 11)) return;
-            if (!Checked_Is_Numeric(txt_father_mobil2)) return;
-            if (!Checked_Phon(txt_tel, 7)) return;
-            if (!Checked_Is_Numeric(txt_tel)) return;
-
-
-            if (!Checked_Phon_End_NO(txt_father_mobil1)) return;
-            if (!Checked_Phon_End_NO(txt_father_mobil2)) return;
-
-            if (!Checked_Data(txt_mother_name, "يرجى إدخال اسم الأم  ... !")) return;
-            if (!Checked_Data(txt_mother_nat, "يرجى إدخال الرقم القومى للأم  ... !")) return;
-
-            if (!Checked_Is_Numeric(txt_mother_nat)) return;
-
-
-            if (Verify_Std_Nat(txt_mother_nat)) return;
-
-
-            if (!Checked_Data(txt_mother_wazifa, "يرجى إدخال وظيفة الأم  ... !")) return;
-            if (!Checked_Data(txt_mother_moahel, "يرجى إدخال مؤهل الأم  ... !")) return;
-
-            if (!Checked_Data(txt_mother_mobil_1, "يرجى إدخال هاتف الأم  ... !")) return;
-            if (!Checked_Phon_End_NO(txt_mother_mobil_1)) return;
-            if (!Checked_Is_Numeric(txt_mother_mobil_1)) return;
-
-            if (_context.OsraState.AddNewOsra == true)
-            {
-                Verify_Osra_Nat(txt_mother_nat, 0);
-            }
-            else
-            {
-                Verify_Osra_Nat(txt_mother_nat, Convert.ToInt32(txt_osra_code.Text));
-            }
-
-            if (!Checked_Phon(txt_mother_mobil_1, 11)) return;
-            if (!Checked_Phon(txt_mother_mobil2, 11)) return;
-            if (!Checked_Is_Numeric(txt_mother_mobil2)) return;
-
-
-            if (!Checked_Phon_End_NO(txt_mother_mobil2)) return;
-
-            if (txt_father_nat.Text == txt_mother_nat.Text)
-            {
-                MSG.ErrorMesg("الأرقام القومية للوالدين متشابهة... !");
-                txt_father_nat.BackColor = Color.MistyRose;
-                txt_mother_nat.BackColor = Color.MistyRose;
-                txt_father_nat.Focus();
-                return;
-            }
-
-            if (txt_father_nat.Text == FRM_ADD_STD.getAdd_Std_Frm.txt_nat.Text)
-            {
-                MSG.ErrorMesg(" تم إدخال هذا الرقم للطالب .. يرجى مراجعة الأرقام القومية... !");
-                txt_father_nat.BackColor = Color.MistyRose;
-                txt_father_nat.Focus();
-                return;
-            }
-
-            if (txt_mother_nat.Text == FRM_ADD_STD.getAdd_Std_Frm.txt_nat.Text)
-            {
-                MSG.ErrorMesg(" تم إدخال هذا الرقم للطالب .. يرجى مراجعة الأرقام القومية... !");
-                txt_mother_nat.BackColor = Color.MistyRose;
-                txt_mother_nat.Focus();
-                return;
-            }
-
-          try
-            {
-                var osraData = BuildOsraDto();
-
-                if (_context.OsraState.AddNewOsra == true)
-                {
-                    // Save Osra Data
-                    int year = int.Parse(Properties.Settings.Default.MyYear.ToString().Substring(2, 2));
-                    int nextYear = year + 1;
-                    
-                    _result = _osraData.SaveOsraData(osraData, nextYear);
-
-                    MSG.MyMesg("تم حفظ بيانات الأسرة بنجاح ... !");
-                    if (_context.OsraState.AddOsraDataToStudent == true)
-                    {
-
-                        if (_result.Success)
-                        {
-                            var frmStd = FRM_ADD_STD.getAdd_Std_Frm;
-
-                            frmStd.FillOsraData(_result,
-                                txt_father_name.Text,
-                                txt_mother_name.Text,
-                                txt_adrs.Text,
-                                txt_father_wazifa.Text,
-                                txt_father_mobil1.Text,
-                                txt_mother_mobil_1.Text);
-
-                            frmStd.Show();
-                            this.Close();
-                        }
-                        else
-                        {
-                            MSG.ErrorMesg(_result.Message);
-                        }
-                    }
-                    if (_context.StudentState.OpenFromGetStd == true)
-                    {
-
-                        AppNavigation.Instance.SetContext(c =>
-                        {
-                           c.StudentState.OpenFromGetStd = false;
-                        }).Show(FRM_ADD_STD.getAdd_Std_Frm,false); // تم التحقق
-                    }
-                }
-                else
-                {
-                    // Update Osra Data
-                    var OsraId = SafeConverter.GetInt(txt_osra_code.Text);
-                   
-                    _result = _osraData.UpdateOsraService(osraData, OsraId);
-
-                    if (_result.Success)
-                    { 
-                        MSG.MyMesg("تم تعديل بيانات الأسرة بنجاح ... !");
-                    }
-                    else
-                    {
-                        MSG.ErrorMesg(_result.Message);
-                    }
-                }
-
-                var frmOsrs = FRM_GET_OSRAA.Get_Osra_data;
-                frmOsrs.LoadAllOsraData();
-
-                if (_context.OsraState.OpenFormGetOsra == true)
-                {
-                    AppNavigation.Instance
-                       .SetContext(c =>
-                       {
-                           c.OsraState.EditOsra = true;
-                       })
-                       .Show(frmOsrs); // تم التحقق
-                }
-
-                this.Close();
             }
             catch (Exception ex)
-           {
+            {
                 MSG.ErrorMesg(ex.Message);
             }
         }

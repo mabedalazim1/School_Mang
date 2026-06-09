@@ -209,6 +209,7 @@ namespace School_Mang.PL.STD.Services
                 .WithOwner(MAIN.FRM_MAIN.Get_Frm_Main)
                 .SetContext(c =>
                 {
+                    c.CurrentYearData = _context.CurrentYearData;
                     c.StudentState.UpdateStdData = true;
                     c.StudentData = new StudentDTO
                     {
@@ -224,7 +225,6 @@ namespace School_Mang.PL.STD.Services
                         ClassId = Convert.ToInt32(row.Cells["Class_Id"].Value),
                         ReligionId = Convert.ToInt32(row.Cells["Religion_Id"].Value)
                     };
-                    //c.UpdateStdData = true;
                 }).Show(frm);
         }
 

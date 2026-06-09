@@ -121,9 +121,10 @@ namespace School_Mang.PL.STD
             txt_osra_id.Text = d.OsraId.ToString();
             txt_std_code.Text = d.StdCode;
             txt_std_name.Text = d.StudentFullName;
-
             txt_first_name.Text = d.StdName;
             txt_nat.Text = d.Nat;
+
+            status = d.StudentStatus;
 
             this.BeginInvoke(new Action(() =>
             {
@@ -135,6 +136,7 @@ namespace School_Mang.PL.STD
                 cmb_relgien.SelectedValue = d.ReligionId;
             }));
 
+            
         }
 
         private void MarkError(string message)
@@ -234,8 +236,9 @@ namespace School_Mang.PL.STD
 
             _transfer.SahbMalf(
                 txt_std_code.Text,
-                Properties.Settings.Default.year_cod + 1,
-                _context.CurrentYearData);
+                Properties.Settings.Default.year_cod,
+                _context.CurrentYearData,
+                status);
 
             return true;
         }
@@ -282,13 +285,61 @@ namespace School_Mang.PL.STD
             }));
         }
 
+        private StudentDTO LoadOsraData(int osraId)
+        {
+            DataTable dt = _osraData.Get_osra_Data_ById(osraId);
 
+            if (dt == null || dt.Rows.Count == 0)
+                throw new Exception("لا توجد بيانات");
+
+            var row = dt.Rows[0];
+            var info = _osraData.GetUpdateInfo(dt);
+
+            return new StudentDTO
+            {
+                FatherName = SafeConverter.GetString(row["father_name"]),
+                FatherLastName = SafeConverter.GetString(row["father_last_name"]),
+                FatherNat = SafeConverter.GetString(row["father_nat"]),
+                FatherHala = SafeConverter.GetInt(row["father_hala"]),
+                Address = SafeConverter.GetString(row["address"]),
+                FatherMoahel = SafeConverter.GetString(row["father_moahel"]),
+                FatherWazifa = SafeConverter.GetString(row["father_wazifa"]),
+                Tel = SafeConverter.GetString(row["tel"]),
+                FatherMobil_1 = SafeConverter.GetString(row["father_mobil_1"]),
+                FatherMobil_2 = SafeConverter.GetString(row["father_mobil_2"]),
+                MotherName = SafeConverter.GetString(row["mother_name"]),
+                MotherNat = SafeConverter.GetString(row["mother_nat"]),
+                MotherMoahel = SafeConverter.GetString(row["mother_moahel"]),
+                MotherWazifa = SafeConverter.GetString(row["mother_wazifa"]),
+                MotherHala = SafeConverter.GetInt(row["mother_hala"]),
+                MotherMbil_1 = SafeConverter.GetString(row["mother_mobil_1"]),
+                MotherMbil_2 = SafeConverter.GetString(row["mother_mobil_2"]),
+                Comments = SafeConverter.GetString(row["comments"]),
+                OsraId = SafeConverter.GetInt(row["Osraa_Id"]),
+                UpdatedBy = info.updatedBy,
+                UpdatedAt = info.updatedAt
+            };
+        }
+        private void OpenOsraForm(StudentDTO data)
+        {
+            var frm = FRM_OSRAA_DATA.Get_Osra_data;
+
+            AppNavigation.Instance
+                .WithOwner(MAIN.FRM_MAIN.Get_Frm_Main)
+                .SetContext(c =>
+                {
+                    c.StudentState.OpenFromGetStd = true;
+                    c.StudentData = data;
+                })
+                .Show(frm);
+        }
         private void btn_save_data_Click(object sender, EventArgs e)
         {
             Waiting.Start();
             try
             {
-                // If Hala = 3 Or 4 Or 7 محول من - محول إلى - محول أثناء العام
+                
+
                 if (!ValidateTransfer())
                     return;
 
@@ -317,7 +368,9 @@ namespace School_Mang.PL.STD
             }
             catch(Exception ex)
             {
+                cmb_hala.SelectedValue = status;
                 MSG.ErrorMesg(ex.Message);
+                MSG.ErrorMesg("تم إلغاء الإجراء.. !");
             }
             finally
             {
@@ -339,61 +392,21 @@ namespace School_Mang.PL.STD
 
         private void btn_show_data_Click(object sender, EventArgs e)
         {
-            DataTable dt;
-            dt = _osraData.Get_osra_Data_ById(Convert.ToInt32(txt_osra_id.Text));
+           
             try
             {
+                int osraId = SafeConverter.GetInt(txt_osra_id.Text);
+
+                var data = LoadOsraData(osraId);
+
                 this.Close();
-                // Add Data
-                var frm = FRM_OSRAA_DATA.Get_Osra_data;
-                var row = dt.Rows[0];
-                var info = _osraData.GetUpdateInfo(dt);
-                var data = new StudentDTO
-                {
-                    FatherName = SafeConverter.GetString(row["father_name"]),
-                    FatherLastName = SafeConverter.GetString(row["father_last_name"]),
-                    FatherNat=SafeConverter.GetString(row["father_nat"]),
-                    FatherHala = SafeConverter.GetInt(row["father_hala"]),
-                    Address = SafeConverter.GetString(row["address"]),
-                    FatherMoahel = SafeConverter.GetString(row["father_moahel"]),
-                    FatherWazifa = SafeConverter.GetString(row["father_wazifa"]),
-                    Tel = SafeConverter.GetString(row["tel"]),
-                    FatherMobil_1 = SafeConverter.GetString(row["father_mobil_1"]),
-                    FatherMobil_2 = SafeConverter.GetString(row["father_mobil_2"]),
-                    MotherName = SafeConverter.GetString(row["mother_name"]),
-                    MotherNat = SafeConverter.GetString(row["mother_nat"]),
-                    MotherMoahel = SafeConverter.GetString(row["mother_moahel"]),
-                    MotherWazifa = SafeConverter.GetString(row["mother_wazifa"]),
-                    MotherHala = SafeConverter.GetInt(row["mother_hala"]),
-                    MotherMbil_1 = SafeConverter.GetString(row["mother_mobil_1"]),
-                    MotherMbil_2 = SafeConverter.GetString(row["mother_mobil_2"]),
-                    Comments = SafeConverter.GetString(row["comments"]),
-                    OsraId = SafeConverter.GetInt(row["Osraa_Id"]),
-                    UpdatedBy = info.updatedBy,
-                    UpdatedAt = info.updatedAt
-                };
 
-               // function.Get_Update_Name_For_OSRAA_DATA(Dt);
-
-
-                AppNavigation.Instance
-                    .WithOwner(MAIN.FRM_MAIN.Get_Frm_Main)
-                    .SetContext(c =>
-                    {
-                        c.StudentState.OpenFromGetStd = true;
-                        c.StudentData = data;
-
-                    }).Show(frm);
+                OpenOsraForm(data);
             }
             catch(Exception ex)
             {
                 MSG.ErrorMesg(ex.Message);
             }
-        }
-
-        private void txt_naat_KeyPress(object sender, KeyPressEventArgs e)
-        {
-
         }
 
         private void txt_nat_KeyPress(object sender, KeyPressEventArgs e)
@@ -492,11 +505,6 @@ namespace School_Mang.PL.STD
             }
         }
 
-        private void FRM_UPDATE_SCHOOL_STD_Activated(object sender, EventArgs e)
-        {
-            status = Convert.ToInt32(cmb_hala.SelectedValue);
-        }
-
         private void FRM_UPDATE_SCHOOL_STD_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
@@ -504,5 +512,6 @@ namespace School_Mang.PL.STD
                 btn_close_b_Click(sender, e);
             }
         }
+        
     }
 }

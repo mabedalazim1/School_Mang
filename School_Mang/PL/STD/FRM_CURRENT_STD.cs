@@ -103,6 +103,9 @@ namespace School_Mang.PL.STD
         // Get School Year Data
         public void Get_School_Year_Data()
         {
+            if (_context == null)
+                return;
+
             try
             {
                 Waiting.Start();

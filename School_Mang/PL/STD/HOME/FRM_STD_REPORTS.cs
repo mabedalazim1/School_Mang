@@ -140,7 +140,7 @@ namespace School_Mang.PL.STD.HOME
 
         private void lbl_transfer_to_Click(object sender, EventArgs e)
         {
-            Open_Report("محولون إلى المدرسة", ReportDataType.OpenTransferFrom);
+            Open_Report("محولون إلى المدرسة", ReportDataType.OpenTransferTo);
         }
 
         private void pic_transfer_from_Click(object sender, EventArgs e)

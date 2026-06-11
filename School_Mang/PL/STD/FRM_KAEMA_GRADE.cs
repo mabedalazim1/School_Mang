@@ -165,12 +165,12 @@ namespace School_Mang.PL.STD
 
                     case ReportDataType.OpenTransferFrom:
 
-                        result = _reportService.PrintTransfer(year_id -1 , grade,3,7);
+                        result = _reportService.PrintTransfer(year_id - 1  , grade,3,7);
                         break;
 
                     case ReportDataType.OpenTransferTo:
 
-                        result = _reportService.PrintTransfer(year_id - 1,grade, 4);
+                        result = _reportService.PrintTransfer(year_id ,grade, 4);
                         break;
                 }
                 if (!result.Success)
@@ -226,13 +226,13 @@ namespace School_Mang.PL.STD
                     case ReportDataType.OpenTransferFrom:
 
                         if (MSG.DialogeErrMsg("سوف يتم عرض بيانات جميع الطلاب .. هل تريد المتابعة ؟ ") != DialogResult.Yes) return;
-                        result = _reportService.PrintTransfer(year_id - 1,0, 3,7);
+                        result = _reportService.PrintTransfer(year_id -1, 0, 3,7);
                         break;
 
                     case ReportDataType.OpenTransferTo:
 
                         if (MSG.DialogeErrMsg("سوف يتم عرض بيانات جميع الطلاب .. هل تريد المتابعة ؟ ") != DialogResult.Yes) return;
-                        result = _reportService.PrintTransfer(year_id - 1,0, 4);
+                        result = _reportService.PrintTransfer(year_id ,0, 4);
                         break;
                 }
 

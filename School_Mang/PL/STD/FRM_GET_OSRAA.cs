@@ -7,6 +7,7 @@ using School_Mang.BL.Services;
 using School_Mang.BL.Services.STD;
 using System;
 using System.Data;
+using System.Text;
 using System.Windows.Forms;
 
 namespace School_Mang.PL.STD
@@ -16,7 +17,7 @@ namespace School_Mang.PL.STD
 
         private NavigationContext _context => AppNavigation.Instance.GetContext();
         private readonly OsraDataService _osraData = new OsraDataService();
-
+        private bool _isDoubleClickBusy;
         public void OnNavigatedTo()
         {
             var ctx = AppNavigation.Instance.GetContext();
@@ -438,22 +439,41 @@ namespace School_Mang.PL.STD
 
         private void dt_osra_data_DoubleClick(object sender, EventArgs e)
         {
-            if (permission_id == 3)
-            {
-                EditOsra();
-                return;
-            }
+            if (_isDoubleClickBusy) return;
 
-            if (_context.OsraState.AddOsraDataToStudent == true ||
-                _context.StudentState.OpenFromAddstudent == true)
+            Waiting.Start();
+            try
             {
-                GetData();
-            }
-            else
-            {
-                EditOsra();
-            }
+                _isDoubleClickBusy = true;
+                dt_osra_data.Enabled = false;
 
+                if (permission_id == 3)
+                {
+                    EditOsra();
+                    return;
+                }
+
+                if (_context.OsraState.AddOsraDataToStudent == true ||
+                    _context.StudentState.OpenFromAddstudent == true)
+                {
+                    GetData();
+                }
+                else
+                {
+                    EditOsra();
+                }
+            }
+            catch (Exception ex)
+            {
+                MSG.ErrorMesg(ex.Message);
+            }
+            finally
+            {
+                _isDoubleClickBusy  = false;
+                dt_osra_data.Enabled = true;
+                Waiting.Stop();
+            }
+                   
         }
     }
 }

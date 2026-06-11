@@ -11,6 +11,7 @@ using School_Mang.PL.STD.Mappers;
 using School_Mang.PL.STD.Services;
 using System;
 using System.Data;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace School_Mang.PL.STD
@@ -29,8 +30,10 @@ namespace School_Mang.PL.STD
             EnsureService();
 
             _service.ApplyContext();
+            LoadInitialData();
         }
 
+        
         private void EnsureService()
         {
             if (_service != null) return;
@@ -42,6 +45,14 @@ namespace School_Mang.PL.STD
             );
         }
 
+        private int _loadingDepth = 0;
+
+        private bool IsLoading => _loadingDepth > 0;
+
+        private void BeginLoad() => _loadingDepth++;
+        private void EndLoad() => _loadingDepth--;
+
+        private bool _isDoubleClickBusy; 
 
         int year_cod = Properties.Settings.Default.year_cod;
         int permission_id = Properties.Settings.Default.permission_id;
@@ -101,11 +112,16 @@ namespace School_Mang.PL.STD
         #region My Voids
 
         // Get School Year Data
+        private void LoadInitialData()
+        {
+            Get_Class_Data(1);
+            Get_School_Year_Data();
+        }
+
         public void Get_School_Year_Data()
         {
             if (_context == null)
                 return;
-
             try
             {
                 Waiting.Start();
@@ -177,6 +193,8 @@ namespace School_Mang.PL.STD
         // Get Class Data
         public void Get_Class_Data(int gradeId, int classId = 0)
         {
+            BeginLoad();
+
             Waiting.Start();
 
             try
@@ -193,41 +211,45 @@ namespace School_Mang.PL.STD
             finally
             {
                 Waiting.Stop();
+                EndLoad();
             }
         }
         // Get Classes
         private void LoadGradeClasses(int gradeId)
         {
-            var dt = studentService.GetGradeData(gradeId);
+                var dt = studentService.GetGradeData(gradeId);
 
-            DataRow dr = dt.NewRow();
-            dr["Class_Desc"] = "الكل";
-            dr["Class_Id"] = 0;
-            dt.Rows.InsertAt(dr, 0);
+                DataRow dr = dt.NewRow();
+                dr["Class_Desc"] = "الكل";
+                dr["Class_Id"] = 0;
+                dt.Rows.InsertAt(dr, 0);
 
-            cmb_class.DataSource = dt;
-            cmb_class.DisplayMember = "Class_Desc";
-            cmb_class.ValueMember = "Class_Id";
+                cmb_class.DataSource = dt;
+                cmb_class.DisplayMember = "Class_Desc";
+                cmb_class.ValueMember = "Class_Id";
         }
 
         // Get Students
         private void LoadStudents(int gradeId, int classId)
         {
+
             int year = SchoolDateHelper.GetCurrentYear(year_cod, _context);
             var dt = studentService.GetStudentsByYear(year, gradeId, classId);
 
             dt_std_data.DataSource = dt;
             lbl_count.Text = dt.Rows.Count.ToString();
+
         }
 
         // Verify Stdunet Status 
 
 
-        
+
         private void LoadClases()
         {
             if (cmb_grade.SelectedIndex < 0 || cmb_class.SelectedIndex < 0)
                 return;
+            BeginLoad();
 
             Waiting.Start();
             try
@@ -250,6 +272,7 @@ namespace School_Mang.PL.STD
             finally
             {
                 Waiting.Stop();
+                EndLoad();
             }
         }
 
@@ -283,6 +306,7 @@ namespace School_Mang.PL.STD
 
         public void ChangeSelectedData()
         {
+            if (IsLoading) return;
 
             Get_Class_Data(SafeConverter.GetInt(cmb_grade.SelectedValue));
             txt_std_data.Text = "";
@@ -342,13 +366,14 @@ namespace School_Mang.PL.STD
 
         private void cmb_class_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (IsLoading) return;
+
             LoadClases();
 
         }
 
         private void FRM_CURRENT_STD_Load(object sender, EventArgs e)
         {
-
             if (_context.StudentCase.IsDegreeStatement())
             {
                 btn_talab_elthak.Visible = false;
@@ -421,20 +446,38 @@ namespace School_Mang.PL.STD
 
         private void dt_std_data_DoubleClick(object sender, EventArgs e)
         {
-            if (_context.StudentCase.IsElthak() == true
-                || _context.StudentCase.IsNextYearElthak() == true)
-            {
-                btn_talab_elthak_Click(sender, e);
-            }
-            else
-            {
-                if (permission_id == 3)
-                {
-                    return;
-                }
-                btn_new_std_Click(sender, e);
-            }
+            if (_isDoubleClickBusy) return;
+            Waiting.Stop();
 
+            try
+            {
+                _isDoubleClickBusy = true;
+                dt_std_data.Enabled = false;
+
+                if (_context.StudentCase.IsElthak() == true
+                || _context.StudentCase.IsNextYearElthak() == true)
+                {
+                    btn_talab_elthak_Click(sender, e);
+                }
+                else
+                {
+                    if (permission_id == 3)
+                    {
+                        return;
+                    }
+                    btn_new_std_Click(sender, e);
+                }
+            }
+            catch (Exception ex)
+            {
+                MSG.ErrorMesg(ex.Message);
+            }
+            finally
+            {
+                dt_std_data.Enabled = true;
+                _isDoubleClickBusy = false;
+                Waiting.Stop();
+            }
         }
 
         private void btn_del_std_Click(object sender, EventArgs e)

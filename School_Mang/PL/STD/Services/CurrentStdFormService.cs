@@ -34,12 +34,16 @@ namespace School_Mang.PL.STD.Services
             _permissionId = permissionId;
         }
 
+        private bool _isApplyingContext;
         public void ApplyContext()
         {
+            if (_isApplyingContext) return;
+
             try
             {
+                _isApplyingContext = true;
+
                 LoadGrades();
-                LoadInitialData();
                 ApplyStudentCaseRules();
                 ApplyYearRules();
                 ApplyPermissions();
@@ -47,6 +51,10 @@ namespace School_Mang.PL.STD.Services
             catch (Exception ex)
             {
                 MSG.ErrorMesg(ex.Message);
+            }
+            finally
+            {
+                _isApplyingContext = false;
             }
         }
 
@@ -63,12 +71,6 @@ namespace School_Mang.PL.STD.Services
             _form.cmb_grade.DataSource = grade_dt;
             _form.cmb_grade.DisplayMember = "GradeDesc";
             _form.cmb_grade.ValueMember = "Grade_Id";
-        }
-
-        private void LoadInitialData()
-        {
-            _form.Get_Class_Data(1);
-            _form.Get_School_Year_Data();
         }
 
         private void ApplyStudentCaseRules()

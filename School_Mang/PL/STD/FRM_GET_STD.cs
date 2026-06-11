@@ -19,6 +19,7 @@ namespace School_Mang.PL.STD
 
         private NavigationContext _context;
         private readonly StudentDataService studentData = new StudentDataService();
+        private bool _isDoubleClickBusy;
         public void SetNavigation(NavigationContext context)
         {
             _context = context;
@@ -464,13 +465,30 @@ namespace School_Mang.PL.STD
 
         private void dt_std_data_DoubleClick(object sender, EventArgs e)
         {
-            if (_context?.StudentCase.Has(GetStudentCase.ElthakStd) == true)
+            Waiting.Start();
+            try
             {
-                GetEltehakSdtudent();
-                return;
-            }
+                _isDoubleClickBusy = true;
+                dt_std_data.Enabled = false;
 
-            EditStudent();
+                if (_context?.StudentCase.Has(GetStudentCase.ElthakStd) == true)
+                {
+                    GetEltehakSdtudent();
+                    return;
+                }
+
+                EditStudent();
+            }
+            catch(Exception ex) 
+            {
+                MSG.ErrorMesg(ex.Message);
+            }
+            finally
+            {
+                _isDoubleClickBusy = false;
+                dt_std_data.Enabled = true;
+                Waiting.Stop();
+            }
         }
 
         private void btn_del_std_Click(object sender, EventArgs e)

@@ -24,6 +24,8 @@ namespace School_Mang.PL.STD
         private bool _isFormReady = false;
         private bool _isClosing = false;
         private bool _loading = false;
+        private bool _natProcessing = false;
+
         public void SetNavigation(NavigationContext context)
         {
             _context = context ?? new NavigationContext();
@@ -500,13 +502,17 @@ namespace School_Mang.PL.STD
             if (!int.TryParse(text.Split('-')[0], out year))
                 return false;
 
-            year = year - 1;
+
             return true;
         }
 
         private void LeaveTextNat()
         {
+            if (_natProcessing) return;
+            _natProcessing = true;
+
             if (_isClosing) return;
+
             ResetFieldColors();
 
             if (string.IsNullOrWhiteSpace(txt_nat.Text))
@@ -532,6 +538,10 @@ namespace School_Mang.PL.STD
                 txt_nat.BackColor = Color.MistyRose;
                 txt_nat.Focus();
                 MSG.ErrorMesg(ex.Message);
+            }
+            finally
+            {
+                _natProcessing = false;
             }
 
         }

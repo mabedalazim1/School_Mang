@@ -12,12 +12,10 @@ namespace School_Mang.PL.STD
 {
     public partial class FRM_TAHWELAT : Form
     {
-        BL.STD.CLS_STD std = new BL.STD.CLS_STD();
 
         private readonly TransferService _transferService = new TransferService();
         private readonly GetDataService _getData = new GetDataService();
         private readonly LookupService _stdData = new LookupService();
-
 
         private byte test_year = 0;
 
@@ -92,7 +90,7 @@ namespace School_Mang.PL.STD
         private void LoadTransfers()
         {
             // Get Trans  Data
-            dt_std_data.DataSource = std.GET_Trans_Data(0, 3, 7);
+            dt_std_data.DataSource = _transferService.GET_Trans_Data(0, 3, 7);
             HideGridColumns();
         }
         private void HideGridColumns()
@@ -131,7 +129,7 @@ namespace School_Mang.PL.STD
         }
 
         // Verify Stdunet Status 
-        private Boolean Verify_Std()
+        private bool Verify_Std()
         {
             if (dt_std_data.SelectedRows.Count == 0)
             {
@@ -208,16 +206,16 @@ namespace School_Mang.PL.STD
 
         public void ChangSelectedData()
         {
-            int gradeId = Convert.ToInt32(cmb_grade.SelectedValue);
+            int gradeId = SafeConverter.GetInt(cmb_grade.SelectedValue);
 
             if (cmb_status.SelectedIndex == 0)
             {
-                dt_std_data.DataSource = std.GET_Trans_Data(gradeId, 3, 7);
+                dt_std_data.DataSource = _transferService.GET_Trans_Data(gradeId, 3, 7);
             }
             else
             {
 
-                dt_std_data.DataSource = std.GET_Trans_Data(gradeId, 4);
+                dt_std_data.DataSource = _transferService.GET_Trans_Data(gradeId, 4);
             }
 
             lbl_count.Text = dt_std_data.Rows.Count.ToString();
@@ -273,8 +271,8 @@ namespace School_Mang.PL.STD
         {
             try
             {
-                var grade = Convert.ToInt32(cmb_grade.SelectedValue);
-                var status = Convert.ToInt32(cmb_status.SelectedIndex + 3);
+                var grade = SafeConverter.GetInt(cmb_grade.SelectedValue);
+                var status = SafeConverter.GetInt(cmb_status.SelectedIndex + 3);
                 var text = txt_std_data.Text;
                 var dt = _transferService.SearchTransferData(grade, status, text);
 
@@ -301,8 +299,8 @@ namespace School_Mang.PL.STD
                 ToSchool = row.Cells["Transfer_School"].Value.ToString(),
                 Resom = Convert.ToByte(row.Cells["Resom"].Value),
                 Kotob = Convert.ToByte(row.Cells["Kotob"].Value),
-                StatusId = Convert.ToInt32(row.Cells["Std_Status_Id"].Value),
-                GradeId = Convert.ToInt32(row.Cells["Grade_Id"].Value)
+                StatusId = SafeConverter.GetInt(row.Cells["Std_Status_Id"].Value),
+                GradeId = SafeConverter.GetInt(row.Cells["Grade_Id"].Value)
             };
         }
         private void btn_new_std_Click(object sender, EventArgs e)
@@ -311,7 +309,7 @@ namespace School_Mang.PL.STD
 
             var row = dt_std_data.CurrentRow;
             var data = MapRowToTransfer(row);
-            var frm = FRM_TAHEEL_STD.Get_Tahweel_Std;
+            var frm = FRM_TAHWEL_STD.Get_Tahweel_Std;
             
             AppNavigation.Instance
                 .SetContext(c =>
@@ -331,12 +329,12 @@ namespace School_Mang.PL.STD
                 StdCode = row.Cells["std_code"].Value.ToString(),
                 StdName = stdName,
                 ClassId = SafeConverter.GetInt(row.Cells["Class_Id"].Value),
-                GradeId = Convert.ToInt32(row.Cells["Grade_Id"].Value),
+                GradeId = SafeConverter.GetInt(row.Cells["Grade_Id"].Value),
                 Year = Properties.Settings.Default.year_cod,
-                TransferCode = Convert.ToInt32(row.Cells["Transfer_code"].Value),
-                CurrentYear = Convert.ToInt32(row.Cells["Year_Id"].Value),
+                TransferCode = SafeConverter.GetInt(row.Cells["Transfer_code"].Value),
+                CurrentYear = SafeConverter.GetInt(row.Cells["Year_Id"].Value),
                 TransAfterYear = Convert.ToBoolean(row.Cells["Trans_After_Year"].Value),
-                StatusId = Convert.ToInt32(row.Cells["Std_Status_Id"].Value)
+                StatusId = SafeConverter.GetInt(row.Cells["Std_Status_Id"].Value)
             };
         }
         private void btn_del_std_Click(object sender, EventArgs e)
@@ -378,11 +376,11 @@ namespace School_Mang.PL.STD
             // Get Trans Data
             var row = dt_std_data.CurrentRow;
 
-            int grade = Convert.ToInt32(row.Cells["Grade_Id"].Value);
-            int Std_Status_Id = Convert.ToInt32(row.Cells["Std_Status_Id"].Value);
+            int grade = SafeConverter.GetInt(row.Cells["Grade_Id"].Value);
+            int Std_Status_Id = SafeConverter.GetInt(row.Cells["Std_Status_Id"].Value);
             string trans_code = row.Cells["Transfer_code"].Value.ToString();
             string std_name = row.Cells["اسم الطالب"].Value.ToString();
-            int sana = (Convert.ToInt32(row.Cells["Year_Id"].Value)) + 2021;
+            int sana = (SafeConverter.GetInt(row.Cells["Year_Id"].Value)) + 2021;
             string year_data;
             string grade_desc = "";
             bool Trans_After_Year = Convert.ToBoolean(row.Cells["Trans_After_Year"].Value);
@@ -412,16 +410,16 @@ namespace School_Mang.PL.STD
             string year_desc = year[1] + "-" + year[0];
 
             // Open Report
-            RPT.REPORT_CONNECTION RPT = new RPT.REPORT_CONNECTION();
+            RPT.REPORT_CONNECTION _rpt = new RPT.REPORT_CONNECTION();
             try
             {
                 if (Std_Status_Id == 3 || Std_Status_Id == 7)
                 {
-                    RPT.OpenTahwel_From_Report(trans_code, std_name, year_desc, grade_desc);
+                    _rpt.OpenTahwel_From_Report(trans_code, std_name, year_desc, grade_desc);
                 }
                 else
                 {
-                    RPT.OpenTahwel_To_Report(trans_code, std_name, year_desc);
+                    _rpt.OpenTahwel_To_Report(trans_code, std_name, year_desc);
                 }
             }
             catch (Exception ex)

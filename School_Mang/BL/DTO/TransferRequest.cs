@@ -64,7 +64,6 @@ namespace School_Mang.BL.DTO
     }
     public class TransferReportData
     {
-        public string StudentName { get; set; }
 
         public string TransferCode { get; set; }
 
@@ -75,5 +74,16 @@ namespace School_Mang.BL.DTO
         public string GradeDesc { get; set; }
 
         public byte TransferSavedStatus { get; set; }
+
+    }
+    public class EnrollmentReportData
+    {
+        public string StdCode { get; set; }
+
+        public string StdName { get; set; }
+
+        public string StdNat { get; set; }
+
+        public int Year { get; set; }
     }
 }

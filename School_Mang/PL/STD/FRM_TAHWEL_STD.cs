@@ -1,10 +1,11 @@
 ﻿using School_Mang.BL;
-using School_Mang.BL.Common;
+using School_Mang.BL.Common.Helper;
 using School_Mang.BL.DTO;
 using School_Mang.BL.Enums;
 using School_Mang.BL.Extensions;
 using School_Mang.BL.Models;
 using School_Mang.BL.Services;
+using School_Mang.BL.Services.Reports;
 using School_Mang.BL.Services.STD;
 using System;
 using System.Drawing;
@@ -12,7 +13,7 @@ using System.Windows.Forms;
 
 namespace School_Mang.PL.STD
 {
-    public partial class FRM_TAHEEL_STD : Form, INavigationAware
+    public partial class FRM_TAHWEL_STD : Form, INavigationAware
     {
 
         private NavigationContext _context;
@@ -23,13 +24,11 @@ namespace School_Mang.PL.STD
             ApplyContext();
         }
 
-        BL.STD.CLS_STD std = new BL.STD.CLS_STD();
-        private readonly TransferData _transferData = new TransferData();
         private readonly TransferService _transferService = new TransferService();
         private readonly StudentSaveService _saveService = new StudentSaveService();
         private readonly ClassService _classService = new ClassService();
 
-        RPT.REPORT_CONNECTION RPT = new RPT.REPORT_CONNECTION();
+        RPT.REPORT_CONNECTION _rpt = new RPT.REPORT_CONNECTION();
         public int transfer_status;
         public int grade = 0;
         public int studentStatus = 0;
@@ -43,26 +42,26 @@ namespace School_Mang.PL.STD
         int permission_id = Properties.Settings.Default.permission_id;
 
         // Form Closed
-        private static FRM_TAHEEL_STD frm_Tahweel_Std;
+        private static FRM_TAHWEL_STD frm_Tahweel_Std;
 
         static void frm_Form_Closed(object sender, FormClosedEventArgs e)
         {
             frm_Tahweel_Std = null;
         }
-        public static FRM_TAHEEL_STD Get_Tahweel_Std
+        public static FRM_TAHWEL_STD Get_Tahweel_Std
         {
             get
             {
                 if (frm_Tahweel_Std == null)
                 {
-                    frm_Tahweel_Std = new FRM_TAHEEL_STD();
+                    frm_Tahweel_Std = new FRM_TAHWEL_STD();
                     frm_Tahweel_Std.FormClosed += new FormClosedEventHandler(frm_Form_Closed);
                 }
                 return frm_Tahweel_Std;
             }
         }
 
-        public FRM_TAHEEL_STD()
+        public FRM_TAHWEL_STD()
         {
             InitializeComponent();
 
@@ -122,24 +121,6 @@ namespace School_Mang.PL.STD
             txt_transfer_reason.Text = d.TransferReason;
         }
 
-        private bool Cheack_Tarns_Data()
-        {
-            var stdCode = txt_std_code.Text;
-            var data = _transferService.GetTransferData(stdCode);
-
-            if (data != null)
-            {
-                txt_trans_code.Text = data.TransferCode;
-                txt_grade.Text = data.GradeId.ToString();
-                txt_year.Text = data.YearId.ToString();
-                transfer_saved_status = data.TransferSavedStatus;
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
         private bool Cheack_Data(TextBox txt)
         {
             if (txt.Text == "")
@@ -180,7 +161,7 @@ namespace School_Mang.PL.STD
 
         }
 
-        #endregion
+
 
         private void ApplyContext()
         {
@@ -201,6 +182,124 @@ namespace School_Mang.PL.STD
 
             chk_after.Checked = true;
         }
+
+        private bool ChaeKInputs()
+        {
+            if (!Cheack_Data(txt_to_school)) return false;
+            if (!Cheack_Data(txt_adrs)) return false;
+            if (!Cheack_Data(txt_guardian_name)) return false;
+            if (!Cheack_Data(txt_transfer_reason)) return false;
+            return true;
+        }
+
+        private TransferRequest BuildTransferRequest()
+        {
+            TransferRequest req = new TransferRequest{
+                 
+                        StdCode = txt_std_code.Text,
+                        ToSchool = txt_to_school.Text,
+                        GuardianName = txt_guardian_name.Text,
+                        Reason = txt_transfer_reason.Text,
+                        Address = txt_adrs.Text,
+                        Grade = grade,
+                        Year = Properties.Settings.Default.year_cod,
+                        TransferStatus = transfer_status,
+                        Rosom = rosom,
+                        Kotob = kotob,
+                        IsBeforeChecked = chk_before.Checked,
+                        IsAfterChecked = chk_after.Checked,
+                        IsUpdate = _context?.StudentCase.Has(GetStudentCase.UpdateTaheewl) == true,
+                        IsSchoolTransfer = _context?.StudentCase.Has(GetStudentCase.TaheewlToSchool) == true,
+                        CurrentYearData = _context?.CurrentYearData == true,
+                        IsValidStudent = true
+                    }; 
+            return req;
+        }
+        private TransferRequest UpdateRequest()
+        {
+            var request = new TransferRequest
+            {
+                TransCode = SafeConverter.GetInt(txt_trans_code.Text),
+                ToSchool = txt_to_school.Text,
+                GuardianName = txt_guardian_name.Text,
+                Reason = txt_transfer_reason.Text,
+                Rosom = rosom,
+                Kotob = kotob,
+                Address = txt_adrs.Text
+            };
+            return request;
+        }
+
+        private bool IsUpdateMode()
+        {
+            return _context?.StudentCase.Has(GetStudentCase.UpdateTaheewl) == true;
+        }
+
+        private void SaveNewTransfer()
+        {
+            if (!ValidateStudentRegistration())
+                return;
+
+            if (_context?.StudentCase.Has(GetStudentCase.TaheewlToSchool) == true)
+            {
+                AddNewStudent(_context.StudentData);
+            }
+
+            var request = BuildTransferRequest();
+
+            _transferService.CreateTransfer(request);
+
+            var frm = FRM_CURRENT_STD.Get_Current_Std;
+            frm.txt_std_data.Text = "";
+            frm.Get_School_Year_Data();
+
+            var frmNewStd = FRM_GET_STD.Get_Student;
+            frmNewStd.SearchStudents();
+
+            MSG.MyMesg("تم حفظ طلب التحويل بنجاح .. !");
+        }
+
+        private void UpdateTransfer()
+        {
+            rosom = chk_resom_no.Checked ? (byte)0 : (byte)1;
+            kotob = chk_kotob_no.Checked ? (byte)0 : (byte)1;
+
+            var updateRequest = UpdateRequest();
+
+            _transferService.UpdateTransfer(updateRequest);
+
+            MSG.MyMesg("تم تعديل طلب التحويل بنجاح .. !");
+        }
+
+        private void RefreshForms()
+        {
+            FRM_TAHWELAT.Get_Frm_Tahwelat.ChangSelectedData();
+        }
+
+        private bool ValidateStudentRegistration()
+        {
+            if (_context?.StudentCase.Has(GetStudentCase.TaheewlToSchool) == true)
+                return true;
+
+            int year = Properties.Settings.Default.year_cod;
+
+            if (_transferService.IsStudentRegistered(txt_std_code.Text, year + 1))
+                return true;
+
+            if (chk_after.Checked)
+            {
+                MSG.ErrorMesg(
+                    "لا يمكن تحويل الطالب .. غير مقيد بالعام الجديد .. يمكنك تغيير العام ثم تحويل الطالب ... !");
+                return false;
+            }
+
+            return MSG.DialogeErrMsg(
+                "سوف يتم تحويل من المدرسة عن العام السابق .. هل تريد المتابعة ؟ ")
+                == DialogResult.Yes;
+        }
+        #endregion
+
+
         int move;
         int move_x;
         int move_y;
@@ -297,152 +396,33 @@ namespace School_Mang.PL.STD
         {
             Waiting.Start();
 
-            // Check Entry Data
-            if (!Cheack_Data(txt_to_school)) return;
-            if (!Cheack_Data(txt_adrs)) return;
-            if (!Cheack_Data(txt_guardian_name)) return;
-            if (!Cheack_Data(txt_transfer_reason)) return;
+            if (!ChaeKInputs())
+                return;
 
-            //  New Trans Data  New Student
-            if (_context?.StudentCase.Has(GetStudentCase.UpdateTaheewl) != true)
+            try
             {
-
-                int year = Properties.Settings.Default.year_cod;
-                if (_context?.StudentCase.Has(GetStudentCase.TaheewlToSchool) != true)
+                if (IsUpdateMode())
                 {
-                    // Cheak If Student Has Data On Next Year Or Not 
-                    if (!_transferService.IsStudentRegistered(txt_std_code.Text, year + 1))
-                    {
-                        if (chk_after.Checked)
-                        {
-                            MSG.ErrorMesg("لا يمكن تحويل الطالب .. غير مقيد بالعام الجديد .. يمكنك تغيير العام ثم تحويل الطالب ... !");
-                            Waiting.Stop();
-                            return;
-                        }
-                        else
-                        {
-                            if (MSG.DialogeErrMsg("سوف يتم تحويل من المدرسة عن العام السابق .. هل تريد المتابعة ؟ ") != DialogResult.Yes)
-                            {
-                                Waiting.Stop();
-                                return;
-                            }
-                        }
-                    }
+                    UpdateTransfer();
+                }
+                else
+                {
+                    SaveNewTransfer();
                 }
 
-                // If Transfer To School
-                if (_context?.StudentCase.Has(GetStudentCase.TaheewlToSchool) == true)
-                {
-                    // Save TaheewlToSchool Not Etehak
-                    AddNewStudent(_context.StudentData);
-                }
-                try
-                {
-                    // If Trans on Current Year After School Begin
-                    var request = new TransferRequest
-                    {
-                        StdCode = txt_std_code.Text,
-                        ToSchool = txt_to_school.Text,
-                        GuardianName = txt_guardian_name.Text,
-                        Reason = txt_transfer_reason.Text,
-                        Address = txt_adrs.Text,
-                        Grade = grade,
-                        Year = Properties.Settings.Default.year_cod,
-                        TransferStatus = transfer_status,
-                        Rosom = rosom,
-                        Kotob = kotob,
-                        IsBeforeChecked = chk_before.Checked,
-                        IsAfterChecked = chk_after.Checked,
-                        IsUpdate = _context?.StudentCase.Has(GetStudentCase.UpdateTaheewl) == true,
-                        IsSchoolTransfer = _context?.StudentCase.Has(GetStudentCase.TaheewlToSchool) == true,
-                        CurrentYearData = _context?.CurrentYearData == true,
-                        IsValidStudent = true
-                    };
+                RefreshForms();
 
-
-                    _transferService.CreateTransfer(request);
-
-                    // Update Current Std Data
-                    var frm = FRM_CURRENT_STD.Get_Current_Std;
-                    frm.txt_std_data.Text = "";
-                    frm.Get_School_Year_Data();
-
-                    var frmNewStd = FRM_GET_STD.Get_Student;
-                    frmNewStd.SearchStudents();
-
-                    MSG.MyMesg("تم حفظ طلب التحويل بنجاح .. !");
-                }
-                catch (Exception ex)
-                {
-                    MSG.ErrorMesg(ex.Message);
-                }
-                finally
-                {
-                    Waiting.Stop();
-                }
+                save_data = 1;
+                btn_new_std.Enabled = false;
             }
-
-            // If Update Current Trans Data
-            else
+            catch (Exception ex)
             {
-                try
-                {// Update Transfers Data
-                    if (chk_resom_no.Checked)
-                    {
-                        rosom = 0;
-                    }
-                    else
-                    {
-                        rosom = 1;
-                    }
-
-                    if (chk_kotob_no.Checked)
-                    {
-                        kotob = 0;
-                    }
-                    else
-                    {
-                        kotob = 1;
-                    }
-
-                    var request = new TransferRequest
-                    {
-                        TransCode = Convert.ToInt32(txt_trans_code.Text),
-                        ToSchool = txt_to_school.Text,
-                        GuardianName = txt_guardian_name.Text,
-                        Reason = txt_transfer_reason.Text,
-                        Rosom = rosom,
-                        Kotob = kotob,
-                        Address = txt_adrs.Text
-                    };
-
-                    _transferService.UpdateTransfer(request);
-
-                    // Update Current Std Data
-                    FRM_TAHWELAT.Get_Frm_Tahwelat.ChangSelectedData();
-                    MSG.MyMesg("تم تعديل طلب التحويل بنجاح .. !");
-
-
-
-                }
-                catch (Exception ex)
-                {
-                    MSG.ErrorMesg(ex.Message);
-
-                }
-                finally
-                {
-                    Waiting.Stop();
-                }
+                MSG.ErrorMesg(ex.Message);
             }
-            // Update Current Std Data
-
-            FRM_TAHWELAT.Get_Frm_Tahwelat.ChangSelectedData();
-
-            // Data is Saved
-            save_data = 1;
-            btn_new_std.Enabled = false;
-
+            finally
+            {
+                Waiting.Stop();
+            }
         }
 
         private void txt_to_school_KeyPress(object sender, KeyPressEventArgs e)
@@ -575,11 +555,10 @@ namespace School_Mang.PL.STD
         }
 
         private void btn_edit_std_Click(object sender, EventArgs e)
-        {
+        { 
+            Waiting.Start();
             try
             {
-                Waiting.Start();
-
                 TransferData transferData = null;
 
                 // لو تحويل إلى مدرسة
@@ -608,7 +587,7 @@ namespace School_Mang.PL.STD
 
                 if (reportData.TransferSavedStatus == 3 || reportData.TransferSavedStatus == 7)
                 {
-                    RPT.OpenTahwel_From_Report(
+                    _rpt.OpenTahwel_From_Report(
                         reportData.TransferCode,
                         txt_std_name.Text,
                         reportData.FromSchoolYearDesc,
@@ -616,7 +595,7 @@ namespace School_Mang.PL.STD
                 }
                 else
                 {
-                    RPT.OpenTahwel_To_Report(
+                    _rpt.OpenTahwel_To_Report(
                         reportData.TransferCode,
                         txt_std_name.Text,
                         reportData.ToSchoolYearDesc);

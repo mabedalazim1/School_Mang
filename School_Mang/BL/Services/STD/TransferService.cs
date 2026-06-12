@@ -1,30 +1,32 @@
-﻿using School_Mang.BL.DTO;
+﻿using School_Mang.BL.Common.Helper;
+using School_Mang.BL.DTO;
 using School_Mang.BL.Models;
+using School_Mang.DAL;
 using System;
 using System.Data;
-using School_Mang.BL.Common;
+using System.Linq;
 
 namespace School_Mang.BL.Services.STD
 {
     public class TransferService
     {
-        private readonly BL.STD.CLS_STD _std;
+        private readonly DataAcceseLayer _dal;
         private readonly StudentService _studentService;
         private readonly GetDataService _getData;
         public TransferService()
         {
-            _std = new BL.STD.CLS_STD();
+            _dal = new DataAcceseLayer();
             _studentService = new StudentService();
             _getData = new GetDataService();
         }
         public DataTable SearchTransferData(int gradeId, int statusId, string searchText)
         {
-            return _std.Search_Trans_Data(gradeId, statusId, searchText);
+            return Search_Trans_Data(gradeId, statusId, searchText);
         }
         public bool HasTransfers()
         {
-            var current = _std.GET_Trans_Data(0, 3, 7);
-            var next = _std.GET_Trans_Data(0, 4);
+            var current = GET_Trans_Data(0, 3, 7);
+            var next = GET_Trans_Data(0, 4);
 
             return current.Rows.Count > 0 || next.Rows.Count > 0;
         }
@@ -34,12 +36,12 @@ namespace School_Mang.BL.Services.STD
             byte transferSavedStatus = 0;
             DataTable dt;
             DataTable dtTransData;
-            dt = _std.GET_Trans_By_Code(stdCode);
+            dt = GET_Trans_By_Code(stdCode);
             if (dt.Rows.Count != 0)
             {
                 var row = dt.Rows[0];
                 var TransCode = row["Transfer_code"].ToString();
-                dtTransData = _std.Get_Tahewl_Data(TransCode);
+                dtTransData = Get_Tahewl_Data(TransCode);
                 if (dtTransData.Rows.Count > 0)
                 {
                     transferSavedStatus =
@@ -47,6 +49,7 @@ namespace School_Mang.BL.Services.STD
                 }
                 return new TransferData
                 {
+                    StudentName = "",
                     TransferCode = TransCode,
                     GradeId = Convert.ToInt32(row["Grade_Id"]),
                     YearId = Convert.ToInt32(row["Year_Id"]),
@@ -72,7 +75,7 @@ namespace School_Mang.BL.Services.STD
                 current_year = (Convert.ToInt32(year) + 1).ToString();
             }
 
-            DataTable dt = _std.Get_Trans_Code(current_year);
+            DataTable dt = Get_Trans_Code(current_year);
             if (dt.Rows.Count == 0 || dt.Rows[0]["Max_Trans_Code"] == DBNull.Value)
             {
 
@@ -172,7 +175,7 @@ namespace School_Mang.BL.Services.STD
         {
             var transCode = GetTransCod(request.CurrentYearData);
 
-            _std.Add_Transfers_Data(
+            Add_Transfers_Data(
                 transCode,
                 request.StdCode,
                 request.ToSchool,
@@ -210,7 +213,7 @@ namespace School_Mang.BL.Services.STD
        
         public void UpdateTransfer(TransferRequest request)
         {
-            _std.Update_Trans_Data(
+           Update_Trans_Data(
                 request.TransCode,
                 request.ToSchool,
                 request.GuardianName,
@@ -237,10 +240,10 @@ namespace School_Mang.BL.Services.STD
             }
 
             int stdFound = Convert.ToInt32(
-                _std.Get_Count_Trans_Std(newYear, request.StdCode)
+               Get_Count_Trans_Std(newYear, request.StdCode)
                 .Rows[0][0]);
 
-            _std.Delete_Transfers_Data(
+            Delete_Transfers_Data(
                 request.TransferCode,
                 request.StdCode,
                 request.CurrentYear,
@@ -296,7 +299,6 @@ namespace School_Mang.BL.Services.STD
            
             return new TransferReportData
             {
-                StudentName = "",
                 TransferCode = data.TransferCode,
                 ToSchoolYearDesc = yearDescToSchool,
                 FromSchoolYearDesc = yearDesc,
@@ -315,10 +317,7 @@ namespace School_Mang.BL.Services.STD
                    throw new Exception("لا يمكن سحب ملف للطالب المسجل فى العام السابق .. !");
                 }
             }
-            if (status == 3 || status == 4 || status == 7) 
-            {
-                throw new Exception("لا يمكن سحب ملف للطالب المحول .. !");
-            }
+            
             int newYear = year + 1;
             _studentService.Delete_School_Std_Data(
                 stdCode,
@@ -384,7 +383,130 @@ namespace School_Mang.BL.Services.STD
                 2,
                 newClassId);
         }
+        public DataTable GET_Trans_Data(int Grade_Id, params int[] statusIds)
+        {
+            bool hasTransferStatus = statusIds.Contains(3) || statusIds.Contains(7);
 
+            int year = hasTransferStatus
+               ? Convert.ToInt32(Globals.My_Year - 1)
+                : Convert.ToInt32(Globals.My_Year);
+            string statusList = string.Join(",", statusIds);
+
+            return _dal.ExecQuery("SP_GET_Trans_Data",
+                SqlParam.Int("@Year_Id", year),
+                SqlParam.Int("@Grade_Id", Grade_Id),
+                SqlParam.NVar("@Status_Ids", statusList)
+            );
+        }
+        private DataTable Search_Trans_Data(int Grade_Id, int Status_Id, string std_name)
+        {
+            int year = (Status_Id == 3)
+                ? Convert.ToInt32(Globals.My_Year - 1)
+                : Convert.ToInt32(Globals.My_Year);
+
+            return _dal.ExecQuery("SP_Search_Trans_Data",
+                SqlParam.Int("@Year_Id", year),
+                SqlParam.Int("@Grade_Id", Grade_Id),
+                SqlParam.Int("@Status_Id", Status_Id),
+                SqlParam.NVar("@std_name", std_name, 200));
+        }
+        private DataTable GET_Trans_By_Code(string std_code)
+           => _dal.ExecQuery("SP_GET_Trans_By_Code",
+               SqlParam.NVar("@std_code", std_code, 20));
+
+        private DataTable Get_Tahewl_Data(string Transfer_code)
+          => _dal.ExecQuery("SP_Get_Tahewl",
+              SqlParam.NVar("@Transfer_code", Transfer_code, 20));
+
+        private DataTable Get_Trans_Code(string year)
+            => _dal.ExecQuery("SP_Get_Trans_Code",
+                SqlParam.NVar("@year", year, 2));
+
+        private void Add_Transfers_Data(string Transfer_code,
+                               string std_code,
+                               string Transfer_School,
+                               int Transfer_status,
+                               int Year_Id,
+                               string Guardian_name,
+                               string Transfer_reason,
+                               byte Resom, byte Kotob,
+                               string adrs, int New_Grade,
+                               bool Trans_After_Year,
+                               bool NewStudentInThisYear)
+        {
+            _dal.ExecNonQuery("SP_Add_Transfers_Data",
+                SqlParam.NVar("@Transfer_code", Transfer_code, 20),
+                SqlParam.NVar("@std_code", std_code, 20),
+                SqlParam.NVar("@Transfer_School", Transfer_School, 100),
+                SqlParam.Int("@Transfer_status", Transfer_status),
+                SqlParam.Int("@Year_Id", Year_Id),
+                SqlParam.NVar("@Guardian_name", Guardian_name, 50),
+                SqlParam.NVar("@Transfer_reason", Transfer_reason, 50),
+                SqlParam.Byte("@Resom", Resom),
+                SqlParam.Byte("@Kotob", Kotob),
+                SqlParam.NVar("@adrs", adrs, 1000),
+                SqlParam.NVar("@Created_by", Properties.Settings.Default.user_name, 15),
+                SqlParam.NVar("@Updated_by", Properties.Settings.Default.user_name, 15),
+                SqlParam.Int("@New_Grade", New_Grade),
+                SqlParam.Bit("@Trans_After_Year", Trans_After_Year),
+                SqlParam.Bit("@NewStudentInThisYear", NewStudentInThisYear)
+            );
+        }
+
+        private void Update_Trans_Data(int Transfer_code,
+                                      string Transfer_School,
+                                      string Guardian_name,
+                                      string Transfer_reason,
+                                      byte Resom, byte Kotob,
+                                      string adrs)
+        {
+            _dal.ExecNonQuery("SP_Update_Trans_Data",
+                SqlParam.Int("@Transfer_code", Transfer_code),
+                SqlParam.NVar("@Transfer_School", Transfer_School, 100),
+                SqlParam.NVar("@Guardian_name", Guardian_name, 50),
+                SqlParam.NVar("@Transfer_reason", Transfer_reason, 50),
+                SqlParam.Byte("@Resom", Resom),
+                SqlParam.Byte("@Kotob", Kotob),
+                SqlParam.NVar("@adrs", adrs, 1000),
+                SqlParam.NVar("@Updated_by", Properties.Settings.Default.user_name, 15)
+            );
+        }
+
+        private DataTable Get_Count_Trans_Std(int new_year, string std_code)
+        {
+            string query = @"SELECT COUNT(std_code) AS std_code
+                     FROM School_Std_Data
+                     WHERE Year_Id = @Year_Id
+                     AND std_code = @std_code";
+
+            return _dal.Query(query,
+                SqlParam.Int("@Year_Id", new_year),
+                SqlParam.NVar("@std_code", std_code, 20)
+            );
+        }
+        private void Delete_Transfers_Data(int Transfer_code,
+                                  string std_code,
+                                  int Year_Id,
+                                  int Grade_Id,
+                                  int Class_Id,
+                                  int new_year,
+                                  int std_found,
+                                  int To_School,
+                                  bool Trans_After_Year)
+        {
+            _dal.ExecNonQuery("SP_Delete_Transfers_Data",
+                SqlParam.Int("@Transfer_code", Transfer_code),
+                SqlParam.NVar("@std_code", std_code, 20),
+                SqlParam.Int("@Year_Id", Year_Id),
+                SqlParam.Int("@Grade_Id", Grade_Id),
+                SqlParam.Int("@Class_Id", Class_Id),
+                SqlParam.NVar("@Updated_by", Properties.Settings.Default.user_name, 15),
+                SqlParam.Int("@new_year", new_year),
+                SqlParam.Int("@std_found", std_found),
+                SqlParam.Int("@To_School", To_School),
+                SqlParam.Bit("@Trans_After_Year", Trans_After_Year)
+            );
+        }
     }
 }
 

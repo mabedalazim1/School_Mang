@@ -11,7 +11,6 @@ using School_Mang.PL.STD.Mappers;
 using School_Mang.PL.STD.Services;
 using System;
 using System.Data;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace School_Mang.PL.STD
@@ -30,6 +29,7 @@ namespace School_Mang.PL.STD
             EnsureService();
 
             _service.ApplyContext();
+
             LoadInitialData();
         }
 
@@ -111,6 +111,7 @@ namespace School_Mang.PL.STD
 
         #region My Voids
 
+
         // Get School Year Data
         private void LoadInitialData()
         {
@@ -137,6 +138,11 @@ namespace School_Mang.PL.STD
                 ApplyContextGridLayout();
 
                 lbl_count.Text = dt.Rows.Count.ToString();
+
+                if (!_context.CurrentYearData)
+                {
+                    btn_del_std.Visible = false;
+                }
 
                 _context?.PostAction?.Invoke();
             }
@@ -505,7 +511,7 @@ namespace School_Mang.PL.STD
                 }
                 try
                 {
-                    var frm = FRM_TAHEEL_STD.Get_Tahweel_Std;
+                    var frm = FRM_TAHWEL_STD.Get_Tahweel_Std;
 
                     frm.chk_resom_no.Checked = true;
                     frm.chk_kotob_no.Checked = true;

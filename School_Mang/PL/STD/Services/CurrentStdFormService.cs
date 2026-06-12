@@ -3,7 +3,7 @@ using School_Mang.BL;
 using School_Mang.BL.Common;
 using School_Mang.BL.Extensions;
 using School_Mang.BL.DTO;
-using School_Mang.BL.Enums;
+using School_Mang.BL.Common.Helper;
 using School_Mang.BL.Services;
 using School_Mang.BL.Services.Reports;
 using School_Mang.BL.Services.STD;
@@ -35,6 +35,7 @@ namespace School_Mang.PL.STD.Services
         }
 
         private bool _isApplyingContext;
+
         public void ApplyContext()
         {
             if (_isApplyingContext) return;
@@ -85,6 +86,7 @@ namespace School_Mang.PL.STD.Services
             }
             else
             {
+
                 _form.btn_del_std.Visible = true;
                 _form.btn_tahwel.Visible = true;
             }
@@ -129,6 +131,24 @@ namespace School_Mang.PL.STD.Services
                     break;
             }
         }
+        private StudentDTO MapStudentFromRow(DataGridViewRow row)
+        {
+            return new StudentDTO
+            {
+                OsraId = SafeConverter.GetInt(row.Cells["Osraa_Id"].Value),
+                StdCode = SafeConverter.GetString(row.Cells["std_code"].Value),
+                StudentFullName = SafeConverter.GetString(row.Cells["اسم الطالب"].Value),
+                StdName = SafeConverter.GetString(row.Cells["std_name"].Value),
+                Nat = SafeConverter.GetString(row.Cells["std_nat"].Value),
+                StudentStatus = SafeConverter.GetInt(row.Cells["Std_Status_Id"].Value),
+                GradeId = SafeConverter.GetInt(row.Cells["Grade_Id"].Value),
+                Sana = SafeConverter.GetInt(row.Cells["Year_Id"].Value),
+                GenderId = SafeConverter.GetInt(row.Cells["Gender_Id"].Value),
+                ClassId = SafeConverter.GetInt(row.Cells["Class_Id"].Value),
+                ReligionId = SafeConverter.GetInt(row.Cells["Religion_Id"].Value)
+            };
+        }
+
         public void HandleNewStdClick(DataGridViewRow row)
         {
             if (row == null)
@@ -181,7 +201,7 @@ namespace School_Mang.PL.STD.Services
         {
             var frm = FRM_UPDATE_SCHOOL_STD.Get_Update_School_Std;
 
-            int grade = Convert.ToInt32(row.Cells["Grade_Id"].Value);
+            int grade = SafeConverter.GetInt(row.Cells["Grade_Id"].Value);
             frm.grade = grade;
 
             if (row.Cells["Updated_by"].Value.ToString() != "")
@@ -213,20 +233,7 @@ namespace School_Mang.PL.STD.Services
                 {
                     c.CurrentYearData = _context.CurrentYearData;
                     c.StudentState.UpdateStdData = true;
-                    c.StudentData = new StudentDTO
-                    {
-                        OsraId = Convert.ToInt32(row.Cells["Osraa_Id"].Value),
-                        StdCode = row.Cells["std_code"].Value?.ToString(),
-                        StudentFullName = row.Cells["اسم الطالب"].Value?.ToString(),
-                        StdName = row.Cells["std_name"].Value?.ToString(),
-                        Nat = row.Cells["std_nat"].Value?.ToString(),
-                        StudentStatus = Convert.ToInt32(row.Cells["Std_Status_Id"].Value),
-                        GradeId = Convert.ToInt32(row.Cells["Grade_Id"].Value),
-                        Sana = Convert.ToInt32(row.Cells["Year_Id"].Value),
-                        GenderId = Convert.ToInt32(row.Cells["Gender_Id"].Value),
-                        ClassId = Convert.ToInt32(row.Cells["Class_Id"].Value),
-                        ReligionId = Convert.ToInt32(row.Cells["Religion_Id"].Value)
-                    };
+                    c.StudentData = MapStudentFromRow(row);
                 }).Show(frm);
         }
 

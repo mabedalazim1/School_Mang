@@ -1,12 +1,15 @@
-﻿using School_Mang.BL;
-using School_Mang.BL.Services;
+﻿using DevExpress.Utils.MVVM.Services;
+using School_Mang.BL;
+using School_Mang.BL.Common.Helper;
+using School_Mang.BL.DTO;
 using School_Mang.BL.Enums;
 using School_Mang.BL.Extensions;
 using School_Mang.BL.Models;
+using School_Mang.BL.Services;
+using School_Mang.BL.Services.Reports;
 using School_Mang.BL.Services.STD;
 using System;
 using System.Windows.Forms;
-using School_Mang.BL.Common.Helper;
 
 namespace School_Mang.PL.STD
 {
@@ -16,6 +19,7 @@ namespace School_Mang.PL.STD
         private NavigationContext _context;
         private readonly StudentSaveService _saveService = new StudentSaveService();
         private readonly LookupService _stdData = new LookupService();
+        private readonly StudentReportService _reportService = new StudentReportService();
         public void SetNavigation(NavigationContext context)
         {
             _context = context;
@@ -34,8 +38,6 @@ namespace School_Mang.PL.STD
                     cmb_class.SelectedIndex = 1;
             }
         }
-
-        RPT.REPORT_CONNECTION RPT = new RPT.REPORT_CONNECTION();
 
         int permission_id = Properties.Settings.Default.permission_id;
 
@@ -85,8 +87,9 @@ namespace School_Mang.PL.STD
             }
             LoadFromContext();
         }
-        public void SaveTahweel()
+        private void SaveTahweel()
         {
+            Waiting.Start();
             try
             {
                 // Add Std
@@ -109,7 +112,7 @@ namespace School_Mang.PL.STD
                 }
                 else
                 {
-                    //MSG.MyMesg("تم حفظ طلب التحويل بنجاح .. !");
+                    MSG.MyMesg("تم حفظ طلب بيانات الطالب فى الصف المحدد بنجاح .. !");
                 }
 
                 btn_new_std.Enabled = false;
@@ -119,11 +122,14 @@ namespace School_Mang.PL.STD
             }
             catch (Exception ex)
             {
-                MSG.ErrorMesg("Here");
-
                 MSG.ErrorMesg(ex.Message);
             }
+            finally
+            {
+                Waiting.Stop();
+            }
         }
+
         private void LoadCombos()
         {
             // Fill Combos
@@ -212,21 +218,23 @@ namespace School_Mang.PL.STD
 
         private void btn_print_elthak_Click(object sender, EventArgs e)
         {
-            try
+            var data = new EnrollmentReportData
             {
-                string std_code = txt_std_code.Text;
-                string std_name = txt_std_name.Text;
-                string std_nat = txt_std_nat.Text;
-                int sana = Convert.ToInt32(txt_sana.Text) + 2020;
+                StdCode = txt_std_code.Text,
+                StdName = txt_std_name.Text,
+                StdNat = txt_std_nat.Text,
+                Year = SafeConverter.GetInt(txt_sana.Text) + 2020
+            };
 
-                this.Close();
-                RPT.OpenElthakReport(std_code, std_name, std_nat, sana);
+            var result = _reportService.PrintEnrollmentReport(data);
 
-            }
-            catch (Exception ex)
+            if (!result.Success)
             {
-                MSG.ErrorMesg(ex.Message);
+                MSG.ErrorMesg(result.Message);
+                return;
             }
+
+            this.Close();
         }
 
         private void FRM_STD_ELTEHK_KeyDown(object sender, KeyEventArgs e)

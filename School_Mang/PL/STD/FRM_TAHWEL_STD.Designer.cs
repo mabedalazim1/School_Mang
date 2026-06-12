@@ -1,7 +1,7 @@
 ﻿
 namespace School_Mang.PL.STD
 {
-    partial class FRM_TAHEEL_STD
+    partial class FRM_TAHWEL_STD
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@ namespace School_Mang.PL.STD
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FRM_TAHEEL_STD));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FRM_TAHWEL_STD));
             this.panel4 = new System.Windows.Forms.Panel();
             this.pn_top = new System.Windows.Forms.Panel();
             this.txt_year = new System.Windows.Forms.TextBox();

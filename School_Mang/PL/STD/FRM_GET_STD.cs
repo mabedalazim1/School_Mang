@@ -211,7 +211,7 @@ namespace School_Mang.PL.STD
                 if (grade > 1 && grade < 10)
                 {
 
-                    var frm = FRM_TAHEEL_STD.Get_Tahweel_Std;
+                    var frm = FRM_TAHWEL_STD.Get_Tahweel_Std;
 
                     frm.chk_resom_no.Checked = true;
                     frm.chk_kotob_no.Checked = true;

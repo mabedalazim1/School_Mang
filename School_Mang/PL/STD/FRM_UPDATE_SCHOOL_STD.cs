@@ -15,8 +15,6 @@ namespace School_Mang.PL.STD
     {
         private NavigationContext _context;
         private readonly OsraDataService _osraData = new OsraDataService();
-        private readonly StudentDataMigrationService _studentData = new StudentDataMigrationService();
-        private readonly StudentService _studentService = new StudentService();
         private readonly StudentSaveService _studentSave = new StudentSaveService();
         private readonly LookupService _stdData = new LookupService();
         private readonly VerifyService _verify = new VerifyService();
@@ -28,11 +26,6 @@ namespace School_Mang.PL.STD
             _context = context ?? new NavigationContext();
             ApplyContext();
         }
-
-        BL.STD.CLS_STD std = new BL.STD.CLS_STD();
-        
-        CLS_STD_FUNCATIONS Std_Func = new CLS_STD_FUNCATIONS();
-
 
         public int grade = 1;
         public int row_index = 0;
@@ -172,7 +165,7 @@ namespace School_Mang.PL.STD
 
         private void cmb_grade_SelectedIndexChanged(object sender, EventArgs e)
         {
-            cmb_class.DataSource = _stdData.Get_Grad_Data(Convert.ToInt32(cmb_grade.SelectedValue));
+            cmb_class.DataSource = _stdData.Get_Grad_Data(SafeConverter.GetInt(cmb_grade.SelectedValue));
         }
 
         private bool ValidateTransfer()
@@ -198,13 +191,19 @@ namespace School_Mang.PL.STD
             if (status != 6)
                 return true;
 
-            if (MSG.DialogeMsg(
+            if (MSG.DialogeErrMsg(
                 $"الطالب كان مسجل سحب ملف .. {txt_first_name.Text} هل تريد المتابعة ؟")
                 != DialogResult.Yes)
             {
-                MSG.ErrorMesg("تم إلغاء عملية الحفظ");
-                cmb_hala.SelectedValue = status;
-                cmb_hala.Focus();
+               CancelSave();
+                return false;
+            }
+
+            if (MSG.DialogeErrMsg(
+                $"سوف يتم إلغاء سحب الملف للطالب  .. {txt_first_name.Text} ")
+                != DialogResult.Yes)
+            {
+                CancelSave();
                 return false;
             }
 
@@ -222,13 +221,26 @@ namespace School_Mang.PL.STD
             if (SafeConverter.GetInt(cmb_hala.SelectedValue) != 6)
                 return true;
 
-            if (MSG.DialogeMsg(
+            if (status == 3 || status == 4 || status == 7)
+            {
+                MSG.ErrorMesg("لا يمكن سحب ملف للطالب المحول .. !");
+                CancelSave();
+                return false;
+            }
+
+            if (MSG.DialogeErrMsg(
                 $"سوف يتم سحب ملف الطالب .. {txt_first_name.Text}")
                 != DialogResult.Yes)
             {
-                MSG.ErrorMesg("تم إلغاء عملية الحفظ");
-                cmb_hala.SelectedValue = status;
-                cmb_hala.Focus();
+                CancelSave();
+                return false;
+            }
+
+            if (MSG.DialogeErrMsg(
+                $"يرجى الحذر قبل تأكيد سحب ملف  .. {txt_first_name.Text}")
+                != DialogResult.Yes)
+            {
+                CancelSave();
                 return false;
             }
 
@@ -243,12 +255,19 @@ namespace School_Mang.PL.STD
             return true;
         }
 
+        private void CancelSave()
+        {
+            MSG.ErrorMesg("تم إلغاء عملية الحفظ");
+            cmb_hala.SelectedValue = status;
+            cmb_hala.Focus();
+        }
+
         private ServiceResult SaveStudent()
         {
             var sen = AgeService.NatAgeHesabSen(
                 txt_nat.Text,
-                Convert.ToInt32(cmb_sana.GetItemText(cmb_sana.SelectedItem)
-                               .Substring(0, 4)) - 1);
+                SafeConverter.GetInt(cmb_sana.GetItemText(cmb_sana.SelectedItem)
+                               .Substring(0, 4)));
 
             DateTime birthDate = new DateTime(
                 sen.BirthYear,
@@ -275,6 +294,7 @@ namespace School_Mang.PL.STD
 
         private void RefreshCurrentStudentsForm()
         {
+
             var frm = FRM_CURRENT_STD.Get_Current_Std;
 
             frm.Get_School_Year_Data();
@@ -460,7 +480,7 @@ namespace School_Mang.PL.STD
                         try
                         {
                             txt_nat.BackColor = Color.White;
-                            var sen = AgeService.NatAgeHesabSen(txt_nat.Text, Convert.ToInt32(cmb_sana.GetItemText(cmb_sana.SelectedItem).Substring(0, 4)) - 1);
+                            var sen = AgeService.NatAgeHesabSen(txt_nat.Text, SafeConverter.GetInt(cmb_sana.GetItemText(cmb_sana.SelectedItem).Substring(0, 4)));
                             txt_tarikh.Text = $"{sen.BirthDay} / {sen.BirthMonth} / {sen.BirthYear}";
                             txt_sen.Text = $"{sen.Days} يوم - {sen.Months} شهر - {sen.Years} سنة";
                             cmb_gender.SelectedIndex = GetTypeService.CheckType(txt_nat);
@@ -495,7 +515,7 @@ namespace School_Mang.PL.STD
             txt_nat_Leave(sender, e);
              StudentCurrentHala = Convert.ToByte(cmb_hala.SelectedValue);
 
-            if (Convert.ToInt32(cmb_hala.SelectedValue) == 3 || Convert.ToInt32(cmb_hala.SelectedValue) == 4)
+            if (SafeConverter.GetInt(cmb_hala.SelectedValue) == 3 || SafeConverter.GetInt(cmb_hala.SelectedValue) == 4)
             {
                 cmb_hala.Enabled = false;
             }

@@ -1,4 +1,7 @@
-﻿using School_Mang.BL.Services.STD;
+﻿using DevExpress.ReportServer.ServiceModel.DataContracts;
+using School_Mang.BL.DTO;
+using School_Mang.BL.Models;
+using School_Mang.BL.Services.STD;
 using School_Mang.BL.STD;
 using System;
 using System.Collections.Generic;
@@ -111,6 +114,23 @@ namespace School_Mang.BL.Services.Reports
             _rpt.OpenTahewl_Data(yearId ,gradeId, statuses);
 
             return Result.Ok();
+        }
+        public Result PrintEnrollmentReport(EnrollmentReportData data)
+        {
+            try
+            {
+                _rpt.OpenElthakReport(
+                    data.StdCode,
+                    data.StdName,
+                    data.StdNat,
+                    data.Year);
+
+                return Result.Ok();
+            }
+            catch (Exception ex)
+            {
+                return Result.Fail(ex.Message);
+            }
         }
     }
 }

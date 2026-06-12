@@ -212,6 +212,7 @@ namespace School_Mang.PL.STD
 
         public void GetData()
         {
+            Waiting.Start();
             try
             {
                 var row = dt_osra_data.CurrentRow;
@@ -238,6 +239,8 @@ namespace School_Mang.PL.STD
                         MotherTel = SafeConverter.GetString(row.Cells["هاتف الأم"].Value)
                     });
 
+                Waiting.Stop();
+
                 AppNavigation.Instance.
                        SetContext(c =>
                        {
@@ -245,12 +248,18 @@ namespace School_Mang.PL.STD
                        })
                            .Show(frm);
 
+                this.Close();
+                
                 frm.BringToFront();
             }
 
             catch (Exception ex)
             {
                 MSG.ErrorMesg(ex.Message);
+            }
+            finally
+            {
+                Waiting.Stop();
             }
         }
         private void btn_new_osra_Click(object sender, EventArgs e)
@@ -317,82 +326,95 @@ namespace School_Mang.PL.STD
 
         private void EditOsra()
         {
-            if (dt_osra_data.CurrentRow == null)
+            Waiting.Start();
+            try
             {
-                MSG.ErrorMesg("برجى اختيار البيانات المراد تعديلها ... !");
-                return;
-            }
-
-            var value = dt_osra_data.CurrentRow.Cells["id"].Value;
-            if (value != null && !string.IsNullOrWhiteSpace(value.ToString()))
-            {
-                int osrs_id = SafeConverter.GetInt(value);
-
-                var result = _osraData.GetOsraDataById(osrs_id);
-
-
-                if (!result.Success)
+                if (dt_osra_data.CurrentRow == null)
                 {
-                    MSG.ErrorMesg(result.Message);
+                    MSG.ErrorMesg("برجى اختيار البيانات المراد تعديلها ... !");
                     return;
                 }
 
-                var dt = result.Data;
-
-                if (dt == null || dt.Rows.Count == 0)
+                var value = dt_osra_data.CurrentRow.Cells["id"].Value;
+                if (value != null && !string.IsNullOrWhiteSpace(value.ToString()))
                 {
-                    MSG.ErrorMesg("لا توجد بيانات لعرضها");
-                    return;
-                }
+                    int osrs_id = SafeConverter.GetInt(value);
+
+                    var result = _osraData.GetOsraDataById(osrs_id);
 
 
-                // Add Data
-                var row = dt.Rows[0];
-                var frm = FRM_OSRAA_DATA.Get_Osra_data;
-                var info = _osraData.GetUpdateInfo(dt);
-                var data = new StudentDTO
-                {
-                    FatherName = SafeConverter.GetString(row["father_name"]),
-                    FatherLastName = SafeConverter.GetString(row["father_last_name"]),
-                    FatherNat = SafeConverter.GetString(row["father_nat"]),
-                    FatherHala = SafeConverter.GetInt(row["father_hala"]),
-                    Address = SafeConverter.GetString(row["address"]),
-                    FatherMoahel = SafeConverter.GetString(row["father_moahel"]),
-                    FatherWazifa = SafeConverter.GetString(row["father_wazifa"]),
-                    Tel = SafeConverter.GetString(row["tel"]),
-                    FatherMobil_1 = SafeConverter.GetString(row["father_mobil_1"]),
-                    FatherMobil_2 = SafeConverter.GetString(row["father_mobil_2"]),
-                    MotherName = SafeConverter.GetString(row["mother_name"]),
-                    MotherNat = SafeConverter.GetString(row["mother_nat"]),
-                    MotherMoahel = SafeConverter.GetString(row["mother_moahel"]),
-                    MotherWazifa = SafeConverter.GetString(row["mother_wazifa"]),
-                    MotherHala = SafeConverter.GetInt(row["mother_hala"]),
-                    MotherMbil_1 = SafeConverter.GetString(row["mother_mobil_1"]),
-                    MotherMbil_2 = SafeConverter.GetString(row["mother_mobil_2"]),
-                    Comments = SafeConverter.GetString(row["comments"]),
-                    OsraId = SafeConverter.GetInt(row["Osraa_Id"]),
-                    UpdatedBy = info.updatedBy,
-                    UpdatedAt = info.updatedAt
-                };
-
-                this.Hide();
-                
-                AppNavigation.Instance.
-                    WithOwner(MAIN.FRM_MAIN.Get_Frm_Main)
-                    .SetContext(c =>
+                    if (!result.Success)
                     {
-                        c.OsraState.OpenFormGetOsra = true; // Update
-                        c.StudentData = data;
-                    })
-                    .Show(frm);
-                frm.txt_adrs.Focus();
+                        MSG.ErrorMesg(result.Message);
+                        return;
+                    }
 
-                //FRM_OSRAA_DATA.Get_Osra_data.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
+                    var dt = result.Data;
+
+                    if (dt == null || dt.Rows.Count == 0)
+                    {
+                        MSG.ErrorMesg("لا توجد بيانات لعرضها");
+                        return;
+                    }
+
+
+                    // Add Data
+                    var row = dt.Rows[0];
+                    var frm = FRM_OSRAA_DATA.Get_Osra_data;
+                    var info = _osraData.GetUpdateInfo(dt);
+                    var data = new StudentDTO
+                    {
+                        FatherName = SafeConverter.GetString(row["father_name"]),
+                        FatherLastName = SafeConverter.GetString(row["father_last_name"]),
+                        FatherNat = SafeConverter.GetString(row["father_nat"]),
+                        FatherHala = SafeConverter.GetInt(row["father_hala"]),
+                        Address = SafeConverter.GetString(row["address"]),
+                        FatherMoahel = SafeConverter.GetString(row["father_moahel"]),
+                        FatherWazifa = SafeConverter.GetString(row["father_wazifa"]),
+                        Tel = SafeConverter.GetString(row["tel"]),
+                        FatherMobil_1 = SafeConverter.GetString(row["father_mobil_1"]),
+                        FatherMobil_2 = SafeConverter.GetString(row["father_mobil_2"]),
+                        MotherName = SafeConverter.GetString(row["mother_name"]),
+                        MotherNat = SafeConverter.GetString(row["mother_nat"]),
+                        MotherMoahel = SafeConverter.GetString(row["mother_moahel"]),
+                        MotherWazifa = SafeConverter.GetString(row["mother_wazifa"]),
+                        MotherHala = SafeConverter.GetInt(row["mother_hala"]),
+                        MotherMbil_1 = SafeConverter.GetString(row["mother_mobil_1"]),
+                        MotherMbil_2 = SafeConverter.GetString(row["mother_mobil_2"]),
+                        Comments = SafeConverter.GetString(row["comments"]),
+                        OsraId = SafeConverter.GetInt(row["Osraa_Id"]),
+                        UpdatedBy = info.updatedBy,
+                        UpdatedAt = info.updatedAt
+                    };
+
+                    Waiting.Stop();
+                    this.Hide();
+
+                    AppNavigation.Instance.
+                        WithOwner(MAIN.FRM_MAIN.Get_Frm_Main)
+                        .SetContext(c =>
+                        {
+                            c.OsraState.OpenFormGetOsra = true; // Update
+                            c.StudentData = data;
+                        })
+                        .Show(frm);
+                    frm.txt_adrs.Focus();
+                    
+                    //FRM_OSRAA_DATA.Get_Osra_data.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
+                }
+                else
+                {
+                    MSG.ErrorMesg("يرجى اختيار البيانات المراد تعديلها ... !");
+                    return;
+                }
             }
-            else
+            catch (Exception ex)
+            { 
+                MSG.ErrorMesg(ex.Message);
+            }
+            finally
             {
-                MSG.ErrorMesg("برجى اختيار البيانات المراد تعديلها ... !");
-                return;
+                Waiting.Stop();
             }
         }
         private void btn_edit_osra_Click(object sender, EventArgs e)
@@ -441,7 +463,6 @@ namespace School_Mang.PL.STD
         {
             if (_isDoubleClickBusy) return;
 
-            Waiting.Start();
             try
             {
                 _isDoubleClickBusy = true;
@@ -462,6 +483,7 @@ namespace School_Mang.PL.STD
                 {
                     EditOsra();
                 }
+              
             }
             catch (Exception ex)
             {
@@ -471,7 +493,6 @@ namespace School_Mang.PL.STD
             {
                 _isDoubleClickBusy  = false;
                 dt_osra_data.Enabled = true;
-                Waiting.Stop();
             }
                    
         }

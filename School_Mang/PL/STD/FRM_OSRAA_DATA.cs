@@ -21,9 +21,6 @@ namespace School_Mang.PL.STD
             _context = context;
         }
 
-
-
-        BL.STD.CLS_STD std = new BL.STD.CLS_STD();
         private readonly VerifyService _verify = new VerifyService();
         private readonly GetDataService _stdData = new GetDataService();
         private readonly OsraDataService _osraData = new OsraDataService();
@@ -247,18 +244,15 @@ namespace School_Mang.PL.STD
 
         private bool Checked_Data(TextBox txt, string str)
         {
-            Waiting.Start();
             if (txt.Text == "")
             {
                 MSG.ErrorMesg(str);
                 txt.BackColor = Color.MistyRose;
                 txt.Focus();
-                Waiting.Stop();
                 return false;
             }
             else
             {
-                Waiting.Stop();
                 return true;
             }
 
@@ -266,36 +260,30 @@ namespace School_Mang.PL.STD
 
         private bool Checked_Phon(TextBox txt, int num)
         {
-            Waiting.Start();
             if (txt.Text.Length != num && txt.Text != "")
             {
                 MSG.ErrorMesg("تأكد من رقم الهاتف المدخل  .. ! يجب ألا يقل عن  " + num.ToString());
                 txt.BackColor = Color.MistyRose;
                 txt.Focus();
-                Waiting.Stop();
                 return false;
             }
             else
             {
-                Waiting.Stop();
                 return true;
             }
         }
 
         private bool Checked_Is_Numeric(TextBox txt)
         {
-            Waiting.Start();
             Regex nonNumericRegex = new Regex(@"\D");
             if (nonNumericRegex.IsMatch(txt.Text))
             {
                 txt.BackColor = Color.MistyRose;
                 MSG.ErrorMesg("تأكد من القيمة المدخلة .. يسمح بالأرقام فقط ..! ");
-                Waiting.Stop();
                 return false;
             }
             else
             {
-                Waiting.Stop();
                 return true;
             }
         }
@@ -306,13 +294,11 @@ namespace School_Mang.PL.STD
             {
                 return true;
             }
-            Waiting.Start();
             Regex nonNumericRegex = new Regex(@"\D");
             if (nonNumericRegex.IsMatch(txt.Text))
             {
                 txt.BackColor = Color.MistyRose;
                 MSG.ErrorMesg("تأكد من القيمة المدخلة .. يسمح بالأرقام فقط ..! ");
-                Waiting.Stop();
                 return false;
             }
             else if (txt.Text.Substring(0, 2) != "01" && txt.Text.Length == 11)
@@ -320,12 +306,10 @@ namespace School_Mang.PL.STD
                 MSG.ErrorMesg("تأكد من رقم الهاتف المدخل  .. ! الرقم يجب أن يبدأ ب  01 ");
                 txt.BackColor = Color.MistyRose;
                 txt.Focus();
-                Waiting.Stop();
                 return false;
             }
             else
             {
-                Waiting.Stop();
                 return true;
             }
         }
@@ -398,8 +382,7 @@ namespace School_Mang.PL.STD
         //Verify Std Nat
         private bool Verify_Std_Nat(TextBox txt)
         {
-            Waiting.Start();
-            Boolean nat = false;
+            bool nat = false;
             try
             {
                 DataTable Dt = _verify.Verify_Std_Nat(txt.Text);
@@ -424,13 +407,7 @@ namespace School_Mang.PL.STD
             {
                 MSG.ErrorMesg(e.Message);
             }
-            finally
-            {
-                Waiting.Stop();
-            }
-            Waiting.Stop();
             return nat;
-
         }
 
         private bool Verify_Osra_Nat(TextBox txt, int osra_code)
@@ -439,7 +416,6 @@ namespace School_Mang.PL.STD
             bool isValidNat = true;
             bool osra_nat = false;
 
-            Waiting.Start();
             int sana = Properties.Settings.Default.MyYear;
 
             try
@@ -481,15 +457,8 @@ namespace School_Mang.PL.STD
                 {
                     MSG.ErrorMesg(e.Message);
                 }
-                finally
-                {
-                    Waiting.Stop();
-                }
-
             }
-
             return osra_nat;
-
         }
 
         private void btn_close_b_Click(object sender, EventArgs e)

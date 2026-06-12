@@ -8,6 +8,7 @@ namespace School_Mang.BL.Models
 {
     public class TransferData
     {
+        public string StudentName { get; set; }
         public string TransferCode { get; set; }
 
         public int GradeId { get; set; }

@@ -216,7 +216,8 @@ namespace School_Mang.PL.MAIN
         {
             AppNavigation.Instance.SetContext(c =>
             {
-                c.StudentCase = GetStudentCase.ElthakStd;
+                c.StudentCase = GetStudentCase.ElthakStdNextYear;
+                c.CurrentYearData = true;
             })
                 .Show(FRM_CURRENT_STD.Get_Current_Std); // تم التحقق
 
@@ -259,11 +260,11 @@ namespace School_Mang.PL.MAIN
 
         private void NextYear()
         {
-            const int LAST_GRADE = 11;
-            FRM_CURRENT_STD.Get_Current_Std.grade = LAST_GRADE;
             AppNavigation.Instance.SetContext(c =>
             {
-                c.StudentCase = GetStudentCase.ElthakStdNextYear;
+                c.StudentCase = GetStudentCase.ElthakStd;
+                c.CurrentYearData = false;
+                
             })
                 .Show(FRM_CURRENT_STD.Get_Current_Std); // تم التحقق
 

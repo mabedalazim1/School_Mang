@@ -20,7 +20,7 @@ namespace School_Mang.PL.STD
         public void SetNavigation(NavigationContext context)
         {
             _context = context;
-            
+
         }
 
         DataTable dt_count = new DataTable();
@@ -34,9 +34,9 @@ namespace School_Mang.PL.STD
         public FRM_CHOOSE_GRADE()
         {
             InitializeComponent();
-           
+
         }
-            
+
         int move;
         int move_x;
         int move_y;
@@ -249,8 +249,8 @@ namespace School_Mang.PL.STD
                     dtrow.DefaultCellStyle.BackColor = Color.Teal;
                 }
             }
-                dt_std_data.Columns[0].Width = 200;
-                dt_std_data.Columns[6].Visible = false;
+            dt_std_data.Columns[0].Width = 200;
+            dt_std_data.Columns[6].Visible = false;
         }
         private void pn_top_MouseDown(object sender, MouseEventArgs e)
         {
@@ -315,13 +315,13 @@ namespace School_Mang.PL.STD
         }
         private void FRM_CHOOSE_GRADE_Load(object sender, EventArgs e)
         {
-            LoadData(); 
+            LoadData();
         }
 
         private void btn_close_b_Click(object sender, EventArgs e)
         {
             this.Close();
-            
+
         }
 
         private void btn_show_data_Click(object sender, EventArgs e)
@@ -338,20 +338,16 @@ namespace School_Mang.PL.STD
             AppNavigation.Instance
                 .WithOwner(MAIN.FRM_MAIN.Get_Frm_Main)
                 .SetContext(c =>
-            {
+                {
+                                
                 c.CurrentYearData = _context.CurrentYearData;
 
                 if (_context.StudentCase.Has(GetStudentCase.DegreeStatement))
                 {
                     c.StudentCase |= GetStudentCase.DegreeStatement;
                 }
-                if (_context.StudentCase.Has(GetStudentCase.ElthakStdNextYear))
-                {
-                    c.StudentCase |= GetStudentCase.ElthakStdNextYear;
-                }
+                }).Show(FRM_CURRENT_STD.Get_Current_Std);
 
-            }).Show(FRM_CURRENT_STD.Get_Current_Std);
-                
 
             //FRM_CURRENT_STD.Get_Current_Std.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
             this.Close();

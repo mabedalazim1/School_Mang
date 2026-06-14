@@ -563,16 +563,18 @@ namespace School_Mang.PL.STD
 
                 string std_name = row.Cells["اسم الطالب"].Value?.ToString();
                 string std_nat = row.Cells["std_nat"].Value.ToString();
-                int sana = (SafeConverter.GetInt(row.Cells["year"].Value)) + 2020;
+                int stdYear = SafeConverter.GetInt(row.Cells["Year"].Value) + 2020;
                 int grade = SafeConverter.GetInt(row.Cells["Grade_Id"].Value);
                 string grade_desc = row.Cells["old_grade"].Value.ToString();
+                int newYear = SafeConverter.GetInt(row.Cells["Year_Id"].Value) + 2021;
 
+              
                 // Get New Std (KG2 And Prim Six) Data For New Year
                 bool nextYearElthak = _context.StudentCase.IsNextYearElthak();
 
 
                 _elthakService.OpenElthakReport(grade, grade_desc, std_code,
-                                                std_name, std_nat, sana, nextYearElthak);
+                                                std_name, std_nat, stdYear, newYear, nextYearElthak);
 
             }
             catch (Exception ex)

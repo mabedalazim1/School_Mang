@@ -17,37 +17,42 @@ namespace School_Mang.BL.Services.Reports
                                      string std_code,
                                      string std_name,
                                      string std_nat,
-                                     int sana,
+                                     int stdYear,
+                                     int newYear,
                                      bool nextYearElthak)
         {
             string new_grade_desc ="";
+            int sana = stdYear;
             string year_desc = "";
 
             if (nextYearElthak == true)
             {
+               
                 switch (grade)
                 {
                     case 11:
-                        sana = sana + 1;
-                        new_grade_desc = "الصف الأول الإبتدائي";
+                        sana = newYear;
                         year_desc = _studentService.GetYearName(sana + 1);
+                        new_grade_desc = "الصف الأول الإبتدائي";
                         break;
 
                     case 6:
-                        sana = sana + 1;
-                        new_grade_desc = "الصف الأول الإعدادي";
+                        sana = newYear;
                         year_desc = _studentService.GetYearName(sana + 1);
+                        new_grade_desc = "الصف الأول الإعدادي";
                         break;
                 }
             }
-            // Get Old Std Data
 
+
+            // Get Old Std Data
             switch (grade)
             {
                 case 1:
                 case 7:
-                    new_grade_desc = grade_desc;
+                    sana = newYear -1;
                     year_desc = _studentService.GetYearName(sana + 1);
+                    new_grade_desc = grade_desc;
                     break;
             }
 

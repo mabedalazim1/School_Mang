@@ -31,13 +31,19 @@ namespace School_Mang.BL.Services
             var dt = Get_School_year_Data(yearCode, 0, 0);
             return dt.Rows.Count > 0;
         }
-        public DataTable GetSchoolYearData(int yearCode, int p1, int p2)
+       
+        public DataTable GetStudentsByYear(int year, int gradeId, int classId, bool sortByUpdatedAt = false)
         {
-            return Get_School_year_Data(yearCode, p1, p2);
-        }
-        public DataTable GetStudentsByYear(int year, int gradeId, int classId)
-        {
-            return Get_School_year_Data(year, gradeId, classId);
+            DataTable dt = Get_School_year_Data(year, gradeId, classId);
+
+            if (sortByUpdatedAt && dt.Columns.Contains("Updated_At"))
+            {
+                DataView dv = dt.DefaultView;
+                dv.Sort = "Updated_At DESC";
+                return dv.ToTable();
+            }
+
+            return dt;
         }
         public DataTable GetGradeData(int gradeId)
         {
@@ -62,6 +68,44 @@ namespace School_Mang.BL.Services
             if (dt.Rows.Count == 0)
                 throw new Exception("لم يتم تسجيل طلاب جدد لهذا العام .. !");
         }
+
+        public ValidationResult CanDeleteStudent(string stdCode, int year, object statusObj)
+        {
+            // 1. check status (نفس اللي في الفورم)
+            var statusCheck = StdValidationService.VerifyStdStatus(statusObj);
+            if (!statusCheck.IsValid)
+                return statusCheck;
+
+            // 2. check previous year
+            var prevYear = Verify_Std_School_Code(stdCode, year - 1);
+            if (prevYear.Rows.Count != 0)
+            {
+                return ValidationResult.Fail("لا يمكن حذف هذا الطالب لأنه مقيد فى العام السابق .. !");
+            }
+
+            // 3. check next year
+            var nextYear = Verify_Std_School_Code(stdCode, year + 1);
+            if (nextYear.Rows.Count != 0)
+            {
+                return ValidationResult.Fail("لا يمكن الحذف فى حالة ترحيل البيانات للعام القادم .. !");
+            }
+
+            return ValidationResult.Ok();
+        }
+
+        public void DeleteStudent(string stdCode, int year)
+        {
+            try
+            { 
+                Delete_School_Std_Data(stdCode, year);
+            }
+            catch (Exception ex)
+            {
+              throw new Exception("حدث خطأ أثناء الحذف: " + ex.Message);
+            }
+        }
+      
+
         public DataTable Get_years(int year = 0)
         {
             return _dal.ExecQuery("SP_GETYEARS",

@@ -36,6 +36,8 @@ namespace School_Mang.PL.STD
         }
 
         int permission_id = Properties.Settings.Default.permission_id;
+        private bool _showUpdatedAt = false;
+
         // Form Closed
         private static FRM_GET_STD frm_Get_Student;
 
@@ -104,7 +106,7 @@ namespace School_Mang.PL.STD
                         "اسم الأم",
                        "الرقم القومى"
                 );
-
+                
             }
             catch (Exception ex)
             {
@@ -454,6 +456,8 @@ namespace School_Mang.PL.STD
                     btn_edit_std.Location = new Point(631, 15);
                     btn_talab_elthak.Location = new Point(423, 15);
                 }
+                toolTip1.SetToolTip(pic_sort, "ترتيب");
+                toolTip1.SetToolTip(pic_help, "بحث");
 
             }
             catch (Exception ex)
@@ -504,6 +508,22 @@ namespace School_Mang.PL.STD
         private void dt_std_data_Click(object sender, EventArgs e)
         {
             UpdateButtonsState();
+        }
+
+        private void pic_sort_Click(object sender, EventArgs e)
+        {
+            _showUpdatedAt = !_showUpdatedAt;
+
+            if (dt_std_data.Columns.Contains("Updated_At"))
+            {
+                dt_std_data.Columns["Updated_At"].Visible = _showUpdatedAt;
+
+                if (_showUpdatedAt)
+                {
+                    dt_std_data.Columns["Updated_At"].HeaderText = "آخر تعديل";
+                    dt_std_data.Columns["Updated_At"].DefaultCellStyle.Format = "dd/MM/yyyy";
+                }
+            }
         }
     }
 }

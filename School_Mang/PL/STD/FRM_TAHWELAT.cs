@@ -18,7 +18,8 @@ namespace School_Mang.PL.STD
         private readonly LookupService _stdData = new LookupService();
 
         private byte test_year = 0;
-
+        private bool _sorted = false;
+            
         int permission_id = Properties.Settings.Default.permission_id;
 
         private bool _isLoading = true;
@@ -56,7 +57,7 @@ namespace School_Mang.PL.STD
 
 
         #region My Voids
-        private void LoadData()
+        private void    LoadData()
         {
             _isLoading = true;
             this.SuspendLayout();
@@ -218,6 +219,7 @@ namespace School_Mang.PL.STD
                 dt_std_data.DataSource = _transferService.GET_Trans_Data(gradeId, 4);
             }
 
+            btn_sort.ButtonText = " ترتيب بالتاريخ";
             lbl_count.Text = dt_std_data.Rows.Count.ToString();
             txt_std_data.Text = "";
         }
@@ -447,10 +449,31 @@ namespace School_Mang.PL.STD
                 lbl_year_b.Text = Properties.Settings.Default.MyYear.ToString();
             }
 
+            btn_sort.ButtonText = " ترتيب بالتاريخ";
             cmb_grade_SelectedIndexChanged(sender, e);
             Test_Data();
 
         }
 
+        private void btn_sort_Click(object sender, EventArgs e)
+        {
+            var dt = dt_std_data.DataSource as DataTable;
+            if (dt == null) return;
+
+            if (!_sorted)
+            {
+                dt.DefaultView.Sort = "Transfer_code DESC";
+                dt_std_data.DataSource = dt;
+                btn_sort.ButtonText = "إلغاء الترتيب";
+                _sorted = true;
+            }
+            else
+            {
+                dt.DefaultView.Sort = "";
+                dt_std_data.DataSource = dt;
+                btn_sort.ButtonText = " ترتيب بالتاريخ";
+                _sorted = false;
+            }
+        }
     }
 }

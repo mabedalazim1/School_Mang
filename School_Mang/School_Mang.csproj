@@ -1062,7 +1062,6 @@
     </Compile>
     <Compile Include="PL\STD\Mappers\FRM_CURRENT_STD_Mappes.cs" />
     <Compile Include="PL\STD\Mappers\FRM_GET_STD_Mapper.cs" />
-    <Compile Include="PL\STD\Services\CurrentStdFormService.cs" />
     <Compile Include="PL\USERS\FRM_ADD_USER.cs">
       <SubType>Form</SubType>
     </Compile>

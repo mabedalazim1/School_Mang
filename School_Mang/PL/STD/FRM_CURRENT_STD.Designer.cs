@@ -29,11 +29,12 @@ namespace School_Mang.PL.STD
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FRM_CURRENT_STD));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pn_top = new System.Windows.Forms.Panel();
             this.btn_close = new DevExpress.XtraEditors.SimpleButton();
             this.lbl_current_year = new System.Windows.Forms.Label();
@@ -55,10 +56,13 @@ namespace School_Mang.PL.STD
             this.cmb_class = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.pic_help = new System.Windows.Forms.PictureBox();
+            this.pic_sort = new System.Windows.Forms.PictureBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.pn_top.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dt_std_data)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic_help)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_sort)).BeginInit();
             this.SuspendLayout();
             // 
             // pn_top
@@ -273,10 +277,10 @@ namespace School_Mang.PL.STD
             "الثالث  الإعدادى",
             "KG1",
             "KG2"});
-            this.cmb_grade.Location = new System.Drawing.Point(151, 69);
+            this.cmb_grade.Location = new System.Drawing.Point(148, 69);
             this.cmb_grade.Name = "cmb_grade";
             this.cmb_grade.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.cmb_grade.Size = new System.Drawing.Size(153, 40);
+            this.cmb_grade.Size = new System.Drawing.Size(145, 40);
             this.cmb_grade.TabIndex = 81;
             this.cmb_grade.SelectedIndexChanged += new System.EventHandler(this.cmb_grade_SelectedIndexChanged);
             // 
@@ -284,7 +288,7 @@ namespace School_Mang.PL.STD
             // 
             this.lbl_help.AutoSize = true;
             this.lbl_help.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_help.Location = new System.Drawing.Point(419, 53);
+            this.lbl_help.Location = new System.Drawing.Point(434, 53);
             this.lbl_help.Name = "lbl_help";
             this.lbl_help.Size = new System.Drawing.Size(29, 29);
             this.lbl_help.TabIndex = 80;
@@ -297,7 +301,7 @@ namespace School_Mang.PL.STD
             this.label2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.label2.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(303, 79);
+            this.label2.Location = new System.Drawing.Point(293, 79);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 25);
             this.label2.TabIndex = 75;
@@ -309,7 +313,7 @@ namespace School_Mang.PL.STD
             this.label3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.label3.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.Black;
-            this.label3.Location = new System.Drawing.Point(897, 79);
+            this.label3.Location = new System.Drawing.Point(915, 79);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(100, 25);
             this.label3.TabIndex = 76;
@@ -321,7 +325,7 @@ namespace School_Mang.PL.STD
             this.lbl_count.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lbl_count.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_count.ForeColor = System.Drawing.Color.Black;
-            this.lbl_count.Location = new System.Drawing.Point(851, 79);
+            this.lbl_count.Location = new System.Drawing.Point(887, 79);
             this.lbl_count.Name = "lbl_count";
             this.lbl_count.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lbl_count.Size = new System.Drawing.Size(0, 25);
@@ -333,7 +337,7 @@ namespace School_Mang.PL.STD
             this.label1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.label1.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(799, 79);
+            this.label1.Location = new System.Drawing.Point(832, 79);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(45, 25);
             this.label1.TabIndex = 78;
@@ -358,7 +362,7 @@ namespace School_Mang.PL.STD
             this.txt_std_data.LineIdleColor = System.Drawing.Color.Gray;
             this.txt_std_data.LineMouseHoverColor = System.Drawing.Color.Blue;
             this.txt_std_data.LineThickness = 5;
-            this.txt_std_data.Location = new System.Drawing.Point(396, 65);
+            this.txt_std_data.Location = new System.Drawing.Point(429, 65);
             this.txt_std_data.Margin = new System.Windows.Forms.Padding(4);
             this.txt_std_data.MaxLength = 32767;
             this.txt_std_data.Name = "txt_std_data";
@@ -375,35 +379,35 @@ namespace School_Mang.PL.STD
             // 
             this.dt_std_data.AllowUserToAddRows = false;
             this.dt_std_data.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dt_std_data.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dt_std_data.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
             this.dt_std_data.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dt_std_data.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("LBC", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dt_std_data.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("LBC", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dt_std_data.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dt_std_data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dt_std_data.Location = new System.Drawing.Point(12, 131);
             this.dt_std_data.MultiSelect = false;
             this.dt_std_data.Name = "dt_std_data";
             this.dt_std_data.ReadOnly = true;
             this.dt_std_data.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dt_std_data.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dt_std_data.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dt_std_data.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dt_std_data.RowsDefaultCellStyle = dataGridViewCellStyle8;
             this.dt_std_data.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dt_std_data.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dt_std_data.Size = new System.Drawing.Size(1003, 395);
@@ -417,10 +421,10 @@ namespace School_Mang.PL.STD
             this.cmb_class.Font = new System.Drawing.Font("Noto Naskh Arabic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmb_class.ForeColor = System.Drawing.Color.DimGray;
             this.cmb_class.FormattingEnabled = true;
-            this.cmb_class.Location = new System.Drawing.Point(15, 69);
+            this.cmb_class.Location = new System.Drawing.Point(12, 69);
             this.cmb_class.Name = "cmb_class";
             this.cmb_class.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.cmb_class.Size = new System.Drawing.Size(77, 40);
+            this.cmb_class.Size = new System.Drawing.Size(74, 40);
             this.cmb_class.TabIndex = 84;
             this.cmb_class.SelectedIndexChanged += new System.EventHandler(this.cmb_class_SelectedIndexChanged);
             // 
@@ -430,7 +434,7 @@ namespace School_Mang.PL.STD
             this.label4.Cursor = System.Windows.Forms.Cursors.Hand;
             this.label4.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.Black;
-            this.label4.Location = new System.Drawing.Point(89, 79);
+            this.label4.Location = new System.Drawing.Point(86, 79);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(59, 25);
             this.label4.TabIndex = 83;
@@ -440,7 +444,7 @@ namespace School_Mang.PL.STD
             // 
             this.pic_help.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pic_help.Image = global::School_Mang.Properties.Resources.help_80;
-            this.pic_help.Location = new System.Drawing.Point(357, 72);
+            this.pic_help.Location = new System.Drawing.Point(390, 72);
             this.pic_help.Name = "pic_help";
             this.pic_help.Size = new System.Drawing.Size(38, 32);
             this.pic_help.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -449,16 +453,29 @@ namespace School_Mang.PL.STD
             this.pic_help.MouseLeave += new System.EventHandler(this.pic_help_MouseLeave);
             this.pic_help.MouseHover += new System.EventHandler(this.pic_help_MouseHover);
             // 
+            // pic_sort
+            // 
+            this.pic_sort.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pic_sort.Image = global::School_Mang.Properties.Resources.transfer_to_100;
+            this.pic_sort.Location = new System.Drawing.Point(352, 72);
+            this.pic_sort.Name = "pic_sort";
+            this.pic_sort.Size = new System.Drawing.Size(32, 32);
+            this.pic_sort.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pic_sort.TabIndex = 85;
+            this.pic_sort.TabStop = false;
+            this.pic_sort.Click += new System.EventHandler(this.pic_sort_Click);
+            // 
             // FRM_CURRENT_STD
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1027, 618);
+            this.Controls.Add(this.cmb_grade);
+            this.Controls.Add(this.pic_sort);
             this.Controls.Add(this.cmb_class);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.dt_std_data);
-            this.Controls.Add(this.cmb_grade);
             this.Controls.Add(this.lbl_help);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label3);
@@ -479,6 +496,7 @@ namespace School_Mang.PL.STD
             this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dt_std_data)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic_help)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_sort)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -507,5 +525,7 @@ namespace School_Mang.PL.STD
         public Bunifu.Framework.UI.BunifuThinButton2 btn_del_std;
         public Bunifu.Framework.UI.BunifuThinButton2 btn_talab_elthak;
         public System.Windows.Forms.ComboBox cmb_class;
+        private System.Windows.Forms.PictureBox pic_sort;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

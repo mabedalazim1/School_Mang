@@ -51,11 +51,12 @@ namespace School_Mang.PL.STD
             this.btn_close_b = new Bunifu.Framework.UI.BunifuThinButton2();
             this.lbl_current_year = new System.Windows.Forms.Label();
             this.pn_top = new System.Windows.Forms.Panel();
-            this.lbl_year_b = new System.Windows.Forms.Label();
             this.btn_close = new DevExpress.XtraEditors.SimpleButton();
+            this.lbl_year_b = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.pic_help = new System.Windows.Forms.PictureBox();
             this.btn_current_year = new Bunifu.Framework.UI.BunifuThinButton2();
+            this.btn_sort = new Bunifu.Framework.UI.BunifuThinButton2();
             ((System.ComponentModel.ISupportInitialize)(this.dt_std_data)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.pn_top.SuspendLayout();
@@ -220,7 +221,10 @@ namespace School_Mang.PL.STD
             // 
             // txt_std_data
             // 
+            this.txt_std_data.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.txt_std_data.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
             this.txt_std_data.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txt_std_data.characterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.txt_std_data.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txt_std_data.Font = new System.Drawing.Font("Noto Naskh Arabic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txt_std_data.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -233,6 +237,7 @@ namespace School_Mang.PL.STD
             this.txt_std_data.LineThickness = 5;
             this.txt_std_data.Location = new System.Drawing.Point(419, 65);
             this.txt_std_data.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_std_data.MaxLength = 32767;
             this.txt_std_data.Name = "txt_std_data";
             this.txt_std_data.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.txt_std_data.Size = new System.Drawing.Size(292, 44);
@@ -246,6 +251,7 @@ namespace School_Mang.PL.STD
             // groupBox3
             // 
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Controls.Add(this.btn_sort);
             this.groupBox3.Controls.Add(this.btn_talab_tahewl);
             this.groupBox3.Controls.Add(this.btn_del_std);
             this.groupBox3.Controls.Add(this.btn_new_std);
@@ -274,10 +280,10 @@ namespace School_Mang.PL.STD
             this.btn_talab_tahewl.IdleFillColor = System.Drawing.Color.WhiteSmoke;
             this.btn_talab_tahewl.IdleForecolor = System.Drawing.Color.DarkCyan;
             this.btn_talab_tahewl.IdleLineColor = System.Drawing.Color.CadetBlue;
-            this.btn_talab_tahewl.Location = new System.Drawing.Point(543, 15);
+            this.btn_talab_tahewl.Location = new System.Drawing.Point(632, 15);
             this.btn_talab_tahewl.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btn_talab_tahewl.Name = "btn_talab_tahewl";
-            this.btn_talab_tahewl.Size = new System.Drawing.Size(169, 50);
+            this.btn_talab_tahewl.Size = new System.Drawing.Size(156, 50);
             this.btn_talab_tahewl.TabIndex = 76;
             this.btn_talab_tahewl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.btn_talab_tahewl.Click += new System.EventHandler(this.btn_talab_tahewl_Click);
@@ -300,10 +306,10 @@ namespace School_Mang.PL.STD
             this.btn_del_std.IdleFillColor = System.Drawing.Color.WhiteSmoke;
             this.btn_del_std.IdleForecolor = System.Drawing.Color.Crimson;
             this.btn_del_std.IdleLineColor = System.Drawing.Color.PaleVioletRed;
-            this.btn_del_std.Location = new System.Drawing.Point(275, 15);
+            this.btn_del_std.Location = new System.Drawing.Point(238, 15);
             this.btn_del_std.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btn_del_std.Name = "btn_del_std";
-            this.btn_del_std.Size = new System.Drawing.Size(169, 50);
+            this.btn_del_std.Size = new System.Drawing.Size(158, 50);
             this.btn_del_std.TabIndex = 18;
             this.btn_del_std.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.btn_del_std.Click += new System.EventHandler(this.btn_del_std_Click);
@@ -326,10 +332,10 @@ namespace School_Mang.PL.STD
             this.btn_new_std.IdleFillColor = System.Drawing.Color.WhiteSmoke;
             this.btn_new_std.IdleForecolor = System.Drawing.Color.SeaGreen;
             this.btn_new_std.IdleLineColor = System.Drawing.Color.SeaGreen;
-            this.btn_new_std.Location = new System.Drawing.Point(811, 15);
+            this.btn_new_std.Location = new System.Drawing.Point(828, 15);
             this.btn_new_std.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btn_new_std.Name = "btn_new_std";
-            this.btn_new_std.Size = new System.Drawing.Size(169, 50);
+            this.btn_new_std.Size = new System.Drawing.Size(152, 50);
             this.btn_new_std.TabIndex = 18;
             this.btn_new_std.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.btn_new_std.Click += new System.EventHandler(this.btn_new_std_Click);
@@ -387,19 +393,6 @@ namespace School_Mang.PL.STD
             this.pn_top.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pn_top_MouseMove);
             this.pn_top.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pn_top_MouseUp);
             // 
-            // lbl_year_b
-            // 
-            this.lbl_year_b.AutoSize = true;
-            this.lbl_year_b.BackColor = System.Drawing.SystemColors.Highlight;
-            this.lbl_year_b.Font = new System.Drawing.Font("LBC", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_year_b.ForeColor = System.Drawing.Color.White;
-            this.lbl_year_b.Location = new System.Drawing.Point(408, 16);
-            this.lbl_year_b.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
-            this.lbl_year_b.Name = "lbl_year_b";
-            this.lbl_year_b.Size = new System.Drawing.Size(50, 22);
-            this.lbl_year_b.TabIndex = 48;
-            this.lbl_year_b.Text = "2023";
-            // 
             // btn_close
             // 
             this.btn_close.DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -412,6 +405,19 @@ namespace School_Mang.PL.STD
             this.btn_close.TabIndex = 11;
             this.btn_close.TabStop = false;
             this.btn_close.Click += new System.EventHandler(this.btn_close_Click);
+            // 
+            // lbl_year_b
+            // 
+            this.lbl_year_b.AutoSize = true;
+            this.lbl_year_b.BackColor = System.Drawing.SystemColors.Highlight;
+            this.lbl_year_b.Font = new System.Drawing.Font("LBC", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_year_b.ForeColor = System.Drawing.Color.White;
+            this.lbl_year_b.Location = new System.Drawing.Point(408, 16);
+            this.lbl_year_b.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
+            this.lbl_year_b.Name = "lbl_year_b";
+            this.lbl_year_b.Size = new System.Drawing.Size(50, 22);
+            this.lbl_year_b.TabIndex = 48;
+            this.lbl_year_b.Text = "2023";
             // 
             // panel4
             // 
@@ -460,6 +466,32 @@ namespace School_Mang.PL.STD
             this.btn_current_year.TabIndex = 99;
             this.btn_current_year.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.btn_current_year.Click += new System.EventHandler(this.btn_current_year_Click);
+            // 
+            // btn_sort
+            // 
+            this.btn_sort.ActiveBorderThickness = 1;
+            this.btn_sort.ActiveCornerRadius = 20;
+            this.btn_sort.ActiveFillColor = System.Drawing.Color.SteelBlue;
+            this.btn_sort.ActiveForecolor = System.Drawing.Color.White;
+            this.btn_sort.ActiveLineColor = System.Drawing.Color.DeepSkyBlue;
+            this.btn_sort.BackColor = System.Drawing.SystemColors.Control;
+            this.btn_sort.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_sort.BackgroundImage")));
+            this.btn_sort.ButtonText = "ترتيب بالتاريخ";
+            this.btn_sort.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_sort.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_sort.ForeColor = System.Drawing.Color.SteelBlue;
+            this.btn_sort.IdleBorderThickness = 1;
+            this.btn_sort.IdleCornerRadius = 20;
+            this.btn_sort.IdleFillColor = System.Drawing.Color.WhiteSmoke;
+            this.btn_sort.IdleForecolor = System.Drawing.Color.RoyalBlue;
+            this.btn_sort.IdleLineColor = System.Drawing.Color.DodgerBlue;
+            this.btn_sort.Location = new System.Drawing.Point(434, 15);
+            this.btn_sort.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_sort.Name = "btn_sort";
+            this.btn_sort.Size = new System.Drawing.Size(156, 50);
+            this.btn_sort.TabIndex = 77;
+            this.btn_sort.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btn_sort.Click += new System.EventHandler(this.btn_sort_Click);
             // 
             // FRM_TAHWELAT
             // 
@@ -520,5 +552,6 @@ namespace School_Mang.PL.STD
         private Bunifu.Framework.UI.BunifuThinButton2 btn_talab_tahewl;
         private Bunifu.Framework.UI.BunifuThinButton2 btn_current_year;
         private System.Windows.Forms.Label lbl_year_b;
+        private Bunifu.Framework.UI.BunifuThinButton2 btn_sort;
     }
 }

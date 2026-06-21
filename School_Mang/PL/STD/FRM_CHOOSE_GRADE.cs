@@ -326,6 +326,7 @@ namespace School_Mang.PL.STD
 
         private void btn_show_data_Click(object sender, EventArgs e)
         {
+            this.Hide();
             Waiting.Start();
             if (dt_std_data.SelectedRows.Count != 0)
             {
@@ -347,12 +348,11 @@ namespace School_Mang.PL.STD
                     c.StudentCase |= GetStudentCase.DegreeStatement;
                 }
                 }).Show(FRM_CURRENT_STD.Get_Current_Std);
-
-
+         
             //FRM_CURRENT_STD.Get_Current_Std.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
-            this.Close();
             Waiting.Stop();
-
+            this.Close();
+            this.Dispose();
         }
 
         private void dt_std_data_DoubleClick(object sender, EventArgs e)

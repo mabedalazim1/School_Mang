@@ -1,55 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace School_Mang.RPT
 {
     public partial class FRM_REPORTS : Form
     {
-
-      
-        // Form Closed
-        private static FRM_REPORTS frm_Report;
-
-        static void frm_Form_Closed(object sender, FormClosedEventArgs e)
-        {
-            frm_Report = null;
-        }
-        public static FRM_REPORTS Get_Frm_report
-        {
-            get
-            {
-                if (frm_Report == null)
-                {
-                    frm_Report = new FRM_REPORTS();
-                    frm_Report.FormClosed += new FormClosedEventHandler(frm_Form_Closed);
-                }
-                return frm_Report;
-            }
-        }
-
-
         public FRM_REPORTS()
         {
             InitializeComponent();
-
-            if (frm_Report == null)
-            {
-                frm_Report = this;
-            }
-           
         }
 
+
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            try
+            {
+                crystalReportViewer1.ReportSource = null;
+            }
+            catch
+            {
+            }
+
+            base.OnFormClosed(e);
+        }
 
         int move;
         int move_x;
         int move_y;
+
 
         private void pn_top_MouseDown(object sender, MouseEventArgs e)
         {

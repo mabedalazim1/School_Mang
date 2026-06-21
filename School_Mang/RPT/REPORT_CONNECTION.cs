@@ -15,8 +15,7 @@ namespace School_Mang.RPT
 
         string[] sen = { };
 
-        private void OpenReport(ReportDocument rpt, string frm_caption,string frm_text )
-                               
+        private void OpenReport(ReportDocument rpt, string frm_caption, string frm_text)
         {
             Waiting.Start();
 
@@ -27,21 +26,33 @@ namespace School_Mang.RPT
 
             try
             {
-                rpt.DataSourceConnections[0].IntegratedSecurity = false;
-                rpt.DataSourceConnections[0].SetConnection(server, dataBase, user, pass);
-                FRM_REPORTS.Get_Frm_report.lbl_caption.Text = frm_caption;
-                FRM_REPORTS.Get_Frm_report.Text = frm_text;
-                FRM_REPORTS.Get_Frm_report.crystalReportViewer1.ReportSource = rpt;
-                Waiting.Stop();
-                FRM_REPORTS.Get_Frm_report.ShowDialog();
-            }
-            catch(Exception e)
-            {
-                MSG.ErrorMesg(e.Message);
-                Waiting.Stop();
-            }
-            Waiting.Stop();
+                using (var frm = new FRM_REPORTS())
+                {
+                    rpt.DataSourceConnections[0].IntegratedSecurity = false;
+                    rpt.DataSourceConnections[0].SetConnection(server, dataBase, user, pass);
 
+                    frm.lbl_caption.Text = frm_caption;
+                    frm.Text = frm_text;
+                    frm.crystalReportViewer1.ReportSource = rpt;
+                    Waiting.Stop();
+                    frm.ShowDialog();
+                }
+            }
+            catch (Exception ex)
+            {
+                MSG.ErrorMesg(ex.Message);
+            }
+            finally
+            {
+                try
+                {
+                    rpt.Close();
+                    rpt.Dispose();
+                }
+                catch { }
+
+                Waiting.Stop();
+            }
         }
         public void OpenElthakReport(string std_code, 
                                      string std_name, 

@@ -2,16 +2,11 @@
 using School_Mang.BL;
 using School_Mang.PL.Controls;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace School_Mang.PL.MAIN
 {
@@ -37,6 +32,7 @@ namespace School_Mang.PL.MAIN
         }
         //Timer
         private UC_EnvironmentIndicator envIndicator;
+        private Timer _monitorTimer = new Timer();
 
         // Color
         public Color color = Color.FromArgb(0, 224, 224, 224);
@@ -116,6 +112,20 @@ namespace School_Mang.PL.MAIN
         }
         // Change Btn Color
 
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            Process p = Process.GetCurrentProcess();
+            int gdi = NativeMethods.GetGuiResources(p.Handle, NativeMethods.GR_GDIOBJECTS);
+            int user = NativeMethods.GetGuiResources(p.Handle, NativeMethods.GR_USEROBJECTS);
+
+            lbl_test.Text = $"RAM={p.PrivateMemorySize64 / 1024 / 1024} MB | " +
+                                    $"Handles={p.HandleCount} | " +
+                                    $"Threads={p.Threads.Count} | " +
+                                    $"GDI={gdi} | " +
+                                    $"USER={user} | " +
+                                    $"Forms={Application.OpenForms.Count}";
+        }
+
         private void clearColor()
         {
             btn_home.ForeColor = color;
@@ -152,6 +162,11 @@ namespace School_Mang.PL.MAIN
                     Properties.Settings.Default.Save();
                 }
             }
+        }
+
+        public void RefreshServerIndicator()
+        {
+            envIndicator?.RefreshServerInfo();
         }
         private void pn_topbar_MouseDown(object sender, MouseEventArgs e)
         {
@@ -309,7 +324,7 @@ namespace School_Mang.PL.MAIN
         private void link_login_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             fromMain = true;
-            Boolean isloged = log;
+            bool isloged = log;
             FRM_SETTINGS.Get_Frm_Settings.link_login_LinkClicked(sender, e);
             FRM_SETTINGS.Get_Frm_Settings.lbl_settings.Visible = false;
             FRM_SETTINGS.Get_Frm_Settings.pn_settings_con.Visible = false;
@@ -319,8 +334,7 @@ namespace School_Mang.PL.MAIN
                 FRM_SETTINGS.Get_Frm_Settings.txt_user.Focus();
                 FRM_SETTINGS.Get_Frm_Settings.lbl_user.Visible = false;
             }
-            // 👇 تحديث اسم السيرفر في الـ Indicator
-            envIndicator.SetServerName(Properties.Settings.Default.Server_Name);
+           
 
             InputLanguage.CurrentInputLanguage =
                InputLanguage.FromCulture(new System.Globalization.CultureInfo("en-US"));
@@ -343,6 +357,10 @@ namespace School_Mang.PL.MAIN
             envIndicator.BringToFront();
             link_login.Focus();
             ActiveControl = link_login;
+
+            _monitorTimer.Interval = 5000; // كل 5 ثوانى
+            _monitorTimer.Tick += timer1_Tick;
+            _monitorTimer.Start();
         }
 
        
@@ -357,6 +375,14 @@ namespace School_Mang.PL.MAIN
         private void pn_top_title_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+        public static class NativeMethods
+        {
+            [DllImport("user32.dll")]
+            public static extern int GetGuiResources(IntPtr hProcess, int uiFlags);
+
+            public const int GR_GDIOBJECTS = 0;
+            public const int GR_USEROBJECTS = 1;
         }
     }
 }

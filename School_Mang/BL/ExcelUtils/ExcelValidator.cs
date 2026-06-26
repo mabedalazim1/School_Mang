@@ -50,6 +50,7 @@ namespace School_Mang.BL.ExcelUtils
             string tableName,
             Func<DataRow, string> businessValidator)
         {
+
             ValidationResult result = new ValidationResult();
 
             DataTable data = Read_Excel.ReadExcelData(
@@ -64,17 +65,21 @@ namespace School_Mang.BL.ExcelUtils
 
             List<string> errors;
 
-            // 1️⃣ VALUES
+            // 1- VALUES
             errors = ValidateValues(data, cols);
             if (errors.Count > 0)
                 return Fail(result, errors);
 
-            // 2️⃣ KEYS
-            errors = ValidateKeys(data, tableName);
-            if (errors.Count > 0)
-                return Fail(result, errors);
+            // 2-  KEYS
+            if (!string.IsNullOrWhiteSpace(tableName))
+            {
+                errors = ValidateKeys(data, tableName);
 
-            // 3️⃣ BUSINESS 🔥
+                if (errors.Count > 0)
+                    return Fail(result, errors);
+            }
+
+            // 3- BUSINESS 🔥
             if (businessValidator != null)
             {
                 errors = ValidateBusiness(data, businessValidator);
@@ -160,6 +165,9 @@ namespace School_Mang.BL.ExcelUtils
         private List<string> ValidateKeys(DataTable data, string tableName)
         {
             List<string> errors = new List<string>();
+
+            if (string.IsNullOrWhiteSpace(tableName))
+                return errors;
 
             for (int i = 0; i < data.Rows.Count; i++)
             {

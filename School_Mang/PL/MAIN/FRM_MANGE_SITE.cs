@@ -295,7 +295,11 @@ namespace School_Mang.PL.MAIN
             MSG.ErrorMesg("هذا الإجراء غير متاح حالياً .. !");
             return;
 
-            // Un Work
+
+            // Un Work 
+
+            /* Begin **************************** Begin
+             * 
             if (MSG.DialogeMsg("هل تريد تحديث بيانات الطلاب في الموقع ... ؟") == DialogResult.Yes)
             {
                 MSG.MyExclamationMsg("هذا الإجراء سوف يستغرق بعض الوقت .. يرجي الإنتطار ..!");
@@ -314,6 +318,8 @@ namespace School_Mang.PL.MAIN
             {
                 MSG.ErrorMesg("تم إلفاء الإجراء ..!");
             }
+            // End *************************************** End  
+            */
         }
 
         private void pic_update_data_Click(object sender, EventArgs e)
@@ -338,8 +344,10 @@ namespace School_Mang.PL.MAIN
 
         private void lbl_add_data_Click(object sender, EventArgs e)
         {
-            SITE.FRM_EDIT_DATA.Get_Frm_Edit_Data.type = 10;
-            SITE.FRM_EDIT_DATA.Get_Frm_Edit_Data.ShowDialog();
+            using (var frm = new SITE.FRM_EDIT_DATA("تحديث المستخدمين", 10))
+            {
+                frm.ShowDialog();
+            }
         }
 
         private void pic_add_data_Click(object sender, EventArgs e)
@@ -349,9 +357,11 @@ namespace School_Mang.PL.MAIN
 
         private void lbl_add_studentd_Click(object sender, EventArgs e)
         {
-            FRM_EDIT_DATA.Get_Frm_Edit_Data.type = 11;
-            FRM_EDIT_DATA.Get_Frm_Edit_Data.lbl_title.Text = "إضافة الطلاب";
-            FRM_EDIT_DATA.Get_Frm_Edit_Data.ShowDialog();
+            using (var frm = new SITE.FRM_EDIT_DATA("إضافة الطلاب", 11))
+            {
+                frm.ShowDialog();
+            }
+           
         }
 
         private void pic_add_studentd_Click(object sender, EventArgs e)

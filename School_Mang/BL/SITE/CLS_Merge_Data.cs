@@ -20,7 +20,7 @@ namespace School_Mang.BL.SITE
             {
                 
                 DataTable localTable = localDb.LocalDbExeucuteQuery($"SELECT * FROM {tableName}");
-                DataTable remoteTable = remoteDb.SchoolSiteExeucuteQuery($"SELECT * FROM {tableName}");
+                DataTable remoteTable = remoteDb.SchoolSiteExecuteQuery($"SELECT * FROM {tableName}");
 
                 // حذف من البعيد
                 foreach (DataRow remoteRow in remoteTable.Rows)

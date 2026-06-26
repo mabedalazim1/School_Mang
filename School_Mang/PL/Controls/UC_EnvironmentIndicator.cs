@@ -1,4 +1,5 @@
 ﻿using DevExpress.Xpo.Logger.Transport;
+using Org.BouncyCastle.Crypto.Tls;
 using System;
 using System.Drawing;
 using System.Net;
@@ -13,6 +14,8 @@ namespace School_Mang.PL.Controls
         private Label lblServer;
         private Label lblText;
         private bool state = false;
+        private readonly ToolTip _toolTip = new ToolTip();
+        private bool _isServerMode;
 
         public UC_EnvironmentIndicator()
         {
@@ -36,7 +39,42 @@ namespace School_Mang.PL.Controls
         {
             MakeCircle(pnlDot);
 
+            RefreshServerInfo();
+        }
+
+        public void RefreshServerInfo()
+        {
             lblServer.Text = Properties.Settings.Default.Server_Name;
+
+            _isServerMode = IsServerMode();
+
+            if (_isServerMode)
+            {
+                lblServer.ForeColor = Color.LimeGreen;
+                lblText.ForeColor = Color.Red;
+                lblText.Text = "متصل";
+            }
+            else
+            {
+                lblServer.ForeColor = Color.LimeGreen;
+                lblServer.Text = "السيرفر المحلي";
+                lblText.Text = "";
+            }
+
+            _toolTip.SetToolTip(
+                this,
+                _isServerMode ? "Server Mode" : "Development Mode");
+        }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                blink?.Stop();
+                blink?.Dispose();
+                _toolTip?.Dispose();
+            }
+
+            base.Dispose(disposing);
         }
 
         // =========================
@@ -45,28 +83,7 @@ namespace School_Mang.PL.Controls
         private void Blink_Tick(object sender, EventArgs e)
         {
             state = !state;
-
-            bool isServer = IsServerMode();
-
-            if (isServer)
-            {
-                pnlDot.BackColor = state ? Color.LimeGreen : Color.DarkGreen;
-                lblServer.ForeColor = Color.LimeGreen;
-                lblText.ForeColor = Color.Red;
-                lblText.Text = "متصل";
-            }
-            else
-            {
-                pnlDot.BackColor = state ? Color.LimeGreen : Color.DarkGreen;
-                lblServer.ForeColor = Color.LimeGreen;
-                lblServer.Text = "السيرفر المحلي";
-                lblText.Text = "";
-            }
-
-            // ToolTip (مرة واحدة أفضل لكن بسيطه هنا)
-            ToolTip tt = new ToolTip();
-            tt.SetToolTip(this,
-                isServer ? "Server Mode" : "Development Mode");
+            pnlDot.BackColor = state ? Color.LimeGreen : Color.DarkGreen;
         }
 
         // =========================
@@ -91,9 +108,11 @@ namespace School_Mang.PL.Controls
         {
             if (c == null) return;
 
-            var gp = new System.Drawing.Drawing2D.GraphicsPath();
-            gp.AddEllipse(0, 0, c.Width - 1, c.Height - 1);
-            c.Region = new Region(gp);
+            using (var gp = new System.Drawing.Drawing2D.GraphicsPath())
+            {
+                gp.AddEllipse(0, 0, c.Width - 1, c.Height - 1);
+                c.Region = new Region(gp);
+            }
         }
 
         private void InitializeComponent()

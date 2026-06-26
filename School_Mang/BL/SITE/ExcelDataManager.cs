@@ -1,8 +1,8 @@
-﻿using School_Mang.BL.ExcelUtils;
+﻿using School_Mang.BL.Common.Extensions;
+using School_Mang.BL.ExcelUtils;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using School_Mang.BL.Common.Extensions;
 using System.Linq;
 
 namespace School_Mang.BL.SITE
@@ -20,13 +20,6 @@ namespace School_Mang.BL.SITE
             Validator = new ExcelValidator(readExcel, mangeSite);
         }
 
-        public class ImportResult
-        {
-            public bool Success { get; set; }
-            public List<string> Errors { get; set; } = new List<string>();
-            public int ProcessedRows { get; set; }
-            public DataTable Data { get; set; }
-        }
 
         public class AnswerModel
         {
@@ -51,6 +44,7 @@ namespace School_Mang.BL.SITE
 
             try
             {
+
                 var validation = Validator.ValidateExcel(file, type, columns, table);
 
                 if (validation == null)
@@ -80,6 +74,7 @@ namespace School_Mang.BL.SITE
                     {
                         foreach (DataRow row in validation.Data.Rows)
                         {
+
                             handler(row);
                             result.ProcessedRows++;
                         }
@@ -118,8 +113,89 @@ namespace School_Mang.BL.SITE
         // ========================= COLUMN FACTORY HELPERS
         private static ExcelColumn Col(string name, Type type, int index, bool allowNull = false)
             => new ExcelColumn { Name = name, DataType = type, Index = index, AllowNull = allowNull };
+        // استيراد المستخدمين 
+        public ImportResult ImportUsers(string excelFile,
+                                        Action<string> showError,
+                                        Action waitStart,
+                                        Action waitEnd)
+        {
+            var columns = new ExcelColumn[]
 
+            {
+                new ExcelColumn { Name = "username",  DataType = typeof(string), Index = 3 },
+                new ExcelColumn { Name = "password",  DataType = typeof(string), Index = 4 },
+                new ExcelColumn { Name = "firstName", DataType = typeof(string), Index = 1 },
+                new ExcelColumn { Name = "fullName",  DataType = typeof(string), Index = 2 },
+                new ExcelColumn { Name = "roleId",    DataType = typeof(int),    Index = 6 },
+                new ExcelColumn { Name = "osraId",    DataType = typeof(string), Index = 5, AllowNull = true, AllowWhitespace = true },
+                new ExcelColumn { Name = "note",      DataType = typeof(string), Index = 7, AllowNull = true, AllowWhitespace = true }
+            };
 
+            return ImportData(
+                excelFile,
+                "users",
+                columns,
+                row =>
+                    {
+                    string password = row.GetString("password");
+                    string passwordHash = BCrypt.Net.BCrypt.HashPassword(password, 10);
+
+                    Mange_Site.Update_User_2025(
+                        row.GetString("username"),
+                        passwordHash,
+                        row.GetString("firstName"),
+                        row.GetString("fullName"),
+                        row.GetInt("roleId"),
+                        row.GetString("osraId", true) ?? "",
+                        row.GetString("note", true) ?? ""
+                    );
+                },
+                showError,waitStart, waitEnd,null
+    
+            );
+        }
+
+        // استيراد الطلاب
+
+        public ImportResult ImportStudents(string excelFile,
+                                        Action<string> showError,
+                                        Action waitStart,
+                                        Action waitEnd)
+        {
+            var columns = new ExcelColumn[]
+
+            {
+                new ExcelColumn { Name = "Student_Id",  DataType = typeof(int), Index = 1 },
+                new ExcelColumn { Name = "Class_Id",  DataType = typeof(int), Index = 2 },
+                new ExcelColumn { Name = "Gender_Id", DataType = typeof(int), Index = 3 },
+                new ExcelColumn { Name = "Religion_Id", DataType = typeof(int), Index = 4 },
+                new ExcelColumn { Name = "Grade_Id", DataType = typeof(int),    Index = 5 },
+                new ExcelColumn { Name = "std_code", DataType = typeof(string), Index = 6 },
+                new ExcelColumn { Name = "Osraa_Id", DataType = typeof(string), Index = 7},
+                new ExcelColumn { Name = "std_name", DataType = typeof(string), Index = 8},
+                new ExcelColumn { Name = "full_name", DataType = typeof(string), Index = 9},
+            };
+
+            return ImportData(
+                excelFile,
+                "students",
+                columns,
+                row =>
+                    Mange_Site.Update_Student_Data(
+                        row.GetInt("Student_Id"),
+                        row.GetInt("Class_Id"),
+                        row.GetInt("Gender_Id"),
+                        row.GetInt("Religion_Id"),
+                        row.GetInt("Grade_Id"),
+                        row.GetString("std_code"),
+                        row.GetString("Osraa_Id"),
+                        row.GetString("std_name"),
+                        row.GetString("full_name")
+                        ),
+                    showError, waitStart, waitEnd, null
+
+            );
+        }
         // استيراد الموضوعات
         public ImportResult ImportTopics(string excelFile,
                                          string fileType,
@@ -441,6 +517,8 @@ namespace School_Mang.BL.SITE
 
             try
             {
+              
+
                 var validation = Validator.ValidateExcel(
                     excelFile,
                     fileType,

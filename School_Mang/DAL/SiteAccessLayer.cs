@@ -10,6 +10,7 @@ namespace School_Mang.DAL
         private readonly string _connectionString;
         private SqlConnection _con;
         private SqlTransaction _trans;
+        private bool HasTransaction => _con != null && _trans != null;
 
         public SiteAccessLayer()
         {
@@ -28,6 +29,9 @@ namespace School_Mang.DAL
         }
         public void BeginTransaction()
         {
+            if (HasTransaction)
+                throw new InvalidOperationException("Transaction already started.");
+
             _con = CreateConnection();
             _con.Open();
             _trans = _con.BeginTransaction();
@@ -35,20 +39,36 @@ namespace School_Mang.DAL
 
         public void Commit()
         {
-            _trans?.Commit();
+            if (!HasTransaction)
+                return;
+
+            _trans.Commit();
+            _trans.Dispose();
             _trans = null;
 
-            _con?.Close();
+            _con.Close();
+            _con.Dispose();
             _con = null;
         }
 
         public void Rollback()
         {
-            _trans?.Rollback();
+            if (!HasTransaction)
+                return;
+
+            _trans.Rollback();
+            _trans.Dispose();
             _trans = null;
 
-            _con?.Close();
+            _con.Close();
+            _con.Dispose();
             _con = null;
+        }
+
+        private static void AddParameters(SqlCommand cmd, SqlParameter[] parameters)
+        {
+            if (parameters?.Length > 0)
+                cmd.Parameters.AddRange(parameters);
         }
 
         // =========================
@@ -62,16 +82,26 @@ namespace School_Mang.DAL
         {
             try
             {
+                if (HasTransaction)
+                {
+                    // أثناء الـ Transaction استخدم نفس الـ Connection
+                    using (SqlCommand cmd = new SqlCommand(commandText, _con, _trans))
+                    {
+                        cmd.CommandType = commandType;
+
+                        AddParameters(cmd, parameters);
+
+                        return executor(cmd);
+                    }
+                }
+
+                // تنفيذ عادي بدون Transaction
                 using (SqlConnection con = CreateConnection())
                 using (SqlCommand cmd = new SqlCommand(commandText, con))
                 {
                     cmd.CommandType = commandType;
 
-                    if (_trans != null)
-                        cmd.Transaction = _trans;
-
-                    if (parameters != null && parameters.Length > 0)
-                        cmd.Parameters.AddRange(parameters);
+                    AddParameters(cmd, parameters);
 
                     con.Open();
                     return executor(cmd);
@@ -79,10 +109,11 @@ namespace School_Mang.DAL
             }
             catch (Exception ex)
             {
-                // مهم: لا UI داخل DAL
                 throw new Exception("Site DB Error: " + ex.Message, ex);
             }
         }
+
+
         // =========================
         // EXEC NON QUERY
         // =========================
@@ -127,29 +158,44 @@ namespace School_Mang.DAL
         }
 
 
-        public DataTable SchoolSiteExeucuteQuery(string query)
+        public DataTable SchoolSiteExecuteQuery(string query)
         {
-            using (var con = CreateConnection())
-            using (var cmd = new SqlCommand(query, con))
-            using (var da = new SqlDataAdapter(cmd))
-            {
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-                return dt;
-            }
+            return Execute(
+                query,
+                CommandType.Text,
+                null,
+                cmd =>
+                {
+                    DataTable dt = new DataTable();
+
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
+                    }
+
+                    return dt;
+                }
+            );
         }
 
         // =========================
         // RAW NON QUERY (SITE DB)
         // =========================
+
+        // لتنفيذ أوامر SQL النصية (Raw SQL) مثل DELETE وUPDATE الديناميكية.
+        // لا تستخدم Stored Procedures.
         public void SchoolSiteExecuteNonQuery(string query)
         {
-            using (var con = CreateConnection())
-            using (var cmd = new SqlCommand(query, con))
-            {
-                con.Open();
-                cmd.ExecuteNonQuery();
-            }
+            Execute(
+                query,
+                CommandType.Text,
+                null,
+                cmd =>
+                {
+                    cmd.ExecuteNonQuery();
+                    return 0;
+                }
+            );
         }
 
         public void RunInTransaction(Action action)

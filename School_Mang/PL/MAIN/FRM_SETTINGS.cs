@@ -175,10 +175,10 @@ namespace School_Mang.PL.MAIN
                 Waiting.Stop();
                 return;
             }
-            if (txt_databasee_name.Text == "")
+            if (txt_databasee_pass.Text == "")
             {
                 MSG.ErrorMesg("تأكد من كلمة المرور");
-                txt_databasee_name.Focus();
+                txt_databasee_pass.Focus();
                 Waiting.Stop();
                 return;
             }
@@ -225,6 +225,14 @@ namespace School_Mang.PL.MAIN
                         break;
                 }
                 Properties.Settings.Default.Save();
+
+                FRM_MAIN frm = Application.OpenForms.OfType<FRM_MAIN>().FirstOrDefault();
+
+                if (frm != null)
+                {
+                    frm.RefreshServerIndicator();
+                }
+
                 Waiting.Stop();
             }
             Waiting.Stop();
@@ -360,6 +368,14 @@ namespace School_Mang.PL.MAIN
         }
         private void btn_login_Click(object sender, EventArgs e)
         {
+            // تحديث اسم السيرفر
+            FRM_MAIN frm = Application.OpenForms.OfType<FRM_MAIN>().FirstOrDefault();
+
+            if (frm != null)
+            {
+                frm.RefreshServerIndicator();
+            }
+
             // Store Dir OpenFile Path
 
             BL.Globals.Dir_Path = "D:\\Rasd";

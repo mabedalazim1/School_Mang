@@ -57,6 +57,7 @@ namespace School_Mang.PL.STD
         static void frm_Form_Closed(object sender, FormClosedEventArgs e)
         {
             frm_Current_Std = null;
+            
         }
         public static FRM_CURRENT_STD Get_Current_Std
         {
@@ -79,9 +80,11 @@ namespace School_Mang.PL.STD
             {
                 frm_Current_Std = this;
             }
+
         }
 
         private bool _isApplyingContext;
+        private bool _gridInitialized = false;
 
         public void ApplyContext()
         {
@@ -213,7 +216,7 @@ namespace School_Mang.PL.STD
         // Get School Year Data
         private void LoadInitialData()
         {
-            Get_Class_Data(1);
+           // Get_Class_Data(1);
             Get_School_Year_Data();
         }
 
@@ -231,11 +234,19 @@ namespace School_Mang.PL.STD
 
                 var dt = _studentService.GetStudentsByYear(year, my_grade, 0, sortByUpdatedAt);
 
+                dt_std_data.SuspendLayout();
+
                 dt_std_data.DataSource = dt;
 
-                ApplyBaseGridLayout();
-                ApplyContextGridLayout();
+                dt_std_data.ResumeLayout();
+                if (!_gridInitialized)
+                {
+                    ApplyBaseGridLayout();
+                    ApplyContextGridLayout();
+                    _gridInitialized = true;
+                }
 
+                ShowUpdate();
 
                 lbl_count.Text = dt.Rows.Count.ToString();
 
@@ -263,15 +274,9 @@ namespace School_Mang.PL.STD
                 "std_code", "Grade_Id", "Religion_Id", "Gender_Id",
                 "Std_Status_Id", "Osraa_Id", "Year_Id", "Class_No", "Class_Id",
                 "father_name", "std_name", "std_nat", "year", "old_grade",
-                "year_desc", "Updated_by"
+                "year_desc", "Updated_by", "Updated_At"
             );
-            dt_std_data.Columns["Updated_At"].Visible = _showUpdatedAt;
-
-            if (_showUpdatedAt)
-            {
-                dt_std_data.Columns["Updated_At"].HeaderText = "آخر تعديل";
-                dt_std_data.Columns["Updated_At"].DefaultCellStyle.Format = "dd/MM/yyyy";
-            }
+           
         }
         private void ApplyContextGridLayout()
         {
@@ -303,6 +308,16 @@ namespace School_Mang.PL.STD
             }
         }
 
+        private void ShowUpdate()
+        {
+            dt_std_data.Columns["Updated_At"].Visible = _showUpdatedAt;
+
+            if (_showUpdatedAt)
+            {
+                dt_std_data.Columns["Updated_At"].HeaderText = "آخر تعديل";
+                dt_std_data.Columns["Updated_At"].DefaultCellStyle.Format = "dd/MM/yyyy";
+            }
+        }
         // Get Class Data
         public void Get_Class_Data(int gradeId, int classId = 0)
         {
@@ -677,6 +692,7 @@ namespace School_Mang.PL.STD
             }
             toolTip1.SetToolTip(pic_sort, "ترتيب");
             toolTip1.SetToolTip(pic_help, "بحث");
+            pic_sort.Image = Properties.Resources.transfer_to_100;
             try
             {
                 dt_std_data.Columns["اسم الطالب"].Width = 200;
@@ -861,14 +877,16 @@ namespace School_Mang.PL.STD
 
         private void pic_sort_Click(object sender, EventArgs e)
         {
-            _showUpdatedAt = true;
-            Get_School_Year_Data(true);
-            _showUpdatedAt = false;
+            _showUpdatedAt = !_showUpdatedAt;
+
+            Get_School_Year_Data(_showUpdatedAt);
+            pic_sort.Image = _showUpdatedAt ? Properties.Resources.transfer_from_100 : Properties.Resources.transfer_to_100;
         }
 
         private void lbl_sort_Click(object sender, EventArgs e)
         {
             pic_sort_Click(sender, e);
         }
+
     }
 }

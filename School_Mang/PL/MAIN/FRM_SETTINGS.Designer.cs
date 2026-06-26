@@ -183,7 +183,10 @@ namespace School_Mang.PL.MAIN
             // 
             // txt_user_data
             // 
+            this.txt_user_data.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.txt_user_data.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
             this.txt_user_data.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txt_user_data.characterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.txt_user_data.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txt_user_data.Font = new System.Drawing.Font("Noto Naskh Arabic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txt_user_data.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -196,6 +199,7 @@ namespace School_Mang.PL.MAIN
             this.txt_user_data.LineThickness = 5;
             this.txt_user_data.Location = new System.Drawing.Point(116, 40);
             this.txt_user_data.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_user_data.MaxLength = 32767;
             this.txt_user_data.Name = "txt_user_data";
             this.txt_user_data.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.txt_user_data.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -673,7 +677,7 @@ namespace School_Mang.PL.MAIN
             this.pn_settings_con.Controls.Add(this.pn_site_server);
             this.pn_settings_con.Location = new System.Drawing.Point(1163, 222);
             this.pn_settings_con.Name = "pn_settings_con";
-            this.pn_settings_con.Size = new System.Drawing.Size(184, 432);
+            this.pn_settings_con.Size = new System.Drawing.Size(184, 439);
             this.pn_settings_con.TabIndex = 13;
             this.pn_settings_con.Paint += new System.Windows.Forms.PaintEventHandler(this.pn_settings_con_Paint);
             // 

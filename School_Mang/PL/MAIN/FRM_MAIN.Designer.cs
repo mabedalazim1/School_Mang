@@ -30,7 +30,7 @@ namespace School_Mang.PL.MAIN
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            BunifuAnimatorNS.Animation animation1 = new BunifuAnimatorNS.Animation();
+            BunifuAnimatorNS.Animation animation6 = new BunifuAnimatorNS.Animation();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FRM_MAIN));
             this.pn_topbar = new System.Windows.Forms.Panel();
             this.btn_min = new DevExpress.XtraEditors.SimpleButton();
@@ -60,6 +60,7 @@ namespace School_Mang.PL.MAIN
             this.pn_btn = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.lbl_test = new System.Windows.Forms.Label();
             this.lbl_caption = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -581,6 +582,7 @@ namespace School_Mang.PL.MAIN
             this.pn_btn.BackColor = System.Drawing.Color.Silver;
             this.pn_btn.Controls.Add(this.label7);
             this.pn_btn.Controls.Add(this.label6);
+            this.pn_btn.Controls.Add(this.lbl_test);
             this.pn_btn.Controls.Add(this.lbl_caption);
             this.pn_btn.Controls.Add(this.label2);
             this.pn_btn.Controls.Add(this.label3);
@@ -601,7 +603,7 @@ namespace School_Mang.PL.MAIN
             this.label7.Font = new System.Drawing.Font("LBC", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.Navy;
             this.label7.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label7.Location = new System.Drawing.Point(333, 4);
+            this.label7.Location = new System.Drawing.Point(971, 4);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(90, 20);
             this.label7.TabIndex = 9;
@@ -616,11 +618,24 @@ namespace School_Mang.PL.MAIN
             this.label6.Font = new System.Drawing.Font("LBC", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.Navy;
             this.label6.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label6.Location = new System.Drawing.Point(253, 4);
+            this.label6.Location = new System.Drawing.Point(891, 4);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(75, 20);
             this.label6.TabIndex = 8;
             this.label6.Text = "2026-5-3";
+            // 
+            // lbl_test
+            // 
+            this.lbl_test.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lbl_test.AutoSize = true;
+            this.lbl_test.BackColor = System.Drawing.Color.Transparent;
+            this.trans_a.SetDecoration(this.lbl_test, BunifuAnimatorNS.DecorationType.None);
+            this.lbl_test.Font = new System.Drawing.Font("LBC", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_test.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lbl_test.Location = new System.Drawing.Point(12, 6);
+            this.lbl_test.Name = "lbl_test";
+            this.lbl_test.Size = new System.Drawing.Size(0, 14);
+            this.lbl_test.TabIndex = 6;
             // 
             // lbl_caption
             // 
@@ -630,7 +645,7 @@ namespace School_Mang.PL.MAIN
             this.trans_a.SetDecoration(this.lbl_caption, BunifuAnimatorNS.DecorationType.None);
             this.lbl_caption.Font = new System.Drawing.Font("LBC", 9.749999F);
             this.lbl_caption.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lbl_caption.Location = new System.Drawing.Point(1152, 4);
+            this.lbl_caption.Location = new System.Drawing.Point(1123, 4);
             this.lbl_caption.Name = "lbl_caption";
             this.lbl_caption.Size = new System.Drawing.Size(115, 16);
             this.lbl_caption.TabIndex = 6;
@@ -645,7 +660,7 @@ namespace School_Mang.PL.MAIN
             this.label2.Font = new System.Drawing.Font("LBC", 9.749999F);
             this.label2.ForeColor = System.Drawing.Color.SteelBlue;
             this.label2.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label2.Location = new System.Drawing.Point(59, 4);
+            this.label2.Location = new System.Drawing.Point(738, 4);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(85, 16);
             this.label2.TabIndex = 5;
@@ -659,7 +674,7 @@ namespace School_Mang.PL.MAIN
             this.trans_a.SetDecoration(this.label3, BunifuAnimatorNS.DecorationType.None);
             this.label3.Font = new System.Drawing.Font("LBC", 9.749999F);
             this.label3.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label3.Location = new System.Drawing.Point(534, 4);
+            this.label3.Location = new System.Drawing.Point(469, 4);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(212, 16);
             this.label3.TabIndex = 5;
@@ -681,22 +696,22 @@ namespace School_Mang.PL.MAIN
             // 
             this.trans_a.AnimationType = BunifuAnimatorNS.AnimationType.HorizSlide;
             this.trans_a.Cursor = null;
-            animation1.AnimateOnlyDifferences = true;
-            animation1.BlindCoeff = ((System.Drawing.PointF)(resources.GetObject("animation1.BlindCoeff")));
-            animation1.LeafCoeff = 0F;
-            animation1.MaxTime = 1F;
-            animation1.MinTime = 0F;
-            animation1.MosaicCoeff = ((System.Drawing.PointF)(resources.GetObject("animation1.MosaicCoeff")));
-            animation1.MosaicShift = ((System.Drawing.PointF)(resources.GetObject("animation1.MosaicShift")));
-            animation1.MosaicSize = 0;
-            animation1.Padding = new System.Windows.Forms.Padding(0);
-            animation1.RotateCoeff = 0F;
-            animation1.RotateLimit = 0F;
-            animation1.ScaleCoeff = ((System.Drawing.PointF)(resources.GetObject("animation1.ScaleCoeff")));
-            animation1.SlideCoeff = ((System.Drawing.PointF)(resources.GetObject("animation1.SlideCoeff")));
-            animation1.TimeCoeff = 0F;
-            animation1.TransparencyCoeff = 0F;
-            this.trans_a.DefaultAnimation = animation1;
+            animation6.AnimateOnlyDifferences = true;
+            animation6.BlindCoeff = ((System.Drawing.PointF)(resources.GetObject("animation6.BlindCoeff")));
+            animation6.LeafCoeff = 0F;
+            animation6.MaxTime = 1F;
+            animation6.MinTime = 0F;
+            animation6.MosaicCoeff = ((System.Drawing.PointF)(resources.GetObject("animation6.MosaicCoeff")));
+            animation6.MosaicShift = ((System.Drawing.PointF)(resources.GetObject("animation6.MosaicShift")));
+            animation6.MosaicSize = 0;
+            animation6.Padding = new System.Windows.Forms.Padding(0);
+            animation6.RotateCoeff = 0F;
+            animation6.RotateLimit = 0F;
+            animation6.ScaleCoeff = ((System.Drawing.PointF)(resources.GetObject("animation6.ScaleCoeff")));
+            animation6.SlideCoeff = ((System.Drawing.PointF)(resources.GetObject("animation6.SlideCoeff")));
+            animation6.TimeCoeff = 0F;
+            animation6.TransparencyCoeff = 0F;
+            this.trans_a.DefaultAnimation = animation6;
             this.trans_a.MaxAnimationTime = 500;
             // 
             // lbl_main
@@ -964,5 +979,6 @@ namespace School_Mang.PL.MAIN
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         public DevExpress.XtraEditors.SimpleButton btn_site;
+        private System.Windows.Forms.Label lbl_test;
     }
 }

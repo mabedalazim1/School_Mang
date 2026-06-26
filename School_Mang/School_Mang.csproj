@@ -235,6 +235,7 @@
     <Compile Include="BL\Common\Helper\SafeConverter.cs" />
     <Compile Include="BL\Common\Helper\GridHelper.cs" />
     <Compile Include="BL\Common\ServiceResult.cs" />
+    <Compile Include="BL\DTO\ExportInfo.cs" />
     <Compile Include="BL\Enums\ColumnVisibility.cs" />
     <Compile Include="BL\Extensions\ExcelRowHelper.cs" />
     <Compile Include="BL\Extensions\StudentCaseExtensions.cs" />
@@ -292,6 +293,8 @@
     <Compile Include="BL\SITE\CLS_READ_EXCEL.cs" />
     <Compile Include="BL\SITE\ExcelColumn.cs" />
     <Compile Include="BL\SITE\ExcelDataManager.cs" />
+    <Compile Include="BL\SITE\ExcelExportService.cs" />
+    <Compile Include="BL\SITE\ImportResult.cs" />
     <Compile Include="BL\SITE\LookupCache.cs" />
     <Compile Include="BL\SITE\SiteExcelUtlity.cs" />
     <Compile Include="BL\STD\CLS_STD.cs" />

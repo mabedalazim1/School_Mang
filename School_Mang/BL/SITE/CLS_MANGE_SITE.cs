@@ -203,6 +203,7 @@ namespace School_Mang.BL.SITE
                                      int GradeId, int SubjectId, int TermId,
                                      short Lang, short TopicSortNo)
         {
+            MSG.MyMesg("OK");
 
             DAL.ExecNonQuery("SP_Lessons_Add_Topic",
                 SqlParam.Int("@TopicId", TopicId),

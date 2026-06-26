@@ -1,77 +1,47 @@
-﻿using School_Mang.BL.Common.Extensions;
+﻿using School_Mang.BL;
+using School_Mang.BL.Common.Helper;
 using School_Mang.BL.SITE;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static DevExpress.Xpo.Helpers.AssociatedCollectionCriteriaHelper;
-using School_Mang.BL.Common.Helper;
-using School_Mang.BL;
 
 
 namespace School_Mang.PL.SITE
 {
     public partial class FRM_EDIT_DATA : Form
     {
-
-        // Form Closed
-        private static FRM_EDIT_DATA Frm_Edit_Data;
-        static void frm_Form_Closed(object sender, FormClosedEventArgs e)
-        {
-            Frm_Edit_Data = null;
-        }
-        public static FRM_EDIT_DATA Get_Frm_Edit_Data
-        {
-            get
-            {
-                if (Frm_Edit_Data == null)
-                {
-                    Frm_Edit_Data = new FRM_EDIT_DATA();
-                    Frm_Edit_Data.FormClosed += new FormClosedEventHandler(frm_Form_Closed);
-                }
-                return Frm_Edit_Data;
-            }
-
-        }
-
-        
         SiteExcelUtlity Excel = new SiteExcelUtlity();
         BL.NATEG.cls_NATAG_FUNCTIONS natag_func = new BL.NATEG.cls_NATAG_FUNCTIONS();
         CLS_MANGE_SITE Mange_Site = new CLS_MANGE_SITE();
         CLS_READ_EXCEL Read_Excel = new CLS_READ_EXCEL();
         private readonly ExcelDataManager _manager;
+        private readonly ExcelExportService _exportService;
 
 
-        public byte type;
+        private readonly byte _type;
         private string excel_file_name;
 
         private Action<string> _error;
         private Action _start;
         private Action _end;
 
-        public FRM_EDIT_DATA()
+        public FRM_EDIT_DATA(string title, byte type)
         {
             InitializeComponent();
-            if (Frm_Edit_Data == null)
-            {
-                Frm_Edit_Data = this;
-            }
+
+            lbl_title.Text = title;
+            _type = type;
+
+            _exportService = new ExcelExportService();
             _manager = new ExcelDataManager(Read_Excel, Mange_Site);
-            _error = m => MSG.ErrorMesg(m);
-            _start = () => Waiting.Start();
-            _end = () => Waiting.Stop();
+            _error = MSG.ErrorMesg;
+            _start = Waiting.Start;
+            _end = Waiting.Stop;
         }
 
-        private void HandleImportResult(ExcelDataManager.ImportResult result)
+        private void HandleImportResult(ImportResult result)
         {
-            _end?.Invoke();
-
             if (result == null)
             {
                 _error("حدث خطأ غير متوقع");
@@ -90,60 +60,40 @@ namespace School_Mang.PL.SITE
 
         private void Save_Data_TO_Excel(string worksheetName)
         {
-            string title = worksheetName;
-            string file_name = @"\" + worksheetName + ".xlsx";
-
+            var info = _exportService.GetExportInfo(worksheetName, _type);
             string saveAsLocation;
 
-            string staticExcelFile = AppDomain.CurrentDomain.BaseDirectory + @"Excel\Lessons\" + worksheetName + ".xlsx";
-            switch (type)
-            {
-                case 10:
-                case 11:
-                    staticExcelFile = AppDomain.CurrentDomain.BaseDirectory + @"Excel\Users\" + worksheetName + ".xlsx";
-                    break;
-            }
+            Directory.CreateDirectory(info.DefaultFolder);
 
-
-            // Folder Path
-            string folder = Properties.Settings.Default.save_Lessons_path;
-            switch (type)
-            {
-                case 10:
-                case 11:
-                    folder = Properties.Settings.Default.save_Users_path;
-                    break;
-            }
-            bool exists = Directory.Exists(folder);
-            if (!exists) Directory.CreateDirectory(folder);
-            folderBrowserDialog1.SelectedPath = folder;
+            folderBrowserDialog1.SelectedPath = info.DefaultFolder;
 
             // Show the FolderBrowserDialog.  
             DialogResult result = folderBrowserDialog1.ShowDialog();
+
             if (result != DialogResult.OK)
             {
                 MSG.ErrorMesg("يرجى اختيار مسار الحفظ .. !");
                 return;
             }
-            else
-            {
-                saveAsLocation = folderBrowserDialog1.SelectedPath.ToString() + file_name;
 
-                if (File.Exists(saveAsLocation))
+            saveAsLocation = Path.Combine(folderBrowserDialog1.SelectedPath,
+                                          info.FileName);
+
+            if (File.Exists(saveAsLocation))
+            {
+                if (MSG.DialogeErrMsg("الصف المحدد تم تصديره سابقاً .. سوف يتم حذف الملف  .. هل تريد المتابعة ؟") == DialogResult.No)
                 {
-                    if (MSG.DialogeErrMsg("الصف المحدد تم تصديره سابقاً .. سوف يتم حذف الملف  .. هل تريد المتابعة ؟") == DialogResult.No)
-                    {
-                        MSG.ErrorMesg("تم إلغاء الإجراء ..!");
-                        return;
-                    }
+                    MSG.ErrorMesg("تم إلغاء الإجراء ..!");
+                    return;
                 }
             }
+
             Waiting.Start();
 
             try
             {
 
-                if (Excel.WriteLessonsDataToExcel(worksheetName, saveAsLocation, title, staticExcelFile))
+                if (_exportService.Export(worksheetName, saveAsLocation, info))
                 {
                     MSG.MyMesg("تم إعداد الملف بنجاح !");
                     MSG.MyMesg(saveAsLocation + "  مسار الملف هو  ");
@@ -153,8 +103,12 @@ namespace School_Mang.PL.SITE
             {
                 MSG.ErrorMesg(ex.Message);
             }
+            finally
+            {
+                Waiting.Stop();
+            }
         }
-        private async void ReadData(byte type)
+        private async void ReadData()
         {
             if (!await InternetFlow.EnsureAsync())
                 return;
@@ -166,10 +120,11 @@ namespace School_Mang.PL.SITE
                 if (excel_file_name == null)
                 {
                     MSG.ErrorMesg("تم إلغاء الإجراء..!");
-                    BL.Globals.Dir_Path = "D://Lessons";
+                    Globals.Dir_Path = "D://Lessons";
                     return;
                 }
-                switch (type)
+
+                switch (_type)
                 {
                     case 1:
                         ReadTopic();
@@ -217,89 +172,44 @@ namespace School_Mang.PL.SITE
 
         private void ReadStudents()
         {
-            try
+
+            DataTable data = Excel.ReadStudentsDataFromExcel(excel_file_name);
+
+            if (data == null)
             {
-                Waiting.Start();
-                DataTable data = Excel.ReadStudentsDataFromExcel(excel_file_name);
-
-                if (data == null)
-                {
-                    _error("لا توجد بيانات..!");
-                    BL.Globals.Dir_Path = "D://Users";
-                    return;
-                }
-                else
-                {
-                    foreach (DataRow row in data.Rows)
-                    {
-                        int Student_Id = Convert.ToInt32(row["Student_Id"]);
-                        int Class_Id = Convert.ToInt32(row["Class_Id"]);
-                        int Gender_Id = Convert.ToInt32(row["Gender_Id"]);
-                        int Religion_Id = Convert.ToInt32(row["Religion_Id"]);
-                        int Grade_Id = Convert.ToInt32(row["Grade_Id"]);
-                        string std_code = row["std_code"].ToString();
-                        string Osraa_Id = row["Osraa_Id"].ToString();
-                        string std_name = row["std_name"].ToString();
-                        string full_name = row["full_name"].ToString();
-
-
-                        Mange_Site.Update_Student_Data(Student_Id, Class_Id, Gender_Id, Religion_Id,
-                                                    Grade_Id, std_code, Osraa_Id,
-                                                    std_name, full_name);
-
-                    }
-                    Waiting.Stop();
-                    MSG.MyMesg("تم تحديث الطلاب بنجاح .. !");
-                }
-                Waiting.Stop();
+                _error("لا توجد بيانات..!");
+                Globals.Dir_Path = "D://Users";
+                return;
             }
-            catch (Exception ex)
-            {
-                MSG.ErrorMesg(ex.Message);
-                Waiting.Stop();
-            }
+
+            var result = _manager.ImportStudents(
+                excel_file_name,
+                _error,
+                _start,
+                _end
+            );
+
+            HandleImportResult(result);
         }
 
         private void ReadUsers()
         {
-            try
+            DataTable data = Excel.ReadUsersDataFromExcel(excel_file_name);
+
+            if (data == null)
             {
-                Waiting.Start();
-                DataTable data = Excel.ReadUsersDataFromExcel(excel_file_name);
-
-                if (data == null)
-                {
-                    _error("لا توجد بيانات..!");
-                    BL.Globals.Dir_Path = "D://Users";
-                    return;
-                }
-                else
-                {
-                    foreach (DataRow row in data.Rows)
-                    {
-                        string username = row["username"].ToString();
-                        string password = row["password"].ToString();
-                        var passwordHash = BCrypt.Net.BCrypt.HashPassword(password, 10);
-                        string firstName = row["firstName"].ToString();
-                        string fullName = row["fullName"].ToString();
-                        int roleId = Convert.ToInt32(row["roleId"]);
-                        string osraId = row["osraId"].ToString();
-                        string note = row["note"].ToString();
-
-                        Mange_Site.Update_User_2025(username, passwordHash, firstName,
-                                                    fullName, roleId, osraId, note);
-
-                    }
-                    Waiting.Stop();
-                    MSG.MyMesg("تم تحديث المستخدمين بنجاح .. !");
-                }
-                Waiting.Stop();
+                _error("لا توجد بيانات..!");
+                Globals.Dir_Path = "D://Users";
+                return;
             }
-            catch (Exception ex)
-            {
-                _error(ex.Message);
-                Waiting.Stop();
-            }
+            var result = _manager.ImportUsers(
+                excel_file_name,
+                _error,
+                _start,
+                _end
+            );
+
+            HandleImportResult(result);
         }
 
         private void ReadTopic()
@@ -469,7 +379,7 @@ namespace School_Mang.PL.SITE
         private void lbl_get_file_Click(object sender, EventArgs e)
         {
             string exel_name;
-            switch (type)
+            switch (_type)
             {
                 case 1:
                     exel_name = "topic";
@@ -522,16 +432,16 @@ namespace School_Mang.PL.SITE
 
         private void label1_Click(object sender, EventArgs e)
         {
-            if (type == 3)
+            if (_type == 3)
             {
                 MSG.MyExclamationMsg("تحديث الفقرات يعتمد على عنوان الفقرة ..!");
             }
-            if (type == 4)
+            if (_type == 4)
             {
                 MSG.MyExclamationMsg("تحديث الفقرات يعتمد على المفردة  ..!");
                 MSG.MyExclamationMsg("في حالة تغيير المفردة سيتم إضافة مفردة جديدة ..!");
             }
-            if (type == 8)
+            if (_type == 8)
             {
                 MSG.MyExclamationMsg("سوف يتم إضافة جميع الإجابات ..!");
                 if (MSG.DialogeErrMsg("هل تريد إضافة جميع الإجابات ... ؟") == DialogResult.No)
@@ -540,7 +450,7 @@ namespace School_Mang.PL.SITE
                 }
             }
             // Chang Void By Names
-            ReadData(type);
+            ReadData();
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)

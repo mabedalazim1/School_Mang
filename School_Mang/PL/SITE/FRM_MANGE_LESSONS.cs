@@ -44,9 +44,10 @@ namespace School_Mang.PL.SITE
         }
         private void OpenEdidData(string title,byte type)
         {
-            FRM_EDIT_DATA.Get_Frm_Edit_Data.type = type;
-            FRM_EDIT_DATA.Get_Frm_Edit_Data.lbl_title.Text = title;
-            FRM_EDIT_DATA.Get_Frm_Edit_Data.ShowDialog();
+            using (var frm = new FRM_EDIT_DATA(title, type))
+            {
+                frm.ShowDialog();
+            }
         }
         private void lbl_index_Click(object sender, EventArgs e)
         {

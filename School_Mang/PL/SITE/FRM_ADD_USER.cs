@@ -16,59 +16,15 @@ namespace School_Mang.PL.SITE
 
         BL.SITE.CLS_MANGE_SITE site = new BL.SITE.CLS_MANGE_SITE();
         
-        BL.SITE.CLS_ADD_USER site_users = new BL.SITE.CLS_ADD_USER();
         private readonly VerifyService _verify = new VerifyService();
         private readonly LookupService _stdData = new LookupService();
         private readonly GetDataService _getData = new GetDataService();
 
 
-        // Form Closed
-        private static FRM_ADD_USER frm_Add_User;
-        static void frm_Form_Closed(object sender, FormClosedEventArgs e)
-        {
-            frm_Add_User = null;
-        }
-        public static FRM_ADD_USER Get_Add_User
-        {
-            get
-            {
-                if (frm_Add_User == null)
-                {
-                    frm_Add_User = new FRM_ADD_USER();
-                    frm_Add_User.FormClosed += new FormClosedEventHandler(frm_Form_Closed);
-                }
-                return frm_Add_User;
-            }
-        }
+        
         public FRM_ADD_USER()
         {
             InitializeComponent();
-
-            if (frm_Add_User == null)
-            {
-                frm_Add_User = this;
-            }
-
-
-            // Fill Combos
-
-            cmb_gender.DataSource = _stdData.Get_genders();
-            cmb_gender.DisplayMember = "GenderDesc";
-            cmb_gender.ValueMember = "Gender_Id";
-
-            cmb_grade.DataSource = _stdData.Get_grades();
-            cmb_grade.DisplayMember = "GradeDesc";
-            cmb_grade.ValueMember = "Grade_Id";
-            cmb_grade.SelectedValue = 1;
-
-            cmb_class.DataSource = _stdData.Get_Grad_Data(1);
-            cmb_class.DisplayMember = "Class_Desc";
-            cmb_class.ValueMember = "Class_Id";
-
-            cmb_relgien.DataSource = _stdData.Get_religion();
-            cmb_relgien.DisplayMember = "ReligionDesc";
-            cmb_relgien.ValueMember = "Religion_Id";
-
         }
 
         int move;
@@ -80,10 +36,11 @@ namespace School_Mang.PL.SITE
         int user_role = 0;
         DataTable Dt_std_code;
         string stdCode = "";
+
         private int Verify_Std_Code(string sdt_code)
         {
-            Boolean code_status = false;
-            int code = Convert.ToInt32(sdt_code);
+            bool code_status = false;
+            int code = SafeConverter.GetInt(sdt_code);
             int year = Properties.Settings.Default.year_cod;
             // Verify Student Code 
 
@@ -93,8 +50,8 @@ namespace School_Mang.PL.SITE
                 DataTable std_Dt = _verify.Verify_Std_Code(code.ToString());
                 if (std_Dt.Rows.Count != 0)
                 {
-                    DataTable Dt = _getData.GET_Code_Std_Grade(Convert.ToInt32(cmb_grade.SelectedValue),year, "no");
-                    code = Convert.ToInt32(Dt.Rows[0]["count_std"]) + 1;
+                    DataTable Dt = _getData.GET_Code_Std_Grade(SafeConverter.GetInt(cmb_grade.SelectedValue),year, "no");
+                    code = SafeConverter.GetInt(Dt.Rows[0]["count_std"]) + 1;
                 }
                 else
                 {
@@ -142,20 +99,20 @@ namespace School_Mang.PL.SITE
                     break;
             }
             int year_code = Properties.Settings.Default.year_cod;
-            DataTable Dt = _getData.GET_Code_Std_Grade(Convert.ToInt32(cmb_grade.SelectedValue), year_code, "yes");
-            count_std = Convert.ToInt32(Dt.Rows[0]["count_std"]);
-            sdt_code = Convert.ToInt32(year + grade) + count_std + 1;
+            DataTable Dt = _getData.GET_Code_Std_Grade(SafeConverter.GetInt(cmb_grade.SelectedValue), year_code, "yes");
+            count_std = SafeConverter.GetInt(Dt.Rows[0]["count_std"]);
+            sdt_code = SafeConverter.GetInt(year + grade) + count_std + 1;
 
             // Verify Student Code 
 
-            DataTable std_Dt = _verify.Verify_Std_Code(Convert.ToString(sdt_code));
+            DataTable std_Dt = _verify.Verify_Std_Code(SafeConverter.GetString(sdt_code));
             if (std_Dt.Rows.Count != 0)
             {
                 sdt_code = Verify_Std_Code(sdt_code.ToString());
             }
             stdCode = sdt_code.ToString();
         }
-        private Boolean is_cheked_data()
+        private bool is_cheked_data()
         {
             if (chk_std.Checked || chk_user.Checked ||
                        chk_admin.Checked || chk_teacher.Checked)
@@ -177,7 +134,7 @@ namespace School_Mang.PL.SITE
             }
         }
 
-        private Boolean is_empty(TextBox textBox)
+        private bool is_empty(TextBox textBox)
         {
             string text = textBox.Text.Replace(" ", string.Empty);
 
@@ -196,7 +153,7 @@ namespace School_Mang.PL.SITE
             }
         }
 
-        private Boolean is_cmb_empty(ComboBox comboBox)
+        private bool is_cmb_empty(ComboBox comboBox)
         {
             if (comboBox.SelectedItem == null)
             {
@@ -208,7 +165,7 @@ namespace School_Mang.PL.SITE
             return false;
         }
 
-        private Boolean Check_Data()
+        private bool Check_Data()
         {
             if (is_empty(txt_user_name)) return false;
 
@@ -250,7 +207,7 @@ namespace School_Mang.PL.SITE
             return true;
         }
 
-        private Boolean Verify_User(string user, bool show_msg = true)
+        private bool Verify_User(string user, bool show_msg = true)
         {
             Dt_std_code = site.Verify_Username(user);
             if (Dt_std_code.Rows.Count > 0)
@@ -275,7 +232,7 @@ namespace School_Mang.PL.SITE
             return false;
         }
 
-        private Boolean Verify_User(int code, bool show_msg = true)
+        private bool Verify_User(int code, bool show_msg = true)
         {
             Dt_std_code = site.Verify_UserSchoolId(code);
             if (Dt_std_code.Rows.Count > 0)
@@ -349,17 +306,17 @@ namespace School_Mang.PL.SITE
                     var passwordHash = BCrypt.Net.BCrypt.HashPassword(password, 10);
                     string first_name = txt_first_name.Text;
                     string full_name = txt_full_name.Text;
-                    int class_id = Convert.ToInt32(cmb_class.SelectedValue);
-                    int gender_Id = Convert.ToInt32(cmb_gender.SelectedValue);
-                    int religion_Id = Convert.ToInt32(cmb_relgien.SelectedValue);
-                    int grade_Id = Convert.ToInt32(cmb_grade.SelectedValue);
+                    int class_id = SafeConverter.GetInt(cmb_class.SelectedValue);
+                    int gender_Id = SafeConverter.GetInt(cmb_gender.SelectedValue);
+                    int religion_Id = SafeConverter.GetInt(cmb_relgien.SelectedValue);
+                    int grade_Id = SafeConverter.GetInt(cmb_grade.SelectedValue);
 
                     // Verify If Username Is Found
                     if (Verify_User(user)) return;
 
                     if (is_student)
                     {
-                        int code = Convert.ToInt32(txt_std_code.Text);
+                        int code = SafeConverter.GetInt(txt_std_code.Text);
 
                         // Verify If Code Is Found On site DataBase
                         if (Verify_User(code))
@@ -554,13 +511,19 @@ namespace School_Mang.PL.SITE
                 // Get User Data
                 if(txt_std_code.Text != "")
                 {
-                    try
+                    int code = SafeConverter.GetInt(txt_std_code.Text);
+                    DataTable dt;
+                    dt =  site.Get_Users_Data(code);
+                    if (dt != null && dt.Rows.Count > 0)
                     {
-                        BL.Globals.Get_User_Data = true;
-                        FRM_SITE_USER_DATA.Get_Frm_Site_User_Data.ShowDialog();
-                    }catch(Exception ex)
+                        DataRow row = dt.Rows[0];
+                        txt_full_name.Text = SafeConverter.GetString(row["اسم الطالب"]);
+                        
+
+                    }
+                    else
                     {
-                        MSG.ErrorMesg(ex.Message);
+                        MSG.ErrorMesg("لا توجد بيانات لهذا الرقم");
                     }
                 }
                 else
@@ -577,13 +540,32 @@ namespace School_Mang.PL.SITE
 
         private void ERM_ADD_USER_Load(object sender, EventArgs e)
         {
+            // Fill Combos
+
+            cmb_gender.DataSource = _stdData.Get_genders();
+            cmb_gender.DisplayMember = "GenderDesc";
+            cmb_gender.ValueMember = "Gender_Id";
+
+            cmb_grade.DataSource = _stdData.Get_grades();
+            cmb_grade.DisplayMember = "GradeDesc";
+            cmb_grade.ValueMember = "Grade_Id";
+            cmb_grade.SelectedValue = 1;
+
+            cmb_class.DataSource = _stdData.Get_Grad_Data(1);
+            cmb_class.DisplayMember = "Class_Desc";
+            cmb_class.ValueMember = "Class_Id";
+
+            cmb_relgien.DataSource = _stdData.Get_religion();
+            cmb_relgien.DisplayMember = "ReligionDesc";
+            cmb_relgien.ValueMember = "Religion_Id";
+
             txt_user_name.Focus();
             chk_std.Checked = false;
         }
 
         private void cmb_grade_DropDownClosed(object sender, EventArgs e)
         {
-            cmb_class.DataSource = _stdData.Get_Grad_Data(Convert.ToInt32(cmb_grade.SelectedValue));
+            cmb_class.DataSource = _stdData.Get_Grad_Data(SafeConverter.GetInt(cmb_grade.SelectedValue));
 
         }
     }

@@ -186,8 +186,10 @@ namespace School_Mang.PL.SITE
                 if (BL.Globals.Get_Site_Data)
                 {
                     // Get Vars
+                    byte grade_Id = Convert.ToByte(Globals.test_grade_id);
                     DataTable std_Dt;
-                    std_Dt = Site.Get_Users_Data(std_code);
+
+                    std_Dt = Site.Get_Users_Data(std_code, grade_Id);
 
                     int std_cod = Convert.ToInt32(std_Dt.Rows[0]["رقم الجلوس"]);
                     string std_first_name = std_Dt.Rows[0]["firstName"].ToString();

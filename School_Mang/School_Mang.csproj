@@ -297,6 +297,7 @@
     <Compile Include="BL\SITE\ImportResult.cs" />
     <Compile Include="BL\SITE\LookupCache.cs" />
     <Compile Include="BL\SITE\SiteExcelUtlity.cs" />
+    <Compile Include="BL\SITE\StudentForSiteService.cs" />
     <Compile Include="BL\STD\CLS_STD.cs" />
     <Compile Include="BL\USERS.cs" />
     <Compile Include="BL\Waiting.cs" />

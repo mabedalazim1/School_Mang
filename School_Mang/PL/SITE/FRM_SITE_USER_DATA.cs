@@ -8,12 +8,19 @@ using School_Mang.BL.Services;
 
 namespace School_Mang.PL.SITE
 {
-    public partial class FRM_SITE_USER_DATA : Form
+    public partial class FRM_SITE_USER_DATA : Form, INavigationAware
     {
         BL.SITE.CLS_MANGE_SITE site = new BL.SITE.CLS_MANGE_SITE();
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
-        
+
+        private NavigationContext _context;
         private readonly LookupService _stdData=new LookupService();
+
+        public void SetNavigation(NavigationContext context)
+        {
+            _context = context ?? new NavigationContext();
+        }
+
         // Form Closed
         private static FRM_SITE_USER_DATA Frm_Site_User_Data;
         static void frm_Form_Closed(object sender, FormClosedEventArgs e)
@@ -62,7 +69,7 @@ namespace School_Mang.PL.SITE
             is_cmb_grade_selected = true;
             txt_std_data.Text = "";
 
-            byte grade = Convert.ToByte(BL.Globals.test_grade_id);
+            byte grade = Convert.ToByte(Globals.test_grade_id);
             Load_Data(grade);
             
             Waiting.Stop();
@@ -82,7 +89,7 @@ namespace School_Mang.PL.SITE
             else
             {
 
-                if (BL.Globals.Get_User_Data)
+                if (Globals.Get_User_Data)
                 {
                     // Get User Data From School DataBase
                     try
@@ -114,6 +121,7 @@ namespace School_Mang.PL.SITE
 
                             lbl_count.Text = users.Rows.Count.ToString();
                             lbl_title.Text = "  بيانات الطلاب  ";
+                            btn_absent_std.Visible = false;
 
                         }
                         else
@@ -154,6 +162,7 @@ namespace School_Mang.PL.SITE
                             dt_std_data.Columns[1].Width = 250;
                             lbl_count.Text = users.Rows.Count.ToString();
                             lbl_title.Text = "بيانات المستخدمين";
+                            btn_absent_std.Visible = true;
                         }
                         else
                         {
@@ -232,25 +241,11 @@ namespace School_Mang.PL.SITE
             if (!await InternetFlow.EnsureAsync())
                 return;
 
-
-            if (BL.Globals.Get_User_Data)
-            {
-                try
-                {
-                    // Add User Data To Form
-                    Close();
-                    BL.Globals.Get_User_Data = false;
-                }
-                catch (Exception ex)
-                {
-                    MSG.ErrorMesg(ex.Message);
-                }
-            }
-
             try
             {
+                byte grade_Id = Convert.ToByte(Globals.test_grade_id);
                 DataTable std_Dt;
-                std_Dt = site.Get_Users_Data(std_code);
+                std_Dt = site.Get_Users_Data(std_code,grade_Id);
 
                 // Open Edit Form
                 this.Hide();

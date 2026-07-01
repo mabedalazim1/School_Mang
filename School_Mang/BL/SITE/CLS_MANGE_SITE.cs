@@ -40,7 +40,17 @@ namespace School_Mang.BL.SITE
         public DataTable Get_Users_Data(int code)
         {
             return DAL.ExecQuery("SP_Get_Users_Data",
-                 SqlParam.Byte("@grade_Id", Convert.ToByte(Globals.test_grade_id)),
+                 SqlParam.Byte("@grade_Id",0),
+                 SqlParam.NVar("@serach", "yes", 3),
+                 SqlParam.NVar("@fullName", "", 100),
+                 SqlParam.Int("@code", code)
+             );
+        }
+
+        public DataTable Get_Users_Data(int code, byte grade_Id)
+        {
+            return DAL.ExecQuery("SP_Get_Users_Data",
+                 SqlParam.Byte("@grade_Id", grade_Id),
                  SqlParam.NVar("@serach", "yes", 3),
                  SqlParam.NVar("@fullName", "", 100),
                  SqlParam.Int("@code", code)

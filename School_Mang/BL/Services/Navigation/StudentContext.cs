@@ -16,5 +16,6 @@ namespace School_Mang.BL.Services.Navigation
         public bool OpenFromAddstudent { get; set; }
         public bool EditStudent { get; set; }
         public bool UpdateStdData { get; set; }
+        public bool Get_User_Data { get; set; }
     }
 }

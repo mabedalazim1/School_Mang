@@ -198,6 +198,47 @@ namespace School_Mang.DAL
             );
         }
 
+        public int ExecuteNonQuery(string sql, params SqlParameter[] prms)
+        {
+            return Execute(
+                sql,
+                CommandType.Text,
+                prms,
+                cmd => cmd.ExecuteNonQuery());
+        }
+        // =========================
+        // EXEC SCALAR (Stored Procedure)
+        // =========================
+        public T ExecuteScalar<T>(string sp, params SqlParameter[] prms)
+        {
+            return Execute(sp, CommandType.StoredProcedure, prms,
+                cmd =>
+                {
+                    object result = cmd.ExecuteScalar();
+
+                    if (result == null || result == DBNull.Value)
+                        return default(T);
+
+                    return (T)Convert.ChangeType(result, typeof(T));
+                });
+        }
+
+        // =========================
+        // EXEC SCALAR (Text Query)
+        // =========================
+        public T ExecuteScalarQuery<T>(string sql, params SqlParameter[] prms)
+        {
+            return Execute(sql, CommandType.Text, prms,
+                cmd =>
+                {
+                    object result = cmd.ExecuteScalar();
+
+                    if (result == null || result == DBNull.Value)
+                        return default(T);
+
+                    return (T)Convert.ChangeType(result, typeof(T));
+                });
+        }
         public void RunInTransaction(Action action)
         {
             BeginTransaction();

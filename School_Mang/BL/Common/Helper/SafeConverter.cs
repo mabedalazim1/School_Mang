@@ -33,5 +33,21 @@ namespace School_Mang.BL.Common.Helper
 
             return null;
         }
+        public static bool GetBool(object value)
+        {
+            if (value == null || value == DBNull.Value)
+                return false;
+
+            if (value is bool b)
+                return b;
+
+            if (value.ToString() == "1")
+                return true;
+
+            if (value.ToString() == "0")
+                return false;
+
+            return Convert.ToBoolean(value);
+        }
     }
 }

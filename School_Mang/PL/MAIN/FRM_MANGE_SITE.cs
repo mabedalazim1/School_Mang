@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using School_Mang.PL.SITE;
+﻿using School_Mang.BL;
 using School_Mang.BL.Common.Helper;
-using School_Mang.BL;
+using School_Mang.BL.Services.FamilySyncService;
+using School_Mang.DAL;
+using School_Mang.PL.SITE;
+using System;
+using System.Data;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace School_Mang.PL.MAIN
 {
@@ -51,7 +48,9 @@ namespace School_Mang.PL.MAIN
         BL.NATEG.cls_NATAG_FUNCTIONS natag_func = new BL.NATEG.cls_NATAG_FUNCTIONS();
         new readonly BL.SITE.CLS_MANGE_SITE Site = new BL.SITE.CLS_MANGE_SITE();
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
+        FamilyDataGenerator generator = new FamilyDataGenerator();
 
+        private readonly DataAcceseLayer _dal = new DataAcceseLayer();
 
         int year = Properties.Settings.Default.year_cod;
         DataTable user_code;
@@ -72,7 +71,7 @@ namespace School_Mang.PL.MAIN
             FRM_MAIN.Get_Frm_Main.lbl_main.Visible = true;
         }
 
-        private Boolean Get_Std_Data(bool get_msg = false)
+        private bool Get_Std_Data(bool get_msg = false)
         {
             bool has_data;
             Waiting.Start();
@@ -106,7 +105,7 @@ namespace School_Mang.PL.MAIN
             return has_data;
         }
 
-        private Boolean Get_Site_Data(bool get_msg = false)
+        private bool Get_Site_Data(bool get_msg = false)
         {
             bool has_data;
             Waiting.Start();
@@ -404,6 +403,28 @@ namespace School_Mang.PL.MAIN
         private void pic_async_site_Click(object sender, EventArgs e)
         {
             lbl_async_site_Click(sender, e);
+        }
+
+        private void pic_archiv_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+                var frm = new FRM_SYNC_YEAR();
+                frm.ShowDialog();
+
+               
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+    
+        private void lbl_archiv_Click(object sender, EventArgs e)
+        {
+            pic_archiv_Click(sender, e);
         }
     }
 }

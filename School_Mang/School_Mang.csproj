@@ -236,7 +236,18 @@
     <Compile Include="BL\Common\Helper\GridHelper.cs" />
     <Compile Include="BL\Common\ServiceResult.cs" />
     <Compile Include="BL\DTO\ExportInfo.cs" />
+    <Compile Include="BL\Enums\FamilySyncAction.cs" />
+    <Compile Include="BL\Services\FamilySyncService\FamilyMapper.cs" />
+    <Compile Include="BL\Services\FamilySyncService\FamilySyncBulkService.cs" />
+    <Compile Include="BL\Services\FamilySyncService\FamilySyncTempBuilder.cs" />
+    <Compile Include="BL\Services\FamilySyncService\FamilySyncTempService.cs" />
+    <Compile Include="BL\Services\FamilySyncService\Models\FamilySyncItem.cs" />
+    <Compile Include="BL\Services\FamilySyncService\Models\FamilySyncResult.cs" />
+    <Compile Include="BL\Services\FamilySyncService\Models\FamilySyncTemp.cs" />
+    <Compile Include="BL\Services\FamilySyncService\Models\FamilyUserNameUpdate.cs" />
+    <Compile Include="BL\Services\FamilySyncService\Models\SchoolFamily.cs" />
     <Compile Include="BL\Enums\ColumnVisibility.cs" />
+    <Compile Include="BL\Enums\UserSearchField.cs" />
     <Compile Include="BL\Extensions\ExcelRowHelper.cs" />
     <Compile Include="BL\Extensions\StudentCaseExtensions.cs" />
     <Compile Include="BL\Common\Helper\InternetFlow.cs" />
@@ -260,6 +271,18 @@
     <Compile Include="BL\NATEG\cls_NATAG_FUNCTIONS.cs" />
     <Compile Include="BL\NATEG\CLS_NATEG.cs" />
     <Compile Include="BL\NATEG\ExcelUtlity.cs" />
+    <Compile Include="BL\Services\FamilySyncService\ArchiveService.cs" />
+    <Compile Include="BL\Services\FamilySyncService\FamilyComparer.cs" />
+    <Compile Include="BL\Services\FamilySyncService\FamilySyncService.cs" />
+    <Compile Include="BL\Services\FamilySyncService\Models\SiteFamily.cs" />
+    <Compile Include="BL\Services\FamilySyncService\Models\SyncReport.cs" />
+    <Compile Include="BL\Services\FamilySyncService\SchoolFamilyProvider.cs" />
+    <Compile Include="BL\Services\FamilySyncService\SiteUserProvider.cs" />
+    <Compile Include="BL\Services\FamilySyncService\SiteUserService.cs" />
+    <Compile Include="BL\Services\FamilySyncService\SyncExecutor.cs" />
+    <Compile Include="BL\Services\FamilySyncService\SyncReportService.cs" />
+    <Compile Include="BL\Services\FamilySyncService\TempTableBuilder.cs" />
+    <Compile Include="BL\Services\FamilySyncService\FamilyDataGenerator.cs" />
     <Compile Include="BL\Services\LookupService.cs" />
     <Compile Include="BL\Services\Navigation\OsraContext.cs" />
     <Compile Include="BL\Services\Navigation\StudentContext.cs" />
@@ -906,6 +929,18 @@
     </Compile>
     <Compile Include="PL\SITE\FRM_COUNT_USERS.Designer.cs">
       <DependentUpon>FRM_COUNT_USERS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PL\SITE\FRM_SYNC_RESULT.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\SITE\FRM_SYNC_RESULT.Designer.cs">
+      <DependentUpon>FRM_SYNC_RESULT.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PL\SITE\FRM_SYNC_YEAR.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\SITE\FRM_SYNC_YEAR.Designer.cs">
+      <DependentUpon>FRM_SYNC_YEAR.cs</DependentUpon>
     </Compile>
     <Compile Include="PL\SITE\FRM_EDIT_DATA.cs">
       <SubType>Form</SubType>
@@ -1639,6 +1674,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PL\SITE\FRM_COUNT_USERS.resx">
       <DependentUpon>FRM_COUNT_USERS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PL\SITE\FRM_SYNC_RESULT.resx">
+      <DependentUpon>FRM_SYNC_RESULT.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PL\SITE\FRM_SYNC_YEAR.resx">
+      <DependentUpon>FRM_SYNC_YEAR.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PL\SITE\FRM_EDIT_DATA.resx">
       <DependentUpon>FRM_EDIT_DATA.cs</DependentUpon>

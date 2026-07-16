@@ -31,15 +31,7 @@ namespace School_Mang.BL.Services.FamilySyncService
                 "FamilySync_Temp");
         }
 
-        public void UpdateUserNames(DataTable table)
-        {
-            _dal.ExecuteTableParameter(
-                "SP_Update_FamilySync_UserNames",
-                "@Users",
-                table,
-                "FamilyUserNameTable");
-        }
-
+        
         public void UpdateSiteFamilies(DataTable table)
         {
             _dal.ExecuteTableParameter(

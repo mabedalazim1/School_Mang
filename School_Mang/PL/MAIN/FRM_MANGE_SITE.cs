@@ -1,11 +1,15 @@
 ﻿using School_Mang.BL;
 using School_Mang.BL.Common.Helper;
+using School_Mang.BL.DTO;
+using School_Mang.BL.Enums;
 using School_Mang.BL.Services.FamilySyncService;
+using School_Mang.BL.Services.FamilySyncService.Models;
+using School_Mang.BL.Services.SyncService;
+using School_Mang.BL.Services.SyncService.Models;
 using School_Mang.DAL;
 using School_Mang.PL.SITE;
 using System;
 using System.Data;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace School_Mang.PL.MAIN
@@ -13,7 +17,10 @@ namespace School_Mang.PL.MAIN
     public partial class FRM_MANGE_SITE : Form
     {
         // Async Data
-        readonly BL.SITE.CLS_Merge_Data Merge_Data = new BL.SITE.CLS_Merge_Data();
+        private readonly SyncProcessService _syncProcessService = new SyncProcessService();
+        private readonly FamilySyncValidationService _validationService = new FamilySyncValidationService();
+        private readonly  FamilySiteSyncService service =new FamilySiteSyncService();
+    
 
         // Form Closed
         private static FRM_MANGE_SITE frm_Mange_Site;
@@ -71,76 +78,8 @@ namespace School_Mang.PL.MAIN
             FRM_MAIN.Get_Frm_Main.lbl_main.Visible = true;
         }
 
-        private bool Get_Std_Data(bool get_msg = false)
-        {
-            bool has_data;
-            Waiting.Start();
-            user_code = Site.Get_User_Code();
-            std_code = std.Get_Kaema_Data(year, 0);
-            if (get_msg)
-            {
-                MSG.MyMesg("عدد الطلاب المسجلين فى قاعدة البيانات  : " + std_code.Rows.Count.ToString());
-            }
-
-            var unmatchedOnDataBase = from row1 in std_code.AsEnumerable()
-                                      join row2 in user_code.AsEnumerable()
-                                      on row1.Field<int>("Golos") equals row2.Field<int>("Golos") into joined
-                                      from row2 in joined.DefaultIfEmpty()
-                                      where row2 == null
-                                      select row1;
-            if (unmatchedOnDataBase.Count() != 0)
-            {
-                unmatchedDataBase = unmatchedOnDataBase.CopyToDataTable();
-                has_data = true;
-            }
-            else
-            {
-                if (!get_msg)
-                {
-                    MSG.ErrorMesg("لا توجد بيانات غير متطابقة..!");
-                }
-                has_data = false;
-            }
-            Waiting.Stop();
-            return has_data;
-        }
-
-        private bool Get_Site_Data(bool get_msg = false)
-        {
-            bool has_data;
-            Waiting.Start();
-            user_code = Site.Get_User_Code();
-            std_code = std.Get_Kaema_Data(year, 0);
-
-            if (get_msg)
-            {
-                MSG.MyMesg("عدد الطلاب المسجلين فى الموقع  : " + user_code.Rows.Count.ToString());
-            }
-            var unmatchedOnSite = from row1 in user_code.AsEnumerable()
-                                  join row2 in std_code.AsEnumerable()
-                                  on row1.Field<int>("Golos") equals row2.Field<int>("Golos") into joined
-                                  from row2 in joined.DefaultIfEmpty()
-                                  where row2 == null
-                                  select row1;
-
-            if (unmatchedOnSite.Count() != 0)
-            {
-                unmatchedSite = unmatchedOnSite.CopyToDataTable();
-                has_data = true;
-            }
-            else
-            {
-                if (!get_msg)
-                {
-                    MSG.ErrorMesg("لا توجد بيانات غير متطابقة..!");
-                }
-                has_data = false;
-            }
-            Waiting.Stop();
-            return has_data;
-        }
-        
-
+    
+       
         private void lbl_back_Click(object sender, EventArgs e)
         {
             natag_func.changePages(FRM_SETTINGS.Get_Frm_Settings.pn_home, "الإعدادات");
@@ -171,25 +110,7 @@ namespace School_Mang.PL.MAIN
             try
             {
 
-                // Load Data
-                if (Get_Std_Data(true))
-                {
-                    MSG.MyMesg(" غير موجود في قاعدة الطلاب: " + unmatchedDataBase.Rows.Count.ToString());
-                }
-                else
-                {
-                    MSG.ErrorMesg("لا يوجد طلاب غير مسجل لهم مستخدم على الموقع  ..!");
-                }
-
-
-                if (Get_Site_Data(true))
-                {
-                    MSG.MyMesg(" غير موجود في قاعدة الطلاب: " + unmatchedSite.Rows.Count.ToString());
-                }
-                else
-                {
-                    MSG.ErrorMesg("لا يوجد طلاب غير مسجلين في قاعدة البيانات ..!");
-                }
+                
             }
             catch (Exception ex)
             {
@@ -215,16 +136,7 @@ namespace School_Mang.PL.MAIN
 
             try
             {
-                if (Get_Site_Data())
-                {
-                    BL.Globals.Get_Site_Data = true;
-                    FRM_UNMATCH_DATA.Get_Frm_UnMatch_Data.Dt_Un_Mathed = unmatchedSite;
-                    FRM_UNMATCH_DATA.Get_Frm_UnMatch_Data.ShowDialog();
-                }
-                else
-                {
-                    return;
-                }
+               
             }
             catch (Exception ex)
             {
@@ -245,16 +157,7 @@ namespace School_Mang.PL.MAIN
 
             try
             {
-                if (Get_Std_Data())
-                {
-                    BL.Globals.Get_Site_Data = false;
-                    FRM_UNMATCH_DATA.Get_Frm_UnMatch_Data.Dt_Un_Mathed = unmatchedDataBase;
-                    FRM_UNMATCH_DATA.Get_Frm_UnMatch_Data.ShowDialog();
-                }
-                else
-                {
-                    return;
-                }
+                
             }
             catch (Exception ex)
             {
@@ -295,30 +198,7 @@ namespace School_Mang.PL.MAIN
             return;
 
 
-            // Un Work 
-
-            /* Begin **************************** Begin
-             * 
-            if (MSG.DialogeMsg("هل تريد تحديث بيانات الطلاب في الموقع ... ؟") == DialogResult.Yes)
-            {
-                MSG.MyExclamationMsg("هذا الإجراء سوف يستغرق بعض الوقت .. يرجي الإنتطار ..!");
-
-                try
-                {
-                    BL.SITE.CLS_ADD_USER add_user = new BL.SITE.CLS_ADD_USER();
-                    add_user.Update_Site_Data();
-                }
-                catch (Exception ex)
-                {
-                    MSG.ErrorMesg(ex.Message);
-                }
-            }
-            else
-            {
-                MSG.ErrorMesg("تم إلفاء الإجراء ..!");
-            }
-            // End *************************************** End  
-            */
+           
         }
 
         private void pic_update_data_Click(object sender, EventArgs e)
@@ -374,30 +254,6 @@ namespace School_Mang.PL.MAIN
                 return;
 
             
-            if (Properties.Settings.Default.Server_Name != "192.168.1.135")
-            {
-                if (MSG.DialogeErrMsg("هل تريد مزامنة قاعدة البيانات علي السيرفر ... ؟") == DialogResult.Yes)
-                {
-                    MSG.MyExclamationMsg("هذا الإجراء سوف يستغرق بعض الوقت .. يرجي الإنتطار ..!");
-                    try
-                    {
-                        Merge_Data.SyncTable("OsraData", new string[] { "Osraa_Id" });
-                        Merge_Data.SyncTable("StdData", new string[] { "std_code" });
-                        Merge_Data.SyncTable("School_Std_Data", new string[] { "std_code", "Year_Id", "Grade_Id" });
-                        Merge_Data.SyncTable("Final_Degrees", new string[] { "Golos", "Year_Id" });
-                        Merge_Data.SyncTable("Transfers", new string[] { "Transfer_code" });
-                    }
-                    catch (Exception ex)
-                    {
-                        MSG.ErrorMesg(ex.Message);
-                    }
-                }
-                else
-                {
-                    MSG.ErrorMesg("تم إلغاء الإجراء");
-                    return;
-                } 
-            }
         }
 
         private void pic_async_site_Click(object sender, EventArgs e)
@@ -405,15 +261,16 @@ namespace School_Mang.PL.MAIN
             lbl_async_site_Click(sender, e);
         }
 
-        private void pic_archiv_Click(object sender, EventArgs e)
+        private void lbl_sync_family_Click(object sender, EventArgs e)
         {
             try
             {
+                var frm = new FRM_SYNC_YEAR("تجهيز الأسر للمزامنة");
 
-                var frm = new FRM_SYNC_YEAR();
-                frm.ShowDialog();
-
-               
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    StartFamilySiteSync();
+                }
 
             }
             catch (Exception ex)
@@ -421,10 +278,127 @@ namespace School_Mang.PL.MAIN
                 MessageBox.Show(ex.Message);
             }
         }
-    
-        private void lbl_archiv_Click(object sender, EventArgs e)
+
+        private void pic_sync_family_Click(object sender, EventArgs e)
         {
-            pic_archiv_Click(sender, e);
+            lbl_sync_family_Click(sender, e);
+        }
+
+        private void StartFamilySiteSync()
+        {
+            Waiting.Start();
+
+            try
+            {
+                SyncProcessInfo info =
+                    _syncProcessService.GetStatus("Family");
+
+                if (!info.IsPrepared || !info.PreparedDate.HasValue)
+                {
+                    MSG.ErrorMesg("يجب تجهيز بيانات الأسر أولاً قبل بدء المزامنة.");
+                    return;
+                }
+
+
+                TimeSpan elapsed =
+                    DateTime.Now - info.PreparedDate.Value;
+
+
+                if (elapsed > TimeSpan.FromMinutes(4))
+                {
+                    string elapsedText =
+                        TimeFormatter.FormatElapsed(elapsed);
+
+                    if (MSG.DialogeErrMsg(
+                        $"تم تجهيز بيانات الأسر منذ {elapsedText}\n\n" +
+                        "قد تكون بيانات المدرسة قد تغيرت منذ ذلك الوقت.\n\n" +
+                        "هل تريد المتابعة باستخدام البيانات الحالية؟")
+                        == DialogResult.No)
+                    {
+                        MSG.ErrorMesg("تم إلغاء المزامنة");
+                        return;
+                    }
+                }
+
+
+                // التحقق النهائي من أسماء المستخدمين
+                FamilyValidationResult result =
+                    _validationService.ValidateUserNames();
+
+
+                if (result.CheckedCount == 0)
+                {
+                    if (MSG.DialogeErrMsg(
+                        "لا توجد أسر جديدة تحتاج إلى التحقق من أسماء المستخدمين.\n\n" +
+                        "هل تريد المتابعة في عملية المزامنة؟")
+                        == DialogResult.No)
+                    {
+                        MSG.ErrorMesg("تم إلغاء المزامنة");
+                        return;
+                    }
+                }
+                else
+                {
+                    MSG.MyMesg(
+                        $"تم التحقق من بيانات الأسر بنجاح.\n\n" +
+                        $"عدد الأسر التي تم فحصها: {result.CheckedCount}\n" +
+                        $"عدد أسماء المستخدمين التي تم تعديلها: {result.UpdatedUserNames}");
+                }
+
+                // هنا تبدأ مزامنة الموقع الفعلية
+                if (MSG.DialogeErrMsg(
+                         "تم التحقق من بيانات الأسر.\n\n" +
+                         "هل تريد المتابعة في عملية المزامنة؟")
+                         == DialogResult.No)
+                {
+                    MSG.ErrorMesg("تم إلغاء المزامنة");
+                    return;
+                }
+                var progress = new FRM_PROGRESS();
+
+                progress.StartPosition = FormStartPosition.CenterScreen;
+                progress.Show();
+
+                service.ProgressChanged += (current, total, message) =>
+                {
+                    progress.UpdateProgress(current, total, message);
+                };
+
+                FamilySyncResult resultSite =
+                    service.SyncFamilies();
+
+
+                progress.Finish();
+                progress.Close();
+
+                MSG.MyMesg("تمت مزامنة الأسر بنجاح.");
+                int year = Properties.Settings.Default.year_cod;
+                var frm = new FRM_SYNC_RESULT(resultSite,
+                                              year,
+                                              SyncResultView.SiteSync,
+                                              "تحديث بيانات المستخدمين");
+
+                frm.ShowDialog();
+
+            }
+            catch (Exception ex)
+            {
+                MSG.ErrorMesg(ex.Message);
+            }
+            finally
+            {
+                Waiting.Stop();
+            }
+        }
+        private void lbl_add_family_Click(object sender, EventArgs e)
+        {
+
+            StartFamilySiteSync();
+        }
+
+        private void pic_add_family_Click(object sender, EventArgs e)
+        {
+            StartFamilySiteSync();
         }
     }
 }

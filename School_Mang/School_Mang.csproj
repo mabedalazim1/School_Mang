@@ -234,18 +234,26 @@
     <Compile Include="BL\CLS_BACKUP_DATABASE.cs" />
     <Compile Include="BL\Common\Helper\SafeConverter.cs" />
     <Compile Include="BL\Common\Helper\GridHelper.cs" />
+    <Compile Include="BL\Common\Helper\TimeFormatter.cs" />
     <Compile Include="BL\Common\ServiceResult.cs" />
     <Compile Include="BL\DTO\ExportInfo.cs" />
+    <Compile Include="BL\DTO\SyncProcessInfo.cs" />
     <Compile Include="BL\Enums\FamilySyncAction.cs" />
-    <Compile Include="BL\Services\FamilySyncService\FamilyMapper.cs" />
-    <Compile Include="BL\Services\FamilySyncService\FamilySyncBulkService.cs" />
-    <Compile Include="BL\Services\FamilySyncService\FamilySyncTempBuilder.cs" />
-    <Compile Include="BL\Services\FamilySyncService\FamilySyncTempService.cs" />
-    <Compile Include="BL\Services\FamilySyncService\Models\FamilySyncItem.cs" />
-    <Compile Include="BL\Services\FamilySyncService\Models\FamilySyncResult.cs" />
-    <Compile Include="BL\Services\FamilySyncService\Models\FamilySyncTemp.cs" />
-    <Compile Include="BL\Services\FamilySyncService\Models\FamilyUserNameUpdate.cs" />
-    <Compile Include="BL\Services\FamilySyncService\Models\SchoolFamily.cs" />
+    <Compile Include="BL\Enums\SyncProcessType.cs" />
+    <Compile Include="BL\Enums\SyncNextAction.cs" />
+    <Compile Include="BL\Enums\SyncResultView.cs" />
+    <Compile Include="BL\Services\SyncService\FamilyMapper.cs" />
+    <Compile Include="BL\Services\SyncService\FamilySiteSyncService.cs" />
+    <Compile Include="BL\Services\SyncService\FamilySyncBulkService.cs" />
+    <Compile Include="BL\Services\SyncService\FamilySyncTempBuilder.cs" />
+    <Compile Include="BL\Services\SyncService\FamilySyncTempService.cs" />
+    <Compile Include="BL\Services\SyncService\FamilySyncValidationService.cs" />
+    <Compile Include="BL\Services\SyncService\Models\FamilySyncItem.cs" />
+    <Compile Include="BL\Services\SyncService\Models\FamilySyncResult.cs" />
+    <Compile Include="BL\Services\SyncService\Models\FamilySyncTemp.cs" />
+    <Compile Include="BL\Services\SyncService\Models\FamilyUserNameUpdate.cs" />
+    <Compile Include="BL\Services\SyncService\Models\FamilyValidationResult.cs" />
+    <Compile Include="BL\Services\SyncService\Models\SchoolFamily.cs" />
     <Compile Include="BL\Enums\ColumnVisibility.cs" />
     <Compile Include="BL\Enums\UserSearchField.cs" />
     <Compile Include="BL\Extensions\ExcelRowHelper.cs" />
@@ -271,18 +279,14 @@
     <Compile Include="BL\NATEG\cls_NATAG_FUNCTIONS.cs" />
     <Compile Include="BL\NATEG\CLS_NATEG.cs" />
     <Compile Include="BL\NATEG\ExcelUtlity.cs" />
-    <Compile Include="BL\Services\FamilySyncService\ArchiveService.cs" />
-    <Compile Include="BL\Services\FamilySyncService\FamilyComparer.cs" />
-    <Compile Include="BL\Services\FamilySyncService\FamilySyncService.cs" />
-    <Compile Include="BL\Services\FamilySyncService\Models\SiteFamily.cs" />
-    <Compile Include="BL\Services\FamilySyncService\Models\SyncReport.cs" />
-    <Compile Include="BL\Services\FamilySyncService\SchoolFamilyProvider.cs" />
-    <Compile Include="BL\Services\FamilySyncService\SiteUserProvider.cs" />
-    <Compile Include="BL\Services\FamilySyncService\SiteUserService.cs" />
-    <Compile Include="BL\Services\FamilySyncService\SyncExecutor.cs" />
-    <Compile Include="BL\Services\FamilySyncService\SyncReportService.cs" />
-    <Compile Include="BL\Services\FamilySyncService\TempTableBuilder.cs" />
-    <Compile Include="BL\Services\FamilySyncService\FamilyDataGenerator.cs" />
+    <Compile Include="BL\Services\SyncService\FamilySyncService.cs" />
+    <Compile Include="BL\Services\SyncService\Models\SiteFamily.cs" />
+    <Compile Include="BL\Services\SyncService\Models\SyncReport.cs" />
+    <Compile Include="BL\Services\SyncService\SchoolFamilyProvider.cs" />
+    <Compile Include="BL\Services\SyncService\SiteUserProvider.cs" />
+    <Compile Include="BL\Services\SyncService\SyncProcessService.cs" />
+    <Compile Include="BL\Services\SyncService\TempTableBuilder.cs" />
+    <Compile Include="BL\Services\SyncService\FamilyDataGenerator.cs" />
     <Compile Include="BL\Services\LookupService.cs" />
     <Compile Include="BL\Services\Navigation\OsraContext.cs" />
     <Compile Include="BL\Services\Navigation\StudentContext.cs" />
@@ -312,7 +316,6 @@
     <Compile Include="BL\Services\STD\StudentDataMigrationService.cs" />
     <Compile Include="BL\SITE\CLS_ADD_USER.cs" />
     <Compile Include="BL\SITE\CLS_MANGE_SITE.cs" />
-    <Compile Include="BL\SITE\CLS_Merge_Data.cs" />
     <Compile Include="BL\SITE\CLS_READ_EXCEL.cs" />
     <Compile Include="BL\SITE\ExcelColumn.cs" />
     <Compile Include="BL\SITE\ExcelDataManager.cs" />
@@ -918,12 +921,6 @@
     <Compile Include="PL\NATIGA\HOME\FRM_MANG_SITE.Designer.cs">
       <DependentUpon>FRM_MANG_SITE.cs</DependentUpon>
     </Compile>
-    <Compile Include="PL\SITE\FRM_ADD_USER.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="PL\SITE\FRM_ADD_USER.Designer.cs">
-      <DependentUpon>FRM_ADD_USER.cs</DependentUpon>
-    </Compile>
     <Compile Include="PL\SITE\FRM_COUNT_USERS.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -935,6 +932,12 @@
     </Compile>
     <Compile Include="PL\SITE\FRM_SYNC_RESULT.Designer.cs">
       <DependentUpon>FRM_SYNC_RESULT.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PL\SITE\FRM_PROGRESS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\SITE\FRM_PROGRESS.Designer.cs">
+      <DependentUpon>FRM_PROGRESS.cs</DependentUpon>
     </Compile>
     <Compile Include="PL\SITE\FRM_SYNC_YEAR.cs">
       <SubType>Form</SubType>
@@ -1669,14 +1672,14 @@
     <EmbeddedResource Include="PL\NATIGA\HOME\FRM_MANG_SITE.resx">
       <DependentUpon>FRM_MANG_SITE.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PL\SITE\FRM_ADD_USER.resx">
-      <DependentUpon>FRM_ADD_USER.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="PL\SITE\FRM_COUNT_USERS.resx">
       <DependentUpon>FRM_COUNT_USERS.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PL\SITE\FRM_SYNC_RESULT.resx">
       <DependentUpon>FRM_SYNC_RESULT.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PL\SITE\FRM_PROGRESS.resx">
+      <DependentUpon>FRM_PROGRESS.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PL\SITE\FRM_SYNC_YEAR.resx">
       <DependentUpon>FRM_SYNC_YEAR.cs</DependentUpon>

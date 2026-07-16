@@ -38,29 +38,41 @@ namespace School_Mang.PL.SITE
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.lbl_year = new System.Windows.Forms.Label();
-            this.lbl_count = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.lbl_add = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.lbl_no = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.lbl_update = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
+            this.grpPrepare = new System.Windows.Forms.GroupBox();
             this.lbl_disabled = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lbl_update = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.lbl_no = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.lbl_add = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.lbl_count = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lbl_year = new System.Windows.Forms.Label();
+            this.lbl_result = new System.Windows.Forms.Label();
+            this.grpSite = new System.Windows.Forms.GroupBox();
+            this.lbl_site_total = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.lbl_site_disabled = new System.Windows.Forms.Label();
+            this.lbl2 = new System.Windows.Forms.Label();
+            this.lbl_site_add = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.lbl_site_active = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.btnContinue = new Bunifu.Framework.UI.BunifuThinButton2();
             this.groupBox3.SuspendLayout();
             this.pn_top.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.groupBox1.SuspendLayout();
+            this.grpPrepare.SuspendLayout();
+            this.grpSite.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.btnContinue);
             this.groupBox3.Controls.Add(this.btn_close_b);
-            this.groupBox3.Location = new System.Drawing.Point(21, 359);
+            this.groupBox3.Location = new System.Drawing.Point(23, 359);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(366, 75);
             this.groupBox3.TabIndex = 102;
@@ -84,7 +96,7 @@ namespace School_Mang.PL.SITE
             this.btn_close_b.IdleFillColor = System.Drawing.Color.WhiteSmoke;
             this.btn_close_b.IdleForecolor = System.Drawing.Color.Red;
             this.btn_close_b.IdleLineColor = System.Drawing.Color.Red;
-            this.btn_close_b.Location = new System.Drawing.Point(93, 17);
+            this.btn_close_b.Location = new System.Drawing.Point(8, 17);
             this.btn_close_b.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btn_close_b.Name = "btn_close_b";
             this.btn_close_b.Size = new System.Drawing.Size(138, 50);
@@ -144,122 +156,23 @@ namespace School_Mang.PL.SITE
             this.pictureBox1.TabIndex = 107;
             this.pictureBox1.TabStop = false;
             // 
-            // groupBox1
+            // grpPrepare
             // 
-            this.groupBox1.Controls.Add(this.lbl_disabled);
-            this.groupBox1.Controls.Add(this.label9);
-            this.groupBox1.Controls.Add(this.lbl_update);
-            this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Controls.Add(this.lbl_no);
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.lbl_add);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.lbl_count);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(21, 127);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(366, 186);
-            this.groupBox1.TabIndex = 103;
-            this.groupBox1.TabStop = false;
-            // 
-            // lbl_year
-            // 
-            this.lbl_year.Font = new System.Drawing.Font("LBC", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_year.ForeColor = System.Drawing.Color.Black;
-            this.lbl_year.Location = new System.Drawing.Point(27, 104);
-            this.lbl_year.Name = "lbl_year";
-            this.lbl_year.Size = new System.Drawing.Size(345, 20);
-            this.lbl_year.TabIndex = 107;
-            this.lbl_year.Text = "label1";
-            this.lbl_year.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lbl_count
-            // 
-            this.lbl_count.Font = new System.Drawing.Font("LBC", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_count.ForeColor = System.Drawing.Color.Red;
-            this.lbl_count.Location = new System.Drawing.Point(10, 150);
-            this.lbl_count.Name = "lbl_count";
-            this.lbl_count.Size = new System.Drawing.Size(220, 20);
-            this.lbl_count.TabIndex = 108;
-            this.lbl_count.Text = "label1";
-            this.lbl_count.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label1
-            // 
-            this.label1.Font = new System.Drawing.Font("LBC", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.Red;
-            this.label1.Location = new System.Drawing.Point(247, 150);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(104, 20);
-            this.label1.TabIndex = 109;
-            this.label1.Text = "العدد الكلى";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lbl_add
-            // 
-            this.lbl_add.Font = new System.Drawing.Font("LBC", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_add.ForeColor = System.Drawing.Color.Black;
-            this.lbl_add.Location = new System.Drawing.Point(10, 51);
-            this.lbl_add.Name = "lbl_add";
-            this.lbl_add.Size = new System.Drawing.Size(220, 20);
-            this.lbl_add.TabIndex = 110;
-            this.lbl_add.Text = "label1";
-            this.lbl_add.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label3
-            // 
-            this.label3.Font = new System.Drawing.Font("LBC", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.Black;
-            this.label3.Location = new System.Drawing.Point(247, 51);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(104, 20);
-            this.label3.TabIndex = 111;
-            this.label3.Text = "إضافة";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lbl_no
-            // 
-            this.lbl_no.Font = new System.Drawing.Font("LBC", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_no.ForeColor = System.Drawing.Color.Black;
-            this.lbl_no.Location = new System.Drawing.Point(10, 18);
-            this.lbl_no.Name = "lbl_no";
-            this.lbl_no.Size = new System.Drawing.Size(220, 20);
-            this.lbl_no.TabIndex = 112;
-            this.lbl_no.Text = "label1";
-            this.lbl_no.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label5
-            // 
-            this.label5.Font = new System.Drawing.Font("LBC", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.Black;
-            this.label5.Location = new System.Drawing.Point(247, 18);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(104, 20);
-            this.label5.TabIndex = 113;
-            this.label5.Text = "بدون تغيير";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lbl_update
-            // 
-            this.lbl_update.Font = new System.Drawing.Font("LBC", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_update.ForeColor = System.Drawing.Color.Black;
-            this.lbl_update.Location = new System.Drawing.Point(10, 84);
-            this.lbl_update.Name = "lbl_update";
-            this.lbl_update.Size = new System.Drawing.Size(220, 20);
-            this.lbl_update.TabIndex = 114;
-            this.lbl_update.Text = "label1";
-            this.lbl_update.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label7
-            // 
-            this.label7.Font = new System.Drawing.Font("LBC", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.Color.Black;
-            this.label7.Location = new System.Drawing.Point(247, 84);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(104, 20);
-            this.label7.TabIndex = 115;
-            this.label7.Text = "تنشيط";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.grpPrepare.Controls.Add(this.lbl_disabled);
+            this.grpPrepare.Controls.Add(this.label9);
+            this.grpPrepare.Controls.Add(this.lbl_update);
+            this.grpPrepare.Controls.Add(this.label7);
+            this.grpPrepare.Controls.Add(this.lbl_no);
+            this.grpPrepare.Controls.Add(this.label5);
+            this.grpPrepare.Controls.Add(this.lbl_add);
+            this.grpPrepare.Controls.Add(this.label3);
+            this.grpPrepare.Controls.Add(this.lbl_count);
+            this.grpPrepare.Controls.Add(this.label1);
+            this.grpPrepare.Location = new System.Drawing.Point(23, 127);
+            this.grpPrepare.Name = "grpPrepare";
+            this.grpPrepare.Size = new System.Drawing.Size(366, 186);
+            this.grpPrepare.TabIndex = 103;
+            this.grpPrepare.TabStop = false;
             // 
             // lbl_disabled
             // 
@@ -283,16 +196,245 @@ namespace School_Mang.PL.SITE
             this.label9.Text = "تعطيل";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label2
+            // lbl_update
             // 
-            this.label2.Font = new System.Drawing.Font("LBC", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label2.Location = new System.Drawing.Point(86, 321);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(220, 35);
-            this.label2.TabIndex = 118;
-            this.label2.Text = "تمت المزامنة بنجاح";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbl_update.Font = new System.Drawing.Font("LBC", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_update.ForeColor = System.Drawing.Color.Black;
+            this.lbl_update.Location = new System.Drawing.Point(10, 84);
+            this.lbl_update.Name = "lbl_update";
+            this.lbl_update.Size = new System.Drawing.Size(220, 20);
+            this.lbl_update.TabIndex = 114;
+            this.lbl_update.Text = "label1";
+            this.lbl_update.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label7
+            // 
+            this.label7.Font = new System.Drawing.Font("LBC", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.Color.Black;
+            this.label7.Location = new System.Drawing.Point(247, 84);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(104, 20);
+            this.label7.TabIndex = 115;
+            this.label7.Text = "تنشيط";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lbl_no
+            // 
+            this.lbl_no.Font = new System.Drawing.Font("LBC", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_no.ForeColor = System.Drawing.Color.Black;
+            this.lbl_no.Location = new System.Drawing.Point(10, 18);
+            this.lbl_no.Name = "lbl_no";
+            this.lbl_no.Size = new System.Drawing.Size(220, 20);
+            this.lbl_no.TabIndex = 112;
+            this.lbl_no.Text = "label1";
+            this.lbl_no.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label5
+            // 
+            this.label5.Font = new System.Drawing.Font("LBC", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.Black;
+            this.label5.Location = new System.Drawing.Point(247, 18);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(104, 20);
+            this.label5.TabIndex = 113;
+            this.label5.Text = "بدون تغيير";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lbl_add
+            // 
+            this.lbl_add.Font = new System.Drawing.Font("LBC", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_add.ForeColor = System.Drawing.Color.Black;
+            this.lbl_add.Location = new System.Drawing.Point(10, 51);
+            this.lbl_add.Name = "lbl_add";
+            this.lbl_add.Size = new System.Drawing.Size(220, 20);
+            this.lbl_add.TabIndex = 110;
+            this.lbl_add.Text = "label1";
+            this.lbl_add.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label3
+            // 
+            this.label3.Font = new System.Drawing.Font("LBC", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.Black;
+            this.label3.Location = new System.Drawing.Point(247, 51);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(104, 20);
+            this.label3.TabIndex = 111;
+            this.label3.Text = "إضافة";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lbl_count
+            // 
+            this.lbl_count.Font = new System.Drawing.Font("LBC", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_count.ForeColor = System.Drawing.Color.Red;
+            this.lbl_count.Location = new System.Drawing.Point(10, 150);
+            this.lbl_count.Name = "lbl_count";
+            this.lbl_count.Size = new System.Drawing.Size(220, 20);
+            this.lbl_count.TabIndex = 108;
+            this.lbl_count.Text = "label1";
+            this.lbl_count.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label1
+            // 
+            this.label1.Font = new System.Drawing.Font("LBC", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.Red;
+            this.label1.Location = new System.Drawing.Point(247, 150);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(104, 20);
+            this.label1.TabIndex = 109;
+            this.label1.Text = "العدد الكلى";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lbl_year
+            // 
+            this.lbl_year.Font = new System.Drawing.Font("LBC", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_year.ForeColor = System.Drawing.Color.Black;
+            this.lbl_year.Location = new System.Drawing.Point(27, 104);
+            this.lbl_year.Name = "lbl_year";
+            this.lbl_year.Size = new System.Drawing.Size(345, 20);
+            this.lbl_year.TabIndex = 107;
+            this.lbl_year.Text = "label1";
+            this.lbl_year.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lbl_result
+            // 
+            this.lbl_result.Font = new System.Drawing.Font("LBC", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_result.ForeColor = System.Drawing.Color.ForestGreen;
+            this.lbl_result.Location = new System.Drawing.Point(86, 321);
+            this.lbl_result.Name = "lbl_result";
+            this.lbl_result.Size = new System.Drawing.Size(220, 35);
+            this.lbl_result.TabIndex = 118;
+            this.lbl_result.Text = "تمت المزامنة بنجاح";
+            this.lbl_result.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // grpSite
+            // 
+            this.grpSite.Controls.Add(this.lbl_site_total);
+            this.grpSite.Controls.Add(this.label6);
+            this.grpSite.Controls.Add(this.lbl_site_disabled);
+            this.grpSite.Controls.Add(this.lbl2);
+            this.grpSite.Controls.Add(this.lbl_site_add);
+            this.grpSite.Controls.Add(this.label12);
+            this.grpSite.Controls.Add(this.lbl_site_active);
+            this.grpSite.Controls.Add(this.label14);
+            this.grpSite.Location = new System.Drawing.Point(17, 164);
+            this.grpSite.Name = "grpSite";
+            this.grpSite.Size = new System.Drawing.Size(366, 149);
+            this.grpSite.TabIndex = 118;
+            this.grpSite.TabStop = false;
+            // 
+            // lbl_site_total
+            // 
+            this.lbl_site_total.Font = new System.Drawing.Font("LBC", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_site_total.ForeColor = System.Drawing.Color.Red;
+            this.lbl_site_total.Location = new System.Drawing.Point(10, 117);
+            this.lbl_site_total.Name = "lbl_site_total";
+            this.lbl_site_total.Size = new System.Drawing.Size(220, 20);
+            this.lbl_site_total.TabIndex = 116;
+            this.lbl_site_total.Text = "label1";
+            this.lbl_site_total.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label6
+            // 
+            this.label6.Font = new System.Drawing.Font("LBC", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.Red;
+            this.label6.Location = new System.Drawing.Point(221, 117);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(139, 20);
+            this.label6.TabIndex = 117;
+            this.label6.Text = "جملة التغييرات";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lbl_site_disabled
+            // 
+            this.lbl_site_disabled.Font = new System.Drawing.Font("LBC", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_site_disabled.ForeColor = System.Drawing.Color.Black;
+            this.lbl_site_disabled.Location = new System.Drawing.Point(10, 84);
+            this.lbl_site_disabled.Name = "lbl_site_disabled";
+            this.lbl_site_disabled.Size = new System.Drawing.Size(220, 20);
+            this.lbl_site_disabled.TabIndex = 114;
+            this.lbl_site_disabled.Text = "label1";
+            this.lbl_site_disabled.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lbl2
+            // 
+            this.lbl2.Font = new System.Drawing.Font("LBC", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl2.ForeColor = System.Drawing.Color.Black;
+            this.lbl2.Location = new System.Drawing.Point(247, 84);
+            this.lbl2.Name = "lbl2";
+            this.lbl2.Size = new System.Drawing.Size(104, 20);
+            this.lbl2.TabIndex = 115;
+            this.lbl2.Text = "تم التعطيل";
+            this.lbl2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lbl_site_add
+            // 
+            this.lbl_site_add.Font = new System.Drawing.Font("LBC", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_site_add.ForeColor = System.Drawing.Color.Black;
+            this.lbl_site_add.Location = new System.Drawing.Point(10, 18);
+            this.lbl_site_add.Name = "lbl_site_add";
+            this.lbl_site_add.Size = new System.Drawing.Size(220, 20);
+            this.lbl_site_add.TabIndex = 112;
+            this.lbl_site_add.Text = "label1";
+            this.lbl_site_add.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label12
+            // 
+            this.label12.Font = new System.Drawing.Font("LBC", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.ForeColor = System.Drawing.Color.Black;
+            this.label12.Location = new System.Drawing.Point(247, 18);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(104, 20);
+            this.label12.TabIndex = 113;
+            this.label12.Text = "تمت الإضافة";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lbl_site_active
+            // 
+            this.lbl_site_active.Font = new System.Drawing.Font("LBC", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_site_active.ForeColor = System.Drawing.Color.Black;
+            this.lbl_site_active.Location = new System.Drawing.Point(10, 51);
+            this.lbl_site_active.Name = "lbl_site_active";
+            this.lbl_site_active.Size = new System.Drawing.Size(220, 20);
+            this.lbl_site_active.TabIndex = 110;
+            this.lbl_site_active.Text = "label1";
+            this.lbl_site_active.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label14
+            // 
+            this.label14.Font = new System.Drawing.Font("LBC", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.ForeColor = System.Drawing.Color.Black;
+            this.label14.Location = new System.Drawing.Point(247, 51);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(104, 20);
+            this.label14.TabIndex = 111;
+            this.label14.Text = "تم التنشيط";
+            this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // btnContinue
+            // 
+            this.btnContinue.ActiveBorderThickness = 1;
+            this.btnContinue.ActiveCornerRadius = 20;
+            this.btnContinue.ActiveFillColor = System.Drawing.Color.DarkOliveGreen;
+            this.btnContinue.ActiveForecolor = System.Drawing.Color.White;
+            this.btnContinue.ActiveLineColor = System.Drawing.Color.YellowGreen;
+            this.btnContinue.BackColor = System.Drawing.SystemColors.Control;
+            this.btnContinue.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnContinue.BackgroundImage")));
+            this.btnContinue.ButtonText = "اكمال المزامنة";
+            this.btnContinue.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnContinue.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnContinue.ForeColor = System.Drawing.Color.DarkGreen;
+            this.btnContinue.IdleBorderThickness = 1;
+            this.btnContinue.IdleCornerRadius = 20;
+            this.btnContinue.IdleFillColor = System.Drawing.Color.WhiteSmoke;
+            this.btnContinue.IdleForecolor = System.Drawing.Color.SeaGreen;
+            this.btnContinue.IdleLineColor = System.Drawing.Color.DarkOliveGreen;
+            this.btnContinue.Location = new System.Drawing.Point(211, 17);
+            this.btnContinue.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnContinue.Name = "btnContinue";
+            this.btnContinue.Size = new System.Drawing.Size(138, 50);
+            this.btnContinue.TabIndex = 12;
+            this.btnContinue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnContinue.Click += new System.EventHandler(this.btnContinue_Click);
             // 
             // FRM_SYNC_RESULT
             // 
@@ -300,12 +442,13 @@ namespace School_Mang.PL.SITE
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btn_close;
             this.ClientSize = new System.Drawing.Size(414, 443);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.grpSite);
+            this.Controls.Add(this.lbl_result);
             this.Controls.Add(this.lbl_year);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.pn_top);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.grpPrepare);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FRM_SYNC_RESULT";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -315,7 +458,8 @@ namespace School_Mang.PL.SITE
             this.pn_top.ResumeLayout(false);
             this.pn_top.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.groupBox1.ResumeLayout(false);
+            this.grpPrepare.ResumeLayout(false);
+            this.grpSite.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -330,7 +474,7 @@ namespace School_Mang.PL.SITE
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox grpPrepare;
         private System.Windows.Forms.Label lbl_year;
         private System.Windows.Forms.Label lbl_count;
         private System.Windows.Forms.Label lbl_no;
@@ -342,6 +486,16 @@ namespace School_Mang.PL.SITE
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label lbl_update;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lbl_result;
+        private System.Windows.Forms.GroupBox grpSite;
+        private System.Windows.Forms.Label lbl_site_total;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lbl_site_disabled;
+        private System.Windows.Forms.Label lbl2;
+        private System.Windows.Forms.Label lbl_site_add;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label lbl_site_active;
+        private System.Windows.Forms.Label label14;
+        private Bunifu.Framework.UI.BunifuThinButton2 btnContinue;
     }
 }

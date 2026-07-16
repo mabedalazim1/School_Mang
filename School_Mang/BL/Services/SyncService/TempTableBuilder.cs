@@ -67,42 +67,6 @@ namespace School_Mang.BL.Services.FamilySyncService
 
             return table;
         }
-
-        public DataTable BuildUserNames(List<FamilyUserNameUpdate> list)
-        {
-            DataTable table = new DataTable();
-
-            table.Columns.Add("Osra_Id", typeof(int));
-            table.Columns.Add("Site_UserName", typeof(string));
-
-            foreach (var item in list)
-            {
-                table.Rows.Add(
-                    item.OsraId,
-                    item.SiteUserName);
-            }
-
-            return table;
-        }
-
-        public DataTable BuildUserNameTable(List<FamilySyncTemp> families)
-        {
-            DataTable table = new DataTable();
-
-            table.Columns.Add("Osra_Id", typeof(int));
-            table.Columns.Add("Site_UserName", typeof(string));
-            table.Columns.Add("Site_Password", typeof(string));
-
-            foreach (var family in families)
-            {
-                table.Rows.Add(
-                    family.OsraId,
-                    family.SiteUserName,
-                    family.SitePassword
-                );
-            }
-
-            return table;
-        }
+       
     }
 }

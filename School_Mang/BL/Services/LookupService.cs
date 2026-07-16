@@ -1,6 +1,7 @@
-﻿using System.Data;
-using School_Mang.BL.STD;
+﻿using School_Mang.BL.STD;
 using School_Mang.DAL;
+using System.Data;
+using System.Linq;
 
 namespace School_Mang.BL.Services
 {
@@ -10,6 +11,16 @@ namespace School_Mang.BL.Services
         public LookupService()
         {
             _dal = new DataAcceseLayer();
+        }
+
+        public string GetYearDesc(int yearId)
+        {
+            DataTable dt = Get_years(yearId);
+
+            DataRow row = dt.AsEnumerable()
+                            .FirstOrDefault(r => r.Field<int>("Year_Id") == yearId);
+
+            return row?["YearDesc"]?.ToString() ?? string.Empty;
         }
 
         public DataTable Get_years(int year = 0)

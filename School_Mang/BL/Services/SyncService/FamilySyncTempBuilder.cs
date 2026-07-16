@@ -158,6 +158,7 @@ namespace School_Mang.BL.Services.FamilySyncService
                     // البيانات القادمة من الموقع فقط
                     SiteUserName = family.UserName,
                     SiteIsActive = family.IsActive,
+                    
 
                     // البيانات المحلية غير موجودة
                     FirstName = null,

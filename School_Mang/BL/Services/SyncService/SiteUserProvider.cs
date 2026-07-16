@@ -1,9 +1,10 @@
 ﻿using School_Mang.BL.Enums;
+using School_Mang.BL.Services.FamilySyncService.Models;
 using School_Mang.DAL;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Data;
+using System.Data.SqlClient;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,33 +19,6 @@ namespace School_Mang.BL.Services.FamilySyncService
             _site = new SiteAccessLayer();
         }
 
-        public bool Exists(UserSearchField field, string value)
-        {
-            string columnName;
-
-            switch (field)
-            {
-                case UserSearchField.UserName:
-                    columnName = "username";
-                    break;
-
-                case UserSearchField.OsraId:
-                    columnName = "osraId";
-                    break;
-
-                default:
-                    throw new ArgumentException("حقل البحث غير صحيح.");
-            }
-
-            string sql = $"SELECT COUNT(*) FROM users WHERE {columnName} = @value";
-
-            int count = _site.ExecuteScalarQuery<int>(
-                sql,
-                new SqlParameter("@value", value)
-            );
-
-            return count > 0;
-        }
 
         public DataTable GetAllFamilies()
         {
@@ -69,6 +43,34 @@ namespace School_Mang.BL.Services.FamilySyncService
             }
 
             return result;
+        }
+
+        public void AddFamilyUser(FamilySyncTemp family)
+        {
+            _site.ExecNonQuery(
+                "SP_Add_User_2025",
+                SqlParam.NVar("@username", family.SiteUserName),
+                SqlParam.NVar("@password", family.SitePassword),
+                SqlParam.NVar("@firstName", family.FirstName),
+                SqlParam.NVar("@fullName", family.FatherName),
+                SqlParam.Int("@roleId", 5),
+                SqlParam.NVar("@osraId", family.OsraId.ToString()),
+                SqlParam.NVar("@note", family.WhatsAppNumber)
+            );
+        }
+
+        public void ActivateFamily(int osraId)
+        {
+            _site.ExecNonQuery(
+                "SP_Activate_Family_User",
+                SqlParam.NVar("@Osra_Id", osraId.ToString()));
+        }
+
+        public void DisableFamily(int osraId)
+        {
+            _site.ExecNonQuery(
+                "SP_Disable_Family_User",
+                SqlParam.NVar("@Osra_Id", osraId.ToString()));
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using School_Mang.BL.Services.FamilySyncService.Models;
+using School_Mang.BL.Services.SyncService;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
@@ -15,6 +16,7 @@ namespace School_Mang.BL.Services.FamilySyncService
         private readonly FamilySyncBulkService _bulkService;
         private readonly FamilySyncTempService _tempService;
         private readonly SiteUserProvider _siteUserProvider;
+        private readonly SyncProcessService _syncProcessService;
 
         public FamilySyncService()
         {
@@ -25,6 +27,7 @@ namespace School_Mang.BL.Services.FamilySyncService
             _bulkService = new FamilySyncBulkService();
             _tempService = new FamilySyncTempService();
             _siteUserProvider = new SiteUserProvider();
+            _syncProcessService = new SyncProcessService();
 
         }
 
@@ -38,6 +41,8 @@ namespace School_Mang.BL.Services.FamilySyncService
             UpdateSiteData(result);
 
             AppendSiteOnlyFamilies(result);
+
+            _syncProcessService.SetPrepared("Family");
 
             return result;
         }

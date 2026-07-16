@@ -381,6 +381,7 @@ namespace School_Mang.PL.STD
                         MotherHala = SafeConverter.GetInt(row["mother_hala"]),
                         MotherMbil_1 = SafeConverter.GetString(row["mother_mobil_1"]),
                         MotherMbil_2 = SafeConverter.GetString(row["mother_mobil_2"]),
+                        WhatsAppSource = SafeConverter.GetByte(row["WhatsAppSource"]),
                         Comments = SafeConverter.GetString(row["comments"]),
                         OsraId = SafeConverter.GetInt(row["Osraa_Id"]),
                         UpdatedBy = info.updatedBy,

@@ -49,6 +49,7 @@ namespace School_Mang.BL.DTO
         public int MotherHala { get; set; }
         public string MotherMbil_1 { get; set; }
         public string MotherMbil_2 { get; set; }
+        public byte WhatsAppSource { get; set; }
         public string Comments { get; set; }
         // User
         public string UserName { get; set; }

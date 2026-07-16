@@ -49,5 +49,11 @@ namespace School_Mang.BL.Common.Helper
 
             return Convert.ToBoolean(value);
         }
+        public static byte GetByte(object value)
+        {
+            return value == DBNull.Value || value == null
+                ? (byte)0
+                : Convert.ToByte(value);
+        }
     }
 }

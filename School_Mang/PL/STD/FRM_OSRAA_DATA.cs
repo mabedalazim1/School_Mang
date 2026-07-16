@@ -1,14 +1,14 @@
-﻿using System;
+﻿using School_Mang.BL;
+using School_Mang.BL.Common;
+using School_Mang.BL.Common.Helper;
+using School_Mang.BL.DTO;
+using School_Mang.BL.Services;
+using School_Mang.BL.Services.STD;
+using System;
 using System.Data;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using School_Mang.BL;
-using School_Mang.BL.Services;
-using School_Mang.BL.Common.Helper;
-using School_Mang.BL.Common;
-using School_Mang.BL.Services.STD;
-using School_Mang.BL.DTO;
 
 namespace School_Mang.PL.STD
 {
@@ -314,6 +314,145 @@ namespace School_Mang.PL.STD
             }
         }
 
+        private bool ValidateWhatsAppPhone(TextBox txt)
+        {
+            if (string.IsNullOrWhiteSpace(txt.Text))
+            {
+                MSG.ErrorMesg("لا يمكن اختيار رقم واتس فارغ.");
+                txt.Focus();
+                return false;
+            }
+
+            return Checked_Phon(txt, 11)
+                && Checked_Is_Numeric(txt)
+                && Checked_Phon_End_NO(txt);
+        }
+        private bool CanSelectWhatsApp(RadioButton radio)
+        {
+            TextBox txt = null;
+
+            if (radio == rdoFather1)
+                txt = txt_father_mobil1;
+            else if (radio == rdoFather2)
+                txt = txt_father_mobil2;
+            else if (radio == rdoMother1)
+                txt = txt_mother_mobil_1;
+            else if (radio == rdoMother2)
+                txt = txt_mother_mobil2;
+
+            if (txt == null)
+                return false;
+
+            return ValidateWhatsAppPhone(txt);
+        }
+
+        private void CheckWhatsAppSelection(RadioButton radio, TextBox txt)
+        {
+            if (!radio.Checked)
+                return;
+
+            if (!ValidateWhatsAppPhone(txt))
+            {
+                radio.AutoCheck = false;
+                radio.Checked = false;
+                radio.AutoCheck = true;
+
+                UpdateWhatsAppIcons();
+            }
+        }
+        public class WhatsAppItem
+        {
+            public PictureBox Picture { get; set; }
+            public TextBox Phone { get; set; }
+        }
+
+        private void UpdateWhatsAppIcons()
+        {
+            RadioButton[] radios =
+                    {
+                rdoFather1,
+                rdoFather2,
+                rdoMother1,
+                rdoMother2
+            };
+
+            foreach (RadioButton radio in radios)
+            {
+                WhatsAppItem item = (WhatsAppItem)radio.Tag;
+
+                item.Picture.Image = radio.Checked
+                    ? Properties.Resources.whatsapp1
+                    : Properties.Resources.whatsapp2;
+            }
+        }
+
+
+        private void Radio_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton current = (RadioButton)sender;
+
+            if (current.Checked)
+            {
+                if (!CanSelectWhatsApp(current))
+                {
+                    current.AutoCheck = false;
+                    current.Checked = false;
+                    current.AutoCheck = true;
+
+                    UpdateWhatsAppIcons();
+                    return;
+                }
+
+                RadioButton[] radios =
+                {
+                    rdoFather1,
+                    rdoFather2,
+                    rdoMother1,
+                    rdoMother2
+                };
+
+                foreach (RadioButton radio in radios)
+                {
+                    if (radio != current)
+                        radio.Checked = false;
+                }
+            }
+
+            UpdateWhatsAppIcons();
+        }
+
+        private void PictureWhatsApp_Click(object sender, EventArgs e)
+        {
+            PictureBox pic = (PictureBox)sender;
+            RadioButton radio = (RadioButton)pic.Tag;
+
+            if (radio.Checked)
+            {
+                radio.AutoCheck = false;
+                radio.Checked = false;
+                radio.AutoCheck = true;
+            }
+            else
+            {
+                if (!CanSelectWhatsApp(radio))
+                    return;
+
+                radio.Checked = true;
+            }
+
+            UpdateWhatsAppIcons();
+        }
+
+        private byte GetSelectedWhatsAppSource()
+        {
+            if (rdoFather1.Checked) return 1;
+            if (rdoFather2.Checked) return 2;
+            if (rdoMother1.Checked) return 3;
+            if (rdoMother2.Checked) return 4;
+
+            return 0;
+        }
+
         // Get Osra Data
         private void GetOsraData()
         {
@@ -359,6 +498,28 @@ namespace School_Mang.PL.STD
                 txt_father_nat.Enabled = true;
                 txt_mother_name.Enabled = true;
                 txt_mother_nat.Enabled = true;
+            }
+
+            switch (d.WhatsAppSource)
+            {
+                case 1:
+                    rdoFather1.Checked = true;
+                    break;
+
+                case 2:
+                    rdoFather2.Checked = true;
+                    break;
+
+                case 3:
+                    rdoMother1.Checked = true;
+                    break;
+
+                case 4:
+                    rdoMother2.Checked = true;
+                    break;
+
+                default:
+                    break;
             }
             FillUpdateInfo(d);
         }
@@ -607,6 +768,7 @@ namespace School_Mang.PL.STD
                 MotherMbil_1 = txt_mother_mobil_1.Text,
                 MotherMbil_2 = txt_mother_mobil2.Text,
                 MotherHala = SafeConverter.GetInt(cmb_mother_hala.SelectedValue),
+                WhatsAppSource = GetSelectedWhatsAppSource(),
                 Comments = txt_memo.Text,
                 UserName = Properties.Settings.Default.user_name
             };
@@ -667,6 +829,38 @@ namespace School_Mang.PL.STD
 
         private void FRM_OSRAA_DATA_Load(object sender, EventArgs e)
         {
+
+            rdoFather1.Tag = new WhatsAppItem
+            {
+                Picture = picFather1,
+                Phone = txt_father_mobil1
+            };
+
+            rdoFather2.Tag = new WhatsAppItem
+            {
+                Picture = picFather2,
+                Phone = txt_father_mobil2
+            };
+
+            rdoMother1.Tag = new WhatsAppItem
+            {
+                Picture = picMother1,
+                Phone = txt_mother_mobil_1
+            };
+
+            rdoMother2.Tag = new WhatsAppItem
+            {
+                Picture = picMother2,
+                Phone = txt_mother_mobil2
+            };
+
+            picFather1.Tag = rdoFather1;
+            picFather2.Tag = rdoFather2;
+            picMother1.Tag = rdoMother1;
+            picMother2.Tag = rdoMother2;
+
+            UpdateWhatsAppIcons();
+
             if (_context.OsraState.AddNewOsra == true)
             {
                 label11.Text = "إضافة بيانات الأسرة";
@@ -724,6 +918,66 @@ namespace School_Mang.PL.STD
             {
                 btn_close_b_Click(sender, e);
             }
+        }
+
+        private void rdoFather1_CheckedChanged(object sender, EventArgs e)
+        {
+            Radio_CheckedChanged(sender, e);
+        }
+
+        private void rdoFather2_CheckedChanged(object sender, EventArgs e)
+        {
+            Radio_CheckedChanged(sender, e);
+        }
+
+        private void rdoMother1_CheckedChanged(object sender, EventArgs e)
+        {
+            Radio_CheckedChanged(sender, e);
+        }
+
+        private void rdoMother2_CheckedChanged(object sender, EventArgs e)
+        {
+            Radio_CheckedChanged(sender, e);
+        }
+
+        private void picFather1_Click(object sender, EventArgs e)
+        {
+            PictureWhatsApp_Click(sender, e);
+        }
+
+        private void picFather2_Click(object sender, EventArgs e)
+        {
+            PictureWhatsApp_Click(sender, e);
+        }
+
+        private void picMother1_Click(object sender, EventArgs e)
+        {
+            PictureWhatsApp_Click(sender, e);
+        }
+
+        private void picMother2_Click(object sender, EventArgs e)
+        {
+            PictureWhatsApp_Click(sender, e);
+        }
+
+        private void txt_father_mobil1_Leave(object sender, EventArgs e)
+        {
+            CheckWhatsAppSelection(rdoFather1, txt_father_mobil1);
+        }
+
+        private void txt_father_mobil2_Leave(object sender, EventArgs e)
+        {
+            CheckWhatsAppSelection(rdoFather2, txt_father_mobil2);
+        }
+
+        private void txt_mother_mobil_1_Leave(object sender, EventArgs e)
+        {
+            CheckWhatsAppSelection(rdoMother1, txt_mother_mobil_1);
+        }
+
+        private void txt_mother_mobil2_Leave(object sender, EventArgs e)
+        {
+            CheckWhatsAppSelection(rdoMother2, txt_mother_mobil2);
         }
     }
 }

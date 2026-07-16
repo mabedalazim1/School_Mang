@@ -157,8 +157,8 @@
   <data name="question-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\question-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="test-100 (2)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\test-100 (2).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icons8-request-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icons8-request-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="boys-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\boys-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -226,6 +226,9 @@
   <data name="icons8-sheet-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-sheet-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="test-cheating-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\test-cheating-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="add-user-male-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\add-user-male-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -249,9 +252,6 @@
   </data>
   <data name="maximize-w" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\maximize-w.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="age-64" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\age-64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="add-golos-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\add-golos-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -280,6 +280,9 @@
   <data name="minimize11" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\minimize11.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="answer-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\answer-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="employees-w401" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\employees-w401.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -304,8 +307,8 @@
   <data name="test-cheating-1001" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\test-cheating-1001.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icons8-certification-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons8-certification-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="whatsapp1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\whatsapp1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="excel-to-2100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\excel-to-2100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -343,14 +346,14 @@
   <data name="study-1001" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\study-1001.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icons8-request-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons8-request-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icons8-certification-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icons8-certification-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="close" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\close.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="test-cheating-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\test-cheating-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="test-100 (2)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\test-100 (2).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="site-40" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\site-40.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -412,6 +415,9 @@
   <data name="icons8-go-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-go-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="age-64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\age-64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="transfer-from-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\transfer-from-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -427,7 +433,7 @@
   <data name="maximize" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\maximize.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="answer-100" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\answer-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="whatsapp2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\whatsapp2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

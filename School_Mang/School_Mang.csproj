@@ -1284,6 +1284,8 @@
     <Content Include="MyReports\rpt_Tadarg_Sen.rpt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\whatsapp2.png" />
+    <None Include="Resources\whatsapp1.png" />
     <None Include="packages.config" />
     <None Include="Resources\answer-100.png" />
     <None Include="Resources\question-100.png" />

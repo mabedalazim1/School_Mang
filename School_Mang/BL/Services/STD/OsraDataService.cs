@@ -140,7 +140,7 @@ namespace School_Mang.BL.Services.STD
             {
                 UpdateOsra(dto, OsraId);
 
-                return ServiceResult<int>.Ok(dto.OsraId);
+                return ServiceResult<int>.Ok(OsraId);
             }
             catch (Exception ex)
             {
@@ -186,6 +186,7 @@ namespace School_Mang.BL.Services.STD
                 SqlParam.NVar("@mother_mobil_1", dto.MotherMbil_1, 11),
                 SqlParam.NVar("@mother_mobil_2", dto.MotherMbil_2, 11),
                 SqlParam.Int("@mother_hala", dto.MotherHala),
+                SqlParam.Byte("@WhatsAppSource", dto.WhatsAppSource),
                 SqlParam.NVar("@comments", dto.Comments, 250),
                 SqlParam.Int("@Osraa_Id", Osraa_Id),
                 SqlParam.NVar("@Created_by", dto.UserName, 15),
@@ -212,6 +213,7 @@ namespace School_Mang.BL.Services.STD
                 SqlParam.NVar("@mother_mobil_1", dto.MotherMbil_1, 11),
                 SqlParam.NVar("@mother_mobil_2", dto.MotherMbil_2, 11),
                 SqlParam.Int("@mother_hala", dto.MotherHala),
+                SqlParam.Int("@WhatsAppSource", dto.WhatsAppSource),
                 SqlParam.NVar("@comments", dto.Comments, 250),
                 SqlParam.Int("@Osraa_Id", OsraId),
                 SqlParam.NVar("@Updated_by", dto.UserName, 15)

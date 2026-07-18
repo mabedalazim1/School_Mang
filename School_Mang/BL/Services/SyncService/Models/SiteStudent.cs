@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace School_Mang.BL.Enums
+namespace School_Mang.BL.Services.SyncService.Models
 {
-    public enum SyncProcessType
+    public class SiteStudent
     {
-        Family,
-        Student,
-        Golos
+        public string StdCode { get; set; }
     }
 }

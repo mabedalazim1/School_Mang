@@ -1,12 +1,8 @@
-﻿using School_Mang.BL.Enums;
-using School_Mang.BL.Services.FamilySyncService.Models;
+﻿using School_Mang.BL.Services.FamilySyncService.Models;
 using School_Mang.DAL;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace School_Mang.BL.Services.FamilySyncService
 {
@@ -71,6 +67,15 @@ namespace School_Mang.BL.Services.FamilySyncService
             _site.ExecNonQuery(
                 "SP_Disable_Family_User",
                 SqlParam.NVar("@Osra_Id", osraId.ToString()));
+        }
+
+        public void UpdateFamilyWhatsApp(DataTable table)
+        {
+            _site.ExecuteTableParameter(
+                "SP_Update_Family_WhatsApp",
+                "@Families",
+                table,
+                "FamilyWhatsAppType");
         }
     }
 }

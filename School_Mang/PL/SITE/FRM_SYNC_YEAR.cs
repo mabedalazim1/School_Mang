@@ -16,15 +16,17 @@ namespace School_Mang.PL.SITE
         private readonly StudentService _student = new StudentService();
         private readonly LookupService _lookup = new LookupService();
         private readonly int currentYear = Properties.Settings.Default.year_cod;
+        private readonly SyncType _syncType;
 
         private string _currentYearDesc;
         private string _nextYearDesc;
         private string _titel;
 
-        public FRM_SYNC_YEAR(string title ="المزامنة")
+        public FRM_SYNC_YEAR(string title ="المزامنة" ,SyncType syncType = SyncType.Family)
         {
             InitializeComponent();
             _titel = title;
+            _syncType = syncType;
         }
 
         int move;
@@ -99,7 +101,7 @@ namespace School_Mang.PL.SITE
                 else
                 {
                     lbl_msg.Text = "لا توجد بيانات للعام الدراسي القادم";
-                    lbl_data.Text = "اضغط موافق لبدء مزامنة بيانات العام الحالي";
+                    lbl_data.Text = "اضغط موافق لبدء تجهيز بيانات العام الحالي";
 
                     radioCurrent.Visible = false;
                     radioNext.Visible = false;
@@ -116,63 +118,136 @@ namespace School_Mang.PL.SITE
             }
         }
 
-        private void btn_ok_Click(object sender, EventArgs e)
+        private bool ConfirmPrepare(string yearDesc)
         {
+            if (MSG.DialogeMsg($"سوف تتم عملية التجهيز لعام {yearDesc}") != DialogResult.Yes)
+                return false;
 
-            var service = new FamilySyncService();
+            return MSG.DialogeErrMsg($"هل تريد متابعة التجهيز {yearDesc}") == DialogResult.Yes;
+        }
 
-            int year = radioCurrent.Checked
-                         ? currentYear
-                         : currentYear + 1;
+        private FRM_PROGRESS CreateProgress()
+        {
+            var progress = new FRM_PROGRESS();
+            progress.StartPosition = FormStartPosition.CenterScreen;
+            progress.Show();
 
-           string data = radioCurrent.Checked
-                        ? _currentYearDesc
-                        : _nextYearDesc;
+            return progress;
+        }
 
+        private void ShowPrepareResult(FamilySyncResult result, int year)
+        {
+            MSG.MyMesg("تمت عملية التجهيز بنجاح.");
 
-            if (MSG.DialogeMsg("سوف تتم عملية المزامنة لعام " + data) != DialogResult.Yes)
+            using (var frm = new FRM_SYNC_RESULT(
+                result,
+                year,
+                SyncResultView.Prepare,
+                "بيانات الأسر الجديدة"))
             {
-                MSG.ErrorMesg("تم إلغاء عملية المزامنة");
-                return;
-            }
-            if (MSG.DialogeErrMsg("هل تريد متابعة المزامنة " + data) != DialogResult.Yes)
-            {
-                MSG.ErrorMesg("تم إلغاء عملية المزامنة");
-                return;
-            }
-
-            Waiting.Start();
-            try
-            {
-                FamilySyncResult result = service.SyncFamilies(year);
-
-                Waiting.Stop();
-
-                MSG.MyMesg("تمت المزامنة بنجاح.");
-                this.Close();
-                this.Dispose();
-
-                var frm = new FRM_SYNC_RESULT(result,
-                                                year,
-                                                 SyncResultView.Prepare,
-                                                "بيانات الأسر الجديدة");
-
                 frm.ShowDialog();
 
                 if (frm.Action == SyncNextAction.Continue)
                 {
                     DialogResult = DialogResult.OK;
+                    Close();
                 }
+            }
+        }
 
-                Close();
+        private void PrepareFamilies(int year)
+        {
+            var service = new FamilySyncService();
+
+            FRM_PROGRESS progress = null;
+
+            try
+            {
+                progress = CreateProgress();
+
+                service.ProgressChanged += (current, total, message) =>
+                {
+                    progress.UpdateProgress(current, total, message);
+                };
+
+                FamilySyncResult result = service.SyncFamilies(year);
+
+                progress.Finish();
+                progress.Close();
+
+
+                ShowPrepareResult(result, year);
+
+                if (!IsDisposed)
+                    Close();
             }
             catch (Exception ex)
             {
+                progress?.Close();
+                Show();
                 MSG.ErrorMesg(ex.Message);
             }
-            finally
+        }
+        private void PrepareStudents(int year)
+        {
+            var service = new StudentSyncService();
+
+            FRM_PROGRESS progress = null;
+
+            try
             {
-                Waiting.Stop();
+                progress = new FRM_PROGRESS();
+                progress.StartPosition = FormStartPosition.CenterScreen;
+                progress.Show();
+
+                service.ProgressChanged += (current, total, message) =>
+                {
+                    progress.UpdateProgress(current, total, message);
+                };
+
+                var result = service.PrepareSync(year);
+
+                progress.Finish();
+                progress.Close();
+                MSG.MyMesg(
+                            $"تم التجهيز\n" +
+                            $"إضافة: {result.Added}\n" +
+                            $"تحديث: {result.Updated}"
+                );
+            }
+            catch (Exception ex)
+            {
+                progress?.Close();
+                MSG.ErrorMesg(ex.Message);
+            }
+        }
+
+        private void btn_ok_Click(object sender, EventArgs e)
+        {
+
+            bool isCurrentYear = radioCurrent.Checked;
+
+            int year = isCurrentYear ? currentYear : currentYear + 1;
+
+            string data = isCurrentYear
+                ? _currentYearDesc
+                : _nextYearDesc;
+
+            if (!ConfirmPrepare(data))
+            {
+                MSG.ErrorMesg("تم إلغاء عملية التجهيز");
+                return;
+            }
+
+            Hide();
+
+            if (_syncType == SyncType.Family)
+            {
+                PrepareFamilies(year);
+            }
+            else if (_syncType == SyncType.Student)
+            {
+                PrepareStudents(year);
             }
         }
     }

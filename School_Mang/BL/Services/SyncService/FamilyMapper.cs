@@ -21,7 +21,7 @@ namespace School_Mang.BL.Services.FamilySyncService
                 {
                     OsraId = SafeConverter.GetInt(row["Osraa_Id"]),
                     FatherName = SafeConverter.GetString(row["father_name"]),
-                    WhatsAppNumber = SafeConverter.GetString(row["mother_mobil_2"]),
+                    WhatsAppNumber = SafeConverter.GetString(row["WhatsApp_Number"]),
                     FatherNat = SafeConverter.GetString(row["Father_Nat"])
                 });
             }

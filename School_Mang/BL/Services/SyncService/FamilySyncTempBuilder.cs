@@ -1,11 +1,8 @@
 ﻿using School_Mang.BL.DTO;
 using School_Mang.BL.Enums;
 using School_Mang.BL.Services.FamilySyncService.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace School_Mang.BL.Services.FamilySyncService
 {

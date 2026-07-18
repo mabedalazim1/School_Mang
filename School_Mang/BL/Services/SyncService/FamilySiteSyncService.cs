@@ -1,12 +1,10 @@
 ﻿using School_Mang.BL.Enums;
 using School_Mang.BL.Services.FamilySyncService;
 using School_Mang.BL.Services.FamilySyncService.Models;
-using School_Mang.BL.Services.SyncService.Models;
 using System;
+using System.Data;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace School_Mang.BL.Services.SyncService
 {
@@ -41,10 +39,13 @@ namespace School_Mang.BL.Services.SyncService
                 .Where(x => x.SiteIsActive)
                 .ToList();
 
+            var noChangeFamilies =
+                _tempService.GetFamiliesForSync((int)FamilySyncAction.NoChange);
 
             _total =
                 addFamilies.Count +
                 activateFamilies.Count +
+                noChangeFamilies.Count +
                 disableFamilies.Count;
 
 
@@ -54,6 +55,8 @@ namespace School_Mang.BL.Services.SyncService
             SyncNewFamilies(addFamilies, result);
 
             ActivateFamilies(activateFamilies, result);
+
+            UpdateExistingFamilies(noChangeFamilies);
 
             DisableFamilies(disableFamilies, result);
 
@@ -100,6 +103,34 @@ namespace School_Mang.BL.Services.SyncService
             }
         }
 
+        private void UpdateExistingFamilies(List<FamilySyncTemp> families)
+        {
+            if (families.Count == 0)
+                return;
+
+            DataTable table = new DataTable();
+
+            table.Columns.Add("OsraId", typeof(string));
+            table.Columns.Add("WhatsApp", typeof(string));
+
+
+            foreach (var family in families)
+            {
+                table.Rows.Add(
+                    family.OsraId.ToString(),
+                    family.WhatsAppNumber);
+            }
+
+            _siteProvider.UpdateFamilyWhatsApp(table);
+
+            _current += families.Count;
+
+            ProgressChanged?.Invoke(
+                _current,
+                _total,
+                "تم تحديث أرقام الواتساب");
+        }
+
         private void DisableFamilies(List<FamilySyncTemp> families,
                              FamilySyncResult result)
         {
@@ -125,6 +156,5 @@ namespace School_Mang.BL.Services.SyncService
                     "جارى تعطيل الأسر غير الموجودة");
             }
         }
-
     }
 }

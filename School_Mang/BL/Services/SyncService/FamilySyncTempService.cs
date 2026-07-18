@@ -1,11 +1,7 @@
-﻿using School_Mang.BL.Enums;
-using School_Mang.BL.Services.FamilySyncService.Models;
+﻿using School_Mang.BL.Services.FamilySyncService.Models;
 using School_Mang.DAL;
-using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace School_Mang.BL.Services.FamilySyncService
 {
@@ -41,6 +37,17 @@ namespace School_Mang.BL.Services.FamilySyncService
         {
             return _dal.Query(
                 "SELECT Osra_Id FROM FamilySync_Temp");
+        }
+
+        public DataTable GetWhatsAppUpdates()
+        {
+            return _dal.Query(
+                @"SELECT 
+              Osra_Id AS OsraId,
+              WhatsApp_Number AS WhatsApp
+          FROM FamilySync_Temp
+          WHERE WhatsApp_Number IS NOT NULL
+            AND LTRIM(RTRIM(WhatsApp_Number)) <> ''");
         }
 
     }

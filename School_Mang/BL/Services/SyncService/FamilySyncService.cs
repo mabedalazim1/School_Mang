@@ -1,9 +1,8 @@
 ﻿using School_Mang.BL.Services.FamilySyncService.Models;
 using School_Mang.BL.Services.SyncService;
+using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
-using System.Web.Services.Description;
 
 namespace School_Mang.BL.Services.FamilySyncService
 {
@@ -18,6 +17,11 @@ namespace School_Mang.BL.Services.FamilySyncService
         private readonly SiteUserProvider _siteUserProvider;
         private readonly SyncProcessService _syncProcessService;
 
+        public event Action<int, int, string> ProgressChanged;
+
+        private int _current;
+        private int _total;
+
         public FamilySyncService()
         {
             _schoolProvider = new SchoolFamilyProvider();
@@ -31,9 +35,17 @@ namespace School_Mang.BL.Services.FamilySyncService
 
         }
 
+        private void Report(string message)
+        {
+            _current++;
+            ProgressChanged?.Invoke(_current, _total, message);
+        }
 
         public FamilySyncResult SyncFamilies(int year)
         {
+            _total = 10;
+            _current = 0;
+
             var result = new FamilySyncResult();
 
             PrepareTempTable(year, result);
@@ -50,35 +62,42 @@ namespace School_Mang.BL.Services.FamilySyncService
         private void PrepareTempTable(int yearId, FamilySyncResult result)
         {
             // تنظيف الجدول المؤقت
+            Report("تنظيف الجدول المؤقت");
             _bulkService.ClearTemp();
 
             // قراءة أسر العام الدراسي
+            Report("قراءة بيانات المدرسة");
             DataTable schoolTable =
                 _schoolProvider.GetCurrentFamilies(yearId);
 
-            
+
             // Mapping أسر المدرسة
+            Report("تجهيز بيانات المدرسة");
             var schoolFamilies =
                 _mapper.MapSchoolFamilies(schoolTable);
 
 
 
             // قراءة أسر الموقع
+            Report("قراءة بيانات الموقع");
             DataTable siteTable =
                 _siteUserProvider.GetAllFamilies();
 
 
             // Mapping أسر الموقع
+            Report("تجهيز بيانات الموقع");
             var siteFamilies =
                 _mapper.MapSiteFamilies(siteTable);
 
             // أسماء المستخدمين الموجودة بالموقع
+            Report("تحميل أسماء المستخدمين");
             HashSet<string> existingUserNames =
                 _siteUserProvider.GetAllUserNames();
 
 
             // تجهيز بيانات الـ Temp
             // (سنعدل Build في الخطوة القادمة)
+            Report("بناء جدول البيانات");
             var tempFamilies =
                 _tempBuilder.Build(
                     schoolFamilies,
@@ -93,6 +112,7 @@ namespace School_Mang.BL.Services.FamilySyncService
 
 
             // Bulk Insert
+            Report("حفظ البيانات المؤقتة");
             _bulkService.InsertTempFamilies(tempTable);
 
         }

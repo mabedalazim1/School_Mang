@@ -35,8 +35,8 @@ namespace School_Mang.PL.SITE
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lblTitle = new System.Windows.Forms.Label();
             this.lblStatus = new System.Windows.Forms.Label();
             this.pn_top.SuspendLayout();
@@ -69,6 +69,7 @@ namespace School_Mang.PL.SITE
             this.btn_close.Size = new System.Drawing.Size(34, 33);
             this.btn_close.TabIndex = 11;
             this.btn_close.TabStop = false;
+            this.btn_close.Visible = false;
             this.btn_close.Click += new System.EventHandler(this.btn_close_Click);
             // 
             // lbl_title
@@ -96,6 +97,13 @@ namespace School_Mang.PL.SITE
             this.groupBox1.TabIndex = 103;
             this.groupBox1.TabStop = false;
             // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(21, 19);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(323, 23);
+            this.progressBar1.TabIndex = 108;
+            // 
             // pictureBox1
             // 
             this.pictureBox1.Image = global::School_Mang.Properties.Resources.note_48;
@@ -104,13 +112,6 @@ namespace School_Mang.PL.SITE
             this.pictureBox1.Size = new System.Drawing.Size(54, 50);
             this.pictureBox1.TabIndex = 107;
             this.pictureBox1.TabStop = false;
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(21, 19);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(323, 23);
-            this.progressBar1.TabIndex = 108;
             // 
             // lblTitle
             // 

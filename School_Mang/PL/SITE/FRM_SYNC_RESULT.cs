@@ -4,9 +4,6 @@ using School_Mang.BL.Enums;
 using School_Mang.BL.Services;
 using School_Mang.BL.Services.FamilySyncService.Models;
 using System;
-using System.Data;
-using System.Linq;
-using System.Web.UI.WebControls;
 using System.Windows.Forms;
 
 

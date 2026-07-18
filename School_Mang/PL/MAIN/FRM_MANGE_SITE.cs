@@ -53,17 +53,10 @@ namespace School_Mang.PL.MAIN
         }
 
         BL.NATEG.cls_NATAG_FUNCTIONS natag_func = new BL.NATEG.cls_NATAG_FUNCTIONS();
-        new readonly BL.SITE.CLS_MANGE_SITE Site = new BL.SITE.CLS_MANGE_SITE();
-        BL.STD.CLS_STD std = new BL.STD.CLS_STD();
-        FamilyDataGenerator generator = new FamilyDataGenerator();
 
-        private readonly DataAcceseLayer _dal = new DataAcceseLayer();
 
         int year = Properties.Settings.Default.year_cod;
-        DataTable user_code;
-        DataTable std_code;
-        DataTable unmatchedDataBase;
-        DataTable unmatchedSite;
+       
 
         private void changePages(Panel pn, string lbl)
         {
@@ -131,17 +124,6 @@ namespace School_Mang.PL.MAIN
 
         private async void lbl_unmach_database_Click(object sender, EventArgs e)
         {
-            if (!await InternetFlow.EnsureAsync())
-                return;
-
-            try
-            {
-               
-            }
-            catch (Exception ex)
-            {
-                MSG.ErrorMesg(ex.Message);
-            }
 
         }
 
@@ -265,7 +247,7 @@ namespace School_Mang.PL.MAIN
         {
             try
             {
-                var frm = new FRM_SYNC_YEAR("تجهيز الأسر للمزامنة");
+                var frm = new FRM_SYNC_YEAR("تجهيز الأسر للمزامنة", SyncType.Family);
 
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
@@ -290,6 +272,7 @@ namespace School_Mang.PL.MAIN
 
             try
             {
+
                 SyncProcessInfo info =
                     _syncProcessService.GetStatus("Family");
 
@@ -399,6 +382,14 @@ namespace School_Mang.PL.MAIN
         private void pic_add_family_Click(object sender, EventArgs e)
         {
             StartFamilySiteSync();
+        }
+
+        private void lbl_sync_students_Click(object sender, EventArgs e)
+        {
+            using (var frm = new FRM_SYNC_YEAR("مزامنة الطلاب", SyncType.Student))
+            {
+                frm.ShowDialog();
+            }
         }
     }
 }

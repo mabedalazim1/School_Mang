@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace School_Mang.BL.Services.SyncService
+namespace School_Mang.BL.Services.SyncService.Student
 {
    public class StudentArchiveService
    {
@@ -31,6 +31,17 @@ namespace School_Mang.BL.Services.SyncService
             return Convert.ToInt32(
                 table.Rows[0]["ArchivedCount"]
             );
+        }
+
+        public bool Exists(string stdCode, int yearId)
+        {
+            DataTable table = _dal.ExecQuery(
+                "SP_Student_Exists_In_Archive",
+                new SqlParameter("@StdCode", stdCode),
+                new SqlParameter("@Year_Id", yearId)
+            );
+
+            return table.Rows.Count > 0;
         }
     }
 }

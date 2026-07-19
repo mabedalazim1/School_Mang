@@ -4,7 +4,7 @@ using School_Mang.BL.Services.FamilySyncService.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace School_Mang.BL.Services.FamilySyncService
+namespace School_Mang.BL.Services.SyncService.Family
 {
     public class FamilySyncTempBuilder
     {

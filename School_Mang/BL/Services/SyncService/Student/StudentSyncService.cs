@@ -5,7 +5,7 @@ using System;
 using System.Data;
 using System.Linq;
 
-namespace School_Mang.BL.Services.SyncService
+namespace School_Mang.BL.Services.SyncService.Student
 {
     public class StudentSyncService
     {
@@ -55,6 +55,7 @@ namespace School_Mang.BL.Services.SyncService
 
             ReportProgress(40, 100, "جاري قراءة بيانات الطلاب من الموقع");
 
+            var resolver = new StudentActionResolver(siteStudents);
 
             var result = new StudentSyncResult();
 
@@ -65,16 +66,12 @@ namespace School_Mang.BL.Services.SyncService
             // تحديد الإضافة والتحديث
             foreach (var student in schoolStudents)
             {
-                if (siteStudents.Contains(student.StdCode))
-                {
-                    student.Action_Id = StudentSyncAction.Update;
+                student.Action_Id = resolver.Resolve(student.StdCode);
+
+                if (student.Action_Id == StudentSyncAction.Update)
                     result.Updated++;
-                }
                 else
-                {
-                    student.Action_Id = StudentSyncAction.Add;
                     result.Added++;
-                }
             }
 
 

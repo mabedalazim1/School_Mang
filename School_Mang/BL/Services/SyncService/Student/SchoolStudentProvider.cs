@@ -1,7 +1,7 @@
 ﻿using School_Mang.DAL;
 using System.Data;
 
-namespace School_Mang.BL.Services.SyncService
+namespace School_Mang.BL.Services.SyncService.Student
 {
     public class SchoolStudentProvider
     {

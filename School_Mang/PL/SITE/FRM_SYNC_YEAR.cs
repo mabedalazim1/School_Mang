@@ -1,9 +1,9 @@
 ﻿using School_Mang.BL;
 using School_Mang.BL.Enums;
 using School_Mang.BL.Services;
-using School_Mang.BL.Services.FamilySyncService;
+using School_Mang.BL.Services.SyncService.Family;
 using School_Mang.BL.Services.FamilySyncService.Models;
-using School_Mang.BL.Services.SyncService;
+using School_Mang.BL.Services.SyncService.Student;
 using System;
 using System.Windows.Forms;
 

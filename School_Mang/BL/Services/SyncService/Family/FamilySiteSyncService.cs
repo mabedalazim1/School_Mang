@@ -6,7 +6,7 @@ using System.Data;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace School_Mang.BL.Services.SyncService
+namespace School_Mang.BL.Services.SyncService.Family
 {
     public class FamilySiteSyncService
     {

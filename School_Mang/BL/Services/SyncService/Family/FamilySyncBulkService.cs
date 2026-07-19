@@ -5,7 +5,7 @@ using System.Data;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace School_Mang.BL.Services.FamilySyncService
+namespace School_Mang.BL.Services.SyncService.Family
 {
     public class FamilySyncBulkService
     {

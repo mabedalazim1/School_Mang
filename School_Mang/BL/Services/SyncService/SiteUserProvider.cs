@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 
-namespace School_Mang.BL.Services.FamilySyncService
+namespace School_Mang.BL.Services.SyncService
 {
     public class SiteUserProvider
     {

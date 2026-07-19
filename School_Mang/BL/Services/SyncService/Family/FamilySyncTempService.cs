@@ -3,7 +3,7 @@ using School_Mang.DAL;
 using System.Collections.Generic;
 using System.Data;
 
-namespace School_Mang.BL.Services.FamilySyncService
+namespace School_Mang.BL.Services.SyncService.Family
 {
     public class FamilySyncTempService
     {

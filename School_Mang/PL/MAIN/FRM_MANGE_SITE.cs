@@ -2,7 +2,7 @@
 using School_Mang.BL.Common.Helper;
 using School_Mang.BL.DTO;
 using School_Mang.BL.Enums;
-using School_Mang.BL.Services.FamilySyncService;
+using School_Mang.BL.Services.SyncService.Family;
 using School_Mang.BL.Services.FamilySyncService.Models;
 using School_Mang.BL.Services.SyncService;
 using School_Mang.BL.Services.SyncService.Models;

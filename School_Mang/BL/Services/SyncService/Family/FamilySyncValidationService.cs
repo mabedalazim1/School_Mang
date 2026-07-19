@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace School_Mang.BL.Services.SyncService
+namespace School_Mang.BL.Services.SyncService.Family
 {
     public class FamilySyncValidationService
     {

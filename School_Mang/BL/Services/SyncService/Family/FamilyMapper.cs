@@ -7,7 +7,7 @@ using System.Data;
 using System.Linq;
 
 
-namespace School_Mang.BL.Services.FamilySyncService
+namespace School_Mang.BL.Services.SyncService.Family
 {
     public class FamilyMapper
     {

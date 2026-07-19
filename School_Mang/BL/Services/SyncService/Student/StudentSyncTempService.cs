@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace School_Mang.BL.Services.SyncService.Models
+namespace School_Mang.BL.Services.SyncService.Student
 {
     public class StudentSyncTempService
     {

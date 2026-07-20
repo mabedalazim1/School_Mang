@@ -259,6 +259,30 @@ namespace School_Mang.DAL
                 cmd => cmd.ExecuteNonQuery());
         }
 
+        // =========================
+        // BULK INSERT
+        // =========================
+        public void BulkInsert(DataTable table, string destinationTable)
+        {
+            using (SqlConnection con = CreateConnection())
+            {
+                con.Open();
+
+                using (SqlBulkCopy bulk = new SqlBulkCopy(con))
+                {
+                    bulk.DestinationTableName = destinationTable;
+
+                    foreach (DataColumn column in table.Columns)
+                    {
+                        bulk.ColumnMappings.Add(
+                            column.ColumnName,
+                            column.ColumnName);
+                    }
+
+                    bulk.WriteToServer(table);
+                }
+            }
+        }
         public void RunInTransaction(Action action)
         {
             BeginTransaction();

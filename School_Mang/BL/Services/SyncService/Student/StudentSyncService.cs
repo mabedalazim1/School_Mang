@@ -2,6 +2,7 @@
 using School_Mang.BL.Enums;
 using School_Mang.BL.Services.SyncService.Models;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
@@ -33,14 +34,14 @@ namespace School_Mang.BL.Services.SyncService.Student
 
         public StudentSyncResult PrepareSync(int yearId)
         {
-            ReportProgress(5, 100, "بدء تجهيز الطلاب");
+            ReportProgress(20, 100, "بدء تجهيز الطلاب");
 
 
             DataTable schoolTable = _schoolProvider.GetCurrentStudents(yearId);
 
             var schoolStudents = _mapper.MapSchoolStudents(schoolTable);
 
-            ReportProgress(10, 100, "جاري قراءة بيانات الطلاب من المدرسة");
+            ReportProgress(30, 100, "جاري قراءة بيانات الطلاب من المدرسة");
 
 
             // قائمة أكواد طلاب المدرسة للمقارنة مع الموقع
@@ -53,14 +54,14 @@ namespace School_Mang.BL.Services.SyncService.Student
 
             var siteStudents = _mapper.MapSiteStudents(siteTable);
 
-            ReportProgress(40, 100, "جاري قراءة بيانات الطلاب من الموقع");
+            ReportProgress(45, 100, "جاري قراءة بيانات الطلاب من الموقع");
 
             var resolver = new StudentActionResolver(siteStudents);
 
             var result = new StudentSyncResult();
 
 
-            ReportProgress(60, 100, "جاري مقارنة بيانات الطلاب");
+            ReportProgress(65, 100, "جاري مقارنة بيانات الطلاب");
 
 
             // تحديد الإضافة والتحديث
@@ -75,7 +76,7 @@ namespace School_Mang.BL.Services.SyncService.Student
             }
 
 
-            ReportProgress(75, 100, "جاري تحديد الطلاب المحذوفين");
+            ReportProgress(80, 100, "جاري تحديد الطلاب المحذوفين");
 
 
             // تحديد الطلاب الموجودين في الموقع وغير الموجودين في المدرسة
@@ -96,8 +97,9 @@ namespace School_Mang.BL.Services.SyncService.Student
             }
 
 
-            ReportProgress(90, 100, "جاري حفظ بيانات التجهيز");
+            ReportProgress(95, 100, "جاري حفظ بيانات التجهيز");
 
+            FixEmptySeatNumbers(schoolStudents);
 
             _tempService.Clear();
 
@@ -113,6 +115,18 @@ namespace School_Mang.BL.Services.SyncService.Student
             return result;
         }
 
+        private void FixEmptySeatNumbers(List<StudentSyncTemp> students)
+        {
+            int nextSeatNo = 100001;
 
+            foreach (var student in students)
+            {
+                if (student.SeatNo <= 0)
+                {
+                    student.SeatNo = nextSeatNo;
+                    nextSeatNo++;
+                }
+            }
+        }
     }
 }

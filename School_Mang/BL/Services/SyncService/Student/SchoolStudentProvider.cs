@@ -18,5 +18,12 @@ namespace School_Mang.BL.Services.SyncService.Student
                 "SP_Get_Students_For_Sync",
                 SqlParam.Int("@YearId", yearId));
         }
+
+        public DataTable GetArchiveStudents(int yearId)
+        {
+            return _dal.ExecQuery(
+                "SP_Get_Students_For_Archive",
+                SqlParam.Int("@Year_Id", yearId));
+        }
     }
 }

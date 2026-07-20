@@ -190,7 +190,10 @@ namespace School_Mang.PL.SITE
         }
         private void PrepareStudents(int year)
         {
+            int archiveYer = Properties.Settings.Default.year_cod;
+            var archiveService = new StudentArchiveSyncService();
             var service = new StudentSyncService();
+            var executeService = new StudentSyncExecuteService();
 
             FRM_PROGRESS progress = null;
 
@@ -200,19 +203,35 @@ namespace School_Mang.PL.SITE
                 progress.StartPosition = FormStartPosition.CenterScreen;
                 progress.Show();
 
+                archiveService.ProgressChanged += (value, message) =>
+                {
+                    progress.UpdateProgress(value, 100, message);
+                };
+
                 service.ProgressChanged += (current, total, message) =>
                 {
                     progress.UpdateProgress(current, total, message);
                 };
 
+                // أرشفة طلاب السنة الحالية
+
+                archiveService.Sync(archiveYer);
+
+
                 var result = service.PrepareSync(year);
+
+
+                var executeResult = executeService.Execute();
 
                 progress.Finish();
                 progress.Close();
+
+
                 MSG.MyMesg(
-                            $"تم التجهيز\n" +
-                            $"إضافة: {result.Added}\n" +
-                            $"تحديث: {result.Updated}"
+                     $"تمت المزامنة\n" +
+                     $"إضافة: {executeResult.Added}\n" +
+                     $"تحديث: {executeResult.Updated}\n" +
+                     $"حذف: {executeResult.Deleted}"
                 );
             }
             catch (Exception ex)

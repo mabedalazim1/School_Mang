@@ -1,40 +1,65 @@
 ﻿using School_Mang.BL.Services.SyncService.Models;
+using School_Mang.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Data;
 using System.Threading.Tasks;
 
 namespace School_Mang.BL.Services.SyncService.Student
 {
     public class StudentSyncExecuteService
     {
-        private readonly StudentArchiveService _archive;
+
         private readonly StudentSyncTempService _temp;
+        private readonly SiteAccessLayer _siteDal;
 
         public StudentSyncExecuteService()
         {
-            _archive = new StudentArchiveService();
             _temp = new StudentSyncTempService();
+            _siteDal = new SiteAccessLayer();
         }
 
 
-        public void Execute(int yearId)
+        public StudentSyncResult Execute()
         {
-            // 1- Archive
-            _archive.Archive(yearId);
+            // قراءة بيانات التجهيز من قاعدة المدرسة
+            DataTable table = _temp.GetAll();
 
 
-            // 2- Get Temp Data
+            if (table.Rows.Count == 0)
+                return new StudentSyncResult();
 
 
-            // 3- Update
+            // تنظيف جدول المزامنة في الموقع
+            _siteDal.ExecuteNonQuery(
+                "TRUNCATE TABLE StudentSync_Temp"
+            );
 
 
-            // 4- Add
+            // إرسال البيانات للموقع
+            _siteDal.BulkInsert(
+                table,
+                "StudentSync_Temp"
+            );
 
 
-            // 5- Delete
+            // تنفيذ المزامنة
+            DataTable result = _siteDal.ExecQuery(
+                "SP_Execute_Student_Sync"
+            );
+
+
+            if (result.Rows.Count == 0)
+                return new StudentSyncResult();
+
+
+            return new StudentSyncResult
+            {
+                Added = Convert.ToInt32(result.Rows[0]["Added"]),
+                Updated = Convert.ToInt32(result.Rows[0]["Updated"]),
+                Deleted = Convert.ToInt32(result.Rows[0]["Deleted"])
+            };
         }
     }
 }

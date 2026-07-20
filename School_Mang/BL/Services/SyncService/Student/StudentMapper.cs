@@ -1,6 +1,7 @@
 ﻿using School_Mang.BL.Common.Helper;
 using System.Collections.Generic;
 using System.Data;
+using School_Mang.BL.Services.SyncService.Models;
 
 namespace School_Mang.BL.Services.SyncService.Student
 {

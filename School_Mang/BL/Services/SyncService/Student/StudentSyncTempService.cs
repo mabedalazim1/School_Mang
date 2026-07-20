@@ -3,6 +3,7 @@ using School_Mang.DAL;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using School_Mang.BL.Services.SyncService.Models;
 
 namespace School_Mang.BL.Services.SyncService.Student
 {
@@ -72,6 +73,15 @@ namespace School_Mang.BL.Services.SyncService.Student
                     "@Action_Id",
                     (byte)action
                 )
+            );
+        }
+
+        
+
+        public DataTable GetAll()
+        {
+            return _dal.ExecQuery(
+                "SP_Get_All_StudentSync_Temp"
             );
         }
     }

@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace School_Mang.BL.Services.SyncService.Models
 {
-    public class FamilyUserNameUpdate
+    internal class SyncResult
     {
-        public int OsraId { get; set; }
-
-        public string SiteUserName { get; set; }
     }
 }

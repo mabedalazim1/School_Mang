@@ -70,9 +70,17 @@ namespace School_Mang.BL.Services.SyncService.Student
                 student.Action_Id = resolver.Resolve(student.StdCode);
 
                 if (student.Action_Id == StudentSyncAction.Update)
+                {
+                    // الاحتفاظ برقم الجلوس الموجود بالموقع
+                    student.SeatNo = resolver.GetSeatNo(student.StdCode);
+
                     result.Updated++;
+                }
                 else
+                {
+                    // الطالب الجديد سيأخذ رقمًا مؤقتًا لاحقًا
                     result.Added++;
+                }
             }
 
 

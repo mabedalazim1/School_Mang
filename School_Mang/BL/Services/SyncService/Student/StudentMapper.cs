@@ -30,13 +30,16 @@ namespace School_Mang.BL.Services.SyncService.Student
             return result;
         }
 
-        public HashSet<string> MapSiteStudents(DataTable table)
+        public Dictionary<string, int> MapSiteStudents(DataTable table)
         {
-            var result = new HashSet<string>();
+            var result = new Dictionary<string, int>();
 
             foreach (DataRow row in table.Rows)
             {
-                result.Add(SafeConverter.GetString(row["StdCode"]));
+                string stdCode = SafeConverter.GetString(row["StdCode"]);
+                int seatNo = SafeConverter.GetInt(row["student_Id"]);
+
+                result[stdCode] = seatNo;
             }
 
             return result;

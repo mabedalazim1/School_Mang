@@ -293,7 +293,6 @@
     <Compile Include="BL\Services\SyncService\Student\StudentSyncTableBuilder.cs" />
     <Compile Include="BL\Services\SyncService\Student\StudentSyncTempService.cs" />
     <Compile Include="BL\Services\SyncService\Student\SiteStudentProvider.cs" />
-    <Compile Include="BL\Services\SyncService\Student\StudentSyncResult.cs" />
     <Compile Include="BL\Services\SyncService\Models\StudentSyncTemp.cs" />
     <Compile Include="BL\Services\SyncService\Family\SchoolFamilyProvider.cs" />
     <Compile Include="BL\Services\SyncService\Student\SchoolStudentProvider.cs" />

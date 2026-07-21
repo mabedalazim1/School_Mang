@@ -1,7 +1,7 @@
 ﻿using School_Mang.BL.DTO;
 using School_Mang.BL.Enums;
 
-namespace School_Mang.BL.Services.FamilySyncService.Models
+namespace School_Mang.BL.Services.SyncService.Models
 {
     public class FamilySyncItem
     {

@@ -28,6 +28,10 @@ namespace School_Mang.BL.Services.SyncService.Models
 
         public int DeletedOnSite { get; set; }
 
+        public int SchoolCount { get; set; }
+
+        public int SiteCount { get; set; }
+
         public int SiteTotal =>
             AddedToSite + UpdatedOnSite + DeletedOnSite;
     }

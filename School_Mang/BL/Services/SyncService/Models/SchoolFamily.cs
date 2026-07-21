@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace School_Mang.BL.DTO
+namespace School_Mang.BL.Services.SyncService.Models
 {
     public class SchoolFamily
     {

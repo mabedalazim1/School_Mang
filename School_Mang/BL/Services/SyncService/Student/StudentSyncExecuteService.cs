@@ -58,7 +58,7 @@ namespace School_Mang.BL.Services.SyncService.Student
             {
                 Added = Convert.ToInt32(result.Rows[0]["Added"]),
                 Updated = Convert.ToInt32(result.Rows[0]["Updated"]),
-                Deleted = Convert.ToInt32(result.Rows[0]["Deleted"])
+                Deleted = Convert.ToInt32(result.Rows[0]["Deleted"]),
             };
         }
     }

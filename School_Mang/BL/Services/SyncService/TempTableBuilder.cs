@@ -1,5 +1,5 @@
 ﻿using School_Mang.BL.Enums;
-using School_Mang.BL.Services.FamilySyncService.Models;
+using School_Mang.BL.Services.SyncService.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;

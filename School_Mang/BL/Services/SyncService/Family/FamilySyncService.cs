@@ -1,9 +1,7 @@
-﻿using School_Mang.BL.Services.FamilySyncService.Models;
-using School_Mang.BL.Services.SyncService;
+﻿using School_Mang.BL.Services.SyncService.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using School_Mang.BL.Services;
 
 namespace School_Mang.BL.Services.SyncService.Family
 {

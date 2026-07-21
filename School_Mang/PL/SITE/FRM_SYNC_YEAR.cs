@@ -2,7 +2,7 @@
 using School_Mang.BL.Enums;
 using School_Mang.BL.Services;
 using School_Mang.BL.Services.SyncService.Family;
-using School_Mang.BL.Services.FamilySyncService.Models;
+using School_Mang.BL.Services.SyncService.Models;
 using School_Mang.BL.Services.SyncService.Student;
 using System;
 using System.Windows.Forms;
@@ -227,12 +227,15 @@ namespace School_Mang.PL.SITE
                 progress.Close();
 
 
-                MSG.MyMesg(
-                     $"تمت المزامنة\n" +
-                     $"إضافة: {executeResult.Added}\n" +
-                     $"تحديث: {executeResult.Updated}\n" +
-                     $"حذف: {executeResult.Deleted}"
-                );
+                using (var frm = new FRM_SYNC_RESULT(
+                         executeResult,
+                         year,
+                         SyncResultView.SiteSync,
+                         "نتيجة مزامنة الطلاب")
+                    )
+                {
+                    frm.ShowDialog();
+                }
             }
             catch (Exception ex)
             {

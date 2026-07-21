@@ -1,4 +1,4 @@
-﻿namespace School_Mang.BL.Services.FamilySyncService.Models
+﻿namespace School_Mang.BL.Services.SyncService.Models
 {
     public class FamilySyncResult
     {

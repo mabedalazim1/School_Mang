@@ -232,12 +232,21 @@ namespace School_Mang.BL.Services.STD
             else
                 classId += 3;
 
-            int newYear = request.Year;
+            int newYear;
 
             if (request.StatusId == 4)
             {
                 newYear = 0;
             }
+            else if (request.StatusId == 3 || request.StatusId == 7)
+            {
+                newYear = request.Year + 1;
+            }
+            else
+            {
+                newYear = request.Year;
+            }
+
 
             int stdFound = Convert.ToInt32(
                Get_Count_Trans_Std(newYear, request.StdCode)

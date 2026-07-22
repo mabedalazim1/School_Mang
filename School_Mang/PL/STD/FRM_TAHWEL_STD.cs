@@ -584,7 +584,6 @@ namespace School_Mang.PL.STD
                     MSG.ErrorMesg("بيانات التحويل غير موجودة");
                     return;
                 }
-
                 if (reportData.TransferSavedStatus == 3 || reportData.TransferSavedStatus == 7)
                 {
                     _rpt.OpenTahwel_From_Report(

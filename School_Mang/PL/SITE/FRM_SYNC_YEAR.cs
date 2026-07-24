@@ -1,4 +1,5 @@
 ﻿using School_Mang.BL;
+using School_Mang.BL.Common;
 using School_Mang.BL.Enums;
 using School_Mang.BL.Services;
 using School_Mang.BL.Services.SyncService.Family;
@@ -63,14 +64,7 @@ namespace School_Mang.PL.SITE
             btn_close_b_Click(sender, e);
         }
 
-        private string ReverseYearDesc(string yearDesc)
-        {
-            string[] parts = yearDesc.Split('-');
-
-            return parts.Length == 2
-                ? $"{parts[1]}-{parts[0]}"
-                : yearDesc;
-        }
+        
 
         private void FRM_EDIT_DATA_Load(object sender, EventArgs e)
         {
@@ -79,8 +73,10 @@ namespace School_Mang.PL.SITE
             Waiting.Start();
             try
             {
-                string currentYearDesc = ReverseYearDesc(_lookup.GetYearDesc(currentYear));
-                string nextYearDesc = ReverseYearDesc(_lookup.GetYearDesc(currentYear + 1));
+                string currentYearDesc = SchoolFormatter.ReverseYearDesc(
+                    _lookup.GetYearDesc(currentYear));
+                string nextYearDesc = SchoolFormatter.ReverseYearDesc(
+                    _lookup.GetYearDesc(currentYear + 1));
 
                 _currentYearDesc = currentYearDesc;
                 _nextYearDesc = nextYearDesc;
@@ -190,7 +186,14 @@ namespace School_Mang.PL.SITE
         }
         private void PrepareStudents(int year)
         {
-            int archiveYer = Properties.Settings.Default.year_cod;
+            int currentYear = Properties.Settings.Default.year_cod;
+
+            StudentService studentService = new StudentService();
+
+            int archiveYear = studentService.HasStudentsInYear(currentYear + 1)
+                ? currentYear
+                : currentYear - 1;
+
             var archiveService = new StudentArchiveSyncService();
             var service = new StudentSyncService();
             var executeService = new StudentSyncExecuteService();
@@ -213,9 +216,13 @@ namespace School_Mang.PL.SITE
                     progress.UpdateProgress(current, total, message);
                 };
 
-                // أرشفة طلاب السنة الحالية
 
-                archiveService.Sync(archiveYer);
+
+                // إنشاء لقطة الأرشيف مرة واحدة فقط لكل سنة
+                if (!archiveService.HasArchive(archiveYear))
+                {
+                    archiveService.Sync(archiveYear);
+                }
 
 
                 var result = service.PrepareSync(year);

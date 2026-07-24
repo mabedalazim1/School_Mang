@@ -38,10 +38,11 @@ namespace School_Mang.PL.SITE
             _view = view;
         }
 
-        public FRM_SYNC_RESULT(StudentSyncResult result,
-                                int currentYear,
-                                SyncResultView view,
-                                string title = "نتيجة مزامنة الطلاب")
+        public FRM_SYNC_RESULT(
+            StudentSyncResult result,
+            int currentYear,
+            SyncResultView view,
+            string title = "نتيجة مزامنة الطلاب")
         {
             InitializeComponent();
 

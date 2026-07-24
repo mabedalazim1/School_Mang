@@ -146,5 +146,17 @@ namespace School_Mang.BL.Services.SyncService.Student
 
             return table;
         }
+
+        public bool HasArchive(int yearId)
+        {
+            int count = _siteDal.ExecuteScalarQuery<int>(
+                @"SELECT COUNT(*)
+                FROM students_archive
+                WHERE Year_Id = @Year_Id",
+                _siteDal.Param("@Year_Id", yearId)
+            );
+
+            return count > 0;
+        }
     }
 }

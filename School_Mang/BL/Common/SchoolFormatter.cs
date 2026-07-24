@@ -49,5 +49,13 @@ namespace School_Mang.BL.Common
 
             return desc;
         }
+        public static string ReverseYearDesc(string yearDesc)
+        {
+            string[] parts = yearDesc.Split('-');
+
+            return parts.Length == 2
+                ? $"{parts[1]}-{parts[0]}"
+                : yearDesc;
+        }
     }
 }

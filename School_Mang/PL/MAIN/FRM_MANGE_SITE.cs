@@ -1,14 +1,19 @@
 ﻿using School_Mang.BL;
+using School_Mang.BL.Common;
 using School_Mang.BL.Common.Helper;
 using School_Mang.BL.DTO;
 using School_Mang.BL.Enums;
-using School_Mang.BL.Services.SyncService.Family;
+using School_Mang.BL.Services;
 using School_Mang.BL.Services.SyncService;
+using School_Mang.BL.Services.SyncService.Degree;
+using School_Mang.BL.Services.SyncService.Family;
 using School_Mang.BL.Services.SyncService.Models;
+using School_Mang.BL.Services.SyncService.Student;
 using School_Mang.DAL;
 using School_Mang.PL.SITE;
 using System;
 using System.Data;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace School_Mang.PL.MAIN
@@ -19,6 +24,7 @@ namespace School_Mang.PL.MAIN
         private readonly SyncProcessService _syncProcessService = new SyncProcessService();
         private readonly FamilySyncValidationService _validationService = new FamilySyncValidationService();
         private readonly  FamilySiteSyncService service =new FamilySiteSyncService();
+        private readonly  LookupService _lookup = new LookupService();
     
 
         // Form Closed
@@ -55,8 +61,101 @@ namespace School_Mang.PL.MAIN
 
 
         int year = Properties.Settings.Default.year_cod;
-       
 
+        
+        #region أدوات الصيانة والاختبار
+
+        private async void RestorData()
+        {
+            if (!await InternetFlow.EnsureAsync())
+                return;
+
+            Waiting.Start();
+            try
+            {
+                var localDal = new DataAcceseLayer();
+                var siteDal = new SiteAccessLayer();
+
+                // قراءة الدرجات من القاعدة المحلية
+               
+                DataTable degrees = localDal.Query("SELECT * FROM degrees_copy");
+                DataTable marks = localDal.Query("SELECT * FROM marks_copy");
+                DataTable students = localDal.Query("SELECT * FROM students_copy");
+
+                if (marks.Rows.Count == 0)
+                {
+                    MessageBox.Show("جدول التقييمات المحلي فارغ.");
+                    return;
+                }
+                if (degrees.Rows.Count == 0)
+                {
+                    MessageBox.Show("جدول الدرجات المحلي فارغ.");
+                    return;
+                }
+                // حذف الدرجات من الموقع
+                siteDal.Query("DELETE FROM marks");
+                siteDal.Query("DELETE FROM degrees");
+                siteDal.Query("DELETE FROM students");
+
+
+
+                // رفع الدرجات للموقع
+                siteDal.BulkInsert(students, "students");
+                siteDal.BulkInsert(degrees, "degrees");
+                siteDal.BulkInsert(marks, "marks");
+
+                MessageBox.Show(
+                    $"تم نقل {students.Rows.Count} سجل طلاب.\n" +
+                    $"تم نقل {degrees.Rows.Count} سجل درجات.\n" +
+                    $"تم نقل {marks.Rows.Count} سجل تقييم.",
+                    "نجاح",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+
+            }
+            catch (Exception ex)
+            {
+                {
+                    MSG.ErrorMesg(ex.Message);
+                }
+            }
+        }
+
+        private bool CheckBeforeStudentYearOperation(string operationName)
+        {
+            int currentYear = Properties.Settings.Default.year_cod;
+
+            StudentService studentService = new StudentService();
+
+            // لا يوجد عامان مستخدمان
+            if (studentService.HasStudentsInYear(currentYear + 1))
+            {
+                MessageBox.Show(
+                    $"لا يمكن تنفيذ عملية ({operationName}) أثناء تجهيز العام الدراسي الجديد.\nقم أولاً بتغيير العام الدراسي في البرنامج.",
+                    "تنبيه",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+
+                return false;
+            }
+
+
+            // يجب أن تكون أرقام الجلوس موجودة
+            if (studentService.HasStudentsWithoutGolos(currentYear))
+            {
+                MessageBox.Show(
+                    $"لا يمكن تنفيذ عملية ({operationName}) قبل تسجيل أرقام الجلوس لجميع الطلاب.",
+                    "تنبيه",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+
+                return false;
+            }
+
+            return true;
+        }
+        #endregion
         private void changePages(Panel pn, string lbl)
         {
             FRM_MAIN.Get_Frm_Main.pn_home.Visible = false;
@@ -70,8 +169,16 @@ namespace School_Mang.PL.MAIN
             FRM_MAIN.Get_Frm_Main.lbl_main.Visible = true;
         }
 
-    
-       
+
+        private FRM_PROGRESS CreateProgress()
+        {
+            var progress = new FRM_PROGRESS();
+            progress.StartPosition = FormStartPosition.CenterScreen;
+            progress.Show();
+
+            return progress;
+        }
+
         private void lbl_back_Click(object sender, EventArgs e)
         {
             natag_func.changePages(FRM_SETTINGS.Get_Frm_Settings.pn_home, "الإعدادات");
@@ -96,12 +203,67 @@ namespace School_Mang.PL.MAIN
 
         private async void lbl_final_test_Click(object sender, EventArgs e)
         {
+            int currentYear = Properties.Settings.Default.year_cod;
+
             if (!await InternetFlow.EnsureAsync())
                 return;
 
+            if (!CheckBeforeStudentYearOperation("أرشفة الدرجات"))
+                return;
+
+            string currentYearDesc = SchoolFormatter.ReverseYearDesc(
+                _lookup.GetYearDesc(currentYear));
+
+            string msg1 = $@"                  تحذير هام
+
+                        سيتم الآن أرشفة درجات العام الدراسى  ({currentYearDesc})
+                        بعد نجاح عملية الأرشفة سيتم الاحتفاظ بهذه الدرجات
+                        داخل الأرشيف، 
+                        وستكون جاهزة لبدء رفع درجات العام الدراسى الجديد.
+
+                        هل أنت متأكد من تنفيذ عملية الأرشفة؟";
+
+            string msg2 = $@"                تأكيد نهائى
+
+                        سيتم الآن أرشفة درجات العام الدراسى ({currentYearDesc})
+                        بعد نجاح عملية الأرشفة سيتم الاحتفاظ بهذه الدرجات
+                        داخل الأرشيف،
+                        وستكون جاهزة لبدء رفع درجات العام الدراسى الجديد.
+
+                        هل أنت متأكد من تنفيذ عملية الأرشفة؟";
+
+
+            if (MSG.DialogeMsgRtl(msg1) != DialogResult.Yes)
+            {
+                MSG.ErrorMesg("تم إلغاء الأرشفة");
+                return;
+            }
+
+            if (MSG.DialogeErrMsgRtl(msg2) != DialogResult.Yes)
+            {
+                MSG.ErrorMesg("تم إلغاء الأرشفة");
+                return;
+            }
+
+            using (var frm = new FRM_ADMIN_PASSWORD(" أرشفة الدرجات"))
+            {
+                if (frm.ShowDialog() != DialogResult.OK)
+                    return;
+            }
+
+            Waiting.Start();
             try
             {
+                var degreeService = new DegreeArchiveService();
 
+                degreeService.Archive(currentYear - 1);
+
+                MessageBox.Show(
+                     "تمت أرشفة الدرجات بنجاح.",
+                     "نجاح",
+                     MessageBoxButtons.OK,
+                     MessageBoxIcon.Information
+                );
                 
             }
             catch (Exception ex)
@@ -111,9 +273,9 @@ namespace School_Mang.PL.MAIN
             }
             finally
             {
+              
                 Waiting.Stop();
             }
-            Waiting.Stop();
         }
 
         private void pic_final_test_Click(object sender, EventArgs e)
@@ -121,7 +283,7 @@ namespace School_Mang.PL.MAIN
             lbl_final_test_Click(sender, e);
         }
 
-        private async void lbl_unmach_database_Click(object sender, EventArgs e)
+        private  void lbl_unmach_database_Click(object sender, EventArgs e)
         {
 
         }
@@ -173,13 +335,93 @@ namespace School_Mang.PL.MAIN
 
         }
 
-        private void lbl_update_data_Click(object sender, EventArgs e)
+        private async void lbl_update_data_Click(object sender, EventArgs e)
         {
-            MSG.ErrorMesg("هذا الإجراء غير متاح حالياً .. !");
-            return;
+            int currentYear = Properties.Settings.Default.year_cod;
+            int archiveYear = currentYear - 1;
+
+            var restoreService = new StudentRestoreService();
+
+            // 1- الإنترنت
+            if (!await InternetFlow.EnsureAsync())
+                return;
+
+            
+            // 2- وجود الأرشيف
+            if (!restoreService.HasArchive(archiveYear))
+            {
+                MessageBox.Show(
+                    "لا يوجد أرشيف للعام الدراسي السابق.",
+                    "تنبيه",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+
+                return;
+            }
+
+            string archiveYearDesc = SchoolFormatter.ReverseYearDesc(
+                _lookup.GetYearDesc(archiveYear));
+
+            string msg1 = $@"                  تحذير هام
+
+                سيتم الآن التراجع عن أرشفة العام الدراسى ({archiveYearDesc})
+
+                سيتم حذف بيانات الطلاب والدرجات الحالية من الموقع،
+                ثم استرجاع بيانات العام الدراسى من الأرشيف.
+
+                هل أنت متأكد من المتابعة؟";
+
+            string msg2 = $@"                تأكيد نهائى
+
+                سيتم الآن إلغاء عملية الأرشفة نهائياً
+                واسترجاع بيانات العام الدراسى ({archiveYearDesc}).
+
+                بعد تنفيذ العملية سيتم حذف الأرشيف الخاص بهذا العام.
+
+                هل أنت متأكد من تنفيذ العملية؟";
 
 
-           
+            if (MSG.DialogeMsgRtl(msg1) != DialogResult.Yes)
+            {
+                MSG.ErrorMesg("تم إلغاء عملية الاسترجاع");
+                return;
+            }
+
+            if (MSG.DialogeErrMsgRtl(msg2) != DialogResult.Yes)
+            {
+                MSG.ErrorMesg("تم إلغاء عملية الاسترجاع");
+                return;
+            }
+
+            using (var frm = new FRM_ADMIN_PASSWORD("التراجع عن أرشفة الدرجات"))
+            {
+                if (frm.ShowDialog() != DialogResult.OK)
+                    return;
+            }
+
+            Waiting.Start();
+
+            try
+            {
+                // 4- تنفيذ الاسترجاع
+                restoreService.Restore(archiveYear);
+
+               
+                MessageBox.Show(
+                    "تم التراجع عن الأرشفة واسترجاع بيانات العام الدراسي بنجاح.",
+                    "نجاح",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MSG.ErrorMesg(ex.Message);
+            }
+            finally
+            {
+
+                Waiting.Stop();
+            }
         }
 
         private void pic_update_data_Click(object sender, EventArgs e)
@@ -202,12 +444,12 @@ namespace School_Mang.PL.MAIN
 
         }
 
-        private void lbl_add_data_Click(object sender, EventArgs e)
+        private async void lbl_add_data_Click(object sender, EventArgs e)
         {
-            using (var frm = new SITE.FRM_EDIT_DATA("تحديث المستخدمين", 10))
-            {
-                frm.ShowDialog();
-            }
+            if (!await InternetFlow.EnsureAsync())
+                return;
+
+            
         }
 
         private void pic_add_data_Click(object sender, EventArgs e)
@@ -215,8 +457,11 @@ namespace School_Mang.PL.MAIN
             lbl_add_data_Click(sender, e);
         }
 
-        private void lbl_add_studentd_Click(object sender, EventArgs e)
+        private async void lbl_add_studentd_Click(object sender, EventArgs e)
         {
+            if (!await InternetFlow.EnsureAsync())
+                return;
+
             using (var frm = new SITE.FRM_EDIT_DATA("إضافة الطلاب", 11))
             {
                 frm.ShowDialog();
@@ -231,10 +476,116 @@ namespace School_Mang.PL.MAIN
 
         private async void lbl_async_site_Click(object sender, EventArgs e)
         {
+            int currentYear = Properties.Settings.Default.year_cod;
             if (!await InternetFlow.EnsureAsync())
                 return;
 
-            
+            if (!CheckBeforeStudentYearOperation("اعتماد بيانات الطلاب"))
+                return;
+
+
+            string currentYearDesc = SchoolFormatter.ReverseYearDesc(
+                _lookup.GetYearDesc(currentYear));
+
+            string msg1 = $@"                  تحذير هام
+                        سيتم الآن تحديث بيانات الطلاب للعام 
+                       ({currentYearDesc}) ....."
+                       ;
+
+            string msg2 = $@"                تأكيد نهائى
+
+                        سيتم الآن تحديث بيانات الطلاب للعام الجديد.
+                        ({currentYearDesc}) .....
+
+                        هل أنت متأكد من تنفيذ عملية التحديث؟";
+
+
+            if (MSG.DialogeMsgRtl(msg1) != DialogResult.Yes)
+            {
+                MSG.ErrorMesg("تم إلغاء التحديث");
+                return;
+            }
+
+            if (MSG.DialogeErrMsgRtl(msg2) != DialogResult.Yes)
+            {
+                MSG.ErrorMesg("تم إلغاء التحديث");
+                return;
+            }
+
+            using (var frm = new FRM_ADMIN_PASSWORD("تحديث بيانات الطلاب"))
+            {
+                if (frm.ShowDialog() != DialogResult.OK)
+                    return;
+            }
+
+            Waiting.Start();
+
+            var progress = CreateProgress();
+
+            try
+            {
+
+                var service = new StudentSyncService();
+                var executeService = new StudentSyncExecuteService();
+
+
+                
+                progress.Start(100, "اعتماد بيانات الطلاب");
+
+
+                service.ProgressChanged += (current, total, message) =>
+                {
+                    progress.UpdateProgress(
+                        current,
+                        total,
+                        message);
+                };
+
+
+                executeService.ProgressChanged += (current, total, message) =>
+                {
+                    progress.UpdateProgress(
+                        current,
+                        total,
+                        message);
+                };
+
+
+                // اعتماد العام الحالى
+               service.PrepareSync(currentYear, true);
+
+                var executeResult = executeService.Execute(currentYear -1, true);
+
+                progress.Finish();
+                progress.Close();
+
+
+                using (var frm = new FRM_SYNC_RESULT(
+                    executeResult,
+                    currentYear,
+                    SyncResultView.SiteSync,
+                    "نتيجة اعتماد بيانات الطلاب"))
+                {
+                    frm.ShowDialog();
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                {
+                    MSG.ErrorMesg(ex.Message);
+                }
+            }
+            finally
+            {
+                if (progress != null)
+                {
+                    progress.Finish();
+                    progress.Close();
+                }
+                Waiting.Stop();
+            }
         }
 
         private void pic_async_site_Click(object sender, EventArgs e)
@@ -242,8 +593,17 @@ namespace School_Mang.PL.MAIN
             lbl_async_site_Click(sender, e);
         }
 
-        private void lbl_sync_family_Click(object sender, EventArgs e)
+        private async void lbl_sync_family_Click(object sender, EventArgs e)
         {
+            using (var frm = new FRM_ADMIN_PASSWORD(" أرشفة الأسر"))
+            {
+                if (frm.ShowDialog() != DialogResult.OK)
+                    return;
+            }
+
+            if (!await InternetFlow.EnsureAsync())
+                return;
+
             try
             {
                 var frm = new FRM_SYNC_YEAR("تجهيز الأسر للمزامنة", SyncType.Family);
@@ -265,8 +625,18 @@ namespace School_Mang.PL.MAIN
             lbl_sync_family_Click(sender, e);
         }
 
-        private void StartFamilySiteSync()
+        private async void StartFamilySiteSync()
+
         {
+            if (!await InternetFlow.EnsureAsync())
+                return;
+
+            using (var frm = new FRM_ADMIN_PASSWORD(" مزامنة الأسر"))
+            {
+                if (frm.ShowDialog() != DialogResult.OK)
+                    return;
+            }
+
             Waiting.Start();
 
             try
@@ -383,8 +753,27 @@ namespace School_Mang.PL.MAIN
             StartFamilySiteSync();
         }
 
-        private void lbl_sync_students_Click(object sender, EventArgs e)
-        {
+        private async void lbl_sync_students_Click(object sender, EventArgs e)
+        { 
+            // تستخدم من السيرفر المحلى فى حالة استعادة بيانات 2025-2026 
+            // للتجربة فقط وبعدها يتم الغاء الاجراء
+            // *******************************
+
+            //RestorData();
+            //return;
+
+            // *******************************
+
+
+            if (!await InternetFlow.EnsureAsync())
+                return;
+
+            using (var frm = new FRM_ADMIN_PASSWORD(" مزامنة الطلاب"))
+            {
+                if (frm.ShowDialog() != DialogResult.OK)
+                    return;
+            }
+
             using (var frm = new FRM_SYNC_YEAR("مزامنة الطلاب", SyncType.Student))
             {
                 frm.ShowDialog();

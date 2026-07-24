@@ -32,7 +32,7 @@ namespace School_Mang.BL.Services.SyncService.Student
             ProgressChanged?.Invoke(current, total, message);
         }
 
-        public StudentSyncResult PrepareSync(int yearId)
+        public StudentSyncResult PrepareSync(int yearId,  bool finalArchiveSync = false )
         {
             ReportProgress(20, 100, "بدء تجهيز الطلاب");
 
@@ -71,8 +71,12 @@ namespace School_Mang.BL.Services.SyncService.Student
 
                 if (student.Action_Id == StudentSyncAction.Update)
                 {
-                    // الاحتفاظ برقم الجلوس الموجود بالموقع
-                    student.SeatNo = resolver.GetSeatNo(student.StdCode);
+                    if (!finalArchiveSync)
+                    {
+                        // المزامنة العادية
+                        // الاحتفاظ برقم الجلوس الموجود بالموقع
+                        student.SeatNo = resolver.GetSeatNo(student.StdCode);
+                    }  
 
                     result.Updated++;
                 }
@@ -107,7 +111,10 @@ namespace School_Mang.BL.Services.SyncService.Student
 
             ReportProgress(95, 100, "جاري حفظ بيانات التجهيز");
 
-            FixEmptySeatNumbers(schoolStudents);
+            if (!finalArchiveSync)
+            {
+                FixEmptySeatNumbers(schoolStudents);
+            }
 
             _tempService.Clear();
 
@@ -125,16 +132,18 @@ namespace School_Mang.BL.Services.SyncService.Student
 
         private void FixEmptySeatNumbers(List<StudentSyncTemp> students)
         {
-            int nextSeatNo = 100001;
+            int nextSeatNo = Math.Max(_siteProvider.GetMaxTemporarySeatNo() + 1, 100001);
 
             foreach (var student in students)
             {
-                if (student.SeatNo <= 0)
+                // كل طالب جديد يأخذ رقمًا مؤقتًا
+                if (student.Action_Id == StudentSyncAction.Add)
                 {
                     student.SeatNo = nextSeatNo;
                     nextSeatNo++;
                 }
             }
         }
+
     }
 }

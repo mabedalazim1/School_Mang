@@ -63,19 +63,6 @@ namespace School_Mang.BL.Services.SyncService.Student
                 "StudentSync_Temp"
             );
         }
-
-
-        public DataTable GetByAction(StudentSyncAction action)
-        {
-            return _dal.ExecQuery(
-                "SP_Get_StudentSync_Temp",
-                new SqlParameter(
-                    "@Action_Id",
-                    (byte)action
-                )
-            );
-        }
-
         
 
         public DataTable GetAll()

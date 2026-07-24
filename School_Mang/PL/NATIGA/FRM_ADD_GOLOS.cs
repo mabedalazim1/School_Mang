@@ -40,9 +40,18 @@ namespace School_Mang.PL.NATIGA
         {
             DataTable dt = nateg.Get_Golos_Sum(grade);
 
-            if ( dt != null  && dt.Rows.Count > 0)
+            bool hasGolos =
+                dt != null &&
+                dt.Rows.Count > 0 &&
+                dt.Rows[0]["Golos"] != DBNull.Value &&
+                Convert.ToInt32(dt.Rows[0]["Golos"]) > 0;
+
+            if (hasGolos)
             {
-                txt_golos.Text = nateg.Get_Golos_Sum(grade,"min").Rows[0]["Golos"].ToString();
+                txt_golos.Text = nateg.Get_Golos_Sum(grade, "min")
+                                      .Rows[0]["Golos"]
+                                      .ToString();
+
                 btn_save_data.ButtonText = "تعديل الترقيم";
                 lbl_edit.Visible = true;
             }

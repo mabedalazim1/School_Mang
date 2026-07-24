@@ -161,34 +161,6 @@ namespace School_Mang.DAL
             }
         }
 
-
-        // =========================
-        // RAW QUERY (SITE DB)
-        // =========================
-        public DataTable LocalDbExeucuteQuery(string query)
-        {
-            using (var con = CreateConnection())
-            using (var cmd = new SqlCommand(query, con))
-            using (var da = new SqlDataAdapter(cmd))
-            {
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-                return dt;
-            }
-        }
-
-        // =========================
-        // RAW NON QUERY (SITE DB)
-        // =========================
-        public void LocalDbExeucuteNonQuery(string query)
-        {
-            using (var con = CreateConnection())
-            using (var cmd = new SqlCommand(query, con))
-            {
-                con.Open();
-                cmd.ExecuteNonQuery();
-            }
-        }
         // =========================
         // BULK INSERT
         // =========================
@@ -231,6 +203,23 @@ namespace School_Mang.DAL
             }
                 },
                 cmd => cmd.ExecuteNonQuery());
+        }
+
+        public T ExecuteScalar<T>(string sp, params SqlParameter[] prms)
+        {
+            return Execute(
+                sp,
+                CommandType.StoredProcedure,
+                prms,
+                cmd =>
+                {
+                    object result = cmd.ExecuteScalar();
+
+                    if (result == null || result == DBNull.Value)
+                        return default(T);
+
+                    return (T)Convert.ChangeType(result, typeof(T));
+                });
         }
     }
 }

@@ -48,5 +48,27 @@ namespace School_Mang.BL
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error);
         }
+
+        public static DialogResult DialogeMsgRtl(string str)
+        {
+            return MessageBox.Show(
+                str,
+                Title,
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button2,
+                MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
+        }
+
+        public static DialogResult DialogeErrMsgRtl(string str)
+        {
+            return MessageBox.Show(
+                str,
+                Title,
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning,
+                MessageBoxDefaultButton.Button2,
+                MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
+        }
     }
 }

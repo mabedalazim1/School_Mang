@@ -20,10 +20,17 @@ namespace School_Mang.BL.Services.SyncService.Student
             _siteDal = new SiteAccessLayer();
         }
 
+        public event Action<int, int, string> ProgressChanged;
 
-        public StudentSyncResult Execute()
+        private void ReportProgress(int current, int total, string message)
+        {
+            ProgressChanged?.Invoke(current, total, message);
+        }
+
+        public StudentSyncResult Execute(int archivedYearId = 0, bool finalSync = false)
         {
             // قراءة بيانات التجهيز من قاعدة المدرسة
+            ReportProgress(10, 100, "جاري قراءة بيانات تجهيز الطلاب");
             DataTable table = _temp.GetAll();
 
 
@@ -32,12 +39,14 @@ namespace School_Mang.BL.Services.SyncService.Student
 
 
             // تنظيف جدول المزامنة في الموقع
-            _siteDal.ExecuteNonQuery(
+            ReportProgress(30, 100, "جاري تنظيف جدول المزامنة بالموقع");
+            _siteDal.Query(
                 "TRUNCATE TABLE StudentSync_Temp"
             );
 
 
             // إرسال البيانات للموقع
+            ReportProgress(50, 100, "جاري رفع بيانات الطلاب للموقع");
             _siteDal.BulkInsert(
                 table,
                 "StudentSync_Temp"
@@ -45,11 +54,14 @@ namespace School_Mang.BL.Services.SyncService.Student
 
 
             // تنفيذ المزامنة
+            ReportProgress(75, 100, "جاري تنفيذ تحديث الطلاب");
             DataTable result = _siteDal.ExecQuery(
-                "SP_Execute_Student_Sync"
+                "SP_Execute_Student_Sync",
+                _siteDal.Param("@YearId", archivedYearId),
+                _siteDal.Param("@FinalSync", finalSync)
             );
 
-
+            ReportProgress(100, 100, "تم تنفيذ مزامنة الطلاب");
             if (result.Rows.Count == 0)
                 return new StudentSyncResult();
 

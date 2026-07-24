@@ -244,16 +244,15 @@
     <Compile Include="BL\Enums\SyncNextAction.cs" />
     <Compile Include="BL\Enums\SyncResultView.cs" />
     <Compile Include="BL\Enums\SyncType.cs" />
+    <Compile Include="BL\Services\SyncService\Degree\DegreeArchiveService.cs" />
     <Compile Include="BL\Services\SyncService\Family\FamilyMapper.cs" />
     <Compile Include="BL\Services\SyncService\Family\FamilySiteSyncService.cs" />
     <Compile Include="BL\Services\SyncService\Family\FamilySyncBulkService.cs" />
     <Compile Include="BL\Services\SyncService\Family\FamilySyncTempBuilder.cs" />
     <Compile Include="BL\Services\SyncService\Family\FamilySyncTempService.cs" />
     <Compile Include="BL\Services\SyncService\Family\FamilySyncValidationService.cs" />
-    <Compile Include="BL\Services\SyncService\Models\FamilySyncItem.cs" />
     <Compile Include="BL\Services\SyncService\Models\FamilySyncResult.cs" />
     <Compile Include="BL\Services\SyncService\Models\FamilySyncTemp.cs" />
-    <Compile Include="BL\Services\SyncService\Models\FamilyUserNameUpdate.cs" />
     <Compile Include="BL\Services\SyncService\Models\FamilyValidationResult.cs" />
     <Compile Include="BL\Services\SyncService\Models\SchoolFamily.cs" />
     <Compile Include="BL\Enums\ColumnVisibility.cs" />
@@ -283,14 +282,12 @@
     <Compile Include="BL\NATEG\ExcelUtlity.cs" />
     <Compile Include="BL\Services\SyncService\Family\FamilySyncService.cs" />
     <Compile Include="BL\Services\SyncService\Models\SiteFamily.cs" />
-    <Compile Include="BL\Services\SyncService\Models\SiteStudent.cs" />
     <Compile Include="BL\Services\SyncService\Models\StudentSyncResult.cs" />
     <Compile Include="BL\Services\SyncService\Student\StudentActionResolver.cs" />
     <Compile Include="BL\Services\SyncService\Student\StudentArchiveProvider.cs" />
-    <Compile Include="BL\Services\SyncService\Student\StudentArchiveService.cs" />
     <Compile Include="BL\Services\SyncService\Student\StudentArchiveSyncService.cs" />
+    <Compile Include="BL\Services\SyncService\Student\StudentRestoreService.cs" />
     <Compile Include="BL\Services\SyncService\Student\StudentSyncExecuteService.cs" />
-    <Compile Include="BL\Services\SyncService\Student\StudentSyncTableBuilder.cs" />
     <Compile Include="BL\Services\SyncService\Student\StudentSyncTempService.cs" />
     <Compile Include="BL\Services\SyncService\Student\SiteStudentProvider.cs" />
     <Compile Include="BL\Services\SyncService\Models\StudentSyncTemp.cs" />
@@ -792,6 +789,12 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="PL\MAIN\CLS_FUNCATIONS.cs" />
+    <Compile Include="PL\MAIN\FRM_ADMIN_PASSWORD.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\MAIN\FRM_ADMIN_PASSWORD.Designer.cs">
+      <DependentUpon>FRM_ADMIN_PASSWORD.cs</DependentUpon>
+    </Compile>
     <Compile Include="PL\MAIN\FRM_AMELIN.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1615,6 +1618,9 @@
     </Content>
     <EmbeddedResource Include="PL\Controls\UC_EnvironmentIndicator.resx">
       <DependentUpon>UC_EnvironmentIndicator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PL\MAIN\FRM_ADMIN_PASSWORD.resx">
+      <DependentUpon>FRM_ADMIN_PASSWORD.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PL\MAIN\FRM_AMELIN.resx">
       <DependentUpon>FRM_AMELIN.cs</DependentUpon>

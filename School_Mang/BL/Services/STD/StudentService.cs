@@ -1,7 +1,8 @@
-﻿using System;
-using System.Data;
-using School_Mang.BL.Services.STD;
+﻿using School_Mang.BL.Services.STD;
 using School_Mang.DAL;
+using System;
+using System.Data;
+using System.Linq;
 
 namespace School_Mang.BL.Services
 {
@@ -141,6 +142,13 @@ namespace School_Mang.BL.Services
                 SqlParam.Int("@Class_Id", Class_Id),
                 SqlParam.NVar("@Updated_by", Properties.Settings.Default.user_name, 15)
             );
+        }
+
+        public bool HasStudentsWithoutGolos(int yearId)
+        {
+            return _dal.ExecuteScalar<bool>(
+                "SP_Has_Students_Without_Golos",
+                SqlParam.Int("@Year_Id", yearId));
         }
     }
 }

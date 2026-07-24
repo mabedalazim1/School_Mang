@@ -157,55 +157,7 @@ namespace School_Mang.DAL
                 });
         }
 
-
-        public DataTable SchoolSiteExecuteQuery(string query)
-        {
-            return Execute(
-                query,
-                CommandType.Text,
-                null,
-                cmd =>
-                {
-                    DataTable dt = new DataTable();
-
-                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
-                    {
-                        da.Fill(dt);
-                    }
-
-                    return dt;
-                }
-            );
-        }
-
-        // =========================
-        // RAW NON QUERY (SITE DB)
-        // =========================
-
-        // لتنفيذ أوامر SQL النصية (Raw SQL) مثل DELETE وUPDATE الديناميكية.
-        // لا تستخدم Stored Procedures.
-        public void SchoolSiteExecuteNonQuery(string query)
-        {
-            Execute(
-                query,
-                CommandType.Text,
-                null,
-                cmd =>
-                {
-                    cmd.ExecuteNonQuery();
-                    return 0;
-                }
-            );
-        }
-
-        public int ExecuteNonQuery(string sql, params SqlParameter[] prms)
-        {
-            return Execute(
-                sql,
-                CommandType.Text,
-                prms,
-                cmd => cmd.ExecuteNonQuery());
-        }
+       
         // =========================
         // EXEC SCALAR (Stored Procedure)
         // =========================
@@ -283,6 +235,12 @@ namespace School_Mang.DAL
                 }
             }
         }
+
+        public SqlParameter Param(string name, object value)
+        {
+            return new SqlParameter(name, value ?? DBNull.Value);
+        }
+
         public void RunInTransaction(Action action)
         {
             BeginTransaction();

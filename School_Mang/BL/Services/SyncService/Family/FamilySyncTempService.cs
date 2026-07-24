@@ -39,16 +39,6 @@ namespace School_Mang.BL.Services.SyncService.Family
                 "SELECT Osra_Id FROM FamilySync_Temp");
         }
 
-        public DataTable GetWhatsAppUpdates()
-        {
-            return _dal.Query(
-                @"SELECT 
-              Osra_Id AS OsraId,
-              WhatsApp_Number AS WhatsApp
-          FROM FamilySync_Temp
-          WHERE WhatsApp_Number IS NOT NULL
-            AND LTRIM(RTRIM(WhatsApp_Number)) <> ''");
-        }
 
     }
 }

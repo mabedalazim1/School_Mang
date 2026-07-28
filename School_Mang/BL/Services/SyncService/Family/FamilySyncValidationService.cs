@@ -12,13 +12,13 @@ namespace School_Mang.BL.Services.SyncService.Family
     public class FamilySyncValidationService
     {
         private readonly FamilySyncTempService _tempService;
-        private readonly SiteUserProvider _siteUserProvider;
+        private readonly SiteDataProvider _siteUserProvider;
         private readonly FamilyDataGenerator _generator;
 
         public FamilySyncValidationService()
         {
             _tempService = new FamilySyncTempService();
-            _siteUserProvider = new SiteUserProvider();
+            _siteUserProvider = new SiteDataProvider();
             _generator = new FamilyDataGenerator();
         }
 

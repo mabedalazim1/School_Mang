@@ -556,6 +556,10 @@ namespace School_Mang.PL.MAIN
 
                 var executeResult = executeService.Execute(currentYear -1, true);
 
+                // تحديث العام فى الموقع
+                var siteProvider = new SiteDataProvider();
+                siteProvider.SetSiteCurrentYear(year);
+
                 progress.Finish();
                 progress.Close();
 

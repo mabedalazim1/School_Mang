@@ -13,7 +13,7 @@ namespace School_Mang.BL.Services.SyncService.Family
         private readonly TempTableBuilder _tableBuilder;
         private readonly FamilySyncBulkService _bulkService;
         private readonly FamilySyncTempService _tempService;
-        private readonly SiteUserProvider _siteUserProvider;
+        private readonly SiteDataProvider _siteUserProvider;
         private readonly SyncProcessService _syncProcessService;
 
         public event Action<int, int, string> ProgressChanged;
@@ -29,7 +29,7 @@ namespace School_Mang.BL.Services.SyncService.Family
             _tableBuilder = new TempTableBuilder();
             _bulkService = new FamilySyncBulkService();
             _tempService = new FamilySyncTempService();
-            _siteUserProvider = new SiteUserProvider();
+            _siteUserProvider = new SiteDataProvider();
             _syncProcessService = new SyncProcessService();
 
         }

@@ -6,11 +6,11 @@ using System.Data;
 
 namespace School_Mang.BL.Services.SyncService
 {
-    public class SiteUserProvider
+    public class SiteDataProvider
     {
         private readonly SiteAccessLayer _site;
 
-        public SiteUserProvider()
+        public SiteDataProvider()
         {
             _site = new SiteAccessLayer();
         }
@@ -76,6 +76,13 @@ namespace School_Mang.BL.Services.SyncService
                 "@Families",
                 table,
                 "FamilyWhatsAppType");
+        }
+
+        public void SetSiteCurrentYear(int yearId)
+        {
+            _site.ExecNonQuery(
+                "SP_Set_Site_Current_Year",
+                SqlParam.Int("@Year_Id", yearId));
         }
     }
 }

@@ -2,6 +2,7 @@
 using School_Mang.BL.Common;
 using School_Mang.BL.Enums;
 using School_Mang.BL.Services;
+using School_Mang.BL.Services.SyncService;
 using School_Mang.BL.Services.SyncService.Family;
 using School_Mang.BL.Services.SyncService.Models;
 using School_Mang.BL.Services.SyncService.Student;
@@ -229,6 +230,11 @@ namespace School_Mang.PL.SITE
 
 
                 var executeResult = executeService.Execute();
+
+                // تحديث العام فى الموقع
+                var siteProvider = new SiteDataProvider();
+                siteProvider.SetSiteCurrentYear(year);
+
 
                 progress.Finish();
                 progress.Close();

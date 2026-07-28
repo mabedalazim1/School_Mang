@@ -10,7 +10,7 @@ namespace School_Mang.BL.Services.SyncService.Family
     public class FamilySiteSyncService
     {
         private readonly FamilySyncTempService _tempService;
-        private readonly SiteUserProvider _siteProvider;
+        private readonly SiteDataProvider _siteProvider;
 
         private int _current;
         private int _total;
@@ -18,7 +18,7 @@ namespace School_Mang.BL.Services.SyncService.Family
         public FamilySiteSyncService()
         {
             _tempService = new FamilySyncTempService();
-            _siteProvider = new SiteUserProvider();
+            _siteProvider = new SiteDataProvider();
         }
 
         public event Action<int, int, string> ProgressChanged;

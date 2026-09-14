@@ -67,7 +67,7 @@ namespace School_Mang.PL.MAIN
 
         private void lbl_rasd_Click(object sender, EventArgs e)
         {
-            BL.Globals.Koshof_Rasd = false;
+            Globals.Koshof_Rasd = false;
             NATIGA.FRM_KSHOF_RASD frm = new NATIGA.FRM_KSHOF_RASD();
             frm.ShowDialog();
         }
@@ -84,7 +84,7 @@ namespace School_Mang.PL.MAIN
 
         private void lbl_rasd_report_Click(object sender, EventArgs e)
         {
-            BL.Globals.Koshof_Rasd = true;
+            Globals.Koshof_Rasd = true;
             NATIGA.FRM_KSHOF_RASD frm = new NATIGA.FRM_KSHOF_RASD();
             frm.ShowDialog();
         }

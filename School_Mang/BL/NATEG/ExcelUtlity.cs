@@ -18,7 +18,7 @@ namespace School_Mang.BL.NATEG
                                           string staticExcelFile,
                                           short test_kind)
         {
-
+            int year = Properties.Settings.Default.year_cod;
             Application excel;
             Workbook excelworkBook;
             Worksheet excelSheet;
@@ -68,13 +68,17 @@ namespace School_Mang.BL.NATEG
                     excelSheet.Cells[rowcount, 16] = test_kind.ToString();
                     excelSheet.Cells[rowcount, 17] = datarow[3].ToString();
                     excelSheet.Cells[rowcount, 19] = datarow[2].ToString();
+                    excelSheet.Cells[rowcount, 20] = year.ToString();
 
                 }
 
                 // Delete Unused Rows
-                Range range;
-                range = excelSheet.Range[excelSheet.Cells[count_data + 5, 1], excelSheet.Cells[152, 19]];
-                range.Delete(XlDeleteShiftDirection.xlShiftUp);
+                Range range = excelSheet.Range[
+                                excelSheet.Rows[count_data + 5],
+                                excelSheet.Rows[152]
+                                ];
+                                
+                range.EntireRow.Delete();
 
                 // Protected Excel
                 excelSheet.Protect("kps2023");
@@ -177,7 +181,7 @@ namespace School_Mang.BL.NATEG
                     excelSheet.Cells[rowcount, 2] = c_id.ToString();
                     excelSheet.Cells[rowcount, 3] = datarow[1].ToString();
                     excelSheet.Cells[rowcount, 4] = datarow[0].ToString();
-                  
+
                     switch (prim)
                     {
                         case 0:
@@ -195,7 +199,7 @@ namespace School_Mang.BL.NATEG
                             excelSheet.Cells[rowcount, 13] = datarow[2].ToString();
                             break;
                     }
-                    
+
                 }
 
                 // Delete Unused Rows
@@ -283,18 +287,18 @@ namespace School_Mang.BL.NATEG
                 excelSheet.Cells[7, 30] = term_id;
                 // loop through each row and add values to our sheet
                 short rowcount = 4;
-                
+
                 short count_data = Convert.ToInt16(dataTable.Rows.Count);
 
                 foreach (DataRow datarow in dataTable.Rows)
                 {
                     // Reset Counter
-                  
+
 
                     rowcount += 1;
 
                     // Add values
-                   
+
                     excelSheet.Cells[rowcount, 1] = datarow[0].ToString();
                     excelSheet.Cells[rowcount, 2] = datarow[1].ToString();
 
@@ -339,7 +343,7 @@ namespace School_Mang.BL.NATEG
                 Waiting.Stop();
             }
         }
-    
+
 
         public bool WriteSeryDataToExcel(System.Data.DataTable dataTable,
                                          string worksheetName,
@@ -374,16 +378,16 @@ namespace School_Mang.BL.NATEG
                 // loop through each row and add values to our sheet
                 short rowcount = 4;
                 short id = 0;
-               
+
                 short count_data = Convert.ToInt16(dataTable.Rows.Count);
 
 
                 foreach (DataRow datarow in dataTable.Rows)
                 {
-                  
+
                     rowcount += 1;
                     id += 1;
-                  
+
 
                     // Add values
                     excelSheet.Cells[rowcount, 1] = id.ToString(); // Id
@@ -429,7 +433,7 @@ namespace School_Mang.BL.NATEG
                 Waiting.Stop();
             }
         }
-       
+
         public System.Data.DataTable ReadRasdDataFromExcel(string staticExcelFile)
 
         {
@@ -516,15 +520,15 @@ namespace School_Mang.BL.NATEG
                     dt.Rows.Add(row); //add row to DataTable
                 }
 
-                excelworkBook.Close(0); 
+                excelworkBook.Close(0);
                 excelSheet = null;
                 excelworkBook = null;
 
                 excel.DisplayAlerts = true;
-                excel.Quit(); 
+                excel.Quit();
                 excel = null;
-              
-                
+
+
 
                 Waiting.Stop();
                 return dt;
@@ -634,7 +638,7 @@ namespace School_Mang.BL.NATEG
 
         {
             System.Data.DataTable dt = new System.Data.DataTable();
-            
+
             Application excel;
             Workbook excelworkBook;
             Worksheet excelSheet;
@@ -735,14 +739,14 @@ namespace School_Mang.BL.NATEG
 
                 dt.Columns.Add("test_kind", typeof(string));
                 dt.Columns.Add("grade_data", typeof(string));
-               
+
 
                 //assign new row to DataTable
                 DataRow NewRow = dt.NewRow();
 
                 NewRow["test_kind"] = excelSheet.Cells[5, 16].Value2;
                 NewRow["grade_data"] = excelSheet.Cells[5, 17].Value2;
-                
+
 
                 dt.Rows.Add(NewRow); //add row to DataTable
 
@@ -987,7 +991,7 @@ namespace School_Mang.BL.NATEG
                 dt.Columns.Add("scince", typeof(decimal));
                 dt.Columns.Add("english", typeof(decimal));
                 dt.Columns.Add("maharat", typeof(decimal));
-              
+
 
                 int rowCounter; //This variable is used for row index number
                 DataRow row;
@@ -1004,7 +1008,7 @@ namespace School_Mang.BL.NATEG
                     row["scince"] = Convert.ToDecimal(xlRange.Cells[i, 8].Value2);
                     row["english"] = Convert.ToDecimal(xlRange.Cells[i, 9].Value2);
                     row["maharat"] = Convert.ToDecimal(xlRange.Cells[i, 10].Value2);
-                   
+
                     rowCounter++;
 
                     dt.Rows.Add(row); //add row to DataTable
@@ -1079,7 +1083,7 @@ namespace School_Mang.BL.NATEG
                 dt.Columns.Add("tocnolegy", typeof(decimal));
 
                 int rowCounter; //This variable is used for row index number
-                DataRow row ;
+                DataRow row;
                 rowCounter = 5;
 
                 for (int i = 5; i <= rowCount; i++) //Loop for available row of excel data
@@ -1099,7 +1103,7 @@ namespace School_Mang.BL.NATEG
 
                     dt.Rows.Add(row); //add row to DataTable
                 }
-                
+
                 excelworkBook.Close(0);
 
                 excel.DisplayAlerts = true;
@@ -1126,8 +1130,8 @@ namespace School_Mang.BL.NATEG
                 Waiting.Stop();
             }
 
-        } 
-        
+        }
+
         public System.Data.DataTable Read_Test(string staticExcelFile, byte stage = 1)
 
         {
@@ -1169,7 +1173,7 @@ namespace School_Mang.BL.NATEG
                 dt.Columns.Add("tocnolegy", typeof(decimal));
 
                 int rowCounter; //This variable is used for row index number
-                DataRow row ;
+                DataRow row;
                 rowCounter = 5;
 
                 for (int i = 5; i <= rowCount; i++) //Loop for available row of excel data
@@ -1179,7 +1183,7 @@ namespace School_Mang.BL.NATEG
                     row["Golos"] = Convert.ToInt32(xlRange.Cells[i, 1].Value2);
                     row["arabic"] = Convert.ToDecimal(xlRange.Cells[i, 3].Value2);
                     row["dain"] = Convert.ToDecimal(xlRange.Cells[i, 4].Value2);
-                    switch(stage)
+                    switch (stage)
                     {
                         case 0:
                             row["math"] = Convert.ToDecimal(xlRange.Cells[i, 5].Value2);
@@ -1192,12 +1196,12 @@ namespace School_Mang.BL.NATEG
                             break;
 
                         case 1:
-                        row["math"] = Convert.ToDecimal(xlRange.Cells[i, 5].Value2);
-                        row["scince"] = Convert.ToDecimal(xlRange.Cells[i, 6].Value2);
-                        row["social"] = Convert.ToDecimal(xlRange.Cells[i, 7].Value2);
-                        row["english"] = Convert.ToDecimal(xlRange.Cells[i, 8].Value2);
-                        row["maharat"] = Convert.ToDecimal(xlRange.Cells[i, 9].Value2);
-                        row["tocnolegy"] = Convert.ToDecimal(xlRange.Cells[i, 10].Value2);
+                            row["math"] = Convert.ToDecimal(xlRange.Cells[i, 5].Value2);
+                            row["scince"] = Convert.ToDecimal(xlRange.Cells[i, 6].Value2);
+                            row["social"] = Convert.ToDecimal(xlRange.Cells[i, 7].Value2);
+                            row["english"] = Convert.ToDecimal(xlRange.Cells[i, 8].Value2);
+                            row["maharat"] = Convert.ToDecimal(xlRange.Cells[i, 9].Value2);
+                            row["tocnolegy"] = Convert.ToDecimal(xlRange.Cells[i, 10].Value2);
                             break;
 
                         case 2:
@@ -1209,8 +1213,8 @@ namespace School_Mang.BL.NATEG
                             row["tocnolegy"] = Convert.ToDecimal(xlRange.Cells[i, 11].Value2);
                             break;
                     }
-                    
-                    if(Convert.ToInt32(xlRange.Cells[i, 1].Value2) == 0)
+
+                    if (Convert.ToInt32(xlRange.Cells[i, 1].Value2) == 0)
                     {
                         break;
                     }

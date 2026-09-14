@@ -45,6 +45,7 @@ namespace School_Mang.PL.STD
             this.label1 = new System.Windows.Forms.Label();
             this.txt_std_data = new Bunifu.Framework.UI.BunifuMaterialTextbox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btn_sort = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btn_talab_tahewl = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btn_del_std = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btn_new_std = new Bunifu.Framework.UI.BunifuThinButton2();
@@ -56,7 +57,6 @@ namespace School_Mang.PL.STD
             this.panel4 = new System.Windows.Forms.Panel();
             this.pic_help = new System.Windows.Forms.PictureBox();
             this.btn_current_year = new Bunifu.Framework.UI.BunifuThinButton2();
-            this.btn_sort = new Bunifu.Framework.UI.BunifuThinButton2();
             ((System.ComponentModel.ISupportInitialize)(this.dt_std_data)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.pn_top.SuspendLayout();
@@ -186,7 +186,7 @@ namespace School_Mang.PL.STD
             this.label3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.label3.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.Black;
-            this.label3.Location = new System.Drawing.Point(793, 77);
+            this.label3.Location = new System.Drawing.Point(801, 77);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(100, 25);
             this.label3.TabIndex = 90;
@@ -198,7 +198,7 @@ namespace School_Mang.PL.STD
             this.lbl_count.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lbl_count.Font = new System.Drawing.Font("LBC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_count.ForeColor = System.Drawing.Color.Black;
-            this.lbl_count.Location = new System.Drawing.Point(763, 79);
+            this.lbl_count.Location = new System.Drawing.Point(752, 79);
             this.lbl_count.Name = "lbl_count";
             this.lbl_count.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lbl_count.Size = new System.Drawing.Size(0, 25);
@@ -261,6 +261,32 @@ namespace School_Mang.PL.STD
             this.groupBox3.Size = new System.Drawing.Size(1003, 73);
             this.groupBox3.TabIndex = 87;
             this.groupBox3.TabStop = false;
+            // 
+            // btn_sort
+            // 
+            this.btn_sort.ActiveBorderThickness = 1;
+            this.btn_sort.ActiveCornerRadius = 20;
+            this.btn_sort.ActiveFillColor = System.Drawing.Color.SteelBlue;
+            this.btn_sort.ActiveForecolor = System.Drawing.Color.White;
+            this.btn_sort.ActiveLineColor = System.Drawing.Color.DeepSkyBlue;
+            this.btn_sort.BackColor = System.Drawing.SystemColors.Control;
+            this.btn_sort.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_sort.BackgroundImage")));
+            this.btn_sort.ButtonText = "ترتيب بالتاريخ";
+            this.btn_sort.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_sort.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_sort.ForeColor = System.Drawing.Color.SteelBlue;
+            this.btn_sort.IdleBorderThickness = 1;
+            this.btn_sort.IdleCornerRadius = 20;
+            this.btn_sort.IdleFillColor = System.Drawing.Color.WhiteSmoke;
+            this.btn_sort.IdleForecolor = System.Drawing.Color.RoyalBlue;
+            this.btn_sort.IdleLineColor = System.Drawing.Color.DodgerBlue;
+            this.btn_sort.Location = new System.Drawing.Point(434, 15);
+            this.btn_sort.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_sort.Name = "btn_sort";
+            this.btn_sort.Size = new System.Drawing.Size(156, 50);
+            this.btn_sort.TabIndex = 77;
+            this.btn_sort.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btn_sort.Click += new System.EventHandler(this.btn_sort_Click);
             // 
             // btn_talab_tahewl
             // 
@@ -467,32 +493,6 @@ namespace School_Mang.PL.STD
             this.btn_current_year.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.btn_current_year.Click += new System.EventHandler(this.btn_current_year_Click);
             // 
-            // btn_sort
-            // 
-            this.btn_sort.ActiveBorderThickness = 1;
-            this.btn_sort.ActiveCornerRadius = 20;
-            this.btn_sort.ActiveFillColor = System.Drawing.Color.SteelBlue;
-            this.btn_sort.ActiveForecolor = System.Drawing.Color.White;
-            this.btn_sort.ActiveLineColor = System.Drawing.Color.DeepSkyBlue;
-            this.btn_sort.BackColor = System.Drawing.SystemColors.Control;
-            this.btn_sort.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_sort.BackgroundImage")));
-            this.btn_sort.ButtonText = "ترتيب بالتاريخ";
-            this.btn_sort.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_sort.Font = new System.Drawing.Font("LBC", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_sort.ForeColor = System.Drawing.Color.SteelBlue;
-            this.btn_sort.IdleBorderThickness = 1;
-            this.btn_sort.IdleCornerRadius = 20;
-            this.btn_sort.IdleFillColor = System.Drawing.Color.WhiteSmoke;
-            this.btn_sort.IdleForecolor = System.Drawing.Color.RoyalBlue;
-            this.btn_sort.IdleLineColor = System.Drawing.Color.DodgerBlue;
-            this.btn_sort.Location = new System.Drawing.Point(434, 15);
-            this.btn_sort.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btn_sort.Name = "btn_sort";
-            this.btn_sort.Size = new System.Drawing.Size(156, 50);
-            this.btn_sort.TabIndex = 77;
-            this.btn_sort.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btn_sort.Click += new System.EventHandler(this.btn_sort_Click);
-            // 
             // FRM_TAHWELAT
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -504,7 +504,6 @@ namespace School_Mang.PL.STD
             this.Controls.Add(this.cmb_grade);
             this.Controls.Add(this.lbl_help);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.lbl_count);
             this.Controls.Add(this.txt_std_data);
             this.Controls.Add(this.pic_help);
@@ -513,6 +512,7 @@ namespace School_Mang.PL.STD
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.label3);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FRM_TAHWELAT";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

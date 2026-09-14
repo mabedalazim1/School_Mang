@@ -228,7 +228,7 @@ namespace School_Mang.PL.NATIGA
         private void btn_degree_Click(object sender, EventArgs e)
         {
 
-            if (BL.Globals.Koshof_Rasd)
+            if (Globals.Koshof_Rasd)
             {
                 OpenRasdReport(1);
             }
@@ -240,7 +240,7 @@ namespace School_Mang.PL.NATIGA
 
         private void btn_mark_Click(object sender, EventArgs e)
         {
-            if (BL.Globals.Koshof_Rasd)
+            if (Globals.Koshof_Rasd)
             {
                 OpenRasdReport(2);
             }

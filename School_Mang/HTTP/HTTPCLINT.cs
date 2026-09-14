@@ -64,7 +64,7 @@ namespace School_Mang.HTTP
             {
                 Waiting.Start();
 
-                if (BL.Globals.accessToken == null) await SignIn();
+                if (Globals.accessToken == null) await SignIn();
                 HttpClient client = new HttpClient();
 
                 client.BaseAddress = new Uri(uri);
@@ -72,7 +72,7 @@ namespace School_Mang.HTTP
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(
                     new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Add("x-access-token", BL.Globals.accessToken);
+                client.DefaultRequestHeaders.Add("x-access-token", Globals.accessToken);
 
                 var formData = new MultipartFormDataContent();
 

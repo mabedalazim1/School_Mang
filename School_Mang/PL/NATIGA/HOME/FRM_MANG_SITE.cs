@@ -67,7 +67,7 @@ namespace School_Mang.PL.NATIGA.HOME
                 else
                 {
                     MSG.ErrorMesg("تم إلغاء الإجراء ..!");
-                    BL.Globals.Dir_Path = "D://Rasd";
+                    Globals.Dir_Path = "D://Rasd";
                 }
 
             }

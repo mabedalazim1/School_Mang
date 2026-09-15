@@ -33,7 +33,7 @@ namespace School_Mang.HTTP
                 var login_info = new Login_Info
                 {
                     username = "admin",
-                    password = "admin123",
+                    password = "admin2026",
                 };
                 var login = JsonSerializer.Serialize(login_info);
 

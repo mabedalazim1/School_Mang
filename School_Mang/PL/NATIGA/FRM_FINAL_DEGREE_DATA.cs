@@ -1,18 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using School_Mang.BL;
+using School_Mang.BL.Services;
+using System;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using School_Mang.BL;
 
 namespace School_Mang.PL.NATIGA
 {
-    public partial class FRM_FINAL_DEGREE_DATA : Form
+    public partial class FRM_FINAL_DEGREE_DATA : Form, INavigationAware
     {
+
+        private NavigationContext _context;
+
+        public void SetNavigation(NavigationContext context)
+        {
+            _context = context ?? new NavigationContext();
+        }
+
         BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
         
 
@@ -78,7 +82,7 @@ namespace School_Mang.PL.NATIGA
         {
 
             // Change Lables For Grades
-            byte test_grade_id = Convert.ToByte(BL.Globals.test_grade_id);
+            byte test_grade_id = Convert.ToByte(_context.Natiga.TestGradeId);
             byte year_id = Convert.ToByte(Properties.Settings.Default.year_cod);
 
             switch (test_grade_id)
@@ -115,7 +119,7 @@ namespace School_Mang.PL.NATIGA
                 case 3:
                     lbl_mahrat.Location = new Point(189, 31);
                     lbl_mahrat.Text = "بدنية";
-                    txt_test_kind.Text = BL.Globals.Final_Test_Name;
+                    txt_test_kind.Text = _context.Natiga.FinalTestName;
                     break;
 
                 case 4:
@@ -125,7 +129,7 @@ namespace School_Mang.PL.NATIGA
                     lbl_mahrat.Text = "مهارات";
                     lbl_tocnolegy.Location = new Point(96, 31);
                     lbl_tocnolegy.Text = "تكنولوجي";
-                    txt_test_kind.Text = BL.Globals.Final_Test_Name;
+                    txt_test_kind.Text = _context.Natiga.FinalTestName;
                     break;
 
                 case 7:
@@ -135,12 +139,13 @@ namespace School_Mang.PL.NATIGA
                     lbl_mahrat.Text = "فنية";
                     lbl_tocnolegy.Location = new Point(106, 31);
                     lbl_tocnolegy.Text = "حاسب";
-                    txt_test_kind.Text = BL.Globals.Final_Test_Name;
+                    txt_test_kind.Text = _context.Natiga.FinalTestName;
                     break;
             }
             
-            int Std_Golos = BL.Globals.Std_Golos;
-            DataTable Dt = NATEG.Get_Final_All_Data(Std_Golos);
+            int Std_Golos = _context.Natiga.StudentGolos;
+            int greadId = _context.Natiga.TestGradeId;
+            DataTable Dt = NATEG.Get_Final_All_Data(Std_Golos,greadId);
             if (Dt.Rows.Count == 0)
             {
                 MSG.ErrorMesg("لا توجد بيانات مسجلة لهذا الطالب ..!");
@@ -185,7 +190,7 @@ namespace School_Mang.PL.NATIGA
                         txt_maharat.Text = Dt.Rows[0]["maharat_A_1"].ToString();
                         txt_tocnolegy.Text = Dt.Rows[0]["tocnolegy_A_1"].ToString();
                         txt_tocnolegy_practical.Text = Dt.Rows[0]["tocnolegy_A_practical"].ToString();
-                        if (BL.Globals.test_grade_id == 7 || BL.Globals.test_grade_id == 8 || BL.Globals.test_grade_id == 9)
+                        if (_context.Natiga.TestGradeId == 7 || _context.Natiga.TestGradeId == 8 || _context.Natiga.TestGradeId == 9)
                         {
                             txt_scince_practical.Enabled = true;
                             txt_tocnolegy_practical.Enabled = true;
@@ -233,7 +238,7 @@ namespace School_Mang.PL.NATIGA
                         txt_maharat.Text = Dt.Rows[0]["maharat_B_1"].ToString();
                         txt_tocnolegy.Text = Dt.Rows[0]["tocnolegy_B_1"].ToString();
                         txt_tocnolegy_practical.Text = Dt.Rows[0]["tocnolegy_B_practical"].ToString();
-                        if (BL.Globals.test_grade_id == 7 || BL.Globals.test_grade_id == 8 || BL.Globals.test_grade_id == 9)
+                        if (_context.Natiga.TestGradeId == 7 || _context.Natiga.TestGradeId == 8 || _context.Natiga.TestGradeId == 9)
                         {
                             txt_scince_practical.Enabled = true;
                             txt_tocnolegy_practical.Enabled = true;
@@ -250,7 +255,7 @@ namespace School_Mang.PL.NATIGA
                         txt_scince_practical.Enabled = false;
                         
 
-                        if (BL.Globals.test_grade_id < 4 || BL.Globals.test_grade_id > 9)
+                        if (_context.Natiga.TestGradeId < 4 || _context.Natiga.TestGradeId > 9)
                         {
                             txt_social.Text = "0";
                             txt_scince_practical.Text = "0";
@@ -309,7 +314,7 @@ namespace School_Mang.PL.NATIGA
                         break;
 
                 }
-                if (BL.Globals.test_grade_id < 4 || BL.Globals.test_grade_id > 9)
+                if (_context.Natiga.TestGradeId < 4 || _context.Natiga.TestGradeId > 9)
                 {
                     switch (year_id)
                     {
@@ -355,11 +360,11 @@ namespace School_Mang.PL.NATIGA
         {
             if (textBox.Text == "غ") return;
 
-            byte test_kind = BL.Globals.Final_Test_Kind;
+            byte test_kind = _context.Natiga.FinalTestKind;
             double max_degree = 0;
 
             byte  year = Convert.ToByte(Properties.Settings.Default.year_cod);
-            byte grade = Convert.ToByte(BL.Globals.test_grade_id);
+            byte grade = Convert.ToByte(_context.Natiga.TestGradeId);
             try
             {
                 switch (grade)
@@ -576,10 +581,13 @@ namespace School_Mang.PL.NATIGA
 
         private void btn_close_b_Click(object sender, EventArgs e)
         {
-            BL.Globals.Std_Golos = 0;
             Close();
-            FRM_FINAL_DATA.Get_Frm_Final_Data.cmb_grade_DropDownClosed(sender, e);
-            FRM_FINAL_DATA.Get_Frm_Final_Data.Visible = true;
+
+            var frm = FRM_FINAL_DATA.Get_Frm_Final_Data;
+
+            frm.RefreshData();
+            frm.Show();
+            frm.Activate();
         }
 
         private void FRM_FINAL_DEGREE_DATA_Load(object sender, EventArgs e)
@@ -600,7 +608,7 @@ namespace School_Mang.PL.NATIGA
 
             try
             {
-                byte test_kind = BL.Globals.Final_Test_Kind;
+                byte test_kind = _context.Natiga.FinalTestKind;
                 Get_Data(test_kind);
             }
             catch (Exception ex)
@@ -748,16 +756,16 @@ namespace School_Mang.PL.NATIGA
                 case 1:
                 case 2:
                 case 3:
-                    if (BL.Globals.test_grade_id < 4 || BL.Globals.test_grade_id > 9)
+                    if (_context.Natiga.TestGradeId < 4 || _context.Natiga.TestGradeId > 9)
                     {
-                        BL.Globals.Final_Test_Kind = 3;
+                        _context.Natiga.FinalTestKind = 3;
                     }
                     break;
 
                 case var expration when year > 3:
-                    if (BL.Globals.test_grade_id < 3 || BL.Globals.test_grade_id > 9)
+                    if (_context.Natiga.TestGradeId < 3 || _context.Natiga.TestGradeId > 9)
                     {
-                        BL.Globals.Final_Test_Kind = 3;
+                        _context.Natiga.FinalTestKind = 3;
                     }
                     break;
             }
@@ -773,13 +781,18 @@ namespace School_Mang.PL.NATIGA
             decimal maharat = Get_Degree(txt_maharat);
             decimal tocnolegy = Get_Degree(txt_tocnolegy);
             decimal tocnolegy_practical = Get_Degree(txt_tocnolegy_practical);
-            
+            int studentGolos = _context.Natiga.StudentGolos;
+            byte testKind = _context.Natiga.FinalTestKind;
+
+
             try
             {
                 Waiting.Start();
                 NATEG.Update_Final_Degree_Data(
-                    ar, math, scince, scince_practical, social, english
-                    , din, maharat, tocnolegy, tocnolegy_practical);
+                    ar, math, scince, scince_practical, social,
+                    english ,din, maharat, tocnolegy, tocnolegy_practical,
+                    studentGolos, testKind );
+                   
                 MSG.MyMesg("تم تعديل الدرجات بنجاح ..!");
 
             }

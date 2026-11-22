@@ -59,35 +59,42 @@ namespace School_Mang.DAL
         // =========================
         // CORE EXECUTOR
         // =========================
+
         private T Execute<T>(
-             string commandText,
-             CommandType commandType,
-             SqlParameter[] parameters,
-             Func<SqlCommand, T> executor)
+            string commandText,
+            CommandType commandType,
+            SqlParameter[] parameters,
+            Func<SqlCommand, T> executor)
         {
             try
             {
-                using (SqlConnection con = CreateConnection())
+                bool useTransaction = _trans != null;
+
+                SqlConnection con = useTransaction ? _con : CreateConnection();
+
+                using (useTransaction ? null : con)
                 using (SqlCommand cmd = new SqlCommand(commandText, con))
                 {
                     cmd.CommandType = commandType;
 
-                    if (_trans != null)
+                    if (useTransaction)
                         cmd.Transaction = _trans;
 
                     if (parameters != null)
                         cmd.Parameters.AddRange(parameters);
 
-                    con.Open();
+                    if (!useTransaction)
+                        con.Open();
+
                     return executor(cmd);
                 }
             }
             catch (Exception ex)
             {
-                // مهم: لا UI داخل DAL
                 throw new Exception("Database Error: " + ex.Message, ex);
             }
         }
+
 
         // =========================
         // EXEC NON QUERY (SP)

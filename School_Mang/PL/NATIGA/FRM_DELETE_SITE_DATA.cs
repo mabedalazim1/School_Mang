@@ -1,22 +1,18 @@
-﻿using System;
+﻿using School_Mang.BL;
+using School_Mang.BL.Common.Helper;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using School_Mang.BL.Common.Helper;
-using School_Mang.BL;
 
 namespace School_Mang.PL.NATIGA
 {
     public partial class FRM_DELETE_SITE_DATA : Form
     {
-        BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
+       private readonly BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
 
-        BL.LOGIN.CLS_LOGIN login = new BL.LOGIN.CLS_LOGIN();
+       private readonly BL.LOGIN.CLS_LOGIN login = new BL.LOGIN.CLS_LOGIN();
 
         // Form Closed
         private static FRM_DELETE_SITE_DATA frm_Delete_Data;
@@ -52,7 +48,7 @@ namespace School_Mang.PL.NATIGA
 
 
 
-        private async void Load_Data()
+        private async Task Load_Data()
         {
             if (!await InternetFlow.EnsureAsync())
             {
@@ -74,7 +70,7 @@ namespace School_Mang.PL.NATIGA
             }
             catch (Exception e)
             {
-                BL.Globals.Test_Internet_Con = false;
+                Globals.Test_Internet_Con = false;
                 MSG.ErrorMesg(e.Message);
             }
             finally
@@ -140,16 +136,31 @@ namespace School_Mang.PL.NATIGA
             }
             else
             {
-                DataTable Dt = login.Login(txt_user.Text, txt_pass.Text);
-                if (Dt.Rows.Count == 0)
-                {
-                    MSG.ErrorMesg("تأكد من اسم المستخدم وكلمة المرور ..!");
-                    txt_user.Focus();
-                    return;
-                }
+                
                 try
                 {
-                    
+                    DataTable Dt = login.Login(txt_user.Text, txt_pass.Text);
+                    if (Dt == null || Dt.Rows.Count == 0)
+                    {
+                        MSG.ErrorMesg("تأكد من اسم المستخدم وكلمة المرور ..!");
+                        txt_user.Focus();
+                        return;
+                    }
+
+                    if (Dt.Rows.Count == 0)
+                    {
+                        MSG.ErrorMesg("تأكد من اسم المستخدم وكلمة المرور ..!");
+                        txt_user.Focus();
+                        return;
+                    }
+                    if (cmb_grade.SelectedValue == null ||
+                        cmb_month.SelectedValue == null ||
+                        cmb_test.SelectedValue == null)
+                    {
+                        MSG.ErrorMesg("يرجى تحديد الصف ونوع الاختبار والبيان أولاً.");
+                        return;
+                    }
+
 
                     int grade = Convert.ToInt32(cmb_grade.SelectedValue);
                     int test_kind = Convert.ToInt32(cmb_month.SelectedValue);
@@ -179,16 +190,8 @@ namespace School_Mang.PL.NATIGA
 
         private async void FRM_DELETE_SITE_DATA_Load(object sender, EventArgs e)
         {
-            bool isConncted = await InternetFlow.EnsureAsync(retries:2, delayMs:2);
-
-            if (!isConncted)
-            {
-                return;
-            }
-            else
-            {
-                Load_Data();
-            }
+            
+               await Load_Data();
         }
     }
 }

@@ -114,6 +114,7 @@ namespace School_Mang.PL.NATIGA.HOME
             this.pic_get_sery.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pic_get_sery.TabIndex = 1;
             this.pic_get_sery.TabStop = false;
+            this.pic_get_sery.Click += new System.EventHandler(this.pic_get_sery_Click);
             // 
             // bunifuCards2
             // 

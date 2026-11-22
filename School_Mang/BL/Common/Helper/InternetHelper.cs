@@ -14,31 +14,47 @@ namespace School_Mang.BL.Common.Helper
         /// <summary>
         /// تحقق من الاتصال بالإنترنت بشكل عام
         /// </summary>
-        public static async Task<bool> CheckInternetAsync(int retries = 3, int delayMs = 500)
+        public static async Task<bool> CheckInternetAsync(
+            int retries = 2,
+            int delayMs = 300)
         {
+            string host = Properties.Settings.Default.Site_Server_Name;
+
+            if (string.IsNullOrWhiteSpace(host))
+                return false;
+
             try
             {
                 using (var ping = new System.Net.NetworkInformation.Ping())
                 {
-                    string host = Properties.Settings.Default.Site_Server_Name;
-
                     for (int i = 0; i < retries; i++)
                     {
-                        var reply = await ping.SendPingAsync(host);
+                        try
+                        {
+                            var reply = await ping.SendPingAsync(host, 1000);
 
-                        if (reply.Status == System.Net.NetworkInformation.IPStatus.Success)
-                            return true;
+                            if (reply.Status ==
+                                System.Net.NetworkInformation.IPStatus.Success)
+                            {
+                                return true;
+                            }
+                        }
+                        catch
+                        {
+                            // فشل المحاولة الحالية، ننتقل للمحاولة التالية
+                        }
 
-                        await Task.Delay(delayMs);
+                        if (i < retries - 1)
+                            await Task.Delay(delayMs);
                     }
-
-                    return false;
                 }
             }
             catch
             {
                 return false;
             }
+
+            return false;
         }
     }
 }

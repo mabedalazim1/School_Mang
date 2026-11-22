@@ -5,16 +5,23 @@ using System.Windows.Forms;
 using Bunifu.Framework.UI;
 using School_Mang.BL;
 using School_Mang.BL.Services;
+using School_Mang.BL.Services.Nateg;
 
 namespace School_Mang.PL.NATIGA
 {
-    public partial class FRM_KSHOF_RASD : Form
+    public partial class FRM_KSHOF_RASD : Form, INavigationAware
     {
+        private readonly RasdService _rasdService = new RasdService();   
+
+        private NavigationContext _context;
+        public void SetNavigation(NavigationContext context)
+        {
+            _context = context ?? new NavigationContext();
+        }
 
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
         
         BL.NATEG.CLS_NATEG nateg = new BL.NATEG.CLS_NATEG();
-        BL.NATEG.ExcelUtlity Excel = new BL.NATEG.ExcelUtlity();
         RPT.REPORT_CONNECTION RPT = new RPT.REPORT_CONNECTION();
 
         private readonly LookupService _stdData = new LookupService();
@@ -32,19 +39,23 @@ namespace School_Mang.PL.NATIGA
             cmb_month.DisplayMember = "testkind_desc";
             cmb_month.ValueMember = "id";
 
-            if (!BL.Globals.Koshof_Rasd)
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
+            if (!_context.Natiga.KoshofRasd)
             {
                 lbl_title.Text = "ملفات كشوف الرصد";
                 pic_rasd.Image = Properties.Resources.excel_48;
             }
             else
             {
-                lbl_title.Text = " كشوف رصد فارغة";
+                lbl_title.Text = "كشوف رصد فارغة";
                 pic_rasd.Image = Properties.Resources.note_48;
             }
-
         }
-
         private void ExportToExcel(BunifuThinButton2 btn,byte status)
         {
             string title;
@@ -151,8 +162,10 @@ namespace School_Mang.PL.NATIGA
             Waiting.Start();
             try
             {
-                DataTable Dt_Rasd = nateg.Get_Rasd_Data(grade);
-                if (Excel.WriteRasdDataToExcel(Dt_Rasd, grade_desc, saveAsLocation, title, staticExcelFile, test_kind))
+                ExcelExportService excelExportService = new ExcelExportService();
+
+                DataTable Dt_Rasd = _rasdService.GetRasdData(grade);
+                if (excelExportService.WriteRasdDataToExcel(Dt_Rasd, grade_desc, saveAsLocation, title, staticExcelFile, test_kind))
                 {
                     MSG.MyMesg("تم إعداد الملف بنجاح !");
                     MSG.MyMesg(saveAsLocation + "  مسار الملف هو  ");
@@ -216,7 +229,8 @@ namespace School_Mang.PL.NATIGA
 
         private void btn_close_b_Click(object sender, EventArgs e)
         {
-            BL.Globals.Koshof_Rasd = false;
+            //BL.Globals.Koshof_Rasd = false;
+
             this.Close();
         }
 
@@ -228,7 +242,8 @@ namespace School_Mang.PL.NATIGA
         private void btn_degree_Click(object sender, EventArgs e)
         {
 
-            if (Globals.Koshof_Rasd)
+            //if (Globals.Koshof_Rasd)
+            if(_context.Natiga.KoshofRasd)
             {
                 OpenRasdReport(1);
             }
@@ -240,7 +255,8 @@ namespace School_Mang.PL.NATIGA
 
         private void btn_mark_Click(object sender, EventArgs e)
         {
-            if (Globals.Koshof_Rasd)
+            //if (Globals.Koshof_Rasd)
+            if (_context.Natiga.KoshofRasd)
             {
                 OpenRasdReport(2);
             }
@@ -250,5 +266,6 @@ namespace School_Mang.PL.NATIGA
             }
         }
 
+        
     }
 }

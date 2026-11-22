@@ -1,15 +1,29 @@
-﻿using System;
+﻿using School_Mang.BL;
+using School_Mang.BL.Common.Helper;
+using School_Mang.BL.Services;
+using System;
 using System.Data;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using School_Mang.BL.Common.Helper;
-using School_Mang.BL;
-using School_Mang.BL.Services;
 
 namespace School_Mang.PL.NATIGA
 {
-    public partial class FRM_SITE_STD_DATA : Form
+    public partial class FRM_SITE_STD_DATA : Form, INavigationAware, INavigationAwareLoaded
     {
+        private NavigationContext _context = new NavigationContext();
+
+        public void SetNavigation(NavigationContext context)
+        {
+            _context = context ?? new NavigationContext();
+            lbl_month.Text = _context.Natiga.TestMonthName;
+        }
+
+        public async void OnNavigatedTo()
+        {
+           await LoadStdData();
+        }
+
         BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
         
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
@@ -39,6 +53,8 @@ namespace School_Mang.PL.NATIGA
         {
             InitializeComponent();
 
+            dt_std_data.AutoGenerateColumns = true;
+
             if (frm_Site_Std_Data == null)
             {
                 frm_Site_Std_Data = this;
@@ -49,9 +65,7 @@ namespace School_Mang.PL.NATIGA
             cmb_grade.DataSource = grade_dt;
             cmb_grade.DisplayMember = "GradeDesc";
             cmb_grade.ValueMember = "Grade_Id";
-            lbl_month.Text = BL.Globals.test_month_name;
-
-            LoadStdData();
+            
         }
 
 
@@ -59,127 +73,162 @@ namespace School_Mang.PL.NATIGA
         int move_x;
         int move_y;
 
-        
-        private async void LoadStdData()
-        {
 
+
+        private void ConfigureGridColumns(int gradeId, int testKind)
+        {
+            // إعادة الأعمدة لحالتها الأصلية قبل تطبيق إعدادات الصف الجديد
+            foreach (DataGridViewColumn column in dt_std_data.Columns)
+            {
+                column.Visible = true;
+
+                if (!string.IsNullOrEmpty(column.DataPropertyName))
+                    column.HeaderText = column.DataPropertyName;
+                else
+                    column.HeaderText = column.Name;
+            }
+
+            if (testKind == 1)
+            {
+                switch (gradeId)
+                {
+                    case 10:
+                    case 11:
+                    case 1:
+                    case 2:
+                    case 3:
+                        HideColumn("دراسات");
+                        HideColumn("مهارات");
+                        HideColumn("تكنولوجيا");
+                        SetHeader("علوم", "متعدد");
+                        break;
+
+                    case 4:
+                    case 5:
+                    case 6:
+                        HideColumn("بدنية");
+                        break;
+
+                    case 7:
+                    case 8:
+                    case 9:
+                        HideColumn("بدنية");
+                        SetHeader("مهارات", "فنية");
+                        SetHeader("تكنولوجيا", "حاسب");
+                        break;
+                }
+            }
+            else if (testKind == 2)
+            {
+                switch (gradeId)
+                {
+                    case 10:
+                    case 11:
+                        HideColumn("دراسات");
+                        HideColumn("فرنسى");
+                        HideColumn("مهارات");
+                        HideColumn("تكنولوجيا");
+                        SetHeader("علوم", "متعدد");
+                        break;
+
+                    case 1:
+                    case 2:
+                    case 3:
+                        HideColumn("دراسات");
+                        HideColumn("مهارات");
+                        HideColumn("تكنولوجيا");
+                        SetHeader("علوم", "متعدد");
+                        break;
+
+                    case 4:
+                    case 5:
+                    case 6:
+                        HideColumn("مهارات");
+                        HideColumn("تكنولوجيا");
+                        break;
+
+                    case 7:
+                    case 8:
+                    case 9:
+                        SetHeader("مهارات", "فنية");
+                        SetHeader("تكنولوجيا", "حاسب");
+                        break;
+                }
+            }
+
+            // إخفاء الأعمدة الداخلية
+            HideColumn("test_kind_Id");
+            HideColumn("grade_Id");
+            HideColumn("الصف");
+            HideColumn("نوع الإختبار");
+            HideColumn("userSchoolId");
+            HideColumn("show_data");
+
+            if (dt_std_data.Columns.Contains("اسم الطالب"))
+                dt_std_data.Columns["اسم الطالب"].Width = 200;
+        }
+
+        private void HideColumn(string columnName)
+        {
+            if (dt_std_data.Columns.Contains(columnName))
+                dt_std_data.Columns[columnName].Visible = false;
+        }
+
+        private void SetHeader(string columnName, string headerText)
+        {
+            if (dt_std_data.Columns.Contains(columnName))
+                dt_std_data.Columns[columnName].HeaderText = headerText;
+        }
+
+
+        private async Task RefreshData()
+        {
+            await LoadStdData();
+        }
+
+
+        private async Task LoadStdData()
+        {
             if (!await InternetFlow.EnsureAsync())
                 return;
 
+            Waiting.Start();
+
             try
             {
-                int test_kind = BL.Globals.test_kind;
-                int grade_id = BL.Globals.test_grade_id;
-                int test_month = BL.Globals.test_month;
-
+                int test_kind = _context.Natiga.TestKind;
+                int grade_id = _context.Natiga.TestGradeId;
+                int test_month = _context.Natiga.TestMonth;
 
                 if (BL.Globals.Test_Internet_Con)
                 {
-
                     DataTable Dt;
 
                     dt_std_data.DataSource = null;
 
-                    Waiting.Start();
-
                     if (test_kind == 1)
                     {
                         Dt = NATEG.Get_Degree_Data(test_month, grade_id);
-                        dt_std_data.DataSource = Dt;
-
-                        switch (grade_id)
-                        {
-                            case 10:
-                            case 11:
-                            case 1:
-                            case 2:
-                            case 3:
-                                dt_std_data.Columns["دراسات"].Visible = false;
-                                dt_std_data.Columns["مهارات"].Visible = false;
-                                dt_std_data.Columns["تكنولوجيا"].Visible = false;
-                                dt_std_data.Columns["تكنولوجيا"].Visible = false;
-                                dt_std_data.Columns["علوم"].HeaderText = "متعدد";
-                                break;
-
-                            case 4:
-                            case 5:
-                            case 6:
-                                dt_std_data.Columns["بدنية"].Visible = false;
-
-                                break;
-
-                            case 7:
-                            case 8:
-                            case 9:
-                                dt_std_data.Columns["بدنية"].Visible = false;
-                                dt_std_data.Columns["مهارات"].HeaderText = "فنية";
-                                dt_std_data.Columns["تكنولوجيا"].HeaderText = "حاسب";
-                                break;
-
-                        }
                     }
                     else
                     {
                         Dt = NATEG.Get_Mark_Data(test_month, grade_id);
-                        dt_std_data.DataSource = Dt;
-                        switch (grade_id)
-                        {
-                            case 10:
-                            case 11:
-                                dt_std_data.Columns["دراسات"].Visible = false;
-                                dt_std_data.Columns["فرنسى"].Visible = false;
-                                dt_std_data.Columns["مهارات"].Visible = false;
-                                dt_std_data.Columns["تكنولوجيا"].Visible = false;
-                                dt_std_data.Columns["علوم"].HeaderText = "متعدد";
-                                break;
-                            case 1:
-                            case 2:
-                            case 3:
-                                dt_std_data.Columns["دراسات"].Visible = false;
-                                dt_std_data.Columns["مهارات"].Visible = false;
-                                dt_std_data.Columns["تكنولوجيا"].Visible = false;
-                                dt_std_data.Columns["علوم"].HeaderText = "متعدد";
-                                break;
-
-                            case 4:
-                            case 5:
-                            case 6:
-                                dt_std_data.Columns["مهارات"].Visible = false;
-                                dt_std_data.Columns["تكنولوجيا"].Visible = false;
-
-                                break;
-
-                            case 7:
-                            case 8:
-                            case 9:
-
-                                dt_std_data.Columns["مهارات"].HeaderText = "فنية";
-                                dt_std_data.Columns["تكنولوجيا"].HeaderText = "حاسب";
-                                break;
-
-                        }
-                        Waiting.Stop();
                     }
 
-                    dt_std_data.Columns["test_kind_Id"].Visible = false;
-                    dt_std_data.Columns["grade_Id"].Visible = false;
-                    dt_std_data.Columns["الصف"].Visible = false;
-                    dt_std_data.Columns["نوع الإختبار"].Visible = false;
-                    dt_std_data.Columns["userSchoolId"].Visible = false;
-                    dt_std_data.Columns["show_data"].Visible = false;
-                    
+                    dt_std_data.DataSource = Dt;
+
+                    // إعداد الأعمدة حسب الصف ونوع الاختبار
+                    ConfigureGridColumns(grade_id, test_kind);
+
                     lbl_count.Text = dt_std_data.Rows.Count.ToString();
-                    dt_std_data.Columns["اسم الطالب"].Width = 200;
+
                     Check_Hide_Natega();
-                    Waiting.Stop();
                 }
                 else
                 {
                     MSG.ErrorMesg("تأكد من الإتصال بالإنترنت..!");
-                    Waiting.Stop();
                     this.Close();
                 }
-                Waiting.Stop();
             }
             catch (Exception e)
             {
@@ -189,8 +238,8 @@ namespace School_Mang.PL.NATIGA
             {
                 Waiting.Stop();
             }
-
         }
+
 
         private void Check_Hide_Natega()
         {
@@ -198,8 +247,13 @@ namespace School_Mang.PL.NATIGA
             {
                 foreach (DataGridViewRow row in dt_std_data.Rows)
                 {
-                    // Get Absent Student
-                    if (row.Cells["show_data"].Value.ToString() == "False")
+                    if (row.IsNewRow)
+                        continue;
+
+                    bool isHidden = Convert.ToString(
+                        row.Cells["show_data"].Value) == "False";
+
+                    if (isHidden)
                     {
                         row.DefaultCellStyle.BackColor = Color.Crimson;
                         row.DefaultCellStyle.ForeColor = Color.White;
@@ -210,52 +264,67 @@ namespace School_Mang.PL.NATIGA
                         row.DefaultCellStyle.BackColor = default;
                         row.DefaultCellStyle.ForeColor = default;
                         row.DefaultCellStyle.SelectionBackColor = default;
-
                     }
-
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 MSG.ErrorMesg(e.Message);
             }
-            
+
         }
 
-        private async void Serach_Data()
+
+        private async Task Serach_Data()
         {
             if (!await InternetFlow.EnsureAsync())
                 return;
 
+            Waiting.Start();
+
             try
             {
-                int test_kind = BL.Globals.test_kind;
-                int grade_id = BL.Globals.test_grade_id;
-                int test_month = BL.Globals.test_month;
+                int test_kind = _context.Natiga.TestKind;
+                int grade_id = _context.Natiga.TestGradeId;
+                int test_month = _context.Natiga.TestMonth;
 
                 DataTable Dt = new DataTable();
+
                 switch (test_kind)
                 {
                     case 1:
-                        Dt = NATEG.Get_Degree_Data(test_month, grade_id, "yes", txt_std_data.Text);
+                        Dt = NATEG.Get_Degree_Data(
+                            test_month, grade_id, "yes", txt_std_data.Text);
                         break;
+
                     case 2:
-                        Dt = NATEG.Get_Mark_Data(test_month, grade_id, "yes", txt_std_data.Text);
+                        Dt = NATEG.Get_Mark_Data(
+                            test_month, grade_id, "yes", txt_std_data.Text);
                         break;
+
+                    default:
+                        return;
                 }
 
-
                 dt_std_data.DataSource = Dt;
+
+                // تطبيق نفس إعدادات الأعمدة المستخدمة في LoadStdData
+                ConfigureGridColumns(grade_id, test_kind);
+
                 lbl_count.Text = dt_std_data.Rows.Count.ToString();
-                dt_std_data.Columns["اسم الطالب"].Width = 200;
+
                 Check_Hide_Natega();
             }
             catch (Exception ex)
             {
                 MSG.ErrorMesg(ex.Message);
+            }
+            finally
+            {
                 Waiting.Stop();
             }
         }
+
         private void pn_top_MouseDown(object sender, MouseEventArgs e)
         {
             move = 1;
@@ -292,31 +361,37 @@ namespace School_Mang.PL.NATIGA
             if (!await InternetFlow.EnsureAsync())
                 return;
 
-            dt_std_data.Columns["اسم الطالب"].Width = 200;
-            cmb_grade.SelectedValue = BL.Globals.test_grade_id;
+            cmb_grade.SelectedValue = _context.Natiga.TestGradeId;
         }
 
-        public async void cmb_grade_DropDownClosed(object sender, EventArgs e)
-        {
 
+        private async void cmb_grade_DropDownClosed(object sender, EventArgs e)
+        {
             if (!await InternetFlow.EnsureAsync())
                 return;
 
-
             try
             {
-                BL.Globals.test_grade_id = Convert.ToInt32(cmb_grade.SelectedValue);
+                if (cmb_grade.SelectedValue == null ||
+                    !int.TryParse(cmb_grade.SelectedValue.ToString(), out int gradeId))
+                {
+                    return;
+                }
+
+                // تحديث الصف الحالي في NavigationContext
+                _context.Natiga.TestGradeId = gradeId;
+
+                // مسح نص البحث السابق
                 txt_std_data.Text = "";
 
-                LoadStdData();
-                dt_std_data.Columns["اسم الطالب"].Width = 200;
+                // تحميل بيانات الصف الجديد
+                await LoadStdData();
 
                 if (dt_std_data.Rows.Count == 0)
                 {
                     MSG.ErrorMesg("لا توجد بيانات مسجلة لهذا الصف ..!");
                     return;
                 }
-                Waiting.Stop();
             }
             catch (Exception ex)
             {
@@ -324,10 +399,12 @@ namespace School_Mang.PL.NATIGA
             }
         }
 
-        private void txt_std_data_KeyUp(object sender, KeyEventArgs e)
+
+        private async void txt_std_data_KeyUp(object sender, KeyEventArgs e)
         {
-            Serach_Data();
+            await Serach_Data();
         }
+
 
         private async void btn_edit_std_Click(object sender, EventArgs e)
         {
@@ -336,91 +413,124 @@ namespace School_Mang.PL.NATIGA
 
             try
             {
-                // Mark Or Degree --test_kind_id--
-                int test_kind_id = BL.Globals.test_kind;
+                if (dt_std_data.CurrentRow == null ||
+                    dt_std_data.CurrentRow.IsNewRow)
+                {
+                    MSG.ErrorMesg("من فضلك حدد الطالب أولاً ..!");
+                    return;
+                }
+
+                int test_kind_id = _context.Natiga.TestKind;
 
                 string badnia = "0";
                 string franch = "0";
                 string sort_id = "0";
 
-                string code = dt_std_data.CurrentRow.Cells["userSchoolId"].Value.ToString();
-                string ar = dt_std_data.CurrentRow.Cells["عربى"].Value.ToString();
-                string din = dt_std_data.CurrentRow.Cells["دين"].Value.ToString();
-                string english = dt_std_data.CurrentRow.Cells["انجليزى"].Value.ToString();
-                string sinces = dt_std_data.CurrentRow.Cells["علوم"].Value.ToString();
-                string math = dt_std_data.CurrentRow.Cells["رياضيات"].Value.ToString();
-                string social = dt_std_data.CurrentRow.Cells["دراسات"].Value.ToString();
-                string maharat = dt_std_data.CurrentRow.Cells["مهارات"].Value.ToString();
-                string tecnolgy = dt_std_data.CurrentRow.Cells["تكنولوجيا"].Value.ToString();
-                string total = dt_std_data.CurrentRow.Cells["مجموع"].Value.ToString();
+                var row = dt_std_data.CurrentRow;
 
-                // Get Test_Month From site --test_kind_Id_site--
-                string test_kind_Id_site = dt_std_data.CurrentRow.Cells["test_kind_Id"].Value.ToString();
-                
-                string grade_Id = dt_std_data.CurrentRow.Cells["grade_Id"].Value.ToString();
-                string name = dt_std_data.CurrentRow.Cells["اسم الطالب"].Value.ToString();
-                string grade = dt_std_data.CurrentRow.Cells["الصف"].Value.ToString();
-                string test_kind = dt_std_data.CurrentRow.Cells["نوع الإختبار"].Value.ToString();
+                string code = Convert.ToString(row.Cells["userSchoolId"].Value);
+                string ar = Convert.ToString(row.Cells["عربى"].Value);
+                string din = Convert.ToString(row.Cells["دين"].Value);
+                string english = Convert.ToString(row.Cells["انجليزى"].Value);
+                string sinces = Convert.ToString(row.Cells["علوم"].Value);
+                string math = Convert.ToString(row.Cells["رياضيات"].Value);
+                string social = Convert.ToString(row.Cells["دراسات"].Value);
+                string maharat = Convert.ToString(row.Cells["مهارات"].Value);
+                string tecnolgy = Convert.ToString(row.Cells["تكنولوجيا"].Value);
+                string total = Convert.ToString(row.Cells["مجموع"].Value);
+
+                string test_kind_Id_site =
+                    Convert.ToString(row.Cells["test_kind_Id"].Value);
+
+                string grade_Id = Convert.ToString(row.Cells["grade_Id"].Value);
+                string name = Convert.ToString(row.Cells["اسم الطالب"].Value);
+                string grade = Convert.ToString(row.Cells["الصف"].Value);
+                string test_kind = Convert.ToString(row.Cells["نوع الإختبار"].Value);
+
+                var context = new NavigationContext();
+                context.Natiga.TestGradeId = _context.Natiga.TestGradeId;
 
                 switch (test_kind_id)
                 {
-                   
                     case 1:
-                        badnia = dt_std_data.CurrentRow.Cells["بدنية"].Value.ToString();
-                        FRM_EDIT_SITE_DEGREES.Get_Edit_Site_Degree.txt_cod.Text = code;
-                        FRM_EDIT_SITE_DEGREES.Get_Edit_Site_Degree.txt_ar.Text = ar;
-                        FRM_EDIT_SITE_DEGREES.Get_Edit_Site_Degree.txt_din.Text = din;
-                        FRM_EDIT_SITE_DEGREES.Get_Edit_Site_Degree.txt_english.Text = english;
-                        FRM_EDIT_SITE_DEGREES.Get_Edit_Site_Degree.txt_sinces.Text = sinces;
-                        FRM_EDIT_SITE_DEGREES.Get_Edit_Site_Degree.txt_math.Text = math;
-                        FRM_EDIT_SITE_DEGREES.Get_Edit_Site_Degree.txt_social.Text = social;
-                        FRM_EDIT_SITE_DEGREES.Get_Edit_Site_Degree.txt_badnia.Text = badnia;
-                        FRM_EDIT_SITE_DEGREES.Get_Edit_Site_Degree.txt_maharat.Text = maharat;
-                        FRM_EDIT_SITE_DEGREES.Get_Edit_Site_Degree.txt_tecnolgey.Text = tecnolgy;
-                        FRM_EDIT_SITE_DEGREES.Get_Edit_Site_Degree.txt_total.Text = total;
-                        FRM_EDIT_SITE_DEGREES.Get_Edit_Site_Degree.txt_test_kind_id.Text = test_kind_Id_site;
-                        FRM_EDIT_SITE_DEGREES.Get_Edit_Site_Degree.txt_grade_id.Text = grade_Id;
-                        FRM_EDIT_SITE_DEGREES.Get_Edit_Site_Degree.txt_name.Text = name;
-                        FRM_EDIT_SITE_DEGREES.Get_Edit_Site_Degree.txt_grade.Text = grade;
-                        FRM_EDIT_SITE_DEGREES.Get_Edit_Site_Degree.txt_test_kind.Text = test_kind;
+                        {
+                            badnia = Convert.ToString(row.Cells["بدنية"].Value);
 
-                        FRM_EDIT_SITE_DEGREES.Get_Edit_Site_Degree.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
-                        break;
+                            var frmDegree = FRM_EDIT_SITE_DEGREES.Get_Edit_Site_Degree;
+
+                            frmDegree.SetNavigation(context);
+
+                            frmDegree.txt_cod.Text = code;
+                            frmDegree.txt_ar.Text = ar;
+                            frmDegree.txt_din.Text = din;
+                            frmDegree.txt_english.Text = english;
+                            frmDegree.txt_sinces.Text = sinces;
+                            frmDegree.txt_math.Text = math;
+                            frmDegree.txt_social.Text = social;
+                            frmDegree.txt_badnia.Text = badnia;
+                            frmDegree.txt_maharat.Text = maharat;
+                            frmDegree.txt_tecnolgey.Text = tecnolgy;
+                            frmDegree.txt_total.Text = total;
+                            frmDegree.txt_test_kind_id.Text = test_kind_Id_site;
+                            frmDegree.txt_grade_id.Text = grade_Id;
+                            frmDegree.txt_name.Text = name;
+                            frmDegree.txt_grade.Text = grade;
+                            frmDegree.txt_test_kind.Text = test_kind;
+
+                            if (frmDegree.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main) == DialogResult.OK)
+                            {
+                                await RefreshData();
+                            }
+
+                            break;
+                        }
+
                     case 2:
-                        franch = dt_std_data.CurrentRow.Cells["فرنسى"].Value.ToString();
-                        sort_id = dt_std_data.CurrentRow.Cells["الترتيب"].Value.ToString();
-                        FRM_EDIT_SITE_MARKS.Get_Edit_Site_Mark.txt_cod.Text = code;
-                        FRM_EDIT_SITE_MARKS.Get_Edit_Site_Mark.txt_ar.Text = ar;
-                        FRM_EDIT_SITE_MARKS.Get_Edit_Site_Mark.txt_din.Text = din;
-                        FRM_EDIT_SITE_MARKS.Get_Edit_Site_Mark.txt_english.Text = english;
-                        FRM_EDIT_SITE_MARKS.Get_Edit_Site_Mark.txt_sinces.Text = sinces;
-                        FRM_EDIT_SITE_MARKS.Get_Edit_Site_Mark.txt_math.Text = math;
-                        FRM_EDIT_SITE_MARKS.Get_Edit_Site_Mark.txt_social.Text = social;
-                        FRM_EDIT_SITE_MARKS.Get_Edit_Site_Mark.txt_french.Text = franch;
-                        FRM_EDIT_SITE_MARKS.Get_Edit_Site_Mark.txt_maharat.Text = maharat;
-                        FRM_EDIT_SITE_MARKS.Get_Edit_Site_Mark.txt_tecnolgey.Text = tecnolgy;
-                        FRM_EDIT_SITE_MARKS.Get_Edit_Site_Mark.txt_total.Text = total;
-                        FRM_EDIT_SITE_MARKS.Get_Edit_Site_Mark.txt_sort.Text = sort_id;
-                        FRM_EDIT_SITE_MARKS.Get_Edit_Site_Mark.txt_test_kind_id.Text = test_kind_Id_site;
-                        FRM_EDIT_SITE_MARKS.Get_Edit_Site_Mark.txt_grade_id.Text = grade_Id;
-                        FRM_EDIT_SITE_MARKS.Get_Edit_Site_Mark.txt_name.Text = name;
-                        FRM_EDIT_SITE_MARKS.Get_Edit_Site_Mark.txt_grade.Text = grade;
-                        FRM_EDIT_SITE_MARKS.Get_Edit_Site_Mark.txt_test_kind.Text = test_kind;
-                        
-                        FRM_EDIT_SITE_MARKS.Get_Edit_Site_Mark.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
+                        {
+                            franch = Convert.ToString(row.Cells["فرنسى"].Value);
+                            sort_id = Convert.ToString(row.Cells["الترتيب"].Value);
+
+                            var frmMark = FRM_EDIT_SITE_MARKS.Get_Edit_Site_Mark;
+
+                            frmMark.SetNavigation(context);
+
+                            frmMark.txt_cod.Text = code;
+                            frmMark.txt_ar.Text = ar;
+                            frmMark.txt_din.Text = din;
+                            frmMark.txt_english.Text = english;
+                            frmMark.txt_sinces.Text = sinces;
+                            frmMark.txt_math.Text = math;
+                            frmMark.txt_social.Text = social;
+                            frmMark.txt_french.Text = franch;
+                            frmMark.txt_maharat.Text = maharat;
+                            frmMark.txt_tecnolgey.Text = tecnolgy;
+                            frmMark.txt_total.Text = total;
+                            frmMark.txt_sort.Text = sort_id;
+                            frmMark.txt_test_kind_id.Text = test_kind_Id_site;
+                            frmMark.txt_grade_id.Text = grade_Id;
+                            frmMark.txt_name.Text = name;
+                            frmMark.txt_grade.Text = grade;
+                            frmMark.txt_test_kind.Text = test_kind;
+
+                            if (frmMark.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main) == DialogResult.OK)
+                            {
+                                await RefreshData();
+                            }
+
+                            break;
+                        }
+
+                    default:
+                        MSG.ErrorMesg("نوع الاختبار غير صحيح ..!");
                         break;
                 }
-
-                
-
-
             }
             catch (Exception ex)
             {
-                MSG.ErrorMesg();
                 MSG.ErrorMesg(ex.Message);
             }
         }
+
 
         private void dt_std_data_DoubleClick(object sender, EventArgs e)
         {
@@ -488,52 +598,62 @@ namespace School_Mang.PL.NATIGA
 
         }
 
-        private void btn_hide_data_Click(object sender, EventArgs e)
+        private async void btn_hide_data_Click(object sender, EventArgs e)
         {
             try
             {
+                if (dt_std_data.CurrentRow == null)
+                    return;
+
                 Waiting.Start();
 
                 string std_name = dt_std_data.CurrentRow.Cells["اسم الطالب"].Value.ToString();
+
                 if (MSG.DialogeMsg("هل تريد تعديل حالة نتيجة ... ؟ " + "\n" + std_name) == DialogResult.No)
                 {
                     MSG.MyExclamationMsg("تم إلغاء الإجراء..!");
-                    Waiting.Stop();
                     return;
                 }
 
-                int student_id = Convert.ToInt32( dt_std_data.CurrentRow.Cells["userSchoolId"].Value);
-                byte test_kind_id = Convert.ToByte(BL.Globals.test_month);
+                int student_id = Convert.ToInt32(
+                    dt_std_data.CurrentRow.Cells["userSchoolId"].Value);
+
+                byte test_kind_id = Convert.ToByte(
+                    dt_std_data.CurrentRow.Cells["test_kind_Id"].Value);
+
                 string show_data = dt_std_data.CurrentRow.Cells["show_data"].Value.ToString();
 
-                
+                NATEG.Toggle_Hide_Data(student_id, test_kind_id, show_data);
 
-                NATEG.Toggle_Hide_Data(student_id,test_kind_id,show_data);
-                cmb_grade_SelectedIndexChanged(sender, e);
-                Serach_Data();
+                await Serach_Data();
 
-                if(show_data == "False")
+                if (show_data == "False")
                 {
                     MSG.MyMesg("تم إتاحة النتيجة للطالب ..!" + "\n" + std_name);
-                    Waiting.Stop();
                 }
                 else
                 {
                     MSG.MyExclamationMsg("تم حجب نتيجة الطالب ..!" + "\n" + std_name);
-                    Waiting.Stop();
                 }
-               
-                Waiting.Stop();
             }
             catch (Exception ex)
             {
                 MSG.ErrorMesg(ex.Message);
             }
+            finally
+            {
+                Waiting.Stop();
+            }
         }
 
         private void dt_std_data_Click(object sender, EventArgs e)
         {
-            if(dt_std_data.CurrentRow.Cells["show_data"].Value.ToString() != "False")
+            if (dt_std_data.CurrentRow == null ||
+                dt_std_data.CurrentRow.IsNewRow)
+                return;
+
+            if (Convert.ToString(
+                dt_std_data.CurrentRow.Cells["show_data"].Value) != "False")
             {
                 btn_hide_data.ButtonText = "حجب النتيجة";
             }

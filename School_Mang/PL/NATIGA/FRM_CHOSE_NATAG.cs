@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using School_Mang.BL;
 using School_Mang.BL.Common.Helper;
-using School_Mang.BL;
+using School_Mang.BL.NATEG;
+using School_Mang.BL.Services;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Windows.Forms;
 
 namespace School_Mang.PL.NATIGA
 {
     public partial class FRM_CHOSE_NATAG : Form
     {
-        BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
+        private readonly CLS_NATEG NATEG = new CLS_NATEG();
         
 
         // Form Closed
@@ -48,38 +45,30 @@ namespace School_Mang.PL.NATIGA
             Load_Data();
         }
 
-        
-        private async  void Load_Data()
-        {
-            
-            bool isConncted = await InternetFlow.EnsureAsync(retries: 2, delayMs: 200);
 
-            if (!isConncted)
+
+        private void Load_Data()
+        {
+            try
             {
-                return;
+                Waiting.Start();
+
+                cmb_month.DataSource = NATEG.GET_TEST_KIND();
+                cmb_month.DisplayMember = "testkind_desc";
+                cmb_month.ValueMember = "id";
             }
-            else
+            catch (Exception e)
             {
-                try
-                {
-                    Waiting.Start();
-                        cmb_month.DataSource = NATEG.GET_TEST_KIND();
-                        cmb_month.DisplayMember = "testkind_desc";
-                        cmb_month.ValueMember = "id";
-                    
-                }
-                catch (Exception e)
-                {
-                    MSG.ErrorMesg(e.Message);
-                }
-                finally
-                {
-                    Waiting.Stop();
-                }
+                MSG.ErrorMesg(e.Message);
+            }
+            finally
+            {
+                Waiting.Stop();
             }
         }
-        
-        
+
+
+
         int move;
         int move_x;
         int move_y;
@@ -131,35 +120,84 @@ namespace School_Mang.PL.NATIGA
             if (!await InternetFlow.EnsureAsync())
                 return;
 
-            BL.Globals.test_kind = Convert.ToInt32(cmb_test.SelectedValue);
-            BL.Globals.test_month = Convert.ToInt32(cmb_month.SelectedValue);
-            BL.Globals.test_month_name = cmb_month.Text;
-            DataTable Dt ;
-
-            switch (BL.Globals.test_kind)
+            if (cmb_test.SelectedValue == null || cmb_month.SelectedValue == null)
             {
-                case 1:
-                    Dt = NATEG.Get_Count_Degree(BL.Globals.test_month);
-                    if (Dt.Rows.Count == 0)
-                    {
-                        MSG.ErrorMesg("لا توجد بيانات مسجلة ..!");
-                        return;
-                    }
-                    break;
-                case 2:
-                    Dt = NATEG.Get_Count_Mark(BL.Globals.test_month);
-                    if (Dt.Rows.Count == 0)
-                    {
-                        MSG.ErrorMesg("لا توجد بيانات مسجلة ..!");
-                        return;
-                    }
-                    break;
+                MSG.ErrorMesg("يرجى تحديد نوع البيانات والشهر أولاً.");
+                return;
             }
 
-            this.Hide();
-            FRM_NATAG_DATA frm = new FRM_NATAG_DATA();
-            frm.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
+            int testKind;
+            int testMonth;
+
+            if (!int.TryParse(cmb_test.SelectedValue.ToString(), out testKind) ||
+                !int.TryParse(cmb_month.SelectedValue.ToString(), out testMonth))
+            {
+                MSG.ErrorMesg("القيم المحددة غير صحيحة، يرجى إعادة الاختيار.");
+                return;
+            }
+
+            string testMonthName = cmb_month.Text;
+            DataTable Dt ;
+
+            try
+            {
+                switch (testKind)
+                {
+                    case 1:
+                        Dt = NATEG.Get_Count_Degree(testMonth);
+                        if (Dt == null)
+                        {
+                            MSG.ErrorMesg("تعذر الحصول على بيانات التقييمات.");
+                            return;
+                        }
+                        if (Dt.Rows.Count == 0)
+                        {
+                            MSG.ErrorMesg("لا توجد بيانات مسجلة ..!");
+                            return;
+                        }
+                        break;
+                    case 2:
+                        Dt = NATEG.Get_Count_Mark(testMonth);
+                        if (Dt == null)
+                        {
+                            MSG.ErrorMesg("تعذر الحصول على بيانات الاختبارات.");
+                            return;
+                        }
+
+                        if (Dt.Rows.Count == 0)
+                        {
+                            MSG.ErrorMesg("لا توجد بيانات مسجلة ..!");
+                            return;
+                        }
+                        break;
+
+                    default:
+                        MSG.ErrorMesg("نوع البيانات المحدد غير صحيح.");
+                        return;
+                }
+            }
+            catch (Exception ex)
+            {
+                MSG.ErrorMesg(ex.Message);
+            }
+
            
+
+            //FRM_NATAG_DATA frm = new FRM_NATAG_DATA();
+            //frm.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
+
+            var frm = new FRM_NATAG_DATA();
+
+            AppNavigation.Instance
+                .WithOwner(MAIN.FRM_MAIN.Get_Frm_Main)
+                .SetContext(c =>
+                {
+                    c.Natiga.TestKind = testKind;
+                    c.Natiga.TestMonth = testMonth;
+                    c.Natiga.TestMonthName = testMonthName;
+                })
+                .Show(frm);
+
         }
     }
 }

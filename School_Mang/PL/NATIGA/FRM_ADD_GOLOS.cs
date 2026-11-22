@@ -1,15 +1,19 @@
-﻿using System;
+﻿using School_Mang.BL;
+using School_Mang.BL.Services;
+using School_Mang.BL.Services.Nateg;
+using System;
 using System.Data;
 using System.Windows.Forms;
-using School_Mang.BL;
-using School_Mang.BL.Services;
 
 namespace School_Mang.PL.NATIGA
 {
     public partial class FRM_ADD_GOLOS : Form
     {
+        private readonly GolosService _golosService =
+                        new GolosService();
+
         BL.STD.CLS_STD std = new BL.STD.CLS_STD();
-        BL.NATEG.CLS_NATEG nateg = new BL.NATEG.CLS_NATEG();
+
         private readonly LookupService _stdData = new LookupService();
 
         int year = Properties.Settings.Default.year_cod;
@@ -38,7 +42,7 @@ namespace School_Mang.PL.NATIGA
 
         private void Get_Count_Grade(int grade)
         {
-            DataTable dt = nateg.Get_Golos_Sum(grade);
+            DataTable dt = _golosService.GetGolosSum(grade);
 
             bool hasGolos =
                 dt != null &&
@@ -48,9 +52,9 @@ namespace School_Mang.PL.NATIGA
 
             if (hasGolos)
             {
-                txt_golos.Text = nateg.Get_Golos_Sum(grade, "min")
-                                      .Rows[0]["Golos"]
-                                      .ToString();
+                txt_golos.Text = _golosService.GetGolosSum(grade, "min")
+                                              .Rows[0]["Golos"]
+                                              .ToString();
 
                 btn_save_data.ButtonText = "تعديل الترقيم";
                 lbl_edit.Visible = true;
@@ -111,55 +115,48 @@ namespace School_Mang.PL.NATIGA
                 txt_golos.Focus();
                 return;
             }
+
+            if (MSG.DialogeMsg("هل تريد إضافة أرقام جلوس للصف المحدد ... ؟") != DialogResult.Yes)
+                return;
+
             try
             {
-                if (MSG.DialogeMsg("هل تريد إضافة أرقام جلوس للصف المحدد ... ؟") == DialogResult.Yes)
-                {
-                    int grade = Convert.ToInt32(cmb_grade.SelectedValue);
+                int grade = Convert.ToInt32(cmb_grade.SelectedValue);
 
-                    if (nateg.Get_Golos_Sum(grade).Rows[0]["Golos"].ToString() != "")
-                    {
-                        if (MSG.DialogeErrMsg("تم إدخال أرقام الجلوس للصف المحدد من قبل .. سوف يتم حذف الأرقام القديمة.. هل تريد المتابعة ؟") == DialogResult.No)
-                        {
-                            return;
-                        }
-
-                    }
-                    // Add Golos Data
-                    int golos = Convert.ToInt32(txt_golos.Text);
-                    int std_code;
-                    DataTable std_data = nateg.Get_Golos_Data(grade);
-                   
-                    Waiting.Start();
-                    foreach(DataRow row in std_data.Rows)
-                    {
-                       std_code = Convert.ToInt32(row["std_code"]);
-                        nateg.Update_Golos_Data(std_code, golos);
-                        golos += 1;
-                    }
-                    Waiting.Stop();
-                    MSG.MyMesg("تم تعديل أرقام الجلوس بنجاح ..!");
-                }
-                else
+                if (_golosService.GetGolosSum(grade).Rows[0]["Golos"].ToString() != "")
                 {
-                    return;
+                    if (MSG.DialogeErrMsg("تم إدخال أرقام الجلوس للصف المحدد من قبل .. سوف يتم حذف الأرقام القديمة.. هل تريد المتابعة ؟") == DialogResult.No)
+                        return;
                 }
 
+                int golos = Convert.ToInt32(txt_golos.Text);
+
+                Waiting.Start();
+
+                _golosService.UpdateGolosNumbers(grade, golos);
+
+                MSG.MyMesg("تم تعديل أرقام الجلوس بنجاح ..!");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MSG.ErrorMesg(ex.Message);
+            }
+            finally
+            {
                 Waiting.Stop();
             }
-            Waiting.Stop();
-
         }
 
         private void cmb_grade_SelectedIndexChanged(object sender, EventArgs e)
         {
             int grade = Convert.ToInt32(cmb_grade.SelectedValue);
-            lbl_coun_std.Text= nateg.Get_Golos_Sum(grade, "count").Rows[0][0].ToString();
-            Get_Count_Grade(Convert.ToInt32(cmb_grade.SelectedValue));
+
+            lbl_coun_std.Text = _golosService
+                .GetGolosSum(grade, "count")
+                .Rows[0][0]
+                .ToString();
+
+            Get_Count_Grade(grade);
         }
     }
 }

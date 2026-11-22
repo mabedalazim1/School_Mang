@@ -256,7 +256,6 @@ namespace School_Mang.PL.NATIGA
             this.Name = "FRM_CHOSE_FINAL_DATA";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ملفات الرصد";
-            this.Load += new System.EventHandler(this.FRM_CHOSE_FINAL_DATA_Load);
             this.pn_top.ResumeLayout(false);
             this.pn_top.PerformLayout();
             this.groupBox1.ResumeLayout(false);

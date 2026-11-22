@@ -15,6 +15,7 @@ namespace School_Mang.BL.Services
     {
         public OsraContext OsraState {  get; set; } = new OsraContext();
         public StudentContext StudentState { get; set; } = new StudentContext();
+        public NatigaContext Natiga { get; set; } = new NatigaContext();
         public  ReportDataType CurrentReport { get; set; }
         public GetStudentCase StudentCase { get; set; }
 

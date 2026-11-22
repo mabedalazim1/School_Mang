@@ -1,24 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using School_Mang.BL;
+using School_Mang.BL.Services.Nateg;
 using School_Mang.PL.MAIN;
-using School_Mang.BL;
+using System;
+using System.Windows.Forms;
 
 namespace School_Mang.PL.NATIGA.HOME
 {
     public partial class FRM_FINAL_EXAMS : Form
     {
 
-        BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
-        
-        BL.NATEG.cls_NATAG_FUNCTIONS natag_func = new BL.NATEG.cls_NATAG_FUNCTIONS();
-        BL.NATEG.ExcelUtlity Excel = new BL.NATEG.ExcelUtlity();
+        private readonly SeryUploadService _seryUploadService =
+            new SeryUploadService();
+
+        private readonly BL.NATEG.cls_NATAG_FUNCTIONS natag_func =
+            new BL.NATEG.cls_NATAG_FUNCTIONS();
 
         // Form Closed
         private static FRM_FINAL_EXAMS frm_Final_Exams;
@@ -49,11 +44,11 @@ namespace School_Mang.PL.NATIGA.HOME
             }
         }
 
-        
+
 
         private void lbl_back_Click(object sender, EventArgs e)
         {
-           natag_func.changePages(FRM_NATEG.Get_Frm_Nateg.pn_home, "التقييمات");
+            natag_func.changePages(FRM_NATEG.Get_Frm_Nateg.pn_home, "التقييمات");
         }
 
         private void pic_back_Click(object sender, EventArgs e)
@@ -63,41 +58,31 @@ namespace School_Mang.PL.NATIGA.HOME
 
         private void lbl_upload_sery_Click(object sender, EventArgs e)
         {
+            string fileName = natag_func.OpenDialoge(openFileDialog1);
+
+            if (fileName == null)
+            {
+                MSG.ErrorMesg("تم إلغاء الإجراء..!");
+                BL.Globals.Dir_Path = "D://Rasd";
+                return;
+            }
+
             try
             {
-                string file_name = natag_func.OpenDialoge(openFileDialog1);
-                if (file_name == null) 
-                {
-                    MSG.ErrorMesg("تم إلغاء الإجراء..!");
-                    BL.Globals.Dir_Path = "D://Rasd";
-                    return;
-                }
                 Waiting.Start();
-              
-                DataTable dt_sery = Excel.ReadSeryData(file_name);
 
-                if (dt_sery == null)
-                {
-                    MSG.ErrorMesg("لا توجد بيانات..!");
-                    BL.Globals.Dir_Path = "D://Rasd";
-                    return;
-                }
-                foreach (DataRow row in dt_sery.Rows)
-                {
-                    int Golos = Convert.ToInt32(row["Golos"]);
-                    int Sery = Convert.ToInt32(row["Sery"]);
+                _seryUploadService.UploadSeryData(fileName);
 
-                    NATEG.Update_Sery_Data(Golos, Sery);
-                  
-                }
-                Waiting.Stop();
                 MSG.MyMesg("تم تحديث الأرقام السرية بنجاح .. !");
             }
             catch (Exception ex)
             {
                 MSG.ErrorMesg(ex.Message);
             }
-            Waiting.Stop();
+            finally
+            {
+                Waiting.Stop();
+            }
         }
 
         private void pic_upload_sery_Click(object sender, EventArgs e)
@@ -121,12 +106,17 @@ namespace School_Mang.PL.NATIGA.HOME
 
         private void lbl_final_Click(object sender, EventArgs e)
         {
-            natag_func.changePages(FRM_FINAL_DATA_HOME.Get_Frm_Final_Data_Home. pn_home, "الإختبارات النهائية");
+            natag_func.changePages(FRM_FINAL_DATA_HOME.Get_Frm_Final_Data_Home.pn_home, "الإختبارات النهائية");
         }
 
         private void pic_final_Click(object sender, EventArgs e)
         {
             lbl_final_Click(sender, e);
+        }
+
+        private void pic_get_sery_Click(object sender, EventArgs e)
+        {
+            lbl_get_sery_Click(sender, e);
         }
     }
 }

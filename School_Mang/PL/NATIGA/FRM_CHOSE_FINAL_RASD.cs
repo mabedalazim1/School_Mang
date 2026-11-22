@@ -1,20 +1,58 @@
-﻿using System;
+﻿using School_Mang.BL;
+using School_Mang.BL.Services;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
-using School_Mang.BL;
-using School_Mang.BL.Services;
 
 
 namespace School_Mang.PL.NATIGA
 {
-    public partial class FRM_CHOSE_FINAL_RASD : Form
+    public partial class FRM_CHOSE_FINAL_RASD : Form, INavigationAware
     {
-        BL.STD.CLS_STD std = new BL.STD.CLS_STD();
+        private NavigationContext _context = new NavigationContext();
 
-        BL.NATEG.CLS_NATEG nateg = new BL.NATEG.CLS_NATEG();
-        BL.NATEG.ExcelUtlity Excel = new BL.NATEG.ExcelUtlity();
-        RPT.REPORT_CONNECTION RPT = new RPT.REPORT_CONNECTION();
+        public void SetNavigation(NavigationContext context)
+        {
+            _context = context ?? new NavigationContext();
+
+            if (_context.Natiga == null)
+            {
+                lbl_title.Text = "بيانات التنقل غير مكتملة";
+                return;
+            }
+
+            if (_context.Natiga.AmalSana)
+            {
+                lbl_title.Text = "كشوف أعمال السنة";
+                pic_rasd.Image = Properties.Resources.test_48;
+            }
+            else if (_context.Natiga.FinalTest)
+            {
+                lbl_title.Text = "كشوف درجات الإختبار";
+                pic_rasd.Image = Properties.Resources.note_48;
+            }
+            else if (_context.Natiga.FinalKoshof)
+            {
+                lbl_title.Text = "كشوف النتائج النهائية";
+                pic_rasd.Image = Properties.Resources.final_naega_3_48;
+            }
+            else if (_context.Natiga.AhsaaEdara)
+            {
+                lbl_title.Text = "إحصاء الإدارة";
+                pic_rasd.Image = Properties.Resources.final_naega_3_48;
+            }
+            else
+            {
+                lbl_title.Text = "كشوف مراجعة النتائج";
+                pic_rasd.Image = Properties.Resources.test_48_1;
+            }
+
+        }
+
+
+        private readonly BL.NATEG.CLS_NATEG nateg = new BL.NATEG.CLS_NATEG();
+        private readonly RPT.REPORT_CONNECTION RPT = new RPT.REPORT_CONNECTION();
 
         private readonly LookupService _stdData = new LookupService();
         // Form Closed
@@ -43,16 +81,57 @@ namespace School_Mang.PL.NATIGA
             {
                 frm_Chose_Final_Rasd = this;
             }
+
             // Fill Combo
             Waiting.Start();
-            cmb_grade.DataSource = _stdData.Get_grades();
-            cmb_grade.DisplayMember = "GradeDesc";
-            cmb_grade.ValueMember = "Grade_Id";
+            try
+            {
+                cmb_grade.DataSource = _stdData.Get_grades();
+                cmb_grade.DisplayMember = "GradeDesc";
+                cmb_grade.ValueMember = "Grade_Id";
 
-            Add_To_Comb_Test();
-            Waiting.Stop();
+                Add_To_Comb_Test();
+            }
+            finally
+            {
+                Waiting.Stop();
+            }
         }
 
+        int move;
+        int move_x;
+        int move_y;
+
+        private void pn_top_MouseDown(object sender, MouseEventArgs e)
+        {
+            move = 1;
+            move_x = e.X;
+            move_y = e.Y;
+        }
+
+        private void pn_top_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (move == 1)
+            {
+                this.SetDesktopLocation(MousePosition.X - move_x, MousePosition.Y - move_y);
+            }
+        }
+
+        private void pn_top_MouseUp(object sender, MouseEventArgs e)
+        {
+            move = 0;
+        }
+
+        private void btn_close_b_Click(object sender, EventArgs e)
+        {
+
+            this.Close();
+        }
+
+        private void btn_close_Click(object sender, EventArgs e)
+        {
+            btn_close_b_Click(sender, e);
+        }
 
 
         private void Add_To_Comb_Test()
@@ -64,32 +143,6 @@ namespace School_Mang.PL.NATIGA
             cmb_test.DataSource = new BindingSource(comboSource, null);
             cmb_test.DisplayMember = "Value";
             cmb_test.ValueMember = "Key";
-
-            if (BL.Globals.Amal_Sana == true)
-            {
-                lbl_title.Text = "كشوف أعمال السنة";
-                pic_rasd.Image = Properties.Resources.test_48;
-            }
-            else if (BL.Globals.Final_Test == true)
-            {
-                lbl_title.Text = "كشوف درجات الإختبار";
-                pic_rasd.Image = Properties.Resources.note_48;
-            }
-            else if (BL.Globals.Final_Koshof == true)
-            {
-                lbl_title.Text = "كشوف النتائج النهائية";
-                pic_rasd.Image = Properties.Resources.final_naega_3_48;
-            }
-            else if (BL.Globals.AhsaaEdara == true)
-            {
-                lbl_title.Text = "إحصاء الإدارة";
-                pic_rasd.Image = Properties.Resources.final_naega_3_48;
-            }
-            else
-            {
-                lbl_title.Text = "كشوف مراجعة النتائج";
-                pic_rasd.Image = Properties.Resources.test_48_1;
-            }
         }
 
         private Boolean Verify_Count()
@@ -98,10 +151,16 @@ namespace School_Mang.PL.NATIGA
             DataTable dt = new DataTable();
             dt = nateg.Get_Final_Degree(grade);
 
+            if (dt == null)
+            {
+                MSG.ErrorMesg("تعذر الحصول على النتائج من قاعدة البيانات.");
+                return false;
+            }
+
             if (dt.Rows.Count == 0)
             {
                 MSG.ErrorMesg("لا توجد نتائج مسجلة للصف المحدد");
-                if (grade < 10 && BL.Globals.Final_Test)
+                if (grade < 10 && _context.Natiga.FinalTest)
                 {
                     if (grade < 3)
                     {
@@ -140,7 +199,6 @@ namespace School_Mang.PL.NATIGA
 
                 RPT.Open_Koshof_Amal(grade, month);
 
-                Waiting.Stop();
             }
             catch (Exception e)
             {
@@ -170,9 +228,6 @@ namespace School_Mang.PL.NATIGA
                 {
                     RPT.OpenResdTest_B(year, grade);
                 }
-
-
-                Waiting.Stop();
             }
             catch (Exception e)
             {
@@ -202,10 +257,6 @@ namespace School_Mang.PL.NATIGA
                 {
                     RPT.OpenNatega_B(year, grade);
                 }
-
-
-
-                Waiting.Stop();
             }
             catch (Exception e)
             {
@@ -234,7 +285,6 @@ namespace School_Mang.PL.NATIGA
                             MSG.ErrorMesg("هذا الإجراء متاح فى نهاية العام فقط ..!");
                             MSG.MyExclamationMsg("يرجي التأكد من نوع الاختبار ..!");
                             cmb_grade.Focus();
-                            Waiting.Stop();
                             return;
                         case var expration when year > 3:
                             switch (grade)
@@ -244,14 +294,12 @@ namespace School_Mang.PL.NATIGA
                                     MSG.ErrorMesg("هذا الإجراء متاح فى نهاية العام فقط ..!");
                                     MSG.MyExclamationMsg("يرجي التأكد من نوع الاختبار ..!");
                                     cmb_grade.Focus();
-                                    Waiting.Stop();
                                     return;
                                 case 1:
                                 case 2:
                                     MSG.ErrorMesg("لم يتم أتاحة هذا الصف!");
                                     MSG.MyExclamationMsg("يرجي التأكد من نوع الاختبار ..!");
                                     cmb_grade.Focus();
-                                    Waiting.Stop();
                                     return;
                                 case 3:
                                 case 4:
@@ -261,7 +309,6 @@ namespace School_Mang.PL.NATIGA
                                 case 8:
                                 case 9:
                                     RPT.OpenFinal_Koshof(year, grade, 1);
-                                    Waiting.Stop();
                                     return;
 
                             }
@@ -280,10 +327,6 @@ namespace School_Mang.PL.NATIGA
 
                     RPT.OpenFinal_Koshof(year, grade, 2);
                 }
-
-
-
-                Waiting.Stop();
             }
             catch (Exception e)
             {
@@ -303,14 +346,12 @@ namespace School_Mang.PL.NATIGA
                 int grade = Convert.ToInt32(cmb_grade.SelectedValue);
                 int year = Properties.Settings.Default.year_cod;
 
-
                 if (test_kind == 1)
                 {
 
                     MSG.ErrorMesg("هذا الإجراء متاح فى نهاية العام فقط ..!");
                     MSG.MyExclamationMsg("يرجي التأكد من نوع الاختبار لم يتم إضافته لنصف العام ..!");
                     cmb_grade.Focus();
-                    Waiting.Stop();
                     return;
 
                 }
@@ -327,8 +368,6 @@ namespace School_Mang.PL.NATIGA
 
                     RPT.OpenAhsaaEdara(year, grade);
                 }
-
-                Waiting.Stop();
             }
             catch (Exception e)
             {
@@ -340,77 +379,47 @@ namespace School_Mang.PL.NATIGA
             }
         }
 
-
-        int move;
-        int move_x;
-        int move_y;
-
-        private void pn_top_MouseDown(object sender, MouseEventArgs e)
-        {
-            move = 1;
-            move_x = e.X;
-            move_y = e.Y;
-        }
-
-        private void pn_top_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (move == 1)
-            {
-                this.SetDesktopLocation(MousePosition.X - move_x, MousePosition.Y - move_y);
-            }
-        }
-
-        private void pn_top_MouseUp(object sender, MouseEventArgs e)
-        {
-            move = 0;
-        }
-
-        private void btn_close_b_Click(object sender, EventArgs e)
-        {
-            BL.Globals.Amal_Sana = false;
-            BL.Globals.Final_Test = false;
-            BL.Globals.Final_Nataga = false;
-            BL.Globals.Final_Koshof = false;
-            this.Close();
-        }
-
-        private void btn_close_Click(object sender, EventArgs e)
-        {
-            btn_close_b_Click(sender, e);
-        }
-
         private void btn_ok_Click(object sender, EventArgs e)
         {
-
-            byte test_kind = Convert.ToByte(cmb_test.SelectedValue);
-            if (BL.Globals.Amal_Sana)
+            if (_context?.Natiga == null)
             {
-                OpenAmalReport(test_kind);
-            }
-            else if (BL.Globals.Final_Test)
-            {
-                if (!Verify_Count()) return;
-                OpenRasdTestReport(test_kind);
-            }
-            else if (BL.Globals.Final_Nataga)
-            {
-                if (!Verify_Count()) return;
-                OpenFinalNatage(test_kind);
-
-            }
-            else if (BL.Globals.Final_Koshof)
-            {
-                if (!Verify_Count()) return;
-                OpenFinalKoshof(test_kind);
-
-            }
-            else if (BL.Globals.AhsaaEdara)
-            {
-                if (!Verify_Count()) return;
-                OpenFinalAhsaaEdara(test_kind);
-
+                MSG.ErrorMesg("بيانات التنقل غير مكتملة، يرجى فتح الشاشة مرة أخرى.");
+                return;
             }
 
+            try
+            {
+                byte test_kind = Convert.ToByte(cmb_test.SelectedValue);
+
+                if (_context.Natiga.AmalSana)
+                {
+                    OpenAmalReport(test_kind);
+                }
+                else if (_context.Natiga.FinalTest)
+                {
+                    if (!Verify_Count()) return;
+                    OpenRasdTestReport(test_kind);
+                }
+                else if (_context.Natiga.FinalNataga)
+                {
+                    if (!Verify_Count()) return;
+                    OpenFinalNatage(test_kind);
+                }
+                else if (_context.Natiga.FinalKoshof)
+                {
+                    if (!Verify_Count()) return;
+                    OpenFinalKoshof(test_kind);
+                }
+                else if (_context.Natiga.AhsaaEdara)
+                {
+                    if (!Verify_Count()) return;
+                    OpenFinalAhsaaEdara(test_kind);
+                }
+            }
+            catch (Exception ex)
+            {
+                MSG.ErrorMesg(ex.Message);
+            }
         }
     }
 }

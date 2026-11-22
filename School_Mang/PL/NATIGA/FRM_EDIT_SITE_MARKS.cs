@@ -1,20 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using School_Mang.BL;
 using School_Mang.BL.Common.Helper;
-using School_Mang.BL;
+using School_Mang.BL.Services;
+using System;
+using System.Drawing;
+using System.Windows.Forms;
 
 
 namespace School_Mang.PL.NATIGA
 {
-    public partial class FRM_EDIT_SITE_MARKS : Form
+    public partial class FRM_EDIT_SITE_MARKS : Form, INavigationAware
     {
+        private NavigationContext _context = new NavigationContext();
+
+        public void SetNavigation(NavigationContext context)
+        {
+            _context = context ?? new NavigationContext();
+        }
+
 
         BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
         
@@ -71,7 +73,7 @@ namespace School_Mang.PL.NATIGA
 
         private void CheckDegree(TextBox textBox, string txt, byte test = 1)
         {
-            int grade = BL.Globals.test_grade_id;
+            int grade = _context.Natiga.TestGradeId;
             byte test_kind_id = Convert.ToByte(txt_test_kind_id.Text);
             try
             {
@@ -240,7 +242,7 @@ namespace School_Mang.PL.NATIGA
 
             // Chang Lables
 
-            int grade_id = BL.Globals.test_grade_id;
+            int grade_id = _context.Natiga.TestGradeId;
             switch (grade_id)
             {
                 case 10:
@@ -520,8 +522,9 @@ namespace School_Mang.PL.NATIGA
                     student_Id, ar, din, math, scince, social, english,
                     maharat, tocnolegy, french, general, sort_code, test_kind_Id);
 
-                FRM_SITE_STD_DATA.Get_Frm_Site_Std_Data.cmb_grade_DropDownClosed(sender, e);
+               
                 MSG.MyMesg("تم التعديل بنجاح ..!");
+                DialogResult = DialogResult.OK;
                 this.Close();
 
             }

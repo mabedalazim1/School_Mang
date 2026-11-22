@@ -1,22 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using School_Mang.BL;
 using School_Mang.BL.Common.Helper;
-using School_Mang.BL;
+using School_Mang.BL.Services;
+using System;
+using System.Drawing;
+using System.Globalization;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace School_Mang.PL.NATIGA
 {
-    public partial class FRM_EDIT_SITE_DEGREES : Form
+    public partial class FRM_EDIT_SITE_DEGREES : Form, INavigationAware
     {
+        private NavigationContext _context = new NavigationContext();
+
+        public void SetNavigation(NavigationContext context)
+        {
+            _context = context ?? new NavigationContext();
+        }
+
 
         BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
-        
+
 
         // Form Closed
         private static FRM_EDIT_SITE_DEGREES frm_Edit_Site_Degree;
@@ -44,10 +48,9 @@ namespace School_Mang.PL.NATIGA
             {
                 frm_Edit_Site_Degree = this;
             }
-
         }
 
-       
+
 
         int move;
         int move_x;
@@ -92,6 +95,13 @@ namespace School_Mang.PL.NATIGA
 
         private async void FRM_EDIT_SITE_DEGREES_Load(object sender, EventArgs e)
         {
+            if (_context?.Natiga == null)
+            {
+                MSG.ErrorMesg("بيانات التنقل غير مكتملة، يرجى فتح الشاشة مرة أخرى.");
+                Close();
+                return;
+            }
+
             //Test Intrent Connection
             if (!await InternetFlow.EnsureAsync())
                 return;
@@ -117,9 +127,10 @@ namespace School_Mang.PL.NATIGA
             maharat_old = txt_maharat.Text;
             tocnolegy_old = txt_tecnolgey.Text;
             badania_old = txt_badnia.Text;
-            general_old = txt_total.Text;
 
-            int grade_id = BL.Globals.test_grade_id;
+            txt_total.ReadOnly = true;
+
+            int grade_id = _context.Natiga.TestGradeId;
             switch (grade_id)
             {
                 case 10:
@@ -127,14 +138,15 @@ namespace School_Mang.PL.NATIGA
                 case 1:
                 case 2:
                 case 3:
-                    lbl_sinces.Text = "متعدد";
+                    lbl_sinces.Text = "علوم";
+                    txt_sinces.Enabled = false;
                     lbl_mahrat.Text = "مهارات";
                     lbl_tecnolgy.Text = "تكنولوجيا";
                     txt_social.Enabled = false;
                     txt_maharat.Enabled = false;
                     txt_tecnolgey.Enabled = false;
                     txt_badnia.Enabled = true;
-                    CheckDegree(txt_badnia, badania_old, 0);
+                    CheckDegree(txt_badnia, badania_old);
                     break;
                 case 4:
                 case 5:
@@ -146,9 +158,10 @@ namespace School_Mang.PL.NATIGA
                     txt_maharat.Enabled = true;
                     txt_tecnolgey.Enabled = true;
                     txt_badnia.Enabled = false;
-                    CheckDegree(txt_social, social_old, 0);
-                    CheckDegree(txt_maharat, maharat_old, 0);
-                    CheckDegree(txt_tecnolgey, maharat_old, 0);
+                    CheckDegree(txt_sinces, sinces_old);
+                    CheckDegree(txt_social, social_old);
+                    CheckDegree(txt_maharat, maharat_old);
+                    CheckDegree(txt_tecnolgey, tocnolegy_old);
                     break;
                 case 7:
                 case 8:
@@ -160,91 +173,259 @@ namespace School_Mang.PL.NATIGA
                     txt_maharat.Enabled = true;
                     txt_tecnolgey.Enabled = true;
                     txt_badnia.Enabled = false;
-                    CheckDegree(txt_social, social_old, 0);
-                    CheckDegree(txt_maharat, maharat_old, 0);
-                    CheckDegree(txt_tecnolgey, maharat_old, 0);
+                    CheckDegree(txt_sinces, sinces_old);
+                    CheckDegree(txt_social, social_old);
+                    CheckDegree(txt_maharat, maharat_old);
+                    CheckDegree(txt_tecnolgey, tocnolegy_old);
                     break;
 
             }
 
             //CheckDegree
-            CheckDegree(txt_ar, ar_old, 0);
-            CheckDegree(txt_din, din_old, 0);
-            CheckDegree(txt_math, math_old, 0);
-            CheckDegree(txt_sinces, sinces_old, 0);
-            CheckDegree(txt_english, english_old, 0);
-            CheckDegree(txt_total, general_old, 0);
+            CheckDegree(txt_ar, ar_old);
+            CheckDegree(txt_din, din_old);
+            CheckDegree(txt_math, math_old);
+            CheckDegree(txt_english, english_old);
+            CheckGeneralDegree();
         }
 
-        private void CheckDegree(TextBox textBox, string txt, byte test = 1)
+
+        private void DecimalDegree_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (test == 1)
+            if (char.IsControl(e.KeyChar))
+                return;
+
+            TextBox textBox = sender as TextBox;
+
+            if (textBox == null)
+                return;
+
+            string currentText = textBox.Text.Remove(
+                textBox.SelectionStart,
+                textBox.SelectionLength
+            );
+
+            string newText = currentText.Insert(
+                textBox.SelectionStart,
+                e.KeyChar.ToString()
+            );
+
+            // السماح بالأرقام والنقطة والفاصلة فقط
+            if (!char.IsDigit(e.KeyChar) &&
+                e.KeyChar != '.' && e.KeyChar != ',')
             {
-                if (Convert.ToInt32(textBox.Text) > 4 || (Convert.ToInt32(textBox.Text) < 1
-                    ))
-                {
-                    MSG.ErrorMesg("تأكد من الدرجة ..!");
-                    textBox.Text = txt;
-                    textBox.Focus();
-                }
-                int grade = BL.Globals.test_grade_id;
-                double total;
-                switch (grade)
-                {
-                    case 10:
-                    case 11:
-                    case 1:
-                    case 2:
-                    case 3:
-                        total =
-                           Convert.ToDouble(txt_ar.Text) +
-                           Convert.ToDouble(txt_din.Text) +
-                           Convert.ToDouble(txt_sinces.Text) +
-                           Convert.ToDouble(txt_math.Text) +
-                           Convert.ToDouble(txt_english.Text) +
-                           Convert.ToDouble(txt_badnia.Text);
-                        total = Math.Round(total / 6, 0);
-                        txt_total.Text = total.ToString();
-                        break;
-
-                    case 4:
-                    case 5:
-                    case 6:
-                    case 7:
-                    case 8:
-                    case 9:
-                        total =
-                           Convert.ToDouble(txt_ar.Text) +
-                           Convert.ToDouble(txt_din.Text) +
-                           Convert.ToDouble(txt_sinces.Text) +
-                           Convert.ToDouble(txt_social.Text) +
-                           Convert.ToDouble(txt_math.Text) +
-                           Convert.ToDouble(txt_english.Text) +
-                           Convert.ToDouble(txt_maharat.Text) +
-                           Convert.ToDouble(txt_tecnolgey.Text);
-                        total = Math.Round(total / 8, 0);
-                        txt_total.Text = total.ToString();
-                        break;
-                }
-
+                e.Handled = true;
+                return;
             }
 
-            switch (Convert.ToInt32(textBox.Text))
+            // منع وجود أكثر من فاصل عشري
+            int separators = newText.Count(c => c == '.' || c == ',');
+
+            if (separators > 1)
             {
+                e.Handled = true;
+                return;
+            }
+
+            // السماح بمنزلتين عشريتين فقط
+            int separatorIndex = newText.IndexOfAny(new char[] { '.', ',' });
+
+            if (separatorIndex >= 0 &&
+                newText.Length - separatorIndex - 1 > 2)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private decimal ReadDegree(TextBox textBox)
+        {
+            if (string.IsNullOrWhiteSpace(textBox.Text))
+                return 0;
+
+            decimal value;
+
+            if (!TryReadDegree(textBox.Text, out value))
+                throw new InvalidOperationException(
+                    "توجد درجة غير صحيحة في مادة: " + textBox.Name);
+
+            return value;
+        }
+
+        private void CalculateGeneralDegree()
+        {
+            decimal total = 0;
+            int grade = _context.Natiga.TestGradeId;
+
+            switch (grade)
+            {
+                // الصفوف الأول والثاني والثالث
                 case 1:
-                    textBox.BackColor = Color.Red;
-                    break;
                 case 2:
-                    textBox.BackColor = Color.Orange;
-                    break;
                 case 3:
-                    textBox.BackColor = Color.Green;
+
+                    total =
+                        ReadDegree(txt_ar) +
+                        ReadDegree(txt_math) +
+                        ReadDegree(txt_english);
+
                     break;
+
+                // الصفوف من الرابع إلى التاسع
                 case 4:
-                    textBox.BackColor = Color.Blue;
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+
+                    total =
+                        ReadDegree(txt_ar) +
+                        ReadDegree(txt_math) +
+                        ReadDegree(txt_english) +
+                        ReadDegree(txt_sinces) +
+                        ReadDegree(txt_social);
+
+                    break;
+
+                // الصفان العاشر والحادي عشر
+                case 10:
+                case 11:
+
+                    total =
+                        ReadDegree(txt_ar) +
+                        ReadDegree(txt_din) +
+                        ReadDegree(txt_math) +
+                        ReadDegree(txt_english) +
+                        ReadDegree(txt_badnia);
+
+                    total = Math.Round(total / 5, 0);
+
+
                     break;
             }
 
+            txt_total.Text = total.ToString("0.##");
+            ApplyTotalColor(txt_total, total);
+        }
+
+
+
+        private bool TryReadDegree(string value, out decimal degree)
+        {
+            value = value.Trim().Replace(',', '.');
+
+            return decimal.TryParse(
+                value,
+                NumberStyles.AllowDecimalPoint,
+                CultureInfo.InvariantCulture,
+                out degree
+            );
+        }
+
+        private void ApplyDegreeColor(TextBox textBox, decimal degree)
+        {
+
+            int grade = _context.Natiga.TestGradeId;
+
+            if (grade == 10 || grade == 11)
+            {
+                if (degree == 1)
+                    textBox.BackColor = Color.Red;
+                else if (degree == 2)
+                    textBox.BackColor = Color.Orange;
+                else if (degree == 3)
+                    textBox.BackColor = Color.Green;
+                else
+                    textBox.BackColor = Color.Blue;
+
+                return;
+            }
+
+            if (degree < 7.5m)
+                textBox.BackColor = Color.Red;
+            else if (degree < 9.75m)
+                textBox.BackColor = Color.Salmon;
+            else if (degree < 11.25m)
+                textBox.BackColor = Color.DarkOrange;
+            else if (degree < 12.75m)
+                textBox.BackColor = Color.Green;
+            else
+                textBox.BackColor = Color.Blue;
+        }
+
+        private void ApplyTotalColor(TextBox textBox, decimal total)
+        {
+            int grade = _context.Natiga.TestGradeId;
+
+            if (grade == 10 || grade == 11)
+            {
+                if (total == 1)
+                    textBox.BackColor = Color.Red;
+                else if (total == 2)
+                    textBox.BackColor = Color.Orange;
+                else if (total == 3)
+                    textBox.BackColor = Color.Green;
+                else
+                    textBox.BackColor = Color.Blue;
+
+                return;
+            }
+
+            decimal multiplier = grade <= 3 ? 3 : 5;
+
+            if (total < 7.5m * multiplier)
+                textBox.BackColor = Color.Red;
+            else if (total < 9.75m * multiplier)
+                textBox.BackColor = Color.Salmon;
+            else if (total < 11.25m * multiplier)
+                textBox.BackColor = Color.DarkOrange;
+            else if (total < 12.75m * multiplier)
+                textBox.BackColor = Color.Green;
+            else
+                textBox.BackColor = Color.Blue;
+        }
+        private void CheckDegree(TextBox textBox, string oldValue)
+        {
+            decimal degree;
+
+            if (!TryReadDegree(textBox.Text, out degree))
+            {
+                return;
+            }
+
+            decimal fraction = degree - Math.Truncate(degree);
+
+            if (degree < 0 || degree > 15 ||
+                (fraction != 0 && fraction != 0.25m &&
+                 fraction != 0.50m && fraction != 0.75m))
+            {
+                MSG.ErrorMesg("الدرجة يجب أن تكون من 0 إلى 15 وبفواصل ربع درجة ..!");
+                textBox.Text = oldValue;
+                textBox.Focus();
+                return;
+            }
+
+            CalculateGeneralDegree();
+            ApplyDegreeColor(textBox, degree);
+        }
+
+
+        private void CheckGeneralDegree()
+        {
+
+            decimal total;
+
+            if (!decimal.TryParse(txt_total.Text, out total))
+                return;
+
+            if (total < 0)
+            {
+                MSG.ErrorMesg("المجموع غير صحيح ..!");
+                txt_total.Text = "0";
+                return;
+            }
+
+            ApplyTotalColor(txt_total, total);
         }
         private void btn_close_Click(object sender, EventArgs e)
         {
@@ -259,84 +440,54 @@ namespace School_Mang.PL.NATIGA
         private void txt_ar_KeyPress(object sender, KeyPressEventArgs e)
         {
 
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
-            {
-                e.Handled = true;
-            }
+            DecimalDegree_KeyPress(sender, e);
 
         }
 
         private void txt_din_KeyPress(object sender, KeyPressEventArgs e)
         {
 
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
-            {
-                e.Handled = true;
-            }
+            DecimalDegree_KeyPress(sender, e);
         }
 
         private void txt_math_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
-            {
-                e.Handled = true;
-            }
+            DecimalDegree_KeyPress(sender, e);
         }
 
         private void txt_sinces_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
-            {
-                e.Handled = true;
-            }
+            DecimalDegree_KeyPress(sender, e);
         }
 
         private void txt_social_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
-            {
-                e.Handled = true;
-            }
+            DecimalDegree_KeyPress(sender, e);
         }
 
         private void txt_english_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
-            {
-                e.Handled = true;
-            }
+            DecimalDegree_KeyPress(sender, e);
         }
 
         private void txt_maharat_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
-            {
-                e.Handled = true;
-            }
+            DecimalDegree_KeyPress(sender, e);
         }
 
         private void txt_tecnolgey_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
-            {
-                e.Handled = true;
-            }
+            DecimalDegree_KeyPress(sender, e);
         }
 
         private void txt_badnia_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
-            {
-                e.Handled = true;
-            }
+            DecimalDegree_KeyPress(sender, e);
         }
 
         private void txt_total_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
-            {
-                e.Handled = true;
-            }
+            DecimalDegree_KeyPress(sender, e);
         }
 
         private async void btn_save_Click(object sender, EventArgs e)
@@ -347,34 +498,45 @@ namespace School_Mang.PL.NATIGA
 
             try
             {
-                int student_Id = Convert.ToInt32(txt_cod.Text);
-                int ar = Convert.ToInt32(txt_ar.Text);
-                int din = Convert.ToInt32(txt_din.Text);
-                int math = Convert.ToInt32(txt_math.Text);
-                int scince = Convert.ToInt32(txt_sinces.Text);
-                int social = Convert.ToInt32(txt_social.Text);
-                int english = Convert.ToInt32(txt_english.Text);
-                int maharat = Convert.ToInt32(txt_maharat.Text);
-                int tocnolegy = Convert.ToInt32(txt_tecnolgey.Text);
-                int badania = Convert.ToInt32(txt_badnia.Text);
-                int general = Convert.ToInt32(txt_total.Text);
-                int test_kind_Id = Convert.ToInt32(txt_test_kind_id.Text);
+                int student_Id;
+
+                if (!int.TryParse(txt_cod.Text, out student_Id))
+                {
+                    MSG.ErrorMesg("كود الطالب غير صحيح ..!");
+                    return;
+                }
+
+                decimal ar = ReadDegree(txt_ar);
+                decimal din = ReadDegree(txt_din);
+                decimal math = ReadDegree(txt_math);
+                decimal scince = ReadDegree(txt_sinces);
+                decimal social = ReadDegree(txt_social);
+                decimal english = ReadDegree(txt_english);
+                decimal maharat = ReadDegree(txt_maharat);
+                decimal tocnolegy = ReadDegree(txt_tecnolgey);
+                decimal badania = ReadDegree(txt_badnia);
+                decimal general = ReadDegree(txt_total);
+
+                int test_kind_Id;
+
+                if (!int.TryParse(txt_test_kind_id.Text, out test_kind_Id))
+                {
+                    MSG.ErrorMesg("نوع الاختبار غير صحيح ..!");
+                    return;
+                }
+
                 NATEG.Update_Degree(
                     student_Id, ar, din, math, scince, social, english,
                     maharat, tocnolegy, badania, general, test_kind_Id);
 
-                FRM_SITE_STD_DATA.Get_Frm_Site_Std_Data.cmb_grade_DropDownClosed(sender, e);
                 MSG.MyMesg("تم التعديل بنجاح ..!");
-                this.Close();
-
-
+                DialogResult = DialogResult.OK;
+                Close();
             }
             catch (Exception ex)
             {
-                MSG.MyMesg("44");
                 MSG.ErrorMesg(ex.Message);
             }
-
         }
 
         private void txt_ar_Leave(object sender, EventArgs e)
@@ -424,7 +586,7 @@ namespace School_Mang.PL.NATIGA
 
         private void txt_total_TextChanged(object sender, EventArgs e)
         {
-            CheckDegree(txt_total, general_old);
+            // CheckDegree(txt_total, general_old);
         }
     }
 }

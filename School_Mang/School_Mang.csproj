@@ -232,6 +232,7 @@
   <ItemGroup>
     <Compile Include="BL\AppEnvironment.cs" />
     <Compile Include="BL\CLS_BACKUP_DATABASE.cs" />
+    <Compile Include="BL\Common\Helper\ExcelHelper.cs" />
     <Compile Include="BL\Common\Helper\SafeConverter.cs" />
     <Compile Include="BL\Common\Helper\GridHelper.cs" />
     <Compile Include="BL\Common\Helper\TimeFormatter.cs" />
@@ -244,6 +245,15 @@
     <Compile Include="BL\Enums\SyncNextAction.cs" />
     <Compile Include="BL\Enums\SyncResultView.cs" />
     <Compile Include="BL\Enums\SyncType.cs" />
+    <Compile Include="BL\ExcelUtils\ExcelWorkbookSession.cs" />
+    <Compile Include="BL\Services\Nateg\ExcelExportService.cs" />
+    <Compile Include="BL\Services\Nateg\AssessmentService.cs" />
+    <Compile Include="BL\Services\Nateg\ExcelImportService.cs" />
+    <Compile Include="BL\Services\Nateg\FinalDataUploadService.cs" />
+    <Compile Include="BL\Services\Nateg\GolosService.cs" />
+    <Compile Include="BL\Services\Nateg\RasdService.cs" />
+    <Compile Include="BL\Services\Nateg\SeryUploadService.cs" />
+    <Compile Include="BL\Services\Navigation\NatigaContext.cs" />
     <Compile Include="BL\Services\SyncService\Degree\DegreeArchiveService.cs" />
     <Compile Include="BL\Services\SyncService\Family\FamilyMapper.cs" />
     <Compile Include="BL\Services\SyncService\Family\FamilySiteSyncService.cs" />
@@ -344,441 +354,441 @@
     <Compile Include="DAL\TestConcation.cs" />
     <Compile Include="HTTP\HTTPCLINT.cs" />
     <Compile Include="Models\LOGIN_DATA.cs" />
-    <Compile Include="MyReports\rpt_Amal_Degree_A.cs">
+    <Compile Include="MyReports\Amal\rpt_Amal_Degree_A.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Amal_Degree_A.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Amal_Degree_A_1_2.cs">
+    <Compile Include="MyReports\Amal\rpt_Amal_Degree_A_1_2.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Amal_Degree_A_1_2.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Amal_Degree_B.cs">
+    <Compile Include="MyReports\Amal\rpt_Amal_Degree_B.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Amal_Degree_B.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Amal_Degree_C.cs">
+    <Compile Include="MyReports\Amal\rpt_Amal_Degree_C.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Amal_Degree_C.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Count_Std.cs">
+    <Compile Include="MyReports\Talaba\rpt_Count_Std.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Count_Std.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Degree_Statement_A.cs">
+    <Compile Include="MyReports\Talaba\rpt_Degree_Statement_A.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Degree_Statement_A.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Degree_Statement_A_Grade_3_2025.cs">
+    <Compile Include="MyReports\Talaba\rpt_Degree_Statement_A_Grade_3_2025.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Degree_Statement_A_Grade_3_2025.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Degree_Statement_B.cs">
+    <Compile Include="MyReports\Talaba\rpt_Degree_Statement_B.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Degree_Statement_B.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Degree_Statement_C.cs">
+    <Compile Include="MyReports\Talaba\rpt_Degree_Statement_C.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Degree_Statement_C.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Eltehak.cs">
+    <Compile Include="MyReports\Talaba\rpt_Eltehak.cs">
       <DependentUpon>rpt_Eltehak.rpt</DependentUpon>
       <SubType>Component</SubType>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Kaema.cs">
+    <Compile Include="MyReports\Talaba\rpt_Kaema.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Kaema.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Koshof_Natega_A.cs">
+    <Compile Include="MyReports\Natega\rpt_Koshof_Natega_A.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Koshof_Natega_A.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Koshof_Natega_B.cs">
+    <Compile Include="MyReports\Natega\rpt_Koshof_Natega_B.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Koshof_Natega_B.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Koshof_Natega_B_Term_A_2025.cs">
+    <Compile Include="MyReports\Natega\rpt_Koshof_Natega_B_Term_A_2025.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Koshof_Natega_B_Term_A_2025.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Koshof_Natega_B_Term_B_2025.cs">
+    <Compile Include="MyReports\Natega\rpt_Koshof_Natega_B_Term_B_2025.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Koshof_Natega_B_Term_B_2025.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Koshof_Natega_C.cs">
+    <Compile Include="MyReports\Natega\rpt_Koshof_Natega_C.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Koshof_Natega_C.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Koshof_Natega_C_2025.cs">
+    <Compile Include="MyReports\Natega\rpt_Koshof_Natega_C_2025.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Koshof_Natega_C_2025.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Koshof_Natega_Term_A_Grade_3_2025.cs">
+    <Compile Include="MyReports\Natega\rpt_Koshof_Natega_Term_A_Grade_3_2025.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Koshof_Natega_Term_A_Grade_3_2025.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Koshof_Natega_Term_B_Grade_3_2025.cs">
+    <Compile Include="MyReports\Natega\rpt_Koshof_Natega_Term_B_Grade_3_2025.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Koshof_Natega_Term_B_Grade_3_2025.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Mostgdin_41.cs">
+    <Compile Include="MyReports\Talaba\rpt_Mostgdin_41.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Mostgdin_41.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Natega_A.cs">
+    <Compile Include="MyReports\Natega\rpt_Natega_A.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Natega_A.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Natega_A_Part_1.cs">
+    <Compile Include="MyReports\Natega\rpt_Natega_A_Part_1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Natega_A_Part_1.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Natega_A_Part_2.cs">
+    <Compile Include="MyReports\Natega\rpt_Natega_A_Part_2.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Natega_A_Part_2.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Natega_B.cs">
+    <Compile Include="MyReports\Natega\rpt_Natega_B.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Natega_B.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Natega_B_Part_1.cs">
+    <Compile Include="MyReports\Natega\rpt_Natega_B_Part_1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Natega_B_Part_1.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Natega_B_part_2.cs">
+    <Compile Include="MyReports\Natega\rpt_Natega_B_part_2.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Natega_B_part_2.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Natega_C.cs">
+    <Compile Include="MyReports\Natega\rpt_Natega_C.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Natega_C.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Natega_C_Part_1.cs">
+    <Compile Include="MyReports\Natega\rpt_Natega_C_Part_1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Natega_C_Part_1.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Natega_C_Part_2.cs">
+    <Compile Include="MyReports\Natega\rpt_Natega_C_Part_2.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Natega_C_Part_2.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Rasd_Degree_A.cs">
+    <Compile Include="MyReports\Rasd\rpt_Rasd_Degree_A.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Rasd_Degree_A.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Rasd_Degree_B.cs">
+    <Compile Include="MyReports\Rasd\rpt_Rasd_Degree_B.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Rasd_Degree_B.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Rasd_Degree_C.cs">
+    <Compile Include="MyReports\Rasd\rpt_Rasd_Degree_C.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Rasd_Degree_C.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Rasd_Mark_A.cs">
+    <Compile Include="MyReports\Rasd\rpt_Rasd_Mark_A.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Rasd_Mark_A.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Rasd_Mark_B.cs">
+    <Compile Include="MyReports\Rasd\rpt_Rasd_Mark_B.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Rasd_Mark_B.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Rasd_Mark_C.cs">
+    <Compile Include="MyReports\Rasd\rpt_Rasd_Mark_C.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Rasd_Mark_C.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Rasd_Mark_D.cs">
+    <Compile Include="MyReports\Rasd\rpt_Rasd_Mark_D.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Rasd_Mark_D.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Rasd_Test_A.cs">
+    <Compile Include="MyReports\Rasd\rpt_Rasd_Test_A.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Rasd_Test_A.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Rasd_Test_B.cs">
+    <Compile Include="MyReports\Rasd\rpt_Rasd_Test_B.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Rasd_Test_B.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Rasd_Test_B_Part_1.cs">
+    <Compile Include="MyReports\Rasd\rpt_Rasd_Test_B_Part_1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Rasd_Test_B_Part_1.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Rasd_Test_B_Part_2.cs">
+    <Compile Include="MyReports\Rasd\rpt_Rasd_Test_B_Part_2.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Rasd_Test_B_Part_2.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Rasd_Test_B_Term_2.cs">
+    <Compile Include="MyReports\Rasd\rpt_Rasd_Test_B_Term_2.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Rasd_Test_B_Term_2.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Rasd_Test_B_Term_2_Part_1.cs">
+    <Compile Include="MyReports\Rasd\rpt_Rasd_Test_B_Term_2_Part_1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Rasd_Test_B_Term_2_Part_1.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Rasd_Test_B_Term_2_Part_2.cs">
+    <Compile Include="MyReports\Rasd\rpt_Rasd_Test_B_Term_2_Part_2.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Rasd_Test_B_Term_2_Part_2.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Rasd_Test_C.cs">
+    <Compile Include="MyReports\Rasd\rpt_Rasd_Test_C.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Rasd_Test_C.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Rasd_Test_C_Part_1.cs">
+    <Compile Include="MyReports\Rasd\rpt_Rasd_Test_C_Part_1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Rasd_Test_C_Part_1.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Rasd_Test_C_Part_2.cs">
+    <Compile Include="MyReports\Rasd\rpt_Rasd_Test_C_Part_2.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Rasd_Test_C_Part_2.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Rasd_Test_C_Term_2.cs">
+    <Compile Include="MyReports\Rasd\rpt_Rasd_Test_C_Term_2.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Rasd_Test_C_Term_2.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Rasd_Test_C_Term_2_Part_1.cs">
+    <Compile Include="MyReports\Rasd\rpt_Rasd_Test_C_Term_2_Part_1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Rasd_Test_C_Term_2_Part_1.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Rasd_Test_C_Term_2_Part_2.cs">
+    <Compile Include="MyReports\Rasd\rpt_Rasd_Test_C_Term_2_Part_2.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Rasd_Test_C_Term_2_Part_2.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Review_Rasd_Test_A.cs">
+    <Compile Include="MyReports\Review\rpt_Review_Rasd_Test_A.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Review_Rasd_Test_A.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Review_Rasd_Test_A_1_2.cs">
+    <Compile Include="MyReports\Review\rpt_Review_Rasd_Test_A_1_2.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Review_Rasd_Test_A_1_2.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Review_Rasd_Test_B.cs">
+    <Compile Include="MyReports\Review\rpt_Review_Rasd_Test_B.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Review_Rasd_Test_B.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Review_Rasd_Test_B_1_2.cs">
+    <Compile Include="MyReports\Review\rpt_Review_Rasd_Test_B_1_2.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Review_Rasd_Test_B_1_2.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Review_Rasd_Test_B_Part_1.cs">
+    <Compile Include="MyReports\Review\rpt_Review_Rasd_Test_B_Part_1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Review_Rasd_Test_B_Part_1.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Review_Rasd_Test_B_Part_2.cs">
+    <Compile Include="MyReports\Review\rpt_Review_Rasd_Test_B_Part_2.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Review_Rasd_Test_B_Part_2.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Review_Rasd_Test_C.cs">
+    <Compile Include="MyReports\Review\rpt_Review_Rasd_Test_C.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Review_Rasd_Test_C.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Review_Rasd_Test_C_Part_1.cs">
+    <Compile Include="MyReports\Review\rpt_Review_Rasd_Test_C_Part_1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Review_Rasd_Test_C_Part_1.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Review_Rasd_Test_C_Part_2.cs">
+    <Compile Include="MyReports\Review\rpt_Review_Rasd_Test_C_Part_2.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Review_Rasd_Test_C_Part_2.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Segel_Data.cs">
+    <Compile Include="MyReports\Talaba\rpt_Segel_Data.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Segel_Data.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Segel_Transform_From.cs">
+    <Compile Include="MyReports\Talaba\rpt_Segel_Transform_From.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Segel_Transform_From.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Tahewl_Data.cs">
+    <Compile Include="MyReports\Talaba\rpt_Tahewl_Data.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Tahewl_Data.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Tahewl_From.cs">
+    <Compile Include="MyReports\Talaba\rpt_Tahewl_From.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Tahewl_From.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MyReports\rpt_Tahewl_To.cs">
+    <Compile Include="MyReports\Talaba\rpt_Tahewl_To.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rpt_Tahewl_To.rpt</DependentUpon>
@@ -1137,47 +1147,47 @@
       <DependentUpon>FRM_REPORTS.cs</DependentUpon>
     </Compile>
     <Compile Include="RPT\REPORT_CONNECTION.cs" />
-    <Content Include="MyReports\rpt_Eltehak.rpt">
+    <Content Include="MyReports\Talaba\rpt_Eltehak.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Eltehak.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Kaema.rpt">
+    <Content Include="MyReports\Talaba\rpt_Kaema.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Kaema.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Tahewl_From.rpt">
+    <Content Include="MyReports\Talaba\rpt_Tahewl_From.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Tahewl_From.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Tahewl_To.rpt">
+    <Content Include="MyReports\Talaba\rpt_Tahewl_To.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Tahewl_To.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Segel_Data.rpt">
+    <Content Include="MyReports\Talaba\rpt_Segel_Data.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Segel_Data.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Segel_Transform_From.rpt">
+    <Content Include="MyReports\Talaba\rpt_Segel_Transform_From.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Segel_Transform_From.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Mostgdin_41.rpt">
+    <Content Include="MyReports\Talaba\rpt_Mostgdin_41.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Mostgdin_41.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Count_Std.rpt">
+    <Content Include="MyReports\Talaba\rpt_Count_Std.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Count_Std.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Tahewl_Data.rpt">
+    <Content Include="MyReports\Talaba\rpt_Tahewl_Data.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Tahewl_Data.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1281,25 +1291,25 @@
     <Content Include="EXCEL\Final\Term_B\Term_B_1_Test.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Rasd_Test_A_Term_2.rpt">
+    <Content Include="MyReports\Rasd\rpt_Rasd_Test_A_Term_2.rpt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Rasd_Test_A_Term_2_Part_1.rpt">
+    <Content Include="MyReports\Rasd\rpt_Rasd_Test_A_Term_2_Part_1.rpt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Rasd_Test_A_Term_2_Part_2.rpt">
+    <Content Include="MyReports\Rasd\rpt_Rasd_Test_A_Term_2_Part_2.rpt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="EXCEL\Lessons\questions_by_answers.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Analysis_prep.rpt">
+    <Content Include="MyReports\Analysis\rpt_Analysis_prep.rpt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Analysis_prim.rpt">
+    <Content Include="MyReports\Analysis\rpt_Analysis_prim.rpt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Tadarg_Sen.rpt">
+    <Content Include="MyReports\Talaba\rpt_Tadarg_Sen.rpt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\whatsapp2.png" />
@@ -1346,272 +1356,272 @@
     <None Include="Resources\test-cheating-1001.png" />
     <None Include="Resources\test-cheating-100.png" />
     <None Include="Resources\add-golos-100.png" />
-    <Content Include="MyReports\rpt_Rasd_Degree_A.rpt">
+    <Content Include="MyReports\Rasd\rpt_Rasd_Degree_A.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Rasd_Degree_A.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Rasd_Degree_B.rpt">
+    <Content Include="MyReports\Rasd\rpt_Rasd_Degree_B.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Rasd_Degree_B.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Rasd_Degree_C.rpt">
+    <Content Include="MyReports\Rasd\rpt_Rasd_Degree_C.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Rasd_Degree_C.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Rasd_Mark_A.rpt">
+    <Content Include="MyReports\Rasd\rpt_Rasd_Mark_A.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Rasd_Mark_A.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Rasd_Mark_B.rpt">
+    <Content Include="MyReports\Rasd\rpt_Rasd_Mark_B.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Rasd_Mark_B.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Rasd_Mark_C.rpt">
+    <Content Include="MyReports\Rasd\rpt_Rasd_Mark_C.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Rasd_Mark_C.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Rasd_Mark_D.rpt">
+    <Content Include="MyReports\Rasd\rpt_Rasd_Mark_D.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Rasd_Mark_D.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Amal_Degree_B.rpt">
+    <Content Include="MyReports\Amal\rpt_Amal_Degree_B.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Amal_Degree_B.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Amal_Degree_C.rpt">
+    <Content Include="MyReports\Amal\rpt_Amal_Degree_C.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Amal_Degree_C.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Rasd_Test_C.rpt">
+    <Content Include="MyReports\Rasd\rpt_Rasd_Test_C.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Rasd_Test_C.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Rasd_Test_C_Part_1.rpt">
+    <Content Include="MyReports\Rasd\rpt_Rasd_Test_C_Part_1.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Rasd_Test_C_Part_1.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Rasd_Test_C_Part_2.rpt">
+    <Content Include="MyReports\Rasd\rpt_Rasd_Test_C_Part_2.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Rasd_Test_C_Part_2.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Rasd_Test_C_Term_2.rpt">
+    <Content Include="MyReports\Rasd\rpt_Rasd_Test_C_Term_2.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Rasd_Test_C_Term_2.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Rasd_Test_C_Term_2_Part_1.rpt">
+    <Content Include="MyReports\Rasd\rpt_Rasd_Test_C_Term_2_Part_1.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Rasd_Test_C_Term_2_Part_1.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Rasd_Test_C_Term_2_Part_2.rpt">
+    <Content Include="MyReports\Rasd\rpt_Rasd_Test_C_Term_2_Part_2.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Rasd_Test_C_Term_2_Part_2.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Rasd_Test_B.rpt">
+    <Content Include="MyReports\Rasd\rpt_Rasd_Test_B.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Rasd_Test_B.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Rasd_Test_B_Part_1.rpt">
+    <Content Include="MyReports\Rasd\rpt_Rasd_Test_B_Part_1.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Rasd_Test_B_Part_1.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Rasd_Test_B_Part_2.rpt">
+    <Content Include="MyReports\Rasd\rpt_Rasd_Test_B_Part_2.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Rasd_Test_B_Part_2.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Rasd_Test_B_Term_2.rpt">
+    <Content Include="MyReports\Rasd\rpt_Rasd_Test_B_Term_2.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Rasd_Test_B_Term_2.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Rasd_Test_B_Term_2_Part_1.rpt">
+    <Content Include="MyReports\Rasd\rpt_Rasd_Test_B_Term_2_Part_1.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Rasd_Test_B_Term_2_Part_1.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Rasd_Test_B_Term_2_Part_2.rpt">
+    <Content Include="MyReports\Rasd\rpt_Rasd_Test_B_Term_2_Part_2.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Rasd_Test_B_Term_2_Part_2.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Natega_B.rpt">
+    <Content Include="MyReports\Natega\rpt_Natega_B.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Natega_B.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Natega_B_Part_1.rpt">
+    <Content Include="MyReports\Natega\rpt_Natega_B_Part_1.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Natega_B_Part_1.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Natega_B_part_2.rpt">
+    <Content Include="MyReports\Natega\rpt_Natega_B_part_2.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Natega_B_part_2.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Review_Rasd_Test_B.rpt">
+    <Content Include="MyReports\Review\rpt_Review_Rasd_Test_B.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Review_Rasd_Test_B.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Review_Rasd_Test_B_Part_1.rpt">
+    <Content Include="MyReports\Review\rpt_Review_Rasd_Test_B_Part_1.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Review_Rasd_Test_B_Part_1.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Review_Rasd_Test_B_Part_2.rpt">
+    <Content Include="MyReports\Review\rpt_Review_Rasd_Test_B_Part_2.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Review_Rasd_Test_B_Part_2.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Review_Rasd_Test_C.rpt">
+    <Content Include="MyReports\Review\rpt_Review_Rasd_Test_C.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Review_Rasd_Test_C.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Review_Rasd_Test_C_Part_1.rpt">
+    <Content Include="MyReports\Review\rpt_Review_Rasd_Test_C_Part_1.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Review_Rasd_Test_C_Part_1.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Review_Rasd_Test_C_Part_2.rpt">
+    <Content Include="MyReports\Review\rpt_Review_Rasd_Test_C_Part_2.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Review_Rasd_Test_C_Part_2.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Natega_C.rpt">
+    <Content Include="MyReports\Natega\rpt_Natega_C.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Natega_C.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Natega_C_Part_1.rpt">
+    <Content Include="MyReports\Natega\rpt_Natega_C_Part_1.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Natega_C_Part_1.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Natega_C_Part_2.rpt">
+    <Content Include="MyReports\Natega\rpt_Natega_C_Part_2.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Natega_C_Part_2.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Koshof_Natega_B.rpt">
+    <Content Include="MyReports\Natega\rpt_Koshof_Natega_B.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Koshof_Natega_B.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Koshof_Natega_C.rpt">
+    <Content Include="MyReports\Natega\rpt_Koshof_Natega_C.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Koshof_Natega_C.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Koshof_Natega_A.rpt">
+    <Content Include="MyReports\Natega\rpt_Koshof_Natega_A.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Koshof_Natega_A.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Degree_Statement_A.rpt">
+    <Content Include="MyReports\Talaba\rpt_Degree_Statement_A.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Degree_Statement_A.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Degree_Statement_B.rpt">
+    <Content Include="MyReports\Talaba\rpt_Degree_Statement_B.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Degree_Statement_B.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Degree_Statement_C.rpt">
+    <Content Include="MyReports\Talaba\rpt_Degree_Statement_C.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Degree_Statement_C.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Amal_Degree_A.rpt">
+    <Content Include="MyReports\Amal\rpt_Amal_Degree_A.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Amal_Degree_A.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Amal_Degree_A_1_2.rpt">
+    <Content Include="MyReports\Amal\rpt_Amal_Degree_A_1_2.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Amal_Degree_A_1_2.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Rasd_Test_A.rpt">
+    <Content Include="MyReports\Rasd\rpt_Rasd_Test_A.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Rasd_Test_A.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Review_Rasd_Test_A.rpt">
+    <Content Include="MyReports\Review\rpt_Review_Rasd_Test_A.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Review_Rasd_Test_A.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Review_Rasd_Test_A_1_2.rpt">
+    <Content Include="MyReports\Review\rpt_Review_Rasd_Test_A_1_2.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Review_Rasd_Test_A_1_2.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Koshof_Natega_Term_A_Grade_3_2025.rpt">
+    <Content Include="MyReports\Natega\rpt_Koshof_Natega_Term_A_Grade_3_2025.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Koshof_Natega_Term_A_Grade_3_2025.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Koshof_Natega_B_Term_A_2025.rpt">
+    <Content Include="MyReports\Natega\rpt_Koshof_Natega_B_Term_A_2025.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Koshof_Natega_B_Term_A_2025.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Review_Rasd_Test_B_1_2.rpt">
+    <Content Include="MyReports\Review\rpt_Review_Rasd_Test_B_1_2.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Review_Rasd_Test_B_1_2.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Natega_A.rpt">
+    <Content Include="MyReports\Natega\rpt_Natega_A.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Natega_A.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Natega_A_Part_1.rpt">
+    <Content Include="MyReports\Natega\rpt_Natega_A_Part_1.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Natega_A_Part_1.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Natega_A_Part_2.rpt">
+    <Content Include="MyReports\Natega\rpt_Natega_A_Part_2.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Natega_A_Part_2.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Koshof_Natega_B_Term_B_2025.rpt">
+    <Content Include="MyReports\Natega\rpt_Koshof_Natega_B_Term_B_2025.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Koshof_Natega_B_Term_B_2025.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Koshof_Natega_Term_B_Grade_3_2025.rpt">
+    <Content Include="MyReports\Natega\rpt_Koshof_Natega_Term_B_Grade_3_2025.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Koshof_Natega_Term_B_Grade_3_2025.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Koshof_Natega_C_2025.rpt">
+    <Content Include="MyReports\Natega\rpt_Koshof_Natega_C_2025.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Koshof_Natega_C_2025.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MyReports\rpt_Degree_Statement_A_Grade_3_2025.rpt">
+    <Content Include="MyReports\Talaba\rpt_Degree_Statement_A_Grade_3_2025.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_Degree_Statement_A_Grade_3_2025.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

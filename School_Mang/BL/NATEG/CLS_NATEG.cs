@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using School_Mang.DAL;
 using System.Data;
-using System.Data.SqlClient;
-using School_Mang.DAL;
-using School_Mang.BL.Common.Helper;
 
 
 namespace School_Mang.BL.NATEG
@@ -16,14 +9,7 @@ namespace School_Mang.BL.NATEG
         private DataAcceseLayer DAL = new DataAcceseLayer();
         private SiteAccessLayer SiteAccess = new SiteAccessLayer();
 
-        public DataTable Get_Golos_Sum(int Grade_Id, string status = "")
-        {  
-           return DAL.ExecQuery("SP_Get_Golos_Sum",
-                        SqlParam.Int("@year_Id", Properties.Settings.Default.year_cod),
-                        SqlParam.Int("@Grade_Id", Grade_Id),
-                        SqlParam.NVar("@status", status,5)
-           ); 
-        }
+        
 
         public void Update_Golos_Data(int std_code, int Golos)
         {
@@ -34,14 +20,7 @@ namespace School_Mang.BL.NATEG
             );
         }
 
-        public DataTable Get_Golos_Data(int Grade_Id)
-        {
-            return DAL.ExecQuery("SP_Get_Golos_Data",
-                SqlParam.Int("@year_Id", Properties.Settings.Default.year_cod),
-                SqlParam.Int("@Grade_Id", Grade_Id)
-            );
-        }
-
+        
         public DataTable Get_Golos_Edit_Data(int Grade_Id, string Get_All = "no")
         {
             return DAL.ExecQuery("SP_Get_Golos_Edit_Data",
@@ -71,15 +50,6 @@ namespace School_Mang.BL.NATEG
                 SqlParam.Int("@year_id", Properties.Settings.Default.year_cod),
                 SqlParam.Int("@Grade_Id", grade_id),
                 SqlParam.Int("@status", status)
-            );
-        }
-
-        public void DeleteAssessmentFromSite(int year_Id, int term_Id, int grade_Id, string sp_name)
-        {
-            SiteAccess.ExecNonQuery("SP_Delete_From_" + sp_name,
-                SqlParam.Int("@year_Id", year_Id),
-                SqlParam.Int("@term_Id", term_Id),
-                SqlParam.Int("@grade_Id", grade_Id)
             );
         }
 
@@ -154,23 +124,23 @@ namespace School_Mang.BL.NATEG
         }
 
         public void Update_Degree(
-                    int student_Id, int arabic_degre, int dain_degre,
-                    int math_degre, int scince_degre, int social_degre,
-                    int english_degre, int maharat_degre, int tocnolegy_degre,
-                    int badania_degre, int general_degre, int test_kind_Id)
+                    int student_Id, decimal arabic_degre, decimal dain_degre,
+                    decimal math_degre, decimal scince_degre, decimal social_degre,
+                    decimal english_degre, decimal maharat_degre, decimal tocnolegy_degre,
+                    decimal badania_degre, decimal general_degre, int test_kind_Id)
         {
             SiteAccess.ExecNonQuery("SP_Update_Degree",
                 SqlParam.Int("@student_Id", student_Id),
-                SqlParam.Int("@arabic_degre", arabic_degre),
-                SqlParam.Int("@dain_degre", dain_degre),
-                SqlParam.Int("@math_degre", math_degre),
-                SqlParam.Int("@scince_degre", scince_degre),
-                SqlParam.Int("@social_degre", social_degre),
-                SqlParam.Int("@english_degre", english_degre),
-                SqlParam.Int("@maharat_degre", maharat_degre),
-                SqlParam.Int("@tocnolegy_degre", tocnolegy_degre),
-                SqlParam.Int("@badania_degre", badania_degre),
-                SqlParam.Int("@general_degre", general_degre),
+                SqlParam.Decimal("@arabic_degre", arabic_degre),
+                SqlParam.Decimal("@dain_degre", dain_degre),
+                SqlParam.Decimal("@math_degre", math_degre),
+                SqlParam.Decimal("@scince_degre", scince_degre),
+                SqlParam.Decimal("@social_degre", social_degre),
+                SqlParam.Decimal("@english_degre", english_degre),
+                SqlParam.Decimal("@maharat_degre", maharat_degre),
+                SqlParam.Decimal("@tocnolegy_degre", tocnolegy_degre),
+                SqlParam.Decimal("@badania_degre", badania_degre),
+                SqlParam.Decimal("@general_degre", general_degre),
                 SqlParam.Int("@test_kind_Id", test_kind_Id)
             );
         }
@@ -201,9 +171,9 @@ namespace School_Mang.BL.NATEG
         public void Update_Sery_Data(int Golos, int Sery)
         {
 
-            DAL.ExecuteQuery("SP_Add_Sery",
+            DAL.ExecNonQuery("SP_Add_Sery",
                 SqlParam.Int("@Golos", Golos),
-                SqlParam.Int("@year_Id", Properties.Settings.Default.year_cod),
+                SqlParam.Int("@Year_Id", Properties.Settings.Default.year_cod),
                 SqlParam.Int("@Sery", Sery)
             );
         }
@@ -471,15 +441,16 @@ namespace School_Mang.BL.NATEG
                 SqlParam.NVar("@Name", name, 100)
             );
         }
-        public DataTable Get_Final_All_Data(int Golos)
+
+        // الدالة الجديدة: تستقبل المرحلة صراحةً
+        public DataTable Get_Final_All_Data(int Golos, int GradeId)
         {
             return DAL.ExecQuery("SP_Get_Final_All_Data",
                 SqlParam.Int("@Year_Id", Properties.Settings.Default.year_cod),
-                SqlParam.Int("@Grade_Id", Globals.test_grade_id),
+                SqlParam.Int("@Grade_Id", GradeId),
                 SqlParam.Int("@Golos", Golos)
             );
         }
-
         public void Update_Final_Degree_Data(
                                             decimal arabic,
                                             decimal math,
@@ -490,13 +461,15 @@ namespace School_Mang.BL.NATEG
                                             decimal dain,
                                             decimal maharat,
                                             decimal tocnolegy,
-                                            decimal tocnolegy_practical)
+                                            decimal tocnolegy_practical,
+                                            int studentGolos,
+                                            byte testKind)
         {
 
             DAL.ExecNonQuery("SP_Update_Final_Degree_Data",
-        SqlParam.Int("@Golos", Globals.Std_Golos),
+        SqlParam.Int("@Golos", studentGolos),
         SqlParam.Int("@Year_Id", Properties.Settings.Default.year_cod),
-        SqlParam.Int("@Test_Kind", Globals.Final_Test_Kind),
+        SqlParam.Int("@Test_Kind", testKind),
 
         SqlParam.Float("@arabic", arabic),
         SqlParam.Float("@math", math),
@@ -511,7 +484,9 @@ namespace School_Mang.BL.NATEG
     );
         }
 
+
         public void Update_Final_Absent(
+                                           int stdGolos,
                                            bool absent_ar_A,
                                            bool absent_ar_B,
                                            bool absent_math_A,
@@ -533,7 +508,7 @@ namespace School_Mang.BL.NATEG
         {
 
             DAL.ExecNonQuery("SP_Update_Final_Absent",
-       SqlParam.Int("@Golos", Globals.Std_Golos),
+       SqlParam.Int("@Golos", stdGolos),
        SqlParam.Int("@Year_Id", Properties.Settings.Default.year_cod),
 
        SqlParam.Bit("@absent_ar_A", absent_ar_A),

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using School_Mang.BL;
+using School_Mang.BL.Services;
 
 namespace School_Mang.PL.NATIGA
 {
@@ -97,9 +98,18 @@ namespace School_Mang.PL.NATIGA
                 return;
             }
             this.Visible = false;
-            BL.Globals.test_grade_id = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Grade_Id"].Value);
-            FRM_FINAL_DATA.Get_Frm_Final_Data.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
-            
+
+            int test_grade_id = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Grade_Id"].Value);
+
+            // BL.Globals.test_grade_id = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Grade_Id"].Value);
+            var frm = FRM_FINAL_DATA.Get_Frm_Final_Data;
+            AppNavigation.Instance
+                .WithOwner(MAIN.FRM_MAIN.Get_Frm_Main)
+                .SetContext(c => c.Natiga.TestGradeId = test_grade_id)
+                .Show(frm);
+
+            // FRM_FINAL_DATA.Get_Frm_Final_Data.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
+
         }
 
         private void dt_std_data_DoubleClick(object sender, EventArgs e)

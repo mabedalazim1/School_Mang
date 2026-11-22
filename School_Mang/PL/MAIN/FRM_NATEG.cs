@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using School_Mang.BL.Services;
 using System.Windows.Forms;
 using School_Mang.BL.Common.Helper;
 using School_Mang.BL;
@@ -56,8 +50,10 @@ namespace School_Mang.PL.MAIN
 
         private void lbl_golos_id_Click(object sender, EventArgs e)
         {
-            NATIGA.FRM_ADD_GOLOS frm = new NATIGA.FRM_ADD_GOLOS();
-            frm.ShowDialog();
+            var  frm = new NATIGA.FRM_ADD_GOLOS();
+            AppNavigation.Instance
+                .Show(frm);
+            //frm.ShowDialog();
         }
 
         private void pic__golos_id_Click(object sender, EventArgs e)
@@ -67,9 +63,15 @@ namespace School_Mang.PL.MAIN
 
         private void lbl_rasd_Click(object sender, EventArgs e)
         {
-            Globals.Koshof_Rasd = false;
-            NATIGA.FRM_KSHOF_RASD frm = new NATIGA.FRM_KSHOF_RASD();
-            frm.ShowDialog();
+            //Globals.Koshof_Rasd = false;
+
+            var frm = new NATIGA.FRM_KSHOF_RASD();
+            AppNavigation.Instance
+                .SetContext(c => c.Natiga.KoshofRasd = false)
+                .Show(frm);
+
+            
+            // frm.ShowDialog();
         }
 
         private void pic_rasd_Click(object sender, EventArgs e)
@@ -84,9 +86,15 @@ namespace School_Mang.PL.MAIN
 
         private void lbl_rasd_report_Click(object sender, EventArgs e)
         {
-            Globals.Koshof_Rasd = true;
-            NATIGA.FRM_KSHOF_RASD frm = new NATIGA.FRM_KSHOF_RASD();
-            frm.ShowDialog();
+            //Globals.Koshof_Rasd = true;
+
+            var frm = new NATIGA.FRM_KSHOF_RASD();
+
+            AppNavigation.Instance
+                .SetContext(c=>c.Natiga.KoshofRasd = true)
+                .Show(frm); 
+
+            //frm.ShowDialog();
         }
 
         private void pic_rasd_report_Click(object sender, EventArgs e)
@@ -142,8 +150,12 @@ namespace School_Mang.PL.MAIN
         {
             try
             {
-                BL.Globals.Edit_Golos = true;
-                NATIGA.FRM_FINAL_DATA.Get_Frm_Final_Data.ShowDialog();
+               // BL.Globals.Edit_Golos = true;
+
+                var frm =  NATIGA.FRM_FINAL_DATA.Get_Frm_Final_Data;
+                AppNavigation.Instance
+                    .SetContext(c=>c.Natiga.EditGolos=true)
+                    .Show(frm);
             }
             catch(Exception ex)
             {

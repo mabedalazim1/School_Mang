@@ -1,22 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using School_Mang.BL;
 using School_Mang.BL.Common.Helper;
-using School_Mang.BL;
+using School_Mang.BL.Services;
+using System;
+using System.Data;
+using System.Windows.Forms;
 
 
 namespace School_Mang.PL.NATIGA
 {
-    public partial class FRM_NATAG_DATA : Form
+    public partial class FRM_NATAG_DATA : Form, INavigationAware, INavigationAwareLoaded
     {
+        private NavigationContext _context = new NavigationContext();
+
+        public void SetNavigation(NavigationContext context)
+        {
+            _context = context ?? new NavigationContext();
+        }
+
+        public void OnNavigatedTo()
+        {
+            Load_Data();
+        }
+
         BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
-        
+
 
 
         // Form Closed
@@ -45,39 +52,38 @@ namespace School_Mang.PL.NATIGA
             {
                 Frm_Natag_Data = this;
             }
-            Load_Data();
         }
 
 
-       
+
 
         private async void Load_Data()
         {
-            bool isConncted = await InternetFlow.EnsureAsync(retries:2, delayMs:2);
+            bool isConncted = await InternetFlow.EnsureAsync(retries: 2, delayMs: 2);
 
             if (!isConncted)
             {
                 this.Close();
                 return;
             }
-            else 
+            else
             {
                 DataTable Dt = null;
                 try
                 {
-                    
 
-                    switch (BL.Globals.test_kind)
+
+                    switch (_context.Natiga.TestKind)
                     {
                         case 1:
-                            Dt = NATEG.Get_Count_Degree(BL.Globals.test_month);
+                            Dt = NATEG.Get_Count_Degree(_context.Natiga.TestMonth);
 
                             dt_std_data.DataSource = Dt;
                             lbl_title.Text = "بيانات الموقع - التقييمات";
 
                             break;
                         case 2:
-                            Dt = NATEG.Get_Count_Mark(BL.Globals.test_month);
+                            Dt = NATEG.Get_Count_Mark(_context.Natiga.TestMonth);
 
                             dt_std_data.DataSource = Dt;
                             lbl_title.Text = "بيانات الموقع - الإختبارات";
@@ -107,7 +113,7 @@ namespace School_Mang.PL.NATIGA
                     Waiting.Stop();
                 }
             }
-               
+
         }
 
         int move;
@@ -154,9 +160,21 @@ namespace School_Mang.PL.NATIGA
             if (!await InternetFlow.EnsureAsync())
                 return;
 
-            BL.Globals.test_grade_id = Convert.ToInt32(dt_std_data.CurrentRow.Cells["grade_Id"].Value);
-            BL.Globals.test_month = Convert.ToInt32(dt_std_data.CurrentRow.Cells["test_kind_Id"].Value);
-            FRM_SITE_STD_DATA.Get_Frm_Site_Std_Data.ShowDialog();
+            int gradeId = Convert.ToInt32(dt_std_data.CurrentRow.Cells["grade_Id"].Value);
+            int testMonth = Convert.ToInt32(dt_std_data.CurrentRow.Cells["test_kind_Id"].Value);
+
+            var frm = FRM_SITE_STD_DATA.Get_Frm_Site_Std_Data;
+
+            AppNavigation.Instance
+                .WithOwner(MAIN.FRM_MAIN.Get_Frm_Main)
+                .SetContext(c =>
+                {
+                    c.Natiga.TestKind = _context.Natiga.TestKind;
+                    c.Natiga.TestMonth = testMonth;
+                    c.Natiga.TestMonthName = _context.Natiga.TestMonthName;
+                    c.Natiga.TestGradeId = gradeId;
+                })
+                .Show(frm);
         }
 
         private void dt_std_data_DoubleClick(object sender, EventArgs e)

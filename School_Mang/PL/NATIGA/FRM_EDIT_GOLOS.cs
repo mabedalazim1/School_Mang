@@ -1,19 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using School_Mang.BL;
+using School_Mang.BL.Services;
+using System;
 using System.Windows.Forms;
-using School_Mang.BL;
 
 namespace School_Mang.PL.NATIGA
 {
-    public partial class FRM_EDIT_GOLOS : Form
+    public partial class FRM_EDIT_GOLOS : Form, INavigationAware
     {
-        BL.NATEG.CLS_NATEG NATEG  = new BL.NATEG.CLS_NATEG();
+        private NavigationContext _context = new NavigationContext();
+
+        public void SetNavigation(NavigationContext context)
+        {
+            _context = context ?? new NavigationContext();
+        }
+
+       private readonly BL.NATEG.CLS_NATEG NATEG  = new BL.NATEG.CLS_NATEG();
 
         // Form Closed
         private static FRM_EDIT_GOLOS frm_Edit_Golos;
@@ -43,7 +44,6 @@ namespace School_Mang.PL.NATIGA
             }
         }
 
-        public int golos;
         int move;
         int move_x;
         int move_y;
@@ -76,7 +76,7 @@ namespace School_Mang.PL.NATIGA
         private void btn_close_b_Click(object sender, EventArgs e)
         {
             this.Close();
-            if (BL.Globals.From_Un_Matched)
+            if (Globals.From_Un_Matched)
             {
                 SITE.FRM_UNMATCH_DATA.Get_Frm_UnMatch_Data.Close();
                 MAIN.FRM_MANGE_SITE.Get_Frm_Mange_Site.lbl_unmach_site_Click(sender, e);
@@ -97,22 +97,37 @@ namespace School_Mang.PL.NATIGA
 
         private void btn_save_Click(object sender, EventArgs e)
         {
-          
+            if (_context?.Natiga == null)
+            {
+                MSG.ErrorMesg("بيانات التنقل غير مكتملة، يرجى فتح الشاشة مرة أخرى.");
+                return;
+            }
+
             try
             {
-                if (txt_golos.Text == golos.ToString())
+                if (txt_golos.Text == _context.Natiga.StudentGolos.ToString())
                 {
                    MSG.MyExclamationMsg("يرجي تغيير رقم الجلوس لتتمكن من التعديل ..!");
-                    MSG.ErrorMesg("لم يتم تعديل رقم الجلوس ..!");
+                   MSG.ErrorMesg("لم يتم تعديل رقم الجلوس ..!");
                 }
                 else
                 {
-                    int code  = Convert.ToInt32(txt_code.Text);
-                    int golos = Convert.ToInt32(txt_golos.Text);
-                    
+                    int code;
+                    int golos;
+
+                    if (!int.TryParse(txt_code.Text, out code) ||
+                        !int.TryParse(txt_golos.Text, out golos))
+                    {
+                        MSG.ErrorMesg("كود الطالب ورقم الجلوس يجب أن يكونا أرقامًا صحيحة.");
+                        return;
+                    }
+
                     NATEG.Update_Golos_Data(code, golos);
-                    FRM_FINAL_DATA.Get_Frm_Final_Data.txt_std_data_OnValueChanged(sender, e);
                     MSG.MyMesg("تم تعديل رقم الجلوس بنجاح ..!");
+
+                    FRM_FINAL_DATA.Get_Frm_Final_Data.TxtChanged();
+                    btn_close_b_Click(sender, e);
+                    return;
                 }
                
 

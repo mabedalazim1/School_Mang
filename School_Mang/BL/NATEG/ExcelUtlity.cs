@@ -77,7 +77,7 @@ namespace School_Mang.BL.NATEG
                                 excelSheet.Rows[count_data + 5],
                                 excelSheet.Rows[152]
                                 ];
-                                
+
                 range.EntireRow.Delete();
 
                 // Protected Excel

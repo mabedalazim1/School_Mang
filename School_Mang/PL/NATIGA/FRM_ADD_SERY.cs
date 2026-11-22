@@ -1,20 +1,22 @@
 ﻿using Bunifu.Framework.UI;
+using School_Mang.BL;
+using School_Mang.BL.Services;
+using School_Mang.BL.Services.Nateg;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Windows.Forms;
-using School_Mang.BL;
-using School_Mang.BL.Services;
 
 namespace School_Mang.PL.NATIGA
 {
     public partial class FRM_ADD_SERY : Form
+
     {
-        BL.STD.CLS_STD std = new BL.STD.CLS_STD();
-        BL.NATEG.CLS_NATEG nateg = new BL.NATEG.CLS_NATEG();
-        BL.NATEG.ExcelUtlity Excel = new BL.NATEG.ExcelUtlity();
-       
+        private readonly RasdService _rasdService = new  RasdService();
+
+        private readonly ExcelExportService _excelExportService = 
+                         new ExcelExportService();
+
         private readonly LookupService _stdData = new LookupService();
         public FRM_ADD_SERY()
         {
@@ -64,12 +66,14 @@ namespace School_Mang.PL.NATIGA
                     }
                 }
             }
-            Waiting.Start();
+            
 
             try
             {
-                DataTable Dt_Rasd = nateg.Get_Rasd_Data(grade,1);
-                if (Excel.WriteSeryDataToExcel(Dt_Rasd, grade_desc, saveAsLocation, title, staticExcelFile))
+                Waiting.Start();
+                DataTable Dt_Rasd = _rasdService.GetRasdData(grade,1);
+                if (_excelExportService.WriteSeryDataToExcel(
+                          Dt_Rasd, grade_desc, saveAsLocation, title, staticExcelFile))
                 {
                     MSG.MyMesg("تم إعداد الملف بنجاح !");
                     MSG.MyMesg(saveAsLocation + "  مسار الملف هو  ");
@@ -78,6 +82,10 @@ namespace School_Mang.PL.NATIGA
             catch (Exception ex)
             {
                 MSG.ErrorMesg(ex.Message);
+            }
+            finally
+            {
+                Waiting.Stop();
             }
         }
 

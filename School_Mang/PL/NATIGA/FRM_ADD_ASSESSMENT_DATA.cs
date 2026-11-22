@@ -1,19 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+﻿using School_Mang.BL;
+using School_Mang.BL.Common.Helper;
+using School_Mang.BL.Services;
+using School_Mang.BL.Services.Nateg;
+using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using School_Mang.BL.Common.Helper;
-using School_Mang.BL;
 
 namespace School_Mang.PL.NATIGA
 {
-    public partial class FRM_ADD_ASSESSMENT_DATA : Form
+    public partial class FRM_ADD_ASSESSMENT_DATA : Form, INavigationAware
     {
+        private readonly AssessmentService _assessmentService =
+                         new AssessmentService();
+
+        private NavigationContext _context = new NavigationContext();
+
+        HTTP.HTTPCLINT HTTP = new HTTP.HTTPCLINT();
+        public void SetNavigation(NavigationContext context)
+        {
+            _context = context ?? new NavigationContext();
+        }
+
         // Form Closed
         private static FRM_ADD_ASSESSMENT_DATA frm_Add_Assessment;
         static void frm_Form_Closed(object sender, FormClosedEventArgs e)
@@ -43,59 +50,65 @@ namespace School_Mang.PL.NATIGA
 
         }
 
-        HTTP.HTTPCLINT HTTP = new HTTP.HTTPCLINT();
-        BL.NATEG.CLS_NATEG Nateg = new BL.NATEG.CLS_NATEG();
-
         int move;
         int move_x;
         int move_y;
 
-       
-
         // Upload File
         private async Task UploadFile(string path)
         {
+            if (openFileDialog1.ShowDialog() != DialogResult.OK)
+            {
+                MSG.ErrorMesg("تم إلغاء الإجراء ..!");
+                BL.Globals.Dir_Path = "D://Rasd";
+                return;
+            }
+
+            if (!await InternetFlow.EnsureAsync())
+                return;
+
             try
             {
-                if (openFileDialog1.ShowDialog() == DialogResult.OK)
-                {
-                    if (!await InternetFlow.EnsureAsync())
-                        return;
+                Waiting.Start();
 
-                    await HTTP.UplodFile(openFileDialog1.FileName, path);
-                }
+                bool result = await HTTP.UploadFileAsync(
+                    openFileDialog1.FileName, path);
+
+                if (result)
+                    MSG.MyMesg("تم رفع الملف بنجاح");
                 else
-                {
-                    MSG.ErrorMesg("تم إلغاء الإجراء ..!");
-                    BL.Globals.Dir_Path = "D://Rasd";
-                }
-
+                    MSG.ErrorMesg("لم يتم رفع الملف .. يرجى مراجعة البيانات ... !");
             }
             catch (Exception ex)
             {
                 MSG.ErrorMesg(ex.Message);
             }
-
+            finally
+            {
+                Waiting.Stop();
+            }
         }
 
         // Delete Assessment
-        private void deleteAssement(int grade, int year, int term , string sp_name)
+        private void DeleteAssessment(int grade, int year, int term, string spName)
         {
             try
             {
                 Waiting.Start();
 
-                Nateg.DeleteAssessmentFromSite(year, term, grade, sp_name);
+                _assessmentService.DeleteAssessmentFromSite(
+                    year, term, grade, spName);
 
-                Waiting.Stop();
                 MSG.MyMesg("تم حذف البيان المحدد");
             }
-            catch(Exception e)
+            catch (Exception ex)
             {
-                MSG.ErrorMesg(e.Message);
+                MSG.ErrorMesg(ex.Message);
+            }
+            finally
+            {
                 Waiting.Stop();
             }
-            
         }
 
         private void btn_close_Click(object sender, EventArgs e)
@@ -191,7 +204,7 @@ namespace School_Mang.PL.NATIGA
             cmb_year.DataSource = years;
             cmb_term.DataSource = terms;
 
-            if (BL.Globals.Del_Assessment_Data)
+            if (_context.Natiga.DelAssessmentData)
             {
                 cmb_grade.Enabled = true;
                 label11.Text = "حذف درجات استمارة التقييم";
@@ -233,9 +246,6 @@ namespace School_Mang.PL.NATIGA
                     return;
                 }
             }
-
-            if (!await InternetFlow.EnsureAsync())
-                return;
 
             byte degree_kind = Convert.ToByte(cmb_subject.SelectedValue);
             string upload = "upload/";
@@ -334,8 +344,8 @@ namespace School_Mang.PL.NATIGA
                     MSG.ErrorMesg("لم يتم تخزين اجراء لهذه العملية ..!");
                     return;
             }
-            deleteAssement(grade, year, term, sp_name);
-                
+            DeleteAssessment(grade, year, term, sp_name);
+
         }
     }
 }

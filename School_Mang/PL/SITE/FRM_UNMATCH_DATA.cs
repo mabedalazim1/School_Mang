@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using School_Mang.PL.NATIGA;
+﻿using School_Mang.BL;
 using School_Mang.BL.Common.Helper;
-using School_Mang.BL;
+using School_Mang.BL.Services;
+using School_Mang.PL.NATIGA;
+using System;
+using System.Data;
+using System.Windows.Forms;
 
 namespace School_Mang.PL.SITE
 {
@@ -220,26 +215,30 @@ namespace School_Mang.PL.SITE
                         // Get Vars
                         int grade = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Grade_Id"].Value);
                         string code = dt_std_data.CurrentRow.Cells["std_code"].Value.ToString();
-                        string std_name = dt_std_data.CurrentRow.Cells["stdunet_name"].Value.ToString();
+                        string stdName = dt_std_data.CurrentRow.Cells["stdunet_name"].Value.ToString();
                         string golos = dt_std_data.CurrentRow.Cells["Golos"].Value.ToString();
-                        string grade_desc = dt_std_data.CurrentRow.Cells["GradeDesc"].Value.ToString();
-                        string class_desc = dt_std_data.CurrentRow.Cells["Class_Desc"].Value.ToString();
-                        string year_desc = dt_std_data.CurrentRow.Cells["YearDesc"].Value.ToString();
+                        string gradeDesc = dt_std_data.CurrentRow.Cells["GradeDesc"].Value.ToString();
+                        string classDesc = dt_std_data.CurrentRow.Cells["Class_Desc"].Value.ToString();
+                        string yearDesc = dt_std_data.CurrentRow.Cells["YearDesc"].Value.ToString();
 
                         if (golos == "") golos = "0";
 
+                        var frm = FRM_EDIT_GOLOS.Get_frm_Edit_Golos;
+                        var context = new NavigationContext();
+                        context.Natiga.StudentGolos = Convert.ToInt32(golos);
+
+                        frm.SetNavigation(context);
+
+                        frm.txt_code.Text = code;
+                        frm.txt_std_name.Text = stdName;
+                        frm.txt_golos.Text = golos;
+                        frm.txt_grade.Text = gradeDesc;
+                        frm.txt_class.Text = classDesc;
+                        frm.txt_year.Text = yearDesc;
+
                         this.Hide();
 
-                        FRM_EDIT_GOLOS.Get_frm_Edit_Golos.golos = Convert.ToInt32(golos);
-                        FRM_EDIT_GOLOS.Get_frm_Edit_Golos.txt_code.Text = code;
-                        FRM_EDIT_GOLOS.Get_frm_Edit_Golos.txt_std_name.Text = std_name;
-                        FRM_EDIT_GOLOS.Get_frm_Edit_Golos.txt_golos.Text = golos;
-                        FRM_EDIT_GOLOS.Get_frm_Edit_Golos.txt_grade.Text = grade_desc;
-                        FRM_EDIT_GOLOS.Get_frm_Edit_Golos.txt_class.Text = class_desc;
-                        FRM_EDIT_GOLOS.Get_frm_Edit_Golos.txt_year.Text = year_desc;
-
-                        FRM_EDIT_GOLOS.Get_frm_Edit_Golos.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
-
+                        frm.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);  
                     }
                     catch (Exception ex)
                     {

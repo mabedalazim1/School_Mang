@@ -1,19 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using School_Mang.BL;
+using School_Mang.BL.Services;
+using System;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using School_Mang.BL;
 
 namespace School_Mang.PL.NATIGA
 {
-    public partial class FRM_EDIT_ABSENT_STD : Form
+    public partial class FRM_EDIT_ABSENT_STD : Form, INavigationAware
     {
-        BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
+        private NavigationContext _context = new NavigationContext();
+
+        public void SetNavigation(NavigationContext context)
+        {
+            _context = context ?? new NavigationContext();
+        }
+
+        private readonly BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
         
 
         // Form Closed
@@ -176,10 +179,17 @@ namespace School_Mang.PL.NATIGA
 
         private void btn_close_b_Click(object sender, EventArgs e)
         {
+            //BL.Globals.Std_Golos = 0;
+            //FRM_FINAL_DATA.Get_Frm_Final_Data.cmb_grade_DropDownClosed(sender, e);
+            //FRM_FINAL_DATA.Get_Frm_Final_Data.Show();
+
+            var frm = FRM_FINAL_DATA.Get_Frm_Final_Data;
+            frm.RefreshData();
+            frm.Show();
+            frm.BringToFront();
+
             Close();
-            BL.Globals.Std_Golos = 0;
-            FRM_FINAL_DATA.Get_Frm_Final_Data.cmb_grade_DropDownClosed(sender, e);
-            FRM_FINAL_DATA.Get_Frm_Final_Data.Show();
+
         }
 
         private void chk_term_1_CheckedChanged(object sender, EventArgs e)
@@ -274,18 +284,39 @@ namespace School_Mang.PL.NATIGA
 
         private void FRM_EDIT_ABSENT_STD_Load(object sender, EventArgs e)
         {
+            if (_context?.Natiga == null)
+            {
+                MSG.ErrorMesg("بيانات التنقل غير مكتملة، يرجى فتح الشاشة مرة أخرى.");
+                Close();
+                return;
+            }
+
             try
             {
-                int grade = BL.Globals.test_grade_id;
+                //int grade = BL.Globals.test_grade_id;
+                //int Std_Golos = BL.Globals.Std_Golos;
 
-                int Std_Golos = BL.Globals.Std_Golos;
-                DataTable Dt = NATEG.Get_Final_All_Data(Std_Golos);
+                int grade = _context.Natiga.TestGradeId;
+                int stdGolos = _context.Natiga.StudentGolos;
+
+                DataTable Dt = NATEG.Get_Final_All_Data(stdGolos, grade);
+                if (Dt == null)
+                {
+                    MSG.ErrorMesg("تعذر الحصول على بيانات الطالب من قاعدة البيانات.");
+                    Close();
+                    return;
+                }
                 if (Dt.Rows.Count == 0)
                 {
                     MSG.ErrorMesg("لا توجد بيانات مسجلة لهذا الطالب ..!");
                     this.Close();
-                    BL.Globals.Std_Golos = 0;
-                    FRM_FINAL_DATA.Get_Frm_Final_Data.Show();
+                    //BL.Globals.Std_Golos = 0;
+                    //FRM_FINAL_DATA.Get_Frm_Final_Data.Show();
+
+                    var frm = FRM_FINAL_DATA.Get_Frm_Final_Data;
+                    frm.Show();
+                    frm.BringToFront();
+
                     return;
                 }
 
@@ -361,6 +392,7 @@ namespace School_Mang.PL.NATIGA
             catch(Exception ex)
             {
                 MSG.ErrorMesg(ex.Message);
+                Close();
             }
         }
 
@@ -388,6 +420,7 @@ namespace School_Mang.PL.NATIGA
             {
                 Waiting.Start();
                 NATEG.Update_Final_Absent(
+                                        _context.Natiga.StudentGolos,
                                         absent_ar_A, absent_ar_B,
                                         absent_math_A, absent_math_B,
                                         absent_scince_A, absent_scince_B,
@@ -398,7 +431,8 @@ namespace School_Mang.PL.NATIGA
                                         absent_tocnolegy_A, absent_tocnolegy_B,
                                         absent_term_A, absent_term_B);
                 MSG.MyMesg("تم تسجيل غياب الطالب .. !");
-                Waiting.Stop();
+                btn_close_b_Click(sender, e);
+                return;
             }
             catch(Exception ex)
             {

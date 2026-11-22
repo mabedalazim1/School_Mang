@@ -64,7 +64,7 @@ namespace School_Mang.RPT
             try
             {
                 ReportDocument myReport = new ReportDocument();
-                myReport.Load(Application.StartupPath + @"/MyReports/rpt_Eltehak.rpt");
+                myReport.Load(Application.StartupPath + @"/MyReports/Talaba/rpt_Eltehak.rpt");
                 //rpt_Eltehak myReport = new rpt_Eltehak();
 
                var sen = AgeService.NatAgeHesabSen(nat, sana);
@@ -93,7 +93,7 @@ namespace School_Mang.RPT
             try
             {
                 ReportDocument myReport = new ReportDocument();
-                myReport.Load(Application.StartupPath + @"/MyReports/rpt_Tahewl_From.rpt");
+                myReport.Load(Application.StartupPath + @"/MyReports/Talaba/rpt_Tahewl_From.rpt");
                 //rpt_Tahewl_From myReport = new rpt_Tahewl_From();
              
                 myReport.SetParameterValue("@Transfer_code", trans_code);
@@ -116,7 +116,7 @@ namespace School_Mang.RPT
             try
             {
                 ReportDocument myReport = new ReportDocument();
-                myReport.Load(Application.StartupPath + @"/MyReports/rpt_Tahewl_To.rpt");
+                myReport.Load(Application.StartupPath + @"/MyReports/Talaba/rpt_Tahewl_To.rpt");
                 //rpt_Tahewl_To myReport = new rpt_Tahewl_To();
 
                 myReport.SetParameterValue("@Transfer_code", trans_code);
@@ -137,7 +137,7 @@ namespace School_Mang.RPT
             try
             {
                 ReportDocument myReport = new ReportDocument();
-                myReport.Load(Application.StartupPath + @"/MyReports/rpt_Kaema.rpt");
+                myReport.Load(Application.StartupPath + @"/MyReports/Talaba/rpt_Kaema.rpt");
                 //rpt_Kaema myReport = new rpt_Kaema();
                
                 myReport.SetParameterValue("@year_id", year);
@@ -159,7 +159,7 @@ namespace School_Mang.RPT
             try
             {
                 ReportDocument myReport = new ReportDocument();
-                myReport.Load(Application.StartupPath + @"/MyReports/rpt_Tadarg_Sen.rpt");
+                myReport.Load(Application.StartupPath + @"/MyReports/Talaba/rpt_Tadarg_Sen.rpt");
                 //rpt_Tadarg_Sen myReport = new rpt_Tadarg_Sen();
 
                 int October_Sana =  year_id + 20;
@@ -185,7 +185,7 @@ namespace School_Mang.RPT
             try
             {
                 ReportDocument myReport = new ReportDocument();
-                myReport.Load(Application.StartupPath + @"/MyReports/rpt_Segel_Data.rpt");
+                myReport.Load(Application.StartupPath + @"/MyReports/Talaba/rpt_Segel_Data.rpt");
 
                 int October_Sana = year_id + 20;
                
@@ -213,7 +213,7 @@ namespace School_Mang.RPT
             try
             {
                 ReportDocument myReport = new ReportDocument();
-                myReport.Load(Application.StartupPath + @"/MyReports/rpt_Mostgdin_41.rpt");
+                myReport.Load(Application.StartupPath + @"/MyReports/Talaba/rpt_Mostgdin_41.rpt");
                 //rpt_Tadarg_Sen myReport = new rpt_Tadarg_Sen();
 
                 int October_Sana = year_id + 20;
@@ -240,7 +240,7 @@ namespace School_Mang.RPT
             try
             {
                 ReportDocument myReport = new ReportDocument();
-                myReport.Load(Application.StartupPath + @"/MyReports/rpt_Tahewl_Data.rpt");
+                myReport.Load(Application.StartupPath + @"/MyReports/Talaba/rpt_Tahewl_Data.rpt");
                 
 
                 myReport.SetParameterValue("@year_id", year_id);
@@ -261,7 +261,7 @@ namespace School_Mang.RPT
             try
             {
                 ReportDocument myReport = new ReportDocument();
-                myReport.Load(Application.StartupPath + @"/MyReports/rpt_Count_Std.rpt");
+                myReport.Load(Application.StartupPath + @"/MyReports/Talaba/rpt_Count_Std.rpt");
 
 
                 myReport.SetParameterValue("@year_id", year_id);
@@ -340,7 +340,7 @@ namespace School_Mang.RPT
 
                     }
                 }
-                myReport.Load(Application.StartupPath + @"/MyReports/" + report_name);
+                myReport.Load(Application.StartupPath + @"/MyReports/Rasd/" + report_name);
 
 
                 myReport.SetParameterValue("@year_id", year);
@@ -426,7 +426,7 @@ namespace School_Mang.RPT
 
                 }
 
-                myReport.Load(Application.StartupPath + @"/MyReports/" + report_name);
+                myReport.Load(Application.StartupPath + @"/MyReports/Amal/" + report_name);
 
 
                 myReport.SetParameterValue("@year_id", year);
@@ -483,7 +483,7 @@ namespace School_Mang.RPT
                                         Waiting.Stop();
                                         return;
                                     case 3:
-                                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Rasd_Test_A.rpt");
+                                        myReport.Load(Application.StartupPath + @"/MyReports/Rasd/rpt_Rasd_Test_A.rpt");
 
                                         myReport.SetParameterValue("@Year_Id", year_id);
                                         myReport.SetParameterValue("@Grade_Id", grade_id);
@@ -496,7 +496,7 @@ namespace School_Mang.RPT
                     case 5:
                     case 6:
 
-                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Rasd_Test_B.rpt");
+                        myReport.Load(Application.StartupPath + @"/MyReports/Rasd/rpt_Rasd_Test_B.rpt");
 
                         myReport.SetParameterValue("@Year_Id", year_id, "rpt_Rasd_Test_B_Part_1.rpt");
                         myReport.SetParameterValue("@Grade_Id", grade_id, "rpt_Rasd_Test_B_Part_1.rpt");
@@ -509,7 +509,7 @@ namespace School_Mang.RPT
                     case 8:
                     case 9:
 
-                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Rasd_Test_C.rpt");
+                        myReport.Load(Application.StartupPath + @"/MyReports/Rasd/rpt_Rasd_Test_C.rpt");
 
 
                         myReport.SetParameterValue("@Year_Id", year_id, "rpt_Rasd_Test_C_Part_1.rpt");
@@ -570,7 +570,7 @@ namespace School_Mang.RPT
                                         Waiting.Stop();
                                         return;
                                     case 3:
-                                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Rasd_Test_A_Term_2.rpt");
+                                        myReport.Load(Application.StartupPath + @"/MyReports/Rasd/rpt_Rasd_Test_A_Term_2.rpt");
 
                                         myReport.SetParameterValue("@Year_Id", 0);
                                         myReport.SetParameterValue("@Grade_Id", 0);
@@ -589,7 +589,7 @@ namespace School_Mang.RPT
                     case 4:
                     case 5:
                     case 6:
-                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Rasd_Test_B_Term_2.rpt");
+                        myReport.Load(Application.StartupPath + @"/MyReports/Rasd/rpt_Rasd_Test_B_Term_2.rpt");
 
                         myReport.SetParameterValue("@Year_Id", 0);
                         myReport.SetParameterValue("@Grade_Id", 0);
@@ -603,7 +603,7 @@ namespace School_Mang.RPT
                     case 7:
                     case 8:
                     case 9:
-                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Rasd_Test_C_Term_2.rpt");
+                        myReport.Load(Application.StartupPath + @"/MyReports/Rasd/rpt_Rasd_Test_C_Term_2.rpt");
 
                         myReport.SetParameterValue("@Year_Id", 0);
                         myReport.SetParameterValue("@Grade_Id", 0);
@@ -656,7 +656,7 @@ namespace School_Mang.RPT
                                 {
                                     case 1:
                                     case 2:
-                                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Review_Rasd_Test_A_1_2.rpt");
+                                        myReport.Load(Application.StartupPath + @"/MyReports/Review/rpt_Review_Rasd_Test_A_1_2.rpt");
 
                                         myReport.SetParameterValue("@Year_Id", year_id);
                                         myReport.SetParameterValue("@Grade_Id", grade_id);
@@ -664,7 +664,7 @@ namespace School_Mang.RPT
                                         break;
 
                                     case 3:
-                                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Review_Rasd_Test_A.rpt");
+                                        myReport.Load(Application.StartupPath + @"/MyReports/Review/rpt_Review_Rasd_Test_A.rpt");
 
                                         myReport.SetParameterValue("@Year_Id", year_id);
                                         myReport.SetParameterValue("@Grade_Id", grade_id);
@@ -678,7 +678,7 @@ namespace School_Mang.RPT
                     case 5:
                     case 6:
 
-                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Review_Rasd_Test_B.rpt");
+                        myReport.Load(Application.StartupPath + @"/MyReports/Review/rpt_Review_Rasd_Test_B.rpt");
 
                         myReport.SetParameterValue("@Year_Id", year_id, "rpt_Review_Rasd_Test_B_Part_1.rpt");
                         myReport.SetParameterValue("@Grade_Id", grade_id, "rpt_Review_Rasd_Test_B_Part_1.rpt");
@@ -691,7 +691,7 @@ namespace School_Mang.RPT
                     case 8:
                     case 9:
 
-                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Review_Rasd_Test_C.rpt");
+                        myReport.Load(Application.StartupPath + @"/MyReports/Review/rpt_Review_Rasd_Test_C.rpt");
 
 
                         myReport.SetParameterValue("@Year_Id", year_id, "rpt_Review_Rasd_Test_C_Part_1.rpt");
@@ -743,7 +743,7 @@ namespace School_Mang.RPT
                                 {
                                     case 1:
                                     case 2:
-                                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Review_Rasd_Test_B_1_2.rpt");
+                                        myReport.Load(Application.StartupPath + @"/MyReports/Review/rpt_Review_Rasd_Test_B_1_2.rpt");
 
                                         myReport.SetParameterValue("@Year_Id", year_id);
                                         myReport.SetParameterValue("@Grade_Id", grade_id);
@@ -751,7 +751,7 @@ namespace School_Mang.RPT
                                         break;
 
                                     case 3:
-                                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Natega_A.rpt");
+                                        myReport.Load(Application.StartupPath + @"/MyReports/Natega/rpt_Natega_A.rpt");
 
                                         myReport.SetParameterValue("@Year_Id", 0);
                                         myReport.SetParameterValue("@Grade_Id", 0);
@@ -769,7 +769,7 @@ namespace School_Mang.RPT
                     case 4:
                     case 5:
                     case 6:
-                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Natega_B.rpt");
+                        myReport.Load(Application.StartupPath + @"/MyReports/Natega/rpt_Natega_B.rpt");
 
                         myReport.SetParameterValue("@Year_Id", 0);
                         myReport.SetParameterValue("@Grade_Id", 0);
@@ -783,7 +783,7 @@ namespace School_Mang.RPT
                     case 7:
                     case 8:
                     case 9:
-                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Natega_C.rpt");
+                        myReport.Load(Application.StartupPath + @"/MyReports/Natega/rpt_Natega_C.rpt");
 
                         myReport.SetParameterValue("@Year_Id", 0);
                         myReport.SetParameterValue("@Grade_Id", 0);
@@ -825,12 +825,12 @@ namespace School_Mang.RPT
                             MSG.ErrorMesg("لم يتم إتاحة هذا الإجراء .. !");
                             return;
                         case 3:
-                            myReport.Load(Application.StartupPath + @"/MyReports/rpt_Koshof_Natega_Term_A_Grade_3_2025.rpt");
+                            myReport.Load(Application.StartupPath + @"/MyReports/Natega/rpt_Koshof_Natega_Term_A_Grade_3_2025.rpt");
                             break;
                         case 4:
                         case 5:
                         case 6:
-                            myReport.Load(Application.StartupPath + @"/MyReports/rpt_Koshof_Natega_B_Term_A_2025.rpt");
+                            myReport.Load(Application.StartupPath + @"/MyReports/Natega/rpt_Koshof_Natega_B_Term_A_2025.rpt");
                             break;
 
                         case 7:
@@ -854,19 +854,19 @@ namespace School_Mang.RPT
                                 case 1:
                                 case 2:
                                 case 3:
-                                    myReport.Load(Application.StartupPath + @"/MyReports/rpt_Koshof_Natega_A.rpt");
+                                    myReport.Load(Application.StartupPath + @"/MyReports/Natega/rpt_Koshof_Natega_A.rpt");
                                     break;
 
                                 case 4:
                                 case 5:
                                 case 6:
-                                    myReport.Load(Application.StartupPath + @"/MyReports/rpt_Koshof_Natega_B.rpt");
+                                    myReport.Load(Application.StartupPath + @"/MyReports/Natega/rpt_Koshof_Natega_B.rpt");
                                     break;
 
                                 case 7:
                                 case 8:
                                 case 9:
-                                    myReport.Load(Application.StartupPath + @"/MyReports/rpt_Koshof_Natega_C.rpt");
+                                    myReport.Load(Application.StartupPath + @"/MyReports/Natega/rpt_Koshof_Natega_C.rpt");
                                     break;
                             }
 
@@ -879,22 +879,22 @@ namespace School_Mang.RPT
                                 case 11:
                                 case 1:
                                 case 2:
-                                    myReport.Load(Application.StartupPath + @"/MyReports/rpt_Koshof_Natega_A.rpt");
+                                    myReport.Load(Application.StartupPath + @"/MyReports/Natega/rpt_Koshof_Natega_A.rpt");
                                     break;
 
                                 case 3:
-                                    myReport.Load(Application.StartupPath + @"/MyReports/rpt_Koshof_Natega_Term_B_Grade_3_2025.rpt");
+                                    myReport.Load(Application.StartupPath + @"/MyReports/Natega/rpt_Koshof_Natega_Term_B_Grade_3_2025.rpt");
                                     break;
                                 case 4:
                                 case 5:
                                 case 6:
-                                    myReport.Load(Application.StartupPath + @"/MyReports/rpt_Koshof_Natega_B_Term_B_2025.rpt");
+                                    myReport.Load(Application.StartupPath + @"/MyReports/Natega/rpt_Koshof_Natega_B_Term_B_2025.rpt");
                                     break;
 
                                 case 7:
                                 case 8:
                                 case 9:
-                                    myReport.Load(Application.StartupPath + @"/MyReports/rpt_Koshof_Natega_C_2025.rpt");
+                                    myReport.Load(Application.StartupPath + @"/MyReports/Natega/rpt_Koshof_Natega_C_2025.rpt");
                                     break;
                             }
                             break;
@@ -935,11 +935,11 @@ namespace School_Mang.RPT
                 case 4:
                 case 5:
                 case 6:
-                    myReport.Load(Application.StartupPath + @"/MyReports/rpt_Analysis_prim.rpt");
+                    myReport.Load(Application.StartupPath + @"/MyReports/Analysis/rpt_Analysis_prim.rpt");
                     break;
                 case 7:
                 case 8:
-                    myReport.Load(Application.StartupPath + @"/MyReports/rpt_Analysis_prep.rpt");
+                    myReport.Load(Application.StartupPath + @"/MyReports/Analysis/rpt_Analysis_prep.rpt");
                     break;
 
             }
@@ -961,7 +961,7 @@ namespace School_Mang.RPT
                     case 11:
                     case 1:
                     case 2:
-                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Degree_Statement_A.rpt");
+                        myReport.Load(Application.StartupPath + @"/MyReports/Talaba/rpt_Degree_Statement_A.rpt");
                         break;
                     case 3:
 
@@ -971,11 +971,11 @@ namespace School_Mang.RPT
                             case 2:
                                 case 3:
 
-                                myReport.Load(Application.StartupPath + @"/MyReports/rpt_Degree_Statement_A.rpt");
+                                myReport.Load(Application.StartupPath + @"/MyReports/Talaba/rpt_Degree_Statement_A.rpt");
 
                                 break;
                             case var expreation when year_id > 3:
-                                myReport.Load(Application.StartupPath + @"/MyReports/rpt_Degree_Statement_A_Grade_3_2025.rpt");
+                                myReport.Load(Application.StartupPath + @"/MyReports/Talaba/rpt_Degree_Statement_A_Grade_3_2025.rpt");
 
                                 break;
                         }
@@ -985,14 +985,13 @@ namespace School_Mang.RPT
                     case 4:
                     case 5:
                     case 6:
-                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Degree_Statement_B.rpt");
+                        myReport.Load(Application.StartupPath + @"/MyReports/Talaba/rpt_Degree_Statement_B.rpt");
 
                         break;
 
                     case 7:
                     case 8:
                     case 9:
-                        myReport.Load(Application.StartupPath + @"/MyReports/rpt_Degree_Statement_C.rpt");
 
                         break;
                 }

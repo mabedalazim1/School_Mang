@@ -54,6 +54,9 @@ namespace School_Mang.PL.NATIGA.HOME
             this.bunifuCards8 = new Bunifu.Framework.UI.BunifuCards();
             this.lbl_natega_a = new System.Windows.Forms.Label();
             this.pic_natega_a = new System.Windows.Forms.PictureBox();
+            this.bunifuCards11 = new Bunifu.Framework.UI.BunifuCards();
+            this.lbl_ahsaa = new System.Windows.Forms.Label();
+            this.picl_ahsaa = new System.Windows.Forms.PictureBox();
             this.bunifuCards9 = new Bunifu.Framework.UI.BunifuCards();
             this.lbl_final_koshof = new System.Windows.Forms.Label();
             this.pic_final_koshof = new System.Windows.Forms.PictureBox();
@@ -62,9 +65,6 @@ namespace School_Mang.PL.NATIGA.HOME
             this.pic_back = new System.Windows.Forms.PictureBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.pn_home = new System.Windows.Forms.Panel();
-            this.bunifuCards11 = new Bunifu.Framework.UI.BunifuCards();
-            this.lbl_ahsaa = new System.Windows.Forms.Label();
-            this.picl_ahsaa = new System.Windows.Forms.PictureBox();
             this.flowLayoutPanel1.SuspendLayout();
             this.bunifuCards4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_final)).BeginInit();
@@ -82,13 +82,13 @@ namespace School_Mang.PL.NATIGA.HOME
             ((System.ComponentModel.ISupportInitialize)(this.pic_sofof_ola)).BeginInit();
             this.bunifuCards8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_natega_a)).BeginInit();
+            this.bunifuCards11.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picl_ahsaa)).BeginInit();
             this.bunifuCards9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_final_koshof)).BeginInit();
             this.bunifuCards1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_back)).BeginInit();
             this.pn_home.SuspendLayout();
-            this.bunifuCards11.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picl_ahsaa)).BeginInit();
             this.SuspendLayout();
             // 
             // flowLayoutPanel1
@@ -112,7 +112,6 @@ namespace School_Mang.PL.NATIGA.HOME
             this.flowLayoutPanel1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.flowLayoutPanel1.Size = new System.Drawing.Size(1337, 785);
             this.flowLayoutPanel1.TabIndex = 12;
-            this.flowLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint);
             // 
             // bunifuCards4
             // 
@@ -458,6 +457,49 @@ namespace School_Mang.PL.NATIGA.HOME
             this.pic_natega_a.TabStop = false;
             this.pic_natega_a.Click += new System.EventHandler(this.pic_natega_a_Click);
             // 
+            // bunifuCards11
+            // 
+            this.bunifuCards11.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.bunifuCards11.BackColor = System.Drawing.Color.White;
+            this.bunifuCards11.BorderRadius = 5;
+            this.bunifuCards11.BottomSahddow = true;
+            this.bunifuCards11.color = System.Drawing.Color.Tomato;
+            this.bunifuCards11.Controls.Add(this.lbl_ahsaa);
+            this.bunifuCards11.Controls.Add(this.picl_ahsaa);
+            this.bunifuCards11.LeftSahddow = false;
+            this.bunifuCards11.Location = new System.Drawing.Point(1024, 407);
+            this.bunifuCards11.Name = "bunifuCards11";
+            this.bunifuCards11.Padding = new System.Windows.Forms.Padding(20);
+            this.bunifuCards11.RightSahddow = true;
+            this.bunifuCards11.ShadowDepth = 20;
+            this.bunifuCards11.Size = new System.Drawing.Size(270, 186);
+            this.bunifuCards11.TabIndex = 21;
+            // 
+            // lbl_ahsaa
+            // 
+            this.lbl_ahsaa.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lbl_ahsaa.AutoSize = true;
+            this.lbl_ahsaa.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lbl_ahsaa.Font = new System.Drawing.Font("LBC", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_ahsaa.Location = new System.Drawing.Point(53, 117);
+            this.lbl_ahsaa.Name = "lbl_ahsaa";
+            this.lbl_ahsaa.Size = new System.Drawing.Size(156, 37);
+            this.lbl_ahsaa.TabIndex = 7;
+            this.lbl_ahsaa.Text = "إحصاء الإدارة";
+            this.lbl_ahsaa.Click += new System.EventHandler(this.lbl_ahsaa_Click);
+            // 
+            // picl_ahsaa
+            // 
+            this.picl_ahsaa.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picl_ahsaa.Image = global::School_Mang.Properties.Resources.exam_a_100;
+            this.picl_ahsaa.Location = new System.Drawing.Point(74, 23);
+            this.picl_ahsaa.Name = "picl_ahsaa";
+            this.picl_ahsaa.Size = new System.Drawing.Size(118, 97);
+            this.picl_ahsaa.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picl_ahsaa.TabIndex = 1;
+            this.picl_ahsaa.TabStop = false;
+            this.picl_ahsaa.Click += new System.EventHandler(this.picl_ahsaa_Click);
+            // 
             // bunifuCards9
             // 
             this.bunifuCards9.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -558,49 +600,6 @@ namespace School_Mang.PL.NATIGA.HOME
             this.pn_home.Size = new System.Drawing.Size(1354, 746);
             this.pn_home.TabIndex = 3;
             // 
-            // bunifuCards11
-            // 
-            this.bunifuCards11.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.bunifuCards11.BackColor = System.Drawing.Color.White;
-            this.bunifuCards11.BorderRadius = 5;
-            this.bunifuCards11.BottomSahddow = true;
-            this.bunifuCards11.color = System.Drawing.Color.Tomato;
-            this.bunifuCards11.Controls.Add(this.lbl_ahsaa);
-            this.bunifuCards11.Controls.Add(this.picl_ahsaa);
-            this.bunifuCards11.LeftSahddow = false;
-            this.bunifuCards11.Location = new System.Drawing.Point(1024, 407);
-            this.bunifuCards11.Name = "bunifuCards11";
-            this.bunifuCards11.Padding = new System.Windows.Forms.Padding(20);
-            this.bunifuCards11.RightSahddow = true;
-            this.bunifuCards11.ShadowDepth = 20;
-            this.bunifuCards11.Size = new System.Drawing.Size(270, 186);
-            this.bunifuCards11.TabIndex = 21;
-            // 
-            // lbl_ahsaa
-            // 
-            this.lbl_ahsaa.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.lbl_ahsaa.AutoSize = true;
-            this.lbl_ahsaa.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lbl_ahsaa.Font = new System.Drawing.Font("LBC", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_ahsaa.Location = new System.Drawing.Point(53, 117);
-            this.lbl_ahsaa.Name = "lbl_ahsaa";
-            this.lbl_ahsaa.Size = new System.Drawing.Size(156, 37);
-            this.lbl_ahsaa.TabIndex = 7;
-            this.lbl_ahsaa.Text = "إحصاء الإدارة";
-            this.lbl_ahsaa.Click += new System.EventHandler(this.lbl_ahsaa_Click);
-            // 
-            // picl_ahsaa
-            // 
-            this.picl_ahsaa.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picl_ahsaa.Image = global::School_Mang.Properties.Resources.exam_a_100;
-            this.picl_ahsaa.Location = new System.Drawing.Point(74, 23);
-            this.picl_ahsaa.Name = "picl_ahsaa";
-            this.picl_ahsaa.Size = new System.Drawing.Size(118, 97);
-            this.picl_ahsaa.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picl_ahsaa.TabIndex = 1;
-            this.picl_ahsaa.TabStop = false;
-            this.picl_ahsaa.Click += new System.EventHandler(this.picl_ahsaa_Click);
-            // 
             // FRM_FINAL_DATA_HOME
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -638,6 +637,9 @@ namespace School_Mang.PL.NATIGA.HOME
             this.bunifuCards8.ResumeLayout(false);
             this.bunifuCards8.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_natega_a)).EndInit();
+            this.bunifuCards11.ResumeLayout(false);
+            this.bunifuCards11.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picl_ahsaa)).EndInit();
             this.bunifuCards9.ResumeLayout(false);
             this.bunifuCards9.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_final_koshof)).EndInit();
@@ -645,9 +647,6 @@ namespace School_Mang.PL.NATIGA.HOME
             this.bunifuCards1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_back)).EndInit();
             this.pn_home.ResumeLayout(false);
-            this.bunifuCards11.ResumeLayout(false);
-            this.bunifuCards11.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picl_ahsaa)).EndInit();
             this.ResumeLayout(false);
 
         }

@@ -287,6 +287,7 @@ namespace School_Mang.PL.MAIN
                     FRM_MAIN.Get_Frm_Main.btn_nataeg.Visible = false;
                     FRM_MAIN.Get_Frm_Main.btn_maliat.Visible = false;
                     FRM_MAIN.Get_Frm_Main.btn_amelin.Visible = false;
+                    FRM_MAIN.Get_Frm_Main.btn_site.Visible = false;
                     FRM_MAIN.Get_Frm_Main.btn_home_Click(sender, e);
 
                     // Change Main Form
@@ -508,6 +509,7 @@ namespace School_Mang.PL.MAIN
                                     FRM_MAIN.Get_Frm_Main.btn_maliat.Visible = true;
                                     FRM_MAIN.Get_Frm_Main.btn_amelin.Visible = true;
                                     FRM_MAIN.Get_Frm_Main.btn_site.Visible = true;
+
 
                                     break;
                                 case 2:

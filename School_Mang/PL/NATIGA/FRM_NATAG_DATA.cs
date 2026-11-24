@@ -22,7 +22,7 @@ namespace School_Mang.PL.NATIGA
             Load_Data();
         }
 
-        BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
+        private readonly BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
 
 
 
@@ -59,7 +59,7 @@ namespace School_Mang.PL.NATIGA
 
         private async void Load_Data()
         {
-            bool isConncted = await InternetFlow.EnsureAsync(retries: 2, delayMs: 2);
+            bool isConncted = await InternetFlow.EnsureAsync(retries: 2, delayMs: 500);
 
             if (!isConncted)
             {
@@ -68,11 +68,10 @@ namespace School_Mang.PL.NATIGA
             }
             else
             {
+                Waiting.Start();
                 DataTable Dt = null;
                 try
                 {
-
-
                     switch (_context.Natiga.TestKind)
                     {
                         case 1:
@@ -88,8 +87,13 @@ namespace School_Mang.PL.NATIGA
                             dt_std_data.DataSource = Dt;
                             lbl_title.Text = "بيانات الموقع - الإختبارات";
                             break;
+
+                        default:
+                            MSG.ErrorMesg("نوع الاختبار غير صحيح ..!");
+                            this.Close();
+                            return;
                     }
-                    if (Dt != null)
+                    if (Dt != null && Dt.Rows.Count > 0)
                     {
                         dt_std_data.Columns["id"].Visible = false;
                         dt_std_data.Columns["test_kind_Id"].Visible = false;
@@ -98,11 +102,9 @@ namespace School_Mang.PL.NATIGA
                     }
                     else
                     {
-                        MSG.ErrorMesg("حدث خطأ فى الإتصال..!");
+                        MSG.ErrorMesg("لا توجد بيانات للعرض ..!");
                         this.Close();
                     }
-
-
                 }
                 catch (Exception e)
                 {
@@ -113,7 +115,6 @@ namespace School_Mang.PL.NATIGA
                     Waiting.Stop();
                 }
             }
-
         }
 
         int move;
@@ -152,12 +153,14 @@ namespace School_Mang.PL.NATIGA
         private void btn_close_Click(object sender, EventArgs e)
         {
             this.Close();
-            this.Dispose();
         }
 
         private async void btn_show_data_Click(object sender, EventArgs e)
         {
             if (!await InternetFlow.EnsureAsync())
+                return;
+
+            if (dt_std_data.CurrentRow == null)
                 return;
 
             int gradeId = Convert.ToInt32(dt_std_data.CurrentRow.Cells["grade_Id"].Value);

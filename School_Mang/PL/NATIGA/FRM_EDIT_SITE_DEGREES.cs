@@ -102,10 +102,6 @@ namespace School_Mang.PL.NATIGA
                 return;
             }
 
-            //Test Intrent Connection
-            if (!await InternetFlow.EnsureAsync())
-                return;
-
             txt_ar.TextAlign = HorizontalAlignment.Center;
             txt_badnia.TextAlign = HorizontalAlignment.Center;
             txt_din.TextAlign = HorizontalAlignment.Center;
@@ -187,6 +183,14 @@ namespace School_Mang.PL.NATIGA
             CheckDegree(txt_math, math_old);
             CheckDegree(txt_english, english_old);
             CheckGeneralDegree();
+
+            // فحص الإنترنت
+            if (!await InternetFlow.EnsureAsync())
+            {
+                MSG.ErrorMesg("تعذر الاتصال بالإنترنت، سيتم إغلاق الشاشة.");
+                Close();
+                return;
+            }
         }
 
 

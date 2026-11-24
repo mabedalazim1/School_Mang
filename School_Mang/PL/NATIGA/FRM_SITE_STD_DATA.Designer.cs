@@ -83,7 +83,6 @@ namespace School_Mang.PL.NATIGA
             this.label2.Size = new System.Drawing.Size(53, 25);
             this.label2.TabIndex = 78;
             this.label2.Text = "الصف";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label3
             // 
@@ -96,7 +95,6 @@ namespace School_Mang.PL.NATIGA
             this.label3.Size = new System.Drawing.Size(100, 25);
             this.label3.TabIndex = 79;
             this.label3.Text = "عدد الطلاب";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // lbl_count
             // 
@@ -109,7 +107,6 @@ namespace School_Mang.PL.NATIGA
             this.lbl_count.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lbl_count.Size = new System.Drawing.Size(0, 25);
             this.lbl_count.TabIndex = 80;
-            this.lbl_count.Click += new System.EventHandler(this.lbl_count_Click);
             // 
             // groupBox3
             // 
@@ -122,7 +119,6 @@ namespace School_Mang.PL.NATIGA
             this.groupBox3.Size = new System.Drawing.Size(1168, 73);
             this.groupBox3.TabIndex = 82;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Enter += new System.EventHandler(this.groupBox3_Enter);
             // 
             // btn_edit_std
             // 
@@ -264,7 +260,6 @@ namespace School_Mang.PL.NATIGA
             this.dt_std_data.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dt_std_data.Size = new System.Drawing.Size(1178, 395);
             this.dt_std_data.TabIndex = 76;
-            this.dt_std_data.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dt_std_data_CellContentClick);
             this.dt_std_data.Click += new System.EventHandler(this.dt_std_data_Click);
             this.dt_std_data.DoubleClick += new System.EventHandler(this.dt_std_data_DoubleClick);
             // 
@@ -276,7 +271,6 @@ namespace School_Mang.PL.NATIGA
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(1200, 10);
             this.panel4.TabIndex = 75;
-            this.panel4.Paint += new System.Windows.Forms.PaintEventHandler(this.panel4_Paint);
             // 
             // label1
             // 
@@ -289,11 +283,13 @@ namespace School_Mang.PL.NATIGA
             this.label1.Size = new System.Drawing.Size(45, 25);
             this.label1.TabIndex = 81;
             this.label1.Text = "بحث";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // txt_std_data
             // 
+            this.txt_std_data.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.txt_std_data.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
             this.txt_std_data.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txt_std_data.characterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.txt_std_data.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txt_std_data.Font = new System.Drawing.Font("Noto Naskh Arabic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txt_std_data.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -306,6 +302,7 @@ namespace School_Mang.PL.NATIGA
             this.txt_std_data.LineThickness = 5;
             this.txt_std_data.Location = new System.Drawing.Point(441, 62);
             this.txt_std_data.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_std_data.MaxLength = 32767;
             this.txt_std_data.Name = "txt_std_data";
             this.txt_std_data.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.txt_std_data.Size = new System.Drawing.Size(464, 44);
@@ -324,7 +321,6 @@ namespace School_Mang.PL.NATIGA
             this.label11.Size = new System.Drawing.Size(114, 25);
             this.label11.TabIndex = 46;
             this.label11.Text = "بيانات الطلاب ";
-            this.label11.Click += new System.EventHandler(this.label11_Click);
             // 
             // pn_top
             // 
@@ -337,7 +333,6 @@ namespace School_Mang.PL.NATIGA
             this.pn_top.Name = "pn_top";
             this.pn_top.Size = new System.Drawing.Size(1200, 50);
             this.pn_top.TabIndex = 74;
-            this.pn_top.Paint += new System.Windows.Forms.PaintEventHandler(this.pn_top_Paint);
             this.pn_top.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pn_top_MouseDown);
             this.pn_top.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pn_top_MouseMove);
             this.pn_top.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pn_top_MouseUp);
@@ -377,7 +372,6 @@ namespace School_Mang.PL.NATIGA
             this.pic_help.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pic_help.TabIndex = 83;
             this.pic_help.TabStop = false;
-            this.pic_help.Click += new System.EventHandler(this.pic_help_Click);
             // 
             // FRM_SITE_STD_DATA
             // 

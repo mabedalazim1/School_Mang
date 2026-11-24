@@ -179,17 +179,7 @@ namespace School_Mang.PL.NATIGA
 
         private void btn_close_b_Click(object sender, EventArgs e)
         {
-            //BL.Globals.Std_Golos = 0;
-            //FRM_FINAL_DATA.Get_Frm_Final_Data.cmb_grade_DropDownClosed(sender, e);
-            //FRM_FINAL_DATA.Get_Frm_Final_Data.Show();
-
-            var frm = FRM_FINAL_DATA.Get_Frm_Final_Data;
-            frm.RefreshData();
-            frm.Show();
-            frm.BringToFront();
-
             Close();
-
         }
 
         private void chk_term_1_CheckedChanged(object sender, EventArgs e)
@@ -431,7 +421,8 @@ namespace School_Mang.PL.NATIGA
                                         absent_tocnolegy_A, absent_tocnolegy_B,
                                         absent_term_A, absent_term_B);
                 MSG.MyMesg("تم تسجيل غياب الطالب .. !");
-                btn_close_b_Click(sender, e);
+                this.DialogResult = DialogResult.OK;
+                this.Close();
                 return;
             }
             catch(Exception ex)

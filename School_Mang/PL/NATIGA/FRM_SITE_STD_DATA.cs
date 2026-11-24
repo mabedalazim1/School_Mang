@@ -24,10 +24,8 @@ namespace School_Mang.PL.NATIGA
            await LoadStdData();
         }
 
-        BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
+        private readonly BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
         
-        BL.STD.CLS_STD std = new BL.STD.CLS_STD();
-
         private readonly LookupService _stdData= new LookupService();
 
 
@@ -356,11 +354,8 @@ namespace School_Mang.PL.NATIGA
             btn_close_b_Click(sender, e);
         }
 
-        private async void FRM_SITE_STD_DATA_Load(object sender, EventArgs e)
+        private void FRM_SITE_STD_DATA_Load(object sender, EventArgs e)
         {
-            if (!await InternetFlow.EnsureAsync())
-                return;
-
             cmb_grade.SelectedValue = _context.Natiga.TestGradeId;
         }
 
@@ -537,77 +532,24 @@ namespace School_Mang.PL.NATIGA
             btn_edit_std_Click(sender, e);
         }
 
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lbl_count_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupBox3_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dt_std_data_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void panel4_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label11_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void cmb_grade_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void btn_del_std_Click(object sender, EventArgs e)
         {
             MSG.ErrorMesg("هذا الإجراء غير متاح ..!");
-        }
-
-       
-        private void pn_top_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void pic_help_Click(object sender, EventArgs e)
-        {
-
         }
 
         private async void btn_hide_data_Click(object sender, EventArgs e)
         {
             try
             {
-                if (dt_std_data.CurrentRow == null)
+                if (!await InternetFlow.EnsureAsync())
                     return;
 
-                Waiting.Start();
+                if (dt_std_data.CurrentRow == null ||
+                    dt_std_data.CurrentRow.IsNewRow)
+                    return;
 
-                string std_name = dt_std_data.CurrentRow.Cells["اسم الطالب"].Value.ToString();
+                string std_name = Convert.ToString(
+                    dt_std_data.CurrentRow.Cells["اسم الطالب"].Value);
 
                 if (MSG.DialogeMsg("هل تريد تعديل حالة نتيجة ... ؟ " + "\n" + std_name) == DialogResult.No)
                 {
@@ -615,13 +557,16 @@ namespace School_Mang.PL.NATIGA
                     return;
                 }
 
+                Waiting.Start();
+
                 int student_id = Convert.ToInt32(
                     dt_std_data.CurrentRow.Cells["userSchoolId"].Value);
 
                 byte test_kind_id = Convert.ToByte(
                     dt_std_data.CurrentRow.Cells["test_kind_Id"].Value);
 
-                string show_data = dt_std_data.CurrentRow.Cells["show_data"].Value.ToString();
+                string show_data = Convert.ToString(
+                    dt_std_data.CurrentRow.Cells["show_data"].Value);
 
                 NATEG.Toggle_Hide_Data(student_id, test_kind_id, show_data);
 

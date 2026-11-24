@@ -142,40 +142,41 @@ namespace School_Mang.PL.NATIGA
                     txt_test_kind.Text = _context.Natiga.FinalTestName;
                     break;
             }
-            
-            int Std_Golos = _context.Natiga.StudentGolos;
-            int greadId = _context.Natiga.TestGradeId;
-            DataTable Dt = NATEG.Get_Final_All_Data(Std_Golos,greadId);
-            if (Dt.Rows.Count == 0)
-            {
-                MSG.ErrorMesg("لا توجد بيانات مسجلة لهذا الطالب ..!");
-                return;
-            }
-            txt_grade.Text = Dt.Rows[0]["GradeDesc"].ToString();
-            txt_name.Text = Dt.Rows[0]["stdunet_name"].ToString();
-
-            // Get Absent Student
-            byte absent_ar_A = Convert.ToByte(Dt.Rows[0]["absent_ar_A"]);
-            byte absent_ar_B = Convert.ToByte(Dt.Rows[0]["absent_ar_B"]);
-            byte absent_math_A = Convert.ToByte(Dt.Rows[0]["absent_math_A"]);
-            byte absent_math_B = Convert.ToByte(Dt.Rows[0]["absent_math_B"]);
-            byte absent_scince_A = Convert.ToByte(Dt.Rows[0]["absent_scince_A"]);
-            byte absent_scince_B = Convert.ToByte(Dt.Rows[0]["absent_scince_B"]);
-            byte absent_social_A = Convert.ToByte(Dt.Rows[0]["absent_social_A"]);
-            byte absent_social_B = Convert.ToByte(Dt.Rows[0]["absent_social_B"]);
-            byte absent_english_A = Convert.ToByte(Dt.Rows[0]["absent_english_A"]);
-            byte absent_english_B = Convert.ToByte(Dt.Rows[0]["absent_english_B"]);
-            byte absent_din_A = Convert.ToByte(Dt.Rows[0]["absent_din_A"]);
-            byte absent_din_B = Convert.ToByte(Dt.Rows[0]["absent_din_B"]);
-            byte absent_maharat_A = Convert.ToByte(Dt.Rows[0]["absent_maharat_A"]);
-            byte absent_maharat_B = Convert.ToByte(Dt.Rows[0]["absent_maharat_B"]);
-            byte absent_tocnolegy_A = Convert.ToByte(Dt.Rows[0]["absent_tocnolegy_A"]);
-            byte absent_tocnolegy_B = Convert.ToByte(Dt.Rows[0]["absent_tocnolegy_B"]);
-
 
             try
             {
                 Waiting.Start();
+                int Std_Golos = _context.Natiga.StudentGolos;
+                int greadId = _context.Natiga.TestGradeId;
+                DataTable Dt = NATEG.Get_Final_All_Data(Std_Golos, greadId);
+                if (Dt.Rows.Count == 0)
+                {
+                    MSG.ErrorMesg("لا توجد بيانات مسجلة لهذا الطالب ..!");
+                    return;
+                }
+                txt_grade.Text = Dt.Rows[0]["GradeDesc"].ToString();
+                txt_name.Text = Dt.Rows[0]["stdunet_name"].ToString();
+
+                // Get Absent Student
+                byte absent_ar_A = Convert.ToByte(Dt.Rows[0]["absent_ar_A"]);
+                byte absent_ar_B = Convert.ToByte(Dt.Rows[0]["absent_ar_B"]);
+                byte absent_math_A = Convert.ToByte(Dt.Rows[0]["absent_math_A"]);
+                byte absent_math_B = Convert.ToByte(Dt.Rows[0]["absent_math_B"]);
+                byte absent_scince_A = Convert.ToByte(Dt.Rows[0]["absent_scince_A"]);
+                byte absent_scince_B = Convert.ToByte(Dt.Rows[0]["absent_scince_B"]);
+                byte absent_social_A = Convert.ToByte(Dt.Rows[0]["absent_social_A"]);
+                byte absent_social_B = Convert.ToByte(Dt.Rows[0]["absent_social_B"]);
+                byte absent_english_A = Convert.ToByte(Dt.Rows[0]["absent_english_A"]);
+                byte absent_english_B = Convert.ToByte(Dt.Rows[0]["absent_english_B"]);
+                byte absent_din_A = Convert.ToByte(Dt.Rows[0]["absent_din_A"]);
+                byte absent_din_B = Convert.ToByte(Dt.Rows[0]["absent_din_B"]);
+                byte absent_maharat_A = Convert.ToByte(Dt.Rows[0]["absent_maharat_A"]);
+                byte absent_maharat_B = Convert.ToByte(Dt.Rows[0]["absent_maharat_B"]);
+                byte absent_tocnolegy_A = Convert.ToByte(Dt.Rows[0]["absent_tocnolegy_A"]);
+                byte absent_tocnolegy_B = Convert.ToByte(Dt.Rows[0]["absent_tocnolegy_B"]);
+
+
+
                 lbl_sinces.Text = "علوم";
                 switch (test_kind)
                 {
@@ -358,7 +359,8 @@ namespace School_Mang.PL.NATIGA
 
         private void CheckDegree(TextBox textBox, string txt_old)
         {
-            if (textBox.Text == "غ") return;
+            if (string.IsNullOrWhiteSpace(textBox.Text) || textBox.Text == "غ")
+                return;
 
             byte test_kind = _context.Natiga.FinalTestKind;
             double max_degree = 0;
@@ -528,37 +530,19 @@ namespace School_Mang.PL.NATIGA
             }
         }
 
-        private decimal Get_Degree(TextBox textBox)
-        {
-            decimal degree = 0;
-            try
-            {
-                Waiting.Start();
-                if (textBox.Text == "غ")
-                {
-                    degree = 0;
-                }
-                else
-                {
-                    degree = Convert.ToDecimal(textBox.Text);
-                }
-            }
-            catch (Exception e)
-            {
-                MSG.ErrorMesg(e.Message);
-            }
-            finally
-            {
-                Waiting.Stop();
-            }
-
-            return degree;
-        }
         private void pn_top_MouseDown(object sender, MouseEventArgs e)
         {
             move = 1;
             move_x = e.X;
             move_y = e.Y;
+        }
+
+        private decimal Get_Degree(TextBox textBox)
+        {
+            if (textBox.Text == "غ")
+                return 0;
+
+            return Convert.ToDecimal(textBox.Text);
         }
 
         private void pn_top_MouseMove(object sender, MouseEventArgs e)
@@ -582,12 +566,6 @@ namespace School_Mang.PL.NATIGA
         private void btn_close_b_Click(object sender, EventArgs e)
         {
             Close();
-
-            var frm = FRM_FINAL_DATA.Get_Frm_Final_Data;
-
-            frm.RefreshData();
-            frm.Show();
-            frm.Activate();
         }
 
         private void FRM_FINAL_DEGREE_DATA_Load(object sender, EventArgs e)
@@ -769,31 +747,32 @@ namespace School_Mang.PL.NATIGA
                     }
                     break;
             }
-            
-
-            decimal ar = Get_Degree(txt_ar);
-            decimal math = Get_Degree(txt_math);
-            decimal scince = Get_Degree(txt_scince);
-            decimal scince_practical = Get_Degree(txt_scince_practical);
-            decimal social = Get_Degree(txt_social);
-            decimal english = Get_Degree(txt_english);
-            decimal din = Get_Degree(txt_din);
-            decimal maharat = Get_Degree(txt_maharat);
-            decimal tocnolegy = Get_Degree(txt_tocnolegy);
-            decimal tocnolegy_practical = Get_Degree(txt_tocnolegy_practical);
-            int studentGolos = _context.Natiga.StudentGolos;
-            byte testKind = _context.Natiga.FinalTestKind;
-
 
             try
             {
                 Waiting.Start();
+
+                decimal ar = Get_Degree(txt_ar);
+                decimal math = Get_Degree(txt_math);
+                decimal scince = Get_Degree(txt_scince);
+                decimal scince_practical = Get_Degree(txt_scince_practical);
+                decimal social = Get_Degree(txt_social);
+                decimal english = Get_Degree(txt_english);
+                decimal din = Get_Degree(txt_din);
+                decimal maharat = Get_Degree(txt_maharat);
+                decimal tocnolegy = Get_Degree(txt_tocnolegy);
+                decimal tocnolegy_practical = Get_Degree(txt_tocnolegy_practical);
+                int studentGolos = _context.Natiga.StudentGolos;
+                byte testKind = _context.Natiga.FinalTestKind;
+
                 NATEG.Update_Final_Degree_Data(
                     ar, math, scince, scince_practical, social,
                     english ,din, maharat, tocnolegy, tocnolegy_practical,
                     studentGolos, testKind );
-                   
+
                 MSG.MyMesg("تم تعديل الدرجات بنجاح ..!");
+                this.DialogResult = DialogResult.OK;
+                this.Close();
 
             }
             catch (Exception ex)

@@ -18,7 +18,7 @@ namespace School_Mang.PL.NATIGA
         }
 
 
-        BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
+        private readonly BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
         
 
 
@@ -68,26 +68,64 @@ namespace School_Mang.PL.NATIGA
         string maharat_old;
         string tocnolegy_old;
         string frinsh_old;
-        string general_old;
         string sort_old;
+
+
+        private void ChangeSortColor()
+        {
+            int sort;
+
+            if (!int.TryParse(txt_sort.Text, out sort) || sort == 0)
+            {
+                txt_sort.BackColor = Color.Orange;
+                txt_sort.ForeColor = Color.WhiteSmoke;
+            }
+            else
+            {
+                txt_sort.BackColor = Color.Green;
+                txt_sort.ForeColor = Color.WhiteSmoke;
+            }
+        }
+
+        private double ReadMark(TextBox textBox)
+        {
+            double value;
+
+            if (string.IsNullOrWhiteSpace(textBox.Text))
+                return 0;
+
+            if (!double.TryParse(textBox.Text, out value))
+                throw new InvalidOperationException(
+                    "توجد درجة غير صحيحة في " + textBox.Name);
+
+            return value;
+        }
 
         private void CheckDegree(TextBox textBox, string txt, byte test = 1)
         {
-            int grade = _context.Natiga.TestGradeId;
-            byte test_kind_id = Convert.ToByte(txt_test_kind_id.Text);
             try
             {
-                if (test == 1 && textBox.Text != "")
+                int grade = _context.Natiga.TestGradeId;
+                byte test_kind_id = Convert.ToByte(txt_test_kind_id.Text);
+
+                if (test == 1)
                 {
-                    if((grade ==9 && test_kind_id == 3) || (grade == 9 && test_kind_id == 6))
+                    if (grade == 10 ||
+                        grade == 11 ||
+                       (grade == 9 && (test_kind_id == 3 || test_kind_id == 6)))
                     {
                         txt_french.Enabled = false;
                     }
                     else
                     {
                         txt_french.Enabled = true;
-                        if (Convert.ToDouble(textBox.Text) > 20 || (Convert.ToDouble(textBox.Text) < 0
-                        ))
+
+                    }
+
+                    if (!(grade == 9 && (test_kind_id == 3 || test_kind_id == 6)))
+                    {
+                        double currentMark = ReadMark(textBox);
+                        if (currentMark > 20 || currentMark < 0)
                         {
                             MSG.ErrorMesg("تأكد من الدرجة ..!");
                             textBox.Text = txt;
@@ -102,10 +140,9 @@ namespace School_Mang.PL.NATIGA
                         case 11:
 
                             total =
-                              Convert.ToDouble(txt_ar.Text) +
-                              Convert.ToDouble(txt_sinces.Text) +
-                              Convert.ToDouble(txt_math.Text) +
-                              Convert.ToDouble(txt_english.Text);
+                              ReadMark(txt_ar) +
+                              ReadMark(txt_math) +
+                              ReadMark(txt_english);
 
                             txt_total.Text = total.ToString();
                             break;
@@ -114,11 +151,10 @@ namespace School_Mang.PL.NATIGA
                         case 2:
                         case 3:
                             total =
-                               Convert.ToDouble(txt_ar.Text) +
-                               Convert.ToDouble(txt_sinces.Text) +
-                               Convert.ToDouble(txt_math.Text) +
-                               Convert.ToDouble(txt_english.Text) +
-                               Convert.ToDouble(txt_french.Text);
+                               ReadMark(txt_ar) +
+                               ReadMark(txt_math) +
+                               ReadMark(txt_english) +
+                               ReadMark(txt_french);
                             txt_total.Text = total.ToString();
                             break;
 
@@ -129,12 +165,12 @@ namespace School_Mang.PL.NATIGA
                         case 8:
                         case 9:
                             total =
-                               Convert.ToDouble(txt_ar.Text) +
-                               Convert.ToDouble(txt_sinces.Text) +
-                               Convert.ToDouble(txt_social.Text) +
-                               Convert.ToDouble(txt_math.Text) +
-                               Convert.ToDouble(txt_english.Text) +
-                               Convert.ToDouble(txt_french.Text);
+                               ReadMark(txt_ar) +
+                               ReadMark(txt_sinces) +
+                               ReadMark(txt_social) +
+                               ReadMark(txt_math) +
+                               ReadMark(txt_english) +
+                               ReadMark(txt_french);
 
                             txt_total.Text = total.ToString();
                             break;
@@ -147,7 +183,8 @@ namespace School_Mang.PL.NATIGA
                 }
                 // Change Mark Color
 
-                double mark = Convert.ToDouble(textBox.Text);
+                double mark = ReadMark(textBox);
+
                 if ((grade == 9 && test_kind_id == 3) || (grade == 9 && test_kind_id == 6))
                 {
                     textBox.BackColor = Color.White;
@@ -165,7 +202,7 @@ namespace School_Mang.PL.NATIGA
                             textBox.BackColor = Color.Orange;
                             textBox.ForeColor = Color.WhiteSmoke;
                             break;
-                        case double n when n < 21:
+                        case double n when n <= 20:
                             textBox.BackColor = Color.Green;
                             textBox.ForeColor = Color.WhiteSmoke;
                             break;
@@ -211,9 +248,13 @@ namespace School_Mang.PL.NATIGA
 
         private async void FRM_EDIT_SITE_MARKS_Load(object sender, EventArgs e)
         {
-            //Test Intrent Connection
-            if (!await InternetFlow.EnsureAsync())
+            if (_context?.Natiga == null)
+            {
+                MSG.ErrorMesg("بيانات التنقل غير مكتملة، يرجى فتح الشاشة مرة أخرى.");
+                Close();
                 return;
+            }
+
 
             txt_ar.TextAlign = HorizontalAlignment.Center;
             txt_french.TextAlign = HorizontalAlignment.Center;
@@ -237,7 +278,6 @@ namespace School_Mang.PL.NATIGA
             maharat_old = txt_maharat.Text;
             tocnolegy_old = txt_tecnolgey.Text;
             frinsh_old = txt_french.Text;
-            general_old = txt_total.Text;
             sort_old = txt_sort.Text;
 
             // Chang Lables
@@ -247,19 +287,19 @@ namespace School_Mang.PL.NATIGA
             {
                 case 10:
                 case 11:
-                    lbl_sinces.Text = "متعدد";
                     lbl_mahrat.Text = "مهارات";
                     lbl_tecnolgy.Text = "تكنولوجيا";
                     txt_social.Enabled = false;
                     txt_maharat.Enabled = false;
                     txt_tecnolgey.Enabled = false;
                     txt_french.Enabled = false;
+                    txt_sinces.Enabled = false;
                     break;
 
                 case 1:
                 case 2:
                 case 3:
-                    lbl_sinces.Text = "متعدد";
+                    txt_sinces.Enabled = false;
                     txt_social.Enabled = false;
                     txt_maharat.Enabled = false;
                     txt_tecnolgey.Enabled = false;
@@ -269,7 +309,6 @@ namespace School_Mang.PL.NATIGA
                 case 4:
                 case 5:
                 case 6:
-                    lbl_sinces.Text = "علوم";
                     txt_social.Enabled = true;
                     txt_maharat.Enabled = false;
                     txt_tecnolgey.Enabled = false;
@@ -281,7 +320,6 @@ namespace School_Mang.PL.NATIGA
                 case 7:
                 case 8:
                 case 9:
-                    lbl_sinces.Text = "علوم";
                     txt_social.Enabled = true;
                     txt_maharat.Enabled = true;
                     txt_tecnolgey.Enabled = true;
@@ -298,19 +336,23 @@ namespace School_Mang.PL.NATIGA
             CheckDegree(txt_ar, ar_old, 0);
             CheckDegree(txt_din, din_old, 0);
             CheckDegree(txt_math, math_old, 0);
-            CheckDegree(txt_sinces, sinces_old, 0);
             CheckDegree(txt_english, english_old, 0);
 
-            // Handel Sort
-            if(Convert.ToInt32(txt_sort.Text) != 0)
+            if (grade_id != 10 && grade_id != 11 &&
+                grade_id != 1 && grade_id != 2 && grade_id != 3)
             {
-                txt_sort.BackColor = Color.Green;
-                txt_sort.ForeColor = Color.WhiteSmoke;
+                CheckDegree(txt_sinces, sinces_old, 0);
             }
-            else
+
+            // Handel Sort
+            ChangeSortColor();
+
+            // فحص الإنترنت
+            if (!await InternetFlow.EnsureAsync())
             {
-                txt_sort.BackColor = Color.Orange;
-                txt_sort.ForeColor = Color.WhiteSmoke;
+                MSG.ErrorMesg("تعذر الاتصال بالإنترنت، سيتم إغلاق الشاشة.");
+                Close();
+                return;
             }
         }
 
@@ -428,21 +470,40 @@ namespace School_Mang.PL.NATIGA
 
         private void txt_sort_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            if (char.IsControl(e.KeyChar))
+                return;
+
+            if (!char.IsDigit(e.KeyChar))
             {
                 e.Handled = true;
+                return;
             }
+
+            TextBox txt = (TextBox)sender;
+
+            string newText = txt.Text.Remove(
+                txt.SelectionStart, txt.SelectionLength)
+                .Insert(txt.SelectionStart, e.KeyChar.ToString());
+
+            int value;
+
+            if (int.TryParse(newText, out value) && value > 10)
+                e.Handled = true;
         }
+
 
         private void txt_sort_TextChanged(object sender, EventArgs e)
         {
-            if(Convert.ToInt32(txt_sort.Text) > 10)
+            int value;
+
+            if (int.TryParse(txt_sort.Text, out value) && value > 10)
             {
-                MSG.ErrorMesg("تأكد من الدرجة ..!");
+                MSG.ErrorMesg("الترتيب يجب ألا يزيد عن 10 ..!");
                 txt_sort.Text = sort_old;
                 txt_sort.Focus();
                 return;
             }
+            ChangeSortColor();
         }
 
         private void txt_ar_Leave(object sender, EventArgs e)
@@ -501,23 +562,50 @@ namespace School_Mang.PL.NATIGA
         {
             //Test Intrent Connection
             if (!await InternetFlow.EnsureAsync())
+            {
+                MSG.ErrorMesg("تأكد من الإتصال بالإنترنت .. لم يتم الحفظ!");
                 return;
+            }
+                
 
             try
             {
-                int student_Id = Convert.ToInt32(txt_cod.Text);
-                decimal ar = Convert.ToDecimal(txt_ar.Text);
-                decimal din = Convert.ToDecimal(txt_din.Text);
-                decimal math = Convert.ToDecimal(txt_math.Text);
-                decimal scince = Convert.ToDecimal(txt_sinces.Text);
-                decimal social = Convert.ToDecimal(txt_social.Text);
-                decimal english = Convert.ToDecimal(txt_english.Text);
-                decimal maharat = Convert.ToDecimal(txt_maharat.Text);
-                decimal tocnolegy = Convert.ToDecimal(txt_tecnolgey.Text);
-                decimal french = Convert.ToDecimal(txt_french.Text);
-                decimal general = Convert.ToDecimal(txt_total.Text);
-                int test_kind_Id = Convert.ToInt32(txt_test_kind_id.Text);
-                int sort_code = Convert.ToInt32(txt_sort.Text);
+                int student_Id;
+
+                if (!int.TryParse(txt_cod.Text, out student_Id))
+                {
+                    MSG.ErrorMesg("كود الطالب غير صحيح ..!");
+                    return;
+                }
+
+                decimal ar = (decimal)ReadMark(txt_ar);
+                decimal din = (decimal)ReadMark(txt_din);
+                decimal math = (decimal)ReadMark(txt_math);
+                decimal scince = (decimal)ReadMark(txt_sinces);
+                decimal social = (decimal)ReadMark(txt_social);
+                decimal english = (decimal)ReadMark(txt_english);
+                decimal maharat = (decimal)ReadMark(txt_maharat);
+                decimal tocnolegy = (decimal)ReadMark(txt_tecnolgey);
+                decimal french = (decimal)ReadMark(txt_french);
+                decimal general = (decimal)ReadMark(txt_total);
+
+                int test_kind_Id;
+                int sort_code;
+
+                if (!int.TryParse(txt_test_kind_id.Text, out test_kind_Id) ||
+                    !int.TryParse(txt_sort.Text, out sort_code))
+                {
+                    MSG.ErrorMesg("نوع الاختبار أو الترتيب غير صحيح ..!");
+                    return;
+                }
+
+                if (sort_code < 0 || sort_code > 10)
+                {
+                    MSG.ErrorMesg("الترتيب يجب أن يكون من 0 إلى 10 ..!");
+                    txt_sort.Focus();
+                    return;
+                }
+
                 NATEG.Update_Mark(
                     student_Id, ar, din, math, scince, social, english,
                     maharat, tocnolegy, french, general, sort_code, test_kind_Id);

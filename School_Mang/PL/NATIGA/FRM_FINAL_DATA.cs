@@ -31,10 +31,8 @@ namespace School_Mang.PL.NATIGA
             LoadStdData();
         }
     
-        BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
+       private readonly BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
         
-        BL.STD.CLS_STD std = new BL.STD.CLS_STD();
-
         private readonly LookupService _stdData= new LookupService();
         // Form Closed
         private static FRM_FINAL_DATA frm_Final_Data;
@@ -72,9 +70,9 @@ namespace School_Mang.PL.NATIGA
         public void TxtChanged()
         {
             DataTable Dt;
-            Waiting.Start();
             try
-            {
+            { 
+                Waiting.Start();
                 if (!_context.Natiga.EditGolos)
                 {
                     int grade = _context.Natiga.TestGradeId;
@@ -84,6 +82,9 @@ namespace School_Mang.PL.NATIGA
                 }
                 else
                 {
+                    if (cmb_grade.SelectedValue == null)
+                        return;
+
                     int grade = Convert.ToInt32(cmb_grade.SelectedValue);
                     Dt = NATEG.Search_Golos_Data(grade, txt_std_data.Text);
                 }
@@ -105,6 +106,8 @@ namespace School_Mang.PL.NATIGA
         {
             try
             {
+                Waiting.Start();
+
                 if (_context.Natiga.EditGolos)
                 {
                     label11.Text = "تعديل أرقام الجلوس للطلاب ";
@@ -117,11 +120,8 @@ namespace School_Mang.PL.NATIGA
                     btn_amal_nesf.Location = new Point(867, 8);
                     btn_close_b.Location = new Point(163, 8);
 
-                    int grade_id = 0;
-                    DataTable Dt;
-                    Dt = NATEG.Get_Golos_Edit_Data(grade_id, "yes");
+                    DataTable Dt = NATEG.Get_Golos_Edit_Data(0, "yes");
                     dt_std_data.DataSource = null;
-                    Waiting.Start();
                     dt_std_data.DataSource = Dt;
                     dt_std_data.Columns["std_code"].Visible = false;
 
@@ -141,25 +141,19 @@ namespace School_Mang.PL.NATIGA
                     btn_close_b.Location = new Point(7, 8);
 
                     int grade_id = _context.Natiga.TestGradeId; 
-                    DataTable Dt;
-                   
-                    Dt = NATEG.Get_Final_Total_Degree(grade_id);
+                    DataTable Dt = NATEG.Get_Final_Total_Degree(grade_id);
                     dt_std_data.DataSource = null;
-                    Waiting.Start();
                     dt_std_data.DataSource = Dt;
+
+                    dt_std_data.Columns["اسم الطالب"].FillWeight = 200;
                     dt_std_data.Columns["Absent_Any"].Visible = false;
+
                     Check_Absent();
                     lbl_count.Text = Dt.Rows.Count.ToString();
 
-                    if (!_context.Natiga.EditGolos)
-                    {
-                        ChangLayOut();
-                        DisableBtn();
-                    }
+                    ChangLayOut();
+                    DisableBtn();
                 }
-
-
-                Waiting.Stop();
             }
             catch (Exception e)
             {
@@ -239,6 +233,12 @@ namespace School_Mang.PL.NATIGA
         {
             try
             {
+                if (dt_std_data.CurrentRow == null)
+                {
+                    MSG.ErrorMesg("يرجى تحديد الطالب أولاً ..!");
+                    return;
+                }
+
                 this.Hide();
                 //BL.Globals.Final_Test_Name = Final_Test_Name;
                 //BL.Globals.Final_Test_Kind = Final_Test_Kind;
@@ -257,9 +257,17 @@ namespace School_Mang.PL.NATIGA
                         c.Natiga.FinalTestKind = finalTestKind;
                     })
                     .Show(frm);
+
+                if (frm.DialogResult == DialogResult.OK)
+                    RefreshData();
+
+                this.Show();
+                this.Activate();
             }
             catch (Exception e)
             {
+                this.Show();
+                this.BringToFront();
                 MSG.ErrorMesg(e.Message);
             }
         }
@@ -398,11 +406,10 @@ namespace School_Mang.PL.NATIGA
 
         public void cmb_grade_DropDownClosed(object sender, EventArgs e)
         {
-            int grade = Convert.ToInt32(cmb_grade.SelectedValue);
-
             try
             {
                 Waiting.Start();
+                int grade = Convert.ToInt32(cmb_grade.SelectedValue);
 
                 DataTable Dt;
 
@@ -519,21 +526,32 @@ namespace School_Mang.PL.NATIGA
         {
             try
             {
+                if (dt_std_data.CurrentRow == null)
+                {
+                    MSG.ErrorMesg("يرجى تحديد الطالب أولاً ..!");
+                    return;
+                }
+
                 int studentGolos =
                     Convert.ToInt32(dt_std_data.CurrentRow.Cells[0].Value);
 
                 var frm = FRM_EDIT_ABSENT_STD.Get_Frm_Edit_absent_std;
 
-                var context = new NavigationContext();
-
-                context.Natiga.TestGradeId = _context.Natiga.TestGradeId;
-                context.Natiga.StudentGolos = studentGolos;
-
-                frm.SetNavigation(context);
-
                 this.Hide();
+                AppNavigation.Instance
+                    .WithOwner(MAIN.FRM_MAIN.Get_Frm_Main).
+                    SetContext(c =>
+                    {
+                        c.Natiga.TestGradeId = _context.Natiga.TestGradeId;
+                        c.Natiga.StudentGolos = studentGolos;
+                    })
+                    .Show(frm);
+                if (frm.DialogResult == DialogResult.OK)
+                    RefreshData();
 
-                frm.ShowDialog(MAIN.FRM_MAIN.Get_Frm_Main);
+                this.Show();
+                this.Activate();
+
             }
             catch (Exception ex)
             {

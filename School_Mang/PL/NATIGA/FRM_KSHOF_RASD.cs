@@ -1,11 +1,11 @@
-﻿using System;
-using System.IO;
-using System.Data;
-using System.Windows.Forms;
-using Bunifu.Framework.UI;
+﻿using Bunifu.Framework.UI;
 using School_Mang.BL;
 using School_Mang.BL.Services;
 using School_Mang.BL.Services.Nateg;
+using System;
+using System.Data;
+using System.IO;
+using System.Windows.Forms;
 
 namespace School_Mang.PL.NATIGA
 {
@@ -19,13 +19,10 @@ namespace School_Mang.PL.NATIGA
             _context = context ?? new NavigationContext();
         }
 
-        BL.STD.CLS_STD std = new BL.STD.CLS_STD();
-        
-        BL.NATEG.CLS_NATEG nateg = new BL.NATEG.CLS_NATEG();
-        RPT.REPORT_CONNECTION RPT = new RPT.REPORT_CONNECTION();
+        private readonly BL.NATEG.CLS_NATEG nateg = new BL.NATEG.CLS_NATEG();
+        private readonly RPT.REPORT_CONNECTION RPT = new RPT.REPORT_CONNECTION();
 
         private readonly LookupService _stdData = new LookupService();
-        int year = Properties.Settings.Default.year_cod;
 
         public FRM_KSHOF_RASD()
         {
@@ -165,6 +162,12 @@ namespace School_Mang.PL.NATIGA
                 ExcelExportService excelExportService = new ExcelExportService();
 
                 DataTable Dt_Rasd = _rasdService.GetRasdData(grade);
+                if (Dt_Rasd.Rows.Count == 0)
+                {
+                    MSG.ErrorMesg("لا توجد بيانات للتصدير ..!");
+                    return;
+                }
+
                 if (excelExportService.WriteRasdDataToExcel(Dt_Rasd, grade_desc, saveAsLocation, title, staticExcelFile, test_kind))
                 {
                     MSG.MyMesg("تم إعداد الملف بنجاح !");
@@ -174,9 +177,11 @@ namespace School_Mang.PL.NATIGA
             catch (Exception ex)
             {
                 MSG.ErrorMesg(ex.Message);
+            }
+            finally
+            {
                 Waiting.Stop();
             }
-            Waiting.Stop();
         }
 
         private void OpenRasdReport(byte test_kind)
@@ -190,17 +195,15 @@ namespace School_Mang.PL.NATIGA
 
                 RPT.OpenKoshof_Rasd(grade, month, test_kind);
 
-                Waiting.Stop();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                MSG.ErrorMesg(e.Message);
+                MSG.ErrorMesg(ex.Message);
             }
             finally
             {
                 Waiting.Stop();
-            }
-            
+            }  
         }
 
         int move;

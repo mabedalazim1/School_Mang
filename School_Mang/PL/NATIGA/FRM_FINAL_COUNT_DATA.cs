@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using School_Mang.BL;
+﻿using School_Mang.BL;
 using School_Mang.BL.Services;
+using System;
+using System.Data;
+using System.Windows.Forms;
 
 namespace School_Mang.PL.NATIGA
 {
     public partial class FRM_FINAL_COUNT_DATA : Form
     {
-        BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
+       private readonly BL.NATEG.CLS_NATEG NATEG = new BL.NATEG.CLS_NATEG();
         
 
         // Form Closed
@@ -44,14 +38,21 @@ namespace School_Mang.PL.NATIGA
                 Frm_Final_Count_Data = this;
             }
 
-            DataTable Dt;
-            Dt = NATEG.Get_Count_Final_Degree();
+            try
+            {
+                DataTable Dt = NATEG.Get_Count_Final_Degree();
 
-            dt_std_data.DataSource = Dt;
-            dt_std_data.Columns["Grade_Id"].Visible = false;
+                if (Dt == null)
+                    throw new InvalidOperationException("تعذر الحصول على بيانات أعداد النتائج.");
 
-
-
+                dt_std_data.DataSource = Dt;
+                dt_std_data.Columns["Grade_Id"].Visible = false;
+            }
+            catch (Exception ex)
+            {
+                MSG.ErrorMesg(ex.Message);
+                Close();
+            }
         }
         int move;
         int move_x;
@@ -97,9 +98,20 @@ namespace School_Mang.PL.NATIGA
                 MSG.ErrorMesg("لا توجد بيانات مسجلة");
                 return;
             }
-            this.Visible = false;
+           
 
-            int test_grade_id = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Grade_Id"].Value);
+            if (dt_std_data.CurrentRow == null ||
+                dt_std_data.CurrentRow.Cells["Grade_Id"].Value == null ||
+                dt_std_data.CurrentRow.Cells["Grade_Id"].Value == DBNull.Value)
+            {
+                MSG.ErrorMesg("يرجى تحديد الصف المطلوب");
+                return;
+            }
+
+            int test_grade_id = Convert.ToInt32(
+                dt_std_data.CurrentRow.Cells["Grade_Id"].Value);
+
+            this.Visible = false;
 
             // BL.Globals.test_grade_id = Convert.ToInt32(dt_std_data.CurrentRow.Cells["Grade_Id"].Value);
             var frm = FRM_FINAL_DATA.Get_Frm_Final_Data;
